@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primajana Press</title>
+    <link rel="icon" href="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" type="image/x-icon">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* Palet Warna & Font */
+        :root {
+            --primary-blue: #0056b3;
+            --accent-green: #28a745;
+            --highlight-purple: #6f42c1;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+            --secondary-text: #6c757d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-text);
+            background-color: #fff;
+        }
+
+        /* Navigasi */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: var(--primary-blue) !important;
+            display: flex;
+            align-items: center;
+            height: auto;
+            transition: transform 0.3s ease-in-out;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .navbar-brand img {
+            max-height: 70px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.03);
+        }
+
+        .nav-link {
+            color: var(--secondary-text) !important;
+            transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue) !important;
+            transform: translateY(-2px);
+        }
+
+        /* Gaya Tombol */
+        .btn-publikasi {
+            background-color: #fff;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            font-weight: 600;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-publikasi:hover {
+            background-color: var(--primary-blue);
+            color: #fff;
+            border-color: var(--primary-blue);
+        }
+
+        /* Konten Baru: Toko Buku & Kalkulator */
+        .primajana-press-section {
+            padding: 150px 0 100px;
+            background-color: var(--light-bg);
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .book-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-card img {
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .book-card .card-body {
+            padding: 1.5rem;
+        }
+
+        .book-card .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .book-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-green);
+        }
+
+        .book-link-btn {
+            background-color: var(--primary-blue);
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .book-link-btn:hover {
+            background-color: #004494;
+        }
+
+        .royalty-calculator {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .royalty-calculator h4 {
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        .royalty-calculator .form-label {
+            font-weight: 500;
+        }
+
+        /* Konten Baru: Paket Penerbitan */
+        .publishing-packages-section {
+            background-color: #fff;
+            padding: 80px 0;
+        }
+        
+        /* Gaya umum card paket */
+        .package-card {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .package-card .package-title {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .package-card .package-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .package-list {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 2rem;
+            text-align: left;
+            flex-grow: 1;
+        }
+        
+        .package-list li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark-text);
+        }
+        
+        .package-list li i {
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+        }
+
+        .package-card .btn {
+            width: 100%;
+        }
+
+        /* Desain khusus per paket */
+        .package-card.mandiri {
+            background-color: #f1f7fe;
+            border-color: #a4c2f4;
+        }
+        .package-card.mandiri .package-title { color: #3c78d8; }
+        .package-card.mandiri .package-price { color: #3c78d8; }
+        .package-card.mandiri .btn {
+            background-color: #3c78d8;
+            color: #fff;
+        }
+        .package-card.mandiri .btn:hover { background-color: #2a58a7; }
+
+        .package-card.profesional {
+            background-color: #e9f5e9;
+            border-color: #8cde8c;
+        }
+        .package-card.profesional .package-title { color: #28a745; }
+        .package-card.profesional .package-price { color: #28a745; }
+        .package-card.profesional .btn {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .package-card.profesional .btn:hover { background-color: #1f7d37; }
+
+        .package-card.lengkap {
+            background-color: #f7f2fe;
+            border-color: #c091e9;
+        }
+        .package-card.lengkap .package-title { color: #6f42c1; }
+        .package-card.lengkap .package-price { color: #6f42c1; }
+        .package-card.lengkap .btn {
+            background-color: #6f42c1;
+            color: #fff;
+        }
+        .package-card.lengkap .btn:hover { background-color: #553393; }
+
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-text);
+            color: white;
+            padding: 60px 0;
+        }
+
+        .footer h5 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .footer a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        .footer .btn-primary {
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .footer .btn-primary:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Media Queries untuk Responsif */
+        @media (max-width: 768px) {
+            .navbar-brand img {
+                max-height: 60px;
+            }
+            .primajana-press-section {
+                padding: 120px 0 60px;
+            }
+            .royalty-calculator {
+                margin-top: 2rem;
+            }
+            .carousel-inner .carousel-item > div {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">Tentang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="courses.html">Kursus</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tryout.html">Tryout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tools.html">Tools</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="publication.html">Publikasi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="primajana-press-section">
+        <div class="container">
+            <h1 class="text-center mb-5">Primajana Press</h1>
+            <p class="text-center lead mb-5">Jelajahi koleksi buku terlaris kami dan hitung potensi keuntungan Anda sebagai penulis.</p>
+
+            <div class="row g-4 mb-5">
+                <div class="col-lg-8">
+                    <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row row-cols-md-4 g-4">
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 1">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Perilaku Kesehatan</h5>
+                                                <p class="book-price">Rp 75.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/p_u6EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 2">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Kiat Jitu Penelitian</h5>
+                                                <p class="book-price">Rp 80.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=p_u6EAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/8uS5EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 3">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Analisis Data Kuantitatif</h5>
+                                                <p class="book-price">Rp 90.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=8uS5EAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/B9G_EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 4">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Metode Riset</h5>
+                                                <p class="book-price">Rp 85.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=B9G_EAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row row-cols-md-4 g-4">
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/q3-eEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 5">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Penelitian Eksperimental</h5>
+                                                <p class="book-price">Rp 95.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=q3-eEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/R-O8EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 6">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Manajemen Risiko</h5>
+                                                <p class="book-price">Rp 105.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=R-O8EAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vj-dEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 7">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Desain UI/UX</h5>
+                                                <p class="book-price">Rp 120.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=vj-dEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/6vSZEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Pemrograman Python</h5>
+                                                <p class="book-price">Rp 110.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=6vSZEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row row-cols-md-4 g-4">
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/tJmeEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Dasar Keperawatan</h5>
+                                                <p class="book-price">Rp 100.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=tJmeEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/6eWdEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 10">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Filsafat Sains</h5>
+                                                <p class="book-price">Rp 125.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=6eWdEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/tQeeEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 11">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Karya Tulis Ilmiah</h5>
+                                                <p class="book-price">Rp 90.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=tQeeEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card h-100 book-card">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/lK-dEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 12">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Akuntansi Sektor Publik</h5>
+                                                <p class="book-price">Rp 130.000</p>
+                                                <a href="https://play.google.com/store/books/details?id=lK-dEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="toko-buku.html" class="btn btn-publikasi">Tampilkan Semua Buku</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="royalty-calculator">
+                        <h4 class="mb-4">Simulasi Royalti Penulis</h4>
+                        <div class="mb-3">
+                            <label for="hargaBuku" class="form-label">Harga Jual Buku (Rp)</label>
+                            <input type="number" class="form-control" id="hargaBuku" value="100000" min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="jumlahTerjual" class="form-label">Jumlah Buku Terjual</label>
+                            <input type="number" class="form-control" id="jumlahTerjual" value="100" min="0">
+                        </div>
+                        <p class="lead mb-2">Royalti Penulis (20%)</p>
+                        <h3 class="text-end fw-bold text-success mb-4" id="royaltiTotal">Rp 2.000.000</h3>
+                        <div class="d-grid">
+                            <button class="btn btn-publikasi" onclick="hitungRoyalti()">Hitung Keuntungan</button>
+                        </div>
+                        <p class="text-muted mt-3 mb-0 text-center">Skema royalti 20% dari harga jual bersih.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="publishing-packages-section">
+                <h2 class="text-center mb-5">Pilihan Paket Penerbitan</h2>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col">
+                        <div class="package-card h-100 mandiri">
+                            <div class="package-content">
+                                <h4 class="package-title">Paket Mandiri</h4>
+                                <p class="package-price">Rp 1.000.000</p>
+                                <ul class="package-list">
+                                    <li><i class="bi bi-check-lg me-2"></i> **Penerbitan Buku**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> **Pengurusan ISBN**</li>
+                                    <li><i class="bi bi-x-lg me-2"></i> Jasa Desain Cover</li>
+                                    <li><i class="bi bi-x-lg me-2"></i> Jasa Layout Isi</li>
+                                    <li><i class="bi bi-x-lg me-2"></i> Promosi Digital</li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn mt-3">Pesan Paket Mandiri</a>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="package-card h-100 profesional">
+                            <div class="package-content">
+                                <h4 class="package-title">Paket Profesional</h4>
+                                <p class="package-price">Rp 2.500.000</p>
+                                <ul class="package-list">
+                                    <li><i class="bi bi-check-lg me-2"></i> **Penerbitan Buku**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> **Pengurusan ISBN**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Jasa **Desain Cover**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Jasa **Layout Isi**</li>
+                                    <li><i class="bi bi-x-lg me-2"></i> Promosi Digital</li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn mt-3">Pesan Paket Profesional</a>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="package-card h-100 lengkap">
+                            <div class="package-content">
+                                <h4 class="package-title">Paket Lengkap</h4>
+                                <p class="package-price">Rp 4.000.000</p>
+                                <ul class="package-list">
+                                    <li><i class="bi bi-check-lg me-2"></i> **Penerbitan Buku**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> **Pengurusan ISBN**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Jasa **Desain Cover**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Jasa **Layout Isi**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> **Promosi Digital**</li>
+                                </ul>
+                            </div>
+                            <a href="#" class="btn mt-3">Pesan Paket Lengkap</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Kontak Kami</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://wa.me/+6285935201571"><i class="bi bi-whatsapp me-2"></i> WhatsApp</a></li>
+                        <li><a href="mailto:haloprimajana@gmail.com"><i class="bi bi-envelope me-2"></i> Email</a></li>
+                        <li><a href="https://share.google/E7o3Eve0sdl6iHJjg"><i class="bi bi-geo-alt me-2"></i> Jalan Waturenggong 153/1 Denpasar, Bali</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Ikuti Kami</h5>
+                    <a href="https://www.tiktok.com/@primajanaedu" class="me-3"><i class="bi bi-tiktok fs-4"></i></a>
+                    <a href="https://www.instagram.com/primajanaedu/" class="me-3"><i class="bi bi-instagram fs-4"></i></a>
+                    <a href="#" class="me-3"><i class="bi bi-linkedin fs-4"></i></a>
+                </div>
+                <div class="col-md-4">
+                    <h5>Newsletter</h5>
+                    <p>Dapatkan informasi terbaru dari kami.</p>
+                    <form>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Masukkan email Anda">
+                            <button class="btn btn-primary" type="submit">Daftar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="my-4 text-white-50">
+            <div class="text-center">
+                <p class="mb-0">© 2025 PT. Primajana Bagia Mesari. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function hitungRoyalti() {
+            const hargaBuku = document.getElementById('hargaBuku').value;
+            const jumlahTerjual = document.getElementById('jumlahTerjual').value;
+            const royalti = 0.20; // 20%
+            
+            const totalRoyalti = (hargaBuku * jumlahTerjual * royalti);
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            });
+            
+            document.getElementById('royaltiTotal').innerText = formatter.format(totalRoyalti);
+        }
+
+        // Hitung royalti saat halaman pertama kali dimuat
+        document.addEventListener('DOMContentLoaded', hitungRoyalti);
+    </script>
+</body>
+</html>
