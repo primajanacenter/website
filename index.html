@@ -31,6 +31,17 @@
         .navbar-brand {
             font-weight: bold;
             color: var(--primary-blue) !important;
+            height: 50px; /* Atur tinggi logo */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .navbar-brand img {
+            height: 100%;
+            width: auto;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05); /* Efek zoom saat hover */
         }
 
         .nav-link {
@@ -53,6 +64,18 @@
         .hero-title {
             color: var(--dark-text);
             font-weight: bold;
+        }
+
+        .hero-image {
+            animation: zoomIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* Animasi custom untuk gambar */
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .hero-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary {
@@ -103,6 +126,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             min-height: 280px;
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            animation: slideIn 1s ease-in-out; /* Animasi custom untuk kartu */
         }
 
         .feature-card:hover {
@@ -169,11 +193,20 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Modifikasi untuk tombol di Hero Section agar rapi */
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .hero-buttons {
             display: flex;
-            flex-wrap: wrap; /* Memastikan tombol ke baris baru jika layar sempit */
-            gap: 1rem; /* Jarak antar tombol */
+            flex-wrap: wrap;
+            gap: 1rem;
             margin-top: 2rem;
         }
     </style>
@@ -182,7 +215,9 @@
 
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3">
         <div class="container">
-            <a class="navbar-brand" href="#">Logo Anda</a>
+            <a class="navbar-brand" href="#">
+                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -214,7 +249,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 mt-4 mt-lg-0 text-center">
-                    <img src="https://via.placeholder.com/600x400/0056b3/FFFFFF?text=Ilustrasi+Akademik" class="img-fluid rounded-3 shadow" alt="Ilustrasi Akademik">
+                    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/online-learning-concept-illustration-vector-removebg-preview_czrj6y.png" class="img-fluid rounded-3 shadow hero-image" alt="Ilustrasi Akademik">
                 </div>
             </div>
         </div>
