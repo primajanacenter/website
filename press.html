@@ -23,6 +23,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--dark-text);
             background-color: #fff;
+            overflow-x: hidden;
         }
 
         /* Navigasi */
@@ -102,9 +103,12 @@
         }
 
         .book-card img {
-            max-height: 250px;
-            object-fit: cover;
+            height: 250px; /* Tinggi cover buku tetap */
+            width: auto;
+            max-width: 100%;
+            object-fit: cover; /* Memastikan gambar tidak terpotong */
             border-radius: 15px 15px 0 0;
+            padding: 1rem;
         }
 
         .book-card .card-body {
@@ -143,10 +147,12 @@
         .royalty-calculator h4 {
             color: var(--primary-blue);
             font-weight: bold;
+            font-size: 1.5rem; /* Ukuran font standar */
         }
 
         .royalty-calculator .form-label {
             font-weight: 500;
+            font-size: 1rem; /* Ukuran font standar */
         }
 
         /* Konten Baru: Paket Penerbitan */
@@ -295,24 +301,78 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- Modifikasi untuk Animasi Carousel yang lebih soft & Tombol Lebih Terang --- */
+        .carousel-inner {
+            transition: none;
+        }
+
+        .carousel-item {
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        .carousel-item.active {
+            opacity: 1;
+            position: relative;
+        }
+        
+        .carousel-control-prev, .carousel-control-next {
+            width: 5%;
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .carousel-control-prev:hover, .carousel-control-next:hover {
+            background: rgba(255, 255, 255, 0.7);
+            transform: scale(1.05);
+        }
+        
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-image: none;
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+
+        .carousel-control-prev-icon::before {
+            content: "❮";
+            color: var(--primary-blue);
+            font-size: 1.25rem;
+        }
+
+        .carousel-control-next-icon::before {
+            content: "❯";
+            color: var(--primary-blue);
+            font-size: 1.25rem;
+        }
+
         /* Media Queries untuk Responsif */
-        @media (max-width: 768px) {
-            .navbar-brand img {
-                max-height: 60px;
+        @media (max-width: 991px) {
+            /* Carousel untuk mobile: 1 buku per slide */
+            .carousel-inner .carousel-item > .row > .col {
+                width: 100%;
             }
-            .primajana-press-section {
-                padding: 120px 0 60px;
+            .carousel-inner .carousel-item > .row {
+                flex-wrap: nowrap;
+                overflow: hidden;
             }
-            .royalty-calculator {
-                margin-top: 2rem;
+            .book-card {
+                margin: 0 1rem;
+            }
+            .book-card img {
+                max-width: 70%;
             }
         }
         
-        /* Carousel styling for 3 items per slide on larger screens */
         @media (min-width: 992px) {
+            /* Carousel untuk desktop: 3 buku per slide */
             .carousel-inner .carousel-item > .row > .col {
-                width: 33.333%;
-                flex-shrink: 0;
+                flex: 0 0 33.333333%;
+                max-width: 33.333333%;
             }
             .carousel-inner .carousel-item > .row {
                 flex-wrap: nowrap;
@@ -320,69 +380,31 @@
             }
         }
 
-        /* --- Modifikasi untuk Animasi Carousel yang lebih soft & Tombol Lebih Terang --- */
-        .carousel-inner {
-            /* Menghilangkan transisi default untuk mengontrolnya sendiri */
-            transition: none; 
+        /* Penyesuaian umum untuk mobile */
+        @media (max-width: 767px) {
+            .primajana-press-section {
+                padding: 120px 0 60px;
+            }
+            .royalty-calculator {
+                margin-top: 2rem;
+            }
+            .navbar-brand img {
+                max-height: 50px;
+            }
         }
 
-        .carousel-item {
-            opacity: 0;
-            transition: opacity 0.6s ease-in-out; /* Efek fade in/out */
-            position: absolute; /* Menyusun item di atas satu sama lain */
-            top: 0;
-            width: 100%;
+        /* Responsif Font untuk Kalkulator Royalti */
+        @media (max-width: 576px) {
+            .royalty-calculator h4 {
+                font-size: 1.2rem;
+            }
+            .royalty-calculator .form-label,
+            .royalty-result-box p,
+            .royalty-result-box h5 {
+                font-size: 0.9rem;
+            }
         }
 
-        .carousel-item.active {
-            opacity: 1; /* Item aktif ditampilkan */
-            position: relative; /* Item aktif mengambil ruang */
-        }
-        
-        /* Gaya panah carousel yang lebih terang dan kecil */
-        .carousel-control-prev, .carousel-control-next {
-            width: 5%;
-            opacity: 1;
-            /* Latar belakang terang dengan sedikit transparansi */
-            background: rgba(255, 255, 255, 0.4); 
-            border-radius: 5px;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .carousel-control-prev:hover, .carousel-control-next:hover {
-            /* Latar belakang sedikit lebih solid saat di-hover */
-            background: rgba(255, 255, 255, 0.7);
-            transform: scale(1.05);
-        }
-        
-        .carousel-control-prev-icon, .carousel-control-next-icon {
-            background-image: none;
-            height: 1.5rem; /* Ukuran kotak ikon lebih kecil */
-            width: 1.5rem;
-        }
-
-        .carousel-control-prev-icon::before {
-            content: "❮";
-            color: var(--primary-blue); /* Warna panah disesuaikan dengan skema */
-            font-size: 1.25rem; /* Ukuran font panah lebih kecil */
-        }
-
-        .carousel-control-next-icon::before {
-            content: "❯";
-            color: var(--primary-blue);
-            font-size: 1.25rem; /* Ukuran font panah lebih kecil */
-        }
-
-        /* Animasi Berkedip & Berpendar */
-        @keyframes glowing {
-            0% { box-shadow: 0 0 5px var(--primary-blue); }
-            50% { box-shadow: 0 0 20px var(--primary-blue); }
-            100% { box-shadow: 0 0 5px var(--primary-blue); }
-        }
-
-        .carousel-control-prev, .carousel-control-next {
-            animation: none; /* Hapus animasi glowing agar tidak mengganggu */
-        }
     </style>
 </head>
 <body>
@@ -687,8 +709,10 @@
             document.getElementById('royaltiPenulis').innerText = formatter.format(totalRoyaltiPenulis);
         }
 
-        // Hitung royalti saat halaman pertama kali dimuat
-        document.addEventListener('DOMContentLoaded', hitungRoyalti);
+        // Jalankan perhitungan pertama kali saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            hitungRoyalti();
+        });
     </script>
 </body>
 </html>
