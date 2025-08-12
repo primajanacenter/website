@@ -17,17 +17,21 @@
             --secondary-text: #6c757d;
         }
 
+        /* Mengatur background body menjadi putih untuk menyatu dengan GIF */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--dark-text);
+            background-color: #fff;
         }
 
         /* Navigasi */
         .navbar {
-            background-color: white !important;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            background-color: transparent !important; /* Membuat navbar transparan */
+            box-shadow: none; /* Menghilangkan bayangan */
+            padding-top: 0.5rem; /* Mengurangi padding atas */
+            padding-bottom: 0.5rem; /* Mengurangi padding bawah */
         }
-
+        
         .navbar-brand {
             font-weight: bold;
             color: var(--primary-blue) !important;
@@ -35,11 +39,12 @@
             align-items: center;
             height: auto;
             transition: transform 0.3s ease-in-out;
+            padding-top: 0.5rem; /* Menambahkan padding agar logo tidak terlalu ke atas */
+            padding-bottom: 0.5rem;
         }
 
         .navbar-brand img {
-            /* Perubahan di sini: Mengatur tinggi logo menjadi lebih besar */
-            max-height: 85px; /* Tinggi logo ditingkatkan dari 70px menjadi 85px */
+            max-height: 85px;
             width: auto;
             margin-right: 10px;
         }
@@ -47,7 +52,7 @@
         .navbar-brand:hover {
             transform: scale(1.03);
         }
-
+        
         .nav-link {
             color: var(--secondary-text) !important;
             transition: color 0.3s ease-in-out;
@@ -56,10 +61,10 @@
         .nav-link:hover {
             color: var(--primary-blue) !important;
         }
-
-        /* Hero Section */
+        
+        /* Mengatur padding hero section agar menyatu dengan background body */
         .hero-section {
-            background-color: var(--light-bg);
+            background-color: #fff; /* Mengubah warna background hero menjadi putih */
             padding: 150px 0 100px;
             text-align: left;
             animation: fadeIn 1s ease-in-out;
@@ -216,7 +221,7 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
@@ -224,7 +229,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">Tentang</a></li>
