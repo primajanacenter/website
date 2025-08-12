@@ -246,7 +246,6 @@
         }
         .package-card.lengkap .btn:hover { background-color: #553393; }
 
-
         /* Footer */
         .footer {
             background-color: var(--dark-text);
@@ -296,8 +295,17 @@
             .royalty-calculator {
                 margin-top: 2rem;
             }
-            .carousel-inner .carousel-item > div {
-                display: block;
+        }
+        
+        /* Carousel styling for 3 items per slide on larger screens */
+        @media (min-width: 992px) {
+            .carousel-inner .carousel-item > .row > .col {
+                width: 33.333%;
+                flex-shrink: 0;
+            }
+            .carousel-inner .carousel-item > .row {
+                flex-wrap: nowrap;
+                overflow: hidden;
             }
         }
     </style>
@@ -319,7 +327,6 @@
                     <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
                     <li class="nav-item"><a class="nav-link" href="courses.html">Kursus</a></li>
                     <li class="nav-item"><a class="nav-link" href="tryout.html">Tryout</a></li>
-                    <li class="nav-item"><a class="nav-link" href="tools.html">Tools</a></li>
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="publication.html">Publikasi</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
                 </ul>
@@ -337,10 +344,10 @@
                     <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <div class="row row-cols-md-4 g-4">
-                                    <div class="col">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
                                         <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 1">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Perilaku Kesehatan">
                                             <div class="card-body">
                                                 <h5 class="card-title">Perilaku Kesehatan</h5>
                                                 <p class="book-price">Rp 75.000</p>
@@ -348,9 +355,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-4">
                                         <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/p_u6EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 2">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/p_u6EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Kiat Jitu Penelitian">
                                             <div class="card-body">
                                                 <h5 class="card-title">Kiat Jitu Penelitian</h5>
                                                 <p class="book-price">Rp 80.000</p>
@@ -358,9 +365,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-4">
                                         <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/8uS5EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 3">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/8uS5EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Analisis Data Kuantitatif">
                                             <div class="card-body">
                                                 <h5 class="card-title">Analisis Data Kuantitatif</h5>
                                                 <p class="book-price">Rp 90.000</p>
@@ -368,9 +375,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
                                         <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/B9G_EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 4">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/B9G_EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Metode Riset">
                                             <div class="card-body">
                                                 <h5 class="card-title">Metode Riset</h5>
                                                 <p class="book-price">Rp 85.000</p>
@@ -378,13 +389,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="row row-cols-md-4 g-4">
-                                    <div class="col">
+                                    <div class="col-md-4">
                                         <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/q3-eEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 5">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/q3-eEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Penelitian Eksperimental">
                                             <div class="card-body">
                                                 <h5 class="card-title">Penelitian Eksperimental</h5>
                                                 <p class="book-price">Rp 95.000</p>
@@ -392,9 +399,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-4">
                                         <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/R-O8EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 6">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/R-O8EAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Manajemen Risiko">
                                             <div class="card-body">
                                                 <h5 class="card-title">Manajemen Risiko</h5>
                                                 <p class="book-price">Rp 105.000</p>
@@ -402,9 +409,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
                                         <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vj-dEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 7">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vj-dEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Desain UI/UX">
                                             <div class="card-body">
                                                 <h5 class="card-title">Desain UI/UX</h5>
                                                 <p class="book-price">Rp 120.000</p>
@@ -412,9 +423,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-md-4">
                                         <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/6vSZEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 8">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/6vSZEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Pemrograman Python">
                                             <div class="card-body">
                                                 <h5 class="card-title">Pemrograman Python</h5>
                                                 <p class="book-price">Rp 110.000</p>
@@ -422,47 +433,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="row row-cols-md-4 g-4">
-                                    <div class="col">
+                                    <div class="col-md-4">
                                         <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/tJmeEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 9">
+                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/tJmeEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Dasar Keperawatan">
                                             <div class="card-body">
                                                 <h5 class="card-title">Dasar Keperawatan</h5>
                                                 <p class="book-price">Rp 100.000</p>
                                                 <a href="https://play.google.com/store/books/details?id=tJmeEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/6eWdEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 10">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Filsafat Sains</h5>
-                                                <p class="book-price">Rp 125.000</p>
-                                                <a href="https://play.google.com/store/books/details?id=6eWdEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/tQeeEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 11">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Karya Tulis Ilmiah</h5>
-                                                <p class="book-price">Rp 90.000</p>
-                                                <a href="https://play.google.com/store/books/details?id=tQeeEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="card h-100 book-card">
-                                            <img src="https://books.google.co.id/books/publisher/content/images/frontcover/lK-dEAAAQBAJ?fife=w400-h600" class="card-img-top mx-auto d-block" alt="Cover Buku 12">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Akuntansi Sektor Publik</h5>
-                                                <p class="book-price">Rp 130.000</p>
-                                                <a href="https://play.google.com/store/books/details?id=lK-dEAAAQBAJ" target="_blank" class="btn btn-primary book-link-btn">Beli</a>
                                             </div>
                                         </div>
                                     </div>
@@ -514,8 +491,8 @@
                                 <h4 class="package-title">Paket Mandiri</h4>
                                 <p class="package-price">Rp 1.000.000</p>
                                 <ul class="package-list">
-                                    <li><i class="bi bi-check-lg me-2"></i> **Penerbitan Buku**</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> **Pengurusan ISBN**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Penerbitan Buku</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Pengurusan ISBN</li>
                                     <li><i class="bi bi-x-lg me-2"></i> Jasa Desain Cover</li>
                                     <li><i class="bi bi-x-lg me-2"></i> Jasa Layout Isi</li>
                                     <li><i class="bi bi-x-lg me-2"></i> Promosi Digital</li>
@@ -530,10 +507,10 @@
                                 <h4 class="package-title">Paket Profesional</h4>
                                 <p class="package-price">Rp 2.500.000</p>
                                 <ul class="package-list">
-                                    <li><i class="bi bi-check-lg me-2"></i> **Penerbitan Buku**</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> **Pengurusan ISBN**</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Jasa **Desain Cover**</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Jasa **Layout Isi**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Penerbitan Buku</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Pengurusan ISBN</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Jasa Desain Cover</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Jasa Layout Isi</li>
                                     <li><i class="bi bi-x-lg me-2"></i> Promosi Digital</li>
                                 </ul>
                             </div>
@@ -546,11 +523,11 @@
                                 <h4 class="package-title">Paket Lengkap</h4>
                                 <p class="package-price">Rp 4.000.000</p>
                                 <ul class="package-list">
-                                    <li><i class="bi bi-check-lg me-2"></i> **Penerbitan Buku**</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> **Pengurusan ISBN**</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Jasa **Desain Cover**</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Jasa **Layout Isi**</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> **Promosi Digital**</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Penerbitan Buku</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Pengurusan ISBN</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Jasa Desain Cover</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Jasa Layout Isi</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Promosi Digital</li>
                                 </ul>
                             </div>
                             <a href="#" class="btn mt-3">Pesan Paket Lengkap</a>
