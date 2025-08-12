@@ -168,6 +168,14 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Modifikasi untuk tombol di Hero Section agar rapi */
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap; /* Memastikan tombol ke baris baru jika layar sempit */
+            gap: 1rem; /* Jarak antar tombol */
+            margin-top: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -199,9 +207,11 @@
                 <div class="col-lg-6">
                     <h1 class="hero-title display-4">One-Stop Academic, Research & Skill Hub</h1>
                     <p class="lead my-4">Tingkatkan kemampuan akademik dan riset Anda dengan pelatihan, tryout, dan tools canggih.</p>
-                    <a href="courses.html" class="btn btn-primary btn-lg me-2">Ikuti Pelatihan</a>
-                    <a href="tryout.html" class="btn btn-accent btn-lg me-2">Coba Tryout Gratis</a>
-                    <a href="tools.html" class="btn btn-secondary-cta btn-lg">Gunakan Tools</a>
+                    <div class="hero-buttons">
+                        <a href="courses.html" class="btn btn-primary btn-lg">Ikuti Pelatihan</a>
+                        <a href="tryout.html" class="btn btn-accent btn-lg">Coba Tryout Gratis</a>
+                        <a href="tools.html" class="btn btn-secondary-cta btn-lg">Gunakan Tools</a>
+                    </div>
                 </div>
                 <div class="col-lg-6 mt-4 mt-lg-0 text-center">
                     <img src="https://via.placeholder.com/600x400/0056b3/FFFFFF?text=Ilustrasi+Akademik" class="img-fluid rounded-3 shadow" alt="Ilustrasi Akademik">
