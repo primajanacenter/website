@@ -319,6 +319,70 @@
                 overflow: hidden;
             }
         }
+
+        /* --- Modifikasi untuk Animasi Carousel yang lebih soft & Tombol Lebih Terang --- */
+        .carousel-inner {
+            /* Menghilangkan transisi default untuk mengontrolnya sendiri */
+            transition: none; 
+        }
+
+        .carousel-item {
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out; /* Efek fade in/out */
+            position: absolute; /* Menyusun item di atas satu sama lain */
+            top: 0;
+            width: 100%;
+        }
+
+        .carousel-item.active {
+            opacity: 1; /* Item aktif ditampilkan */
+            position: relative; /* Item aktif mengambil ruang */
+        }
+        
+        /* Gaya panah carousel yang lebih terang dan kecil */
+        .carousel-control-prev, .carousel-control-next {
+            width: 5%;
+            opacity: 1;
+            /* Latar belakang terang dengan sedikit transparansi */
+            background: rgba(255, 255, 255, 0.4); 
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .carousel-control-prev:hover, .carousel-control-next:hover {
+            /* Latar belakang sedikit lebih solid saat di-hover */
+            background: rgba(255, 255, 255, 0.7);
+            transform: scale(1.05);
+        }
+        
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-image: none;
+            height: 1.5rem; /* Ukuran kotak ikon lebih kecil */
+            width: 1.5rem;
+        }
+
+        .carousel-control-prev-icon::before {
+            content: "❮";
+            color: var(--primary-blue); /* Warna panah disesuaikan dengan skema */
+            font-size: 1.25rem; /* Ukuran font panah lebih kecil */
+        }
+
+        .carousel-control-next-icon::before {
+            content: "❯";
+            color: var(--primary-blue);
+            font-size: 1.25rem; /* Ukuran font panah lebih kecil */
+        }
+
+        /* Animasi Berkedip & Berpendar */
+        @keyframes glowing {
+            0% { box-shadow: 0 0 5px var(--primary-blue); }
+            50% { box-shadow: 0 0 20px var(--primary-blue); }
+            100% { box-shadow: 0 0 5px var(--primary-blue); }
+        }
+
+        .carousel-control-prev, .carousel-control-next {
+            animation: none; /* Hapus animasi glowing agar tidak mengganggu */
+        }
     </style>
 </head>
 <body>
@@ -352,7 +416,7 @@
 
             <div class="row g-4 mb-5">
                 <div class="col-lg-8">
-                    <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div id="bookCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="row g-4">
