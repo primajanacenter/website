@@ -17,21 +17,20 @@
             --secondary-text: #6c757d;
         }
 
-        /* Mengatur background body menjadi putih untuk menyatu dengan GIF */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--dark-text);
             background-color: #fff;
         }
 
-        /* Navigasi */
+        /* Modifikasi Navigasi */
         .navbar {
-            background-color: transparent !important; /* Membuat navbar transparan */
-            box-shadow: none; /* Menghilangkan bayangan */
-            padding-top: 0.5rem; /* Mengurangi padding atas */
-            padding-bottom: 0.5rem; /* Mengurangi padding bawah */
+            background-color: rgba(255, 255, 255, 0.9); /* Background semi-transparan */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan halus */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
         }
-        
+
         .navbar-brand {
             font-weight: bold;
             color: var(--primary-blue) !important;
@@ -39,12 +38,12 @@
             align-items: center;
             height: auto;
             transition: transform 0.3s ease-in-out;
-            padding-top: 0.5rem; /* Menambahkan padding agar logo tidak terlalu ke atas */
-            padding-bottom: 0.5rem;
+            padding-top: 0;
+            padding-bottom: 0;
         }
 
         .navbar-brand img {
-            max-height: 85px;
+            max-height: 70px; /* Ukuran logo yang lebih proporsional */
             width: auto;
             margin-right: 10px;
         }
@@ -52,19 +51,21 @@
         .navbar-brand:hover {
             transform: scale(1.03);
         }
-        
+
         .nav-link {
             color: var(--secondary-text) !important;
-            transition: color 0.3s ease-in-out;
+            transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            padding: 0.5rem 1rem; /* Padding untuk spasi yang lebih baik */
         }
 
         .nav-link:hover {
             color: var(--primary-blue) !important;
+            transform: translateY(-2px);
         }
         
-        /* Mengatur padding hero section agar menyatu dengan background body */
+        /* Modifikasi Hero Section */
         .hero-section {
-            background-color: #fff; /* Mengubah warna background hero menjadi putih */
+            background-color: #fff;
             padding: 150px 0 100px;
             text-align: left;
             animation: fadeIn 1s ease-in-out;
@@ -73,6 +74,7 @@
         .hero-title {
             color: var(--dark-text);
             font-weight: bold;
+            font-size: 2.5rem; /* Ukuran font lebih proporsional */
         }
 
         .hero-image-container {
@@ -86,70 +88,98 @@
             border-radius: 5px;
         }
 
+        .btn-primary, .btn-accent, .btn-secondary-cta {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s;
+        }
+
+        .btn-primary:hover, .btn-accent:hover, .btn-secondary-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
         .btn-primary {
             background-color: var(--primary-blue);
             border-color: var(--primary-blue);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
 
         .btn-primary:hover {
             background-color: #004085;
             border-color: #004085;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         }
 
         .btn-accent {
             background-color: var(--accent-green);
             border-color: var(--accent-green);
             color: white;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
 
         .btn-accent:hover {
             background-color: #218838;
             border-color: #218838;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         }
 
         .btn-secondary-cta {
             background-color: var(--highlight-purple);
             border-color: var(--highlight-purple);
             color: white;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
 
         .btn-secondary-cta:hover {
             background-color: #5c35a3;
             border-color: #5c35a3;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Feature Cards */
+        /* Modifikasi Feature Cards */
         .feature-card {
-            border: none;
-            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.05); /* Menambah border halus */
+            border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            min-height: 280px;
+            min-height: 300px; /* Menambah tinggi agar lebih rapi */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
             animation: slideIn 1s ease-in-out;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            background-color: #fff;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 86, 179, 0.05);
+            transform: scale(0);
+            border-radius: 15px;
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .feature-card:hover::before {
+            transform: scale(1);
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+            transform: translateY(-8px) scale(1.02); /* Efek hover yang lebih menarik */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .feature-card .card-body {
+            position: relative;
+            z-index: 2;
         }
 
         .feature-card .card-title {
             color: var(--primary-blue);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .feature-card .btn-outline-primary {
             color: var(--primary-blue);
             border-color: var(--primary-blue);
+            transition: all 0.3s ease-in-out;
         }
 
         .feature-card .btn-outline-primary:hover {
@@ -157,10 +187,32 @@
             color: white;
         }
 
-        /* Testimonial Section */
+        /* Modifikasi Testimonial Section */
         .testimonial-section {
             background-color: #e9ecef;
             padding: 80px 0;
+        }
+        
+        .testimonial-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid var(--primary-blue);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .blockquote-footer {
+            margin-top: 1rem;
         }
 
         /* Footer */
@@ -217,6 +269,26 @@
             gap: 1rem;
             margin-top: 2rem;
         }
+        
+        /* Media Queries untuk Responsif */
+        @media (max-width: 768px) {
+            .navbar-brand img {
+                max-height: 60px; /* Sesuaikan ukuran logo di layar kecil */
+            }
+            .hero-section {
+                padding: 120px 0 60px;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .feature-card {
+                min-height: auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -267,7 +339,7 @@
         <h2 class="text-center mb-5">Layanan Unggulan Kami</h2>
         <div class="row text-center">
             <div class="col-md-3 mb-4">
-                <div class="card h-100 p-3 feature-card">
+                <div class="card h-100 feature-card">
                     <div class="card-body">
                         <h4 class="card-title">Pelatihan Menulis & Riset</h4>
                         <p class="card-text">Tingkatkan kemampuan Anda dalam menulis karya ilmiah dan melakukan penelitian.</p>
@@ -276,7 +348,7 @@
                 </div>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="card h-100 p-3 feature-card">
+                <div class="card h-100 feature-card">
                     <div class="card-body">
                         <h4 class="card-title">Tryout & Simulasi</h4>
                         <p class="card-text">Persiapkan diri Anda menghadapi ujian CPNS, psikotes, dan ujian akademik lainnya.</p>
@@ -285,7 +357,7 @@
                 </div>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="card h-100 p-3 feature-card">
+                <div class="card h-100 feature-card">
                     <div class="card-body">
                         <h4 class="card-title">Tools Penelitian</h4>
                         <p class="card-text">Mempermudah analisis data dan riset Anda dengan berbagai kalkulator dan template.</p>
@@ -294,7 +366,7 @@
                 </div>
             </div>
             <div class="col-md-3 mb-4">
-                <div class="card h-100 p-3 feature-card">
+                <div class="card h-100 feature-card">
                     <div class="card-body">
                         <h4 class="card-title">Publikasi & Buku</h4>
                         <p class="card-text">Bantu Anda menerbitkan buku, mengelola jurnal, dan mendapatkan ISBN.</p>
@@ -311,18 +383,20 @@
             <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <div class="text-center p-3">
+                        <div class="testimonial-item">
+                            <img src="https://via.placeholder.com/80/0056b3/ffffff?text=K1" alt="Foto Klien 1" class="testimonial-avatar">
                             <p class="lead fst-italic">"Sangat membantu sekali! Pelatihannya komprehensif dan mudah dipahami. Highly recommended!"</p>
                             <footer class="blockquote-footer">Mahasiswa S2</footer>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <div class="text-center p-3">
+                        <div class="testimonial-item">
+                            <img src="https://via.placeholder.com/80/28a745/ffffff?text=K2" alt="Foto Klien 2" class="testimonial-avatar">
                             <p class="lead fst-italic">"Jasa konsultasi risetnya top banget. Pembimbingnya sangat sabar dan ahli di bidangnya."</p>
                             <footer class="blockquote-footer">Dosen Muda</footer>
                         </div>
                     </div>
-                </div>
+                    </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
