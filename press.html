@@ -683,47 +683,41 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function hitungRoyalti() {
-            const hargaBuku = parseFloat(document.getElementById('hargaBuku').value);
-            const jumlahTerjual = parseInt(document.getElementById('jumlahTerjual').value);
+   <script>
+    function hitungRoyalti() {
+        const hargaBuku = parseFloat(document.getElementById('hargaBuku').value);
+        const jumlahTerjual = parseInt(document.getElementById('jumlahTerjual').value);
 
-            // Persentase tetap
-            const rgp = 0.50; // 50% untuk Google Play
-            const ppub = 0.10; // 10% untuk Penerbit (dari sisa)
-            const penulis = 0.40; // 40% untuk Penulis (dari sisa)
+        // Persentase langsung dari harga awal
+        const rgp = 0.50; // Google Play 50%
+        const ppub = 0.10; // Penerbit 10%
+        const penulis = 0.40; // Penulis 40%
 
-            // Potongan Google Play
-            const potonganGooglePlayPerBuku = hargaBuku * rgp;
+        // Potongan langsung
+        const potonganGooglePlayPerBuku = hargaBuku * rgp;
+        const potonganPenerbitPerBuku = hargaBuku * ppub;
+        const royaltiPenulisPerBuku = hargaBuku * penulis;
 
-            // Sisa setelah Google Play
-            const sisaSetelahGooglePlay = hargaBuku - potonganGooglePlayPerBuku;
+        // Total semua
+        const totalRoyaltiKotor = potonganGooglePlayPerBuku * jumlahTerjual;
+        const totalPotonganPenerbit = potonganPenerbitPerBuku * jumlahTerjual;
+        const totalRoyaltiPenulis = royaltiPenulisPerBuku * jumlahTerjual;
 
-            // Potongan penerbit dari sisa
-            const potonganPenerbitPerBuku = sisaSetelahGooglePlay * ppub;
-
-            // Royalti penulis dari sisa
-            const royaltiPenulisPerBuku = sisaSetelahGooglePlay * penulis;
-
-            // Total semua
-            const totalRoyaltiKotor = potonganGooglePlayPerBuku * jumlahTerjual;
-            const totalPotonganPenerbit = potonganPenerbitPerBuku * jumlahTerjual;
-            const totalRoyaltiPenulis = royaltiPenulisPerBuku * jumlahTerjual;
-
-            const formatter = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            });
-
-            document.getElementById('royaltiKotor').innerText = formatter.format(totalRoyaltiKotor);
-            document.getElementById('potonganPenerbit').innerText = formatter.format(totalPotonganPenerbit);
-            document.getElementById('royaltiPenulis').innerText = formatter.format(totalRoyaltiPenulis);
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            hitungRoyalti();
+        const formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
         });
-    </script>
+
+        document.getElementById('royaltiKotor').innerText = formatter.format(totalRoyaltiKotor);
+        document.getElementById('potonganPenerbit').innerText = formatter.format(totalPotonganPenerbit);
+        document.getElementById('royaltiPenulis').innerText = formatter.format(totalRoyaltiPenulis);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        hitungRoyalti();
+    });
+</script>
+
 </body>
 </html>
