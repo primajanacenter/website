@@ -526,13 +526,19 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
-                    <div class="text-center mt-4">
-                        <a href="toko-buku.html" class="btn btn-publikasi">Tampilkan Semua Buku</a>
-                    </div>
+                    <div class="text-center mt-4 d-flex justify-content-center gap-3 flex-wrap">
+    <a href="toko-buku.html" class="btn btn-publikasi">
+        <i class="bi bi-book"></i> Tampilkan Semua Buku
+    </a>
+    <a href="#royaltyCalculatorSection" class="btn btn-warning fw-bold">
+        <i class="bi bi-calculator-fill"></i> Cek Perolehan Royalti
+    </a>
+</div>
+
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="royalty-calculator">
+                    <div class="royalty-calculator" id="royaltyCalculatorSection">
                         <h4 class="mb-4">Simulasi Royalti Penulis</h4>
                         <div class="mb-3">
                             <label for="hargaBuku" class="form-label">Harga Jual Buku (Rp)</label>
@@ -559,6 +565,11 @@
             </div>
 
             <div class="publishing-packages-section">
+              <div class="d-flex justify-content-center mb-4">
+    <a href="pengajuan-buku.html" class="btn btn-success btn-lg fw-bold">
+        <i class="bi bi-upload"></i> Cek Pengajuan Buku
+    </a>
+</div>
                 <h2 class="text-center mb-5">Pilihan Paket Penerbitan</h2>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <div class="col">
@@ -683,6 +694,17 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+
    <script>
     function hitungRoyalti() {
         const hargaBuku = parseFloat(document.getElementById('hargaBuku').value);
