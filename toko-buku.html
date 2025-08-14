@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primajana Press - Semua Buku</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fff;
+    color: #343a40;
+}
+.navbar {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.book-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    text-align: center;
+    overflow: hidden;
+}
+.book-card:hover { transform: translateY(-5px); }
+.book-card img {
+    height: 250px;
+    object-fit: cover;
+    padding: 1rem;
+}
+.book-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #28a745;
+}
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo" style="max-height:60px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">Tentang</a></li>
+                <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
+                <li class="nav-item"><a class="nav-link" href="courses.html">Kursus</a></li>
+                <li class="nav-item"><a class="nav-link" href="tryout.html">Tryout</a></li>
+                <li class="nav-item"><a class="nav-link active" href="publication.html">Publikasi</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<section class="container" style="padding-top:120px;">
+    <h1 class="text-center mb-4">Koleksi Buku Primajana Press</h1>
+    <div class="row mb-4">
+        <div class="col-md-6 mb-2">
+            <input type="text" id="searchInput" class="form-control" placeholder="Cari judul atau penulis...">
+        </div>
+        <div class="col-md-6 mb-2">
+            <select id="topicFilter" class="form-select">
+                <option value="">Semua Topik</option>
+                <option value="kesehatan">Kesehatan</option>
+                <option value="pendidikan">Pendidikan</option>
+                <option value="ekonomi">Ekonomi</option>
+                <option value="teknologi">Teknologi</option>
+            </select>
+        </div>
+    </div>
+    <div class="row g-4" id="bookList">
+        <!-- Contoh buku -->
+        <div class="col-md-3" data-title="Perilaku Kesehatan" data-author="Dr. Andi" data-topic="kesehatan">
+            <div class="card book-card">
+                <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">Perilaku Kesehatan</h5>
+                    <p class="book-price">Rp 53.781</p>
+                    <a href="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" data-title="Kiat Jitu Penelitian" data-author="Budi Santoso" data-topic="pendidikan">
+            <div class="card book-card">
+                <img src="https://books.google.co.id/books/publisher/content/images/frontcover/OAdTEQAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">Kiat Jitu Penelitian</h5>
+                    <p class="book-price">Rp 41.625</p>
+                    <a href="https://play.google.com/store/books/details?id=OAdTEQAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
+                </div>
+            </div>
+        </div>
+        <!-- Tambahkan semua buku lain dari carousel -->
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer bg-dark text-light mt-5 py-4">
+    <div class="container text-center">
+        <p>© 2025 PT. Primajana Bagia Mesari. Hak Cipta Dilindungi.</p>
+    </div>
+</footer>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const topicFilter = document.getElementById('topicFilter');
+const bookList = document.getElementById('bookList').children;
+
+function filterBooks() {
+    const searchText = searchInput.value.toLowerCase();
+    const topicValue = topicFilter.value;
+
+    Array.from(bookList).forEach(book => {
+        const title = book.getAttribute('data-title').toLowerCase();
+        const author = book.getAttribute('data-author').toLowerCase();
+        const topic = book.getAttribute('data-topic');
+
+        const matchesSearch = title.includes(searchText) || author.includes(searchText);
+        const matchesTopic = topicValue === '' || topic === topicValue;
+
+        if (matchesSearch && matchesTopic) {
+            book.style.display = '';
+        } else {
+            book.style.display = 'none';
+        }
+    });
+}
+
+searchInput.addEventListener('input', filterBooks);
+topicFilter.addEventListener('change', filterBooks);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
