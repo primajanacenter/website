@@ -16,52 +16,24 @@ body {
     background-color: rgba(255, 255, 255, 0.95);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-
-/* --- Card Buku --- */
 .book-card {
     border: none;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
     text-align: center;
     overflow: hidden;
-    background: #fff;
-    opacity: 0; /* untuk animasi awal */
-    animation: fadeInUp 0.6s ease forwards;
-    filter: blur(6px); /* blur awal */
 }
-.book-card:hover { 
-    transform: translateY(-5px) scale(1.03);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-}
+.book-card:hover { transform: translateY(-5px); }
 .book-card img {
-    width: 100%;
-    height: 350px;
+    height: 250px;
     object-fit: cover;
-    border-bottom: 1px solid #eee;
-    transition: transform 0.4s ease;
-}
-.book-card:hover img {
-    transform: scale(1.08);
+    padding: 1rem;
 }
 .book-price {
     font-size: 1.2rem;
     font-weight: bold;
     color: #28a745;
-}
-
-/* --- Animasi Fade In + Slide Up + Blur --- */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-        filter: blur(6px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
 }
 </style>
 </head>
@@ -108,89 +80,167 @@ body {
         </div>
     </div>
     <div class="row g-4" id="bookList">
-        <!-- Contoh buku -->
-        <div class="col-md-3" data-title="Perilaku Kesehatan" data-author="Ngakan Putu Anom Harjana" data-topic="kesehatan">
-            <div class="card book-card">
-                <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"><del>Rp 75.000</del></h5>
-                    <p class="book-price">Rp 53.781</p>
-                    <a href="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
-                </div>
-            </div>
+        <!-- Buku 1 -->
+<div class="col-md-3" data-title="Perilaku Kesehatan" data-author="Ngakan Putu Anom Harjana" data-topic="kesehatan">
+    <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
+        data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ?fife=w800-h1200"
+        data-buy="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ"
+        data-price-old="Rp 75.000"
+        data-price-new="Rp 53.781">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title"><del>Rp 75.000</del></h5>
+            <p class="book-price">Rp 53.781</p>
+            <a href="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
         </div>
-        <div class="col-md-3" data-title="3 hari jago Rstudio" data-author="Ngakan Putu Anom Harjana" data-topic="pendidikan">
-            <div class="card book-card">
-                <img src="https://books.google.co.id/books/publisher/content/images/frontcover/OAdTEQAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"><del>Rp 55.000</del></h5>
-                    <p class="book-price">Rp 41.625</p>
-                    <a href="https://play.google.com/store/books/details?id=OAdTEQAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
-                </div>
-            </div>
+    </div>
+</div>
+
+<!-- Buku 2 -->
+<div class="col-md-3" data-title="3 hari jago Rstudio" data-author="Ngakan Putu Anom Harjana" data-topic="pendidikan">
+    <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
+        data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/OAdTEQAAQBAJ?fife=w800-h1200"
+        data-buy="https://play.google.com/store/books/details?id=OAdTEQAAQBAJ"
+        data-price-old="Rp 55.000"
+        data-price-new="Rp 41.625">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/OAdTEQAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title"><del>Rp 55.000</del></h5>
+            <p class="book-price">Rp 41.625</p>
+            <a href="https://play.google.com/store/books/details?id=OAdTEQAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
         </div>
-        <div class="col-md-3" data-title="Essay is Easy" data-author="Ngakan Putu Anom Harjana" data-topic="pendidikan">
-            <div class="card book-card">
-                <img src="https://books.google.co.id/books/publisher/content/images/frontcover/VLo3EAAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"><del>Rp 75.000</del></h5>
-                    <p class="book-price">Rp 67.257</p>
-                    <a href="https://play.google.com/store/books/details?id=VLo3EAAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
-                </div>
-            </div>
+    </div>
+</div>
+
+<!-- Buku 3 -->
+<div class="col-md-3" data-title="Essay is Easy" data-author="Ngakan Putu Anom Harjana" data-topic="pendidikan">
+    <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
+        data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/VLo3EAAAQBAJ?fife=w800-h1200"
+        data-buy="https://play.google.com/store/books/details?id=VLo3EAAAQBAJ"
+        data-price-old="Rp 75.000"
+        data-price-new="Rp 67.257">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/VLo3EAAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title"><del>Rp 75.000</del></h5>
+            <p class="book-price">Rp 67.257</p>
+            <a href="https://play.google.com/store/books/details?id=VLo3EAAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
         </div>
-        <div class="col-md-3" data-title="Pemodelan Kesehatan" data-author="Ngakan Putu Anom Harjana" data-topic="kesehatan">
-            <div class="card book-card">
-                <img src="https://books.google.co.id/books/publisher/content/images/frontcover/lSs7EQAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"><del>Rp 50.000</del></h5>
-                    <p class="book-price">Rp 41.625</p>
-                    <a href="https://play.google.com/store/books/details?id=lSs7EQAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
-                </div>
-            </div>
+    </div>
+</div>
+
+<!-- Buku 4 -->
+<div class="col-md-3" data-title="Pemodelan Kesehatan" data-author="Ngakan Putu Anom Harjana" data-topic="kesehatan">
+    <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
+        data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/lSs7EQAAQBAJ?fife=w800-h1200"
+        data-buy="https://play.google.com/store/books/details?id=lSs7EQAAQBAJ"
+        data-price-old="Rp 50.000"
+        data-price-new="Rp 41.625">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/lSs7EQAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title"><del>Rp 50.000</del></h5>
+            <p class="book-price">Rp 41.625</p>
+            <a href="https://play.google.com/store/books/details?id=lSs7EQAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
         </div>
-        <div class="col-md-3" data-title="Manajemen Data" data-author="Ngakan Putu Anom Harjana" data-topic="pendidikan">
-            <div class="card book-card">
-                <img src="https://books.google.co.id/books/publisher/content/images/frontcover/w19LEQAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"><del>Rp 35.000</del></h5>
-                    <p class="book-price">Rp 29.692</p>
-                    <a href="https://play.google.com/store/books/details?id=w19LEQAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
-                </div>
-            </div>
+    </div>
+</div>
+
+<!-- Buku 5 -->
+<div class="col-md-3" data-title="Manajemen Data" data-author="Ngakan Putu Anom Harjana" data-topic="pendidikan">
+    <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
+        data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/w19LEQAAQBAJ?fife=w800-h1200"
+        data-buy="https://play.google.com/store/books/details?id=w19LEQAAQBAJ"
+        data-price-old="Rp 35.000"
+        data-price-new="Rp 29.692">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/w19LEQAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title"><del>Rp 35.000</del></h5>
+            <p class="book-price">Rp 29.692</p>
+            <a href="https://play.google.com/store/books/details?id=w19LEQAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
         </div>
-        <div class="col-md-3" data-title="Kumpulan Karya Esai Juara" data-author="Ngakan Putu Anom Harjana" data-topic="pendidikan">
-            <div class="card book-card">
-                <img src="https://books.google.co.id/books/publisher/content/images/frontcover/PEVvEAAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"><del>Rp 35.000</del></h5>
-                    <p class="book-price">Rp 27.750</p>
-                    <a href="https://play.google.com/store/books/details?id=PEVvEAAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
-                </div>
-            </div>
+    </div>
+</div>
+
+<!-- Buku 6 -->
+<div class="col-md-3" data-title="Kumpulan Karya Esai Juara" data-author="Ngakan Putu Anom Harjana" data-topic="pendidikan">
+    <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
+        data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/PEVvEAAAQBAJ?fife=w800-h1200"
+        data-buy="https://play.google.com/store/books/details?id=PEVvEAAAQBAJ"
+        data-price-old="Rp 35.000"
+        data-price-new="Rp 27.750">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/PEVvEAAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title"><del>Rp 35.000</del></h5>
+            <p class="book-price">Rp 27.750</p>
+            <a href="https://play.google.com/store/books/details?id=PEVvEAAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
         </div>
-        <div class="col-md-3" data-title="How to Write Winning Essay for Scholarship Application" data-author="Ngakan Putu Anom Harjana" data-topic="pendidikan">
-            <div class="card book-card">
-                <img src="https://books.google.co.id/books/publisher/content/images/frontcover/_kdEEQAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"><del>Rp 60.000</del></h5>
-                    <p class="book-price">Rp 53.781</p>
-                    <a href="https://play.google.com/store/books/details?id=_kdEEQAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
-                </div>
-            </div>
+    </div>
+</div>
+
+<!-- Buku 7 -->
+<div class="col-md-3" data-title="How to Write Winning Essay for Scholarship Application" data-author="Ngakan Putu Anom Harjana" data-topic="pendidikan">
+    <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
+        data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/_kdEEQAAQBAJ?fife=w800-h1200"
+        data-buy="https://play.google.com/store/books/details?id=_kdEEQAAQBAJ"
+        data-price-old="Rp 60.000"
+        data-price-new="Rp 53.781">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/_kdEEQAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title"><del>Rp 60.000</del></h5>
+            <p class="book-price">Rp 53.781</p>
+            <a href="https://play.google.com/store/books/details?id=_kdEEQAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
         </div>
-        <div class="col-md-3" data-title="Petualangan Rahan dan Lalita" data-author="Ngakan Putu Anom Harjana" data-topic="fiksi">
-            <div class="card book-card">
-                <img src="https://books.google.co.id/books/publisher/content/images/frontcover/iQnJEAAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"><del>Rp 25.000</del></h5>
-                    <p class="book-price">Rp 11.100</p>
-                    <a href="https://play.google.com/store/books/details?id=iQnJEAAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
-                </div>
-            </div>
+    </div>
+</div>
+
+<!-- Buku 8 -->
+<div class="col-md-3" data-title="Petualangan Rahan dan Lalita" data-author="Ngakan Putu Anom Harjana" data-topic="fiksi">
+    <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
+        data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/iQnJEAAAQBAJ?fife=w800-h1200"
+        data-buy="https://play.google.com/store/books/details?id=iQnJEAAAQBAJ"
+        data-price-old="Rp 25.000"
+        data-price-new="Rp 11.100">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/iQnJEAAAQBAJ?fife=w400-h600" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title"><del>Rp 25.000</del></h5>
+            <p class="book-price">Rp 11.100</p>
+            <a href="https://play.google.com/store/books/details?id=iQnJEAAAQBAJ" target="_blank" class="btn btn-primary btn-sm">Beli</a>
         </div>
-        
-        <!-- Tambahkan buku lainnya di sini -->
+    </div>
+</div>
+
+<!-- Tambahkan Buku Lainnya -->
+
+
+<!-- Modal Popup -->
+<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookModalLabel">Preview Buku</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body">
+        <img id="modalBookCover" src="" alt="Cover Buku" style="max-width:100%; height:auto; border-radius:10px;">
+        <div class="mt-3">
+            <h5><del id="modalOldPrice"></del></h5>
+            <p class="book-price" id="modalNewPrice"></p>
+            <a id="modalBuyBtn" href="#" target="_blank" class="btn btn-primary">Beli Sekarang</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.book-card').forEach(card => {
+    card.addEventListener('click', function() {
+        document.getElementById('modalBookCover').src = this.dataset.cover;
+        document.getElementById('modalBuyBtn').href = this.dataset.buy;
+        document.getElementById('modalOldPrice').textContent = this.dataset.priceOld;
+        document.getElementById('modalNewPrice').textContent = this.dataset.priceNew;
+    });
+});
+</script>
     </div>
 </section>
 
@@ -228,14 +278,6 @@ function filterBooks() {
 
 searchInput.addEventListener('input', filterBooks);
 topicFilter.addEventListener('change', filterBooks);
-
-// Delay animasi untuk setiap card
-document.addEventListener("DOMContentLoaded", function () {
-    const cards = document.querySelectorAll(".book-card");
-    cards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-    });
-});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
