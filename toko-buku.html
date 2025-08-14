@@ -352,7 +352,14 @@
                 overflow: hidden;
             }
             .book-card { margin: 0 1rem; }
-            .book-card img { max-width: 70%; }
+            .book-card img {
+    height: 250px;
+    width: auto; /* Memastikan lebar otomatis */
+    max-width: 100%;
+    object-fit: contain; /* Mengubah properti ini */
+    border-radius: 15px 15px 0 0;
+    padding: 1rem;
+}
         }
         
         @media (min-width: 992px) {
