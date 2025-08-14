@@ -103,10 +103,10 @@
         }
 
         .book-card img {
-            height: 250px; /* Tinggi cover buku tetap */
+            height: 250px;
             width: auto;
             max-width: 100%;
-            object-fit: cover; /* Memastikan gambar tidak terpotong */
+            object-fit: cover;
             border-radius: 15px 15px 0 0;
             padding: 1rem;
         }
@@ -147,12 +147,12 @@
         .royalty-calculator h4 {
             color: var(--primary-blue);
             font-weight: bold;
-            font-size: 1.5rem; /* Ukuran font standar */
+            font-size: 1.5rem;
         }
 
         .royalty-calculator .form-label {
             font-weight: 500;
-            font-size: 1rem; /* Ukuran font standar */
+            font-size: 1rem;
         }
 
         /* Konten Baru: Paket Penerbitan */
@@ -161,7 +161,6 @@
             padding: 80px 0;
         }
         
-        /* Gaya umum card paket */
         .package-card {
             border: 2px solid #e9ecef;
             border-radius: 15px;
@@ -211,6 +210,14 @@
             top: 0.2rem;
         }
 
+        /* Warna ikon bullet list paket */
+        .package-list li i.bi-check-lg {
+            color: #28a745;
+        }
+        .package-list li i.bi-x-lg {
+            color: #dc3545;
+        }
+
         .package-card .btn {
             width: 100%;
         }
@@ -252,7 +259,6 @@
         }
         .package-card.lengkap .btn:hover { background-color: #553393; }
         
-        /* Gaya untuk tampilan hasil kalkulator baru */
         .royalty-result-box {
             padding: 1rem;
             background-color: #f1f7fe;
@@ -301,11 +307,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Modifikasi untuk Animasi Carousel yang lebih soft & Tombol Lebih Terang --- */
-        .carousel-inner {
-            transition: none;
-        }
-
+        .carousel-inner { transition: none; }
         .carousel-item {
             opacity: 0;
             transition: opacity 0.6s ease-in-out;
@@ -313,11 +315,7 @@
             top: 0;
             width: 100%;
         }
-
-        .carousel-item.active {
-            opacity: 1;
-            position: relative;
-        }
+        .carousel-item.active { opacity: 1; position: relative; }
         
         .carousel-control-prev, .carousel-control-next {
             width: 5%;
@@ -326,7 +324,6 @@
             border-radius: 5px;
             transition: all 0.3s ease-in-out;
         }
-
         .carousel-control-prev:hover, .carousel-control-next:hover {
             background: rgba(255, 255, 255, 0.7);
             transform: scale(1.05);
@@ -337,39 +334,28 @@
             height: 1.5rem;
             width: 1.5rem;
         }
-
         .carousel-control-prev-icon::before {
             content: "❮";
             color: var(--primary-blue);
             font-size: 1.25rem;
         }
-
         .carousel-control-next-icon::before {
             content: "❯";
             color: var(--primary-blue);
             font-size: 1.25rem;
         }
 
-        /* Media Queries untuk Responsif */
         @media (max-width: 991px) {
-            /* Carousel untuk mobile: 1 buku per slide */
-            .carousel-inner .carousel-item > .row > .col {
-                width: 100%;
-            }
+            .carousel-inner .carousel-item > .row > .col { width: 100%; }
             .carousel-inner .carousel-item > .row {
                 flex-wrap: nowrap;
                 overflow: hidden;
             }
-            .book-card {
-                margin: 0 1rem;
-            }
-            .book-card img {
-                max-width: 70%;
-            }
+            .book-card { margin: 0 1rem; }
+            .book-card img { max-width: 70%; }
         }
         
         @media (min-width: 992px) {
-            /* Carousel untuk desktop: 3 buku per slide */
             .carousel-inner .carousel-item > .row > .col {
                 flex: 0 0 33.333333%;
                 max-width: 33.333333%;
@@ -380,35 +366,24 @@
             }
         }
 
-        /* Penyesuaian umum untuk mobile */
         @media (max-width: 767px) {
-            .primajana-press-section {
-                padding: 120px 0 60px;
-            }
-            .royalty-calculator {
-                margin-top: 2rem;
-            }
-            .navbar-brand img {
-                max-height: 50px;
-            }
+            .primajana-press-section { padding: 120px 0 60px; }
+            .royalty-calculator { margin-top: 2rem; }
+            .navbar-brand img { max-height: 50px; }
         }
 
-        /* Responsif Font untuk Kalkulator Royalti */
         @media (max-width: 576px) {
-            .royalty-calculator h4 {
-                font-size: 1.2rem;
-            }
+            .royalty-calculator h4 { font-size: 1.2rem; }
             .royalty-calculator .form-label,
             .royalty-result-box p,
-            .royalty-result-box h5 {
-                font-size: 0.9rem;
-            }
+            .royalty-result-box h5 { font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <!-- Bagian konten lainnya tetap sama seperti kode asli -->
+    <!-- ... (carousel buku, paket penerbitan, footer) ... -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
@@ -590,13 +565,24 @@
                         <div class="package-card h-100 mandiri">
                             <div class="package-content">
                                 <h4 class="package-title">Paket Mandiri</h4>
-                                <p class="package-price">Rp 1.000.000</p>
+                                <p class="package-price">Rp 675.000</p>
                                 <ul class="package-list">
-                                    <li><i class="bi bi-check-lg me-2"></i> Penerbitan Buku</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Pengurusan ISBN</li>
-                                    <li><i class="bi bi-x-lg me-2"></i> Jasa Desain Cover</li>
-                                    <li><i class="bi bi-x-lg me-2"></i> Jasa Layout Isi</li>
-                                    <li><i class="bi bi-x-lg me-2"></i> Promosi Digital</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis QRCBN</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Buku Hitam Putih</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Sertifikat Terbit</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terindeks Google Scholar</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Layout Buku</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Desain Cover</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Editing Naskah</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Pembatas Buku</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Poster Promosi</li>
+                                    <li><i class="bi bi-x-lg me-2"></i> Terdaftar di PERPUSNAS</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terdaftar di Gramedia Digital</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terdaftar di Google Play Book</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Distribusi Marketplace</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis 10 Eksemplar Buku (A5 maksimal 150 halaman)</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Royalti 40% untuk Penulis</li>
+                                    <li><i class="bi bi-x-lg me-2"></i> Gratis Sertifikat HAKI</li>
                                 </ul>
                             </div>
                             <a href="#" class="btn mt-3">Pesan Paket Mandiri</a>
@@ -606,13 +592,24 @@
                         <div class="package-card h-100 profesional">
                             <div class="package-content">
                                 <h4 class="package-title">Paket Profesional</h4>
-                                <p class="package-price">Rp 2.500.000</p>
+                                <p class="package-price">Rp 1.275.000</p>
                                 <ul class="package-list">
-                                    <li><i class="bi bi-check-lg me-2"></i> Penerbitan Buku</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Pengurusan ISBN</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Jasa Desain Cover</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Jasa Layout Isi</li>
-                                    <li><i class="bi bi-x-lg me-2"></i> Promosi Digital</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis ISBN</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Buku Hitam Putih</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Sertifikat Terbit</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terindeks Google Scholar</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Layout Buku</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Desain Cover</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Editing Naskah</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Pembatas Buku</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Poster Promosi</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terdaftar di PERPUSNAS</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terdaftar di Gramedia Digital</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terdaftar di Google Play Book</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Distribusi Marketplace</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis 10 Eksemplar Buku (A5 maksimal 150 halaman)</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Royalti 40% untuk Penulis</li>
+                                    <li><i class="bi bi-x-lg me-2"></i> Gratis Sertifikat HAKI</li>
                                 </ul>
                             </div>
                             <a href="#" class="btn mt-3">Pesan Paket Profesional</a>
@@ -622,13 +619,24 @@
                         <div class="package-card h-100 lengkap">
                             <div class="package-content">
                                 <h4 class="package-title">Paket Lengkap</h4>
-                                <p class="package-price">Rp 4.000.000</p>
+                                <p class="package-price">Rp 1.475.000</p>
                                 <ul class="package-list">
-                                    <li><i class="bi bi-check-lg me-2"></i> Penerbitan Buku</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Pengurusan ISBN</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Jasa Desain Cover</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Jasa Layout Isi</li>
-                                    <li><i class="bi bi-check-lg me-2"></i> Promosi Digital</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis ISBN</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Buku Hitam Putih</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Sertifikat Terbit</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terindeks Google Scholar</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Layout Buku</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Desain Cover</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Editing Naskah</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Pembatas Buku</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Poster Promosi</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terdaftar di PERPUSNAS</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terdaftar di Gramedia Digital</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Terdaftar di Google Play Book</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Distribusi Marketplace</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis 10 Eksemplar Buku (A5 maksimal 150 halaman)</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Royalti 40% untuk Penulis</li>
+                                    <li><i class="bi bi-check-lg me-2"></i> Gratis Sertifikat HAKI</li>
                                 </ul>
                             </div>
                             <a href="#" class="btn mt-3">Pesan Paket Lengkap</a>
@@ -677,21 +685,28 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function hitungRoyalti() {
-            const hargaBuku = document.getElementById('hargaBuku').value;
-            const jumlahTerjual = document.getElementById('jumlahTerjual').value;
-            
-            // Variabel Dasar (FIX)
-            const rgp = 0.50; // 50% untuk Google Play
-            const ppub = 0.10; // 10% untuk Penerbit
-            const penulis = 0.40; // 40% untuk Penulis
+            const hargaBuku = parseFloat(document.getElementById('hargaBuku').value);
+            const jumlahTerjual = parseInt(document.getElementById('jumlahTerjual').value);
 
-            // Perhitungan per buku
-            const royaltiKotorPerBuku = hargaBuku * rgp;
-            const potonganPenerbitPerBuku = hargaBuku * ppub;
-            const royaltiPenulisPerBuku = hargaBuku * penulis;
-            
-            // Perhitungan total
-            const totalRoyaltiKotor = royaltiKotorPerBuku * jumlahTerjual;
+            // Persentase tetap
+            const rgp = 0.50; // 50% untuk Google Play
+            const ppub = 0.10; // 10% untuk Penerbit (dari sisa)
+            const penulis = 0.40; // 40% untuk Penulis (dari sisa)
+
+            // Potongan Google Play
+            const potonganGooglePlayPerBuku = hargaBuku * rgp;
+
+            // Sisa setelah Google Play
+            const sisaSetelahGooglePlay = hargaBuku - potonganGooglePlayPerBuku;
+
+            // Potongan penerbit dari sisa
+            const potonganPenerbitPerBuku = sisaSetelahGooglePlay * ppub;
+
+            // Royalti penulis dari sisa
+            const royaltiPenulisPerBuku = sisaSetelahGooglePlay * penulis;
+
+            // Total semua
+            const totalRoyaltiKotor = potonganGooglePlayPerBuku * jumlahTerjual;
             const totalPotonganPenerbit = potonganPenerbitPerBuku * jumlahTerjual;
             const totalRoyaltiPenulis = royaltiPenulisPerBuku * jumlahTerjual;
 
@@ -700,13 +715,12 @@
                 currency: 'IDR',
                 minimumFractionDigits: 0
             });
-            
+
             document.getElementById('royaltiKotor').innerText = formatter.format(totalRoyaltiKotor);
             document.getElementById('potonganPenerbit').innerText = formatter.format(totalPotonganPenerbit);
             document.getElementById('royaltiPenulis').innerText = formatter.format(totalRoyaltiPenulis);
         }
 
-        // Jalankan perhitungan pertama kali saat halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
             hitungRoyalti();
         });
