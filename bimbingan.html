@@ -214,6 +214,36 @@
     box-shadow: none;   /* hilangkan shadow */
 }
 
+/* Kode Perbaikan Untuk Icon WA */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50%; /* Memastikan bentuknya selalu lingkaran sempurna */
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            /* Menggunakan Flexbox untuk memposisikan ikon di tengah */
+            display: flex;
+            justify-content: center; /* Tengah secara horizontal */
+            align-items: center;    /* Tengah secara vertikal */
+        }
+
+        .whatsapp-float i {
+            font-size: 32px; /* Menyesuaikan ukuran ikon agar proporsional */
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+        
   </style>
 </head>
 <body>
@@ -417,6 +447,10 @@
     </div>
   </footer>
 
+<a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana%20Center,%20saya%20tertarik%20dengan%20layanan%20Anda." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Hubungi Kami via WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+    
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
