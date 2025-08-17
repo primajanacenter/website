@@ -1,393 +1,400 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bimbingan Primajana </title>
-    <link rel="icon" href="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bimbingan Primajana</title>
+  <link rel="icon" href="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" type="image/x-icon">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* Palet Warna & Font */
+    :root {
+      --primary-blue: #0056b3;
+      --accent-green: #28a745;
+      --highlight-purple: #6f42c1;
+      --light-bg: #f8f9fa;
+      --dark-text: #343a40;
+      --secondary-text: #6c757d;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--dark-text);
+      background-color: #fff;
+    }
+
+    /* Navigasi */
+    .navbar {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      color: var(--primary-blue) !important;
+      display: flex;
+      align-items: center;
+      height: auto;
+      transition: transform 0.3s ease-in-out;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .navbar-brand img {
+      max-height: 70px;
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .navbar-brand:hover {
+      transform: scale(1.03);
+    }
+
+    .nav-link {
+      color: var(--secondary-text) !important;
+      transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+      padding: 0.5rem 1rem;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-blue) !important;
+      transform: translateY(-2px);
+    }
+
+    /* Section */
+    .publication-section {
+      padding: 140px 0 90px;
+      background-color: var(--light-bg);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .hero-title {
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+
+    .subtitle-text {
+      font-size: 0.95rem;
+      color: var(--secondary-text);
+      max-width: 850px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    /* Banner Daftar Pengajar */
+    .teacher-banner {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .teacher-banner img {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+      border-radius: 15px; /* opsional: bisa dihapus jika mau kotak polos */
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .teacher-banner h3 {
+      color: var(--primary-blue);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .teacher-banner p {
+      color: var(--secondary-text);
+      font-size: 1rem;
+    }
+
+    .btn-publikasi {
+      background-color: #fff;
+      color: var(--primary-blue);
+      border: 2px solid var(--primary-blue);
+      font-weight: 600;
+      transition: all 0.3s ease-in-out;
+      border-radius: 25px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .btn-publikasi:hover {
+      background-color: var(--primary-blue);
+      color: #fff;
+      border-color: var(--primary-blue);
+    }
+
+    /* Card Publikasi */
+    .publication-card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      overflow: hidden;
+      background-color: #fff;
+      text-align: center;
+      padding: 25px 20px;
+    }
+
+    .publication-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-icon-publication {
+      font-size: 3.8rem;
+      color: var(--primary-blue);
+      margin-bottom: 1rem;
+      display: block;
+      transition: transform 0.4s ease-in-out, color 0.4s ease-in-out;
+    }
+
+    .publication-card:hover .card-icon-publication {
+      transform: scale(1.08);
+      color: var(--accent-green);
+    }
+
+    .card-title-publication {
+      color: var(--primary-blue);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+      color: var(--secondary-text);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--dark-text);
+      color: white;
+      padding: 15px 0;
+    }
+
+    .footer a {
+      color: #adb5bd;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .footer a:hover {
+      color: white;
+    }
+
+    /* Animasi */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .navbar-brand img {
+        max-height: 60px;
+      }
+      .publication-section {
+        padding: 120px 0 60px;
+      }
+      .teacher-banner img {
+        max-width: 250px;
+      }
+    }
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <style>
-        /* Palet Warna & Font */
-        :root {
-            --primary-blue: #0056b3;
-            --accent-green: #28a745;
-            --highlight-purple: #6f42c1;
-            --light-bg: #f8f9fa;
-            --dark-text: #343a40;
-            --secondary-text: #6c757d;
-        }
+    .teacher-img-custom {
+    max-width: 400px; /* biar tidak terlalu besar */
+    width: 100%;
+    height: auto;
+    border: none;       /* hilangkan border */
+    border-radius: 0;   /* hilangkan lingkaran */
+    box-shadow: none;   /* hilangkan shadow */
+}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: var(--dark-text);
-            background-color: #fff;
-        }
-
-        /* Navigasi */
-        .navbar {
-            background-color: rgba(255, 255, 255, 0.9) !important;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-            transition: background-color 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-            color: var(--primary-blue) !important;
-            display: flex;
-            align-items: center;
-            height: auto;
-            transition: transform 0.3s ease-in-out;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-
-        .navbar-brand img {
-            max-height: 70px;
-            width: auto;
-            margin-right: 10px;
-        }
-
-        .navbar-brand:hover {
-            transform: scale(1.03);
-        }
-
-        .nav-link {
-            color: var(--secondary-text) !important;
-            transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
-            padding: 0.5rem 1rem;
-        }
-
-        .nav-link:hover {
-            color: var(--primary-blue) !important;
-            transform: translateY(-2px);
-        }
-
-        /* Style untuk halaman Publikasi */
-        .publication-section {
-            padding: 140px 0 90px;
-            background-color: var(--light-bg);
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .hero-title {
-            font-weight: 700;
-            color: var(--primary-blue);
-        }
-
-        .subtitle-text {
-            font-size: 0.95rem;
-            color: var(--secondary-text);
-            max-width: 850px;
-            margin: 0 auto 40px;
-            line-height: 1.6;
-        }
-
-        .publication-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            overflow: hidden;
-            background-color: #fff;
-            position: relative;
-            text-align: center;
-            padding: 25px 20px;
-        }
-
-        .publication-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-        }
-
-        .card-icon-publication {
-            font-size: 3.8rem;
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-            display: block;
-            transition: transform 0.4s ease-in-out, color 0.4s ease-in-out;
-        }
-
-        .publication-card:hover .card-icon-publication {
-            transform: scale(1.08);
-            color: var(--accent-green);
-        }
-        
-        .card-body-publication {
-            padding: 1.5rem;
-        }
-
-        .card-title-publication {
-            color: var(--primary-blue);
-            font-weight: 600;
-            margin-bottom: 0.6rem;
-        }
-
-        .card-text {
-            font-size: 0.9rem;
-            color: var(--secondary-text);
-        }
-
-        /* Foto khusus untuk card tenaga pengajar */
-        .teacher-img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-bottom: 1rem;
-            border: 3px solid var(--primary-blue);
-        }
-
-        /* Gaya tombol */
-        .btn-publikasi {
-            background-color: #fff;
-            color: var(--primary-blue);
-            border: 2px solid var(--primary-blue);
-            font-weight: 600;
-            transition: all 0.3s ease-in-out;
-            border-radius: 25px;
-            padding: 0.5rem 1.2rem;
-            font-size: 0.9rem;
-        }
-
-        .btn-publikasi:hover {
-            background-color: var(--primary-blue);
-            color: #fff;
-            border-color: var(--primary-blue);
-        }
-
-        /* Footer */
-        .footer {
-            background-color: var(--dark-text);
-            color: white;
-            padding: 15px 0;
-        }
-
-        .footer h5 {
-            color: white;
-            margin-bottom: 10px;
-        }
-
-        .footer a {
-            color: #adb5bd;
-            text-decoration: none;
-            transition: color 0.3s ease-in-out;
-        }
-
-        .footer a:hover {
-            color: white;
-        }
-
-        .footer .btn-primary {
-            background-color: var(--accent-green);
-            border-color: var(--accent-green);
-        }
-
-        .footer .btn-primary:hover {
-            background-color: #218838;
-            border-color: #218838;
-        }
-
-        /* Animasi */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Responsif */
-        @media (max-width: 768px) {
-            .navbar-brand img {
-                max-height: 60px;
-            }
-            .publication-section {
-                padding: 120px 0 60px;
-            }
-        }
-    </style>
+  </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">Tentang</a></li>
-                    <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="bimbingan.html">Bimbingan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="pendampingan.html">Pendampingan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="tools.html">Tools</a></li>
-                    <li class="nav-item"><a class="nav-link" href="publication.html">Publikasi</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
-                </ul>
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">Tentang</a></li>
+          <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="bimbingan.html">Bimbingan</a></li>
+          <li class="nav-item"><a class="nav-link" href="pendampingan.html">Pendampingan</a></li>
+          <li class="nav-item"><a class="nav-link" href="tools.html">Tools</a></li>
+          <li class="nav-item"><a class="nav-link" href="publication.html">Publikasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="publication-section">
+    <div class="container">
+      <h1 class="text-center mb-4 hero-title">Primajana Bimbingan</h1>
+      <p class="text-center subtitle-text">Layanan bimbingan privat berdurasi 1 jam yang dilakukan secara online melalui Google Meet atau Zoom, di mana klien dapat belajar, berdiskusi, dan mendapatkan arahan langsung dari tenaga pengajar sesuai bidang yang dibutuhkan.</p>
+
+      <!-- Ajakan Daftar -->
+<div class="row mb-5">
+    <div class="col-md-12 text-center">
+        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755416418/Gabung_Primajana_qlaqdv.png" 
+             alt="Gabung Primajana" 
+             class="img-fluid mb-3 teacher-img-custom">
+        <h3 class="card-title-publication">Gabung Jadi Tenaga Pengajar</h3>
+        <p class="card-text">Kamu bisa mengajar kapan saja, di mana saja, dengan biaya yang kamu tentukan sendiri.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf6ljV6LmuJ1yeBDjczHnsRzBNib8T4p8yPeBk3JH9rwGlMVw/viewform" target="_blank" class="btn btn-publikasi mt-3">Daftar Sekarang</a>
+    </div>
+</div>
+
+
+      <p class="text-center lead mb-4">Daftar Bidang Bimbingan:</p>
+
+      <!-- Cards -->
+      <div class="row g-4">
+        <div class="col-md-4">
+          <a href="esai.html" class="text-decoration-none text-dark">
+            <div class="card publication-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-pencil-square card-icon-publication"></i>
+                <h5 class="card-title-publication">Lomba Esai</h5>
+                <p class="card-text">Pendampingan penulisan esai yang kritis, argumentatif, dan sesuai standar kompetisi.</p>
+              </div>
             </div>
+          </a>
         </div>
-    </nav>
 
-    <section class="publication-section">
-        <div class="container">
-            <h1 class="text-center mb-4 hero-title">Primajana Bimbingan</h1>
-            <p class="text-center subtitle-text">Layanan bimbingan privat berdurasi 1 jam yang dilakukan secara online melalui Google Meet atau Zoom, di mana klien dapat belajar, berdiskusi, dan mendapatkan arahan langsung dari tenaga pengajar sesuai bidang yang dibutuhkan.</p>
-
-            <!-- Ajakan Daftar -->
-            <div class="row mb-5">
-                <div class="col-md-12">
-                    <div class="card publication-card">
-                        <div class="card-body card-body-publication text-center">
-                            <img src="https://via.placeholder.com/150" alt="Foto Tenaga Pengajar" class="teacher-img">
-                            <h3 class="card-title-publication">Gabung Jadi Tenaga Pengajar</h3>
-                            <p class="card-text">Kamu bisa mengajar kapan saja, di mana saja, dengan biaya yang kamu tentukan sendiri.</p>
-                            <a href="https://forms.gle/xxxxxx" target="_blank" class="btn btn-publikasi mt-3">Daftar Sekarang</a>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-md-4">
+          <a href="kti.html" class="text-decoration-none text-dark">
+            <div class="card publication-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-journal-text card-icon-publication"></i>
+                <h5 class="card-title-publication">Lomba Karya Tulis Ilmiah</h5>
+                <p class="card-text">Bimbingan dalam penyusunan KTI yang sistematis, logis, dan berbasis penelitian.</p>
+              </div>
             </div>
-
-            <p class="text-center lead mb-4">Daftar Bidang Bimbingan:</p>
-
-            <!-- Card Bidang -->
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <a href="esai.html" class="text-decoration-none text-dark">
-                        <div class="card publication-card h-100">
-                            <div class="card-body card-body-publication text-center">
-                                <i class="bi bi-pencil-square card-icon-publication"></i>
-                                <h5 class="card-title-publication">Lomba Esai</h5>
-                                <p class="card-text">Pendampingan penulisan esai yang kritis, argumentatif, dan sesuai standar kompetisi.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-4">
-                    <a href="kti.html" class="text-decoration-none text-dark">
-                        <div class="card publication-card h-100">
-                            <div class="card-body card-body-publication text-center">
-                                <i class="bi bi-journal-text card-icon-publication"></i>
-                                <h5 class="card-title-publication">Lomba Karya Tulis Ilmiah</h5>
-                                <p class="card-text">Bimbingan dalam penyusunan KTI yang sistematis, logis, dan berbasis penelitian.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-4">
-                    <a href="business-plan.html" class="text-decoration-none text-dark">
-                        <div class="card publication-card h-100">
-                            <div class="card-body card-body-publication text-center">
-                                <i class="bi bi-briefcase card-icon-publication"></i>
-                                <h5 class="card-title-publication">Lomba Business Plan</h5>
-                                <p class="card-text">Pendampingan penyusunan ide bisnis inovatif hingga perencanaan bisnis yang matang.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-4">
-                    <a href="opsi.html" class="text-decoration-none text-dark">
-                        <div class="card publication-card h-100">
-                            <div class="card-body card-body-publication text-center">
-                                <i class="bi bi-lightbulb card-icon-publication"></i>
-                                <h5 class="card-title-publication">Olimpiade Penelitian Siswa Indonesia</h5>
-                                <p class="card-text">Bimbingan dalam penelitian, metodologi, dan presentasi untuk OPSI.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-4">
-                    <a href="pkm.html" class="text-decoration-none text-dark">
-                        <div class="card publication-card h-100">
-                            <div class="card-body card-body-publication text-center">
-                                <i class="bi bi-rocket-takeoff card-icon-publication"></i>
-                                <h5 class="card-title-publication">Program Kreativitas Mahasiswa</h5>
-                                <p class="card-text">Pendampingan penyusunan proposal PKM sesuai panduan Kemendikbudristek.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-4">
-                    <a href="proposal-pendanaan.html" class="text-decoration-none text-dark">
-                        <div class="card publication-card h-100">
-                            <div class="card-body card-body-publication text-center">
-                                <i class="bi bi-cash-stack card-icon-publication"></i>
-                                <h5 class="card-title-publication">Proposal Pendanaan</h5>
-                                <p class="card-text">Bimbingan penyusunan proposal dana hibah, sponsor, maupun kompetisi pendanaan.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-4">
-                    <a href="skripsi.html" class="text-decoration-none text-dark">
-                        <div class="card publication-card h-100">
-                            <div class="card-body card-body-publication text-center">
-                                <i class="bi bi-book card-icon-publication"></i>
-                                <h5 class="card-title-publication">Skripsi</h5>
-                                <p class="card-text">Pendampingan penyusunan skripsi dari proposal hingga analisis data.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-4">
-                    <a href="tesis.html" class="text-decoration-none text-dark">
-                        <div class="card publication-card h-100">
-                            <div class="card-body card-body-publication text-center">
-                                <i class="bi bi-mortarboard card-icon-publication"></i>
-                                <h5 class="card-title-publication">Tesis</h5>
-                                <p class="card-text">Bimbingan intensif penyusunan tesis S2 dengan metodologi penelitian yang kuat.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-4">
-                    <a href="disertasi.html" class="text-decoration-none text-dark">
-                        <div class="card publication-card h-100">
-                            <div class="card-body card-body-publication text-center">
-                                <i class="bi bi-award card-icon-publication"></i>
-                                <h5 class="card-title-publication">Disertasi</h5>
-                                <p class="card-text">Pendampingan akademik untuk penyusunan disertasi hingga publikasi hasil riset.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-4">
-                    <a href="artikel-jurnal.html" class="text-decoration-none text-dark">
-                        <div class="card publication-card h-100">
-                            <div class="card-body card-body-publication text-center">
-                                <i class="bi bi-journal-richtext card-icon-publication"></i>
-                                <h5 class="card-title-publication">Artikel Jurnal</h5>
-                                <p class="card-text">Bimbingan penulisan artikel ilmiah agar siap dipublikasikan di jurnal bereputasi.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+          </a>
         </div>
-    </section>
 
-    <footer class="footer">
-        <div class="container">
-            <hr class="my-3 text-white-50">
-            <div class="text-center">
-                <p class="mb-0">© 2025 PT Primajana Bagia Mesari</p>
+        <div class="col-md-4">
+          <a href="business-plan.html" class="text-decoration-none text-dark">
+            <div class="card publication-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-briefcase card-icon-publication"></i>
+                <h5 class="card-title-publication">Lomba Business Plan</h5>
+                <p class="card-text">Pendampingan penyusunan ide bisnis inovatif hingga perencanaan bisnis yang matang.</p>
+              </div>
             </div>
+          </a>
         </div>
-    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <div class="col-md-4">
+          <a href="opsi.html" class="text-decoration-none text-dark">
+            <div class="card publication-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-lightbulb card-icon-publication"></i>
+                <h5 class="card-title-publication">Olimpiade Penelitian Siswa Indonesia</h5>
+                <p class="card-text">Bimbingan dalam penelitian, metodologi, dan presentasi untuk OPSI.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="pkm.html" class="text-decoration-none text-dark">
+            <div class="card publication-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-rocket-takeoff card-icon-publication"></i>
+                <h5 class="card-title-publication">Program Kreativitas Mahasiswa</h5>
+                <p class="card-text">Pendampingan penyusunan proposal PKM sesuai panduan Kemendikbudristek.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="proposal-pendanaan.html" class="text-decoration-none text-dark">
+            <div class="card publication-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-cash-stack card-icon-publication"></i>
+                <h5 class="card-title-publication">Proposal Pendanaan</h5>
+                <p class="card-text">Bimbingan penyusunan proposal dana hibah, sponsor, maupun kompetisi pendanaan.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="skripsi.html" class="text-decoration-none text-dark">
+            <div class="card publication-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-book card-icon-publication"></i>
+                <h5 class="card-title-publication">Skripsi</h5>
+                <p class="card-text">Pendampingan penyusunan skripsi dari proposal hingga analisis data.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="tesis.html" class="text-decoration-none text-dark">
+            <div class="card publication-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-mortarboard card-icon-publication"></i>
+                <h5 class="card-title-publication">Tesis</h5>
+                <p class="card-text">Bimbingan intensif penyusunan tesis S2 dengan metodologi penelitian yang kuat.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="disertasi.html" class="text-decoration-none text-dark">
+            <div class="card publication-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-award card-icon-publication"></i>
+                <h5 class="card-title-publication">Disertasi</h5>
+                <p class="card-text">Pendampingan akademik untuk penyusunan disertasi hingga publikasi hasil riset.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="artikel-jurnal.html" class="text-decoration-none text-dark">
+            <div class="card publication-card h-100">
+              <div class="card-body text-center">
+                <i class="bi bi-journal-richtext card-icon-publication"></i>
+                <h5 class="card-title-publication">Artikel Jurnal</h5>
+                <p class="card-text">Bimbingan penulisan artikel ilmiah agar siap dipublikasikan di jurnal bereputasi.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <hr class="my-3 text-white-50">
+      <div class="text-center">
+        <p class="mb-0">© 2025 PT Primajana Bagia Mesari</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
