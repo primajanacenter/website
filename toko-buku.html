@@ -104,13 +104,16 @@
         }
 
         .book-card img {
-            height: 250px;
-            width: auto;
-            max-width: 100%;
-            object-fit: cover;
-            border-radius: 15px 15px 0 0;
-            padding: 1rem;
-        }
+    height: 250px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain; /* lebih baik contain supaya cover tidak terpotong */
+    border-radius: 15px 15px 0 0;
+    padding: 1rem;
+    display: block;      /* ubah default inline jadi block */
+    margin: 0 auto;      /* bikin gambar rata tengah */
+}
+
 
         .book-card .card-body {
             padding: 1.5rem;
