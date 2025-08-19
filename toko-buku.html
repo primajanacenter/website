@@ -36,15 +36,15 @@
         }
 
         .navbar-brand {
-            font-weight: bold;
-            color: var(--primary-blue) !important;
-            display: flex;
-            align-items: center;
-            height: auto;
-            transition: transform 0.3s ease-in-out;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
+    font-weight: bold;
+    color: var(--primary-blue) !important;
+    display: flex;
+    align-items: center;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+    padding-top: 0;
+    padding-bottom: 0;
+}
 
         .navbar-brand img {
             max-height: 70px;
@@ -418,12 +418,29 @@
             <h1 class="text-center mb-5">Koleksi Buku Primajana Press</h1>
             <p class="text-center lead mb-5"></p>
 
+<!-- Filter & Search -->
+<div class="row mb-4">
+  <div class="col-md-4">
+    <select id="filterKategori" class="form-select">
+      <option value="">Semua Bidang</option>
+      <option value="kesehatan">Kesehatan</option>
+      <option value="pendidikan">Pendidikan</option>
+      <option value="ekonomi">Ekonomi</option>
+      <option value="sosial">Sosial</option>
+      <option value="fiksi">Fiksi</option>
+    </select>
+  </div>
+  <div class="col-md-8">
+    <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan judul buku...">
+  </div>
+</div>
+
 <body>
 
 <div class="container my-5">
     <div class="row g-4">
         <!-- Buku 1 -->
-        <div class="col-md-3">
+        <div class="col-md-3 book-item" data-kategori="kesehatan" data-judul="Perilaku Kesehatan">
             <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
                 data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ?fife=w800-h1200"
                 data-buy="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ"
@@ -439,7 +456,7 @@
         </div>
 
         <!-- Buku 2 -->
-        <div class="col-md-3">
+        <div class="col-md-3 book-item" data-kategori="pendidikan" data-judul="3 Hari Jago RStudio">
             <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
                 data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/OAdTEQAAQBAJ?fife=w800-h1200"
                 data-buy="https://play.google.com/store/books/details?id=OAdTEQAAQBAJ"
@@ -455,7 +472,7 @@
         </div>
 
         <!-- Buku 3 -->
-        <div class="col-md-3">
+        <div class="col-md-3 book-item" data-kategori="pendidikan" data-judul="Essay is Easy">
             <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
                 data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/VLo3EAAAQBAJ?fife=w800-h1200"
                 data-buy="https://play.google.com/store/books/details?id=VLo3EAAAQBAJ"
@@ -471,7 +488,7 @@
         </div>
 
         <!-- Buku 4 -->
-        <div class="col-md-3">
+        <div class="col-md-3 book-item" data-kategori="kesehatan" data-judul="Pemodelan Kesehatan">
             <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
                 data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/lSs7EQAAQBAJ?fife=w800-h1200"
                 data-buy="https://play.google.com/store/books/details?id=lSs7EQAAQBAJ"
@@ -487,7 +504,7 @@
         </div>
 
         <!-- Buku 5 -->
-        <div class="col-md-3">
+        <div class="col-md-3 book-item" data-kategori="pendidikan" data-judul="Manajemen Data">
             <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
                 data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/w19LEQAAQBAJ?fife=w800-h1200"
                 data-buy="https://play.google.com/store/books/details?id=w19LEQAAQBAJ"
@@ -503,7 +520,7 @@
         </div>
 
         <!-- Buku 6 -->
-        <div class="col-md-3">
+        <div class="col-md-3 book-item" data-kategori="pendidikan" data-judul="Kumpulan Karya Esai Juara">
             <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
                 data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/PEVvEAAAQBAJ?fife=w800-h1200"
                 data-buy="https://play.google.com/store/books/details?id=PEVvEAAAQBAJ"
@@ -519,7 +536,7 @@
         </div>
 
         <!-- Buku 7 -->
-        <div class="col-md-3">
+        <div class="col-md-3 book-item" data-kategori="pendidikan" data-judul="How to write a winning essay for scholarship">
             <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
                 data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/_kdEEQAAQBAJ?fife=w800-h1200"
                 data-buy="https://play.google.com/store/books/details?id=_kdEEQAAQBAJ"
@@ -535,7 +552,7 @@
         </div>
 
         <!-- Buku 8 -->
-        <div class="col-md-3">
+        <div class="col-md-3 book-item" data-kategori="fiksi" data-judul="Petualangan Rahan dan Lalita">
             <div class="card book-card" data-bs-toggle="modal" data-bs-target="#bookModal"
                 data-cover="https://books.google.co.id/books/publisher/content/images/frontcover/iQnJEAAAQBAJ?fife=w800-h1200"
                 data-buy="https://play.google.com/store/books/details?id=iQnJEAAAQBAJ"
@@ -577,30 +594,6 @@
     <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <h5>Kontak Kami</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="https://wa.me/+6285935201571"><i class="bi bi-whatsapp me-2"></i> WhatsApp</a></li>
-                        <li><a href="mailto:haloprimajana@gmail.com"><i class="bi bi-envelope me-2"></i> Email</a></li>
-                        <li><a href="https://share.google/E7o3Eve0sdl6iHJjg"><i class="bi bi-geo-alt me-2"></i> Jalan Waturenggong 153/1 Denpasar, Bali</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Ikuti Kami</h5>
-                    <a href="https://www.tiktok.com/@primajanaedu" class="me-3"><i class="bi bi-tiktok fs-4"></i></a>
-                    <a href="https://www.instagram.com/primajanaedu/" class="me-3"><i class="bi bi-instagram fs-4"></i></a>
-                    <a href="#" class="me-3"><i class="bi bi-linkedin fs-4"></i></a>
-                </div>
-                <div class="col-md-4">
-                    <h5>Newsletter</h5>
-                    <p>Dapatkan informasi terbaru dari kami.</p>
-                    <form>
-                        <div class="input-group">
-                            <input type="email" class="form-control" placeholder="Masukkan email Anda">
-                            <button class="btn btn-primary" type="submit">Daftar</button>
-                        </div>
-                    </form>
-                </div>
             </div>
             <hr class="my-4 text-white-50">
             <div class="text-center">
@@ -628,6 +621,30 @@ document.querySelectorAll('.book-card').forEach(card => {
         document.getElementById('modalNewPrice').textContent = this.getAttribute('data-price-new');
     });
 });
+
+// === FILTER & SEARCH ===
+const searchInput = document.getElementById('searchInput');
+const filterKategori = document.getElementById('filterKategori');
+const bookItems = document.querySelectorAll('.book-item');
+
+function filterBooks() {
+  const searchVal = searchInput.value.toLowerCase();
+  const kategoriVal = filterKategori.value;
+
+  bookItems.forEach(item => {
+    const judul = item.getAttribute('data-judul').toLowerCase();
+    const kategori = item.getAttribute('data-kategori');
+
+    const matchJudul = judul.includes(searchVal);
+    const matchKategori = !kategoriVal || kategori === kategoriVal;
+
+    item.style.display = (matchJudul && matchKategori) ? 'block' : 'none';
+  });
+}
+
+searchInput.addEventListener('input', filterBooks);
+filterKategori.addEventListener('change', filterBooks);
+
 </script>
 
 </body>
