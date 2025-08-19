@@ -539,7 +539,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const animateCounter = (el, callback) => {
     const target = +el.getAttribute("data-value");
     let current = 0;
-    const increment = Math.ceil(target / 80);
+    const increment = Math.ceil(target / 30);
 
     const update = () => {
       if (current < target) {
