@@ -36,15 +36,16 @@
         }
 
         .navbar-brand {
-    font-weight: bold;
-    color: var(--primary-blue) !important;
-    display: flex;
-    align-items: center;
-    height: auto;
-    transition: transform 0.3s ease-in-out;
-    padding-top: 0;
-    padding-bottom: 0;
-}
+            font-weight: bold;
+            color: var(--primary-blue) !important;
+            display: flex;
+            align-items: center;
+            height: auto;
+            transition: transform 0.3s ease-in-out;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
 
         .navbar-brand img {
             max-height: 70px;
@@ -352,14 +353,7 @@
                 overflow: hidden;
             }
             .book-card { margin: 0 1rem; }
-            .book-card img {
-    height: 250px;
-    width: auto; /* Memastikan lebar otomatis */
-    max-width: 100%;
-    object-fit: contain; /* Mengubah properti ini */
-    border-radius: 15px 15px 0 0;
-    padding: 1rem;
-}
+            .book-card img { max-width: 70%; }
         }
         
         @media (min-width: 992px) {
@@ -385,6 +379,37 @@
             .royalty-result-box p,
             .royalty-result-box h5 { font-size: 0.9rem; }
         }
+        
+        /* Kode Perbaikan Untuk Icon WA */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50%; /* Memastikan bentuknya selalu lingkaran sempurna */
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            /* Menggunakan Flexbox untuk memposisikan ikon di tengah */
+            display: flex;
+            justify-content: center; /* Tengah secara horizontal */
+            align-items: center;    /* Tengah secara vertikal */
+        }
+
+        .whatsapp-float i {
+            font-size: 32px; /* Menyesuaikan ukuran ikon agar proporsional */
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+        
     </style>
 </head>
 <body>
