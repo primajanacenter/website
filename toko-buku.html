@@ -410,6 +410,18 @@
             color: #fff;
         }
         
+        /* Efek teks merah berkedip */
+.blink-red {
+    color: red;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%   { opacity: 1; }
+    50%  { opacity: 0; }
+    100% { opacity: 1; }
+}
+
     </style>
 </head>
 <body>
@@ -441,6 +453,12 @@
     <section class="primajana-press-section">
         <div class="container">
             <h1 class="text-center mb-5">Koleksi Buku Primajana Press</h1>
+            <p class="text-center lead mb-5"></p>
+            
+            <h5 class="text-center mb-5 blink-red">
+    Klik <b>Cover Buku</b> untuk Preview penuh, atau <b>Beli</b> untuk melihat Sinopsis.
+</h5>
+
             <p class="text-center lead mb-5"></p>
 
 <!-- Filter & Search -->
