@@ -9,7 +9,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
-    /* === Palet Warna & Font === */
     :root {
       --primary-blue: #0056b3;
       --accent-green: #28a745;
@@ -19,495 +18,204 @@
       --secondary-text: #6c757d;
     }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: var(--dark-text);
-      background-color: #fff;
-      line-height: 1.6;
-    }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--dark-text); background:#fff; }
+    .navbar { background: rgba(255,255,255,0.95)!important; box-shadow:0 2px 5px rgba(0,0,0,0.08); }
+    .navbar-brand img { max-height:60px; }
+    .nav-link { color: var(--secondary-text)!important; }
+    .nav-link:hover,.nav-link.active{ color:var(--primary-blue)!important; }
+    .royalty-section { background: var(--light-bg); padding:120px 1rem 80px; }
+    .summary-box { background:#fff; border-radius:12px; padding:20px; text-align:center; box-shadow:0 3px 12px rgba(0,0,0,0.08); margin-bottom:20px; }
+    .summary-box h5 { font-weight:600; font-size:1rem; color:var(--secondary-text); }
+    .summary-box p { font-size:1.5rem; font-weight:bold; color:var(--dark-text); }
+    .card { border:none; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.08); margin-bottom:30px; }
+    .card-header { background:var(--primary-blue); color:#fff; font-weight:600; text-align:center; border-radius:15px 15px 0 0; }
+    #bookSearchResults { position:absolute; top:100%; left:0; right:0; z-index:1000; background:#fff; border:1px solid #ddd; border-top:none; border-radius:0 0 8px 8px; max-height:200px; overflow-y:auto; display:none; }
+    .search-result-item { padding:10px; cursor:pointer; }
+    .search-result-item:hover{ background:#f8f9fa; }
+    .footer{ background:var(--dark-text); color:white; padding:20px 0; margin-top:50px; }
 
-    /* === Navbar === */
-    .navbar {
-      background-color: rgba(255, 255, 255, 0.95) !important;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-      padding: 0.8rem 1rem;
-    }
-
-    .navbar-brand img {
-      max-height: 60px;
-      width: auto;
-    }
-
-    .nav-link {
-      color: var(--secondary-text) !important;
-      padding: 0.5rem 0.8rem;
-      font-size: 0.95rem;
-    }
-
-    .nav-link:hover,
-    .nav-link.active {
-      color: var(--primary-blue) !important;
-    }
-
-    /* === Section Royalty === */
-    .royalty-section {
-      background-color: var(--light-bg);
-      padding: 120px 1rem 80px; /* beri padding samping agar lega */
-    }
-
-    .royalty-section h2 {
-      font-weight: 700;
-      color: var(--primary-blue);
-      margin-bottom: 30px;
-      text-align: center;
-    }
-
-    /* Kotak Ringkasan */
-    .summary-box {
-      background-color: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-    }
-
-    .summary-box h5 {
-      font-weight: 600;
-      font-size: 1rem;
-      color: var(--secondary-text);
-    }
-
-    .summary-box p {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: var(--dark-text);
-      margin-top: 8px;
-    }
-
-    /* Card & Tabel */
-    .card {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      margin-bottom: 30px;
-    }
-
-    .card-header {
-      background-color: var(--primary-blue);
-      color: #fff;
-      font-weight: 600;
-      text-align: center;
-      border-radius: 15px 15px 0 0;
-      padding: 1rem;
-    }
-
-    .card-body {
-      padding: 1.5rem;
-    }
-
-    .table {
-      font-size: 0.9rem;
-    }
-
-    /* Pencarian */
-    #bookSearchContainer {
-      position: relative;
-      margin-bottom: 30px;
-    }
-
-    #bookSearchResults { 
-      position: absolute; 
-      top: 100%; 
-      left: 0; 
-      right: 0; 
-      z-index: 1000; 
-      background-color: #fff; 
-      border: 1px solid #ddd; 
-      border-top: none; 
-      border-radius: 0 0 8px 8px; 
-      box-shadow: 0 4px 8px rgba(0,0,0,0.08); 
-      max-height: 200px; 
-      overflow-y: auto; 
-      display: none; 
-    }
-
-    .search-result-item {
-      padding: 10px;
-      cursor: pointer;
-    }
-
-    .search-result-item:hover {
-      background-color: #f8f9fa;
-    }
-
-    .no-results {
-      padding: 10px;
-      color: #888;
-      text-align: center;
-    }
-
-    /* Footer */
-    .footer {
-      background-color: var(--dark-text);
-      color: white;
-      padding: 20px 0;
-      margin-top: 50px;
-    }
-
-    .footer a {
-      color: #adb5bd;
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      color: #fff;
-    }
-
-    /* Tombol WhatsApp */
-    .whatsapp-float {
-      position: fixed;
-      width: 55px;
-      height: 55px;
-      bottom: 20px;
-      right: 20px;
-      background-color: #25d366;
-      color: #FFF;
-      border-radius: 50%;
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: transform 0.3s ease;
-    }
-
-    .whatsapp-float i {
-      font-size: 28px;
-    }
-
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-      color: #fff;
-    }
-
-    /* === Responsif === */
-    @media (max-width: 768px) {
-      .navbar-brand img { max-height: 50px; }
-      .royalty-section { padding: 100px 1rem 60px; }
-      .summary-box p { font-size: 1.3rem; }
-      .card-body { padding: 1rem; }
-    }
-
-    @media (max-width: 576px) {
-      .summary-box { padding: 15px; }
-      .summary-box p { font-size: 1.2rem; }
-      .card-header { font-size: 1rem; }
-    }
+    /* FIX: tinggi canvas untuk chart */
+    #salesChart { width: 100%; height: 400px; }
   </style>
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="about.html">Tentang</a></li>
-          <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
-          <li class="nav-item"><a class="nav-link" href="bimbingan.html">Bimbingan</a></li>
-          <li class="nav-item"><a class="nav-link" href="pendampingan.html">Pendampingan</a></li>
-          <li class="nav-item"><a class="nav-link" href="tools.html">Tools</a></li>
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="publication.html">Publikasi</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
-        </ul>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#"><img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">Tentang</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
+        <li class="nav-item"><a class="nav-link" href="bimbingan.html">Bimbingan</a></li>
+        <li class="nav-item"><a class="nav-link" href="pendampingan.html">Pendampingan</a></li>
+        <li class="nav-item"><a class="nav-link" href="tools.html">Tools</a></li>
+        <li class="nav-item"><a class="nav-link active" href="publication.html">Publikasi</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="royalty-section">
+  <div class="row mb-4">
+    <div class="col-md-6 offset-md-3">
+      <div id="bookSearchContainer" class="input-group">
+        <label class="input-group-text" for="bookSearchInput">Cari Judul Buku:</label>
+        <input type="text" class="form-control" id="bookSearchInput" placeholder="Ketik judul buku...">
+        <div id="bookSearchResults"></div>
       </div>
     </div>
-  </nav>
+  </div>
 
-<!-- === SECTION LIHAT PEROLEHAN ROYALTI === -->
-<section class="royalty-section">
- <div class="row mb-4">
-            <div class="col-md-6 offset-md-3">
-                <div id="bookSearchContainer" class="input-group">
-                    <label class="input-group-text" for="bookSearchInput">Cari Judul Buku:</label>
-                    <input type="text" class="form-control" id="bookSearchInput" placeholder="Ketik judul buku...">
-                    <div id="bookSearchResults"></div>
-                </div>
-            </div>
-        </div>
+  <div class="row text-center">
+    <div class="col-md-6"><div class="summary-box bg-light"><h5>Royalti Penulis</h5><p id="royaltiPenulis">Rp 0</p></div></div>
+    <div class="col-md-6"><div class="summary-box bg-light"><h5>Unit Terjual</h5><p id="bukuTerjual">0</p></div></div>
+  </div>
 
-        <div class="row text-center">
-            <div class="col-md-4">
-                <div class="summary-box bg-light">
-                    <h5>Pendapatan Kotor</h5>
-                    <p id="totalPenjualan">Rp 0</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="summary-box bg-light">
-                    <h5>Royalti Penulis (40%)</h5>
-                    <p id="royaltiPenulis">Rp 0</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="summary-box bg-light">
-                    <h5>Unit Terjual</h5>
-                    <p id="bukuTerjual">0</p>
-                </div>
-            </div>
-        </div>
+  <hr>
 
-        <hr>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card mb-4">
-                    <div class="card-header text-center">
-                        <h4>Grafik Perolehan Royalti Bulanan</h4>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="salesChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <hr>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h4>Detail Transaksi</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Tanggal</th>
-                                        <th>Judul Buku</th>
-                                        <th>Harga Jual</th>
-                                        <th>Royalti Penulis</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="transactionsTableBody">
-                                    </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4"><div class="card-header text-center"><h4>Grafik Harian (30 Hari Terakhir)</h4></div><div class="card-body"><canvas id="salesChart"></canvas></div></div>
     </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card"><div class="card-header text-center"><h4>Detail Transaksi</h4></div><div class="card-body"><div class="table-responsive"><table class="table table-striped table-hover"><thead><tr><th>Tanggal</th><th>Judul Buku</th><th>Royalti Penulis</th></tr></thead><tbody id="transactionsTableBody"></tbody></table></div></div></div>
+    </div>
+  </div>
 </section>
 
-  <footer class="footer">
-    <div class="container">
-      <hr class="my-3 text-white-50">
-      <div class="text-center">
-        <p class="mb-0">© 2025 PT Primajana Bagia Mesari</p>
-      </div>
-    </div>
-  </footer>
+<footer class="footer"><div class="container text-center"><p class="mb-0">© 2025 PT Primajana Bagia Mesari</p></div></footer>
 
-<a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana%20Center,%20saya%20tertarik%20dengan%20layanan%20Anda." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Hubungi Kami via WhatsApp">
-        <i class="bi bi-whatsapp"></i>
-    </a>
+<a href="https://wa.me/+6285935201571" class="whatsapp-float" target="_blank"><i class="bi bi-whatsapp"></i></a>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const rawData = [
+    { "Transaction Date": "5/9/2022", "Title": "Kumpulan Karya Esai Juara", "List Price [tax inclusive]": 72150 },
+    { "Transaction Date": "2/9/2022", "Title": "Essay is Easy: 11 Tips Pasti Juara...", "List Price [tax inclusive]": 105450 },
+    { "Transaction Date": "9/13/22", "Title": "Panduan Program HIV...", "List Price [tax inclusive]": 0 },
+    { "Transaction Date": "9/15/22", "Title": "Essay is Easy: 11 Tips Pasti Juara...", "List Price [tax inclusive]": 105450 },
+    { "Transaction Date": "9/16/22", "Title": "Panduan Program HIV...", "List Price [tax inclusive]": 0 }
+  ];
 
-            // Data contoh dari user, diubah menjadi format yang lebih mudah diolah
-            const rawData = [
-                { "Transaction Date": "5/9/2022", "Title": "Kumpulan Karya Esai Juara", "List Price [tax inclusive]": 72150, "Publisher Revenue": 33800 },
-                { "Transaction Date": "2/9/2022", "Title": "Essay is Easy: 11 Tips Pasti Juara Lomba Esai Ilmiah dan Populer: Pengalaman 7 tahun langganan juara esai hingga mendapatkan beasiswa S2 penuh dari pemerintah Thailand", "List Price [tax inclusive]": 105450, "Publisher Revenue": 49400 },
-                { "Transaction Date": "9/13/22", "Title": "Panduan Program HIV dan IMS Komprehensif dalam Situasi Krisis Kesehatan dan Kebencanaan di Tingkat Komunitas", "List Price [tax inclusive]": 0, "Publisher Revenue": 0 },
-                { "Transaction Date": "9/15/22", "Title": "Essay is Easy: 11 Tips Pasti Juara Lomba Esai Ilmiah dan Populer: Pengalaman 7 tahun langganan juara esai hingga mendapatkan beasiswa S2 penuh dari pemerintah Thailand", "List Price [tax inclusive]": 105450, "Publisher Revenue": 49400 },
-                { "Transaction Date": "9/16/22", "Title": "Panduan Program HIV dan IMS Komprehensif dalam Situasi Krisis Kesehatan dan Kebencanaan di Tingkat Komunitas", "List Price [tax inclusive]": 0, "Publisher Revenue": 0 },
-                { "Transaction Date": "9/16/22", "Title": "Panduan Program HIV dan IMS Komprehensif dalam Situasi Krisis Kesehatan dan Kebencanaan di Tingkat Komunitas", "List Price [tax inclusive]": 0, "Publisher Revenue": 0 }
-            ];
+  const ROYALTY_AUTHOR_PERCENTAGE = 0.40;
+  const GOOGLE_SHARE_PERCENTAGE = 0.50;
 
-            // Konstanta pembagian royalti baru
-            const ROYALTY_AUTHOR_PERCENTAGE = 0.40;
-            const ROYALTY_PUBLISHER_PERCENTAGE = 0.10;
-            const GOOGLE_SHARE_PERCENTAGE = 0.50;
+  function parseDate(dateStr) {
+    const parts = dateStr.split(/[\/\-]/);
+    let month = parseInt(parts[0], 10) - 1;
+    let day = parseInt(parts[1], 10);
+    let year = parts[2].length === 2 ? 2000 + parseInt(parts[2], 10) : parseInt(parts[2], 10);
+    return new Date(year, month, day);
+  }
 
-            // Fungsi untuk membersihkan dan mengolah data
-            function processData(data) {
-                return data.filter(item => item["List Price [tax inclusive]"] > 0).map(item => {
-                    const pendapatanKotor = item["List Price [tax inclusive]"];
-                    const royaltiBersih = pendapatanKotor * (1 - GOOGLE_SHARE_PERCENTAGE);
-                    const royaltiPenulis = royaltiBersih * ROYALTY_AUTHOR_PERCENTAGE;
+  function processData(data) {
+    return data.map(item => {
+      const pendapatanKotor = item["List Price [tax inclusive]"];
+      const royaltiBersih = pendapatanKotor * (1 - GOOGLE_SHARE_PERCENTAGE);
+      const royaltiPenulis = pendapatanKotor > 0 ? royaltiBersih * ROYALTY_AUTHOR_PERCENTAGE : 0;
+      return { date: parseDate(item["Transaction Date"]), title: item["Title"], royaltiPenulis };
+    });
+  }
 
-                    return {
-                        date: new Date(item["Transaction Date"]),
-                        title: item["Title"],
-                        pendapatanKotor: pendapatanKotor,
-                        royaltiPenulis: royaltiPenulis
-                    };
-                });
-            }
+  const processedData = processData(rawData);
+  const allBookTitles = [...new Set(rawData.map(item => item.Title))];
 
-            const processedData = processData(rawData);
-            const allBookTitles = [...new Set(processedData.map(item => item.title))];
+  function formatRupiah(number) { return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',minimumFractionDigits:0}).format(number); }
 
-            // Fungsi untuk memformat mata uang
-            function formatRupiah(number) {
-                return new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0
-                }).format(number);
-            }
+  function displaySearchResults(query) {
+    const resDiv=document.getElementById('bookSearchResults');resDiv.innerHTML='';
+    if(!query){resDiv.style.display='none';return;}
+    const results=allBookTitles.filter(title=>title.toLowerCase().includes(query.toLowerCase()));
+    results.forEach(title=>{const div=document.createElement('div');div.className='search-result-item';div.textContent=title;div.onclick=()=>{document.getElementById('bookSearchInput').value=title;updateDisplay(title);resDiv.style.display='none';};resDiv.appendChild(div);});
+    resDiv.style.display=results.length? 'block':'none';
+  }
 
-            // Fungsi untuk mengisi dan menampilkan hasil pencarian
-            function displaySearchResults(query) {
-                const searchResultsDiv = document.getElementById('bookSearchResults');
-                searchResultsDiv.innerHTML = '';
-                searchResultsDiv.style.display = 'none';
+  function updateDisplay(selectedTitle) {
+    const filtered=processedData.filter(item=>item.title===selectedTitle);
+    const totalRoyalti=filtered.reduce((acc,item)=>acc+item.royaltiPenulis,0);
+    const totalTerjual=filtered.length;
+    document.getElementById('royaltiPenulis').textContent=formatRupiah(totalRoyalti);
+    document.getElementById('bukuTerjual').textContent=totalTerjual;
+    updateTransactionsTable(filtered);
+    updateChart(filtered);
+  }
 
-                if (query.length < 2) return;
+  function updateTransactionsTable(data){
+    const tbody=document.getElementById('transactionsTableBody');
+    tbody.innerHTML='';
+    data.forEach(item=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${item.date.toLocaleDateString('id-ID')}</td><td>${item.title}</td><td>${formatRupiah(item.royaltiPenulis)}</td>`;
+      tbody.appendChild(tr);
+    });
+  }
 
-                const filteredTitles = allBookTitles.filter(title =>
-                    title.toLowerCase().includes(query.toLowerCase())
-                );
+  let salesChart = null;
+function updateChart(data) {
+    const ctx = document.getElementById('salesChart').getContext('2d');
 
-                if (filteredTitles.length > 0) {
-                    filteredTitles.forEach(title => {
-                        const resultItem = document.createElement('div');
-                        resultItem.className = 'search-result-item';
-                        resultItem.textContent = title;
-                        resultItem.onclick = () => {
-                            document.getElementById('bookSearchInput').value = title;
-                            searchResultsDiv.style.display = 'none';
-                            renderDashboard(processedData.filter(item => item.title === title));
-                        };
-                        searchResultsDiv.appendChild(resultItem);
-                    });
-                } else {
-                    const noResults = document.createElement('div');
-                    noResults.className = 'no-results';
-                    noResults.textContent = "Pencarian Tidak Ditemukan";
-                    searchResultsDiv.appendChild(noResults);
-                }
+    // Gabungkan transaksi per hari
+    const dailyTotals = {};
+    data.forEach(item => {
+        const key = item.date.toLocaleDateString('id-ID'); // label tanggal
+        if (!dailyTotals[key]) dailyTotals[key] = 0;
+        dailyTotals[key] += item.royaltiPenulis;
+    });
 
-                searchResultsDiv.style.display = 'block';
-            }
+    const labels = Object.keys(dailyTotals).sort((a,b) => new Date(a) - new Date(b));
+    const values = labels.map(label => dailyTotals[label]);
 
-            // Fungsi utama untuk me-render dashboard
-            function renderDashboard(dataToRender) {
-                // Menghitung total ringkasan
-                const totalPenjualan = dataToRender.reduce((sum, item) => sum + item.pendapatanKotor, 0);
-                const totalRoyalti = dataToRender.reduce((sum, item) => sum + item.royaltiPenulis, 0);
-                const totalBukuTerjual = dataToRender.length;
+    if (salesChart) salesChart.destroy();
 
-                document.getElementById('totalPenjualan').textContent = formatRupiah(totalPenjualan);
-                document.getElementById('royaltiPenulis').textContent = formatRupiah(totalRoyalti);
-                document.getElementById('bukuTerjual').textContent = totalBukuTerjual;
-
-                // Mengisi tabel data
-                const tableBody = document.getElementById('transactionsTableBody');
-                tableBody.innerHTML = '';
-                if (dataToRender.length === 0) {
-                    const row = tableBody.insertRow();
-                    const cell = row.insertCell(0);
-                    cell.colSpan = 4;
-                    cell.textContent = "Tidak ada data untuk ditampilkan.";
-                    cell.style.textAlign = 'center';
-                } else {
-                    dataToRender.forEach(item => {
-                        const row = tableBody.insertRow();
-                        row.insertCell(0).textContent = item.date.toLocaleDateString('id-ID');
-                        row.insertCell(1).textContent = item.title;
-                        row.insertCell(2).textContent = formatRupiah(item.pendapatanKotor);
-                        row.insertCell(3).textContent = formatRupiah(item.royaltiPenulis);
-                    });
-                }
-
-                // Menggambar/memperbarui grafik
-                drawChart(dataToRender);
-            }
-
-            // Fungsi untuk menggambar grafik
-            let salesChart;
-            function drawChart(dataToChart) {
-                const monthlyData = dataToChart.reduce((acc, item) => {
-                    const monthYear = item.date.toLocaleString('id-ID', { month: 'short', year: 'numeric' });
-                    if (!acc[monthYear]) {
-                        acc[monthYear] = { pendapatanKotor: 0, royaltiPenulis: 0 };
+    salesChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Royalti Penulis (Rp)',
+                data: values,
+                backgroundColor: 'rgba(0,123,255,0.6)',
+                borderColor: 'rgba(0,123,255,1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Royalti (Rp)' },
+                    ticks: {
+                        callback: function(value) { return formatRupiah(value); }
                     }
-                    acc[monthYear].pendapatanKotor += item.pendapatanKotor;
-                    acc[monthYear].royaltiPenulis += item.royaltiPenulis;
-                    return acc;
-                }, {});
-
-                const labels = Object.keys(monthlyData);
-                const penjualanData = labels.map(label => monthlyData[label].pendapatanKotor);
-                const royaltiData = labels.map(label => monthlyData[label].royaltiPenulis);
-
-                const ctx = document.getElementById('salesChart').getContext('2d');
-                if (salesChart) {
-                    salesChart.destroy();
                 }
-
-                salesChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [
-                            {
-                                label: 'Pendapatan Kotor',
-                                data: penjualanData,
-                                backgroundColor: 'rgba(0, 123, 255, 0.7)',
-                                borderColor: 'rgba(0, 123, 255, 1)',
-                                borderWidth: 1
-                            },
-                            {
-                                label: 'Royalti Penulis',
-                                data: royaltiData,
-                                backgroundColor: 'rgba(40, 167, 69, 0.7)',
-                                borderColor: 'rgba(40, 167, 69, 1)',
-                                borderWidth: 1
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: { beginAtZero: true, title: { display: true, text: 'Jumlah (Rp)' } },
-                            x: { title: { display: true, text: 'Bulan' } }
-                        }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) { return formatRupiah(context.parsed.y); }
                     }
-                });
-            }
-
-            // Event listener untuk input pencarian
-            document.getElementById('bookSearchInput').addEventListener('input', function(e) {
-                displaySearchResults(e.target.value);
-            });
-
-            // Sembunyikan hasil pencarian saat mengklik di luar area
-            document.addEventListener('click', function(e) {
-                const searchContainer = document.getElementById('bookSearchContainer');
-                if (!searchContainer.contains(e.target)) {
-                    document.getElementById('bookSearchResults').style.display = 'none';
                 }
-            });
+            }
+        }
+    });
+}
 
-            // Inisialisasi dashboard
-            renderDashboard(processedData);
-        });
-    </script>
+
+  document.getElementById('bookSearchInput').addEventListener('input',e=>displaySearchResults(e.target.value));
+});
+</script>
 </body>
 </html>
