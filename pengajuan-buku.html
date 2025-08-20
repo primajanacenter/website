@@ -86,88 +86,21 @@
       line-height: 1.6;
     }
 
-    /* Banner Daftar Pengajar */
-    .teacher-banner {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-
-    .teacher-banner img {
-      max-width: 350px;
+    /* Embed Looker Studio */
+    .looker-embed-container {
       width: 100%;
-      height: auto;
-      margin-bottom: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      height: 600px;
+      overflow: hidden;
       border-radius: 15px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     }
 
-    .teacher-banner h3 {
-      color: var(--primary-blue);
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .teacher-banner p {
-      color: var(--secondary-text);
-      font-size: 1rem;
-    }
-
-    .btn-publikasi {
-      background-color: #fff;
-      color: var(--primary-blue);
-      border: 2px solid var(--primary-blue);
-      font-weight: 600;
-      transition: all 0.3s ease-in-out;
-      border-radius: 25px;
-      padding: 0.5rem 1.2rem;
-      font-size: 0.9rem;
-    }
-
-    .btn-publikasi:hover {
-      background-color: var(--primary-blue);
-      color: #fff;
-      border-color: var(--primary-blue);
-    }
-
-    /* Card Publikasi */
-    .publication-card {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-      overflow: hidden;
-      background-color: #fff;
-      text-align: center;
-      padding: 25px 20px;
-    }
-
-    .publication-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-    }
-
-    .card-icon-publication {
-      font-size: 3.8rem;
-      color: var(--primary-blue);
-      margin-bottom: 1rem;
-      display: block;
-      transition: transform 0.4s ease-in-out, color 0.4s ease-in-out;
-    }
-
-    .publication-card:hover .card-icon-publication {
-      transform: scale(1.08);
-      color: var(--accent-green);
-    }
-
-    .card-title-publication {
-      color: var(--primary-blue);
-      font-weight: 600;
-      margin-bottom: 0.6rem;
-    }
-
-    .card-text {
-      font-size: 0.9rem;
-      color: var(--secondary-text);
+    .looker-embed-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
 
     /* Footer */
@@ -200,18 +133,6 @@
       .publication-section {
         padding: 120px 0 80px;
       }
-      .teacher-banner img {
-        max-width: 250px;
-      }
-    }
-
-    .teacher-img-custom {
-      max-width: 400px;
-      width: 100%;
-      height: auto;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
     }
 
     .whatsapp-float {
@@ -240,21 +161,6 @@
       box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
       color: #fff;
     }
-
-    /* Efek Berkedip untuk teks "Halaman ini sedang diperbaharui" */
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-
-    .blinking-text {
-      font-size: 3rem;
-      color: red;
-      animation: blink 1s infinite;
-      padding: 30px 15px;
-      margin-bottom: 80px; /* jarak ke footer */
-    }
   </style>
 </head>
 <body>
@@ -272,10 +178,10 @@
           <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">Tentang</a></li>
           <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="bimbingan.html">Bimbingan</a></li>
+          <li class="nav-item"><a class="nav-link" href="bimbingan.html">Bimbingan</a></li>
           <li class="nav-item"><a class="nav-link" href="pendampingan.html">Pendampingan</a></li>
           <li class="nav-item"><a class="nav-link" href="tools.html">Tools</a></li>
-          <li class="nav-item"><a class="nav-link" href="publication.html">Publikasi</a></li>
+          <li class="nav-item"><a class="nav-link active" href="publication.html">Publikasi</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
         </ul>
       </div>
@@ -283,10 +189,22 @@
   </nav>
 
   <section class="publication-section text-center">
-    <h1 class="blinking-text">
-      Daftar Tenaga Pengajar sedang diperbaharui. Stay tune ya!
+    <h1 class="hero-title" style="font-weight: bold; color: var(--primary-blue);">
+      Cek Progress Pengajuan Buku
     </h1>
-    <p class="subtitle-text">Kami sedang memperbarui konten di halaman ini. Silakan cek kembali nanti untuk informasi terbaru.</p>
+    <p class="subtitle-text">
+      Lacak proses pengajuan buku Anda secara real-time melalui dashboard di bawah ini. Semua tahap mulai dari pengajuan, review, hingga publikasi dapat dicek di sini.
+    </p>
+
+    <!-- Embed Looker Studio -->
+    <div class="looker-embed-container">
+      <iframe 
+        src="URL_LOOKER_STUDIO_ANDA" 
+        frameborder="0" 
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    </div>
   </section>
 
   <footer class="footer">
@@ -298,9 +216,9 @@
     </div>
   </footer>
 
-<a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana%20Center,%20saya%20tertarik%20dengan%20layanan%20Anda." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Hubungi Kami via WhatsApp">
-        <i class="bi bi-whatsapp"></i>
-    </a>
+  <a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana%20Center,%20saya%20tertarik%20dengan%20layanan%20Anda." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Hubungi Kami via WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+  </a>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
