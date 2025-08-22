@@ -9,7 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
-    /* Palet Warna & Font */
+  /* Palet Warna & Font */
     :root {
       --primary-blue: #0056b3;
       --accent-green: #28a745;
@@ -255,11 +255,29 @@
       padding: 30px 15px;
       margin-bottom: 80px; /* jarak ke footer */
     }
+  
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:#fff; }
+    .publication-section { padding:140px 0 100px; background:#f8f9fa; }
+    .publication-card { border:none; border-radius:15px; box-shadow:0 6px 20px rgba(0,0,0,0.08); padding:25px 20px; text-align:center; cursor:pointer; }
+    .card-title-publication { color:#0056b3; font-weight:600; margin-bottom:1rem; }
+    .deadline-label { font-weight:600; color:#dc3545; }
+    .filter-btn { margin:5px; }
+    /* Styling gambar di modal */
+    .modal-body img { 
+      max-width: 100%; 
+      height: auto; 
+      border-radius: 10px; 
+      display: block; 
+      margin: 0 auto; 
+    }
+    .modal-dialog {
+      max-width: 600px; /* Biar modal tidak terlalu lebar */
+    }
   </style>
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#">
         <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
@@ -289,186 +307,140 @@
 
 <div class="container mt-5">
 <div class="row g-4">
+  
+  <!-- Filter -->
+  <div class="mb-4">
+    <button class="btn btn-outline-primary filter-btn" onclick="filterCards('all')">Semua</button>
+    <button class="btn btn-outline-primary filter-btn" onclick="filterCards('esai')">Esai</button>
+    <button class="btn btn-outline-primary filter-btn" onclick="filterCards('blog')">Blog</button>
+    <button class="btn btn-outline-primary filter-btn" onclick="filterCards('artikel')">Artikel Ilmiah</button>
+  </div>
 
+  <div class="container mt-4">
+    <div class="row g-4">
 
-<!-- Card 1 -->
-<div class="col-md-6 col-lg-4">
-<div class="publication-card" data-bs-toggle="modal" data-bs-target="#modal1">
-<h4 class="card-title-publication">📢 𝗞𝗢𝗠𝗣𝗘𝗧𝗜𝗦𝗜 𝗘𝗦𝗔𝗜 𝗡𝗔𝗦𝗜𝗢𝗡𝗔𝗟 𝟮𝟬𝟮𝟱 𝗥𝗘𝗦𝗠𝗜 𝗗𝗜𝗕𝗨𝗞𝗔! 📢</h4>
-<p class="card-text">Pemuda Internasional mengundang seluruh masyarakat Indonesia untuk berpartisipasi dalam Kompetisi Esai Nasional dengan tema:
-💡 “𝘈𝘐: 𝘔𝘦𝘯𝘥𝘰𝘳𝘰𝘯𝘨 𝘒𝘦𝘮𝘢𝘫𝘶𝘢𝘯 𝘗𝘦𝘳𝘢𝘥𝘢𝘣𝘢𝘯 𝘢𝘵𝘢𝘶 𝘔𝘦𝘯𝘫𝘢𝘥𝘪 𝘗𝘦𝘯𝘨𝘩𝘢𝘮𝘣𝘢𝘵?”.</p>
-<img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830014/WhatsApp_Image_2025-08-21_at_12.20.51_PM_q8zbgc.jpg" alt="Flyer Call Proposal" class="img-fluid rounded mb-3">
-<p class="fw-bold" id="countdown1">Loading countdown...</p>
-</div>
-</div>
+      <!-- Card 1 -->
+      <div class="col-md-6 col-lg-4 card-item" data-category="esai" onclick="openModal(this)">
+        <div class="publication-card">
+          <h4 class="card-title-publication">Kompetisi Esai Nasional 2025</h4>
+          <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830014/WhatsApp_Image_2025-08-21_at_12.20.51_PM_q8zbgc.jpg" class="img-fluid rounded mb-3">
+          <p class="deadline-label">Deadline: 19 Sep 2025</p>
+          <p class="fw-bold" id="countdown1">Loading...</p>
+        </div>
+      </div>
 
+      <!-- Card 2 -->
+      <div class="col-md-6 col-lg-4 card-item" data-category="blog" onclick="openModal(this)">
+        <div class="publication-card">
+          <h4 class="card-title-publication">Blog Competition Pendidikan</h4>
+          <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.18.30_PM_eb06o7.jpg" class="img-fluid rounded mb-3">
+          <p class="deadline-label">Deadline: 29 Agu 2025</p>
+          <p class="fw-bold" id="countdown2">Loading...</p>
+        </div>
+      </div>
 
-<!-- Card 2 -->
-<div class="col-md-6 col-lg-4">
-<div class="publication-card" data-bs-toggle="modal" data-bs-target="#modal2">
-<h4 class="card-title-publication">Kompasianer punya kisah seru atau inspiratif soal pendidikan? 🤔</h4>
-<p class="card-text">Yuk ikutan Blog Competition “Aspirasi Pendidikan Bermutu” bareng @kompasianacom & @kemendikdasmen 🎯</p>
-<img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.18.30_PM_eb06o7.jpg" alt="Flyer Lomba Esai" class="img-fluid rounded mb-3">
-<p class="fw-bold" id="countdown2">Loading countdown...</p>
-</div>
-</div>
+      <!-- Card 3 -->
+      <div class="col-md-6 col-lg-4 card-item" data-category="esai" onclick="openModal(this)">
+        <div class="publication-card">
+          <h4 class="card-title-publication">National SDGs Essay Competition</h4>
+          <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.17.40_PM_sh4je8.jpg" class="img-fluid rounded mb-3">
+          <p class="deadline-label">Deadline: 31 Agu 2025</p>
+          <p class="fw-bold" id="countdown3">Loading...</p>
+        </div>
+      </div>
 
+      <!-- Card 4 -->
+      <div class="col-md-6 col-lg-4 card-item" data-category="artikel" onclick="openModal(this)">
+        <div class="publication-card">
+          <h4 class="card-title-publication">Kompetisi Artikel Ilmiah 2025</h4>
+          <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.21.54_PM_uctlvi.jpg" class="img-fluid rounded mb-3">
+          <p class="deadline-label">Deadline: 31 Agu 2025</p>
+          <p class="fw-bold" id="countdown4">Loading...</p>
+        </div>
+      </div>
 
-<!-- Card 3 -->
-<div class="col-md-6 col-lg-4">
-<div class="publication-card" data-bs-toggle="modal" data-bs-target="#modal3">
-<h4 class="card-title-publication">📣 National SDGs Essay Competition 2025 Resmi Diperpanjang! "Tulis Gagasanmu, Wujudkan Dunia Berkelanjutan"</h4>
-<p class="card-text">🎯 Tema Utama: "Aksiku untuk Dunia Berkelanjutan: Peran Generasi Muda dalam Mewujudkan SDGs 2030"</p>
-<img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.17.40_PM_sh4je8.jpg" alt="Flyer Poster Kreatif" class="img-fluid rounded mb-3">
-<p class="fw-bold" id="countdown3">Loading countdown...</p>
-</div>
-</div>
-
-<!-- Card 4 -->
-<div class="col-md-6 col-lg-4">
-<div class="publication-card" data-bs-toggle="modal" data-bs-target="#modal4">
-<h4 class="card-title-publication">🏆 KOMPETISI NASIONAL ARTIKEL ILMIAH MAHASISWA 2025 🏆</h4>
-<p class="card-text">🔹 Topik: Segala bidang terkait Kedokteran & Kesehatan</p>
-<img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.21.54_PM_uctlvi.jpg" alt="Flyer Poster Kreatif" class="img-fluid rounded mb-3">
-<p class="fw-bold" id="countdown4">Loading countdown...</p>
-</div>
-</div>
-
-</div>
-</div>
+    </div>
+  </div>
 </section>
 
-  <footer class="footer">
-    <div class="container">
-      <hr class="my-3 text-white-50">
-      <div class="text-center">
-        <p class="mb-0">© 2025 PT Primajana Bagia Mesari</p>
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Detail Lomba</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="modalImage" src="" alt="Detail Lomba">
+        <p class="mt-3" id="modalDeadline"></p>
       </div>
     </div>
-  </footer>
+  </div>
+</div>
 
-<a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana%20Center,%20saya%20tertarik%20dengan%20layanan%20Anda." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Hubungi Kami via WhatsApp">
-        <i class="bi bi-whatsapp"></i>
-    </a>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<footer class="footer bg-dark text-white text-center py-3">
+  <p class="mb-0">© 2025 PT Primajana Bagia Mesari</p>
+</footer>
 
 <script>
 // Fungsi hitung mundur
 function startCountdown(id, deadline) {
-const countdownElement = document.getElementById(id);
-const targetDate = new Date(deadline).getTime();
+  const countdownElement = document.getElementById(id);
+  const targetDate = new Date(deadline).getTime();
 
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
 
-const timer = setInterval(() => {
-const now = new Date().getTime();
-const distance = targetDate - now;
+    if (distance < 0) {
+      clearInterval(timer);
+      countdownElement.innerHTML = "❌ Deadline berakhir";
+      return;
+    }
 
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-if (distance < 0) {
-clearInterval(timer);
-countdownElement.innerHTML = "❌ Deadline berakhir";
-return;
+    countdownElement.innerHTML = `${days}h ${hours}j ${minutes}m ${seconds}d`;
+  }, 1000);
 }
-
-
-const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-
-countdownElement.innerHTML = `${days}h ${hours}j ${minutes}m ${seconds}d`;
-}, 1000);
-}
-
 
 // Inisialisasi countdown
 startCountdown("countdown1", "2025-09-19T23:59:59");
 startCountdown("countdown2", "2025-08-29T23:59:59");
 startCountdown("countdown3", "2025-08-31T23:59:59");
 startCountdown("countdown4", "2025-08-31T23:59:59");
+
+// Filter
+function filterCards(category) {
+  const cards = document.querySelectorAll('.card-item');
+  cards.forEach(card => {
+    if (category === 'all' || card.getAttribute('data-category') === category) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Modal open
+function openModal(card) {
+  const title = card.querySelector('.card-title-publication').innerText;
+  const image = card.querySelector('img').src;
+  const deadline = card.querySelector('.deadline-label').innerText;
+
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalImage').src = image;
+  document.getElementById('modalDeadline').innerText = deadline;
+
+  const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+  modal.show();
+}
 </script>
 
-<!-- Modal 1 -->
-<div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal1Label">📢 Kompetisi Esai Nasional 2025 📢</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center">
-        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830014/WhatsApp_Image_2025-08-21_at_12.20.51_PM_q8zbgc.jpg" class="img-fluid rounded mb-3" alt="Flyer Call Proposal">
-        <p><strong>Tema:</strong> 💡 “AI: Mendorong Kemajuan Peradaban atau Menjadi Penghambat?”</p>
-        <p>Pemuda Internasional mengundang seluruh masyarakat Indonesia untuk berpartisipasi dalam Kompetisi Esai Nasional 2025.</p>
-      </div>
-      <div class="modal-footer">
-        <a href="https://pemudainternasional.com/ken/" target="_blank" class="btn btn-primary">Daftar Sekarang</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 2 -->
-<div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal2Label">✍️ Blog Competition “Aspirasi Pendidikan Bermutu”</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center">
-        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.18.30_PM_eb06o7.jpg" class="img-fluid rounded mb-3" alt="Flyer Lomba Esai">
-        <p>Kompasianer punya kisah seru atau inspiratif soal pendidikan? 🤔 Yuk ikutan Blog Competition “Aspirasi Pendidikan Bermutu” bareng @kompasianacom & @kemendikdasmen 🎯</p>
-      </div>
-      <div class="modal-footer">
-        <a href="https://event.kompasiana.com/kompasiana/689980a2c925c45e5f5a0ba2/kalau-ceritamu-bisa-ngubah-dunia-pendidikan-kenapa-nggak-sekalian-dapet-hadiah-uang-saku" target="_blank" class="btn btn-primary">Daftar Sekarang</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 3 -->
-<div class="modal fade" id="modal3" tabindex="-1" aria-labelledby="modal3Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal3Label">📣 National SDGs Essay Competition 2025</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center">
-        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.17.40_PM_sh4je8.jpg" class="img-fluid rounded mb-3" alt="Flyer Poster Kreatif">
-        <p><strong>Tema Utama:</strong> "Aksiku untuk Dunia Berkelanjutan: Peran Generasi Muda dalam Mewujudkan SDGs 2030"</p>
-        <p>📢 National SDGs Essay Competition 2025 resmi diperpanjang! Yuk tuliskan gagasanmu untuk dunia berkelanjutan 🌍</p>
-      </div>
-      <div class="modal-footer">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeogrAMw9d_isVw1Ah-ReDkG5HQsFa3Or3FGeoKlxVnLnz2ZA/viewform" target="_blank" class="btn btn-primary">Daftar Sekarang</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal 4 -->
-<div class="modal fade" id="modal4" tabindex="-1" aria-labelledby="modal4Label" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal4Label">🏆 Kompetisi Nasional Artikel Ilmiah Mahasiswa 2025 🏆</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center">
-        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.21.54_PM_uctlvi.jpg" class="img-fluid rounded mb-3" alt="Flyer Artikel Ilmiah">
-        <p><strong>Topik:</strong> Segala bidang terkait Kedokteran & Kesehatan</p>
-        <p>Ikuti ajang prestisius ini untuk menunjukkan kontribusi ilmiah mahasiswa dalam dunia kesehatan 🏥</p>
-      </div>
-      <div class="modal-footer">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScX-2L3rjZnQCbpY9NRi6TXfssXGZqzpJKCJPqP5hdy1eSTwQ/viewform" target="_blank" class="btn btn-primary">Daftar Sekarang</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
