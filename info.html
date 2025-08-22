@@ -283,11 +283,60 @@
   </nav>
 
   <section class="publication-section text-center">
-    <h1 class="blinking-text">
-      Halaman ini sedang diperbaharui
-    </h1>
-    <p class="subtitle-text">Kami sedang memperbarui konten di halaman ini. Silakan cek kembali nanti untuk informasi terbaru.</p>
-  </section>
+<h1 class="title-text">Informasi Lomba / Hibah</h1>
+<p class="subtitle-text">Dapatkan informasi terbaru terkait lomba Esai, Karya Tulis, Poster, dan kompetisi lainnya.</p>
+
+
+<div class="container mt-5">
+<div class="row g-4">
+
+
+<!-- Card 1 -->
+<div class="col-md-6 col-lg-4">
+<div class="publication-card">
+<h4 class="card-title-publication">📢 𝗞𝗢𝗠𝗣𝗘𝗧𝗜𝗦𝗜 𝗘𝗦𝗔𝗜 𝗡𝗔𝗦𝗜𝗢𝗡𝗔𝗟 𝟮𝟬𝟮𝟱 𝗥𝗘𝗦𝗠𝗜 𝗗𝗜𝗕𝗨𝗞𝗔! 📢</h4>
+<p class="card-text">Pemuda Internasional mengundang seluruh masyarakat Indonesia untuk berpartisipasi dalam Kompetisi Esai Nasional dengan tema:
+💡 “𝘈𝘐: 𝘔𝘦𝘯𝘥𝘰𝘳𝘰𝘯𝘨 𝘒𝘦𝘮𝘢𝘫𝘶𝘢𝘯 𝘗𝘦𝘳𝘢𝘥𝘢𝘣𝘢𝘯 𝘢𝘵𝘢𝘶 𝘔𝘦𝘯𝘫𝘢𝘥𝘪 𝘗𝘦𝘯𝘨𝘩𝘢𝘮𝘣𝘢𝘵?”.</p>
+<img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830014/WhatsApp_Image_2025-08-21_at_12.20.51_PM_q8zbgc.jpg" alt="Flyer Call Proposal" class="img-fluid rounded mb-3">
+<p class="fw-bold" id="countdown1">Loading countdown...</p>
+</div>
+</div>
+
+
+<!-- Card 2 -->
+<div class="col-md-6 col-lg-4">
+<div class="publication-card">
+<h4 class="card-title-publication">Kompasianer punya kisah seru atau inspiratif soal pendidikan? 🤔</h4>
+<p class="card-text">Yuk ikutan Blog Competition “Aspirasi Pendidikan Bermutu” bareng @kompasianacom & @kemendikdasmen 🎯</p>
+<img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.18.30_PM_eb06o7.jpg" alt="Flyer Lomba Esai" class="img-fluid rounded mb-3">
+<p class="fw-bold" id="countdown2">Loading countdown...</p>
+</div>
+</div>
+
+
+<!-- Card 3 -->
+<div class="col-md-6 col-lg-4">
+<div class="publication-card">
+<h4 class="card-title-publication">📣 National SDGs Essay Competition 2025 Resmi Diperpanjang! "Tulis Gagasanmu, Wujudkan Dunia Berkelanjutan"</h4>
+<p class="card-text">🎯 Tema Utama: "Aksiku untuk Dunia Berkelanjutan: Peran Generasi Muda dalam Mewujudkan SDGs 2030"</p>
+<img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.17.40_PM_sh4je8.jpg" alt="Flyer Poster Kreatif" class="img-fluid rounded mb-3">
+<p class="fw-bold" id="countdown3">Loading countdown...</p>
+</div>
+</div>
+
+<!-- Card 4 -->
+<div class="col-md-6 col-lg-4">
+<div class="publication-card">
+<h4 class="card-title-publication">🏆 KOMPETISI NASIONAL ARTIKEL ILMIAH MAHASISWA 2025 🏆</h4>
+<p class="card-text">🔹 Topik: Segala bidang terkait Kedokteran & Kesehatan</p>
+<img src="https://res.cloudinary.com/djexglfns/image/upload/v1755830013/WhatsApp_Image_2025-08-21_at_12.21.54_PM_uctlvi.jpg" alt="Flyer Poster Kreatif" class="img-fluid rounded mb-3">
+<p class="fw-bold" id="countdown4">Loading countdown...</p>
+</div>
+</div>
+
+</div>
+</div>
+</section>
 
   <footer class="footer">
     <div class="container">
@@ -303,5 +352,43 @@
     </a>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// Fungsi hitung mundur
+function startCountdown(id, deadline) {
+const countdownElement = document.getElementById(id);
+const targetDate = new Date(deadline).getTime();
+
+
+const timer = setInterval(() => {
+const now = new Date().getTime();
+const distance = targetDate - now;
+
+
+if (distance < 0) {
+clearInterval(timer);
+countdownElement.innerHTML = "❌ Deadline berakhir";
+return;
+}
+
+
+const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+countdownElement.innerHTML = `${days}h ${hours}j ${minutes}m ${seconds}d`;
+}, 1000);
+}
+
+
+// Inisialisasi countdown
+startCountdown("countdown1", "2025-09-19T23:59:59");
+startCountdown("countdown2", "2025-08-29T23:59:59");
+startCountdown("countdown3", "2025-08-31T23:59:59");
+startCountdown("countdown4", "2025-08-31T23:59:59");
+</script>
+
 </body>
 </html>
