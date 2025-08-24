@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Simulasi CAT CPNS - Pavio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Variabel CSS dari kode Pavio */
+        :root {
+            --primary-color: #f97316; /* Oranye */
+            --primary-dark: #c2410c;
+            --secondary-color: #333;
+            --light-bg: #f9f9fb;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --light-text: #666;
+            --border-color: #eee;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif; /* Menggunakan font Inter */
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden; /* Mencegah scroll horizontal */
+            display: flex; /* Untuk menempatkan footer di paling bawah */
+            flex-direction: column; /* Untuk menempatkan footer di paling bawah */
+            min-height: 100vh; /* Memastikan body minimal setinggi viewport */
+        }
+
+        /* Header dari kode Pavio */
+        header {
+            padding: 3.5rem 2rem;
+            text-align: center;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        header img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 { /* Styling untuk judul utama di header */
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0 0 1rem 0;
+            color: var(--secondary-color);
+        }
+
+        p.lead { /* Styling untuk paragraf di header */
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            color: var(--light-text);
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Container utama yang kini menggunakan CSS Grid untuk 3 kolom */
+        .container {
+            flex-grow: 1; /* Memastikan container mengambil sisa ruang */
+            display: grid; /* Mengubah dari flex menjadi grid */
+            /* Mengatur 3 kolom responsif.
+               minmax(300px, 1fr) memastikan setiap kolom minimal 300px
+               dan akan merata jika ada sisa ruang.
+               auto-fit akan membuat kolom sebanyak mungkin yang muat. */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem; /* Menyesuaikan jarak antar kolom dan baris agar lebih terasa */
+            padding: 4.5rem 2rem; /* Padding container */
+            max-width: 1200px; /* Batas lebar konten */
+            margin: 0 auto; /* Tengah di halaman */
+        }
+
+        /* Styling untuk setiap kartu soal (mengadopsi .menu-card) */
+        .card {
+            background: var(--card-bg);
+            padding: 2.8rem; /* Padding internal kartu */
+            border-radius: 18px; /* Lebih bulat */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.09); /* Lebih tegas */
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease, border-color 0.3s ease; /* Transisi lebih halus */
+            text-align: center;
+            width: auto; /* Biarkan Grid yang menentukan lebar, tidak perlu 100% atau max-width */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            border: 2px solid transparent; /* Border transparan untuk efek hover */
+            animation: fadeInUp 0.8s ease-out forwards; /* Animasi muncul */
+            opacity: 0; /* Mulai dengan opacity 0 */
+        }
+
+        /* Animasi delay untuk setiap kartu */
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.02); /* Lebih menonjol */
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15); /* Bayangan lebih kuat */
+            border-color: var(--primary-color); /* Border berwarna saat hover */
+        }
+
+        .card h3 { /* Mengganti h2 menjadi h3 untuk judul kartu */
+            margin-top: 0;
+            font-size: 2.1rem; /* Ukuran judul lebih besar */
+            color: var(--secondary-color);
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        .card p {
+            font-size: 1.15rem; /* Ukuran teks lebih besar */
+            color: var(--light-text);
+            margin-bottom: 2.2rem;
+            flex-grow: 1;
+        }
+
+        .card button { /* Mengadopsi styling .btn dari kode Pavio */
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2.4rem; /* Padding lebih besar */
+            border: none;
+            border-radius: 10px; /* Lebih bulat */
+            font-size: 1.15rem; /* Ukuran teks tombol lebih besar */
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: auto; /* Biarkan lebar sesuai konten + padding, bukan 100% */
+            cursor: pointer; /* Pastikan cursor pointer */
+        }
+
+        .card button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px); /* Tombol sedikit terangkat */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer dari kode Pavio */
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            color: #aaa;
+            font-size: 0.95rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+        }
+
+        /* Floating Help Button dari kode Pavio */
+        .help-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background-color: #4caf50; /* Warna hijau WhatsApp */
+            color: white;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .help-button:hover {
+            background-color: #43a047; /* Sedikit lebih gelap saat hover */
+            transform: scale(1.1) translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Keyframe Animations dari kode Pavio */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive styles dari kode Pavio, disesuaikan untuk elemen yang ada */
+        @media (max-width: 768px) {
+            header {
+                padding: 2.5rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.4rem;
+            }
+
+            p.lead {
+                font-size: 1.2rem;
+            }
+
+            /* Container pada tablet: 2 kolom */
+            .container {
+                grid-template-columns: repeat(2, 1fr); /* Jelas 2 kolom */
+                padding: 3rem 1.5rem;
+                gap: 2rem;
+            }
+
+            .card {
+                padding: 2rem;
+            }
+
+            .card h3 {
+                font-size: 1.8rem;
+            }
+
+            .card p {
+                font-size: 1.05rem;
+            }
+
+            .card button {
+                padding: 0.9rem 2rem;
+                font-size: 1.05rem;
+            }
+
+            .help-button {
+                width: 55px;
+                height: 55px;
+                font-size: 1.8rem;
+                bottom: 25px;
+                right: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 2rem 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p.lead {
+                font-size: 1rem;
+            }
+
+            /* Container pada mobile: 1 kolom */
+            .container {
+                grid-template-columns: 1fr; /* 1 kolom */
+                padding: 2.5rem 1rem;
+                gap: 1.5rem;
+            }
+
+            .card {
+                padding: 1.8rem;
+            }
+
+            .card h3 {
+                font-size: 1.6rem;
+            }
+
+            .card p {
+                font-size: 0.95rem;
+            }
+
+            .card button {
+                padding: 0.8rem 1.6rem;
+                font-size: 0.95rem;
+            }
+
+            .help-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.6rem;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Pavio" />
+        <h1>COMPUTER ASSISTED TEST<br>Tools Simulasi <span style="color: var(--primary-color);">CPNS</span></h1>
+        <p class="lead">Pilih <strong>paket soal</strong> yang Anda inginkan untuk simulasi CAT CPNS. Tingkatkan peluang lolos Anda dengan latihan yang <strong>komprehensif dan realistis</strong>.</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h3>Paket Soal 1</h3>
+            <p>110 Soal - TWK, TIU, TKP. Siap untuk menguji pengetahuan Anda dalam Tes Wawasan Kebangsaan, Tes Intelegensi Umum, dan Tes Karakteristik Pribadi.</p>
+            <button onclick="location.href='paket1.html?paket=paket1.html'">Mulai Simulasi</button>
+        </div>
+        <div class="card">
+            <h3>Paket Soal 2</h3>
+            <p>110 Soal - TWK, TIU, TKP. Tantang diri Anda dengan variasi soal baru untuk mempersiapkan diri menghadapi seleksi CPNS yang sesungguhnya.</p>
+            <button onclick="location.href='paket2.html?paket=paket2.html'">Mulai Simulasi</button>
+        </div>
+        <div class="card">
+            <h3>Paket Soal 3</h3>
+            <p>110 Soal - TWK, TIU, TKP. Paket lengkap untuk melatih kecepatan dan ketepatan Anda dalam menjawab soal-soal CPNS secara efektif.</p>
+            <button onclick="location.href='paket3.html?paket=paket3.html'">Mulai Simulasi</button>
+        </div>
+    </div>
+
+    <a class="help-button" title="Butuh Bantuan? Hubungi Kami" href="https://wa.me/+6285935201571" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        &copy; 2025 PT Primajana Bagia Mesari
+    </footer>
+</body>
+</html>
