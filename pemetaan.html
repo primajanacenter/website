@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools</title>
+  <link rel="icon" href="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" type="image/x-icon">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* Palet Warna & Font */
+    :root {
+      --primary-blue: #0056b3;
+      --accent-green: #28a745;
+      --highlight-purple: #6f42c1;
+      --light-bg: #f8f9fa;
+      --dark-text: #343a40;
+      --secondary-text: #6c757d;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--dark-text);
+      background-color: #fff;
+    }
+
+    /* Navigasi */
+    .navbar {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      color: var(--primary-blue) !important;
+      display: flex;
+      align-items: center;
+      height: auto;
+      transition: transform 0.3s ease-in-out;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .navbar-brand img {
+      max-height: 70px;
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .navbar-brand:hover {
+      transform: scale(1.03);
+    }
+
+    .nav-link {
+      color: var(--secondary-text) !important;
+      transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+      padding: 0.5rem 1rem;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-blue) !important;
+      transform: translateY(-2px);
+    }
+
+    /* Section */
+    .publication-section {
+      padding: 140px 0 100px; /* padding bawah lebih besar untuk jarak ke footer */
+      background-color: var(--light-bg);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .hero-title {
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+
+    .subtitle-text {
+      font-size: 0.95rem;
+      color: var(--secondary-text);
+      max-width: 850px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    /* Banner Daftar Pengajar */
+    .teacher-banner {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .teacher-banner img {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .teacher-banner h3 {
+      color: var(--primary-blue);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .teacher-banner p {
+      color: var(--secondary-text);
+      font-size: 1rem;
+    }
+
+    .btn-publikasi {
+      background-color: #fff;
+      color: var(--primary-blue);
+      border: 2px solid var(--primary-blue);
+      font-weight: 600;
+      transition: all 0.3s ease-in-out;
+      border-radius: 25px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .btn-publikasi:hover {
+      background-color: var(--primary-blue);
+      color: #fff;
+      border-color: var(--primary-blue);
+    }
+
+    /* Card Publikasi */
+    .publication-card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      overflow: hidden;
+      background-color: #fff;
+      text-align: center;
+      padding: 25px 20px;
+    }
+
+    .publication-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-icon-publication {
+      font-size: 3.8rem;
+      color: var(--primary-blue);
+      margin-bottom: 1rem;
+      display: block;
+      transition: transform 0.4s ease-in-out, color 0.4s ease-in-out;
+    }
+
+    .publication-card:hover .card-icon-publication {
+      transform: scale(1.08);
+      color: var(--accent-green);
+    }
+
+    .card-title-publication {
+      color: var(--primary-blue);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+      color: var(--secondary-text);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--dark-text);
+      color: white;
+      padding: 15px 0;
+    }
+
+    .footer a {
+      color: #adb5bd;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .footer a:hover {
+      color: white;
+    }
+
+    /* Animasi */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .navbar-brand img {
+        max-height: 60px;
+      }
+      .publication-section {
+        padding: 120px 0 80px;
+      }
+      .teacher-banner img {
+        max-width: 250px;
+      }
+    }
+
+    .teacher-img-custom {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 30px;
+      right: 30px;
+      background-color: #25d366;
+      color: #FFF;
+      border-radius: 50%;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .whatsapp-float i {
+      font-size: 32px;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+
+    /* Efek Berkedip untuk teks "Halaman ini sedang diperbaharui" */
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .blinking-text {
+      font-size: 3rem;
+      color: red;
+      animation: blink 1s infinite;
+      padding: 30px 15px;
+      margin-bottom: 80px; /* jarak ke footer */
+    }
+    
+    :root {
+      --primary-color: #f97316;
+      --primary-dark: #c2410c;
+      --secondary-color: #333;
+      --light-bg: #f9f9fb;
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --light-text: #666;
+      --border-color: #eee;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+body {
+  padding-top: 100px; /* sesuaikan tinggi navbar */
+}
+
+    header {
+      padding: 3.5rem 2rem;
+      text-align: center;
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      animation: fadeInDown 1s ease-out;
+    }
+
+    header img {
+      max-width: 250px;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 0 0 1rem 0;
+      color: var(--secondary-color);
+    }
+
+    p.lead {
+      font-size: 1.4rem;
+      color: var(--light-text);
+      max-width: 750px;
+      margin: 1.5rem auto 0;
+    }
+
+    .main-menu-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2.8rem;
+      padding: 4.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+  background: var(--card-bg);
+  padding: 2.8rem;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.09);
+  transition: transform 0.4s, box-shadow 0.4s, border-color 0.3s;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  border: 2px solid transparent;
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+  height: 100%;
+}
+
+
+    .menu-card:nth-child(1) { animation-delay: 0.2s; }
+    .menu-card:nth-child(2) { animation-delay: 0.4s; }
+    .menu-card:nth-child(3) { animation-delay: 0.6s; }
+
+    .menu-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-color);
+    }
+
+    .menu-card .icon {
+      font-size: 4.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s;
+    }
+
+    .menu-card:hover .icon {
+      transform: scale(1.1);
+    }
+
+    .menu-card h2 {
+      font-size: 2.1rem;
+      color: var(--secondary-color);
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+
+    .menu-card p {
+      font-size: 1.15rem;
+      color: var(--light-text);
+      margin-bottom: 2.2rem;
+      flex-grow: 1;
+    }
+
+    .menu-card .btn {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 2.4rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-card .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+    }
+
+    .help-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .help-button:hover {
+      background-color: #43a047;
+      transform: scale(1.1) translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+     :root {
+      --primary-orange: #f97316;
+      --dark-grey: #333;
+      --light-bg: #f9f9fb;
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --light-text: #666;
+      --border-color: #eee;
+      --blue-accent: #1565c0;
+      --green-accent: #2e7d32;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-brand img {
+      height: 48px;
+      width: 48px;
+      object-fit: contain;
+    }
+
+    .header-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--dark-grey);
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--light-text);
+    }
+
+    .main-content {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .category-section {
+      margin-bottom: 4rem;
+    }
+
+    .category-section h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--dark-grey);
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .category-section h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background-color: var(--primary-orange);
+      border-radius: 2px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      padding: 1.8rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--border-color);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card h3 {
+      margin-top: 0;
+      font-size: 1.35rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--dark-grey);
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 svg,
+    .feature-card h3 .icon {
+      width: 28px;
+      height: 28px;
+      stroke: var(--dark-grey);
+      stroke-width: 2;
+      fill: none;
+      color: var(--dark-grey); /* For Font Awesome icons */
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      color: var(--light-text);
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .feature-card .btn {
+      display: inline-block;
+      margin-top: auto;
+      background-color: var(--dark-grey);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-align: center;
+    }
+
+    .feature-card .btn:hover {
+      background-color: #000;
+      transform: translateY(-2px);
+    }
+
+
+    /* Specific card styles */
+    .elearning-card {
+      background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+      border: 1px solid #bbdefb;
+      box-shadow: 0 6px 18px rgba(100, 181, 246, 0.1);
+    }
+
+    .elearning-card h3 {
+      color: var(--blue-accent);
+    }
+
+    .elearning-card h3 svg,
+    .elearning-card h3 .icon {
+      stroke: var(--blue-accent);
+      color: var(--blue-accent);
+    }
+
+    .elearning-card .btn {
+      background-color: var(--blue-accent);
+    }
+
+    .elearning-card .btn:hover {
+      background-color: #0d47a1;
+    }
+
+    .pelatihan-card {
+      background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%);
+      border: 1px solid #a5d6a7;
+      box-shadow: 0 6px 18px rgba(76, 175, 80, 0.1);
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    .pelatihan-card h3 {
+      color: var(--green-accent);
+    }
+
+    .pelatihan-card h3 svg,
+    .pelatihan-card h3 .icon {
+      stroke: var(--green-accent);
+      color: var(--green-accent);
+    }
+
+    .pelatihan-card .btn {
+      background-color: var(--green-accent);
+    }
+
+    .pelatihan-card .btn:hover {
+      background-color: #1b5e20;
+    }
+
+    @keyframes pulseGlow {
+      0%,
+      100% {
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.15);
+      }
+      50% {
+        box-shadow: 0 0 18px rgba(76, 175, 80, 0.35);
+      }
+    }
+
+    .dataset-card {
+      background: linear-gradient(135deg, #f3e5f5 0%, #ffffff 100%); /* Slightly different gradient */
+      border: 1px solid #ce93d8;
+      box-shadow: 0 6px 18px rgba(156, 39, 176, 0.1);
+      display: flex; /* Make it a flex container */
+      flex-direction: column; /* Stack children vertically */
+      justify-content: space-between; /* Push content to top and bottom */
+    }
+
+    .dataset-card h3 {
+      color: #8e24aa; /* Darker purple */
+    }
+
+    .dataset-card h3 .icon-circle {
+      background-color: #e1bee7; /* Lighter purple for circle */
+      padding: 8px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dataset-card h3 svg,
+    .dataset-card h3 .icon {
+      stroke: #8e24aa;
+      color: #8e24aa;
+    }
+
+    .dataset-card p {
+      margin-top: 0.5rem;
+      margin-bottom: 1rem; /* Adjust margin */
+    }
+
+    .dataset-card a {
+      color: #6a1b9a; /* Even darker purple for links */
+      font-weight: 600;
+      text-decoration: none;
+      position: relative;
+      display: block; /* Make links block level for better spacing */
+      margin-bottom: 0.5rem; /* Space between links */
+    }
+
+    .dataset-card a:last-child {
+      margin-bottom: 0;
+    }
+
+    .dataset-card a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: -2px;
+      background-color: #6a1b9a;
+      transition: width 0.3s ease;
+    }
+
+    .dataset-card a:hover::after {
+      width: 100%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-top: 4rem; /* Add some space above footer */
+      border-top: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+    }
+
+    /* Floating Help Button */
+    .help-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #25d366; /* WhatsApp brand color */
+      color: white;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .help-button:hover {
+      background-color: #1da851;
+      transform: scale(1.05) translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem 1.5rem;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .header-brand {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .main-content {
+        padding: 0 1.5rem;
+      }
+
+      .category-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .feature-card {
+        padding: 1.5rem;
+      }
+
+      .feature-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .feature-card p {
+        font-size: 0.95rem;
+      }
+
+      .feature-card .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      .help-button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.8rem;
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 0.8rem 1rem;
+      }
+
+      .header-brand img {
+        height: 40px;
+        width: 40px;
+      }
+
+      .header-text h1 {
+        font-size: 1.3rem;
+      }
+
+      .header-text p {
+        font-size: 0.85rem;
+      }
+
+      .main-content {
+        padding: 0 1rem;
+      }
+
+      .category-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .feature-card {
+        padding: 1.2rem;
+      }
+
+      .feature-card h3 {
+        font-size: 1.1rem;
+        gap: 0.5rem;
+      }
+
+      .feature-card h3 svg,
+      .feature-card h3 .icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      .feature-card p {
+        font-size: 0.9rem;
+      }
+
+      .feature-card .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .help-button {
+        width: 45px;
+        height: 45px;
+        font-size: 1.6rem;
+        bottom: 15px;
+        right: 15px;
+      }
+    }
+    
+      body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9fb;
+      color: #333;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-brand img {
+      height: 48px;
+      width: 48px;
+      object-fit: contain;
+    }
+
+    .header-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #777;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 960px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .feature {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature h3 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .feature ul {
+      padding-left: 1.2rem;
+      margin-top: 0.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature ul li {
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #333;
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-link:hover {
+      background-color: #000;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .feature img {
+    max-width: 100%;
+    height: auto;
+    }
+    
+    .accordion-box {
+  margin-top: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #e0f7fa;
+}
+
+details summary {
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  outline: none;
+}
+
+details[open] summary::after {
+  content: "▲";
+  float: right;
+}
+
+details summary::after {
+  content: "▼";
+  float: right;
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+details p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+    /* Floating Help Button */
+    .help-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .help-button:hover {
+      background-color: #43a047;
+    }
+    
+     body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9fb;
+      color: #333;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-brand img {
+      height: 48px;
+      width: 48px;
+      object-fit: contain;
+    }
+
+    .header-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #777;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 960px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .feature {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature h3 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .feature ul {
+      padding-left: 1.2rem;
+      margin-top: 0.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature ul li {
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #333;
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-link:hover {
+      background-color: #000;
+      transform: scale(1.05);
+    }
+
+    .btn-inline {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-inline:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .explanation {
+      font-size: 0.85rem;
+      color: #555;
+      margin-top: 0.25rem;
+      display: none;
+      padding-left: 1rem;
+    }
+
+    .explanation-button {
+      font-size: 0.9rem;
+      color: #007bff;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    .explanation-button:hover {
+      text-decoration: underline;
+    }
+
+    .feature-item {
+      margin-bottom: 1.5rem;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9fb;
+      color: #333;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-brand img {
+      height: 48px;
+      width: 48px;
+      object-fit: contain;
+    }
+
+    .header-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #777;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 960px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .feature {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature h3 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .feature ul {
+      padding-left: 1.2rem;
+      margin-top: 0.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature ul li {
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #333;
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      align-self: flex-start;
+    }
+
+    .btn-link:hover {
+      background-color: #000;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .expandable-content {
+      background-color: #e0f7fa;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out;
+    }
+
+    .expand-btn {
+      cursor: pointer;
+      color: #007bff;
+      font-size: 0.95rem;
+      text-decoration: underline;
+      margin-bottom: 0.5rem;
+    }
+
+    .expand-btn:focus {
+      outline: none;
+    }
+
+    .fixed-image {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-top: 1rem;
+    }
+     /* Floating Help Button */
+    .help-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .help-button:hover {
+      background-color: #43a047;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">Tentang</a></li>
+          <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
+          <li class="nav-item"><a class="nav-link"href="bimbingan.html">Bimbingan</a></li>
+          <li class="nav-item"><a class="nav-link" href="pendampingan.html">Pendampingan</a></li>
+          <li class="nav-item"><a class="nav-link active" href="tools.html">Tools</a></li>
+          <li class="nav-item"><a class="nav-link" href="publication.html">Publikasi</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+ <section class="features">
+    <!-- PETA 1 -->
+    <div class="feature">
+      <h3>🗺️ Peta Sebaran Kasus</h3>
+      <h4>Visualisasi Lokasi Kasus Individu</h4>
+      <ul>
+        <li>Titik mewakili satu atau lebih kasus</li>
+        <li>Melihat distribusi spasial langsung</li>
+        <li>Contoh: peta penyebaran DBD</li>
+      </ul>
+      <strong>🌍 Contoh Peta</strong>
+      <img class="fixed-image" src="https://res.cloudinary.com/djexglfns/image/upload/v1746799745/Slide1_milb4z.png" alt="Contoh Peta Sebaran Kasus" />
+      <div role="button" class="expand-btn" onclick="toggleExpand('expandable-content-map-1')">Lihat Penjelasan</div>
+      <div id="expandable-content-map-1" class="expandable-content">
+        <p><strong>Definisi:</strong> Peta yang menampilkan lokasi kejadian atau kasus berdasarkan titik koordinat.</p>
+        <p><strong>Kapan Digunakan:</strong> Saat data tersedia dalam format titik (point data).</p>
+        <p><strong>Contoh Pertanyaan:</strong></p>
+        <ul><li>Di mana titik konsentrasi kasus flu burung di tahun tertentu?</li></ul>
+      </div>
+      <a href="peta_sebaran_kasus.html" class="btn-link">Buat Peta Sebaran Kasus</a>
+    </div>
+
+    <!-- PETA 2 -->
+    <div class="feature">
+      <h3>🔥 Peta Panas (Heatmap)</h3>
+      <h4>Kepadatan Data dalam Area Tertentu</h4>
+      <ul>
+        <li>Gradasi warna menunjukkan intensitas</li>
+        <li>Cocok untuk data volume besar</li>
+        <li>Contoh: kepadatan penduduk</li>
+      </ul>
+      <strong>🌍 Contoh Peta</strong>
+      <img class="fixed-image" src="https://res.cloudinary.com/djexglfns/image/upload/v1746799745/Slide2_xwro5j.png" alt="Contoh Peta Panas" />
+      <div role="button" class="expand-btn" onclick="toggleExpand('expandable-content-map-2')">Lihat Penjelasan</div>
+      <div id="expandable-content-map-2" class="expandable-content">
+        <p><strong>Definisi:</strong> Peta panas menggunakan warna untuk menunjukkan konsentrasi data.</p>
+        <p><strong>Kapan Digunakan:</strong> Cocok saat data terlalu padat untuk divisualisasi dengan titik individu.</p>
+        <p><strong>Contoh Pertanyaan:</strong></p>
+        <ul><li>Bagian kota mana yang memiliki lalu lintas tertinggi?</li></ul>
+      </div>
+      <a href="peta_panas.html" class="btn-link">Buat Peta Panas</a>
+    </div>
+
+    <!-- PETA 3 -->
+    <div class="feature">
+      <h3>🎨 Peta Tematik</h3>
+      <h4>Visualisasi Berdasarkan Tema atau Variabel</h4>
+      <ul>
+        <li>Menunjukkan topik spesifik</li>
+        <li>Menyesuaikan warna/simbol dengan nilai data</li>
+        <li>Contoh: Peta tingkat literasi</li>
+      </ul>
+      <strong>🌍 Contoh Peta</strong>
+      <img class="fixed-image" src="https://res.cloudinary.com/djexglfns/image/upload/v1746799745/Slide3_mptcac.png" alt="Contoh Peta Tematik" />
+      <div role="button" class="expand-btn" onclick="toggleExpand('expandable-content-map-3')">Lihat Penjelasan</div>
+      <div id="expandable-content-map-3" class="expandable-content">
+        <p><strong>Definisi:</strong> Peta yang menggambarkan fenomena tertentu pada wilayah tertentu.</p>
+        <p><strong>Kapan Digunakan:</strong> Ketika ingin menyampaikan narasi data tematik.</p>
+        <p><strong>Contoh Pertanyaan:</strong></p>
+        <ul><li>Bagaimana sebaran fasilitas pendidikan?</li></ul>
+      </div>
+      <a href="peta_tematik.html" class="btn-link">Buat Peta Tematik</a>
+    </div>
+
+    <!-- PETA 4 -->
+    <div class="feature">
+      <h3>🧭 Peta Choropleth</h3>
+      <h4>Warna untuk Menunjukkan Nilai Agregat</h4>
+      <ul>
+        <li>Wilayah diwarnai berdasarkan nilai data</li>
+        <li>Cocok untuk variasi antar area</li>
+        <li>Contoh: pendapatan rata-rata</li>
+      </ul>
+      <strong>🌍 Contoh Peta</strong>
+      <img class="fixed-image" src="https://res.cloudinary.com/djexglfns/image/upload/v1746799744/Slide4_hft0zu.png" alt="Contoh Peta Choropleth" />
+      <div role="button" class="expand-btn" onclick="toggleExpand('expandable-content-map-4')">Lihat Penjelasan</div>
+      <div id="expandable-content-map-4" class="expandable-content">
+        <p><strong>Definisi:</strong> Peta choropleth mengisi area dengan warna sesuai nilai statistik.</p>
+        <p><strong>Kapan Digunakan:</strong> Untuk membandingkan wilayah secara relatif.</p>
+        <p><strong>Contoh Pertanyaan:</strong></p>
+        <ul><li>Wilayah mana yang punya pengangguran tertinggi?</li></ul>
+      </div>
+      <a href="peta_chloroplet.html" class="btn-link">Buat Peta Choropleth</a>
+    </div>
+  </section>
+
+  <section class="video-tutorial" style="max-width: 960px; margin: 2rem auto; padding: 0 2rem;">
+    <h2 style="text-align:center; font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;">🎥 Tutorial Pembuatan Peta</h2>
+    <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      <iframe 
+        src="https://www.youtube.com/embed/6tx-hqeSutw"
+        title="Tutorial Peta dengan Pavio"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="position:absolute; top:0; left:0; width:100%; height:100%;">
+      </iframe>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <hr class="my-3 text-white-50">
+      <div class="text-center">
+        <p class="mb-0">© 2025 PT Primajana Bagia Mesari</p>
+      </div>
+    </div>
+  </footer>
+
+<a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana%20Center,%20saya%20tertarik%20dengan%20layanan%20Anda." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Hubungi Kami via WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function toggleExpand(contentId) {
+      var content = document.getElementById(contentId);
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    }
+  </script>
+  
+</body>
+</html>
