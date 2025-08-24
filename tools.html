@@ -255,6 +255,184 @@
       padding: 30px 15px;
       margin-bottom: 80px; /* jarak ke footer */
     }
+    
+    :root {
+      --primary-color: #f97316;
+      --primary-dark: #c2410c;
+      --secondary-color: #333;
+      --light-bg: #f9f9fb;
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --light-text: #666;
+      --border-color: #eee;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+body {
+  padding-top: 100px; /* sesuaikan tinggi navbar */
+}
+
+    header {
+      padding: 3.5rem 2rem;
+      text-align: center;
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      animation: fadeInDown 1s ease-out;
+    }
+
+    header img {
+      max-width: 250px;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 0 0 1rem 0;
+      color: var(--secondary-color);
+    }
+
+    p.lead {
+      font-size: 1.4rem;
+      color: var(--light-text);
+      max-width: 750px;
+      margin: 1.5rem auto 0;
+    }
+
+    .main-menu-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2.8rem;
+      padding: 4.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+  background: var(--card-bg);
+  padding: 2.8rem;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.09);
+  transition: transform 0.4s, box-shadow 0.4s, border-color 0.3s;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  border: 2px solid transparent;
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+  height: 100%;
+}
+
+
+    .menu-card:nth-child(1) { animation-delay: 0.2s; }
+    .menu-card:nth-child(2) { animation-delay: 0.4s; }
+    .menu-card:nth-child(3) { animation-delay: 0.6s; }
+
+    .menu-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-color);
+    }
+
+    .menu-card .icon {
+      font-size: 4.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s;
+    }
+
+    .menu-card:hover .icon {
+      transform: scale(1.1);
+    }
+
+    .menu-card h2 {
+      font-size: 2.1rem;
+      color: var(--secondary-color);
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+
+    .menu-card p {
+      font-size: 1.15rem;
+      color: var(--light-text);
+      margin-bottom: 2.2rem;
+      flex-grow: 1;
+    }
+
+    .menu-card .btn {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 2.4rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-card .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+    }
+
+    .help-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .help-button:hover {
+      background-color: #43a047;
+      transform: scale(1.1) translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -272,9 +450,9 @@
           <li class="nav-item"><a class="nav-link" href="index.html">Beranda</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">Tentang</a></li>
           <li class="nav-item"><a class="nav-link" href="services.html">Layanan</a></li>
-          <li class="nav-item"><a class="nav-link active" aria-current="page" href="bimbingan.html">Bimbingan</a></li>
+          <li class="nav-item"><a class="nav-link"href="bimbingan.html">Bimbingan</a></li>
           <li class="nav-item"><a class="nav-link" href="pendampingan.html">Pendampingan</a></li>
-          <li class="nav-item"><a class="nav-link" href="tools.html">Tools</a></li>
+          <li class="nav-item"><a class="nav-link active" href="tools.html">Tools</a></li>
           <li class="nav-item"><a class="nav-link" href="publication.html">Publikasi</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
         </ul>
@@ -282,12 +460,44 @@
     </div>
   </nav>
 
-  <section class="publication-section text-center">
-    <h1 class="blinking-text">
-      Halaman ini sedang diperbaharui. Stay tune ya!
-    </h1>
-    <p class="subtitle-text">Kami sedang memperbarui konten di halaman ini. Silakan cek kembali nanti untuk informasi terbaru.</p>
-  </section>
+ <section class="container py-5" style="padding-top: 120px;">
+  <!-- Judul -->
+  <h2 class="text-center fw-bold mb-5 pt-3" style="color: var(--primary-blue);">
+    Pilih Alat Bantu
+  </h2>
+
+  <!-- Cards -->
+  <div class="row g-4">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="menu-card h-100" onclick="window.location.href='research-tools.html'">
+        <i class="fas fa-chart-line icon"></i>
+        <h2>Tools Penelitian</h2>
+        <p>Alat bantu untuk riset dan analisis data yang mendalam.</p>
+        <a href="research-tools.html" class="btn">Mulai Analisis</a>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="menu-card h-100" onclick="window.location.href='cpns-simulation.html'">
+        <i class="fas fa-user-tie icon"></i>
+        <h2>Simulasi CPNS</h2>
+        <p>Latihan soal dan simulasi tes CPNS yang realistis.</p>
+        <a href="registrasi_cpns.html" class="btn">Mulai Simulasi</a>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="menu-card h-100" onclick="window.location.href='psychotest-simulation.html'">
+        <i class="fas fa-brain icon"></i>
+        <h2>Simulasi Psikotes</h2>
+        <p>Latihan soal dan pembahasan psikotes secara interaktif.</p>
+        <a href="psychotest-simulation.html" class="btn">Mulai Psikotes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
   <footer class="footer">
     <div class="container">
