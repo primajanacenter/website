@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dotmap Tematik (Peta Kasus Agregat)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- PapaParse -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center">
+  <div class="container max-w-5xl w-full p-6 mt-10 bg-white shadow-lg rounded-lg">
+    <h2 class="text-2xl text-center font-semibold text-gray-800 mb-4">Upload CSV dan Tampilkan Peta Tematik</h2>
+
+    <input type="file" id="csvFile" accept=".csv" class="px-4 py-2 border rounded-lg mb-4 w-full bg-gray-100" />
+
+    <div id="status" class="text-gray-600 mb-4">Silakan upload file CSV yang memiliki kolom wilayah dan angka.</div>
+
+    <div id="configContainer" class="mb-4 hidden">
+      <label class="block text-gray-700 font-semibold mb-1">Pilih Kolom Wilayah:</label>
+      <select id="regionSelect" class="w-full bg-gray-100 border px-2 py-1 rounded mb-4"></select>
+
+      <label class="block text-gray-700 font-semibold mb-1">Pilih Variabel Numerik (untuk ukuran simbol):</label>
+      <select id="valueSelect" class="w-full bg-gray-100 border px-2 py-1 rounded"></select>
+    </div>
+
+    <button id="showMapBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 w-full mt-2 mb-4" disabled>
+      Tampilkan Peta Tematik
+    </button>
+
+    <div id="interpretationBox" class="hidden mt-6">
+      <h3 class="text-xl font-semibold text-gray-700">Interpretasi:</h3>
+      <div id="interpretation" class="mt-2 bg-blue-50 p-4 rounded text-sm"></div>
+    </div>
+
+    <div id="map" class="mt-6 rounded-lg border" style="height: 500px;"></div>
+  </div>
+
+  <script>
+    const map = L.map('map').setView([-2.5, 118], 5);
+    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    let parsedData = [], latKey, lonKey, allColumns = [], legendControl;
+
+    function detectLatLonFields(headers) {
+      const latCandidates = ['lat', 'latitude', 'Latitude'];
+      const lonCandidates = ['lon', 'lng', 'long', 'longitude', 'Longitude'];
+      let lat = null, lon = null;
+      headers.forEach(key => {
+        const lower = key.toLowerCase();
+        if (!lat && latCandidates.includes(lower)) lat = key;
+        if (!lon && lonCandidates.includes(lower)) lon = key;
+      });
+      return { latKey: lat, lonKey: lon };
+    }
+
+    function isNumericColumn(data, column) {
+      return data.every(row => !isNaN(parseFloat(row[column])));
+    }
+
+    function getUniqueValues(data, column) {
+      return [...new Set(data.map(row => row[column]))].filter(Boolean);
+    }
+
+    function aggregateByRegion(data, regionKey, valueKey) {
+      const grouped = {};
+      data.forEach(row => {
+        const region = row[regionKey];
+        if (!grouped[region]) {
+          grouped[region] = { count: 0, total: 0, latSum: 0, lonSum: 0 };
+        }
+        const lat = parseFloat(row[latKey]);
+        const lon = parseFloat(row[lonKey]);
+        const val = parseFloat(row[valueKey]) || 0;
+        if (!isNaN(lat) && !isNaN(lon)) {
+          grouped[region].count++;
+          grouped[region].latSum += lat;
+          grouped[region].lonSum += lon;
+          grouped[region].total += val;
+        }
+      });
+
+      const result = [];
+      for (const region in grouped) {
+        const g = grouped[region];
+        result.push({
+          region,
+          total: g.total,
+          lat: g.latSum / g.count,
+          lon: g.lonSum / g.count
+        });
+      }
+      return result;
+    }
+
+    function plotAggregatedSymbols(aggregatedData) {
+      map.eachLayer(layer => {
+        if (layer instanceof L.Circle) map.removeLayer(layer);
+      });
+
+      let maxTotal = Math.max(...aggregatedData.map(r => r.total));
+      aggregatedData.forEach(r => {
+        const radius = Math.sqrt(r.total / maxTotal) * 20; // skala pixel
+        L.circleMarker([r.lat, r.lon], {
+          radius: radius, // radius dalam pixel
+          fillColor: '#007bff',
+          color: '#004080',
+          weight: 1,
+          fillOpacity: 0.6
+        }).addTo(map);
+      });
+
+      const bounds = aggregatedData.map(r => [r.lat, r.lon]);
+      if (bounds.length > 0) map.fitBounds(bounds, { padding: [20, 20] });
+    }
+
+    function updateInterpretation(aggregatedData, valueKey) {
+      const sorted = aggregatedData.sort((a, b) => b.total - a.total);
+      const totalAll = sorted.reduce((sum, r) => sum + r.total, 0);
+      const summary = sorted.map(r => `${r.total} (${((r.total / totalAll) * 100).toFixed(1)}%) di <strong>${r.region}</strong>`);
+      const sentence = `Total dari ${valueKey}: ${totalAll}. Distribusi: ${summary.join(', ').replace(/, ([^,]*)$/, ', dan $1')}.`;
+      document.getElementById('interpretation').innerHTML = sentence;
+    }
+
+    document.getElementById('csvFile').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          const headers = results.meta.fields;
+          const detected = detectLatLonFields(headers);
+          if (!detected.latKey || !detected.lonKey) {
+            document.getElementById('status').textContent = "Kolom latitude/longitude tidak ditemukan.";
+            return;
+          }
+          latKey = detected.latKey;
+          lonKey = detected.lonKey;
+          parsedData = results.data.filter(row => !isNaN(row[latKey]) && !isNaN(row[lonKey]));
+          allColumns = headers;
+
+          const regionSelect = document.getElementById('regionSelect');
+          const valueSelect = document.getElementById('valueSelect');
+          regionSelect.innerHTML = '<option disabled selected>Pilih kolom wilayah</option>' +
+            allColumns.filter(c => c !== latKey && c !== lonKey).map(c => `<option value="${c}">${c}</option>`).join('');
+
+          valueSelect.innerHTML = '<option disabled selected>Pilih variabel numerik</option>' +
+            allColumns.filter(c => c !== latKey && c !== lonKey && isNumericColumn(parsedData, c)).map(c => `<option value="${c}">${c}</option>`).join('');
+
+          document.getElementById('configContainer').style.display = 'block';
+          document.getElementById('showMapBtn').disabled = false;
+          document.getElementById('status').textContent = `Berhasil memuat ${parsedData.length} baris data.`;
+        }
+      });
+    });
+
+    document.getElementById('showMapBtn').addEventListener('click', () => {
+      const regionKey = document.getElementById('regionSelect').value;
+      const valueKey = document.getElementById('valueSelect').value;
+      if (!regionKey || !valueKey) return;
+
+      const aggregated = aggregateByRegion(parsedData, regionKey, valueKey);
+      plotAggregatedSymbols(aggregated);
+      updateInterpretation(aggregated, valueKey);
+      document.getElementById('interpretationBox').style.display = 'block';
+    });
+  </script>
+</body>
+
+<footer class="text-sm text-gray-500 text-center mt-10">&copy; 2025 PT Primajana Bagia Mesari</footer>
+
+</html>
