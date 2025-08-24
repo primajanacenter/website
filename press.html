@@ -410,6 +410,11 @@
             color: #fff;
         }
         
+        .primajana-press-section h1 {
+    font-weight: bold;
+    color: var(--primary-blue); /* pakai variabel warna biru dari root */
+}
+
     </style>
 </head>
 <body>
@@ -441,7 +446,7 @@
 
     <section class="primajana-press-section">
         <div class="container">
-            <h1 class="text-center mb-5">Primajana Press</h1>
+            <h1 class="text-center mb-5">Primajana Bagia Mesari</h1>
             <p class="text-center lead mb-5">Jelajahi koleksi buku terlaris kami dan hitung potensi keuntungan Anda sebagai penulis.</p>
 
             <div class="row g-4 mb-5">
@@ -582,13 +587,13 @@
                             <label for="jumlahTerjual" class="form-label">Jumlah Buku Terjual</label>
                             <input type="number" class="form-control" id="jumlahTerjual" value="100" min="0">
                         </div>
-                        <p class="text-muted mb-4">Pembagian royalti: Google Play (50%), Penerbit (10%), Penulis (40%)</p>
+                        <p class="text-muted mb-4">Pembagian royalti: Google Play (39%), PPN (11%), Penerbit (10%), Penulis (40%)</p>
                         <div class="d-grid mb-4">
                             <button class="btn btn-publikasi" onclick="hitungRoyalti()">Hitung Keuntungan</button>
                         </div>
                         <div class="royalty-result-box">
                             <p class="fw-bold mb-2">Estimasi Keuntungan Total:</p>
-                            <p>Potongan Google Play: <span class="float-end" id="royaltiKotor">Rp 5.000.000</span></p>
+                            <p>Potongan Google Play + PPN: <span class="float-end" id="royaltiKotor">Rp 5.000.000</span></p>
                             <p>Potongan Penerbit: <span class="float-end" id="potonganPenerbit">Rp 1.000.000</span></p>
                             <hr>
                             <h5 class="fw-bold text-success">Royalti Penulis: <span class="float-end" id="royaltiPenulis">Rp 4.000.000</span></h5>
@@ -700,6 +705,51 @@
                 </div>
             </div>
         </div>
+        
+        
+ <div class="col">
+  <div class="package-card h-100 profil">
+    <div class="package-content text-center">
+      <h4 class="package-title">Profil Penerbit</h4>
+      <p class="fw-bold mb-2">Primajana Bagia Mesari</p>
+      <p class="text-muted small mb-3">
+        Primajana Bagia Mesari merupakan penerbit resmi berbadan hukum yang berkomitmen dalam mendukung pengembangan literasi, pendidikan, dan karya intelektual di Indonesia. Melalui brand Primajana Press, penerbit ini fokus pada penerbitan buku ilmiah, akademik, serta literatur umum yang berkualitas. Sebagai badan usaha yang sah, Primajana Bagia Mesari telah terdaftar dengan Nomor Induk Berusaha (NIB) dan memiliki akta pendirian Perseroan Terbatas, sehingga menjamin legalitas dan profesionalitas dalam setiap proses penerbitan. Dengan semangat membangun budaya literasi, Primajana Bagia Mesari hadir untuk menjadi mitra terpercaya bagi para penulis dalam mewujudkan karya yang bermanfaat bagi masyarakat luas.
+      </p>
+
+      <!-- Dua Card Dokumen -->
+      <div class="row g-3 justify-content-center">
+
+        <!-- Card NIB -->
+        <div class="col-6">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-2">
+              <h6 class="fw-bold small mb-2">Nomor Induk Berusaha (NIB)</h6>
+              <img src="https://res.cloudinary.com/djexglfns/image/upload/v1756011686/nib_f4p8w2.jpg" 
+                   class="img-fluid rounded" alt="NIB Primajana Bagia Mesari">
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Akta PT -->
+        <div class="col-6">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-body p-2">
+              <h6 class="fw-bold small mb-2">Akta Pendirian PT</h6>
+              <img src="https://res.cloudinary.com/djexglfns/image/upload/v1756011683/akta_cqa4us.jpg" 
+                   class="img-fluid rounded" alt="Akta Pendirian PT Primajana Bagia Mesari">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
     </section>
 
     <footer class="footer">
