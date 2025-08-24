@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulasi CAT CPNS - Paket Lengkap</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f2f7; /* Nuansa biru muda untuk background */
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #FFFFFF;
+      padding: 20px;
+      border-bottom: 4px solid #99ccff; /* Nuansa biru untuk border bawah header */
+      position: relative;
+    }
+    header img {
+      height: 60px;
+      float: left;
+      margin-right: 15px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      color: #000000;
+    }
+    .info-bar {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      display: flex;
+      gap: 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      align-items: center;
+    }
+    .info-item {
+      text-align: center;
+      padding: 5px 10px;
+    }
+    .info-item strong { display: block; }
+    .container {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .user-info {
+      background: #e6f7ff; /* Nuansa biru sangat muda */
+      padding: 15px;
+      border: 1px solid #b3e0ff; /* Nuansa biru untuk border */
+      margin-bottom: 20px;
+    }
+    .soal-box {
+      background: #fff;
+      border: 1px solid #b3e0ff; /* Nuansa biru untuk border */
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .option { margin: 10px 0; }
+    .button-group {
+      margin-top: 20px;
+    }
+    .button-group button {
+      padding: 10px 15px;
+      border: none;
+      margin-right: 10px;
+      cursor: pointer;
+      background: #007bff; /* Biru cerah untuk tombol utama */
+      color: white;
+      border-radius: 5px;
+    }
+    .grid-navigasi {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 20px;
+    }
+    .grid-navigasi button {
+      width: 35px;
+      height: 35px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .green { background: #16a34a; color: white; } /* Tetap hijau untuk dijawab */
+    /* Mengubah warna merah menjadi nuansa biru untuk tombol "belum dijawab" */
+    .red { background: #5a82b0; color: white; } /* Nuansa biru gelap untuk belum dijawab */
+    #timer-box {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #0056b3; /* Biru gelap untuk timer */
+      color: white;
+      font-size: 24px;
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+    .section-nav {
+      margin-bottom: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    
+    #btn-kirim {
+      background-color: #007bff; /* Biru cerah untuk tombol kirim */
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      display: none; /* hanya muncul saat semua soal dijawab */
+    }
+
+    /* Mengubah warna teks "Belum Dijawab" menjadi nuansa biru gelap */
+    .info-item.belum-dijawab {
+        color: #0056b3 !important; /* Biru gelap yang sama dengan timer */
+    }
+.popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.popup-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.popup-box h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.popup-box p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.popup-box input {
+  box-sizing: border-box;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 100%;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  margin: 1.2rem 0;
+  font-size: 1rem;
+  outline: none;
+}
+
+.popup-box button {
+  margin: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-akses {
+  background-color: #f97316;
+  color: white;
+}
+
+.btn-akses:hover {
+  background-color: #c2410c;
+}
+
+.btn-premium {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-premium:hover {
+  background-color: #388e3c;
+}
+
+  </style>
+</head>
+<body onload="initApp()">
+  <header>
+    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="BKN Primajana Education">
+    <h1>COMPUTER ASSISTED TEST<br>Tools Simulasi CPNS</h1>
+    <div class="info-bar">
+      <div class="info-item"><strong>Batas Waktu</strong>90</div>
+      <div class="info-item"><strong>Jumlah Soal</strong>110</div>
+      <div class="info-item" style="color: green"><strong>Soal Dijawab</strong><span id="dijawab">0</span></div>
+      <div class="info-item" style="color: #3399ff"><strong>Belum Dijawab</strong><span id="belum">110</span></div> <button id="btn-selesai" onclick="konfirmasiSelesai()">Selesai Ujian</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="user-info">
+      <p><strong>Nama Peserta</strong>: <span id="namaPeserta">-</span></p>
+      <p><strong>Email</strong>: <span id="emailPeserta">-</span></p>
+    </div>
+
+    <div class="soal-box">
+      <div id="soalTeks">Soal akan muncul di sini.</div>
+      <div id="opsi"></div>
+      <div class="section-nav" id="navSection"></div>
+      <div class="button-group">
+  <button onclick="simpanDanLanjut()">Simpan dan Lanjutkan</button>
+  <button onclick="lewati()">Lewatkan soal ini</button>
+  <button id="btn-kirim" onclick="kirimJawaban()">Kirim Jawaban</button>
+</div>
+    </div>
+
+    <div class="grid-navigasi" id="navigasi"></div>
+  </div>
+
+  <div id="timer-box"><span id="timer">01:30:00</span></div>
+<!-- POPUP MODAL -->
+<div class="popup-overlay" id="popup-access">
+  <div class="popup-box">
+    <h2>Akses Premium</h2>
+    <p>
+      Ingin membuka seluruh fitur ini? Yuk mulai berlangganan sekarang.<br>
+      Jika Anda sudah memiliki kode akses, masukkan di bawah ini:
+    </p>
+    <input type="text" id="access-code" placeholder="Masukkan Kode Akses" />
+    <div>
+      <button class="btn-akses" onclick="checkAccess()">Gunakan Kode</button>
+      <button class="btn-premium" onclick="window.location.href='https://lynk.id/primajanaedu/2q46wjnpngky/checkout'">Berlangganan Sekarang</button>
+    </div>
+  </div>
+</div>
+
+  <script>
+    const soal = [];
+
+    function acakPilihan(jawabanBenar, opsi) {
+      const jawabanBenarIndex = jawabanBenar;
+      const opsiAcak = [...opsi];
+      for (let i = opsiAcak.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [opsiAcak[i], opsiAcak[j]] = [opsiAcak[j], opsiAcak[i]];
+      }
+      const jawabanBenarSetelahAcak = opsiAcak.indexOf(opsi[jawabanBenarIndex]);
+      return { opsiAcak, jawabanBenarSetelahAcak };
+    }
+
+    // TWK
+    for (let i = 0; i < 30; i++) {
+  soal.push({
+    tanya: [
+      "Pancasila sebagai dasar negara Indonesia tercantum dalam?",
+      "Semboyan Bhinneka Tunggal Ika berasal dari?",
+      "UUD 1945 pertama kali disahkan pada tanggal?",
+      "Lambang negara Indonesia adalah?",
+      "Sila ke-3 Pancasila berbunyi?",
+      "Lembaga yang berwenang mengubah UUD 1945 adalah?",
+      "Hak asasi manusia dijamin dalam UUD 1945 pasal?",
+      "Indonesia merdeka pada tanggal?",
+      "Sistem pemerintahan Indonesia adalah?",
+      "Presiden pertama Republik Indonesia adalah?",
+      "Lagu kebangsaan Indonesia adalah?",
+      "Bentuk negara Indonesia menurut UUD 1945 adalah?",
+      "Semboyan negara Indonesia mengandung makna?",
+      "Sila pertama Pancasila mengandung nilai?",
+      "Pancasila disahkan sebagai dasar negara pada?",
+      "Sila ke-5 Pancasila adalah?",
+      "Bendera negara Indonesia berwarna?",
+      "Semboyan Bhinneka Tunggal Ika berarti?",
+      "Wilayah Indonesia terbentang dari?",
+      "Bahasa resmi negara Indonesia adalah?",
+      "Dasar hukum tertinggi di Indonesia adalah?",
+      "Pembukaan UUD 1945 terdiri dari berapa alinea?",
+      "Pancasila digali dari?",
+      "Sistem pemerintahan Indonesia adalah?",
+      "Negara Indonesia berdasarkan atas?",
+      "Lambang burung Garuda memiliki jumlah bulu yang melambangkan?",
+      "Hari lahir Pancasila diperingati setiap tanggal?",
+      "Sumber hukum tertinggi di Indonesia adalah?",
+      "Nilai-nilai Pancasila bersifat?",
+      "Kedudukan Pancasila sebagai dasar negara berarti?"
+    ][i],
+    opsi: [
+      ["Pembukaan UUD 1945", "Batang tubuh UUD 1945", "Amandemen UUD", "Ketetapan MPR", "Proklamasi Kemerdekaan"],
+      ["Kitab Sutasoma", "Kitab Arjuna Wiwaha", "Kitab Negarakertagama", "Kitab Ramayana", "Kitab Mahabharata"],
+      ["18 Agustus 1945", "17 Agustus 1945", "1 Juni 1945", "5 Juli 1959", "10 November 1945"],
+      ["Garuda Pancasila", "Garuda Indonesia", "Burung Rajawali", "Bhinneka Tunggal Ika", "Garuda Merdeka"],
+      ["Persatuan Indonesia", "Kemanusiaan yang adil", "Keadilan sosial", "Ketuhanan yang Maha Esa", "Kerakyatan yang dipimpin"],
+      ["MPR", "DPR", "Presiden", "MA", "MK"],
+      ["Pasal 28", "Pasal 29", "Pasal 31", "Pasal 33", "Pasal 34"],
+      ["17 Agustus 1945", "18 Agustus 1945", "1 Juni 1945", "20 Mei 1908", "28 Oktober 1928"],
+      ["Presidensial", "Parlementer", "Monarki", "Federasi", "Kerajaan"],
+      ["Soekarno", "Hatta", "Soeharto", "Habibie", "Megawati"],
+      ["Indonesia Raya", "Tanah Airku", "Hari Merdeka", "Garuda Pancasila", "Rayuan Pulau Kelapa"],
+      ["Negara Kesatuan", "Republik Serikat", "Kerajaan", "Monarki", "Konfederasi"],
+      ["Persatuan dalam keberagaman", "Kebebasan sepenuhnya", "Kesamaan mutlak", "Tidak berbeda", "Tanpa perbedaan"],
+      ["Ketuhanan", "Kemanusiaan", "Keadilan", "Persatuan", "Kebebasan"],
+      ["18 Agustus 1945", "17 Agustus 1945", "20 Mei 1908", "1 Juni 1945", "28 Oktober 1928"],
+      ["Keadilan sosial bagi seluruh rakyat Indonesia", "Kemanusiaan yang adil dan beradab", "Persatuan Indonesia", "Kerakyatan yang dipimpin", "Ketuhanan Yang Maha Esa"],
+      ["Merah dan putih", "Merah dan kuning", "Putih dan hijau", "Biru dan putih", "Hitam dan putih"],
+      ["Berbeda-beda tetapi tetap satu", "Satu tetapi berbeda", "Bersatu tanpa perbedaan", "Seragam dan sama", "Tidak boleh berbeda"],
+      ["Sabang sampai Merauke", "Aceh sampai Papua", "Utara ke Selatan", "Timur ke Barat", "Jawa ke Papua"],
+      ["Bahasa Indonesia", "Bahasa Jawa", "Bahasa Inggris", "Bahasa Sunda", "Bahasa Melayu"],
+      ["UUD 1945", "Pancasila", "Peraturan Presiden", "Undang-undang", "Ketetapan MPR"],
+      ["4", "3", "5", "2", "1"],
+      ["Nilai budaya bangsa", "Budaya luar", "Kitab suci", "Konstitusi", "Warisan kolonial"],
+      ["Presidensial", "Monarki", "Federasi", "Konfederasi", "Otoriter"],
+      ["Pancasila dan UUD 1945", "Pancasila saja", "UUD saja", "Perda", "Ketetapan Presiden"],
+      ["Tanggal kemerdekaan", "Jumlah hari kemerdekaan", "Hari lahir Soekarno", "Jumlah sila Pancasila", "Jumlah pulau"],
+      ["1 Juni", "17 Agustus", "20 Mei", "5 Juli", "18 Agustus"],
+      ["UUD 1945", "Pancasila", "Presiden", "DPR", "Ketetapan MPR"],
+      ["Universal", "Relatif", "Tertutup", "Sementara", "Kontroversial"],
+      ["Segala aspek kehidupan berbangsa", "Kegiatan ekonomi saja", "Urusan agama saja", "Hukum adat", "Pendidikan saja"]
+    ][i],
+    jawaban: 0, // Jawaban benar = opsi pertama dari masing-masing
+    jenis: "TWK"
+  });
+}
+
+    // TIU
+    for (let i = 0; i < 35; i++) {
+  soal.push({
+    tanya: [
+      "Jika 4x + 5 = 21, berapa nilai x?",
+      "Sebuah kereta bergerak dengan kecepatan 72 km/jam, berapa jarak yang ditempuh dalam waktu 3 jam?",
+      "Dua angka jika dijumlahkan hasilnya 20 dan jika dikalikan hasilnya 96. Berapakah kedua angka tersebut?",
+      "Apakah 0.5 lebih besar dari 1/3?",
+      "Berapa hasil dari 16 ÷ 4 × 2?",
+      "Jika 5 buah apel dibagi rata ke dalam 5 keranjang, berapa apel yang ada dalam setiap keranjang?",
+      "Jika 7 ditambah 3 dikali 4, berapa hasilnya?",
+      "Berapakah akar kuadrat dari 64?",
+      "Seorang anak memiliki 20 kelereng dan memberikan 8 kepada temannya. Berapa kelereng yang tersisa?",
+      "Bilangan yang lebih kecil dari 5 dan lebih besar dari 1 adalah?",
+      "Jika 3x + 5 = 20, berapa nilai x?",
+      "Sebuah bola memiliki diameter 12 cm. Berapa jari-jari bola tersebut?",
+      "Jika sebuah mobil menempuh jarak 120 km dalam waktu 2 jam, berapa kecepatan mobil tersebut?",
+      "Berapakah hasil dari 2⁴?",
+      "Panjang sisi sebuah persegi adalah 5 cm. Berapakah luasnya?",
+      "Tiga kali sebuah angka ditambah 4 hasilnya 19. Berapa angka tersebut?",
+      "Dua bilangan yang berbeda jika dijumlahkan hasilnya 13 dan dikalikan hasilnya 42. Berapakah kedua bilangan tersebut?",
+      "Berapakah selisih antara 25 dan 15?",
+      "Apa yang lebih besar, 0.75 atau 3/4?",
+      "Berapa hasil dari 5 × 5 + 5?",
+      "Apakah 36 adalah bilangan kuadrat sempurna?",
+      "Berapa hasil dari 12 x 8?",
+      "Jika 3x = 24, berapa nilai x?",
+      "Tentukan hasil dari 25 - 5 x 2",
+      "Sebuah segitiga memiliki alas 6 cm dan tinggi 4 cm. Berapa luas segitiga tersebut?",
+      "Berapakah hasil dari 7 + 2 × 5?",
+      "Jika sebuah kubus memiliki panjang sisi 3 cm, berapa volumenya?",
+      "Jumlah 5, 10, dan 15 adalah?",
+      "Berapa hasil dari 20 ÷ 4?",
+      "Sebuah mobil bergerak dengan kecepatan 60 km/jam. Berapa jarak yang ditempuh dalam 4 jam?",
+      "Apakah 15 adalah kelipatan dari 3?",
+      "Berapa hasil dari 2 + 3 × 4?",
+      "Berapakah hasil dari 10 x 3 - 5?",
+      "Bilangan yang lebih besar dari 10 dan kurang dari 20 adalah?",
+      "Jika 2x - 4 = 10, berapa nilai x?"
+    ][i],
+    opsi: [
+      // Jawaban benar ditempatkan pada indeks 0 untuk setiap soal
+      ["4", "5", "6", "7", "8"],
+      ["216 km", "150 km", "200 km", "250 km", "300 km"],
+      ["8 dan 12", "6 dan 14", "4 dan 16", "5 dan 15", "3 dan 17"],
+      ["Ya", "Tidak", "Mungkin", "Tergantung", "Tidak pasti"],
+      ["8", "12", "10", "14", "18"],
+      ["1", "2", "3", "4", "5"],
+      ["19", "23", "29", "27", "31"],
+      ["8", "6", "4", "10", "5"],
+      ["12 kelereng", "10 kelereng", "15 kelereng", "8 kelereng", "5 kelereng"],
+      ["2", "3", "4", "5", "6"],
+      ["5", "6", "7", "8", "9"],
+      ["6 cm", "5 cm", "4 cm", "7 cm", "8 cm"],
+      ["60 km/jam", "70 km/jam", "80 km/jam", "90 km/jam", "100 km/jam"],
+      ["16", "32", "64", "128", "256"],
+      ["25 cm²", "20 cm²", "30 cm²", "35 cm²", "40 cm²"],
+      ["5", "6", "7", "8", "9"],
+      ["6 dan 7", "5 dan 8", "4 dan 9", "3 dan 10", "2 dan 11"],
+      ["10", "15", "20", "25", "30"],
+      ["3", "4", "5", "6", "7"],
+      ["30", "15", "16", "17", "18"],
+      ["Ya", "Tidak", "Mungkin", "Tergantung", "Tidak pasti"],
+      ["96", "24", "25", "26", "28"],
+      ["8", "6", "7", "9", "10"],
+      ["15", "20", "25", "10", "5"],
+      ["12", "10", "15", "20", "8"],
+      ["17", "28", "30", "32", "36"],
+      ["27", "28", "30", "32", "36"],
+      ["30", "25", "20", "15", "10"],
+      ["5", "4", "6", "8", "10"],
+      ["240 km", "45", "50", "55", "60"],
+      ["Ya", "Tidak", "Mungkin", "Tergantung", "Tidak pasti"],
+      ["14", "12", "16", "18", "20"],
+      ["25", "20", "15", "30", "35"],
+      ["11", "10", "9", "20", "21"],
+      ["7", "6", "5", "8", "9"]
+    ][i],
+    jawaban: 0,
+    jenis: "TIU"
+  });
+}
+
+    // TKP
+const pertanyaanTKP = [
+  "Apakah Anda lebih suka bekerja sendiri atau dalam tim?",
+  "Bagaimana Anda menghadapi tekanan waktu?",
+  "Apa yang Anda lakukan saat menghadapi masalah yang sulit?",
+  "Bagaimana cara Anda beradaptasi dengan perubahan?",
+  "Apakah Anda merasa nyaman bekerja dengan orang yang berbeda latar belakang?",
+  "Bagaimana Anda menangani kritik dari atasan?",
+  "Apa yang Anda lakukan ketika menemui tantangan di tempat kerja?",
+  "Apa yang Anda lakukan jika pekerjaan Anda dikejar deadline?",
+  "Bagaimana cara Anda menyelesaikan konflik dengan rekan kerja?",
+  "Apakah Anda lebih suka bekerja dengan instruksi atau mandiri?",
+  "Bagaimana Anda menangani situasi yang tidak terduga?",
+  "Bagaimana Anda menunjukkan tanggung jawab dalam pekerjaan?",
+  "Apa yang Anda lakukan jika Anda tidak setuju dengan kebijakan perusahaan?",
+  "Bagaimana Anda mengatur waktu saat memiliki banyak tugas?",
+  "Apa yang Anda lakukan saat harus mengambil keputusan penting?",
+  "Bagaimana Anda memotivasi diri dalam pekerjaan?",
+  "Apa yang Anda lakukan jika mengalami kegagalan?",
+  "Bagaimana Anda menjaga hubungan baik dengan kolega?",
+  "Apa yang Anda lakukan ketika merasa stres di tempat kerja?",
+  "Bagaimana Anda menyelesaikan tugas yang tidak Anda sukai?",
+  "Apakah Anda lebih suka tugas yang jelas atau tantangan yang harus dipelajari?",
+  "Bagaimana Anda mengatasi rasa cemas saat bekerja?",
+  "Bagaimana Anda menjaga etika kerja yang baik?",
+  "Apa yang Anda lakukan ketika diberi tugas yang lebih sulit dari yang diharapkan?",
+  "Bagaimana Anda mengelola konflik antara tim?",
+  "Apakah Anda berkomunikasi lebih baik secara lisan atau tertulis?",
+  "Apa yang Anda lakukan jika menghadapi situasi tidak adil di tempat kerja?",
+  "Bagaimana Anda menangani ketidakpastian dalam pekerjaan?",
+  "Apa yang Anda lakukan jika ada perubahan mendadak dalam pekerjaan?",
+  "Bagaimana Anda memastikan kualitas pekerjaan Anda?",
+  "Bagaimana Anda menangani pekerjaan yang membosankan?",
+  "Apa yang Anda lakukan jika Anda tidak memiliki cukup informasi untuk menyelesaikan tugas?",
+  "Apakah Anda lebih suka bekerja di bawah tekanan atau tidak?",
+  "Apa yang Anda lakukan ketika diberi tugas yang tidak sesuai dengan keahlian Anda?",
+  "Bagaimana cara Anda mengelola waktu dan prioritas?",
+  "Apa yang Anda lakukan jika ada kesalahan dalam pekerjaan Anda?",
+  "Bagaimana Anda menjaga semangat dalam bekerja?",
+  "Apa yang Anda lakukan saat berhadapan dengan tantangan yang tidak bisa Anda kontrol?",
+  "Apa yang Anda lakukan jika Anda merasa tidak dihargai di tempat kerja?",
+  "Bagaimana cara Anda menyesuaikan diri dengan rekan kerja yang berbeda pendapat?",
+  "Apa yang Anda lakukan jika harus bekerja dengan orang yang sangat berbeda pandangannya?",
+  "Bagaimana cara Anda meningkatkan keterampilan pribadi Anda di tempat kerja?",
+  "Apa yang Anda lakukan jika diberi tugas dengan sedikit instruksi?",
+  "Bagaimana Anda mengatasi rasa tidak percaya diri saat bekerja?",
+  "Apa yang Anda lakukan jika Anda merasa kehilangan motivasi?",
+  "Bagaimana Anda membagi tugas dalam kerja tim?"
+];
+
+const opsiTKP = [
+  ["Bekerja dalam tim", "Tergantung situasinya", "Lebih suka bekerja dengan orang lain", "Bekerja sendiri", "Tidak yakin"],
+  ["Mengatur waktu dengan baik", "Mengambil napas dalam-dalam", "Mencari bantuan dari orang lain", "Melakukan hal lain sejenak", "Menunda pekerjaan"],
+  ["Menghadapi dengan tenang", "Mencari solusi dengan cepat", "Bertanya pada rekan kerja", "Menunggu bantuan atasan", "Menghindari masalah"],
+  ["Menyesuaikan diri dengan cepat", "Mencari informasi lebih lanjut", "Mencari dukungan dari rekan kerja", "Menunggu waktu yang tepat", "Menolak perubahan"],
+  ["Ya, saya merasa nyaman", "Tidak masalah", "Tergantung orangnya", "Sedikit tidak nyaman", "Tidak nyaman sama sekali"],
+  ["Menerima dan memperbaiki diri", "Menanggapi dengan tenang", "Berusaha menjelaskan alasan", "Tidak terlalu memperdulikan kritik", "Menghindar dari kritik"],
+  ["Mencari cara terbaik", "Berbicara dengan atasan", "Mencari solusi bersama tim", "Menyerah pada masalah", "Menunggu masalah selesai dengan sendirinya"],
+  ["Bekerja dengan fokus", "Mencari cara efisien", "Menanyakan prioritas", "Menunda pekerjaan sampai mendekati deadline", "Bekerja lebih cepat tanpa memikirkan kualitas"],
+  ["Mencari penyelesaian bersama", "Berbicara langsung dengan pihak terkait", "Mencari solusi lain", "Menghindari konflik", "Membiarkan konflik berlangsung"],
+  ["Tergantung tugasnya", "Lebih suka mandiri", "Lebih suka instruksi", "Suka mencari tahu sendiri", "Tidak terlalu penting"],
+  ["Beradaptasi dengan situasi", "Berusaha tetap tenang", "Mencari bantuan", "Menghindari situasi tersebut", "Berusaha mengikuti alur"],
+  ["Menanggapi dengan profesional", "Berbicara dengan atasan", "Mencari bantuan rekan kerja", "Menghindari tanggung jawab", "Mengabaikan situasi tersebut"],
+  ["Mencari cara untuk mengatasi masalah", "Berbicara dengan atasan", "Bertanya pada rekan kerja", "Menghindari situasi tersebut", "Menganggap masalah itu kecil"],
+  ["Mengatur waktu dengan bijak", "Mencari bantuan rekan kerja", "Berusaha mengerjakan semua sekaligus", "Menunda pekerjaan", "Mencari cara yang lebih mudah"],
+  ["Memikirkan dengan matang", "Mengambil keputusan cepat", "Berbicara dengan atasan", "Bertanya pada rekan kerja", "Membiarkan orang lain yang memutuskan"],
+  ["Motivasi diri dengan tujuan", "Berbicara dengan atasan", "Mencari dukungan teman", "Mengabaikan motivasi", "Menunggu motivasi datang dengan sendirinya"],
+  ["Berusaha belajar dari kegagalan", "Mencari bantuan dari rekan kerja", "Menyesali kegagalan", "Menyerah untuk sementara", "Mencari cara menghindari kegagalan"],
+  ["Menjaga komunikasi yang baik", "Berbicara langsung dengan pihak yang bersangkutan", "Mencari cara menghindari konflik", "Tidak terlalu peduli", "Tidak berhubungan dengan kolega"],
+  ["Mencari solusi untuk mengurangi stres", "Mengambil waktu untuk diri sendiri", "Berbicara dengan atasan", "Mengabaikan stres", "Menunggu masalah selesai dengan sendirinya"],
+  ["Mencari cara menghadapinya", "Berbicara dengan atasan", "Menunda pekerjaan", "Menghindari pekerjaan tersebut", "Menyerah tanpa mencobanya"],
+  ["Tantangan yang harus dipelajari", "Tugas yang jelas", "Keduanya sama", "Tidak tahu", "Tergantung situasi"],
+  ["Mengatasi dengan komunikasi terbuka", "Menarik napas dalam-dalam", "Menunda pekerjaan", "Menghindar dari konflik", "Menunggu situasi tenang"],
+  ["Menjaga etika kerja", "Mengikuti aturan yang ada", "Berbicara dengan rekan kerja", "Mengubah cara kerja", "Mengabaikan etika kerja"],
+  ["Mengambil inisiatif", "Berbicara dengan atasan", "Mengikuti petunjuk", "Menunda pekerjaan", "Tidak melakukan apapun"],
+  ["Berbicara langsung dengan anggota tim", "Menghindari konflik", "Menyerahkan kepada atasan", "Mengabaikan konflik", "Menunggu situasi membaik"],
+  ["Secara lisan", "Secara tertulis", "Tergantung lawan bicara", "Tidak yakin", "Tidak suka keduanya"],
+  ["Berbicara dengan atasan", "Mengambil sikap profesional", "Mengabaikan situasi", "Membalas dengan perlakuan yang sama", "Keluar dari pekerjaan"],
+  ["Mencari solusi terbaik", "Mencari dukungan", "Menunggu arahan", "Mengabaikan", "Panik"],
+  ["Bersikap fleksibel", "Bekerja seperti biasa", "Protes", "Bingung", "Menghindar"],
+  ["Mengevaluasi pekerjaan secara rutin", "Bertanya pada orang lain", "Menunggu umpan balik", "Asal selesai", "Menghindari tanggung jawab"],
+  ["Mencari cara membuatnya menarik", "Mengerjakan seadanya", "Menunda", "Membagi ke orang lain", "Tidak dikerjakan"],
+  ["Mencari informasi tambahan", "Menunda tugas", "Mengerjakan tanpa informasi", "Menolak tugas", "Menunggu bantuan"],
+  ["Bekerja di bawah tekanan", "Tidak di bawah tekanan", "Tergantung tugas", "Tidak yakin", "Tidak suka tekanan"],
+  ["Mengambilnya sebagai tantangan", "Berbicara dengan atasan", "Menolak", "Menunda", "Mengerjakan tanpa niat"],
+  ["Menggunakan skala prioritas", "Mengerjakan yang mudah dulu", "Menunda tugas", "Membagi rata waktu", "Menanyakan pada atasan"],
+  ["Mengevaluasi kesalahan", "Menutup-nutupi", "Mengabaikan", "Menunda koreksi", "Membiarkan orang lain tahu"],
+  ["Mengingat tujuan utama", "Istirahat", "Mengeluh", "Berdiam diri", "Menunggu dimotivasi"],
+  ["Menerima dan beradaptasi", "Mencari solusi alternatif", "Menghindari", "Menyalahkan", "Putus asa"],
+  ["Berbicara dengan pihak terkait", "Mengintrospeksi diri", "Menghindari", "Mengeluh ke teman", "Memendam rasa kecewa"],
+  ["Berusaha memahami sudut pandang", "Berargumen", "Menghindari diskusi", "Menyindir", "Tidak peduli"],
+  ["Membangun komunikasi", "Mengikuti arus", "Menghindari interaksi", "Menjaga jarak", "Memprotes"],
+  ["Belajar mandiri", "Mencari pelatihan", "Membiarkan berjalan", "Menunggu promosi", "Tidak mau belajar"],
+  ["Meminta klarifikasi", "Mengerjakan sebisanya", "Menunda", "Menyuruh orang lain", "Menghindari tugas"],
+  ["Membangun kepercayaan diri", "Minta dukungan", "Menghindar", "Menyalahkan diri sendiri", "Tidak bertindak"],
+  ["Mengingat tujuan besar", "Beristirahat", "Membiarkan", "Mengeluh", "Mencari pekerjaan baru"],
+  ["Membagi sesuai kemampuan", "Membebani satu orang", "Tidak membagi", "Menunggu perintah", "Tidak peduli"]
+];
+
+// Generate soal
+for (let i = 0; i < 45; i++) {
+  const opsiArray = opsiTKP[i].map((teks, index) => ({
+    teks,
+    skor: 5 - index
+  }));
+
+  soal.push({
+    tanya: pertanyaanTKP[i],
+    opsi: opsiArray,
+    jawaban: 0,
+    jenis: "TKP"
+  });
+}
+
+
+    let indeks = 0;
+    const jawaban = new Array(soal.length).fill(null);
+    let waktuTersisa = 90 * 60;
+    let interval;
+
+    function initApp() {
+      loadPeserta();
+      tampilkanSoal();
+      mulaiTimer(waktuTersisa);
+    }
+
+    function loadPeserta() {
+      const data = JSON.parse(localStorage.getItem("dataPeserta"));
+      if (data) {
+        document.getElementById("namaPeserta").textContent = data.nama;
+        document.getElementById("emailPeserta").textContent = data.email;
+      }
+    }
+
+    function tampilkanSoal() {
+      const s = soal[indeks];
+      let opsiHTML = '';
+      if (s.jenis === "TWK" || s.jenis === "TIU") {
+        const { opsiAcak, jawabanBenarSetelahAcak } = acakPilihan(s.jawaban, s.opsi);
+        s.opsi = opsiAcak;
+        s.jawaban = jawabanBenarSetelahAcak;
+
+        opsiHTML = s.opsi.map((o, i) => `
+          <div class="option">
+            <label><input type="radio" name="opsi" value="${i}" ${jawaban[indeks] === i ? "checked" : ""}> ${o}</label>
+          </div>`).join('');
+      } else {
+        opsiHTML = s.opsi.map((o, i) => `
+          <div class="option">
+            <label><input type="radio" name="opsi" value="${i}" ${jawaban[indeks] === i ? "checked" : ""}> ${o.teks}</label>
+          </div>`).join('');
+      }
+
+      document.getElementById("soalTeks").innerHTML = `<strong>Soal No. ${indeks + 1} (${s.jenis})</strong><br>${s.tanya}`;
+      document.getElementById("opsi").innerHTML = opsiHTML;
+      updateNavigasi();
+      updateNavSection();
+      updateCounter();
+    }
+
+    function simpanDanLanjut() {
+      const pilih = document.querySelector('input[name="opsi"]:checked');
+      if (pilih) jawaban[indeks] = parseInt(pilih.value);
+      if (indeks < soal.length - 1) indeks++;
+      tampilkanSoal();
+    }
+
+    function lewati() {
+      if (indeks < soal.length - 1) indeks++;
+      tampilkanSoal();
+    }
+
+    function navigasiKe(i) {
+      indeks = i;
+      tampilkanSoal();
+    }
+
+    function updateNavigasi() {
+      const nav = soal.map((_, i) => `
+        <button class="${jawaban[i] !== null ? 'green' : 'red'}" onclick="navigasiKe(${i})">${i + 1}</button>
+      `).join('');
+      document.getElementById("navigasi").innerHTML = nav;
+    }
+
+    function updateNavSection() {
+      const sectionNav = [];
+      const sections = ['TWK', 'TIU', 'TKP'];
+      sections.forEach((jenis, i) => {
+        const sectionSoal = soal.filter(s => s.jenis === jenis);
+        const button = `<button onclick="filterSoal('${jenis}')">${jenis} (${sectionSoal.length})</button>`;
+        sectionNav.push(button);
+      });
+      document.getElementById("navSection").innerHTML = sectionNav.join(' ');
+    }
+
+    function updateCounter() {
+  const dijawab = jawaban.filter(j => j !== null).length;
+  const belum = soal.length - dijawab;
+  document.getElementById("dijawab").textContent = dijawab;
+  document.getElementById("belum").textContent = belum;
+
+  const btnKirim = document.getElementById("btn-kirim");
+  if (belum === 0) {
+    btnKirim.style.display = "inline-block";
+  } else {
+    btnKirim.style.display = "none";
+  }
+}
+
+    function filterSoal(jenis) {
+      for (let i = 0; i < soal.length; i++) {
+        if (soal[i].jenis === jenis) {
+          navigasiKe(i);
+          break;
+        }
+      }
+    }
+
+    function mulaiTimer(waktu) {
+      interval = setInterval(function() {
+        if (waktu <= 0) {
+          clearInterval(interval);
+          alert("Waktu habis!");
+          konfirmasiSelesai();
+          return;
+        }
+        waktu--;
+        const menit = Math.floor(waktu / 60);
+        const detik = waktu % 60;
+        document.getElementById("timer").textContent = `${String(menit).padStart(2, '0')}:${String(detik).padStart(2, '0')}`;
+      }, 1000);
+    }
+
+    function konfirmasiSelesai() {
+      if (confirm("Apakah Anda yakin ingin menyelesaikan ujian?")) {
+        clearInterval(interval);
+        const dataPeserta = JSON.parse(localStorage.getItem("dataPeserta")) || { nama: "-", email: "-" };
+        let skorTWK = 0, skorTIU = 0, skorTKP = 0;
+
+        soal.forEach((s, i) => {
+          const jwb = jawaban[i];
+          if (s.jenis === "TWK" || s.jenis === "TIU") {
+            if (jwb === s.jawaban) {
+              if (s.jenis === "TWK") skorTWK += 5;
+              if (s.jenis === "TIU") skorTIU += 5;
+            }
+          } else if (s.jenis === "TKP") {
+            if (jwb !== null) skorTKP += s.opsi[jwb].skor;
+          }
+        });
+
+        const hasilUjian = {
+          nama: dataPeserta.nama,
+          email: dataPeserta.email,
+          skorTWK,
+          skorTIU,
+          skorTKP,
+          total: skorTWK + skorTIU + skorTKP
+        };
+        localStorage.setItem("hasilUjian", JSON.stringify(hasilUjian));
+        window.location.href = "hasil.html";
+      }
+    }
+    
+    function kirimJawaban() {
+  if (confirm("Semua soal telah dijawab. Kirim jawaban dan lihat hasil?")) {
+    clearInterval(interval); // hentikan timer
+    const dataPeserta = JSON.parse(localStorage.getItem("dataPeserta")) || { nama: "-", email: "-" };
+    let skorTWK = 0, skorTIU = 0, skorTKP = 0;
+
+    soal.forEach((s, i) => {
+      const jwb = jawaban[i];
+      if (s.jenis === "TWK" || s.jenis === "TIU") {
+        if (jwb === s.jawaban) {
+          if (s.jenis === "TWK") skorTWK += 5;
+          if (s.jenis === "TIU") skorTIU += 5;
+        }
+      } else if (s.jenis === "TKP") {
+        if (jwb !== null) skorTKP += s.opsi[jwb].skor;
+      }
+    });
+
+    const hasilUjian = {
+      nama: dataPeserta.nama,
+      email: dataPeserta.email,
+      skorTWK,
+      skorTIU,
+      skorTKP,
+      total: skorTWK + skorTIU + skorTKP
+    };
+
+    localStorage.setItem("hasilUjian", JSON.stringify(hasilUjian));
+    window.location.href = "hasil.html";
+  }
+}
+
+    localStorage.setItem("paketSoal", "paket1.html");
+    
+  </script>
+  <script>
+  window.addEventListener('load', () => {
+    const alreadyAccessed = sessionStorage.getItem("hasAccess");
+    if (!alreadyAccessed) {
+      setTimeout(() => {
+        document.getElementById('popup-access').style.display = 'flex';
+      }, 5000); // 20 detik setelah halaman dimuat
+    }
+  });
+
+  function checkAccess() {
+    const code = document.getElementById('access-code').value.trim();
+    const validCode = "8188"; // Ganti sesuai kebutuhan
+    if (code === validCode) {
+      sessionStorage.setItem("hasAccess", "true");
+      document.getElementById('popup-access').style.display = 'none';
+    } else {
+      alert("Kode akses salah. Silakan coba lagi.");
+    }
+  }
+</script>
+
+</body>
+</html>
