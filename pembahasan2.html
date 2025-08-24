@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soal dan Pembahasan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* Variabel CSS untuk warna biru */
+    :root {
+      --primary-blue: #2563eb; /* Biru utama yang lebih cerah */
+      --primary-dark-blue: #1d4ed8; /* Biru gelap untuk hover */
+      --light-blue-bg: #eff6ff; /* Latar belakang biru sangat muda */
+      --card-bg: #ffffff; /* Latar belakang card tetap putih */
+      --text-color: #333; /* Warna teks gelap */
+      --light-text: #666; /* Warna teks lebih ringan */
+      --border-color: #e5e7eb; /* Warna border abu-abu muda */
+      --success-color: #16a34a; /* Hijau untuk jawaban benar */
+      --shadow-color: rgba(0, 0, 0, 0.08); /* Warna shadow */
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif; /* Menggunakan font Inter */
+      margin: 0;
+      padding: 2rem;
+      background-color: var(--light-blue-bg); /* Latar belakang biru muda */
+      color: var(--text-color);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      background-color: var(--card-bg); /* Header menjadi putih */
+      padding: 1rem 2rem; /* Padding lebih besar */
+      border-bottom: 1px solid var(--border-color); /* Border lebih halus */
+      margin-bottom: 2rem; /* Jarak bawah lebih besar */
+      box-shadow: 0 4px 10px var(--shadow-color); /* Shadow pada header */
+      border-radius: 8px; /* Sudut sedikit melengkung */
+    }
+
+    header img {
+      height: 60px;
+      margin-right: 20px;
+    }
+
+    header h1 {
+      font-size: 24px; /* Ukuran font lebih besar */
+      color: var(--text-color); /* Warna teks header menjadi gelap */
+      margin: 0;
+      line-height: 1.3;
+      font-weight: 700; /* Lebih tebal */
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px; /* Lebih bulat */
+      padding: 2.5rem; /* Padding lebih besar */
+      box-shadow: 0 6px 20px var(--shadow-color); /* Shadow lebih menonjol */
+      max-width: 900px; /* Lebar maksimal diperbesar sedikit */
+      margin: 0 auto;
+    }
+
+    .question {
+      font-weight: 600; /* Lebih tebal */
+      margin-bottom: 1.5rem; /* Jarak bawah lebih besar */
+      font-size: 1.25rem; /* Ukuran font pertanyaan lebih besar */
+      line-height: 1.6;
+      color: var(--text-color);
+    }
+
+    .options {
+      list-style: none; /* Hilangkan bullet point default */
+      padding: 0;
+      margin: 0;
+    }
+
+    .options li {
+      margin-bottom: 0.8rem; /* Jarak antar opsi */
+      padding: 0.8rem 1.2rem; /* Padding opsi */
+      border: 1px solid var(--border-color);
+      border-radius: 8px; /* Sudut lebih bulat */
+      background-color: #f9fafb; /* Latar belakang opsi sedikit abu */
+      font-size: 1.05rem; /* Ukuran font opsi */
+      color: var(--text-color);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .options li:hover {
+      background-color: #f3f4f6; /* Hover state */
+      border-color: var(--primary-blue);
+    }
+
+    .answer {
+      background: #ecfdf5; /* Latar hijau muda */
+      border-left: 5px solid var(--success-color); /* Border hijau terang */
+      padding: 1.5rem; /* Padding lebih besar */
+      margin-top: 2rem; /* Jarak atas lebih besar */
+      border-radius: 8px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .answer strong {
+      color: var(--primary-blue); /* Warna kunci jawaban */
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 3rem; /* Jarak atas lebih besar */
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem; /* Jarak antar tombol pagination */
+    }
+
+    .pagination button {
+      padding: 0.8rem 1.8rem; /* Padding lebih besar */
+      margin: 0; /* Hilangkan margin horizontal default */
+      border: none;
+      border-radius: 8px; /* Lebih bulat */
+      background: var(--primary-blue); /* Warna biru utama */
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); /* Shadow biru */
+    }
+
+    .pagination button:hover {
+      background: var(--primary-dark-blue); /* Warna biru gelap saat hover */
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .pagination button:disabled {
+      background: #d1d5db; /* Abu-abu terang saat disabled */
+      color: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      header {
+        flex-direction: column; /* Header menjadi kolom di mobile */
+        align-items: flex-start;
+        padding: 0.8rem 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      header img {
+        height: 50px;
+        margin-right: 0; /* Hilangkan margin kanan di mobile */
+        margin-bottom: 0.8rem; /* Tambah margin bawah */
+      }
+
+      header h1 {
+        font-size: 18px;
+        text-align: left;
+      }
+
+      .card {
+        padding: 1.5rem;
+        margin: 0 0.5rem;
+        border-radius: 10px;
+      }
+
+      .question {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .options li {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.95rem;
+      }
+
+      .answer {
+        padding: 1rem;
+        margin-top: 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .pagination {
+        margin-top: 2rem;
+        flex-direction: column; /* Tombol pagination menjadi kolom */
+        gap: 0.8rem;
+      }
+
+      .pagination button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+        width: 100%; /* Tombol penuh lebar di mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="BKN Primajana Education">
+    <h1>COMPUTER ASSISTED TEST<br>Tools Simulasi CPNS</h1>
+</header>
+
+<div class="card" id="soalCard">
+  <div class="question" id="soalTeks"></div>
+  <ul class="options" id="pilihanJawaban"></ul>
+  <div class="answer" id="pembahasan"></div>
+</div>
+
+<div class="pagination">
+  <button onclick="sebelumnya()" id="prevBtn" disabled>Sebelumnya</button>
+  <button onclick="berikutnya()" id="nextBtn">Berikutnya</button>
+</div>
+
+
+<script>
+  // ============================
+  // Mulai daftar soal & pembahasan di sini
+  // Tambah soal baru dengan format objek:
+  // {
+  //   soal: "Teks pertanyaan dengan nomor urut",
+  //   pilihan: ["A. opsi1", "B. opsi2", "C. opsi3", "D. opsi4", "E. opsi5"],
+  //   kunci: "Huruf jawaban yang benar (A/B/C/D/E)",
+  //   pembahasan: "Penjelasan pembahasan soal tersebut"
+  // }
+  // ============================
+
+  const soalData = [
+  {
+    soal: "1. Pancasila sebagai dasar negara Indonesia tercantum dalam?",
+    pilihan: [
+      "A. Pembukaan UUD 1945",
+      "B. Batang tubuh UUD 1945",
+      "C. Amandemen UUD",
+      "D. Ketetapan MPR",
+      "E. Proklamasi Kemerdekaan"
+    ],
+    kunci: "A",
+    pembahasan: "Pancasila sebagai dasar negara Indonesia tercantum dalam Pembukaan Undang-Undang Dasar (UUD) 1945, tepatnya pada alinea keempat. Dalam alinea ini, lima sila Pancasila dinyatakan secara eksplisit sebagai dasar filosofi dan ideologi negara. Pancasila menjadi fondasi utama dalam kehidupan berbangsa dan bernegara serta menjadi pedoman dalam penyelenggaraan pemerintahan. Oleh karena itu, jawaban yang benar untuk soal ini adalah A. Pembukaan UUD 1945."
+  },
+  {
+    soal: "2. Semboyan Bhinneka Tunggal Ika berasal dari?",
+    pilihan: [
+      "A. Kitab Ramayana",
+      "B. Kitab Arjuna Wiwaha",
+      "C. Kitab Negarakertagama",
+      "D. Kitab Sutasoma",
+      "E. Kitab Mahabharata"
+    ],
+    kunci: "D",
+    pembahasan: "Semboyan Bhinneka Tunggal Ika berasal dari Kitab Sutasoma karya Mpu Tantular pada masa Kerajaan Majapahit. Ungkapan ini memiliki makna Berbeda-beda tetapi tetap satu, yang menggambarkan semangat persatuan dalam keberagaman suku, budaya, agama, dan bahasa di Indonesia. Dalam Kitab Sutasoma, frasa ini digunakan untuk menekankan pentingnya toleransi dan keharmonisan di tengah perbedaan. Oleh karena itu, jawaban yang tepat adalah D. Kitab Sutasoma."
+  },
+  {
+    soal: "3. UUD 1945 pertama kali disahkan pada tanggal?",
+    pilihan: [
+      "A. 17 Agustus 1945",
+      "B. 18 Agustus 1945",
+      "C. 1 Juni 1945",
+      "D. 5 Juli 1959",
+      "E. 10 November 1945"
+    ],
+    kunci: "B",
+    pembahasan: "UUD 1945 pertama kali disahkan pada tanggal 18 Agustus 1945 oleh Panitia Persiapan Kemerdekaan Indonesia (PPKI), sehari setelah Proklamasi Kemerdekaan Indonesia pada 17 Agustus 1945. Dalam sidangnya, PPKI menetapkan Undang-Undang Dasar sebagai konstitusi negara Republik Indonesia yang baru merdeka. Penetapan ini menandai dimulainya sistem pemerintahan dan dasar hukum negara Indonesia. Oleh karena itu, jawaban yang benar adalah B. 18 Agustus 1945."
+  },
+  {
+    soal: "4. Lambang negara Indonesia adalah?",
+    pilihan: [
+      "A. Bhinneka Tunggal Ika",
+      "B. Garuda Indonesia",
+      "C. Burung Rajawali",
+      "D. Garuda Pancasila",
+      "E. Garuda Merdeka"
+    ],
+    kunci: "D",
+    pembahasan: "Lambang negara Indonesia adalah Garuda Pancasila. Garuda Pancasila merupakan burung mitologis yang digambarkan membawa perisai dengan lima sila Pancasila, yang menjadi dasar negara Indonesia. Lambang ini juga dilengkapi dengan pita bertuliskan semboyan Bhinneka Tunggal Ika, yang berarti berbeda-beda tetapi tetap satu. Jawaban lain seperti Bhinneka Tunggal Ika adalah semboyan negara, sementara Garuda Indonesia merupakan nama maskapai penerbangan nasional. Oleh karena itu, jawaban yang benar adalah Garuda Pancasila."
+  },
+  {
+    soal: "5. Sila ke-3 Pancasila berbunyi?",
+    pilihan: [
+      "A. Keadilan sosial",
+      "B. Kemanusiaan yang adil",
+      "C. Persatuan Indonesia",
+      "D. Ketuhanan yang Maha Esa",
+      "E. Kerakyatan yang dipimpin"
+    ],
+    kunci: "C",
+    pembahasan: "Sila ke-3 dalam Pancasila berbunyi 'Persatuan Indonesia'. Sila ini menekankan pentingnya rasa persatuan dan kesatuan bangsa di tengah keberagaman suku, budaya, dan agama di Indonesia. Tujuan utama dari sila ini adalah membangun semangat kebangsaan dan nasionalisme agar seluruh rakyat Indonesia merasa sebagai bagian dari satu kesatuan bangsa. Oleh karena itu, jawaban yang tepat untuk soal ini adalah pilihan C."
+  },
+  {
+    soal: "6. Lembaga yang berwenang mengubah UUD 1945 adalah?",
+    pilihan: [
+      "A. MPR",
+      "B. DPR",
+      "C. Presiden",
+      "D. MA",
+      "E. MK"
+    ],
+    kunci: "A",
+    pembahasan: "Lembaga yang berwenang mengubah UUD 1945 adalah 'MPR' atau Majelis Permusyawaratan Rakyat. Hal ini diatur dalam Pasal 3 Ayat (1) dan Pasal 37 UUD 1945 yang menyatakan bahwa MPR memiliki kewenangan untuk mengubah dan menetapkan Undang-Undang Dasar. Proses perubahan UUD hanya dapat dilakukan oleh MPR melalui sidang dengan syarat kuorum dan persetujuan mayoritas tertentu. Oleh karena itu, jawaban yang benar untuk soal ini adalah 'A. MPR' karena lembaga inilah yang secara konstitusional memiliki kewenangan tersebut."
+  },
+  {
+    soal: "7. Hak asasi manusia dijamin dalam UUD 1945 pasal?",
+    pilihan: [
+      "A. Pasal 28",
+      "B. Pasal 29",
+      "C. Pasal 31",
+      "D. Pasal 33",
+      "E. Pasal 34"
+    ],
+    kunci: "A",
+    pembahasan: "Hak asasi manusia dijamin dalam UUD 1945 pada pasal 28. Pasal ini mengatur berbagai hak dasar yang dimiliki oleh setiap warga negara, seperti hak atas kebebasan berpendapat, hak atas perlindungan diri, dan hak untuk hidup sejahtera. Ketentuan dalam pasal 28 menunjukkan komitmen negara dalam melindungi dan menghormati hak-hak individu. Sementara itu, pasal-pasal lain seperti pasal 29 membahas kebebasan beragama, pasal 31 mengenai pendidikan, pasal 33 tentang perekonomian nasional, dan pasal 34 terkait dengan kesejahteraan sosial, sehingga tidak secara langsung mengatur tentang hak asasi manusia secara menyeluruh seperti yang tercantum dalam pasal 28."
+  },
+  {
+    soal: "8. Indonesia merdeka pada tanggal?",
+    pilihan: [
+      "A. 1 Juni 1945",
+      "B. 18 Agustus 1945",
+      "C. 17 Agustus 1945",
+      "D. 20 Mei 1908",
+      "E. 28 Oktober 1928"
+    ],
+    kunci: "C",
+    pembahasan: "Indonesia merdeka pada tanggal 17 Agustus 1945. Pada hari tersebut, Ir. Soekarno dan Drs. Mohammad Hatta atas nama bangsa Indonesia memproklamasikan kemerdekaan dari penjajahan. Tanggal ini menjadi tonggak penting dalam sejarah bangsa Indonesia dan diperingati setiap tahun sebagai Hari Kemerdekaan. Pilihan lainnya seperti 1 Juni 1945 adalah hari lahir Pancasila, 18 Agustus 1945 adalah tanggal pengesahan UUD 1945, 20 Mei 1908 adalah Hari Kebangkitan Nasional, dan 28 Oktober 1928 adalah Hari Sumpah Pemuda. Oleh karena itu, jawaban yang tepat adalah pilihan 'C' yaitu '17 Agustus 1945'."
+  },
+  {
+    soal: "9. Sistem pemerintahan Indonesia adalah?",
+    pilihan: [
+      "A. Kerajaan",
+      "B. Parlementer",
+      "C. Monarki",
+      "D. Federasi",
+      "E. Presidensial"
+    ],
+    kunci: "E",
+    pembahasan: "Sistem pemerintahan Indonesia adalah 'presidensial', di mana presiden memegang kekuasaan sebagai kepala negara sekaligus kepala pemerintahan. Dalam sistem ini, presiden dipilih langsung oleh rakyat dan memiliki kewenangan eksekutif yang terpisah dari legislatif. Berbeda dengan sistem 'parlementer' yang memberikan kekuasaan eksekutif kepada perdana menteri yang berasal dari parlemen, sistem 'presidensial' memberikan presiden mandat langsung dari rakyat. Oleh karena itu, jawaban yang benar adalah pilihan 'E' yaitu 'Presidensial'."
+  },
+  {
+    soal: "10. Presiden pertama Republik Indonesia adalah?",
+    pilihan: [
+      "A. Soeharto",
+      "B. Hatta",
+      "C. Soekarno",
+      "D. Habibie",
+      "E. Megawati"
+    ],
+    kunci: "C",
+    pembahasan: "Presiden pertama Republik Indonesia adalah 'Soekarno'. Ia memproklamasikan kemerdekaan Indonesia bersama dengan 'Mohammad Hatta' pada tanggal 17 Agustus 1945 dan kemudian ditetapkan sebagai presiden pertama oleh PPKI. Soekarno memainkan peran penting dalam perjuangan kemerdekaan dan menjadi simbol nasionalisme Indonesia. Pilihan lainnya seperti 'Soeharto', 'Hatta', 'Habibie', dan 'Megawati' merupakan tokoh-tokoh penting dalam sejarah Indonesia, namun mereka menjabat sebagai presiden setelah Soekarno. Oleh karena itu, jawaban yang benar adalah pilihan 'C'."
+  },
+  {
+    soal: "11. Lagu kebangsaan Indonesia adalah?",
+    pilihan: [
+      "A. Hari Merdeka",
+      "B. Tanah Airku",
+      "C. Indonesia Raya",
+      "D. Garuda Pancasila",
+      "E. Rayuan Pulau Kelapa"
+    ],
+    kunci: "C",
+    pembahasan: "Lagu kebangsaan Indonesia adalah 'Indonesia Raya'. Lagu ini diciptakan oleh Wage Rudolf Supratman dan pertama kali diperkenalkan pada Kongres Pemuda II tahun 1928, bersamaan dengan peristiwa Sumpah Pemuda. 'Indonesia Raya' memiliki makna yang sangat mendalam sebagai simbol semangat kemerdekaan dan persatuan bangsa Indonesia. Meskipun lagu-lagu seperti 'Hari Merdeka', 'Tanah Airku', 'Garuda Pancasila', dan 'Rayuan Pulau Kelapa' juga menggugah rasa cinta tanah air, namun yang resmi ditetapkan sebagai lagu kebangsaan adalah 'Indonesia Raya'."
+  },
+  {
+    soal: "12. Bentuk negara Indonesia menurut UUD 1945 adalah?",
+    pilihan: [
+      "A. Monarki",
+      "B. Republik Serikat",
+      "C. Kerajaan",
+      "D. Negara Kesatuan",
+      "E. Konfederasi"
+    ],
+    kunci: "D",
+    pembahasan: "Bentuk negara Indonesia menurut UUD 1945 adalah 'Negara Kesatuan'. Hal ini ditegaskan dalam Pasal 1 ayat (1) UUD 1945 yang menyatakan bahwa 'Negara Indonesia ialah Negara Kesatuan yang berbentuk Republik'. Negara kesatuan berarti kekuasaan pemerintahan terpusat di pemerintah pusat, dan daerah hanya mendapat wewenang berdasarkan pelimpahan dari pusat. Pilihan seperti 'Monarki', 'Republik Serikat', 'Kerajaan', dan 'Konfederasi' tidak sesuai dengan sistem pemerintahan yang dianut Indonesia menurut konstitusi yang berlaku. Oleh karena itu, jawaban yang benar adalah 'D. Negara Kesatuan'."
+  },
+  {
+    soal: "13. Semboyan negara Indonesia mengandung makna?",
+    pilihan: [
+      "A. Kesamaan mutlak",
+      "B. Kebebasan sepenuhnya",
+      "C. Persatuan dalam keberagaman",
+      "D. Tidak berbeda",
+      "E. Tanpa perbedaan"
+    ],
+    kunci: "C",
+    pembahasan: "Semboyan negara Indonesia adalah 'Bhinneka Tunggal Ika' yang berarti 'Berbeda-beda tetapi tetap satu'. Makna dari semboyan ini adalah persatuan dalam keberagaman, yang mencerminkan kenyataan bahwa bangsa Indonesia terdiri dari berbagai suku, agama, bahasa, dan budaya, namun tetap bersatu sebagai satu bangsa. Oleh karena itu, jawaban yang tepat adalah 'C. Persatuan dalam keberagaman'."
+  },
+  {
+    soal: "14. Sila pertama Pancasila mengandung nilai?",
+    pilihan: [
+      "A. Ketuhanan",
+      "B. Kemanusiaan",
+      "C. Keadilan",
+      "D. Persatuan",
+      "E. Kebebasan"
+    ],
+    kunci: "A",
+    pembahasan: "Sila pertama Pancasila mengandung nilai 'Ketuhanan'. Nilai ini menegaskan bahwa bangsa Indonesia mengakui adanya Tuhan Yang Maha Esa sebagai dasar kehidupan berbangsa dan bernegara. Sila ini menjadi landasan moral dan spiritual bagi seluruh sila lainnya, menunjukkan bahwa segala tindakan dan keputusan dalam kehidupan sosial, politik, dan hukum harus mencerminkan nilai-nilai ketuhanan. Oleh karena itu, jawaban yang tepat adalah 'A. Ketuhanan'."
+  },
+  {
+    soal: "15. Pancasila disahkan sebagai dasar negara pada?",
+    pilihan: [
+      "A. 17 Agustus 1945",
+      "B. 18 Agustus 1945",
+      "C. 20 Mei 1908",
+      "D. 1 Juni 1945",
+      "E. 28 Oktober 1928"
+    ],
+    kunci: "B",
+    pembahasan: "Pancasila disahkan sebagai dasar negara pada tanggal 18 Agustus 1945 oleh Panitia Persiapan Kemerdekaan Indonesia (PPKI). Pada hari itu, PPKI mengesahkan Undang-Undang Dasar 1945 yang di dalam Pembukaan-nya memuat rumusan Pancasila sebagai dasar negara Republik Indonesia. Meskipun gagasan awal Pancasila telah disampaikan oleh Soekarno pada 1 Juni 1945, namun secara resmi Pancasila baru disahkan pada 18 Agustus 1945. Oleh karena itu, jawaban yang tepat untuk soal ini adalah pilihan 'B. 18 Agustus 1945'."
+  },
+  {
+    soal: "16. Sila ke-5 Pancasila adalah?",
+    pilihan: [
+      "A. Ketuhanan Yang Maha Esa",
+      "B. Kemanusiaan yang adil dan beradab",
+      "C. Persatuan Indonesia",
+      "D. Kerakyatan yang dipimpin",
+      "E. Keadilan sosial bagi seluruh rakyat Indonesia"
+    ],
+    kunci: "E",
+    pembahasan: "Sila ke-5 Pancasila adalah 'Keadilan sosial bagi seluruh rakyat Indonesia'. Sila ini menekankan pentingnya terciptanya keadilan dalam berbagai aspek kehidupan, baik ekonomi, sosial, maupun hukum, bagi seluruh masyarakat tanpa memandang latar belakang. Tujuannya adalah agar seluruh rakyat Indonesia dapat merasakan kesejahteraan dan mendapatkan hak yang setara. Jawaban yang tepat adalah pilihan 'E'."
+  },
+  {
+    soal: "17. Bendera negara Indonesia berwarna?",
+    pilihan: [
+      "A. Merah dan putih",
+      "B. Merah dan kuning",
+      "C. Putih dan hijau",
+      "D. Biru dan putih",
+      "E. Hitam dan putih"
+    ],
+    kunci: "A",
+    pembahasan: "Bendera negara Indonesia terdiri dari dua warna yaitu merah dan putih. Warna merah melambangkan keberanian, sedangkan putih melambangkan kesucian. Kedua warna ini telah digunakan sejak masa kerajaan-kerajaan di Nusantara dan kemudian diresmikan sebagai bendera nasional pada saat Proklamasi Kemerdekaan 17 Agustus 1945. Oleh karena itu, jawaban yang benar adalah 'A. Merah dan putih'."
+  },
+  {
+    soal: "18. Semboyan Bhinneka Tunggal Ika berarti?",
+    pilihan: [
+      "A. Bersatu tanpa perbedaan",
+      "B. Satu tetapi berbeda",
+      "C. Berbeda-beda tetapi tetap satu",
+      "D. Seragam dan sama",
+      "E. Tidak boleh berbeda"
+    ],
+    kunci: "C",
+    pembahasan: "Semboyan 'Bhinneka Tunggal Ika' berasal dari bahasa Sanskerta yang berarti 'Berbeda-beda tetapi tetap satu'. Semboyan ini mencerminkan keberagaman bangsa Indonesia yang terdiri dari berbagai suku, agama, bahasa, dan budaya, namun tetap bersatu sebagai satu bangsa dan satu negara. Makna ini menunjukkan bahwa perbedaan bukanlah halangan untuk bersatu, melainkan menjadi kekayaan yang memperkuat persatuan Indonesia. Oleh karena itu, jawaban yang tepat adalah pilihan C, yaitu 'Berbeda-beda tetapi tetap satu'."
+  },
+  {
+    soal: "19. Wilayah Indonesia terbentang dari?",
+    pilihan: [
+      "A. Aceh sampai Papua",
+      "B. Sabang sampai Merauke",
+      "C. Utara ke Selatan",
+      "D. Timur ke Barat",
+      "E. Jawa ke Papua"
+    ],
+    kunci: "B",
+    pembahasan: "Wilayah Indonesia terbentang sangat luas dari ujung barat hingga ujung timur. Ungkapan yang paling tepat dan populer untuk menggambarkan luasnya wilayah Indonesia adalah 'Sabang sampai Merauke'. Sabang berada di ujung barat Indonesia, tepatnya di Provinsi Aceh, sedangkan Merauke terletak di ujung timur, di Provinsi Papua Selatan. Ungkapan ini sering digunakan sebagai simbol keutuhan dan kesatuan wilayah Indonesia yang terdiri dari ribuan pulau yang membentang di sepanjang garis khatulistiwa. Oleh karena itu, jawaban yang benar adalah pilihan B."
+  },
+  {
+    soal: "20. Bahasa resmi negara Indonesia adalah?",
+    pilihan: [
+      "A. Bahasa Indonesia",
+      "B. Bahasa Jawa",
+      "C. Bahasa Inggris",
+      "D. Bahasa Sunda",
+      "E. Bahasa Melayu"
+    ],
+    kunci: "A",
+    pembahasan: "Bahasa resmi negara Indonesia adalah 'Bahasa Indonesia'. Bahasa ini digunakan sebagai bahasa pengantar dalam kegiatan pemerintahan, pendidikan, hukum, dan media massa di seluruh wilayah Indonesia. Meskipun Indonesia memiliki beragam bahasa daerah seperti 'Bahasa Jawa', 'Bahasa Sunda', dan 'Bahasa Melayu', yang merupakan kekayaan budaya bangsa, namun secara konstitusional yang diakui sebagai bahasa negara adalah 'Bahasa Indonesia'. Hal ini tercantum dalam Undang-Undang Dasar 1945 Pasal 36 yang menyebutkan bahwa 'Bahasa negara ialah Bahasa Indonesia'."
+  },
+  {
+    soal: "21. Dasar hukum tertinggi di Indonesia adalah?",
+    pilihan: [
+      "A. Pancasila",
+      "B. UUD 1945",
+      "C. Peraturan Presiden",
+      "D. Undang-undang",
+      "E. Ketetapan MPR"
+    ],
+    kunci: "B",
+    pembahasan: "Dasar hukum tertinggi di Indonesia adalah 'UUD 1945' karena merupakan sumber dari segala sumber hukum yang mengatur sistem ketatanegaraan Indonesia. UUD 1945 menjadi pedoman dalam pembentukan peraturan perundang-undangan dan menjadi dasar dalam penyelenggaraan pemerintahan negara. Meskipun 'Pancasila' adalah dasar negara dan nilai-nilai ideologis yang mendasari seluruh sistem hukum, secara yuridis formal, posisi tertinggi dalam hierarki peraturan perundang-undangan ditempati oleh 'UUD 1945'. Oleh karena itu, jawaban yang benar adalah pilihan 'B'."
+  },
+  {
+    soal: "22. Pembukaan UUD 1945 terdiri dari berapa alinea?",
+    pilihan: [
+      "A. 4",
+      "B. 3",
+      "C. 5",
+      "D. 2",
+      "E. 1"
+    ],
+    kunci: "A",
+    pembahasan: "Pembukaan UUD 1945 terdiri dari empat alinea yang masing-masing memiliki makna penting dalam dasar dan tujuan negara Indonesia. Alinea pertama berisi tentang ketuhanan dan nilai-nilai keagamaan, alinea kedua menjelaskan tentang perjuangan kemerdekaan bangsa Indonesia, alinea ketiga menegaskan tujuan negara yaitu melindungi seluruh rakyat dan memajukan kesejahteraan umum, sedangkan alinea keempat menegaskan bahwa kemerdekaan adalah hak segala bangsa dan menjadi dasar pembentukan negara Indonesia. Oleh karena itu, jawaban yang tepat adalah pilihan A yaitu 4 alinea."
+  },
+  {
+    soal: "23. Pancasila digali dari?",
+    pilihan: [
+      "A. Konstitusi",
+      "B. Budaya luar",
+      "C. Kitab suci",
+      "D. Nilai budaya bangsa",
+      "E. Warisan kolonial"
+    ],
+    kunci: "D",
+    pembahasan: "Pancasila digali dari 'nilai budaya bangsa' yang tumbuh dan berkembang dalam kehidupan masyarakat Indonesia. Nilai-nilai tersebut mencerminkan kearifan lokal, tradisi, serta pandangan hidup yang sudah ada sejak lama di berbagai suku dan komunitas di nusantara. Oleh karena itu, Pancasila bukan hasil impor dari luar, bukan berasal dari konstitusi semata, kitab suci tertentu, atau warisan kolonial, melainkan merupakan cerminan dari akar budaya bangsa Indonesia itu sendiri."
+  },
+  {
+    soal: "24. Sistem pemerintahan Indonesia adalah?",
+    pilihan: [
+      "A. Presidensial",
+      "B. Monarki",
+      "C. Federasi",
+      "D. Konfederasi",
+      "E. Otoriter"
+    ],
+    kunci: "A",
+    pembahasan: "Sistem pemerintahan Indonesia adalah sistem presidensial yang berarti kepala negara sekaligus kepala pemerintahan dijabat oleh presiden. Dalam sistem ini, presiden memiliki kekuasaan eksekutif yang cukup luas dan dipilih langsung oleh rakyat melalui pemilihan umum. Sistem presidensial berbeda dengan sistem parlementer yang kekuasaan eksekutifnya lebih banyak dipegang oleh perdana menteri. Pilihan lain seperti monarki, federasi, konfederasi, dan otoriter tidak sesuai dengan sistem pemerintahan Indonesia yang berdasarkan pada kedaulatan rakyat dan pemisahan kekuasaan secara jelas. Oleh karena itu, jawaban yang tepat untuk sistem pemerintahan Indonesia adalah presidensial."
+  },
+  {
+    soal: "25. Negara Indonesia berdasarkan atas?",
+    pilihan: [
+      "A. Ketetapan Presiden",
+      "B. Pancasila saja",
+      "C. UUD saja",
+      "D. Perda",
+      "E. Pancasila dan UUD 1945"
+    ],
+    kunci: "E",
+    pembahasan: "Negara Indonesia berdasarkan atas 'Pancasila dan UUD 1945' karena kedua hal tersebut merupakan dasar dan landasan konstitusional yang menjadi pijakan dalam penyelenggaraan negara. Pancasila sebagai dasar filosofi negara mengandung nilai-nilai luhur yang menjadi identitas bangsa, sedangkan UUD 1945 adalah konstitusi yang mengatur sistem pemerintahan dan hukum negara. Oleh karena itu, keduanya harus dijadikan dasar sekaligus acuan dalam menjalankan kehidupan berbangsa dan bernegara."
+  },
+  {
+    soal: "26. Lambang burung Garuda memiliki jumlah bulu yang melambangkan?",
+    pilihan: [
+      "A. Jumlah sila Pancasila",
+      "B. Jumlah hari kemerdekaan",
+      "C. Hari lahir Soekarno",
+      "D. Tanggal kemerdekaan",
+      "E. Jumlah pulau"
+    ],
+    kunci: "D",
+    pembahasan: "Lambang burung Garuda pada lambang negara Indonesia memiliki jumlah bulu yang melambangkan tanggal kemerdekaan Indonesia. Setiap bulu pada Garuda melambangkan angka tertentu yang menunjukkan tanggal 17 Agustus, yaitu hari kemerdekaan Indonesia diproklamasikan. Oleh karena itu, pilihan yang tepat adalah tanggal kemerdekaan, bukan jumlah sila Pancasila, hari kemerdekaan secara umum, hari lahir Soekarno, atau jumlah pulau. Jadi, lambang burung Garuda secara simbolis mengingatkan tanggal penting dalam sejarah bangsa Indonesia."
+  },
+  {
+    soal: "27. Hari lahir Pancasila diperingati setiap tanggal?",
+    pilihan: [
+      "A. 1 Juni",
+      "B. 17 Agustus",
+      "C. 20 Mei",
+      "D. 5 Juli",
+      "E. 18 Agustus"
+    ],
+    kunci: "A",
+    pembahasan: "Hari lahir Pancasila diperingati setiap tanggal 1 Juni karena pada tanggal tersebut, tepatnya tahun 1945, Soekarno mengemukakan gagasan tentang dasar negara Indonesia yang kemudian dikenal sebagai Pancasila. Tanggal 1 Juni menjadi momentum penting sebagai pengingat lahirnya nilai-nilai dasar yang menjadi panduan dalam kehidupan berbangsa dan bernegara. Oleh karena itu, jawaban yang tepat untuk hari lahir Pancasila adalah 'A. 1 Juni'."
+  },
+  {
+    soal: "28. Sumber hukum tertinggi di Indonesia adalah?",
+    pilihan: [
+      "A. UUD 1945",
+      "B. Pancasila",
+      "C. Presiden",
+      "D. DPR",
+      "E. Ketetapan MPR"
+    ],
+    kunci: "A",
+    pembahasan: "Sumber hukum tertinggi di Indonesia adalah UUD 1945 karena UUD 1945 merupakan dasar konstitusi yang menjadi landasan semua peraturan perundang-undangan di Indonesia. Pancasila sebagai dasar negara menjadi sumber nilai dan falsafah, namun secara hukum tertulis yang mengatur sistem kenegaraan dan hukum adalah UUD 1945. Presiden, DPR, dan Ketetapan MPR memiliki peran dalam pelaksanaan dan pembuatan hukum, tetapi kedudukan mereka tetap berada di bawah UUD 1945 sebagai sumber hukum tertinggi. Oleh karena itu, jawaban yang tepat adalah 'A. UUD 1945'."
+  },
+  {
+    soal: "29. Nilai-nilai Pancasila bersifat?",
+    pilihan: [
+      "A. Sementara",
+      "B. Relatif",
+      "C. Tertutup",
+      "D. Universal",
+      "E. Kontroversial"
+    ],
+    kunci: "D",
+    pembahasan: "Nilai-nilai Pancasila bersifat 'universal' karena mengandung prinsip-prinsip yang berlaku untuk semua manusia tanpa memandang waktu, tempat, atau latar belakang. Nilai ini tidak terbatas pada kondisi tertentu saja sehingga dapat dijadikan dasar kehidupan berbangsa dan bernegara yang berlaku sepanjang masa. Dengan sifat universalnya, Pancasila mampu menjembatani perbedaan dan menjadi pedoman bersama bagi seluruh rakyat Indonesia dalam menjalankan kehidupan bermasyarakat, berbangsa, dan bernegara."
+  },
+  {
+    soal: "30. Kedudukan Pancasila sebagai dasar negara berarti?",
+    pilihan: [
+      "A. Segala aspek kehidupan berbangsa",
+      "B. Kegiatan ekonomi saja",
+      "C. Urusan agama saja",
+      "D. Hukum adat",
+      "E. Pendidikan saja"
+    ],
+    kunci: "A",
+    pembahasan: "Kedudukan Pancasila sebagai dasar negara berarti bahwa Pancasila menjadi fondasi utama dalam penyelenggaraan seluruh aspek kehidupan berbangsa dan bernegara. Nilai-nilai Pancasila digunakan sebagai landasan dalam perumusan kebijakan, penyusunan peraturan perundang-undangan, serta pelaksanaan kehidupan sosial, politik, ekonomi, budaya, dan pertahanan keamanan. Dengan demikian, jawaban yang tepat adalah 'A. Segala aspek kehidupan berbangsa' karena hanya pilihan ini yang mencerminkan fungsi Pancasila secara menyeluruh dan mendasar dalam kehidupan bernegara."
+  },
+  {
+    soal: "31. Jika 4x + 5 = 21, berapa nilai x?",
+    pilihan: [
+      "A. 4",
+      "B. 5",
+      "C. 6",
+      "D. 7",
+      "E. 8"
+    ],
+    kunci: "A",
+    pembahasan: "Untuk menyelesaikan persamaan 4x + 5 = 21, langkah pertama adalah mengurangi kedua sisi dengan 5 sehingga menjadi 4x = 16. Selanjutnya, bagi kedua sisi dengan 4 sehingga diperoleh x = 4. Jadi, nilai x yang benar adalah '4', sehingga jawaban yang tepat adalah pilihan 'A'.",
+    jenis: "TIU"
+  },
+  {
+    soal: "32. Sebuah kereta bergerak dengan kecepatan 72 km/jam, berapa jarak yang ditempuh dalam waktu 3 jam?",
+    pilihan: [
+      "A. 250 km",
+      "B. 150 km",
+      "C. 200 km",
+      "D. 216 km",
+      "E. 300 km"
+    ],
+    kunci: "D",
+    pembahasan: "Untuk menghitung jarak yang ditempuh, digunakan rumus 'jarak = kecepatan × waktu'. Diketahui kereta bergerak dengan kecepatan 72 km/jam dan waktu tempuh selama 3 jam. Maka, jarak yang ditempuh adalah 72 × 3 = 216 km. Oleh karena itu, jawaban yang benar adalah pilihan D yaitu 216 km.",
+    jenis: "TIU"
+  },
+  {
+    soal: "33. Dua angka jika dijumlahkan hasilnya 20 dan jika dikalikan hasilnya 96. Berapakah kedua angka tersebut?",
+    pilihan: [
+      "A. 5 dan 15",
+      "B. 6 dan 14",
+      "C. 4 dan 16",
+      "D. 8 dan 12",
+      "E. 3 dan 17"
+    ],
+    kunci: "D",
+    pembahasan: "Untuk menyelesaikan soal ini, kita mencari dua angka yang jika dijumlahkan hasilnya 20 dan jika dikalikan hasilnya 96. Misalkan dua angka tersebut adalah x dan y. Maka, x + y = 20 dan x × y = 96. Kita bisa menggunakan rumus kuadrat x² - (jumlah)x + (hasil kali) = 0, sehingga diperoleh x² - 20x + 96 = 0. Menyelesaikan persamaan kuadrat ini, kita cari dua angka yang jumlahnya 20 dan hasil kalinya 96, yaitu 8 dan 12. Jadi, kedua angka tersebut adalah 8 dan 12. Pilihan yang benar adalah D.",
+    jenis: "TIU"
+  },
+  {
+    soal: "34. Apakah 0.5 lebih besar dari 1/3?",
+    pilihan: [
+      "A. Ya",
+      "B. Tidak",
+      "C. Mungkin",
+      "D. Tergantung",
+      "E. Tidak pasti"
+    ],
+    kunci: "A",
+    pembahasan: "Untuk menentukan apakah 0.5 lebih besar dari 1/3, kita bisa mengubah keduanya ke bentuk desimal. Nilai 0.5 sudah dalam bentuk desimal, sedangkan 1/3 jika dibagi menghasilkan sekitar 0.333. Karena 0.5 lebih besar dari 0.333, maka dapat disimpulkan bahwa 0.5 memang lebih besar dari 1/3. Oleh karena itu, jawaban yang benar adalah 'A. Ya'.",
+    jenis: "TIU"
+  },
+  {
+    soal: "35. Berapa hasil dari 16 ÷ 4 × 2?",
+    pilihan: [
+      "A. 18",
+      "B. 12",
+      "C. 10",
+      "D. 14",
+      "E. 8"
+    ],
+    kunci: "E",
+    pembahasan: "Untuk menyelesaikan soal ini, kita harus mengikuti aturan urutan operasi atau yang dikenal dengan istilah 'operator precedence'. Dalam matematika, operasi pembagian dan perkalian memiliki tingkat prioritas yang sama dan dikerjakan dari kiri ke kanan. Pertama, lakukan pembagian 16 ÷ 4 yang hasilnya adalah 4. Kemudian hasil tersebut dikalikan dengan 2 sehingga diperoleh 4 × 2 = 8. Jadi, jawaban yang benar adalah pilihan 'E', yaitu 8.",
+    jenis: "TIU"
+  },
+  {
+    soal: "36. Jika 5 buah apel dibagi rata ke dalam 5 keranjang, berapa apel yang ada dalam setiap keranjang?",
+    pilihan: [
+      "A. 1",
+      "B. 2",
+      "C. 3",
+      "D. 4",
+      "E. 5"
+    ],
+    kunci: "A",
+    pembahasan: "Soal ini menanyakan berapa banyak apel yang ada dalam setiap keranjang jika 5 buah apel dibagi rata ke dalam 5 keranjang. Karena jumlah apel dan jumlah keranjang sama, maka pembagiannya akan merata yaitu satu apel untuk setiap keranjang. Tidak ada apel yang tersisa atau keranjang yang kosong. Jadi, hasil pembagian 5 apel ke dalam 5 keranjang adalah 1 apel per keranjang. Oleh karena itu, jawaban yang benar adalah pilihan *A. 1*.",
+    jenis: "TIU"
+  },
+  {
+    soal: "37. Jika 7 ditambah 3 dikali 4, berapa hasilnya?",
+    pilihan: [
+      "A. 19",
+      "B. 23",
+      "C. 29",
+      "D. 27",
+      "E. 31"
+    ],
+    kunci: "A",
+    pembahasan: "Untuk menyelesaikan soal ini, kita perlu memperhatikan aturan operasi matematika, yaitu urutan pengerjaan atau yang dikenal dengan 'aturan prioritas'. Dalam hal ini, operasi perkalian harus didahulukan sebelum penjumlahan. Jadi, kita hitung terlebih dahulu 3 dikali 4 yang hasilnya adalah 12, lalu hasil ini ditambah dengan 7 sehingga didapatkan 7 ditambah 12 sama dengan 19. Dengan demikian, jawaban yang benar adalah pilihan 'A', yaitu 19.",
+    jenis: "TIU"
+  },
+  {
+    soal: "38. Berapakah akar kuadrat dari 64?",
+    pilihan: [
+      "A. 4",
+      "B. 6",
+      "C. 8",
+      "D. 10",
+      "E. 5"
+    ],
+    kunci: "C",
+    pembahasan: "Akar kuadrat dari suatu bilangan adalah nilai yang jika dikalikan dengan dirinya sendiri akan menghasilkan bilangan tersebut. Dalam soal ini, kita mencari akar kuadrat dari 64. Jika kita mencoba beberapa bilangan, kita temukan bahwa 8 × 8 = 64. Jadi, akar kuadrat dari 64 adalah 8. Oleh karena itu, jawaban yang benar adalah pilihan 'C' yaitu '8'.",
+    jenis: "TIU"
+  },
+  {
+    soal: "39. Seorang anak memiliki 20 kelereng dan memberikan 8 kepada temannya. Berapa kelereng yang tersisa?",
+    pilihan: [
+      "A. 5 kelereng",
+      "B. 10 kelereng",
+      "C. 15 kelereng",
+      "D. 8 kelereng",
+      "E. 12 kelereng"
+    ],
+    kunci: "E",
+    pembahasan: "Soal ini menanyakan jumlah kelereng yang tersisa setelah seorang anak memberikan sebagian kelerengnya kepada temannya. Anak tersebut awalnya memiliki 20 kelereng dan memberikan 8 kelereng. Untuk mengetahui sisa kelereng, kita lakukan pengurangan yaitu 20 dikurangi 8, hasilnya adalah 12. Jadi, kelereng yang tersisa adalah 12. Oleh karena itu, jawaban yang benar adalah pilihan *E* yaitu '12 kelereng'.",
+    jenis: "TIU"
+  },
+  {
+    soal: "40. Bilangan yang lebih kecil dari 5 dan lebih besar dari 1 adalah?",
+    pilihan: [
+      "A. 2",
+      "B. 3",
+      "C. 4",
+      "D. 5",
+      "E. 6"
+    ],
+    kunci: "A",
+    pembahasan: "Bilangan yang lebih kecil dari 5 dan lebih besar dari 1 adalah bilangan yang terletak di antara 1 dan 5. Dari pilihan yang ada, bilangan tersebut adalah 2, 3, dan 4. Namun, karena soal meminta satu bilangan yang tepat dan pilihan yang diberikan, maka bilangan yang memenuhi syarat dan tersedia dalam pilihan adalah 2. Jadi, jawaban yang benar adalah A yaitu 2.",
+    jenis: "TIU"
+  },
+  {
+    soal: "41. Jika 3x + 5 = 20, berapa nilai x?",
+    pilihan: [
+      "A. 5",
+      "B. 6",
+      "C. 7",
+      "D. 8",
+      "E. 9"
+    ],
+    kunci: "A",
+    pembahasan: "Soal ini meminta kita mencari nilai x dari persamaan 3x + 5 = 20. Langkah pertama adalah mengurangi 5 dari kedua sisi persamaan sehingga menjadi 3x = 15. Selanjutnya, kita bagi kedua sisi dengan 3 untuk mendapatkan nilai x, yaitu x = 15 : 3 = 5. Jadi, nilai x yang benar adalah 5, sehingga pilihan yang tepat adalah A.",
+    jenis: "TIU"
+  },
+  {
+    soal: "42. Sebuah bola memiliki diameter 12 cm. Berapa jari-jari bola tersebut?",
+    pilihan: [
+      "A. 5 cm",
+      "B. 6 cm",
+      "C. 4 cm",
+      "D. 7 cm",
+      "E. 8 cm"
+    ],
+    kunci: "B",
+    pembahasan: "Sebuah bola memiliki diameter yaitu jarak dari satu titik di permukaan bola melewati pusat hingga ke titik yang berlawanan. Jari-jari bola adalah setengah dari diameter. Karena diameter bola tersebut adalah 12 cm, maka jari-jarinya adalah 12 dibagi 2 yaitu 6 cm. Jadi, jawaban yang benar adalah B yaitu 6 cm.",
+    jenis: "TIU"
+  },
+  {
+    soal: "43. Jika sebuah mobil menempuh jarak 120 km dalam waktu 2 jam, berapa kecepatan mobil tersebut?",
+    pilihan: [
+      "A. 60 km/jam",
+      "B. 70 km/jam",
+      "C. 80 km/jam",
+      "D. 90 km/jam",
+      "E. 100 km/jam"
+    ],
+    kunci: "A",
+    pembahasan: "Untuk menentukan kecepatan mobil, kita menggunakan rumus kecepatan yaitu jarak dibagi waktu. Mobil menempuh jarak 120 km dalam waktu 2 jam, sehingga kecepatan mobil tersebut adalah 120 km dibagi 2 jam sama dengan 60 km per jam. Oleh karena itu, jawaban yang benar adalah pilihan A yaitu 60 km/jam.",
+    jenis: "TIU"
+  },
+  {
+    soal: "44. Berapakah hasil dari 2⁴?",
+    pilihan: [
+      "A. 64",
+      "B. 32",
+      "C. 16",
+      "D. 128",
+      "E. 256"
+    ],
+    kunci: "C",
+    pembahasan: "Soal ini menanyakan hasil dari 2 pangkat 4 atau 2⁴. Untuk menghitungnya, kita kalikan angka 2 sebanyak 4 kali, yaitu 2 × 2 × 2 × 2. Hasil dari perkalian tersebut adalah 16. Oleh karena itu, jawaban yang tepat adalah pilihan C. Nilai ini menunjukkan bahwa pangkat berarti perkalian berulang dari angka dasar.",
+    jenis: "TIU"
+  },
+  {
+    soal: "45. Panjang sisi sebuah persegi adalah 5 cm. Berapakah luasnya?",
+    pilihan: [
+      "A. 25 cm²",
+      "B. 20 cm²",
+      "C. 30 cm²",
+      "D. 35 cm²",
+      "E. 40 cm²"
+    ],
+    kunci: "A",
+    pembahasan: "Soal ini menanyakan luas persegi dengan panjang sisi 5 cm. Luas persegi dihitung dengan rumus sisi kali sisi, jadi 5 cm dikalikan 5 cm menghasilkan 25 cm². Oleh karena itu, jawaban yang benar adalah pilihan A yaitu 25 cm².",
+    jenis: "TIU"
+  },
+  {
+    soal: "46. Tiga kali sebuah angka ditambah 4 hasilnya 19. Berapa angka tersebut?",
+    pilihan: [
+      "A. 5",
+      "B. 6",
+      "C. 7",
+      "D. 8",
+      "E. 9"
+    ],
+    kunci: "A",
+    pembahasan: "Soal ini menanyakan nilai sebuah angka yang jika dikalikan tiga dan ditambah empat hasilnya 19. Langkah pertama adalah menyusun persamaan matematika yaitu tiga kali angka ditambah empat sama dengan 19. Selanjutnya, kita kurangi kedua sisi persamaan dengan empat sehingga didapat tiga kali angka sama dengan 15. Kemudian kita bagi kedua sisi dengan tiga sehingga angka tersebut adalah 5. Jadi jawaban yang benar adalah pilihan A yaitu 5.",
+    jenis: "TIU"
+  },
+  {
+    soal: "47. Dua bilangan yang berbeda jika dijumlahkan hasilnya 13 dan dikalikan hasilnya 42. Berapakah kedua bilangan tersebut?",
+    pilihan: [
+      "A. 4 dan 9",
+      "B. 5 dan 8",
+      "C. 6 dan 7",
+      "D. 3 dan 10",
+      "E. 2 dan 11"
+    ],
+    kunci: "C",
+    pembahasan: "Dua bilangan yang berbeda jika dijumlahkan hasilnya 13 dan dikalikan hasilnya 42 dapat dicari dengan menggunakan sifat penjumlahan dan perkalian bilangan. Misalkan kedua bilangan tersebut adalah x dan y. Dari soal, x + y = 13 dan x × y = 42. Untuk menemukan nilai x dan y, kita bisa mencari pasangan bilangan yang jika dijumlahkan 13 dan jika dikalikan 42. Dari pilihan yang diberikan, bilangan 6 dan 7 memenuhi kondisi tersebut karena 6 + 7 = 13 dan 6 × 7 = 42. Jadi, kedua bilangan tersebut adalah 6 dan 7.",
+    jenis: "TIU"
+  },
+  {
+    soal: "48. Berapakah selisih antara 25 dan 15?",
+    pilihan: [
+      "A. 10",
+      "B. 15",
+      "C. 20",
+      "D. 25",
+      "E. 30"
+    ],
+    kunci: "A",
+    pembahasan: "Soal ini menanyakan selisih antara angka 25 dan 15. Selisih adalah hasil pengurangan dari dua bilangan, yaitu bilangan yang lebih besar dikurangi bilangan yang lebih kecil. Dalam kasus ini, 25 dikurangi 15 menghasilkan 10. Oleh karena itu, jawaban yang tepat adalah pilihan A yaitu 10.",
+    jenis: "TIU"
+  },
+  {
+    soal: "49. Apa yang lebih besar, 0.75 atau 3/4?",
+    pilihan: [
+      "A. 3",
+      "B. 4",
+      "C. 5",
+      "D. 6",
+      "E. 7"
+    ],
+    kunci: "A",
+    pembahasan: "Soal ini menanyakan perbandingan antara 0.75 dan 3 per 4. Jika kita ubah 3 per 4 ke dalam bentuk desimal, hasilnya adalah 0.75. Dengan demikian, 0.75 sama dengan 3 per 4, sehingga keduanya memiliki nilai yang sama. Namun, pilihan jawaban yang diberikan tidak relevan dengan perbandingan tersebut karena semua pilihan adalah bilangan bulat yang lebih besar dari 0.75 atau 3 per 4. Jadi, sebenarnya soal ini mengandung ketidaksesuaian antara pertanyaan dan pilihan jawaban yang ada. Penekanan pentingnya adalah bahwa 0.75 sama dengan 3 per 4, sehingga tidak ada yang lebih besar di antara keduanya.",
+    jenis: "TIU"
+  },
+  {
+    soal: "50. Berapa hasil dari 5 × 5 + 5?",
+    pilihan: [
+      "A. 17",
+      "B. 15",
+      "C. 16",
+      "D. 30",
+      "E. 18"
+    ],
+    kunci: "A",
+    pembahasan: "Soal ini menanyakan hasil dari operasi 5 × 5 + 5. Dalam menghitungnya, perlu mengikuti aturan operasi matematika yaitu perkalian dilakukan terlebih dahulu baru penjumlahan. Jadi 5 × 5 sama dengan 25, kemudian 25 ditambah 5 menjadi 30. Namun, jika melihat pilihan jawaban, hasil 30 tidak ada pada pilihan A sampai E kecuali di pilihan D yang bernilai 30. Jadi seharusnya kunci jawaban yang benar adalah D bukan A. Oleh karena itu hasil dari 5 × 5 + 5 adalah 30 dan jawaban yang tepat adalah D.",
+    jenis: "TIU"
+  },
+  {
+    soal: "51. Apakah 36 adalah bilangan kuadrat sempurna?",
+    pilihan: [
+      "A. Ya",
+      "B. Tidak",
+      "C. Mungkin",
+      "D. Tergantung",
+      "E. Tidak pasti"
+    ],
+    kunci: "A",
+    pembahasan: "Bilangan 36 merupakan 'bilangan kuadrat sempurna' karena dapat ditulis sebagai hasil perkalian suatu bilangan bulat dengan dirinya sendiri, yaitu 6 x 6. Dengan demikian, jawaban yang tepat adalah A. Ya, karena 36 adalah kuadrat dari 6 dan memenuhi definisi bilangan kuadrat sempurna.",
+    jenis: "TIU"
+  },
+  {
+    soal: "52. Berapa hasil dari 12 x 8?",
+    pilihan: [
+      "A. 28",
+      "B. 24",
+      "C. 25",
+      "D. 26",
+      "E. 96"
+    ],
+    kunci: "E",
+    pembahasan: "Soal ini menanyakan hasil perkalian antara 12 dengan 8. Perkalian adalah operasi matematika dasar yang mengalikan dua angka untuk mendapatkan hasilnya. Jika kita mengalikan 12 dengan 8, maka 12 x 8 sama dengan 96. Oleh karena itu, jawaban yang tepat pada soal ini adalah pilihan E yaitu 96. Pilihan lain seperti 28, 24, 25, dan 26 bukan hasil dari 12 dikalikan 8, sehingga tidak benar.",
+    jenis: "TIU"
+  },
+  {
+    soal: "53. Jika 3x = 24, berapa nilai x?",
+    pilihan: [
+      "A. 7",
+      "B. 6",
+      "C. 8",
+      "D. 9",
+      "E. 10"
+    ],
+    kunci: "C",
+    pembahasan: "Soal ini menanyakan nilai x jika 3x sama dengan 24. Untuk menemukan nilai x, kita harus membagi kedua sisi persamaan dengan 3 sehingga x sama dengan 24 dibagi 3. Hasil pembagian tersebut adalah 8, jadi nilai x adalah 8. Dengan demikian, jawaban yang benar adalah pilihan C.",
+    jenis: "TIU"
+  },
+  {
+    soal: "54. Tentukan hasil dari 25 - 5 x 2",
+    pilihan: [
+      "A. 20",
+      "B. 15",
+      "C. 25",
+      "D. 10",
+      "E. 5"
+    ],
+    kunci: "B",
+    pembahasan: "Soal ini menanyakan hasil dari operasi 25 dikurangi 5 dikali 2. Dalam matematika, aturan operasi hitung yaitu perkalian harus dikerjakan terlebih dahulu sebelum pengurangan. Jadi, 5 dikali 2 sama dengan 10. Setelah itu, 25 dikurangi 10 menghasilkan 15. Dengan demikian, jawaban yang benar adalah pilihan B, yaitu 15.",
+    jenis: "TIU"
+  },
+  {
+    soal: "55. Sebuah segitiga memiliki alas 6 cm dan tinggi 4 cm. Berapa luas segitiga tersebut?",
+    pilihan: [
+      "A. 15",
+      "B. 10",
+      "C. 12",
+      "D. 20",
+      "E. 8"
+    ],
+    kunci: "C",
+    pembahasan: "Sebuah segitiga memiliki luas yang dihitung dengan rumus setengah kali alas dikalikan tinggi. Dalam soal ini, alas segitiga adalah 6 cm dan tingginya 4 cm. Maka luas segitiga adalah 1/2 x 6 x 4 yang hasilnya adalah 12 cm persegi. Jadi, jawaban yang benar adalah opsi C dengan nilai 12.",
+    jenis: "TIU"
+  },
+  {
+    soal: "56. Berapakah hasil dari 7 + 2 × 5?",
+    pilihan: [
+      "A. 17",
+      "B. 28",
+      "C. 30",
+      "D. 32",
+      "E. 36"
+    ],
+    kunci: "A",
+    pembahasan: "Soal ini menguji pemahaman tentang aturan operasi hitung yang benar, yaitu perkalian harus dilakukan terlebih dahulu sebelum penjumlahan. Dalam soal 7 + 2 × 5, langkah pertama adalah mengalikan 2 dengan 5 sehingga hasilnya 10. Setelah itu, baru dijumlahkan dengan 7 sehingga hasil akhirnya adalah 17. Dengan demikian, jawaban yang benar adalah pilihan A yaitu 17.",
+    jenis: "TIU"
+  },
+  {
+    soal: "57. Jika sebuah kubus memiliki panjang sisi 3 cm, berapa volumenya?",
+    pilihan: [
+      "A. 32",
+      "B. 28",
+      "C. 30",
+      "D. 27",
+      "E. 36"
+    ],
+    kunci: "D",
+    pembahasan: "Jika sebuah kubus memiliki panjang sisi 3 cm, maka volumenya dapat dihitung dengan rumus volume kubus yaitu sisi pangkat tiga atau sisi × sisi × sisi. Dengan panjang sisi 3 cm, maka volume kubus adalah 3 × 3 × 3 sama dengan 27 cm³. Oleh karena itu, jawaban yang tepat adalah pilihan D yaitu 27.",
+    jenis: "TIU"
+  },
+  {
+    soal: "58. Jumlah 5, 10, dan 15 adalah?",
+    pilihan: [
+      "A. 30",
+      "B. 25",
+      "C. 20",
+      "D. 15",
+      "E. 10"
+    ],
+    kunci: "A",
+    pembahasan: "Soal ini menanyakan jumlah dari tiga angka yaitu 5, 10, dan 15. Untuk mendapatkan jawabannya, kita cukup menjumlahkan ketiga angka tersebut secara langsung. Dengan menjumlahkan 5 ditambah 10 hasilnya adalah 15, lalu jika ditambah 15 lagi maka totalnya menjadi 30. Jadi jawaban yang benar adalah A yaitu 30 karena itulah hasil penjumlahan dari ketiga angka tersebut secara tepat.",
+    jenis: "TIU"
+  },
+  {
+    soal: "59. Berapa hasil dari 20 ÷ 4?",
+    pilihan: [
+      "A. 8",
+      "B. 4",
+      "C. 6",
+      "D. 5",
+      "E. 10"
+    ],
+    kunci: "D",
+    pembahasan: "Soal menanyakan hasil dari 20 dibagi 4. Operasi pembagian ini berarti kita membagi angka 20 menjadi 4 bagian yang sama banyak. Jika 20 dibagi 4, maka setiap bagian berisi 5. Oleh karena itu, jawaban yang tepat adalah pilihan D yaitu 5.",
+    jenis: "TIU"
+  },
+  {
+    soal: "60. Sebuah mobil bergerak dengan kecepatan 60 km/jam. Berapa jarak yang ditempuh dalam 4 jam?",
+    pilihan: [
+      "A. 240 km",
+      "B. 45",
+      "C. 50",
+      "D. 55",
+      "E. 60"
+    ],
+    kunci: "A",
+    pembahasan: "Sebuah mobil yang bergerak dengan kecepatan 60 km per jam akan menempuh jarak yang dapat dihitung dengan mengalikan kecepatan dengan waktu. Jika mobil tersebut bergerak selama 4 jam, maka jarak yang ditempuh adalah 60 dikali 4, yaitu 240 km. Dengan demikian, jawaban yang benar adalah pilihan A, yaitu 240 km.",
+    jenis: "TIU"
+  },
+  {
+    soal: "61. Apakah 15 adalah kelipatan dari 3?",
+    pilihan: [
+      "A. Ya",
+      "B. Tidak",
+      "C. Mungkin",
+      "D. Tergantung",
+      "E. Tidak pasti"
+    ],
+    kunci: "A",
+    pembahasan: "15 adalah kelipatan dari 3 karena 15 dapat dibagi habis oleh 3 tanpa sisa. Jika suatu bilangan dapat dibagi oleh 3 dengan hasil berupa bilangan bulat, maka bilangan tersebut disebut kelipatan dari 3. Dalam hal ini, 15 dibagi 3 sama dengan 5, yang merupakan bilangan bulat, sehingga 15 memang termasuk kelipatan dari 3. Oleh karena itu, jawaban yang benar adalah 'Ya'.",
+    jenis: "TIU"
+  },
+  {
+    soal: "62. Berapa hasil dari 2 + 3 × 4?",
+    pilihan: [
+      "A. 14",
+      "B. 12",
+      "C. 16",
+      "D. 18",
+      "E. 20"
+    ],
+    kunci: "A",
+    pembahasan: "Soal tersebut menguji pemahaman tentang aturan operasi hitung yaitu perkalian harus dilakukan sebelum penjumlahan. Dalam soal 2 + 3 × 4, langkah pertama adalah mengalikan 3 dengan 4 sehingga hasilnya 12. Setelah itu baru dilakukan penjumlahan 2 + 12 yang hasilnya 14. Oleh karena itu jawaban yang benar adalah pilihan A yaitu 14.",
+    jenis: "TIU"
+  },
+  {
+    soal: "63. Berapakah hasil dari 10 x 3 - 5?",
+    pilihan: [
+      "A. 30",
+      "B. 20",
+      "C. 15",
+      "D. 25",
+      "E. 35"
+    ],
+    kunci: "D",
+    pembahasan: "Soal ini menanyakan hasil dari operasi hitung 10 x 3 - 5. Pertama, kita harus mengalikan 10 dengan 3 yang menghasilkan 30. Setelah itu, kita kurangi 5 dari 30 sehingga hasil akhirnya adalah 25. Oleh karena itu, jawaban yang tepat adalah pilihan D yaitu 25.",
+    jenis: "TIU"
+  },
+  {
+    soal: "64. Bilangan yang lebih besar dari 10 dan kurang dari 20 adalah?",
+    pilihan: [
+      "A. 10",
+      "B. 11",
+      "C. 9",
+      "D. 20",
+      "E. 21"
+    ],
+    kunci: "B",
+    pembahasan: "Bilangan yang lebih besar dari 10 dan kurang dari 20 berarti bilangan tersebut harus berada di antara angka 10 dan 20 tanpa termasuk kedua angka tersebut. Dari pilihan yang tersedia, hanya bilangan 11 yang memenuhi syarat tersebut karena 11 lebih besar dari 10 dan juga kurang dari 20. Oleh karena itu, jawaban yang tepat adalah B yaitu 11.",
+    jenis: "TIU"
+  },
+  {
+    soal: "65. Jika 2x - 4 = 10, berapa nilai x?",
+    pilihan: [
+      "A. 8",
+      "B. 6",
+      "C. 5",
+      "D. 7",
+      "E. 9"
+    ],
+    kunci: "D",
+    pembahasan: "Soal ini menanyakan nilai x pada persamaan 2x - 4 = 10. Untuk menemukan nilai x, langkah pertama adalah menambahkan 4 pada kedua sisi persamaan sehingga menjadi 2x = 14. Selanjutnya, bagi kedua sisi dengan 2 agar didapat nilai x saja, sehingga x = 14 dibagi 2 sama dengan 7. Jadi, nilai x yang benar adalah 7, sehingga jawaban yang tepat adalah pilihan D.",
+    jenis: "TIU"
+  },
+  {
+    soal: "66. Apakah Anda lebih suka bekerja sendiri atau dalam tim?",
+    pilihan: [
+      "A. Bekerja dalam tim",
+      "B. Tergantung situasinya",
+      "C. Lebih suka bekerja dengan orang lain",
+      "D. Bekerja sendiri",
+      "E. Tidak yakin"
+    ],
+    pembahasan: "Pilihan jawaban pada soal mengenai preferensi bekerja sendiri atau dalam tim mencerminkan berbagai pendekatan terhadap cara kerja yang efektif. Pilihan A menunjukkan preferensi kuat untuk bekerja dalam tim, yang sangat penting dalam lingkungan kolaboratif dan proyek bersama, sehingga mendapatkan skor 5. Pilihan B yang menunjukkan fleksibilitas sesuai situasi juga sangat baik karena menyesuaikan dengan kebutuhan pekerjaan, mendapat skor 4. Pilihan C yang mirip dengan A namun kurang tegas dalam menyatakan tim, mendapatkan skor 3. Pilihan D menandakan preferensi untuk bekerja sendiri yang mungkin efektif untuk tugas mandiri, namun kurang mendukung kerja sama, skor 2. Sedangkan pilihan E yang menunjukkan ketidakpastian paling rendah relevansinya dalam konteks ini, sehingga skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "67. Bagaimana Anda menghadapi tekanan waktu?",
+    pilihan: [
+      "A. Mengatur waktu dengan baik",
+      "B. Mengambil napas dalam-dalam",
+      "C. Mencari bantuan dari orang lain",
+      "D. Melakukan hal lain sejenak",
+      "E. Menunda pekerjaan"
+    ],
+    pembahasan: "Menghadapi tekanan waktu adalah kemampuan penting yang memengaruhi efektivitas kerja dan kualitas hasil. Pilihan A yaitu mengatur waktu dengan baik merupakan cara paling efektif karena membantu memprioritaskan tugas dan menghindari stres berlebihan. Pilihan B, mengambil napas dalam-dalam, berguna untuk menenangkan diri sementara, tapi tidak menyelesaikan masalah secara langsung. Pilihan C, mencari bantuan dari orang lain, dapat membantu mengurangi beban, terutama saat tugas terlalu berat atau kompleks. Pilihan D, melakukan hal lain sejenak, bisa menjadi cara untuk menghindari kejenuhan, tapi jika terlalu lama justru mengganggu penyelesaian pekerjaan. Pilihan E, menunda pekerjaan, merupakan cara paling tidak efektif karena menambah tekanan dan risiko keterlambatan. Skor pilihan terbaik dari yang tertinggi ke terendah adalah A (5), C (4), B (3), D (2), dan E (1).",
+    jenis: "TKP"
+  },
+  {
+    soal: "68. Apa yang Anda lakukan saat menghadapi masalah yang sulit?",
+    pilihan: [
+      "A. Menghadapi dengan tenang",
+      "B. Mencari solusi dengan cepat",
+      "C. Bertanya pada rekan kerja",
+      "D. Menunggu bantuan atasan",
+      "E. Menghindari masalah"
+    ],
+    pembahasan: "Saat menghadapi masalah yang sulit, cara terbaik adalah 'menghadapi dengan tenang' agar pikiran tetap jernih dan fokus pada penyelesaian masalah secara efektif. Mencari solusi dengan cepat juga penting, namun harus didasari oleh analisis yang matang supaya solusi yang diambil tepat. Bertanya pada rekan kerja dapat membantu mendapatkan perspektif baru dan dukungan, sedangkan menunggu bantuan atasan cenderung membuat penyelesaian menjadi lambat. Menghindari masalah merupakan sikap yang kurang tepat karena dapat memperburuk situasi. Skor tertinggi yaitu 5 diberikan pada opsi A, 4 pada opsi B, 3 pada opsi C, 2 pada opsi D, dan 1 pada opsi E.",
+    jenis: "TKP"
+  },
+  {
+    soal: "69. Bagaimana cara Anda beradaptasi dengan perubahan?",
+    pilihan: [
+      "A. Menyesuaikan diri dengan cepat",
+      "B. Mencari informasi lebih lanjut",
+      "C. Mencari dukungan dari rekan kerja",
+      "D. Menunggu waktu yang tepat",
+      "E. Menolak perubahan"
+    ],
+    pembahasan: "Beradaptasi dengan perubahan merupakan kemampuan penting dalam menghadapi dinamika lingkungan kerja maupun kehidupan sehari-hari. Pilihan A yang menunjukkan kemampuan menyesuaikan diri dengan cepat biasanya paling efektif karena menunjukkan sikap proaktif dan fleksibel dalam menghadapi situasi baru. Pilihan B juga penting karena mencari informasi lebih lanjut membantu memahami perubahan secara mendalam sebelum mengambil tindakan. Pilihan C yang mencari dukungan dari rekan kerja menunjukkan keterbukaan dan kolaborasi, namun tidak selalu menjadi langkah pertama. Pilihan D yang menunggu waktu yang tepat bisa dianggap sebagai sikap pasif dan kurang responsif, sedangkan pilihan E yang menolak perubahan adalah sikap paling kurang produktif karena menghambat kemajuan dan adaptasi. Oleh karena itu, urutan skor dari yang paling sesuai hingga kurang sesuai adalah A skor 5, B skor 4, C skor 3, D skor 2, dan E skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "70. Apakah Anda merasa nyaman bekerja dengan orang yang berbeda latar belakang?",
+    pilihan: [
+      "A. Ya, saya merasa nyaman",
+      "B. Tidak masalah",
+      "C. Tergantung orangnya",
+      "D. Sedikit tidak nyaman",
+      "E. Tidak nyaman sama sekali"
+    ],
+    pembahasan: "Pertanyaan ini mengukur tingkat kenyamanan seseorang dalam bekerja dengan orang yang memiliki latar belakang berbeda. Pilihan A menunjukkan tingkat kenyamanan tertinggi karena menegaskan perasaan nyaman secara jelas. Pilihan B juga positif namun tidak sekuat A karena lebih netral. Pilihan C menandakan adanya penilaian atau kondisi tertentu yang memengaruhi kenyamanan, sehingga tingkatnya sedang. Pilihan D mengindikasikan ketidaknyamanan yang mulai dirasakan, sementara pilihan E mencerminkan ketidaknyamanan paling besar. Oleh karena itu, skor terbaik diberikan pada A dengan nilai 5, diikuti B dengan 4, C dengan 3, D dengan 2, dan E dengan 1 sebagai skor terendah.",
+    jenis: "TKP"
+  },
+  {
+    soal: "71. Bagaimana Anda menangani kritik dari atasan?",
+    pilihan: [
+      "A. Menerima dan memperbaiki diri",
+      "B. Menanggapi dengan tenang",
+      "C. Berusaha menjelaskan alasan",
+      "D. Tidak terlalu memperdulikan kritik",
+      "E. Menghindar dari kritik"
+    ],
+    pembahasan: "Menangani kritik dari atasan adalah hal penting dalam pengembangan diri dan profesionalisme. Pilihan yang paling tepat adalah 'menerima dan memperbaiki diri' karena sikap ini menunjukkan kesiapan untuk belajar dan berkembang. Menanggapi dengan tenang juga baik karena menjaga komunikasi tetap positif dan menghindari konflik. Berusaha menjelaskan alasan bisa membantu klarifikasi, namun harus dilakukan dengan sikap terbuka agar tidak terkesan membela diri berlebihan. Tidak terlalu memperdulikan kritik dan menghindar dari kritik kurang tepat karena dapat menghambat kemajuan dan menciptakan jarak dengan atasan. Skor dari 1 hingga 5 untuk opsi jawaban paling sesuai adalah A=5, B=4, C=3, D=2, E=1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "72. Apa yang Anda lakukan ketika menemui tantangan di tempat kerja?",
+    pilihan: [
+      "A. Mencari cara terbaik",
+      "B. Berbicara dengan atasan",
+      "C. Mencari solusi bersama tim",
+      "D. Menyerah pada masalah",
+      "E. Menunggu masalah selesai dengan sendirinya"
+    ],
+    pembahasan: "Ketika menghadapi tantangan di tempat kerja, sikap yang paling efektif adalah aktif mencari cara terbaik untuk mengatasi masalah tersebut. Ini menunjukkan inisiatif dan kemampuan problem solving yang tinggi. Berbicara dengan atasan juga penting untuk mendapatkan arahan dan dukungan, namun sebaiknya dikombinasikan dengan upaya mandiri terlebih dahulu. Mencari solusi bersama tim memperlihatkan kemampuan kerja sama dan kolaborasi yang baik, sangat berguna dalam situasi kompleks. Menyerah pada masalah menunjukkan sikap negatif dan kurangnya ketangguhan, sehingga kurang tepat. Sedangkan menunggu masalah selesai dengan sendirinya adalah tindakan pasif yang berisiko memperburuk situasi. Berdasarkan hal ini, skor pilihan jawaban adalah: A: 5, C: 4, B: 3, D: 1, E: 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "73. Apa yang Anda lakukan jika pekerjaan Anda dikejar deadline?",
+    pilihan: [
+      "A. Bekerja dengan fokus",
+      "B. Mencari cara efisien",
+      "C. Menanyakan prioritas",
+      "D. Menunda pekerjaan sampai mendekati deadline",
+      "E. Bekerja lebih cepat tanpa memikirkan kualitas"
+    ],
+    pembahasan: "Ketika pekerjaan dikejar deadline, penting untuk tetap menjaga fokus agar tugas dapat diselesaikan tepat waktu. Bekerja dengan fokus membantu menghindari gangguan dan meningkatkan produktivitas sehingga hasil yang dicapai tetap berkualitas. Selain itu, mencari cara yang efisien dalam menyelesaikan pekerjaan juga sangat penting untuk menghemat waktu tanpa mengorbankan kualitas. Menanyakan prioritas bisa membantu memastikan bahwa bagian pekerjaan yang paling penting dikerjakan terlebih dahulu, sehingga penggunaan waktu lebih optimal. Menunda pekerjaan sampai mendekati deadline biasanya berisiko karena bisa menyebabkan pekerjaan terburu-buru dan hasil kurang maksimal. Sedangkan bekerja lebih cepat tanpa memikirkan kualitas dapat mengakibatkan hasil yang buruk dan harus diperbaiki ulang, sehingga tidak efektif. Dari opsi tersebut, bekerja dengan fokus (A) dan mencari cara efisien (B) adalah pendekatan terbaik untuk mengatasi deadline. Skor pilihan: A. Bekerja dengan fokus – 5, B. Mencari cara efisien – 4, C. Menanyakan prioritas – 3, D. Menunda pekerjaan sampai mendekati deadline – 1, E. Bekerja lebih cepat tanpa memikirkan kualitas – 2",
+    jenis: "TKP"
+  },
+  {
+    soal: "74. Bagaimana cara Anda menyelesaikan konflik dengan rekan kerja?",
+    pilihan: [
+      "A. Mencari penyelesaian bersama",
+      "B. Berbicara langsung dengan pihak terkait",
+      "C. Mencari solusi lain",
+      "D. Menghindari konflik",
+      "E. Membiarkan konflik berlangsung"
+    ],
+    pembahasan: "Dalam menyelesaikan konflik dengan rekan kerja, pendekatan yang paling efektif adalah mencari penyelesaian bersama karena hal ini menunjukkan sikap kooperatif dan kemampuan untuk bekerja sama demi kepentingan bersama. Berbicara langsung dengan pihak terkait juga penting untuk komunikasi yang jelas dan menghindari kesalahpahaman. Mencari solusi lain bisa menjadi alternatif bila solusi awal tidak berhasil, namun tetap harus melibatkan diskusi terbuka. Menghindari konflik biasanya tidak menyelesaikan masalah dan dapat memperburuk situasi. Membiarkan konflik berlangsung tanpa tindakan hanya akan menciptakan ketegangan dan merusak hubungan kerja. Oleh karena itu, pilihan A mendapat skor 5 sebagai yang paling sesuai, B skor 4, C skor 3, D skor 2, dan E skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "75. Apakah Anda lebih suka bekerja dengan instruksi atau mandiri?",
+    pilihan: [
+      "A. Tergantung tugasnya",
+      "B. Lebih suka mandiri",
+      "C. Lebih suka instruksi",
+      "D. Suka mencari tahu sendiri",
+      "E. Tidak terlalu penting"
+    ],
+    pembahasan: "Soal ini menilai preferensi seseorang dalam menjalankan pekerjaan, apakah lebih nyaman mengikuti instruksi yang jelas atau lebih suka bekerja secara mandiri tanpa banyak arahan. Pilihan A menunjukkan fleksibilitas sesuai dengan jenis tugas, pilihan B menekankan kemandirian, pilihan C mengindikasikan kebutuhan akan arahan, pilihan D menunjukkan sikap proaktif dalam mencari informasi sendiri, dan pilihan E menilai bahwa cara kerja tidak menjadi prioritas utama. Skor tertinggi diberikan pada pilihan yang paling mencerminkan kemandirian dan kemampuan beradaptasi, seperti A dan B, karena keduanya menunjukkan sikap yang produktif dan responsif terhadap situasi kerja yang berbeda. Berikut skor untuk masing-masing pilihan: A=5, B=4, D=3, C=2, E=1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "76. Bagaimana Anda menangani situasi yang tidak terduga?",
+    pilihan: [
+      "A. Beradaptasi dengan situasi",
+      "B. Berusaha tetap tenang",
+      "C. Mencari bantuan",
+      "D. Menghindari situasi tersebut",
+      "E. Berusaha mengikuti alur"
+    ],
+    pembahasan: "Dalam menghadapi situasi yang tidak terduga, kemampuan untuk beradaptasi dengan cepat sangat penting karena memungkinkan seseorang menyesuaikan diri dengan perubahan secara efektif dan menemukan solusi yang tepat. Tetap tenang juga sangat membantu agar pikiran tetap jernih dan dapat mengambil keputusan yang rasional. Mencari bantuan merupakan langkah yang bijak jika situasi di luar kemampuan individu, namun terlalu bergantung pada bantuan bisa menghambat pengembangan diri. Menghindari situasi tidak menyelesaikan masalah dan justru dapat memperburuk kondisi, sedangkan berusaha mengikuti alur tanpa fleksibilitas mungkin membuat seseorang kehilangan peluang untuk berinovasi atau menyesuaikan diri. Oleh karena itu, opsi A sangat dianjurkan sebagai yang paling efektif, diikuti oleh B dan C, sementara D dan E memiliki efektivitas yang lebih rendah.",
+    jenis: "TKP"
+  },
+  {
+    soal: "77. Bagaimana Anda menunjukkan tanggung jawab dalam pekerjaan?",
+    pilihan: [
+      "A. Menanggapi dengan profesional",
+      "B. Berbicara dengan atasan",
+      "C. Mencari bantuan rekan kerja",
+      "D. Menghindari tanggung jawab",
+      "E. Mengabaikan situasi tersebut"
+    ],
+    pembahasan: "Menunjukkan tanggung jawab dalam pekerjaan berarti mengambil sikap yang profesional dan proaktif dalam menghadapi tugas dan tantangan. Menanggapi dengan profesional mencerminkan keseriusan dan komitmen terhadap pekerjaan sehingga menjadi pilihan terbaik. Berbicara dengan atasan atau mencari bantuan rekan kerja bisa membantu, tapi lebih tepat digunakan sebagai langkah pendukung, bukan pengganti tanggung jawab penuh. Sedangkan menghindari tanggung jawab atau mengabaikan situasi menunjukkan sikap yang kurang bertanggung jawab dan merugikan proses kerja. Oleh karena itu, opsi A paling sesuai untuk menunjukkan tanggung jawab, diikuti oleh B dan C, sementara D dan E adalah pilihan yang tidak tepat.",
+    jenis: "TKP"
+  },
+  {
+    soal: "78. Apa yang Anda lakukan jika Anda tidak setuju dengan kebijakan perusahaan?",
+    pilihan: [
+      "A. Mencari cara untuk mengatasi masalah",
+      "B. Berbicara dengan atasan",
+      "C. Bertanya pada rekan kerja",
+      "D. Menghindari situasi tersebut",
+      "E. Menganggap masalah itu kecil"
+    ],
+    pembahasan: "Ketika menghadapi ketidaksetujuan terhadap kebijakan perusahaan, langkah paling efektif adalah 'mencari cara untuk mengatasi masalah' karena ini menunjukkan sikap proaktif dan solusi yang konstruktif, sehingga mendapatkan skor 5. Berbicara dengan atasan juga penting sebagai upaya komunikasi langsung dan klarifikasi, sehingga layak mendapat skor 4. Bertanya pada rekan kerja dapat membantu mendapatkan perspektif lain, tapi kurang langsung menyelesaikan masalah, sehingga skor 3. Menghindari situasi tersebut menunjukkan ketidakberanian dan mengabaikan masalah, yang membuatnya kurang tepat dan mendapatkan skor 2. Sedangkan menganggap masalah itu kecil menunjukkan sikap menyepelekan yang bisa berakibat negatif, sehingga mendapat skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "79. Bagaimana Anda mengatur waktu saat memiliki banyak tugas?",
+    pilihan: [
+      "A. Mengatur waktu dengan bijak",
+      "B. Mencari bantuan rekan kerja",
+      "C. Berusaha mengerjakan semua sekaligus",
+      "D. Menunda pekerjaan",
+      "E. Mencari cara yang lebih mudah"
+    ],
+    pembahasan: "Saat menghadapi banyak tugas, cara terbaik adalah 'mengatur waktu dengan bijak' agar setiap pekerjaan dapat diselesaikan secara efektif dan efisien tanpa mengorbankan kualitas. Mencari bantuan rekan kerja juga dapat menjadi strategi yang baik untuk membagi beban kerja dan meningkatkan produktivitas, namun tetap perlu manajemen waktu yang tepat. Berusaha mengerjakan semua sekaligus biasanya kurang efektif karena dapat menyebabkan kelelahan dan menurunnya fokus. Menunda pekerjaan cenderung memperburuk situasi karena menumpuk tugas dan meningkatkan stres. Mencari cara yang lebih mudah mungkin membantu, tetapi jika tidak disertai perencanaan waktu yang baik, hasilnya bisa kurang optimal. Skor 5 untuk opsi A, 4 untuk opsi B, 2 untuk opsi E, 1 untuk opsi C dan D.",
+    jenis: "TKP"
+  },
+  {
+    soal: "80. Apa yang Anda lakukan saat harus mengambil keputusan penting?",
+    pilihan: [
+      "A. Memikirkan dengan matang",
+      "B. Mengambil keputusan cepat",
+      "C. Berbicara dengan atasan",
+      "D. Bertanya pada rekan kerja",
+      "E. Membiarkan orang lain yang memutuskan"
+    ],
+    pembahasan: "Saat menghadapi keputusan penting, cara yang paling efektif adalah dengan 'memikirkan dengan matang' untuk memastikan semua aspek dan konsekuensi dipertimbangkan dengan baik, sehingga keputusan yang diambil lebih tepat dan bertanggung jawab. Mengambil keputusan cepat kadang dibutuhkan dalam situasi darurat, tetapi bisa berisiko jika tanpa analisis yang cukup. Berbicara dengan atasan atau bertanya pada rekan kerja bisa membantu mendapatkan perspektif tambahan, namun tetap perlu dipadukan dengan penilaian pribadi. Membiarkan orang lain yang memutuskan menunjukkan kurangnya inisiatif dan tanggung jawab. Oleh karena itu, skor terbaik untuk pilihan ini adalah A dengan skor 5, B skor 3, C dan D masing-masing skor 2, dan E skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "81. Bagaimana Anda memotivasi diri dalam pekerjaan?",
+    pilihan: [
+      "A. Motivasi diri dengan tujuan",
+      "B. Berbicara dengan atasan",
+      "C. Mencari dukungan teman",
+      "D. Mengabaikan motivasi",
+      "E. Menunggu motivasi datang dengan sendirinya"
+    ],
+    pembahasan: "Memotivasi diri dalam pekerjaan sangat penting untuk menjaga semangat dan produktivitas. Opsi A yaitu memotivasi diri dengan tujuan adalah cara yang paling efektif karena memiliki arah yang jelas dan dapat mendorong seseorang untuk terus maju. Berbicara dengan atasan (B) dan mencari dukungan teman (C) juga bisa membantu, namun tingkat motivasi yang datang dari dalam diri sendiri biasanya lebih kuat dan tahan lama. Mengabaikan motivasi (D) dan menunggu motivasi datang dengan sendirinya (E) kurang tepat karena bisa menyebabkan penurunan semangat dan hasil kerja yang kurang optimal. Oleh karena itu, skor tertinggi diberikan pada A dengan skor 5, B dan C masing-masing skor 3, sedangkan D dan E mendapat skor terendah yaitu 1 karena kurang efektif.",
+    jenis: "TKP"
+  },
+  {
+    soal: "82. Apa yang Anda lakukan jika mengalami kegagalan?",
+    pilihan: [
+      "A. Berusaha belajar dari kegagalan",
+      "B. Mencari bantuan dari rekan kerja",
+      "C. Menyesali kegagalan",
+      "D. Menyerah untuk sementara",
+      "E. Mencari cara menghindari kegagalan"
+    ],
+    pembahasan: "Ketika menghadapi kegagalan, sikap yang paling konstruktif adalah berusaha belajar dari kegagalan tersebut karena ini membantu meningkatkan kemampuan dan menghindari kesalahan yang sama di masa depan. Oleh karena itu, pilihan A mendapat skor 5 sebagai respon paling tepat. Mencari bantuan dari rekan kerja juga merupakan tindakan positif karena membuka peluang untuk mendapatkan perspektif baru dan dukungan, sehingga pilihan B mendapat skor 4. Menyesali kegagalan, meskipun wajar, jika berlebihan dapat menghambat kemajuan sehingga pilihan C diberi skor 2. Menyerah untuk sementara bisa dianggap sebagai bentuk rehat, tetapi jika terlalu lama dapat menurunkan motivasi, sehingga pilihan D mendapat skor 1. Sedangkan mencari cara menghindari kegagalan secara berlebihan bisa menimbulkan ketakutan dan menghalangi inovasi, maka pilihan E juga diberi skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "83. Bagaimana Anda menjaga hubungan baik dengan kolega?",
+    pilihan: [
+      "A. Menjaga komunikasi yang baik",
+      "B. Berbicara langsung dengan pihak yang bersangkutan",
+      "C. Mencari cara menghindari konflik",
+      "D. Tidak terlalu peduli",
+      "E. Tidak berhubungan dengan kolega"
+    ],
+    pembahasan: "Menjaga hubungan baik dengan kolega sangat penting untuk menciptakan lingkungan kerja yang harmonis dan produktif. Pilihan yang paling tepat adalah 'menjaga komunikasi yang baik' karena komunikasi yang efektif membantu membangun saling pengertian dan kepercayaan antar rekan kerja, sehingga mencegah kesalahpahaman dan konflik. Berbicara langsung dengan pihak yang bersangkutan juga penting untuk menyelesaikan masalah secara cepat dan jelas, namun komunikasi yang baik harus dilakukan secara berkelanjutan, bukan hanya saat ada masalah. Mencari cara menghindari konflik mungkin terasa nyaman, tetapi tidak menyelesaikan akar masalah dan bisa menimbulkan ketegangan terselubung. Sikap tidak terlalu peduli atau tidak berhubungan dengan kolega justru akan merusak kerja sama dan menimbulkan isolasi dalam tim. Oleh karena itu, skoring untuk opsi jawaban adalah: A mendapat skor 5, B mendapat skor 4, C mendapat skor 2, D mendapat skor 1, dan E mendapat skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "84. Apa yang Anda lakukan ketika merasa stres di tempat kerja?",
+    pilihan: [
+      "A. Mencari solusi untuk mengurangi stres",
+      "B. Mengambil waktu untuk diri sendiri",
+      "C. Berbicara dengan atasan",
+      "D. Mengabaikan stres",
+      "E. Menunggu masalah selesai dengan sendirinya"
+    ],
+    pembahasan: "Ketika merasa stres di tempat kerja, tindakan yang paling efektif adalah mencari solusi untuk mengurangi stres karena hal ini menunjukkan sikap proaktif dalam menghadapi masalah dan menjaga produktivitas. Mengambil waktu untuk diri sendiri juga penting sebagai cara untuk menenangkan pikiran dan memulihkan energi, sehingga layak mendapat skor tinggi. Berbicara dengan atasan dapat membantu jika stres terkait dengan beban kerja atau masalah komunikasi, namun tidak selalu menjadi langkah pertama yang diambil semua orang. Mengabaikan stres atau menunggu masalah selesai dengan sendirinya biasanya tidak disarankan karena dapat memperburuk kondisi dan menurunkan kinerja. Oleh karena itu, pilihan A mendapat skor 5, B mendapat skor 4, C mendapat skor 3, D mendapat skor 2, dan E mendapat skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "85. Bagaimana Anda menyelesaikan tugas yang tidak Anda sukai?",
+    pilihan: [
+      "A. Mencari cara menghadapinya",
+      "B. Berbicara dengan atasan",
+      "C. Menunda pekerjaan",
+      "D. Menghindari pekerjaan tersebut",
+      "E. Menyerah tanpa mencobanya"
+    ],
+    pembahasan: "Ketika menghadapi tugas yang tidak disukai, pendekatan yang paling efektif adalah 'mencari cara menghadapinya' karena hal ini menunjukkan sikap proaktif dan kemampuan problem solving yang penting dalam dunia kerja. Berbicara dengan atasan bisa membantu jika tugas terasa berat atau membingungkan, namun ini bukan solusi utama dalam menyelesaikan tugas itu sendiri. Menunda pekerjaan atau menghindari tugas justru dapat menimbulkan tekanan lebih besar dan menurunkan produktivitas, sedangkan menyerah tanpa mencoba adalah sikap yang paling negatif karena menunjukkan kurangnya motivasi dan tanggung jawab. Oleh karena itu, skor tertinggi diberikan pada opsi A dengan nilai 5, diikuti B dengan skor 4, kemudian C dan D dengan skor 2, dan skor terendah 1 untuk E.",
+    jenis: "TKP"
+  },
+  {
+    soal: "86. Apakah Anda lebih suka tugas yang jelas atau tantangan yang harus dipelajari?",
+    pilihan: [
+      "A. Tantangan yang harus dipelajari",
+      "B. Tugas yang jelas",
+      "C. Keduanya sama",
+      "D. Tidak tahu",
+      "E. Tergantung situasi"
+    ],
+    pembahasan: "Pilihan antara tugas yang jelas dan tantangan yang harus dipelajari mencerminkan preferensi seseorang terhadap kepastian atau eksplorasi. Pilihan A menunjukkan sikap terbuka terhadap pembelajaran dan pengembangan diri melalui tantangan baru, sehingga mendapatkan skor 5 sebagai opsi yang sangat positif untuk pertumbuhan. Pilihan B menunjukkan kecenderungan pada kejelasan dan struktur yang dapat meminimalkan risiko, diberikan skor 4 karena stabilitas. Pilihan C mengindikasikan fleksibilitas, sehingga diberi skor 3 karena dapat menyesuaikan situasi. Pilihan E juga menunjukkan adaptabilitas dengan mempertimbangkan konteks, mendapat skor 2 karena lebih bersifat situasional dan tidak pasti. Pilihan D menandakan ketidakpastian atau kurangnya preferensi, sehingga mendapat skor 1 sebagai yang paling rendah dalam hal keputusan yang jelas.",
+    jenis: "TKP"
+  },
+  {
+    soal: "87. Bagaimana Anda mengatasi rasa cemas saat bekerja?",
+    pilihan: [
+      "A. Mengatasi dengan komunikasi terbuka",
+      "B. Menarik napas dalam-dalam",
+      "C. Menunda pekerjaan",
+      "D. Menghindar dari konflik",
+      "E. Menunggu situasi tenang"
+    ],
+    pembahasan: "Mengatasi rasa cemas saat bekerja dapat dilakukan dengan berbagai cara, namun yang paling efektif biasanya adalah dengan 'komunikasi terbuka' karena hal ini memungkinkan seseorang untuk menyampaikan kekhawatiran dan mencari solusi bersama, sehingga mengurangi beban pikiran. Teknik 'menarik napas dalam-dalam' juga membantu untuk menenangkan diri secara fisik dan mental dalam jangka pendek. Sebaliknya, 'menunda pekerjaan' dan 'menghindar dari konflik' cenderung memperburuk kecemasan karena masalah tidak diselesaikan dan menumpuk. Sedangkan 'menunggu situasi tenang' mungkin tidak selalu efektif karena kondisi kerja seringkali dinamis dan menuntut tindakan segera. Oleh karena itu, skor terbaik diberikan untuk A, diikuti oleh B, E, D, dan terakhir C dengan skor paling rendah. Skor: A=5, B=4, E=3, D=2, C=1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "88. Bagaimana Anda menjaga etika kerja yang baik?",
+    pilihan: [
+      "A. Menjaga etika kerja",
+      "B. Mengikuti aturan yang ada",
+      "C. Berbicara dengan rekan kerja",
+      "D. Mengubah cara kerja",
+      "E. Mengabaikan etika kerja"
+    ],
+    pembahasan: "Menjaga etika kerja yang baik sangat penting untuk menciptakan lingkungan kerja yang profesional dan harmonis. Pilihan A, yaitu 'Menjaga etika kerja', merupakan jawaban yang paling tepat karena secara langsung menunjukkan komitmen untuk selalu bertindak sesuai dengan norma dan prinsip kerja yang benar. Pilihan B, 'Mengikuti aturan yang ada', juga penting karena aturan adalah bagian dari etika yang harus dipatuhi, namun masih lebih spesifik dari keseluruhan konsep etika kerja. Pilihan C, 'Berbicara dengan rekan kerja', dapat membantu komunikasi dan kerja sama, tapi tidak cukup untuk menjamin etika kerja yang baik. Pilihan D, 'Mengubah cara kerja', bisa relevan jika perubahan itu membawa perbaikan etika, namun tanpa konteks jelas kurang tepat. Sedangkan pilihan E, 'Mengabaikan etika kerja', jelas merupakan pilihan terburuk karena bertentangan langsung dengan prinsip menjaga etika kerja. Skor diberikan sebagai berikut: A=5, B=4, C=3, D=2, E=1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "89. Apa yang Anda lakukan ketika diberi tugas yang lebih sulit dari yang diharapkan?",
+    pilihan: [
+      "A. Mengambil inisiatif",
+      "B. Berbicara dengan atasan",
+      "C. Mengikuti petunjuk",
+      "D. Menunda pekerjaan",
+      "E. Tidak melakukan apapun"
+    ],
+    pembahasan: "Ketika diberi tugas yang lebih sulit dari yang diharapkan, sikap yang paling efektif adalah 'mengambil inisiatif' karena hal ini menunjukkan kemampuan adaptasi dan keinginan untuk mencari solusi secara proaktif, sehingga mendapatkan skor 5. Selanjutnya, 'berbicara dengan atasan' juga penting untuk mendapatkan klarifikasi atau bantuan sehingga mendapat skor 4. 'Mengikuti petunjuk' menunjukkan kepatuhan dan keinginan untuk menyelesaikan tugas sesuai arahan, namun kurang optimal jika tanpa upaya tambahan, maka skor 3. Sementara itu, 'menunda pekerjaan' mencerminkan kurangnya manajemen waktu dan tanggung jawab, sehingga mendapat skor 2. Terakhir, 'tidak melakukan apapun' adalah sikap paling negatif karena mengabaikan tanggung jawab, sehingga mendapat skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "90. Bagaimana Anda mengelola konflik antara tim?",
+    pilihan: [
+      "A. Berbicara langsung dengan anggota tim",
+      "B. Menghindari konflik",
+      "C. Menyerahkan kepada atasan",
+      "D. Mengabaikan konflik",
+      "E. Menunggu situasi membaik"
+    ],
+    pembahasan: "Mengelola konflik dalam tim sebaiknya dilakukan dengan pendekatan yang proaktif dan terbuka. Berbicara langsung dengan anggota tim memungkinkan penyelesaian masalah secara efektif karena komunikasi yang jelas dapat mengidentifikasi akar konflik dan menemukan solusi bersama. Menghindari konflik atau mengabaikannya biasanya memperburuk situasi karena masalah tidak terselesaikan dan bisa menimbulkan ketegangan yang lebih besar. Menyerahkan kepada atasan dapat menjadi pilihan bila konflik sudah sulit dikendalikan, namun hal ini tidak selalu mendorong kemandirian tim dalam menyelesaikan masalah. Menunggu situasi membaik tanpa tindakan juga kurang efektif karena konflik dapat berkembang menjadi masalah yang lebih serius. Oleh karena itu, opsi A adalah yang paling tepat dengan skor 5, opsi C mendapat skor 3 sebagai alternatif, opsi E skor 2, sedangkan opsi B dan D mendapatkan skor 1 karena kurang efektif dalam pengelolaan konflik.",
+    jenis: "TKP"
+  },
+  {
+    soal: "91. Apakah Anda berkomunikasi lebih baik secara lisan atau tertulis?",
+    pilihan: [
+      "A. Secara lisan",
+      "B. Secara tertulis",
+      "C. Tergantung lawan bicara",
+      "D. Tidak yakin",
+      "E. Tidak suka keduanya"
+    ],
+    pembahasan: "Pilihan jawaban terkait cara berkomunikasi yang paling sesuai akan sangat bergantung pada konteks dan preferensi pribadi. Jawaban A menunjukkan kemampuan berkomunikasi 'secara lisan' yang biasanya efektif untuk interaksi langsung dan respons cepat, sehingga mendapat skor 4 karena kekuatannya dalam situasi tatap muka. Jawaban B menekankan komunikasi 'secara tertulis' yang penting untuk dokumentasi dan komunikasi formal, mendapat skor 4 juga karena kejelasan dan ketelitian yang bisa diberikan. Jawaban C menunjukkan fleksibilitas dengan menyesuaikan cara berkomunikasi 'tergantung lawan bicara', ini dapat dianggap pilihan paling adaptif dan mendapat skor 5 karena kemampuan menyesuaikan diri sangat penting dalam berbagai situasi. Jawaban D 'tidak yakin' menunjukkan ketidakpastian dan mendapat skor 2 karena kurangnya kejelasan dalam preferensi. Sedangkan jawaban E 'tidak suka keduanya' mencerminkan ketidaktertarikan atau kesulitan dalam komunikasi, sehingga mendapat skor 1 sebagai pilihan paling rendah dalam konteks efektivitas komunikasi.",
+    jenis: "TKP"
+  },
+  {
+    soal: "92. Apa yang Anda lakukan jika menghadapi situasi tidak adil di tempat kerja?",
+    pilihan: [
+      "A. Berbicara dengan atasan",
+      "B. Mengambil sikap profesional",
+      "C. Mengabaikan situasi",
+      "D. Membalas dengan perlakuan yang sama",
+      "E. Keluar dari pekerjaan"
+    ],
+    pembahasan: "Menghadapi situasi tidak adil di tempat kerja sebaiknya direspon dengan pendekatan yang konstruktif dan profesional. Pilihan terbaik adalah berbicara dengan atasan untuk menyampaikan keluhan secara jelas dan mencari solusi bersama, sehingga masalah dapat diselesaikan dengan baik tanpa menimbulkan konflik lebih lanjut. Mengambil sikap profesional juga penting untuk menjaga integritas dan reputasi kerja, meskipun mungkin tidak langsung mengubah situasi. Mengabaikan situasi cenderung kurang efektif karena masalah tidak terselesaikan dan bisa menimbulkan rasa tidak puas yang berkelanjutan. Membalas dengan perlakuan yang sama justru dapat memperburuk keadaan dan menciptakan lingkungan kerja yang negatif. Keluar dari pekerjaan sebaiknya menjadi pilihan terakhir jika tidak ada solusi setelah upaya penyelesaian dilakukan. Skor tertinggi 5 diberikan untuk A karena komunikasi langsung dengan atasan adalah langkah paling tepat, diikuti B dengan skor 4 karena sikap profesional penting, C skor 2, D skor 1, dan E skor 3 sebagai opsi terakhir jika solusi lain gagal.",
+    jenis: "TKP"
+  },
+  {
+    soal: "93. Bagaimana Anda menangani ketidakpastian dalam pekerjaan?",
+    pilihan: [
+      "A. Mencari solusi terbaik",
+      "B. Mencari dukungan",
+      "C. Menunggu arahan",
+      "D. Mengabaikan",
+      "E. Panik"
+    ],
+    pembahasan: "Dalam menghadapi ketidakpastian dalam pekerjaan, pendekatan yang paling efektif adalah 'mencari solusi terbaik' karena ini menunjukkan sikap proaktif dan kemampuan problem solving yang tinggi, sehingga mendapatkan skor 5. Selanjutnya, 'mencari dukungan' juga merupakan langkah yang baik karena menunjukkan kemampuan kolaborasi dan mencari bantuan saat diperlukan, mendapat skor 4. 'Menunggu arahan' menunjukkan sikap pasif yang kurang efektif dalam situasi tidak pasti, sehingga mendapat skor 3. 'Mengabaikan' adalah tindakan yang tidak tepat karena dapat memperburuk situasi dan menghambat penyelesaian masalah, sehingga diberi skor 2. Sedangkan 'panik' adalah reaksi yang paling tidak diharapkan karena mengganggu fokus dan pengambilan keputusan yang rasional, sehingga mendapat skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "94. Apa yang Anda lakukan jika ada perubahan mendadak dalam pekerjaan?",
+    pilihan: [
+      "A. Bersikap fleksibel",
+      "B. Bekerja seperti biasa",
+      "C. Protes",
+      "D. Bingung",
+      "E. Menghindar"
+    ],
+    pembahasan: "Jika menghadapi perubahan mendadak dalam pekerjaan, sikap yang paling tepat adalah 'bersikap fleksibel' karena hal ini menunjukkan kemampuan untuk menyesuaikan diri dengan situasi baru dan tetap produktif meskipun kondisi berubah. Pilihan ini mencerminkan adaptabilitas yang sangat dibutuhkan di lingkungan kerja yang dinamis. Sebaliknya, bekerja seperti biasa tanpa menyesuaikan diri bisa membuat hasil kurang optimal karena tidak memperhitungkan perubahan yang terjadi. Sikap protes, bingung, atau menghindar justru menunjukkan kurangnya kesiapan dan kemampuan menghadapi tantangan, yang bisa menghambat kelancaran pekerjaan. Oleh karena itu, skor tertinggi diberikan pada pilihan A yaitu 5, diikuti B dengan skor 3, sementara C, D, dan E masing-masing mendapatkan skor rendah, yaitu 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "95. Bagaimana Anda memastikan kualitas pekerjaan Anda?",
+    pilihan: [
+      "A. Mengevaluasi pekerjaan secara rutin",
+      "B. Bertanya pada orang lain",
+      "C. Menunggu umpan balik",
+      "D. Asal selesai",
+      "E. Menghindari tanggung jawab"
+    ],
+    pembahasan: "Dalam memastikan kualitas pekerjaan, langkah paling efektif adalah dengan 'mengevaluasi pekerjaan secara rutin' karena hal ini memungkinkan untuk mendeteksi dan memperbaiki kesalahan secara cepat sehingga hasil yang didapat lebih optimal. Bertanya pada orang lain bisa membantu sebagai tambahan perspektif, tetapi tidak menggantikan evaluasi mandiri. Menunggu umpan balik cenderung pasif dan berisiko terlambat menangani masalah. Asal selesai dan menghindari tanggung jawab jelas tidak menjamin kualitas dan bisa merugikan hasil kerja secara keseluruhan. Oleh karena itu, opsi A mendapatkan skor 5 sebagai yang paling sesuai, opsi B skor 3, opsi C skor 2, sementara opsi D dan E skor 1 karena kurang tepat dalam konteks menjaga kualitas pekerjaan.",
+    jenis: "TKP"
+  },
+  {
+    soal: "96. Bagaimana Anda menangani pekerjaan yang membosankan?",
+    pilihan: [
+      "A. Mencari cara membuatnya menarik",
+      "B. Mengerjakan seadanya",
+      "C. Menunda",
+      "D. Membagi ke orang lain",
+      "E. Tidak dikerjakan"
+    ],
+    pembahasan: "Menangani pekerjaan yang membosankan memerlukan sikap proaktif agar tetap produktif dan termotivasi. Pilihan terbaik adalah mencari cara membuat pekerjaan tersebut menjadi lebih menarik atau menantang, karena ini menunjukkan kemampuan beradaptasi dan kreatifitas dalam menghadapi tugas yang kurang menyenangkan. Mengerjakan seadanya menunjukkan kurangnya motivasi dan bisa berdampak pada kualitas hasil kerja. Menunda pekerjaan justru memperburuk situasi karena menumpuk tugas dan menimbulkan stres. Membagi pekerjaan ke orang lain tanpa alasan yang jelas dapat dianggap sebagai penghindaran tanggung jawab. Sedangkan tidak mengerjakan sama sekali menunjukkan sikap yang sangat negatif dan tidak profesional. Oleh karena itu, skor tertinggi adalah untuk opsi A yang paling sesuai dalam menghadapi pekerjaan membosankan, diikuti B, C, D, dan E sebagai yang paling rendah.",
+    jenis: "TKP"
+  },
+  {
+    soal: "97. Apa yang Anda lakukan jika Anda tidak memiliki cukup informasi untuk menyelesaikan tugas?",
+    pilihan: [
+      "A. Mencari informasi tambahan",
+      "B. Menunda tugas",
+      "C. Mengerjakan tanpa informasi",
+      "D. Menolak tugas",
+      "E. Menunggu bantuan"
+    ],
+    pembahasan: "Jika menghadapi situasi di mana informasi yang dimiliki tidak cukup untuk menyelesaikan tugas, langkah paling tepat adalah 'mencari informasi tambahan' karena hal ini memungkinkan penyelesaian tugas dengan data yang lengkap dan akurat. Menunda tugas bisa menjadi pilihan namun kurang efektif karena menunda progress tanpa kepastian kapan informasi akan didapat. Mengerjakan tanpa informasi berisiko menghasilkan hasil yang kurang baik atau salah. Menolak tugas menunjukkan sikap tidak kooperatif dan menghambat penyelesaian pekerjaan. Menunggu bantuan juga kurang proaktif karena mengandalkan orang lain tanpa usaha mandiri. Oleh karena itu, skor tertinggi diberikan pada opsi A dengan skor 5, disusul opsi E dengan skor 3, opsi B dengan skor 2, dan opsi C serta D masing-masing skor 1 karena kurang tepat dan dapat menghambat penyelesaian tugas.",
+    jenis: "TKP"
+  },
+  {
+    soal: "98. Apakah Anda lebih suka bekerja di bawah tekanan atau tidak?",
+    pilihan: [
+      "A. Bekerja di bawah tekanan",
+      "B. Tidak di bawah tekanan",
+      "C. Tergantung tugas",
+      "D. Tidak yakin",
+      "E. Tidak suka tekanan"
+    ],
+    pembahasan: "Soal ini menilai preferensi seseorang dalam menghadapi situasi kerja yang penuh tekanan. Pilihan A menunjukkan bahwa seseorang merasa nyaman dan mungkin termotivasi saat bekerja di bawah tekanan, sehingga bisa mendapatkan skor 5 karena menunjukkan kemampuan adaptasi dan ketahanan. Pilihan C dengan jawaban tergantung tugas mendapat skor 4 karena menandakan fleksibilitas sesuai konteks pekerjaan. Pilihan B yang tidak suka bekerja di bawah tekanan mendapat skor 3 karena masih bisa bekerja dengan baik tanpa tekanan. Pilihan E yang menyatakan tidak suka tekanan mendapat skor 2 karena cenderung menghindari situasi menantang. Pilihan D yang tidak yakin mendapat skor 1 karena kurang menunjukkan preferensi yang jelas dan kesiapan dalam bekerja.",
+    jenis: "TKP"
+  },
+  {
+    soal: "99. Apa yang Anda lakukan ketika diberi tugas yang tidak sesuai dengan keahlian Anda?",
+    pilihan: [
+      "A. Mengambilnya sebagai tantangan",
+      "B. Berbicara dengan atasan",
+      "C. Menolak",
+      "D. Menunda",
+      "E. Mengerjakan tanpa niat"
+    ],
+    pembahasan: "Ketika diberi tugas yang tidak sesuai dengan keahlian, pendekatan terbaik adalah melihatnya sebagai peluang untuk berkembang dan belajar, sehingga opsi A 'Mengambilnya sebagai tantangan' mendapatkan skor 5 karena sikap ini menunjukkan kesiapan dan motivasi untuk menghadapi hal baru. Berbicara dengan atasan, opsi B, juga penting untuk klarifikasi dan mendapatkan dukungan, sehingga diberi skor 4. Menolak tugas, opsi C, cenderung negatif dan bisa menghambat kemajuan, jadi skornya 2. Menunda pekerjaan, opsi D, menunjukkan kurangnya tanggung jawab dan motivasi, sehingga skor 1. Sedangkan mengerjakan tanpa niat, opsi E, adalah sikap yang paling tidak produktif dan merugikan, sehingga juga mendapat skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "100. Bagaimana cara Anda mengelola waktu dan prioritas?",
+    pilihan: [
+      "A. Menggunakan skala prioritas",
+      "B. Mengerjakan yang mudah dulu",
+      "C. Menunda tugas",
+      "D. Membagi rata waktu",
+      "E. Menanyakan pada atasan"
+    ],
+    pembahasan: "Mengelola waktu dan prioritas adalah kunci efektivitas dalam menyelesaikan pekerjaan. Opsi A yang menggunakan skala prioritas merupakan cara yang paling tepat karena membantu menentukan tugas mana yang harus diselesaikan terlebih dahulu berdasarkan tingkat urgensi dan pentingnya, sehingga pekerjaan dapat berjalan efisien dan terorganisir. Opsi B mengerjakan yang mudah dulu cenderung kurang efektif karena bisa menunda tugas penting yang lebih mendesak. Opsi C menunda tugas jelas tidak baik karena berpotensi menyebabkan penumpukan pekerjaan dan stres. Opsi D membagi rata waktu tanpa mempertimbangkan prioritas juga kurang tepat karena tidak semua tugas memiliki tingkat kepentingan yang sama. Sedangkan opsi E menanyakan pada atasan bisa menjadi langkah baik untuk klarifikasi, namun tidak selalu praktis untuk setiap keputusan kecil. Skor 5 untuk A, skor 3 untuk E, skor 2 untuk B dan D, serta skor 1 untuk C.",
+    jenis: "TKP"
+  },
+  {
+    soal: "101. Apa yang Anda lakukan jika ada kesalahan dalam pekerjaan Anda?",
+    pilihan: [
+      "A. Mengevaluasi kesalahan",
+      "B. Menutup-nutupi",
+      "C. Mengabaikan",
+      "D. Menunda koreksi",
+      "E. Membiarkan orang lain tahu"
+    ],
+    pembahasan: "Ketika menghadapi kesalahan dalam pekerjaan, sikap yang paling tepat adalah mengevaluasi kesalahan tersebut secara jujur dan objektif. Dengan melakukan evaluasi, kita bisa memahami penyebab kesalahan dan mencari solusi yang efektif untuk memperbaikinya sehingga tidak terulang di masa depan. Menutup-nutupi, mengabaikan, menunda koreksi, atau membiarkan orang lain tahu tanpa solusi hanya akan memperburuk situasi dan merusak kepercayaan. Oleh karena itu, pilihan A mendapat skor 5 sebagai jawaban terbaik, sedangkan pilihan B, C, D, dan E masing-masing mendapat skor 1 karena menunjukkan sikap tidak bertanggung jawab atau kurang profesional.",
+    jenis: "TKP"
+  },
+  {
+    soal: "102. Bagaimana Anda menjaga semangat dalam bekerja?",
+    pilihan: [
+      "A. Mengingat tujuan utama",
+      "B. Istirahat",
+      "C. Mengeluh",
+      "D. Berdiam diri",
+      "E. Menunggu dimotivasi"
+    ],
+    pembahasan: "Menjaga semangat dalam bekerja sangat penting agar produktivitas dan kualitas kerja tetap optimal. Dari pilihan yang ada, mengingat tujuan utama menjadi cara paling efektif karena membantu seseorang fokus pada hasil yang ingin dicapai dan memberikan motivasi intrinsik untuk terus maju. Istirahat juga penting untuk menjaga energi agar tidak cepat lelah, namun tidak cukup sebagai sumber semangat utama. Mengeluh dan berdiam diri cenderung negatif dan dapat menurunkan motivasi serta suasana hati. Menunggu dimotivasi dari luar menunjukkan sikap pasif yang kurang efektif dalam mempertahankan semangat. Oleh karena itu, opsi A mendapat skor 5 sebagai pilihan terbaik, B skor 4, C dan D skor 2, dan E skor 1 sebagai yang paling rendah.",
+    jenis: "TKP"
+  },
+  {
+    soal: "103. Apa yang Anda lakukan saat berhadapan dengan tantangan yang tidak bisa Anda kontrol?",
+    pilihan: [
+      "A. Menerima dan beradaptasi",
+      "B. Mencari solusi alternatif",
+      "C. Menghindari",
+      "D. Menyalahkan",
+      "E. Putus asa"
+    ],
+    pembahasan: "Saat menghadapi tantangan yang tidak bisa dikontrol, pendekatan yang paling efektif adalah 'menerima dan beradaptasi' karena hal ini menunjukkan sikap realistis dan kemampuan beradaptasi terhadap situasi yang sulit. Mencari solusi alternatif juga penting, namun jika tantangan benar-benar di luar kendali, fokus pada penyesuaian diri lebih bijak. Menghindari masalah, menyalahkan orang lain, atau merasa putus asa cenderung memperburuk keadaan dan menghambat kemajuan. Oleh karena itu, pilihan A mendapat skor 5 sebagai yang paling sesuai, B skor 4, C skor 2, D skor 1, dan E skor 1 karena menunjukkan sikap negatif yang tidak membantu.",
+    jenis: "TKP"
+  },
+  {
+    soal: "104. Apa yang Anda lakukan jika Anda merasa tidak dihargai di tempat kerja?",
+    pilihan: [
+      "A. Berbicara dengan pihak terkait",
+      "B. Mengintrospeksi diri",
+      "C. Menghindari",
+      "D. Mengeluh ke teman",
+      "E. Memendam rasa kecewa"
+    ],
+    pembahasan: "Ketika seseorang merasa tidak dihargai di tempat kerja, pendekatan terbaik adalah menghadapi situasi secara dewasa dan konstruktif. Opsi A yaitu 'Berbicara dengan pihak terkait' mencerminkan kemampuan komunikasi yang asertif dan penyelesaian masalah secara langsung, sehingga layak mendapat skor tertinggi yaitu 5. Opsi B yakni 'Mengintrospeksi diri' juga merupakan langkah positif untuk refleksi pribadi, namun jika tidak disertai tindakan lanjut, hasilnya bisa terbatas, sehingga mendapat skor 4. Opsi C yaitu 'Menghindari' menunjukkan sikap pasif yang tidak menyelesaikan masalah, layak diberi skor 2. Opsi D 'Mengeluh ke teman' berpotensi memperkeruh suasana tanpa solusi nyata, sehingga skornya 1. Sedangkan E yaitu 'Memendam rasa kecewa' berisiko menimbulkan akumulasi emosi negatif dan berdampak buruk jangka panjang, sehingga juga diberi skor 1. Pendekatan yang proaktif, terbuka, dan bertanggung jawab sangat penting dalam menjaga hubungan kerja yang sehat.",
+    jenis: "TKP"
+  },
+  {
+    soal: "105. Bagaimana cara Anda menyesuaikan diri dengan rekan kerja yang berbeda pendapat?",
+    pilihan: [
+      "A. Berusaha memahami sudut pandang",
+      "B. Berargumen",
+      "C. Menghindari diskusi",
+      "D. Menyindir",
+      "E. Tidak peduli"
+    ],
+    pembahasan: "Dalam menghadapi rekan kerja yang berbeda pendapat, sikap terbaik adalah dengan 'berusaha memahami sudut pandang' mereka. Pendekatan ini mencerminkan kemampuan empati, keterbukaan, dan kedewasaan dalam bekerja sama, serta menunjukkan bahwa individu siap membangun komunikasi yang sehat demi tercapainya tujuan bersama, sehingga mendapatkan skor 5. Pilihan 'berargumen' memang menunjukkan keberanian menyampaikan pendapat, namun jika tidak dibarengi dengan keterampilan komunikasi yang baik, bisa menimbulkan konflik, sehingga diberi skor 3. Menghindari diskusi mengindikasikan kecenderungan pasif dan tidak menyelesaikan masalah, sehingga mendapat skor 2. Menyindir adalah perilaku tidak langsung dan berpotensi merusak hubungan kerja, sehingga hanya mendapat skor 1. Sementara itu, 'tidak peduli' menunjukkan sikap apatis yang sangat tidak sesuai dalam lingkungan kerja yang membutuhkan kolaborasi, dan karenanya juga diberi skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "106. Apa yang Anda lakukan jika harus bekerja dengan orang yang sangat berbeda pandangannya?",
+    pilihan: [
+      "A. Membangun komunikasi",
+      "B. Mengikuti arus",
+      "C. Menghindari interaksi",
+      "D. Menjaga jarak",
+      "E. Memprotes"
+    ],
+    pembahasan: "Bekerja dengan orang yang memiliki pandangan sangat berbeda menuntut kemampuan adaptasi dan kedewasaan emosional. Pilihan 'A. Membangun komunikasi' mencerminkan sikap terbuka, kolaboratif, dan berorientasi solusi, yang sangat penting dalam lingkungan kerja yang beragam; oleh karena itu, mendapat skor 5. Sementara itu, 'B. Mengikuti arus' menunjukkan sikap pasif yang mungkin meredam konflik, tetapi tidak menyelesaikan perbedaan secara konstruktif, sehingga layak diberi skor 3. Pilihan 'C. Menghindari interaksi' dan 'D. Menjaga jarak' menunjukkan penghindaran yang dapat mengganggu kerja sama tim dan menimbulkan ketegangan, masing-masing mendapat skor 2. Adapun 'E. Memprotes' mencerminkan konfrontasi yang berpotensi merusak hubungan kerja dan dinamika tim, sehingga mendapat skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "107. Bagaimana cara Anda meningkatkan keterampilan pribadi Anda di tempat kerja?",
+    pilihan: [
+      "A. Belajar mandiri",
+      "B. Mencari pelatihan",
+      "C. Membiarkan berjalan",
+      "D. Menunggu promosi",
+      "E. Tidak mau belajar"
+    ],
+    pembahasan: "Cara seseorang meningkatkan keterampilan pribadi di tempat kerja mencerminkan sikap terhadap pengembangan diri dan kesiapan beradaptasi dengan perubahan. Pilihan 'B. Mencari pelatihan' menunjukkan inisiatif aktif dan kesadaran akan pentingnya peningkatan kompetensi melalui sumber yang terstruktur dan kredibel, sehingga mendapat skor 5. 'A. Belajar mandiri' juga menunjukkan semangat belajar, meskipun tanpa dukungan sistematis, dan dinilai positif dengan skor 4. 'C. Membiarkan berjalan' menunjukkan sikap pasif dan kurang berorientasi pada pertumbuhan, sehingga hanya layak diberi skor 2. 'D. Menunggu promosi' menggambarkan ketergantungan pada faktor eksternal tanpa usaha nyata untuk berkembang, mendapat skor 1. Sementara 'E. Tidak mau belajar' menandakan penolakan terhadap perbaikan diri dan sikap yang sangat tidak produktif, sehingga mendapat skor terendah, yaitu 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "108. Apa yang Anda lakukan jika diberi tugas dengan sedikit instruksi?",
+    pilihan: [
+      "A. Meminta klarifikasi",
+      "B. Mengerjakan sebisanya",
+      "C. Menunda",
+      "D. Menyuruh orang lain",
+      "E. Menghindari tugas"
+    ],
+    pembahasan: "Ketika seseorang diberikan tugas dengan sedikit instruksi, sikap terbaik adalah proaktif mencari kejelasan agar dapat menyelesaikan tugas dengan benar. Pilihan 'A. Meminta klarifikasi' menunjukkan inisiatif, tanggung jawab, dan keinginan untuk menyelesaikan tugas dengan benar meski informasi awal terbatas, sehingga layak mendapatkan skor 5. Sebaliknya, 'B. Mengerjakan sebisanya' tampak seperti usaha, namun berisiko salah arah karena kurangnya pemahaman, sehingga dinilai dengan skor 3. Pilihan 'C. Menunda', 'D. Menyuruh orang lain', dan 'E. Menghindari tugas' mencerminkan penghindaran tanggung jawab dan kurangnya komitmen, yang tidak sesuai dengan etika kerja yang baik, sehingga masing-masing diberi skor 2, 1, dan 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "109. Bagaimana Anda mengatasi rasa tidak percaya diri saat bekerja?",
+    pilihan: [
+      "A. Membangun kepercayaan diri",
+      "B. Minta dukungan",
+      "C. Menghindar",
+      "D. Menyalahkan diri sendiri",
+      "E. Tidak bertindak"
+    ],
+    pembahasan: "Mengatasi rasa tidak percaya diri saat bekerja memerlukan pendekatan yang membangun dan berorientasi solusi. Pilihan 'A. Membangun kepercayaan diri' menunjukkan usaha aktif untuk memperkuat kapasitas diri dan merupakan respons paling positif terhadap masalah ini, sehingga layak mendapat skor 5. Pilihan 'B. Minta dukungan' juga merupakan langkah adaptif yang sehat karena menunjukkan kesadaran akan keterbatasan dan kesiapan untuk menerima bantuan, sehingga diberi skor 4. Sementara itu, 'C. Menghindar' merupakan mekanisme pelarian yang tidak menyelesaikan masalah inti dan berpotensi memperburuk situasi, layak mendapat skor 2. Pilihan 'D. Menyalahkan diri sendiri' mencerminkan sikap yang merugikan mental dan tidak konstruktif, sehingga hanya mendapat skor 1. Terakhir, 'E. Tidak bertindak' menunjukkan sikap pasif yang sama sekali tidak membantu pemulihan kepercayaan diri, dan juga diberi skor 1.",
+    jenis: "TKP"
+  },
+  {
+    soal: "110. Apa yang Anda lakukan jika Anda merasa kehilangan motivasi?",
+    pilihan: [
+      "A. Mengingat tujuan besar",
+      "B. Beristirahat",
+      "C. Membiarkan",
+      "D. Mengeluh",
+      "E. Mencari pekerjaan baru"
+    ],
+    pembahasan: "Ketika seseorang merasa kehilangan motivasi, tindakan yang paling konstruktif adalah dengan kembali mengingat tujuan besar yang ingin dicapai. Ini dapat menghidupkan kembali semangat dan memberikan arah yang jelas, karena tujuan sering menjadi penggerak utama di balik usaha yang berkelanjutan. Maka dari itu, pilihan 'A. Mengingat tujuan besar' mendapat skor 5 karena menunjukkan refleksi dan ketahanan diri yang kuat. Pilihan 'B. Beristirahat' juga merupakan respon yang cukup baik dengan skor 4, karena memberi ruang untuk pemulihan sebelum kembali bangkit. Sementara itu, 'E. Mencari pekerjaan baru' bisa menjadi opsi yang valid dalam konteks tertentu namun terlalu reaktif jika dilakukan tanpa evaluasi matang, sehingga mendapat skor 3. Pilihan 'C. Membiarkan' dan 'D. Mengeluh' menunjukkan kurangnya inisiatif untuk mengatasi permasalahan dan bisa memperburuk keadaan, sehingga masing-masing mendapat skor 2 dan 1.",
+    jenis: "TKP"
+  }
+    // Tambah soal baru di sini dengan koma di belakang objek sebelumnya
+  ];
+
+  let index = 0;
+
+  function renderSoal(i) {
+    const soal = soalData[i];
+    document.getElementById('soalTeks').textContent = soal.soal;
+    document.getElementById('pilihanJawaban').innerHTML = soal.pilihan.map(p => `<li>${p}</li>`).join('');
+    document.getElementById('pembahasan').innerHTML = `<strong>Jawaban: ${soal.kunci}</strong><br>${soal.pembahasan}`;
+    document.getElementById('prevBtn').disabled = i === 0;
+    document.getElementById('nextBtn').disabled = i === soalData.length - 1;
+  }
+
+  function sebelumnya() {
+    if (index > 0) {
+      index--;
+      renderSoal(index);
+    }
+  }
+
+  function berikutnya() {
+    if (index < soalData.length - 1) {
+      index++;
+      renderSoal(index);
+    }
+  }
+
+  // Render soal pertama saat halaman dimuat
+  renderSoal(index);
+
+</script>
+
+</body>
+</html>
