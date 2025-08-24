@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soal dan Pembahasan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* Variabel CSS untuk warna biru */
+    :root {
+      --primary-blue: #2563eb; /* Biru utama yang lebih cerah */
+      --primary-dark-blue: #1d4ed8; /* Biru gelap untuk hover */
+      --light-blue-bg: #eff6ff; /* Latar belakang biru sangat muda */
+      --card-bg: #ffffff; /* Latar belakang card tetap putih */
+      --text-color: #333; /* Warna teks gelap */
+      --light-text: #666; /* Warna teks lebih ringan */
+      --border-color: #e5e7eb; /* Warna border abu-abu muda */
+      --success-color: #16a34a; /* Hijau untuk jawaban benar */
+      --shadow-color: rgba(0, 0, 0, 0.08); /* Warna shadow */
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif; /* Menggunakan font Inter */
+      margin: 0;
+      padding: 2rem;
+      background-color: var(--light-blue-bg); /* Latar belakang biru muda */
+      color: var(--text-color);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      background-color: var(--card-bg); /* Header menjadi putih */
+      padding: 1rem 2rem; /* Padding lebih besar */
+      border-bottom: 1px solid var(--border-color); /* Border lebih halus */
+      margin-bottom: 2rem; /* Jarak bawah lebih besar */
+      box-shadow: 0 4px 10px var(--shadow-color); /* Shadow pada header */
+      border-radius: 8px; /* Sudut sedikit melengkung */
+    }
+
+    header img {
+      height: 60px;
+      margin-right: 20px;
+    }
+
+    header h1 {
+      font-size: 24px; /* Ukuran font lebih besar */
+      color: var(--text-color); /* Warna teks header menjadi gelap */
+      margin: 0;
+      line-height: 1.3;
+      font-weight: 700; /* Lebih tebal */
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px; /* Lebih bulat */
+      padding: 2.5rem; /* Padding lebih besar */
+      box-shadow: 0 6px 20px var(--shadow-color); /* Shadow lebih menonjol */
+      max-width: 900px; /* Lebar maksimal diperbesar sedikit */
+      margin: 0 auto;
+    }
+
+    .question {
+      font-weight: 600; /* Lebih tebal */
+      margin-bottom: 1.5rem; /* Jarak bawah lebih besar */
+      font-size: 1.25rem; /* Ukuran font pertanyaan lebih besar */
+      line-height: 1.6;
+      color: var(--text-color);
+    }
+
+    .options {
+      list-style: none; /* Hilangkan bullet point default */
+      padding: 0;
+      margin: 0;
+    }
+
+    .options li {
+      margin-bottom: 0.8rem; /* Jarak antar opsi */
+      padding: 0.8rem 1.2rem; /* Padding opsi */
+      border: 1px solid var(--border-color);
+      border-radius: 8px; /* Sudut lebih bulat */
+      background-color: #f9fafb; /* Latar belakang opsi sedikit abu */
+      font-size: 1.05rem; /* Ukuran font opsi */
+      color: var(--text-color);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .options li:hover {
+      background-color: #f3f4f6; /* Hover state */
+      border-color: var(--primary-blue);
+    }
+
+    .answer {
+      background: #ecfdf5; /* Latar hijau muda */
+      border-left: 5px solid var(--success-color); /* Border hijau terang */
+      padding: 1.5rem; /* Padding lebih besar */
+      margin-top: 2rem; /* Jarak atas lebih besar */
+      border-radius: 8px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .answer strong {
+      color: var(--primary-blue); /* Warna kunci jawaban */
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 3rem; /* Jarak atas lebih besar */
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem; /* Jarak antar tombol pagination */
+    }
+
+    .pagination button {
+      padding: 0.8rem 1.8rem; /* Padding lebih besar */
+      margin: 0; /* Hilangkan margin horizontal default */
+      border: none;
+      border-radius: 8px; /* Lebih bulat */
+      background: var(--primary-blue); /* Warna biru utama */
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); /* Shadow biru */
+    }
+
+    .pagination button:hover {
+      background: var(--primary-dark-blue); /* Warna biru gelap saat hover */
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .pagination button:disabled {
+      background: #d1d5db; /* Abu-abu terang saat disabled */
+      color: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      header {
+        flex-direction: column; /* Header menjadi kolom di mobile */
+        align-items: flex-start;
+        padding: 0.8rem 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      header img {
+        height: 50px;
+        margin-right: 0; /* Hilangkan margin kanan di mobile */
+        margin-bottom: 0.8rem; /* Tambah margin bawah */
+      }
+
+      header h1 {
+        font-size: 18px;
+        text-align: left;
+      }
+
+      .card {
+        padding: 1.5rem;
+        margin: 0 0.5rem;
+        border-radius: 10px;
+      }
+
+      .question {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .options li {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.95rem;
+      }
+
+      .answer {
+        padding: 1rem;
+        margin-top: 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .pagination {
+        margin-top: 2rem;
+        flex-direction: column; /* Tombol pagination menjadi kolom */
+        gap: 0.8rem;
+      }
+
+      .pagination button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+        width: 100%; /* Tombol penuh lebar di mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="BKN Primajana Education">
+    <h1>COMPUTER ASSISTED TEST<br>Tools Simulasi CPNS</h1>
+</header>
+
+<div class="card" id="soalCard">
+  <div class="question" id="soalTeks"></div>
+  <ul class="options" id="pilihanJawaban"></ul>
+  <div class="answer" id="pembahasan"></div>
+</div>
+
+<div class="pagination">
+  <button onclick="sebelumnya()" id="prevBtn" disabled>Sebelumnya</button>
+  <button onclick="berikutnya()" id="nextBtn">Berikutnya</button>
+</div>
+
+
+<script>
+  // ============================
+  // Mulai daftar soal & pembahasan di sini
+  // Tambah soal baru dengan format objek:
+  // {
+  //   soal: "Teks pertanyaan dengan nomor urut",
+  //   pilihan: ["A. opsi1", "B. opsi2", "C. opsi3", "D. opsi4", "E. opsi5"],
+  //   kunci: "Huruf jawaban yang benar (A/B/C/D/E)",
+  //   pembahasan: "Penjelasan pembahasan soal tersebut"
+  // }
+  // ============================
+
+  const soalData = [
+  {
+    soal: "1. Pancasila sebagai dasar negara Indonesia tercantum dalam?",
+    pilihan: [
+      "A. Pembukaan UUD 1945",
+      "B. Batang tubuh UUD 1945",
+      "C. Amandemen UUD",
+      "D. Ketetapan MPR",
+      "E. Proklamasi Kemerdekaan"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "2. Semboyan Bhinneka Tunggal Ika berasal dari?",
+    pilihan: [
+      "A. Kitab Sutasoma",
+      "B. Kitab Arjuna Wiwaha",
+      "C. Kitab Negarakertagama",
+      "D. Kitab Ramayana",
+      "E. Kitab Mahabharata"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "3. UUD 1945 pertama kali disahkan pada tanggal?",
+    pilihan: [
+      "A. 18 Agustus 1945",
+      "B. 17 Agustus 1945",
+      "C. 1 Juni 1945",
+      "D. 5 Juli 1959",
+      "E. 10 November 1945"
+    ],
+    kunci: "B",
+    pembahasan: ""
+  },
+  {
+    soal: "4. Lambang negara Indonesia adalah?",
+    pilihan: [
+      "A. Garuda Pancasila",
+      "B. Garuda Indonesia",
+      "C. Burung Rajawali",
+      "D. Bhinneka Tunggal Ika",
+      "E. Garuda Merdeka"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "5. Sila ke-3 Pancasila berbunyi?",
+    pilihan: [
+      "A. Persatuan Indonesia",
+      "B. Kemanusiaan yang adil",
+      "C. Keadilan sosial",
+      "D. Ketuhanan yang Maha Esa",
+      "E. Kerakyatan yang dipimpin"
+    ],
+    kunci: "C",
+    pembahasan: ""
+  },
+  {
+    soal: "6. Lembaga yang berwenang mengubah UUD 1945 adalah?",
+    pilihan: [
+      "A. MPR",
+      "B. DPR",
+      "C. Presiden",
+      "D. MA",
+      "E. MK"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "7. Hak asasi manusia dijamin dalam UUD 1945 pasal?",
+    pilihan: [
+      "A. Pasal 28",
+      "B. Pasal 29",
+      "C. Pasal 31",
+      "D. Pasal 33",
+      "E. Pasal 34"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "8. Indonesia merdeka pada tanggal?",
+    pilihan: [
+      "A. 17 Agustus 1945",
+      "B. 18 Agustus 1945",
+      "C. 1 Juni 1945",
+      "D. 20 Mei 1908",
+      "E. 28 Oktober 1928"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "9. Sistem pemerintahan Indonesia adalah?",
+    pilihan: [
+      "A. Presidensial",
+      "B. Parlementer",
+      "C. Monarki",
+      "D. Federasi",
+      "E. Kerajaan"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "10. Presiden pertama Republik Indonesia adalah?",
+    pilihan: [
+      "A. Soekarno",
+      "B. Hatta",
+      "C. Soeharto",
+      "D. Habibie",
+      "E. Megawati"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "11. Lagu kebangsaan Indonesia adalah?",
+    pilihan: [
+      "A. Indonesia Raya",
+      "B. Tanah Airku",
+      "C. Hari Merdeka",
+      "D. Garuda Pancasila",
+      "E. Rayuan Pulau Kelapa"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "12. Bentuk negara Indonesia menurut UUD 1945 adalah?",
+    pilihan: [
+      "A. Negara Kesatuan",
+      "B. Republik Serikat",
+      "C. Kerajaan",
+      "D. Monarki",
+      "E. Konfederasi"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "13. Semboyan negara Indonesia mengandung makna?",
+    pilihan: [
+      "A. Persatuan dalam keberagaman",
+      "B. Kebebasan sepenuhnya",
+      "C. Kesamaan mutlak",
+      "D. Tidak berbeda",
+      "E. Tanpa perbedaan"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "14. Sila pertama Pancasila mengandung nilai?",
+    pilihan: [
+      "A. Ketuhanan",
+      "B. Kemanusiaan",
+      "C. Keadilan",
+      "D. Persatuan",
+      "E. Kebebasan"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "15. Pancasila disahkan sebagai dasar negara pada?",
+    pilihan: [
+      "A. 18 Agustus 1945",
+      "B. 17 Agustus 1945",
+      "C. 20 Mei 1908",
+      "D. 1 Juni 1945",
+      "E. 28 Oktober 1928"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "16. Sila ke-5 Pancasila adalah?",
+    pilihan: [
+      "A. Keadilan sosial bagi seluruh rakyat Indonesia",
+      "B. Kemanusiaan yang adil dan beradab",
+      "C. Persatuan Indonesia",
+      "D. Kerakyatan yang dipimpin",
+      "E. Ketuhanan Yang Maha Esa"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "17. Bendera negara Indonesia berwarna?",
+    pilihan: [
+      "A. Merah dan putih",
+      "B. Merah dan kuning",
+      "C. Putih dan hijau",
+      "D. Biru dan putih",
+      "E. Hitam dan putih"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "18. Semboyan Bhinneka Tunggal Ika berarti?",
+    pilihan: [
+      "A. Berbeda-beda tetapi tetap satu",
+      "B. Satu tetapi berbeda",
+      "C. Bersatu tanpa perbedaan",
+      "D. Seragam dan sama",
+      "E. Tidak boleh berbeda"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "19. Wilayah Indonesia terbentang dari?",
+    pilihan: [
+      "A. Sabang sampai Merauke",
+      "B. Aceh sampai Papua",
+      "C. Utara ke Selatan",
+      "D. Timur ke Barat",
+      "E. Jawa ke Papua"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "20. Bahasa resmi negara Indonesia adalah?",
+    pilihan: [
+      "A. Bahasa Indonesia",
+      "B. Bahasa Jawa",
+      "C. Bahasa Inggris",
+      "D. Bahasa Sunda",
+      "E. Bahasa Melayu"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "21. Dasar hukum tertinggi di Indonesia adalah?",
+    pilihan: [
+      "A. UUD 1945",
+      "B. Pancasila",
+      "C. Peraturan Presiden",
+      "D. Undang-undang",
+      "E. Ketetapan MPR"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "22. Pembukaan UUD 1945 terdiri dari berapa alinea?",
+    pilihan: [
+      "A. 4",
+      "B. 3",
+      "C. 5",
+      "D. 2",
+      "E. 1"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "23. Pancasila digali dari?",
+    pilihan: [
+      "A. Nilai budaya bangsa",
+      "B. Budaya luar",
+      "C. Kitab suci",
+      "D. Konstitusi",
+      "E. Warisan kolonial"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "24. Sistem pemerintahan Indonesia adalah?",
+    pilihan: [
+      "A. Presidensial",
+      "B. Monarki",
+      "C. Federasi",
+      "D. Konfederasi",
+      "E. Otoriter"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "25. Negara Indonesia berdasarkan atas?",
+    pilihan: [
+      "A. Pancasila dan UUD 1945",
+      "B. Pancasila saja",
+      "C. UUD saja",
+      "D. Perda",
+      "E. Ketetapan Presiden"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "26. Lambang burung Garuda memiliki jumlah bulu yang melambangkan?",
+    pilihan: [
+      "A. Tanggal kemerdekaan",
+      "B. Jumlah hari kemerdekaan",
+      "C. Hari lahir Soekarno",
+      "D. Jumlah sila Pancasila",
+      "E. Jumlah pulau"
+    ],
+    kunci: "D",
+    pembahasan: ""
+  },
+  {
+    soal: "27. Hari lahir Pancasila diperingati setiap tanggal?",
+    pilihan: [
+      "A. 1 Juni",
+      "B. 17 Agustus",
+      "C. 20 Mei",
+      "D. 5 Juli",
+      "E. 18 Agustus"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "28. Sumber hukum tertinggi di Indonesia adalah?",
+    pilihan: [
+      "A. UUD 1945",
+      "B. Pancasila",
+      "C. Presiden",
+      "D. DPR",
+      "E. Ketetapan MPR"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "29. Nilai-nilai Pancasila bersifat?",
+    pilihan: [
+      "A. Universal",
+      "B. Relatif",
+      "C. Tertutup",
+      "D. Sementara",
+      "E. Kontroversial"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "30. Kedudukan Pancasila sebagai dasar negara berarti?",
+    pilihan: [
+      "A. Segala aspek kehidupan berbangsa",
+      "B. Kegiatan ekonomi saja",
+      "C. Urusan agama saja",
+      "D. Hukum adat",
+      "E. Pendidikan saja"
+    ],
+    kunci: "A",
+    pembahasan: ""
+  },
+  {
+    soal: "Jika 4x + 5 = 21, berapa nilai x?",
+    pilihan: [
+      "A. 4",
+      "B. 5",
+      "C. 6",
+      "D. 7",
+      "E. 8"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Sebuah kereta bergerak dengan kecepatan 72 km/jam, berapa jarak yang ditempuh dalam waktu 3 jam?",
+    pilihan: [
+      "A. 216 km",
+      "B. 150 km",
+      "C. 200 km",
+      "D. 250 km",
+      "E. 300 km"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Dua angka jika dijumlahkan hasilnya 20 dan jika dikalikan hasilnya 96. Berapakah kedua angka tersebut?",
+    pilihan: [
+      "A. 8 dan 12",
+      "B. 6 dan 14",
+      "C. 4 dan 16",
+      "D. 5 dan 15",
+      "E. 3 dan 17"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Apakah 0.5 lebih besar dari 1/3?",
+    pilihan: [
+      "A. Ya",
+      "B. Tidak",
+      "C. Mungkin",
+      "D. Tergantung",
+      "E. Tidak pasti"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Berapa hasil dari 16 ÷ 4 × 2?",
+    pilihan: [
+      "A. 8",
+      "B. 12",
+      "C. 10",
+      "D. 14",
+      "E. 18"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Jika 5 buah apel dibagi rata ke dalam 5 keranjang, berapa apel yang ada dalam setiap keranjang?",
+    pilihan: [
+      "A. 1",
+      "B. 2",
+      "C. 3",
+      "D. 4",
+      "E. 5"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Jika 7 ditambah 3 dikali 4, berapa hasilnya?",
+    pilihan: [
+      "A. 19",
+      "B. 23",
+      "C. 29",
+      "D. 27",
+      "E. 31"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Berapakah akar kuadrat dari 64?",
+    pilihan: [
+      "A. 8",
+      "B. 6",
+      "C. 4",
+      "D. 10",
+      "E. 5"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Seorang anak memiliki 20 kelereng dan memberikan 8 kepada temannya. Berapa kelereng yang tersisa?",
+    pilihan: [
+      "A. 12 kelereng",
+      "B. 10 kelereng",
+      "C. 15 kelereng",
+      "D. 8 kelereng",
+      "E. 5 kelereng"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Bilangan yang lebih kecil dari 5 dan lebih besar dari 1 adalah?",
+    pilihan: [
+      "A. 2",
+      "B. 3",
+      "C. 4",
+      "D. 5",
+      "E. 6"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Jika 3x + 5 = 20, berapa nilai x?",
+    pilihan: [
+      "A. 5",
+      "B. 6",
+      "C. 7",
+      "D. 8",
+      "E. 9"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Sebuah bola memiliki diameter 12 cm. Berapa jari-jari bola tersebut?",
+    pilihan: [
+      "A. 6 cm",
+      "B. 5 cm",
+      "C. 4 cm",
+      "D. 7 cm",
+      "E. 8 cm"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Jika sebuah mobil menempuh jarak 120 km dalam waktu 2 jam, berapa kecepatan mobil tersebut?",
+    pilihan: [
+      "A. 60 km/jam",
+      "B. 70 km/jam",
+      "C. 80 km/jam",
+      "D. 90 km/jam",
+      "E. 100 km/jam"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Berapakah hasil dari 2⁴?",
+    pilihan: [
+      "A. 16",
+      "B. 32",
+      "C. 64",
+      "D. 128",
+      "E. 256"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Panjang sisi sebuah persegi adalah 5 cm. Berapakah luasnya?",
+    pilihan: [
+      "A. 25 cm²",
+      "B. 20 cm²",
+      "C. 30 cm²",
+      "D. 35 cm²",
+      "E. 40 cm²"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Tiga kali sebuah angka ditambah 4 hasilnya 19. Berapa angka tersebut?",
+    pilihan: [
+      "A. 5",
+      "B. 6",
+      "C. 7",
+      "D. 8",
+      "E. 9"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Dua bilangan yang berbeda jika dijumlahkan hasilnya 13 dan dikalikan hasilnya 42. Berapakah kedua bilangan tersebut?",
+    pilihan: [
+      "A. 6 dan 7",
+      "B. 5 dan 8",
+      "C. 4 dan 9",
+      "D. 3 dan 10",
+      "E. 2 dan 11"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Berapakah selisih antara 25 dan 15?",
+    pilihan: [
+      "A. 10",
+      "B. 15",
+      "C. 20",
+      "D. 25",
+      "E. 30"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Apa yang lebih besar, 0.75 atau 3/4?",
+    pilihan: [
+      "A. 3",
+      "B. 4",
+      "C. 5",
+      "D. 6",
+      "E. 7"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Berapa hasil dari 5 × 5 + 5?",
+    pilihan: [
+      "A. 30",
+      "B. 15",
+      "C. 16",
+      "D. 17",
+      "E. 18"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Apakah 36 adalah bilangan kuadrat sempurna?",
+    pilihan: [
+      "A. Ya",
+      "B. Tidak",
+      "C. Mungkin",
+      "D. Tergantung",
+      "E. Tidak pasti"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Berapa hasil dari 12 x 8?",
+    pilihan: [
+      "A. 96",
+      "B. 24",
+      "C. 25",
+      "D. 26",
+      "E. 28"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Jika 3x = 24, berapa nilai x?",
+    pilihan: [
+      "A. 8",
+      "B. 6",
+      "C. 7",
+      "D. 9",
+      "E. 10"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Tentukan hasil dari 25 - 5 x 2",
+    pilihan: [
+      "A. 15",
+      "B. 20",
+      "C. 25",
+      "D. 10",
+      "E. 5"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Sebuah segitiga memiliki alas 6 cm dan tinggi 4 cm. Berapa luas segitiga tersebut?",
+    pilihan: [
+      "A. 12",
+      "B. 10",
+      "C. 15",
+      "D. 20",
+      "E. 8"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Berapakah hasil dari 7 + 2 × 5?",
+    pilihan: [
+      "A. 17",
+      "B. 28",
+      "C. 30",
+      "D. 32",
+      "E. 36"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Jika sebuah kubus memiliki panjang sisi 3 cm, berapa volumenya?",
+    pilihan: [
+      "A. 27",
+      "B. 28",
+      "C. 30",
+      "D. 32",
+      "E. 36"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Jumlah 5, 10, dan 15 adalah?",
+    pilihan: [
+      "A. 30",
+      "B. 25",
+      "C. 20",
+      "D. 15",
+      "E. 10"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Berapa hasil dari 20 ÷ 4?",
+    pilihan: [
+      "A. 5",
+      "B. 4",
+      "C. 6",
+      "D. 8",
+      "E. 10"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Sebuah mobil bergerak dengan kecepatan 60 km/jam. Berapa jarak yang ditempuh dalam 4 jam?",
+    pilihan: [
+      "A. 240 km",
+      "B. 45",
+      "C. 50",
+      "D. 55",
+      "E. 60"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Apakah 15 adalah kelipatan dari 3?",
+    pilihan: [
+      "A. Ya",
+      "B. Tidak",
+      "C. Mungkin",
+      "D. Tergantung",
+      "E. Tidak pasti"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Berapa hasil dari 2 + 3 × 4?",
+    pilihan: [
+      "A. 14",
+      "B. 12",
+      "C. 16",
+      "D. 18",
+      "E. 20"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Berapakah hasil dari 10 x 3 - 5?",
+    pilihan: [
+      "A. 25",
+      "B. 20",
+      "C. 15",
+      "D. 30",
+      "E. 35"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Bilangan yang lebih besar dari 10 dan kurang dari 20 adalah?",
+    pilihan: [
+      "A. 11",
+      "B. 10",
+      "C. 9",
+      "D. 20",
+      "E. 21"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Jika 2x - 4 = 10, berapa nilai x?",
+    pilihan: [
+      "A. 7",
+      "B. 6",
+      "C. 5",
+      "D. 8",
+      "E. 9"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TIU"
+  },
+  {
+    soal: "Apakah Anda lebih suka bekerja sendiri atau dalam tim?",
+    pilihan: [
+      "A. Bekerja dalam tim",
+      "B. Tergantung situasinya",
+      "C. Lebih suka bekerja dengan orang lain",
+      "D. Bekerja sendiri",
+      "E. Tidak yakin"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda menghadapi tekanan waktu?",
+    pilihan: [
+      "A. Mengatur waktu dengan baik",
+      "B. Mengambil napas dalam-dalam",
+      "C. Mencari bantuan dari orang lain",
+      "D. Melakukan hal lain sejenak",
+      "E. Menunda pekerjaan"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan saat menghadapi masalah yang sulit?",
+    pilihan: [
+      "A. Menghadapi dengan tenang",
+      "B. Mencari solusi dengan cepat",
+      "C. Bertanya pada rekan kerja",
+      "D. Menunggu bantuan atasan",
+      "E. Menghindari masalah"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana cara Anda beradaptasi dengan perubahan?",
+    pilihan: [
+      "A. Menyesuaikan diri dengan cepat",
+      "B. Mencari informasi lebih lanjut",
+      "C. Mencari dukungan dari rekan kerja",
+      "D. Menunggu waktu yang tepat",
+      "E. Menolak perubahan"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apakah Anda merasa nyaman bekerja dengan orang yang berbeda latar belakang?",
+    pilihan: [
+      "A. Ya, saya merasa nyaman",
+      "B. Tidak masalah",
+      "C. Tergantung orangnya",
+      "D. Sedikit tidak nyaman",
+      "E. Tidak nyaman sama sekali"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda menangani kritik dari atasan?",
+    pilihan: [
+      "A. Menerima dan memperbaiki diri",
+      "B. Menanggapi dengan tenang",
+      "C. Berusaha menjelaskan alasan",
+      "D. Tidak terlalu memperdulikan kritik",
+      "E. Menghindar dari kritik"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan ketika menemui tantangan di tempat kerja?",
+    pilihan: [
+      "A. Mencari cara terbaik",
+      "B. Berbicara dengan atasan",
+      "C. Mencari solusi bersama tim",
+      "D. Menyerah pada masalah",
+      "E. Menunggu masalah selesai dengan sendirinya"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika pekerjaan Anda dikejar deadline?",
+    pilihan: [
+      "A. Bekerja dengan fokus",
+      "B. Mencari cara efisien",
+      "C. Menanyakan prioritas",
+      "D. Menunda pekerjaan sampai mendekati deadline",
+      "E. Bekerja lebih cepat tanpa memikirkan kualitas"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana cara Anda menyelesaikan konflik dengan rekan kerja?",
+    pilihan: [
+      "A. Mencari penyelesaian bersama",
+      "B. Berbicara langsung dengan pihak terkait",
+      "C. Mencari solusi lain",
+      "D. Menghindari konflik",
+      "E. Membiarkan konflik berlangsung"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apakah Anda lebih suka bekerja dengan instruksi atau mandiri?",
+    pilihan: [
+      "A. Tergantung tugasnya",
+      "B. Lebih suka mandiri",
+      "C. Lebih suka instruksi",
+      "D. Suka mencari tahu sendiri",
+      "E. Tidak terlalu penting"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda menangani situasi yang tidak terduga?",
+    pilihan: [
+      "A. Beradaptasi dengan situasi",
+      "B. Berusaha tetap tenang",
+      "C. Mencari bantuan",
+      "D. Menghindari situasi tersebut",
+      "E. Berusaha mengikuti alur"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda menunjukkan tanggung jawab dalam pekerjaan?",
+    pilihan: [
+      "A. Menanggapi dengan profesional",
+      "B. Berbicara dengan atasan",
+      "C. Mencari bantuan rekan kerja",
+      "D. Menghindari tanggung jawab",
+      "E. Mengabaikan situasi tersebut"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika Anda tidak setuju dengan kebijakan perusahaan?",
+    pilihan: [
+      "A. Mencari cara untuk mengatasi masalah",
+      "B. Berbicara dengan atasan",
+      "C. Bertanya pada rekan kerja",
+      "D. Menghindari situasi tersebut",
+      "E. Menganggap masalah itu kecil"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda mengatur waktu saat memiliki banyak tugas?",
+    pilihan: [
+      "A. Mengatur waktu dengan bijak",
+      "B. Mencari bantuan rekan kerja",
+      "C. Berusaha mengerjakan semua sekaligus",
+      "D. Menunda pekerjaan",
+      "E. Mencari cara yang lebih mudah"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan saat harus mengambil keputusan penting?",
+    pilihan: [
+      "A. Memikirkan dengan matang",
+      "B. Mengambil keputusan cepat",
+      "C. Berbicara dengan atasan",
+      "D. Bertanya pada rekan kerja",
+      "E. Membiarkan orang lain yang memutuskan"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda memotivasi diri dalam pekerjaan?",
+    pilihan: [
+      "A. Motivasi diri dengan tujuan",
+      "B. Berbicara dengan atasan",
+      "C. Mencari dukungan teman",
+      "D. Mengabaikan motivasi",
+      "E. Menunggu motivasi datang dengan sendirinya"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika mengalami kegagalan?",
+    pilihan: [
+      "A. Berusaha belajar dari kegagalan",
+      "B. Mencari bantuan dari rekan kerja",
+      "C. Menyesali kegagalan",
+      "D. Menyerah untuk sementara",
+      "E. Mencari cara menghindari kegagalan"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda menjaga hubungan baik dengan kolega?",
+    pilihan: [
+      "A. Menjaga komunikasi yang baik",
+      "B. Berbicara langsung dengan pihak yang bersangkutan",
+      "C. Mencari cara menghindari konflik",
+      "D. Tidak terlalu peduli",
+      "E. Tidak berhubungan dengan kolega"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan ketika merasa stres di tempat kerja?",
+    pilihan: [
+      "A. Mencari solusi untuk mengurangi stres",
+      "B. Mengambil waktu untuk diri sendiri",
+      "C. Berbicara dengan atasan",
+      "D. Mengabaikan stres",
+      "E. Menunggu masalah selesai dengan sendirinya"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda menyelesaikan tugas yang tidak Anda sukai?",
+    pilihan: [
+      "A. Mencari cara menghadapinya",
+      "B. Berbicara dengan atasan",
+      "C. Menunda pekerjaan",
+      "D. Menghindari pekerjaan tersebut",
+      "E. Menyerah tanpa mencobanya"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apakah Anda lebih suka tugas yang jelas atau tantangan yang harus dipelajari?",
+    pilihan: [
+      "A. Tantangan yang harus dipelajari",
+      "B. Tugas yang jelas",
+      "C. Keduanya sama",
+      "D. Tidak tahu",
+      "E. Tergantung situasi"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda mengatasi rasa cemas saat bekerja?",
+    pilihan: [
+      "A. Mengatasi dengan komunikasi terbuka",
+      "B. Menarik napas dalam-dalam",
+      "C. Menunda pekerjaan",
+      "D. Menghindar dari konflik",
+      "E. Menunggu situasi tenang"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda menjaga etika kerja yang baik?",
+    pilihan: [
+      "A. Menjaga etika kerja",
+      "B. Mengikuti aturan yang ada",
+      "C. Berbicara dengan rekan kerja",
+      "D. Mengubah cara kerja",
+      "E. Mengabaikan etika kerja"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan ketika diberi tugas yang lebih sulit dari yang diharapkan?",
+    pilihan: [
+      "A. Mengambil inisiatif",
+      "B. Berbicara dengan atasan",
+      "C. Mengikuti petunjuk",
+      "D. Menunda pekerjaan",
+      "E. Tidak melakukan apapun"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda mengelola konflik antara tim?",
+    pilihan: [
+      "A. Berbicara langsung dengan anggota tim",
+      "B. Menghindari konflik",
+      "C. Menyerahkan kepada atasan",
+      "D. Mengabaikan konflik",
+      "E. Menunggu situasi membaik"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apakah Anda berkomunikasi lebih baik secara lisan atau tertulis?",
+    pilihan: [
+      "A. Secara lisan",
+      "B. Secara tertulis",
+      "C. Tergantung lawan bicara",
+      "D. Tidak yakin",
+      "E. Tidak suka keduanya"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika menghadapi situasi tidak adil di tempat kerja?",
+    pilihan: [
+      "A. Berbicara dengan atasan",
+      "B. Mengambil sikap profesional",
+      "C. Mengabaikan situasi",
+      "D. Membalas dengan perlakuan yang sama",
+      "E. Keluar dari pekerjaan"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda menangani ketidakpastian dalam pekerjaan?",
+    pilihan: [
+      "A. Mencari solusi terbaik",
+      "B. Mencari dukungan",
+      "C. Menunggu arahan",
+      "D. Mengabaikan",
+      "E. Panik"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika ada perubahan mendadak dalam pekerjaan?",
+    pilihan: [
+      "A. Bersikap fleksibel",
+      "B. Bekerja seperti biasa",
+      "C. Protes",
+      "D. Bingung",
+      "E. Menghindar"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda memastikan kualitas pekerjaan Anda?",
+    pilihan: [
+      "A. Mengevaluasi pekerjaan secara rutin",
+      "B. Bertanya pada orang lain",
+      "C. Menunggu umpan balik",
+      "D. Asal selesai",
+      "E. Menghindari tanggung jawab"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda menangani pekerjaan yang membosankan?",
+    pilihan: [
+      "A. Mencari cara membuatnya menarik",
+      "B. Mengerjakan seadanya",
+      "C. Menunda",
+      "D. Membagi ke orang lain",
+      "E. Tidak dikerjakan"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika Anda tidak memiliki cukup informasi untuk menyelesaikan tugas?",
+    pilihan: [
+      "A. Mencari informasi tambahan",
+      "B. Menunda tugas",
+      "C. Mengerjakan tanpa informasi",
+      "D. Menolak tugas",
+      "E. Menunggu bantuan"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apakah Anda lebih suka bekerja di bawah tekanan atau tidak?",
+    pilihan: [
+      "A. Bekerja di bawah tekanan",
+      "B. Tidak di bawah tekanan",
+      "C. Tergantung tugas",
+      "D. Tidak yakin",
+      "E. Tidak suka tekanan"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan ketika diberi tugas yang tidak sesuai dengan keahlian Anda?",
+    pilihan: [
+      "A. Mengambilnya sebagai tantangan",
+      "B. Berbicara dengan atasan",
+      "C. Menolak",
+      "D. Menunda",
+      "E. Mengerjakan tanpa niat"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana cara Anda mengelola waktu dan prioritas?",
+    pilihan: [
+      "A. Menggunakan skala prioritas",
+      "B. Mengerjakan yang mudah dulu",
+      "C. Menunda tugas",
+      "D. Membagi rata waktu",
+      "E. Menanyakan pada atasan"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika ada kesalahan dalam pekerjaan Anda?",
+    pilihan: [
+      "A. Mengevaluasi kesalahan",
+      "B. Menutup-nutupi",
+      "C. Mengabaikan",
+      "D. Menunda koreksi",
+      "E. Membiarkan orang lain tahu"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda menjaga semangat dalam bekerja?",
+    pilihan: [
+      "A. Mengingat tujuan utama",
+      "B. Istirahat",
+      "C. Mengeluh",
+      "D. Berdiam diri",
+      "E. Menunggu dimotivasi"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan saat berhadapan dengan tantangan yang tidak bisa Anda kontrol?",
+    pilihan: [
+      "A. Menerima dan beradaptasi",
+      "B. Mencari solusi alternatif",
+      "C. Menghindari",
+      "D. Menyalahkan",
+      "E. Putus asa"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika Anda merasa tidak dihargai di tempat kerja?",
+    pilihan: [
+      "A. Berbicara dengan pihak terkait",
+      "B. Mengintrospeksi diri",
+      "C. Menghindari",
+      "D. Mengeluh ke teman",
+      "E. Memendam rasa kecewa"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana cara Anda menyesuaikan diri dengan rekan kerja yang berbeda pendapat?",
+    pilihan: [
+      "A. Berusaha memahami sudut pandang",
+      "B. Berargumen",
+      "C. Menghindari diskusi",
+      "D. Menyindir",
+      "E. Tidak peduli"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika harus bekerja dengan orang yang sangat berbeda pandangannya?",
+    pilihan: [
+      "A. Membangun komunikasi",
+      "B. Mengikuti arus",
+      "C. Menghindari interaksi",
+      "D. Menjaga jarak",
+      "E. Memprotes"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana cara Anda meningkatkan keterampilan pribadi Anda di tempat kerja?",
+    pilihan: [
+      "A. Belajar mandiri",
+      "B. Mencari pelatihan",
+      "C. Membiarkan berjalan",
+      "D. Menunggu promosi",
+      "E. Tidak mau belajar"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika diberi tugas dengan sedikit instruksi?",
+    pilihan: [
+      "A. Meminta klarifikasi",
+      "B. Mengerjakan sebisanya",
+      "C. Menunda",
+      "D. Menyuruh orang lain",
+      "E. Menghindari tugas"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda mengatasi rasa tidak percaya diri saat bekerja?",
+    pilihan: [
+      "A. Membangun kepercayaan diri",
+      "B. Minta dukungan",
+      "C. Menghindar",
+      "D. Menyalahkan diri sendiri",
+      "E. Tidak bertindak"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Apa yang Anda lakukan jika Anda merasa kehilangan motivasi?",
+    pilihan: [
+      "A. Mengingat tujuan besar",
+      "B. Beristirahat",
+      "C. Membiarkan",
+      "D. Mengeluh",
+      "E. Mencari pekerjaan baru"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  },
+  {
+    soal: "Bagaimana Anda membagi tugas dalam kerja tim?",
+    pilihan: [
+      "A. Membagi sesuai kemampuan",
+      "B. Membebani satu orang",
+      "C. Tidak membagi",
+      "D. Menunggu perintah",
+      "E. Tidak peduli"
+    ],
+    kunci: "A",
+    pembahasan: "",
+    jenis: "TKP"
+  }
+    // Tambah soal baru di sini dengan koma di belakang objek sebelumnya
+  ];
+
+  let index = 0;
+
+  function renderSoal(i) {
+    const soal = soalData[i];
+    document.getElementById('soalTeks').textContent = soal.soal;
+    document.getElementById('pilihanJawaban').innerHTML = soal.pilihan.map(p => `<li>${p}</li>`).join('');
+    document.getElementById('pembahasan').innerHTML = `<strong>Jawaban: ${soal.kunci}</strong><br>${soal.pembahasan}`;
+    document.getElementById('prevBtn').disabled = i === 0;
+    document.getElementById('nextBtn').disabled = i === soalData.length - 1;
+  }
+
+  function sebelumnya() {
+    if (index > 0) {
+      index--;
+      renderSoal(index);
+    }
+  }
+
+  function berikutnya() {
+    if (index < soalData.length - 1) {
+      index++;
+      renderSoal(index);
+    }
+  }
+
+  // Render soal pertama saat halaman dimuat
+  renderSoal(index);
+
+</script>
+
+</body>
+</html>
