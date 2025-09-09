@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Buku - Penerbit Primajana Bagia Mesari</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Animasi global */
+    @keyframes fadeSlideIn {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .fade-slide { animation: fadeSlideIn 1s ease-out forwards; }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0px rgba(34,197,94,0.5); }
+      50% { box-shadow: 0 0 15px rgba(34,197,94,0.6); }
+    }
+    .pulse-glow { animation: pulseGlow 2.5s infinite; }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-sky-50 via-white to-blue-50 text-gray-800 min-h-screen font-sans flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md sticky top-0 z-50 transition duration-300 hover:shadow-lg">
+    <div class="max-w-6xl mx-auto flex items-center p-4">
+      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" 
+           alt="Logo Penerbit Primajana Bagia Mesari" 
+           class="h-12 mr-3 transition-transform duration-500 hover:rotate-6 hover:scale-110 drop-shadow">
+      <h1 class="text-2xl font-bold text-gray-700 tracking-wide">Penerbit Primajana Bagia Mesari</h1>
+    </div>
+  </header>
+
+  <!-- Konten Buku -->
+  <main class="max-w-5xl mx-auto p-6 flex-grow fade-slide">
+    <div class="bg-white rounded-3xl shadow-lg overflow-hidden flex flex-col md:flex-row transition-all duration-700 hover:shadow-2xl">
+      
+      <!-- Cover -->
+      <div class="md:w-1/3 flex justify-center items-center bg-gray-50 p-6">
+        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1757420316/WhatsApp_Image_2025-09-09_at_7.14.48_PM_ihfq8b.jpg" 
+             alt="Cover Buku" 
+             class="rounded-xl shadow-md object-contain max-h-[500px] w-full transition-transform duration-700 hover:scale-105 hover:rotate-1">
+      </div>
+      
+      <!-- Info Buku -->
+      <div class="p-8 md:w-2/3 flex flex-col space-y-6">
+        <div>
+          <h2 class="text-4xl font-serif font-bold mb-2 text-gray-900 tracking-tight">Judul Buku Dummy</h2>
+          <p class="text-lg text-gray-600 italic">oleh <span class="font-medium not-italic">Penulis Dummy</span></p>
+        </div>
+
+        <!-- Detail -->
+        <div class="space-y-3 border-l-4 border-green-500 pl-4">
+          <p class="transition-all duration-500 hover:translate-x-1"><span class="font-semibold">Penerbit:</span> Dummy Publisher</p>
+          <p class="transition-all duration-500 hover:translate-x-1"><span class="font-semibold">Tahun Terbit:</span> 2023</p>
+          <p class="transition-all duration-500 hover:translate-x-1"><span class="font-semibold">ISBN:</span> 978-3-16-148410-0</p>
+          <p class="transition-all duration-500 hover:translate-x-1"><span class="font-semibold">Genre:</span> Fiksi Ilmiah</p>
+          <p class="transition-all duration-500 hover:translate-x-1"><span class="font-semibold">Bahasa:</span> Indonesia</p>
+          <p class="transition-all duration-500 hover:translate-x-1"><span class="font-semibold">Jumlah Halaman:</span> 350</p>
+          <p class="transition-all duration-500 hover:translate-x-1"><span class="font-semibold">Rating:</span> ⭐⭐⭐⭐☆ (4.2/5)</p>
+        </div>
+
+        <!-- Sinopsis -->
+        <div>
+          <h3 class="text-2xl font-serif font-semibold mb-3 text-gray-800">Sinopsis</h3>
+          <p class="text-gray-700 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Praesent ac orci vel augue vehicula viverra. Integer in sapien 
+            sit amet eros aliquet varius. Cras mattis ex eget risus dignissim, 
+            ut sollicitudin mauris interdum. Curabitur sit amet mattis tortor. 
+            Aenean sit amet felis at metus tincidunt feugiat. Proin a justo id 
+            lorem luctus tincidunt.
+          </p>
+        </div>
+
+        <!-- Tombol -->
+        <div class="pt-4">
+          <a href="https://wa.me/6281234567890?text=Halo,%20saya%20tertarik%20membeli%20buku%20Judul%20Buku%20Dummy."
+             target="_blank"
+             class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white px-8 py-3 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out pulse-glow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.648.5.5 5.648.5 12S5.648 23.5 12 23.5 23.5 18.352 23.5 12 18.352.5 12 .5zm0 21c-1.942 0-3.75-.561-5.273-1.525l-3.677.965.983-3.588C3.7 16.721 3 14.44 3 12 3 7.031 7.031 3 12 3s9 4.031 9 9-4.031 9-9 9z"/><path d="M16.207 13.207c-.371-.186-2.195-1.082-2.535-1.207s-.594-.186-.842.186c-.248.371-.965 1.207-1.184 1.455s-.436.279-.807.093c-.371-.186-1.564-.576-2.979-1.84-1.101-.981-1.844-2.187-2.03-2.559s-.021-.572.165-.758c.17-.17.371-.436.557-.652.186-.216.248-.371.371-.619s.062-.465-.031-.652c-.093-.186-.842-2.032-1.153-2.787-.303-.729-.611-.629-.842-.641-.217-.012-.465-.012-.713-.012s-.652.093-.994.465c-.342.371-1.303 1.273-1.303 3.107s1.334 3.607 1.518 3.855c.186.248 2.627 4.021 6.367 5.635.891.383 1.588.611 2.132.781.895.285 1.709.246 2.352.15.717-.106 2.195-.896 2.504-1.764.309-.867.309-1.611.217-1.764-.093-.154-.34-.248-.711-.434z"/></svg>
+            Beli via WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 text-gray-600 text-center py-6 mt-12">
+    <p class="text-sm">&copy; 2025 Penerbit Primajana Bagia Mesari. </p>
+  </footer>
+
+</body>
+</html>
