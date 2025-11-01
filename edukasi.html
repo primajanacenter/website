@@ -538,58 +538,60 @@
         </div>
     </nav>
 
-    <section class="primajana-press-section">
-        <div class="container">
-            <h1 class="text-center mb-5">Primajana Edukasi</h1>
-            <p class="text-center lead mb-5"></p>
+   <section class="primajana-press-section">
+  <div class="container">
+    <h1 class="text-center mb-5">Primajana Edukasi</h1>
 
-            <div class="row mb-4">
-                <div class="col-md-4">
-                    <select id="filterKategori" class="form-select">
-                        <option value="">Semua Kategori</option>
-                        <option value="e-book">E-Book</option>
-                        <option value="video">Video</option>
-                        <option value="bimbingan">Bimbingan Chat</option>
-                        <option value="template">Template</option>
-                        <option value="pelatihan">Pelatihan</option>
-                    </select>
-                </div>
-                <div class="col-md-8">
-                    <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan nama produk...">
-                </div>
-            </div>
+    <!-- Filter dan Pencarian -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <select id="filterKategori" class="form-select">
+          <option value="">Semua Kategori</option>
+          <option value="e-book">E-Book</option>
+          <option value="video">Video</option>
+          <option value="bimbingan">Bimbingan Chat</option>
+          <option value="template">Template</option>
+          <option value="pelatihan">Pelatihan</option>
+        </select>
+      </div>
+      <div class="col-md-8">
+        <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan nama produk...">
+      </div>
+    </div>
 
-            <body>
+    <!-- Grid Produk -->
+    <div class="row g-4 justify-content-center">
+      <!-- CARD 1 -->
+      <div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="e-book" data-judul="E-Book Perilaku Kesehatan">
+        <div class="card book-card">
+          <img src="https://res.cloudinary.com/djexglfns/image/upload/v1757407675/WhatsApp_Image_2025-09-09_at_3.46.15_PM_chdkec.jpg" class="card-img-top" alt="Cover E-Book Perilaku Kesehatan">
+          <div class="card-body text-center">
+            <h5 class="card-title">E-Book 33 Teknik Membuat Ide dan Contohnya</h5>
+            <p class="book-price">Rp 10.000</p>
+            <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20produk%20E-Book%2033%20Teknik%20Membuat%20Ide%20dan%20Contohnya." 
+               target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+          </div>
+        </div>
+      </div>
 
-                <div class="container my-5">
-                    <div class="row g-4">
-                        <div class="col-md-3 book-item" data-kategori="e-book" data-judul="E-Book Perilaku Kesehatan">
-                            <div class="card book-card">
-                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1757407675/WhatsApp_Image_2025-09-09_at_3.46.15_PM_chdkec.jpg" class="card-img-top" alt="Cover E-Book Perilaku Kesehatan">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">E-Book 33 Teknik Membuat Ide dan Contohnya</h5>
-                                    <p class="book-price">Rp 10.000</p>
-                                    <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20produk%20E-Book%2033%20Teknik%20Membuat%20Ide%20dan%20Contohnya." target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="container my-5">
-                    <div class="row g-4">
-                        <div class="col-md-3 book-item" data-kategori="pelatihan" data-judul="E-Book Perilaku Kesehatan">
-                            <div class="card book-card">
-                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1762038840/Flyer_Esai_Primajana_1_tnh3zj.jpg" class="card-img-top" alt="Cover E-Book Perilaku Kesehatan">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Bimbingan Privat Esai</h5>
-                                    <p class="book-price">Rp 250.000</p>
-                                    <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20produk%20E-Book%2033%20Teknik%20Membuat%20Ide%20dan%20Contohnya." target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
-                                </div>
-                            </div>
-                        </div>
+      <!-- CARD 2 -->
+      <div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="pelatihan" data-judul="Bimbingan Privat Esai">
+        <div class="card book-card">
+          <img src="https://res.cloudinary.com/djexglfns/image/upload/v1762038840/Flyer_Esai_Primajana_1_tnh3zj.jpg" class="card-img-top" alt="Cover Bimbingan Esai">
+          <div class="card-body text-center">
+            <h5 class="card-title">Bimbingan Privat Esai</h5>
+            <p class="book-price">Rp 250.000</p>
+            <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20produk%20Bimbingan%20Privat%20Esai." 
+               target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+          </div>
+        </div>
+      </div>
 
+      <!-- Tambah card baru di sini dengan struktur yang sama -->
+    </div>
+  </div>
+</section>
 
-                </section>
 
     <footer class="footer">
         <div class="container">
