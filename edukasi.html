@@ -543,181 +543,180 @@
     <h1 class="text-center mb-5">Primajana Edukasi</h1>
 
     <!-- Filter dan Pencarian -->
-    <div class="row mb-4">
-      <div class="col-md-4">
-        <select id="filterKategori" class="form-select">
-          <option value="">Semua Kategori</option>
-          <option value="e-book">E-Book</option>
-          <option value="video">Video</option>
-          <option value="bimbingan">Bimbingan Chat</option>
-          <option value="template">Template</option>
-          <option value="pelatihan">Pelatihan</option>
-        </select>
-      </div>
-      <div class="col-md-8">
-        <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan nama produk...">
-      </div>
-    </div>
-
-    <!-- Grid Produk -->
-    <div class="row g-4 justify-content-center">
-      <!-- CARD 1 -->
-      <div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="e-book" data-judul="E-Book Perilaku Kesehatan">
-        <div class="card book-card">
-          <img src="https://res.cloudinary.com/djexglfns/image/upload/v1757407675/WhatsApp_Image_2025-09-09_at_3.46.15_PM_chdkec.jpg" class="card-img-top" alt="Cover E-Book Perilaku Kesehatan">
-          <div class="card-body text-center">
-            <h5 class="card-title">E-Book 33 Teknik Membuat Ide dan Contohnya</h5>
-            <p class="book-price">Rp 10.000</p>
-            <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20produk%20E-Book%2033%20Teknik%20Membuat%20Ide%20dan%20Contohnya." 
-               target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- CARD 2 -->
-      <div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="pelatihan" data-judul="Bimbingan Privat Esai">
-        <div class="card book-card">
-          <img src="https://res.cloudinary.com/djexglfns/image/upload/v1762038840/Flyer_Esai_Primajana_1_tnh3zj.jpg" class="card-img-top" alt="Cover Bimbingan Esai">
-          <div class="card-body text-center">
-            <h5 class="card-title">Bimbingan Privat Esai</h5>
-            <p class="book-price">Rp 250.000 (Sold Out)</p>
-            <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20produk%20Bimbingan%20Privat%20Esai." 
-               target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
-          </div>
-        </div>
-      </div>
-      
-      <!-- ================== LAYANAN BIMBINGAN CHAT PER JAM ================== -->
-
-<!-- Esai -->
-<div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan-chat" data-judul="Bimbingan Chat Esai">
-  <div class="card book-card text-center p-3">
-    <div class="display-4 text-primary mb-2"><i class="bi bi-pencil-square"></i></div>
-    <div class="card-body">
-      <h5 class="card-title">Bimbingan Chat – Esai</h5>
-      <p class="book-price">Rp 35.000 / jam</p>
-      <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Bimbingan%20Chat%20Esai%20per%20jam."
-         target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
-    </div>
+<div class="row mb-4">
+  <div class="col-md-4">
+    <select id="filterKategori" class="form-select">
+      <option value="">Semua Kategori</option>
+      <option value="e-book">E-Book</option>
+      <option value="pelatihan">Pelatihan</option>
+      <option value="bimbingan">Bimbingan Chat</option>
+    </select>
+  </div>
+  <div class="col-md-8">
+    <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan nama produk...">
   </div>
 </div>
 
-<!-- Karya Tulis Ilmiah -->
-<div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan-chat" data-judul="Bimbingan Chat KTI">
-  <div class="card book-card text-center p-3">
-    <div class="display-4 text-success mb-2"><i class="bi bi-journal-text"></i></div>
-    <div class="card-body">
-      <h5 class="card-title">Bimbingan Chat – Karya Tulis Ilmiah</h5>
-      <p class="book-price">Rp 35.000 / jam</p>
-      <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Bimbingan%20Chat%20Karya%20Tulis%20Ilmiah%20per%20jam."
-         target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+    <!-- GRID PRODUK -->
+<div class="row g-4 justify-content-center" id="productGrid">
+
+  <!-- E-BOOK -->
+  <div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="e-book" data-judul="33 teknik membuat ide dan contohnya">
+    <div class="card book-card h-100">
+      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1757407675/WhatsApp_Image_2025-09-09_at_3.46.15_PM_chdkec.jpg" class="card-img-top">
+      <div class="card-body text-center">
+        <h5 class="card-title">E-Book 33 Teknik Membuat Ide dan Contohnya</h5>
+        <p class="book-price">Rp 10.000</p>
+        <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20E-Book%2033%20Teknik%20Membuat%20Ide"
+           target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Proposal Pendanaan -->
-<div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan-chat" data-judul="Bimbingan Chat Proposal Pendanaan">
-  <div class="card book-card text-center p-3">
-    <div class="display-4 text-warning mb-2"><i class="bi bi-cash-stack"></i></div>
-    <div class="card-body">
-      <h5 class="card-title">Bimbingan Chat – Proposal Pendanaan</h5>
-      <p class="book-price">Rp 35.000 / jam</p>
-      <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Bimbingan%20Chat%20Proposal%20Pendanaan%20per%20jam."
-         target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+  <!-- PELATIHAN -->
+  <div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="pelatihan" data-judul="bimbingan privat esai">
+    <div class="card book-card h-100">
+      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1762038840/Flyer_Esai_Primajana_1_tnh3zj.jpg" class="card-img-top">
+      <div class="card-body text-center">
+        <h5 class="card-title">Bimbingan Privat Esai</h5>
+        <p class="book-price">Rp 250.000 (Sold Out)</p>
+        <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Privat%20Esai"
+           target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Skripsi -->
-<div class="col-12 col-md-6 col-lg-4 book-item">
-  <div class="card book-card text-center p-3">
+  <!-- BIMBINGAN CHAT -->
+  <!-- ESAI -->
+  <div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan" data-judul="bimbingan chat esai">
+    <div class="card book-card text-center p-3 h-100">
+      <div class="display-4 text-primary mb-2"><i class="bi bi-pencil-square"></i></div>
+      <div class="card-body">
+        <h5 class="card-title">Bimbingan Chat – Esai</h5>
+        <p class="book-price">Rp 35.000 / jam</p>
+        <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Chat%20Esai"
+           target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- KTI -->
+  <div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan" data-judul="bimbingan chat karya tulis ilmiah">
+    <div class="card book-card text-center p-3 h-100">
+      <div class="display-4 text-success mb-2"><i class="bi bi-journal-text"></i></div>
+      <div class="card-body">
+        <h5 class="card-title">Bimbingan Chat – Karya Tulis Ilmiah</h5>
+        <p class="book-price">Rp 35.000 / jam</p>
+        <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Chat%20KTI"
+           target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROPOSAL -->
+  <div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan" data-judul="bimbingan chat proposal pendanaan">
+    <div class="card book-card text-center p-3 h-100">
+      <div class="display-4 text-warning mb-2"><i class="bi bi-cash-stack"></i></div>
+      <div class="card-body">
+        <h5 class="card-title">Bimbingan Chat – Proposal Pendanaan</h5>
+        <p class="book-price">Rp 35.000 / jam</p>
+        <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Chat%20Proposal"
+           target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- SKRIPSI -->
+<div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan" data-judul="bimbingan chat skripsi">
+  <div class="card book-card text-center p-3 h-100">
     <div class="display-4 text-info mb-2"><i class="bi bi-mortarboard"></i></div>
     <div class="card-body">
       <h5 class="card-title">Bimbingan Chat – Skripsi</h5>
       <p class="book-price">Rp 35.000 / jam</p>
-      <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Bimbingan%20Chat%20Skripsi%20per%20jam."
+      <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Chat%20Skripsi"
          target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
     </div>
   </div>
 </div>
 
-<!-- Tesis -->
-<div class="col-12 col-md-6 col-lg-4 book-item">
-  <div class="card book-card text-center p-3">
+<!-- TESIS -->
+<div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan" data-judul="bimbingan chat tesis">
+  <div class="card book-card text-center p-3 h-100">
     <div class="display-4 text-secondary mb-2"><i class="bi bi-award"></i></div>
     <div class="card-body">
       <h5 class="card-title">Bimbingan Chat – Tesis</h5>
       <p class="book-price">Rp 35.000 / jam</p>
-      <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Bimbingan%20Chat%20Tesis%20per%20jam."
+      <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Chat%20Tesis"
          target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
     </div>
   </div>
 </div>
 
-<!-- Publikasi Jurnal -->
-<div class="col-12 col-md-6 col-lg-4 book-item">
-  <div class="card book-card text-center p-3">
+<!-- PUBLIKASI JURNAL -->
+<div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan" data-judul="bimbingan chat publikasi jurnal">
+  <div class="card book-card text-center p-3 h-100">
     <div class="display-4 text-dark mb-2"><i class="bi bi-journal-check"></i></div>
     <div class="card-body">
       <h5 class="card-title">Bimbingan Chat – Publikasi Jurnal</h5>
       <p class="book-price">Rp 35.000 / jam</p>
-      <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Bimbingan%20Chat%20Publikasi%20Jurnal%20per%20jam."
+      <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Chat%20Publikasi%20Jurnal"
          target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
     </div>
   </div>
 </div>
 
-<!-- Infografis -->
-<div class="col-12 col-md-6 col-lg-4 book-item">
-  <div class="card book-card text-center p-3">
+<!-- INFOGRAFIS -->
+<div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan" data-judul="bimbingan chat infografis">
+  <div class="card book-card text-center p-3 h-100">
     <div class="display-4 text-primary mb-2"><i class="bi bi-bar-chart-line"></i></div>
     <div class="card-body">
       <h5 class="card-title">Bimbingan Chat – Infografis</h5>
       <p class="book-price">Rp 35.000 / jam</p>
-      <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Bimbingan%20Chat%20Infografis%20per%20jam."
+      <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Chat%20Infografis"
          target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
     </div>
   </div>
 </div>
 
-<!-- Business Plan -->
-<div class="col-12 col-md-6 col-lg-4 book-item">
-  <div class="card book-card text-center p-3">
+<!-- BUSINESS PLAN -->
+<div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan" data-judul="bimbingan chat business plan">
+  <div class="card book-card text-center p-3 h-100">
     <div class="display-4 text-success mb-2"><i class="bi bi-briefcase"></i></div>
     <div class="card-body">
       <h5 class="card-title">Bimbingan Chat – Business Plan</h5>
       <p class="book-price">Rp 35.000 / jam</p>
-      <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Bimbingan%20Chat%20Business%20Plan%20per%20jam."
+      <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Chat%20Business%20Plan"
          target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
     </div>
   </div>
 </div>
 
 <!-- PKM -->
-<div class="col-12 col-md-6 col-lg-4 book-item">
-  <div class="card book-card text-center p-3">
+<div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan" data-judul="bimbingan chat pkm">
+  <div class="card book-card text-center p-3 h-100">
     <div class="display-4 text-warning mb-2"><i class="bi bi-lightbulb"></i></div>
     <div class="card-body">
       <h5 class="card-title">Bimbingan Chat – Program Kreativitas Mahasiswa</h5>
       <p class="book-price">Rp 35.000 / jam</p>
-      <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Bimbingan%20Chat%20PKM%20per%20jam."
+      <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Chat%20PKM"
          target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
     </div>
   </div>
 </div>
 
-<!-- Penelitian Kualitatif -->
-<div class="col-12 col-md-6 col-lg-4 book-item">
-  <div class="card book-card text-center p-3">
+<!-- PENELITIAN KUALITATIF -->
+<div class="col-12 col-md-6 col-lg-4 book-item" data-kategori="bimbingan" data-judul="bimbingan chat penelitian kualitatif">
+  <div class="card book-card text-center p-3 h-100">
     <div class="display-4 text-info mb-2"><i class="bi bi-chat-dots"></i></div>
     <div class="card-body">
       <h5 class="card-title">Bimbingan Chat – Penelitian Kualitatif</h5>
       <p class="book-price">Rp 35.000 / jam</p>
-      <a href="https://wa.me/+6285935201571?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Bimbingan%20Chat%20Penelitian%20Kualitatif%20per%20jam."
+      <a href="https://wa.me/6285935201571?text=Halo%20Admin,%20saya%20tertarik%20Bimbingan%20Chat%20Penelitian%20Kualitatif"
          target="_blank" class="btn btn-primary btn-sm">Pesan Sekarang</a>
     </div>
   </div>
 </div>
+
 
       
       <!-- Tambah card baru di sini dengan struktur yang sama -->
@@ -738,38 +737,38 @@
     </footer>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Animasi delay untuk card
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll(".book-card").forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.1}s`;
-            });
-        });
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-        // === FILTER & SEARCH ===
-        const searchInput = document.getElementById('searchInput');
-        const filterKategori = document.getElementById('filterKategori');
-        const bookItems = document.querySelectorAll('.book-item');
+  // Animasi delay card
+  document.querySelectorAll(".book-card").forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
 
-        function filterProducts() {
-            const searchVal = searchInput.value.toLowerCase();
-            const kategoriVal = filterKategori.value;
+  // FILTER PRODUK
+  const filterKategori = document.getElementById("filterKategori");
+  const searchInput = document.getElementById("searchInput");
+  const items = document.querySelectorAll(".book-item");
 
-            bookItems.forEach(item => {
-                const judul = item.getAttribute('data-judul').toLowerCase();
-                const kategori = item.getAttribute('data-kategori');
+  function filterProduk() {
+    const kategori = filterKategori.value.toLowerCase();
+    const keyword  = searchInput.value.toLowerCase();
 
-                const matchJudul = judul.includes(searchVal);
-                const matchKategori = !kategoriVal || kategori === kategoriVal;
+    items.forEach(item => {
+      const itemKategori = item.dataset.kategori.toLowerCase();
+      const itemJudul    = item.dataset.judul.toLowerCase();
 
-                item.style.display = (matchJudul && matchKategori) ? 'block' : 'none';
-            });
-        }
+      const cocokKategori = !kategori || itemKategori === kategori;
+      const cocokJudul    = itemJudul.includes(keyword);
 
-        searchInput.addEventListener('input', filterProducts);
-        filterKategori.addEventListener('change', filterProducts);
-    </script>
+      item.style.display = (cocokKategori && cocokJudul) ? "" : "none";
+    });
+  }
+
+  filterKategori.addEventListener("change", filterProduk);
+  searchInput.addEventListener("input", filterProduk);
+});
+</script>
 
 </body>
 
