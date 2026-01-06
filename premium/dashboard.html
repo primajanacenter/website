@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>Dashboard Pavio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{box-sizing:border-box;}
 body{margin:0;background:#f5f7fb;font-family:system-ui;}
@@ -58,31 +58,41 @@ body{margin:0;background:#f5f7fb;font-family:system-ui;}
 
 </div>
 
-<script>
-const supabaseClient = supabase.createClient(
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabaseClient = createClient(
  "https://dxyjtkmtpkqbuotovmyg.supabase.co",
  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4eWp0a210cGtxYnVvdG92bXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NDYwNzgsImV4cCI6MjA4MzIyMjA3OH0.-b50kwMiNs9oy3flr0yUJaEVnVIFQBGnc_rDlKGqOiA"
 );
 
-async function check(){
- const {data:{session}}=await supabaseClient.auth.getSession();
- if(!session) return location.href="login.html";
+// expose for inline HTML
+window.openApp = function(u){ location.href = u; }
 
- const {data}=await supabaseClient.from("subscriptions").select("*").single();
- if(data && data.active){
-   substatus.innerText="AKTIF";
-   substatus.className="status";
-   const exp=new Date(data.expired_at);
-   setInterval(()=>{
-    const d=Math.max(0,Math.floor((exp-new Date())/86400000));
-    countdown.innerText="Berakhir dalam "+d+" hari";
-   },1000);
- }else substatus.innerText="TIDAK AKTIF";
+window.logout = async function(){
+ await supabaseClient.auth.signOut();
+ location.href = "login.html";
 }
-check();
 
-function openApp(u){location.href=u;}
-function logout(){supabaseClient.auth.signOut();location.href="login.html";}
+const { data:{ session } } = await supabaseClient.auth.getSession();
+if(!session){
+ location.href="login.html";
+}
+
+const { data } = await supabaseClient.from("subscriptions").select("*").single();
+
+if(data && data.active){
+ substatus.innerText = "AKTIF";
+ substatus.className = "status";
+ const exp = new Date(data.expired_at);
+ setInterval(()=>{
+  const d = Math.max(0, Math.floor((exp - new Date()) / 86400000));
+  countdown.innerText = "Berakhir dalam " + d + " hari";
+ },1000);
+}else{
+ substatus.innerText = "TIDAK AKTIF";
+}
 </script>
+
 </body>
 </html>
