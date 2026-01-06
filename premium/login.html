@@ -83,10 +83,24 @@ window.doLogin = async function(){
 }
 
 window.doRegister = async function(){
+  const emailVal = email.value.trim();
+  const passVal  = password.value;
+
+  if(!emailVal || !emailVal.includes("@")){
+    msg.innerText = "Email tidak valid.";
+    return;
+  }
+
+  if(passVal.length < 6){
+    msg.innerText = "Password minimal 6 karakter.";
+    return;
+  }
+
   msg.innerText = "Mendaftarkan akun...";
+
   const { data, error } = await supabase.auth.signUp({
-    email: email.value.trim(),
-    password: password.value
+    email: emailVal,
+    password: passVal
   });
 
   if(error){
@@ -101,6 +115,7 @@ window.doRegister = async function(){
   msg.style.color="#198754";
   msg.innerText="Akun berhasil dibuat. Silakan login.";
 }
+
 </script>
 </body>
 </html>
