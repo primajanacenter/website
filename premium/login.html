@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Masuk Pavio</title>
+<title>Masuk</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
@@ -39,7 +39,7 @@ button{
 <body>
 
 <div class="card">
-<h2>Pavio</h2>
+<h2>Masuk Akun</h2>
 
 <div class="input-group">
  <input id="email" placeholder="Email">
@@ -58,35 +58,48 @@ button{
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-const supabaseClient = createClient(
- "https://dxyjtkmtpkqbuotovmyg.supabase.co",
- "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4eWp0a210cGtxYnVvdG92bXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NDYwNzgsImV4cCI6MjA4MzIyMjA3OH0.-b50kwMiNs9oy3flr0yUJaEVnVIFQBGnc_rDlKGqOiA"
-);
+const SUPABASE_URL = "https://jzrqalbhvjkgradpnbcp.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cnFhbGJodmprZ3JhZHBuYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NzQ2NTksImV4cCI6MjA4MzI1MDY1OX0.yOGN7e7Bu6Yvm1gDaF1URHF7Mjcj7aVHfJ5URHRWyaE";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 window.togglePwd = function(){
- password.type = password.type==="password"?"text":"password";
+  const pwd = document.getElementById("password");
+  pwd.type = pwd.type === "password" ? "text" : "password";
 }
 
 window.doLogin = async function(){
- const { error } = await supabaseClient.auth.signInWithPassword({
-   email: email.value,
-   password: password.value
- });
- if(error) msg.innerText = error.message;
- else location.href = "dashboard.html";
+  msg.innerText = "Memproses...";
+  const { error } = await supabase.auth.signInWithPassword({
+    email: email.value.trim(),
+    password: password.value
+  });
+
+  if(error){
+    msg.innerText = error.message;
+  } else {
+    location.href = "dashboard.html";
+  }
 }
 
 window.doRegister = async function(){
- const { data, error } = await supabaseClient.auth.signUp({
-   email: email.value,
-   password: password.value
- });
- if(error) msg.innerText = error.message;
- else{
-  await supabaseClient.from("subscriptions").insert([{ id: data.user.id }]);
+  msg.innerText = "Mendaftarkan akun...";
+  const { data, error } = await supabase.auth.signUp({
+    email: email.value.trim(),
+    password: password.value
+  });
+
+  if(error){
+    msg.innerText = error.message;
+    return;
+  }
+
+  await supabase.from("subscriptions").insert([
+    { id: data.user.id, active: false }
+  ]);
+
   msg.style.color="#198754";
   msg.innerText="Akun berhasil dibuat. Silakan login.";
- }
 }
 </script>
 </body>
