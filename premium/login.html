@@ -34,6 +34,15 @@ button{
 }
 .secondary{background:#e9f1ff;color:#0d6efd;margin-top:10px;}
 #msg{text-align:center;margin-top:12px;font-size:14px;color:#dc3545;}
+.forgot{
+ text-align:center;
+ margin-top:12px;
+}
+.forgot a{
+ color:#0d6efd;
+ text-decoration:none;
+ font-size:13px;
+}
 </style>
 </head>
 <body>
@@ -52,6 +61,11 @@ button{
 
 <button onclick="doLogin()">Masuk</button>
 <button class="secondary" onclick="doRegister()">Daftar Akun</button>
+
+<div class="forgot">
+  <a href="reset-request.html">Lupa Password?</a>
+</div>
+
 <p id="msg"></p>
 </div>
 
@@ -115,7 +129,6 @@ window.doRegister = async function(){
   msg.style.color="#198754";
   msg.innerText="Akun berhasil dibuat. Silakan login.";
 }
-
 </script>
 </body>
 </html>
