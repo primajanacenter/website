@@ -59,13 +59,12 @@ button{
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
 const supabaseClient = createClient(
-  "https://dxyjtkmtpkqbuotovmyg.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4eWp0a210cGtxYnVvdG92bXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NDYwNzgsImV4cCI6MjA4MzIyMjA3OH0.-b50kwMiNs9oy3flr0yUJaEVnVIFQBGnc_rDlKGqOiA"
+ "https://dxyjtkmtpkqbuotovmyg.supabase.co",
+ "YOUR_ANON_KEY"
 );
 
 window.togglePwd = function(){
- const pwd=document.getElementById("password");
- pwd.type = pwd.type==="password"?"text":"password";
+ password.type = password.type==="password"?"text":"password";
 }
 
 window.doLogin = async function(){
@@ -84,12 +83,11 @@ window.doRegister = async function(){
  });
  if(error) msg.innerText = error.message;
  else{
-   await supabaseClient.from("subscriptions").insert([{ id: data.user.id }]);
-   msg.style.color="#198754";
-   msg.innerText="Akun berhasil dibuat. Silakan login.";
+  await supabaseClient.from("subscriptions").insert([{ id: data.user.id }]);
+  msg.style.color="#198754";
+  msg.innerText="Akun berhasil dibuat. Silakan login.";
  }
 }
 </script>
-
 </body>
 </html>
