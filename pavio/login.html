@@ -11,22 +11,22 @@
 <input id="email" placeholder="Email"><br>
 <input id="password" type="password" placeholder="Password"><br><br>
 
-<button onclick="login()">Login</button>
-<button onclick="register()">Daftar</button>
+<button onclick="doLogin()">Login</button>
+<button onclick="doRegister()">Daftar</button>
 
 <p id="msg"></p>
 
 <script>
-const supabase = supabase.createClient(
+const supabaseClient = supabase.createClient(
   "https://dxyjtkmtpkqbuotovmyg.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4eWp0a210cGtxYnVvdG92bXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NDYwNzgsImV4cCI6MjA4MzIyMjA3OH0.-b50kwMiNs9oy3flr0yUJaEVnVIFQBGnc_rDlKGqOiA"
 );
 
-async function login(){
+async function doLogin(){
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
   if(error){
     msg.innerText = error.message;
   }else{
@@ -34,16 +34,15 @@ async function login(){
   }
 }
 
-async function register(){
+async function doRegister(){
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const { data, error } = await supabase.auth.signUp({ email, password });
+  const { data, error } = await supabaseClient.auth.signUp({ email, password });
   if(error){
     msg.innerText = error.message;
   }else{
-    // buat row subscription kosong
-    await supabase.from("subscriptions").insert([{ id: data.user.id }]);
+    await supabaseClient.from("subscriptions").insert([{ id: data.user.id }]);
     msg.innerText = "Pendaftaran berhasil, silakan login.";
   }
 }
