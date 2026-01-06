@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Pavio</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<h2>Login / Daftar Pavio</h2>
+
+<input id="email" placeholder="Email"><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+
+<button onclick="login()">Login</button>
+<button onclick="register()">Daftar</button>
+
+<p id="msg"></p>
+
+<script>
+const supabase = supabase.createClient(
+  "https://dxyjtkmtpkqbuotovmyg.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR4eWp0a210cGtxYnVvdG92bXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NDYwNzgsImV4cCI6MjA4MzIyMjA3OH0.-b50kwMiNs9oy3flr0yUJaEVnVIFQBGnc_rDlKGqOiA"
+);
+
+async function login(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if(error){
+    msg.innerText = error.message;
+  }else{
+    window.location.href = "dashboard.html";
+  }
+}
+
+async function register(){
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { data, error } = await supabase.auth.signUp({ email, password });
+  if(error){
+    msg.innerText = error.message;
+  }else{
+    // buat row subscription kosong
+    await supabase.from("subscriptions").insert([{ id: data.user.id }]);
+    msg.innerText = "Pendaftaran berhasil, silakan login.";
+  }
+}
+</script>
+
+</body>
+</html>
