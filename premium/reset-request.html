@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Reset Password</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+*{box-sizing:border-box;}
+body{
+ background:linear-gradient(135deg,#f5f7fb,#eef2ff);
+ font-family:system-ui,-apple-system,BlinkMacSystemFont;
+ display:flex;align-items:center;justify-content:center;height:100vh;margin:0;
+}
+.card{
+ background:#fff;max-width:380px;width:100%;
+ padding:36px;border-radius:18px;
+ box-shadow:0 12px 35px rgba(0,0,0,.08);
+}
+h2{text-align:center;color:#0d6efd;margin-bottom:25px;}
+input{
+ width:100%;
+ padding:12px;
+ border:1px solid #ddd;border-radius:10px;font-size:14px;
+}
+button{
+ width:100%;padding:12px;margin-top:12px;border:none;border-radius:10px;
+ background:#0d6efd;color:#fff;font-weight:600;cursor:pointer;
+}
+#msg{text-align:center;margin-top:12px;font-size:14px;color:#198754;}
+.back{
+ text-align:center;margin-top:14px;
+}
+.back a{color:#0d6efd;text-decoration:none;font-size:13px;}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>Reset Password</h2>
+
+<input id="email" placeholder="Masukkan email kamu">
+
+<button onclick="sendLink()">Kirim Link Reset</button>
+
+<div class="back">
+  <a href="login.html">Kembali ke Login</a>
+</div>
+
+<p id="msg"></p>
+</div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const SUPABASE_URL = "https://jzrqalbhvjkgradpnbcp.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cnFhbGJodmprZ3JhZHBuYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NzQ2NTksImV4cCI6MjA4MzI1MDY1OX0.yOGN7e7Bu6Yvm1gDaF1URHF7Mjcj7aVHfJ5URHRWyaE";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+window.sendLink = async function(){
+  const emailVal = email.value.trim();
+  if(!emailVal){
+    msg.innerText = "Masukkan email terlebih dahulu.";
+    return;
+  }
+
+  const { error } = await supabase.auth.resetPasswordForEmail(emailVal,{
+    redirectTo: "https://primajana.com/premium/reset-password.html"
+  });
+
+  msg.innerText = error ? error.message : "Link reset telah dikirim ke email kamu.";
+}
+</script>
+
+</body>
+</html>
