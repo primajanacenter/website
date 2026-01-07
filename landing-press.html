@@ -546,6 +546,98 @@ section > p{
   50%{transform:translateY(-6px)}
 }
 
+.royalty-info{
+  padding-right:20px;
+}
+
+.royalty-icon{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:#dcfce7;
+  color:#16a34a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  margin-bottom:12px;
+  animation:floatIcon 3s ease-in-out infinite;
+}
+
+.royalty-icon.small{
+  background:#e0ecff;
+  color:#2563eb;
+  margin:0 auto 10px;
+}
+
+.royalty-info ul{
+  list-style:none;
+  padding:0;
+  margin-top:14px;
+}
+
+.royalty-info li{
+  margin-bottom:8px;
+  font-size:14px;
+}
+
+.royalty-info li i{
+  color:#22c55e;
+  margin-right:8px;
+}
+
+.royalty-card{
+  text-align:left;
+}
+
+.royalty-card label{
+  font-size:13px;
+  font-weight:600;
+  margin-top:10px;
+  display:block;
+}
+
+.royalty-card input{
+  width:100%;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid #d1d5db;
+  margin-top:6px;
+}
+
+.royalty-card .btn-primary{
+  width:100%;
+  margin-top:14px;
+}
+
+.royalty-result{
+  margin-top:14px;
+  background:#ecfdf5;
+  padding:12px 14px;
+  border-radius:10px;
+  font-weight:700;
+  color:#065f46;
+  display:flex;
+  justify-content:space-between;
+}
+
+.step-icon{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  margin-bottom:10px;
+  animation:floatIcon 3s ease-in-out infinite;
+}
+
+.step-icon.blue{background:#e0ecff;color:#2563eb}
+.step-icon.green{background:#dcfce7;color:#16a34a}
+.step-icon.purple{background:#ede9fe;color:#7c3aed}
+.step-icon.gold{background:#fef3c7;color:#f59e0b}
+
 </style>
 </head>
 <body>
@@ -739,35 +831,40 @@ section > p{
     <div class="grid" style="align-items:center">
 
       <!-- INFO ROYALTI -->
-      <div>
-        <h2>Simulasi Royalti Penulis</h2>
-        <p style="color:#4b5563">
-          Hitung estimasi royalti Anda sebagai penulis buku di Primajana Press.
-          Skema pembagian: Google Play 39% + PPN 11% + Penerbit 10% + Penulis 40%.
-        </p>
-        <ul style="color:#374151">
-          <li>Hak royalti transparan & real-time</li>
-          <li>Laporan penjualan dapat diakses penulis</li>
-          <li>Royalti dibayarkan rutin</li>
-        </ul>
-      </div>
+      <div class="royalty-info">
+  <div class="royalty-icon"><i class="fa-solid fa-coins"></i></div>
+  <h2>Simulasi Royalti Penulis</h2>
+  <p>
+    Hitung estimasi royalti Anda sebagai penulis buku di Primajana Press.
+    Skema pembagian: Google Play 39% + PPN 11% + Penerbit 10% + Penulis 40%.
+  </p>
+
+  <ul>
+    <li><i class="fa-solid fa-check"></i> Hak royalti transparan & real-time</li>
+    <li><i class="fa-solid fa-check"></i> Laporan penjualan dapat diakses penulis</li>
+    <li><i class="fa-solid fa-check"></i> Royalti dibayarkan rutin tiap akhir bulan</li>
+  </ul>
+</div>
+
 
       <!-- FORM KALKULATOR -->
-      <div class="card">
-        <label>Harga Buku (Rp)</label>
-        <input id="hargaBuku" type="number" value="100000">
-        <label style="margin-top:10px">Jumlah Terjual</label>
-        <input id="jumlahTerjual" type="number" value="100">
+      <div class="card royalty-card">
+  <div class="royalty-icon small"><i class="fa-solid fa-calculator"></i></div>
 
-        <button class="btn-primary" style="margin-top:15px" onclick="hitungRoyalti()">
-          Hitung Royalti
-        </button>
+  <label>Harga Buku (Rp)</label>
+  <input id="hargaBuku" type="number" value="100000">
 
-        <div style="margin-top:15px;color:#065f46;font-weight:600">
-          Royalti Penulis:
-          <span id="hasilRoyalti">Rp 4.000.000</span>
-        </div>
-      </div>
+  <label>Jumlah Terjual</label>
+  <input id="jumlahTerjual" type="number" value="100">
+
+  <button class="btn-primary" onclick="hitungRoyalti()">Hitung Royalti</button>
+
+  <div class="royalty-result">
+    Royalti Penulis:
+    <span id="hasilRoyalti">Rp 4.000.000</span>
+  </div>
+</div>
+
 
     </div>
   </div>
@@ -958,7 +1055,8 @@ section > p{
       <div class="process-step">
         <span class="step-number">1</span>
         <div class="step-card">
-          <h4>📩 Konsultasi & Pengajuan Naskah</h4>
+          <div class="step-icon blue"><i class="fa-solid fa-comments"></i></div>
+          <h4>Konsultasi & Pengajuan Naskah</h4>
           <p>Diskusi awal & pengajuan naskah melalui WhatsApp atau Google Form.</p>
         </div>
       </div>
@@ -966,7 +1064,8 @@ section > p{
       <div class="process-step">
         <span class="step-number">2</span>
         <div class="step-card">
-          <h4>✍ Editing & Layout Profesional</h4>
+          <div class="step-icon green"><i class="fa-solid fa-pen-nib"></i></div>
+          <h4>Editing & Layout Profesional</h4>
           <p>Proses editorial, penyuntingan akademik, dan penataan layout buku.</p>
         </div>
       </div>
@@ -974,7 +1073,8 @@ section > p{
       <div class="process-step">
         <span class="step-number">3</span>
         <div class="step-card">
-          <h4>🧾 ISBN & Legalitas</h4>
+          <div class="step-icon purple"><i class="fa-solid fa-file-signature"></i></div>
+          <h4>ISBN & Legalitas</h4>
           <p>Pendaftaran ISBN, kelengkapan administrasi, dan legalitas penerbitan.</p>
         </div>
       </div>
@@ -982,7 +1082,8 @@ section > p{
       <div class="process-step">
         <span class="step-number">4</span>
         <div class="step-card">
-          <h4>📚 Distribusi Nasional & Digital</h4>
+          <div class="step-icon gold"><i class="fa-solid fa-truck-fast"></i></div>
+          <h4>Distribusi Nasional & Digital</h4>
           <p>Distribusi ke marketplace, Google Play Book, Primajana Digital, dan Perpusnas.</p>
         </div>
       </div>
@@ -990,6 +1091,7 @@ section > p{
     </div>
   </div>
 </section>
+
 
 <!-- ================= TESTIMONI ================= -->
 <section id="testimoni" class="reveal">
