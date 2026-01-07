@@ -228,6 +228,199 @@ header{
   50%{opacity:.65}
 }
 
+/* ================= GLOBAL GUTTER FIX ================= */
+
+/* Pastikan semua section punya ruang kiri-kanan aman */
+section{
+  padding:90px 0;
+}
+
+/* Container benar-benar jadi batas konten */
+.container{
+  max-width:1120px;
+  margin:auto;
+  padding-left:36px;
+  padding-right:36px;
+}
+
+/* Teks langsung di section (bukan di dalam card) jangan nempel ke tepi */
+section > h1,
+section > h2,
+section > h3,
+section > p{
+  padding-left:6px;
+  padding-right:6px;
+}
+
+/* Card lebih lega */
+.card{
+  padding:34px 32px;
+}
+
+/* Grid beri jarak konsisten */
+.grid{
+  gap:30px;
+}
+
+/* ================= MOBILE FIX ================= */
+@media(max-width:768px){
+  section{
+    padding:60px 0;
+  }
+
+  .container{
+    padding-left:22px;
+    padding-right:22px;
+  }
+
+  .card{
+    padding:24px 22px;
+  }
+
+  section > h1,
+  section > h2,
+  section > h3,
+  section > p{
+    padding-left:4px;
+    padding-right:4px;
+  }
+}
+
+/* ================= FIX KHUSUS SECTION PAKET ================= */
+#paket{
+  padding-left:0;
+  padding-right:0;
+}
+
+/* Ruang ekstra di dalam paket */
+#paket .container{
+  padding-left:56px;
+  padding-right:56px;
+}
+
+/* Card di paket jangan terlalu lebar */
+#paket .card{
+  padding:34px 30px;
+}
+
+/* Grid lebih renggang */
+#paket .grid{
+  gap:34px;
+}
+
+/* Mobile */
+@media(max-width:768px){
+  #paket .container{
+    padding-left:22px;
+    padding-right:22px;
+  }
+  #paket .card{
+    padding:24px 22px;
+  }
+  #paket .grid{
+    gap:24px;
+  }
+}
+
+#paket .card h4{
+  margin-top:4px;
+  margin-bottom:10px;
+}
+
+/* ===== FORCE SAFE LAYOUT FOR PACKAGE SECTION ===== */
+
+/* Pastikan section paket tidak melebar sendiri */
+#paket{
+  overflow:hidden;
+}
+
+/* Semua konten langsung di dalam #paket diberi gutter */
+#paket > *{
+  max-width:1120px;
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:48px;
+  padding-right:48px;
+}
+
+/* Card lebih seimbang */
+#paket .card{
+  padding:36px 32px;
+}
+
+/* Grid lebih longgar */
+#paket .grid{
+  gap:36px;
+}
+
+/* Mobile */
+@media(max-width:768px){
+  #paket > *{
+    padding-left:20px;
+    padding-right:20px;
+  }
+  #paket .card{
+    padding:24px 22px;
+  }
+  #paket .grid{
+    gap:24px;
+  }
+}
+
+.book-carousel-wrapper{
+  overflow:hidden;
+  position:relative;
+}
+
+.book-carousel{
+  display:flex;
+  gap:28px;
+  transition:transform .8s cubic-bezier(.19,1,.22,1);
+}
+
+.book-carousel .book-card{
+  min-width:calc((100% - 56px) / 3);
+}
+@media(max-width:768px){
+  .book-carousel .book-card{
+    min-width:100%;
+  }
+}
+
+.book-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  text-align:center;
+  height:100%;
+}
+
+.book-card img{
+  width:100%;
+  max-width:170px;
+  margin-bottom:14px;
+}
+
+.book-card h4{
+  font-size:16px;
+  margin:8px 0 10px;
+  min-height:44px;
+}
+
+.book-meta{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  margin-top:auto;
+}
+
+.book-meta .btn-outline{
+  padding:8px 18px;
+  font-size:13px;
+}
+
 </style>
 </head>
 <body>
@@ -337,48 +530,81 @@ header{
 </div>
 
 
-  <section id="buku" class="reveal" style="background:#eef3ff">
+<section id="buku" class="reveal" style="background:#eef3ff">
   <div class="container">
     <h2 style="text-align:center;margin-bottom:10px">Buku Terbitan Primajana Press</h2>
     <p style="text-align:center;color:#4b5563;margin-bottom:40px">
       Sebagian karya dosen & peneliti yang telah diterbitkan bersama kami.
     </p>
 
-    <div class="grid">
+    <div class="book-carousel-wrapper">
+      <div class="book-carousel">
 
-      <div class="card">
-        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ"
-             style="width:100%;border-radius:12px">
-        <h4>Perilaku Kesehatan</h4>
-        <div class="price">Rp 53.781</div>
-        <a class="btn-outline" href="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ" target="_blank">
-          Lihat di Google Play
-        </a>
+        <!-- CARD 1 -->
+        <div class="card book-card">
+          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ">
+          <h4>Perilaku Kesehatan</h4>
+          <div class="book-meta">
+            <span class="price">Rp 53.781</span>
+            <a class="btn-outline" href="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ" target="_blank">Google Play</a>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="card book-card">
+          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/OAdTEQAAQBAJ">
+          <h4>Kiat Jitu Penelitian</h4>
+          <div class="book-meta">
+            <span class="price">Rp 41.625</span>
+            <a class="btn-outline" href="https://play.google.com/store/books/details?id=OAdTEQAAQBAJ" target="_blank">Google Play</a>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="card book-card">
+          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/VLo3EAAAQBAJ">
+          <h4>Analisis Data Kuantitatif</h4>
+          <div class="book-meta">
+            <span class="price">Rp 67.257</span>
+            <a class="btn-outline" href="https://play.google.com/store/books/details?id=VLo3EAAAQBAJ" target="_blank">Google Play</a>
+          </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="card book-card">
+          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/lSs7EQAAQBAJ">
+          <h4>Metode Riset</h4>
+          <div class="book-meta">
+            <span class="price">Rp 41.625</span>
+            <a class="btn-outline" href="https://play.google.com/store/books/details?id=lSs7EQAAQBAJ" target="_blank">Google Play</a>
+          </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="card book-card">
+          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/w19LEQAAQBAJ">
+          <h4>Penelitian Eksperimental</h4>
+          <div class="book-meta">
+            <span class="price">Rp 29.692</span>
+            <a class="btn-outline" href="https://play.google.com/store/books/details?id=w19LEQAAQBAJ" target="_blank">Google Play</a>
+          </div>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="card book-card">
+          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/PEVvEAAAQBAJ">
+          <h4>Manajemen Risiko</h4>
+          <div class="book-meta">
+            <span class="price">Rp 27.750</span>
+            <a class="btn-outline" href="https://play.google.com/store/books/details?id=PEVvEAAAQBAJ" target="_blank">Google Play</a>
+          </div>
+        </div>
+
       </div>
-
-      <div class="card">
-        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/OAdTEQAAQBAJ"
-             style="width:100%;border-radius:12px">
-        <h4>Kiat Jitu Penelitian</h4>
-        <div class="price">Rp 41.625</div>
-        <a class="btn-outline" href="https://play.google.com/store/books/details?id=OAdTEQAAQBAJ" target="_blank">
-          Lihat di Google Play
-        </a>
-      </div>
-
-      <div class="card">
-        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/VLo3EAAAQBAJ"
-             style="width:100%;border-radius:12px">
-        <h4>Analisis Data Kuantitatif</h4>
-        <div class="price">Rp 67.257</div>
-        <a class="btn-outline" href="https://play.google.com/store/books/details?id=VLo3EAAAQBAJ" target="_blank">
-          Lihat di Google Play
-        </a>
-      </div>
-
     </div>
   </div>
 </section>
+
 
   <section id="royalti" class="reveal">
   <div class="container">
@@ -419,86 +645,93 @@ header{
   </div>
 </section>
 
-<h3>Paket Penerbitan Buku</h3>
-<div class="grid">
+<div class="container">
 
-<!-- MANDIRI -->
-<div class="card">
-  <h4>Paket Mandiri</h4>
-  <div class="price">Rp 500.000</div>
-  <ul>
-    <li>Gratis ISBN</li>
-    <li>Gratis Sertifikat Terbit</li>
-    <li>Terindeks Google Scholar</li>
-    <li>Terdaftar PERPUSNAS</li>
-    <li>Terdaftar Gramedia Digital</li>
-    <li>Terdaftar Google Play Book</li>
-    <li>Distribusi Marketplace</li>
-    <li><s>Layout Buku</s></li>
-    <li><s>Desain Cover</s></li>
-    <li><s>Editing Naskah</s></li>
-    <li>Royalti Penulis 40%</li>
-  </ul>
-  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Mandiri">Pesan Paket Mandiri</a>
-</div>
+  <h3>Paket Penerbitan Buku</h3>
+  <div class="grid">
 
-<!-- PROFESIONAL -->
-<div class="card">
-  <h4>Paket Profesional</h4>
-  <div class="price">Rp 1.275.000</div>
-  <ul>
-    <li>Gratis ISBN</li>
-    <li>Buku Hitam Putih</li>
-    <li>Gratis Sertifikat Terbit</li>
-    <li>Terindeks Google Scholar</li>
-    <li>Gratis Layout Buku</li>
-    <li>Gratis Desain Cover</li>
-    <li>Gratis Editing Naskah</li>
-    <li>Gratis Poster Promosi</li>
-    <li>Terdaftar PERPUSNAS</li>
-    <li>Terdaftar Gramedia Digital</li>
-    <li>Terdaftar Google Play Book</li>
-    <li>Distribusi Marketplace</li>
-    <li>Royalti Penulis 40%</li>
-  </ul>
-  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Profesional">Pesan Paket Profesional</a>
-</div>
+    <!-- MANDIRI -->
+    <div class="card">
+      <h4>Paket Mandiri</h4>
+      <div class="price">Rp 500.000</div>
+      <ul>
+        <li>Gratis ISBN</li>
+        <li>Gratis Sertifikat Terbit</li>
+        <li>Terindeks Google Scholar</li>
+        <li>Terdaftar PERPUSNAS</li>
+        <li>Terdaftar Gramedia Digital</li>
+        <li>Terdaftar Google Play Book</li>
+        <li>Distribusi Marketplace</li>
+        <li><s>Layout Buku</s></li>
+        <li><s>Desain Cover</s></li>
+        <li><s>Editing Naskah</s></li>
+        <li>Royalti Penulis 40%</li>
+      </ul>
+      <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Mandiri">
+        Pesan Paket Mandiri
+      </a>
+    </div>
 
-<!-- LENGKAP -->
-<div class="card">
-  <h4>Paket Lengkap</h4>
-  <div class="price">Rp 1.475.000</div>
-  <ul>
-    <li>Gratis ISBN</li>
-    <li>Buku Hitam Putih</li>
-    <li>Gratis Sertifikat Terbit</li>
-    <li>Terindeks Google Scholar</li>
-    <li>Gratis Layout Buku</li>
-    <li>Gratis Desain Cover</li>
-    <li>Gratis Editing Naskah</li>
-    <li>Gratis Pembatas Buku</li>
-    <li>Gratis Poster Promosi</li>
-    <li>Terdaftar PERPUSNAS</li>
-    <li>Terdaftar Gramedia Digital</li>
-    <li>Terdaftar Google Play Book</li>
-    <li>Distribusi Marketplace</li>
-    <li>Royalti Penulis 40%</li>
-    <li>Gratis Sertifikat HAKI</li>
-  </ul>
-  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Lengkap">Pesan Paket Lengkap</a>
-</div>
+    <!-- PROFESIONAL -->
+    <div class="card">
+      <h4>Paket Profesional</h4>
+      <div class="price">Rp 1.275.000</div>
+      <ul>
+        <li>Gratis ISBN</li>
+        <li>Buku Hitam Putih</li>
+        <li>Gratis Sertifikat Terbit</li>
+        <li>Terindeks Google Scholar</li>
+        <li>Gratis Layout Buku</li>
+        <li>Gratis Desain Cover</li>
+        <li>Gratis Editing Naskah</li>
+        <li>Gratis Poster Promosi</li>
+        <li>Terdaftar PERPUSNAS</li>
+        <li>Terdaftar Gramedia Digital</li>
+        <li>Terdaftar Google Play Book</li>
+        <li>Distribusi Marketplace</li>
+        <li>Royalti Penulis 40%</li>
+      </ul>
+      <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Profesional">
+        Pesan Paket Profesional
+      </a>
+    </div>
 
-</div>
+    <!-- LENGKAP -->
+    <div class="card">
+      <h4>Paket Lengkap</h4>
+      <div class="price">Rp 1.475.000</div>
+      <ul>
+        <li>Gratis ISBN</li>
+        <li>Buku Hitam Putih</li>
+        <li>Terindeks Google Scholar</li>
+        <li>Gratis Layout Buku</li>
+        <li>Gratis Desain Cover</li>
+        <li>Gratis Editing Naskah</li>
+        <li>Gratis Pembatas Buku</li>
+        <li>Gratis Poster Promosi</li>
+        <li>Terdaftar PERPUSNAS</li>
+        <li>Terdaftar Gramedia Digital</li>
+        <li>Terdaftar Google Play Book</li>
+        <li>Distribusi Marketplace</li>
+        <li>Royalti Penulis 40%</li>
+        <li>Gratis Sertifikat HAKI</li>
+      </ul>
+      <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Lengkap">
+        Pesan Paket Lengkap
+      </a>
+    </div>
+
+  </div>
 
   <h3 style="margin-top:60px">Paket Transformasi Karya Ilmiah</h3>
-<p style="color:#4b5563;margin-bottom:30px">
-Layanan khusus untuk mengubah karya ilmiah Anda menjadi buku ajar / buku referensi
-siap publikasi nasional.
-</p>
+  <p style="color:#4b5563;margin-bottom:30px">
+    Layanan khusus untuk mengubah karya ilmiah Anda menjadi buku ajar / buku referensi
+    siap publikasi nasional.
+  </p>
 
-<div class="grid">
+  <div class="grid">
 
-<!-- BACHELOR -->
+    <!-- BACHELOR -->
 <div class="card">
   <h4>Bachelor Edition</h4>
   <div class="price">Rp 2.000.000</div>
@@ -513,7 +746,9 @@ siap publikasi nasional.
     <li>Sertifikat Terbit</li>
     <li>Gratis 10 Eksemplar Buku (A5, maks 200 halaman)</li>
   </ul>
-  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Bachelor%20Edition">Pesan Bachelor Edition</a>
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Bachelor%20Edition">
+    Pesan Bachelor Edition
+  </a>
 </div>
 
 <!-- MASTER -->
@@ -530,7 +765,9 @@ siap publikasi nasional.
     <li>Landing Page Penulis</li>
     <li>Gratis 10 Eksemplar Buku (A5, maks 250 halaman)</li>
   </ul>
-  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Master%20Edition">Pesan Master Edition</a>
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Master%20Edition">
+    Pesan Master Edition
+  </a>
 </div>
 
 <!-- DOCTORAL -->
@@ -547,8 +784,16 @@ siap publikasi nasional.
     <li>Sertifikat Terbit & Portofolio Penulis</li>
     <li>Gratis 10 Eksemplar Buku (A5, maks 300 halaman)</li>
   </ul>
-  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Doctoral%20Edition">Pesan Doctoral Edition</a>
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Doctoral%20Edition">
+    Pesan Doctoral Edition
+  </a>
 </div>
+
+
+  </div>
+
+</div>
+
 
 </div>
 
@@ -671,6 +916,22 @@ window.addEventListener("load", revealOnScroll);
 class="wa-float">
 <i class="fa-brands fa-whatsapp"></i>
 </a>
+
+<script>
+let currentSlide = 0;
+const carousel = document.querySelector(".book-carousel");
+const cards = document.querySelectorAll(".book-carousel .book-card");
+const visible = 3;
+
+setInterval(()=>{
+  currentSlide++;
+  if(currentSlide > cards.length - visible){
+    currentSlide = 0;
+  }
+  const cardWidth = cards[0].offsetWidth + 28;
+  carousel.style.transform = `translateX(-${currentSlide * cardWidth}px)`;
+}, 4000);
+</script>
 
 
 </body>
