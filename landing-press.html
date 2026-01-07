@@ -638,6 +638,67 @@ section > p{
 .step-icon.purple{background:#ede9fe;color:#7c3aed}
 .step-icon.gold{background:#fef3c7;color:#f59e0b}
 
+.testimonial-card{
+  text-align:center;
+}
+
+.testimonial-icon{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  margin:0 auto 10px;
+  animation:floatIcon 3s ease-in-out infinite;
+}
+
+.testimonial-icon.blue{background:#e0ecff;color:#2563eb}
+.testimonial-icon.green{background:#dcfce7;color:#16a34a}
+.testimonial-icon.purple{background:#ede9fe;color:#7c3aed}
+
+.testimonial-card p{
+  font-size:14px;
+  color:#374151;
+  margin-bottom:10px;
+}
+
+.testimonial-card span{
+  display:block;
+  font-size:12px;
+  color:#6b7280;
+}
+
+.faq-card details{
+  padding:14px 0;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.faq-card summary{
+  cursor:pointer;
+  font-weight:600;
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.faq-card summary i{
+  color:#2563eb;
+}
+
+.faq-card details[open] summary{
+  color:#0d3b66;
+}
+
+.faq-card p{
+  margin:10px 0 0 28px;
+  color:#4b5563;
+  font-size:14px;
+}
+
+
 </style>
 </head>
 <body>
@@ -1099,26 +1160,38 @@ section > p{
     <h2 class="section-title">Testimoni Penulis</h2>
 
     <div class="grid testimonial-grid">
+
       <div class="card testimonial-card">
+        <div class="testimonial-icon blue">
+          <i class="fa-solid fa-quote-left"></i>
+        </div>
         <p>“Proses konversi skripsi saya menjadi buku ajar berjalan sangat profesional.”</p>
         <strong>Dr. Andi Prasetyo, M.Pd</strong>
         <span>Dosen Pendidikan</span>
       </div>
 
       <div class="card testimonial-card">
+        <div class="testimonial-icon green">
+          <i class="fa-solid fa-quote-left"></i>
+        </div>
         <p>“Layout rapi, editing berkualitas, dan ISBN resmi. Sangat membantu untuk BKD.”</p>
         <strong>Nurhayati, M.Kes</strong>
         <span>Dosen Kesehatan Masyarakat</span>
       </div>
 
       <div class="card testimonial-card">
+        <div class="testimonial-icon purple">
+          <i class="fa-solid fa-quote-left"></i>
+        </div>
         <p>“Tim Primajana Press komunikatif dan transparan dalam laporan royalti.”</p>
         <strong>Dr. Rudi Santoso</strong>
         <span>Peneliti Sosial</span>
       </div>
+
     </div>
   </div>
 </section>
+
 
 <!-- ================= FAQ ================= -->
 <section id="faq" class="reveal" style="background:#eef3ff">
@@ -1126,28 +1199,66 @@ section > p{
     <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
 
     <div class="card faq-card">
+
       <details>
-        <summary>Apakah semua buku mendapatkan ISBN resmi?</summary>
+        <summary><i class="fa-solid fa-book"></i> Apakah semua buku mendapatkan ISBN resmi?</summary>
         <p>Ya, seluruh paket penerbitan mendapatkan ISBN resmi dari Perpustakaan Nasional.</p>
       </details>
 
       <details>
-        <summary>Berapa lama proses penerbitan buku?</summary>
-        <p>Rata-rata proses penerbitan memerlukan waktu 2–4 minggu.</p>
+        <summary><i class="fa-solid fa-clock"></i> Berapa lama proses penerbitan buku?</summary>
+        <p>Rata-rata proses penerbitan memerlukan waktu 2–4 minggu sejak naskah dinyatakan final.</p>
       </details>
 
       <details>
-        <summary>Apakah buku dapat digunakan untuk BKD dosen?</summary>
-        <p>Bisa, khusus paket Profesional, Lengkap, dan Transformasi Karya Ilmiah.</p>
+        <summary><i class="fa-solid fa-id-card"></i> Apakah buku dapat digunakan untuk BKD dosen?</summary>
+        <p>Bisa, khusus paket Profesional, Lengkap, dan seluruh paket Transformasi Karya Ilmiah.</p>
       </details>
 
       <details>
-        <summary>Bagaimana sistem royalti dibayarkan?</summary>
-        <p>Royalti penulis sebesar 40% dan dibayarkan secara berkala.</p>
+        <summary><i class="fa-solid fa-coins"></i> Bagaimana sistem royalti dibayarkan?</summary>
+        <p>Royalti penulis sebesar 40% dan dibayarkan secara rutin berdasarkan laporan penjualan.</p>
       </details>
+
+      <details>
+        <summary><i class="fa-solid fa-pen"></i> Apakah saya boleh mengajukan naskah mentah?</summary>
+        <p>Boleh. Tim kami akan membantu proses editing sesuai dengan paket yang Anda pilih.</p>
+      </details>
+
+      <details>
+        <summary><i class="fa-solid fa-file-lines"></i> Apakah skripsi/tesis saya dijamin tidak plagiarisme?</summary>
+        <p>Ya, kami melakukan pengecekan orisinalitas sebelum proses penerbitan.</p>
+      </details>
+
+      <details>
+        <summary><i class="fa-solid fa-truck"></i> Apakah buku akan dikirim ke rumah penulis?</summary>
+        <p>Ya, penulis akan menerima eksemplar buku fisik sesuai paket yang diambil.</p>
+      </details>
+
+      <details>
+        <summary><i class="fa-solid fa-store"></i> Apakah buku saya dijual di marketplace?</summary>
+        <p>Ya, buku akan didistribusikan ke Google Play Book, Primajana Digital, dan marketplace lainnya.</p>
+      </details>
+
+      <details>
+        <summary><i class="fa-solid fa-credit-card"></i> Apakah tersedia pembayaran bertahap?</summary>
+        <p>Tersedia skema DP & pelunasan sesuai kesepakatan dengan admin.</p>
+      </details>
+
+      <details>
+        <summary><i class="fa-solid fa-shield-halved"></i> Apakah data dan naskah saya aman?</summary>
+        <p>Seluruh naskah dijamin kerahasiaannya dan hanya digunakan untuk keperluan penerbitan.</p>
+      </details>
+
+      <details>
+        <summary><i class="fa-solid fa-headset"></i> Bagaimana cara menghubungi admin?</summary>
+        <p>Silakan klik tombol “Konsultasi Gratis via WhatsApp” di halaman ini.</p>
+      </details>
+
     </div>
   </div>
 </section>
+
 
   <footer>
   <div class="container">
