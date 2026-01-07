@@ -898,6 +898,56 @@ section > p{
   transform:translateX(0);
 }
 
+/* ================= BOOK CARD CENTER FIX ================= */
+.book-carousel{
+  justify-content:center !important;
+}
+
+.book-card{
+  align-items:center !important;
+  width:100%;
+  max-width:320px;
+  margin:auto;
+}
+
+/* Google Play button selalu muat dalam card */
+.book-meta{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+}
+
+.book-meta .btn-outline{
+  width:100%;
+  max-width:220px;
+}
+
+/* ================= ROYALTI FORM FIX ================= */
+.royalty-card input,
+.royalty-card .btn-primary{
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+}
+
+/* Tidak boleh ada elemen keluar card */
+.card{
+  overflow:hidden;
+}
+
+/* Mobile spacing */
+@media(max-width:768px){
+  .book-card{
+    max-width:100%;
+  }
+  .book-meta .btn-outline{
+    font-size:13px;
+    padding:8px 14px;
+  }
+}
+
 
 </style>
 </head>
