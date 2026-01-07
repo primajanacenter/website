@@ -5,6 +5,8 @@
 <title>Primajana Press – Penerbit Buku Akademik & Ilmiah</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Primajana Press – Penerbit resmi PT Primajana Bagia Mesari. Terbitkan skripsi, tesis, disertasi, dan buku akademik dengan ISBN resmi & terindeks Google Scholar.">
+<meta name="keywords" content="penerbit buku dosen, konversi skripsi ke buku, penerbit ISBN, penerbit buku ilmiah">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
 <link rel="icon" href="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
 
@@ -164,6 +166,68 @@ header{
   }
 }
 
+  .cta-bar{
+ position:fixed;
+ bottom:0;left:0;right:0;
+ background:#ffffffee;
+ padding:12px;
+ box-shadow:0 -6px 18px rgba(0,0,0,.1);
+ text-align:center;
+ z-index:999;
+}
+
+.trust-cards{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+ gap:18px;
+ margin:35px 0 10px;
+}
+
+.trust-card{
+ background:#ffffff;
+ border-radius:16px;
+ padding:20px 14px;
+ text-align:center;
+ box-shadow:0 8px 25px rgba(0,0,0,.06);
+ transition:.35s ease;
+}
+
+.trust-card:hover{
+ transform:translateY(-6px) scale(1.03);
+ box-shadow:0 18px 40px rgba(13,59,102,.18);
+}
+
+.trust-icon{font-size:28px;margin-bottom:6px}
+.trust-value{
+ font-size:22px;
+ font-weight:700;
+ color:#0d3b66;
+}
+.trust-label{
+ font-size:13px;
+ color:#4b5563;
+}
+
+.impact-text{
+  font-family:'Playfair Display',serif;
+  font-size:22px;
+  line-height:1.6;
+  color:#1f2937;
+  margin-bottom:20px;
+  animation:softBlink 4s infinite;
+}
+
+.impact-text span{
+  color:#0d3b66;
+  font-weight:600;
+}
+
+/* soft blinking highlight */
+@keyframes softBlink{
+  0%,100%{opacity:1}
+  50%{opacity:.65}
+}
+
 </style>
 </head>
 <body>
@@ -184,44 +248,57 @@ header{
 </div>
 </header>
 
-  <section id="tentang" class="reveal">
+<section id="tentang" class="reveal">
   <div class="container">
-    <div class="grid" style="align-items:center">
+    <div class="grid" style="align-items:center;gap:40px">
 
       <!-- HERO TEXT -->
       <div>
-        <h1 style="font-size:40px;color:#0d3b66;margin-bottom:10px">
+        <h1 style="font-size:40px;color:#0d3b66;margin-bottom:14px">
           Primajana Press
         </h1>
-        <p style="font-size:18px;color:#4b5563">
+
+        <p style="font-size:18px;color:#4b5563;margin-bottom:10px">
           Unit penerbitan resmi PT Primajana Bagia Mesari yang berfokus pada penerbitan
           buku akademik, ilmiah, dan karya riset dosen serta peneliti Indonesia.
         </p>
-        <div style="margin:15px 0">
+
+<p class="impact-text">
+  Kami bantu karya Anda menjadi <span>buku bereputasi nasional</span> — 
+  bukan sekadar dicetak, tetapi berdampak dan diakui secara akademik.
+</p>
+
+        <!-- BADGES -->
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px">
           <span class="badge">ISBN Resmi</span>
           <span class="badge">Terdaftar PERPUSNAS</span>
           <span class="badge">Terindeks Google Scholar</span>
           <span class="badge">Distribusi Nasional</span>
-        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px">
-  <a href="https://wa.me/6285935201571?text=Halo%20Admin%20Primajana%20Press,%20saya%20ingin%20konsultasi%20penerbitan%20buku."
-     class="btn-primary">
-     <i class="fa-brands fa-whatsapp"></i> Konsultasi Gratis Sekarang
-  </a>
+        </div>
 
-  <a href="https://forms.gle/" class="btn-outline">
-     Ajukan Naskah
-  </a>
-</div>
+        <!-- CTA -->
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <a href="https://wa.me/6285935201571?text=Halo%20Admin%20Primajana%20Press,%20saya%20ingin%20konsultasi%20penerbitan%20buku."
+             class="btn-primary">
+             <i class="fa-brands fa-whatsapp"></i> Konsultasi Gratis Sekarang
+          </a>
+
+          <a href="https://forms.gle/" class="btn-outline">
+             Ajukan Naskah
+          </a>
+        </div>
+      </div>
 
       <!-- PROFIL LEGALITAS -->
       <div class="card">
-        <h3>Profil Penerbit</h3>
-        <p style="color:#4b5563">
+        <h3 style="margin-top:0">Profil Penerbit</h3>
+        <p style="color:#4b5563;margin-bottom:12px">
           <b>PT Primajana Bagia Mesari</b> merupakan badan hukum resmi yang berkomitmen
           mendukung pengembangan literasi dan publikasi karya ilmiah di Indonesia.
           Seluruh proses penerbitan dilakukan secara profesional dan transparan.
         </p>
-        <ul style="padding-left:18px;color:#374151">
+
+        <ul style="padding-left:18px;color:#374151;margin:0">
           <li>Nomor Induk Berusaha (NIB) terverifikasi</li>
           <li>Akta Pendirian Perseroan Terbatas</li>
           <li>Terdaftar di Perpustakaan Nasional RI</li>
@@ -232,6 +309,33 @@ header{
     </div>
   </div>
 </section>
+
+<div class="trust-cards">
+  <div class="trust-card">
+    <div class="trust-icon">📘</div>
+    <div class="trust-value">120+</div>
+    <div class="trust-label">Buku Terbit</div>
+  </div>
+
+  <div class="trust-card">
+    <div class="trust-icon">🎓</div>
+    <div class="trust-value">80+</div>
+    <div class="trust-label">Dosen Aktif</div>
+  </div>
+
+  <div class="trust-card">
+    <div class="trust-icon">🏛</div>
+    <div class="trust-value">Resmi</div>
+    <div class="trust-label">Terdaftar PERPUSNAS</div>
+  </div>
+
+  <div class="trust-card">
+    <div class="trust-icon">⭐</div>
+    <div class="trust-value">4.9 / 5</div>
+    <div class="trust-label">Rating Penulis</div>
+  </div>
+</div>
+
 
   <section id="buku" class="reveal" style="background:#eef3ff">
   <div class="container">
@@ -483,6 +587,21 @@ siap publikasi nasional.
   </div>
 </section>
 
+<section class="reveal" style="background:#f9fbff">
+<div class="container">
+<h2 style="text-align:center">Alur Penerbitan di Primajana Press</h2>
+<div class="grid">
+
+<div class="card">📩 Konsultasi & Pengajuan Naskah</div>
+<div class="card">✍ Editing & Layout Profesional</div>
+<div class="card">🧾 ISBN & Legalitas</div>
+<div class="card">📚 Distribusi Nasional & Digital</div>
+
+</div>
+</div>
+</section>
+
+      
 <section id="faq" style="background:#eef3ff" class="reveal">
   <div class="container">
     <h2 style="text-align:center;margin-bottom:30px">Pertanyaan yang Sering Diajukan</h2>
@@ -552,6 +671,7 @@ window.addEventListener("load", revealOnScroll);
 class="wa-float">
 <i class="fa-brands fa-whatsapp"></i>
 </a>
+
 
 </body>
 </html>
