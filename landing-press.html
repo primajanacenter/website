@@ -698,6 +698,38 @@ section > p{
   font-size:14px;
 }
 
+.book-card{
+  text-align:center;
+  perspective:900px;
+}
+
+.book-3d{
+  width:100%;
+  height:230px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:12px;
+}
+
+.book-3d img{
+  width:150px;
+  height:100%;
+  object-fit:cover;
+  border-radius:6px;
+  transform:rotateY(-18deg);
+  box-shadow:
+    -12px 10px 25px rgba(0,0,0,.25),
+    -3px 0 0 rgba(255,255,255,.4);
+  transition:.5s ease;
+  background:#fff;
+}
+
+.book-card:hover .book-3d img{
+  transform:rotateY(0deg) scale(1.05);
+  box-shadow:0 18px 45px rgba(0,0,0,.35);
+}
+
 
 </style>
 </head>
@@ -821,65 +853,72 @@ section > p{
     <div class="book-carousel-wrapper">
       <div class="book-carousel">
 
-        <!-- CARD 1 -->
         <div class="card book-card">
-          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ">
-          <h4>Perilaku Kesehatan</h4>
-          <div class="book-meta">
-            <span class="price">Rp 53.781</span>
-            <a class="btn-outline" href="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ" target="_blank">Google Play</a>
-          </div>
-        </div>
+  <div class="book-3d">
+    <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ">
+  </div>
+  <h4>Perilaku Kesehatan</h4>
+  <div class="book-meta">
+    <span class="price">Rp 53.781</span>
+    <a class="btn-outline" href="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ" target="_blank">Google Play</a>
+  </div>
+</div>
 
-        <!-- CARD 2 -->
-        <div class="card book-card">
-          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/OAdTEQAAQBAJ">
-          <h4>Kiat Jitu Penelitian</h4>
-          <div class="book-meta">
-            <span class="price">Rp 41.625</span>
-            <a class="btn-outline" href="https://play.google.com/store/books/details?id=OAdTEQAAQBAJ" target="_blank">Google Play</a>
-          </div>
-        </div>
+<div class="card book-card">
+  <div class="book-3d">
+    <img src="https://books.google.co.id/books/publisher/content/images/frontcover/OAdTEQAAQBAJ">
+  </div>
+  <h4>Kiat Jitu Penelitian</h4>
+  <div class="book-meta">
+    <span class="price">Rp 41.625</span>
+    <a class="btn-outline" href="https://play.google.com/store/books/details?id=OAdTEQAAQBAJ" target="_blank">Google Play</a>
+  </div>
+</div>
 
-        <!-- CARD 3 -->
-        <div class="card book-card">
-          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/VLo3EAAAQBAJ">
-          <h4>Analisis Data Kuantitatif</h4>
-          <div class="book-meta">
-            <span class="price">Rp 67.257</span>
-            <a class="btn-outline" href="https://play.google.com/store/books/details?id=VLo3EAAAQBAJ" target="_blank">Google Play</a>
-          </div>
-        </div>
+<div class="card book-card">
+  <div class="book-3d">
+    <img src="https://books.google.co.id/books/publisher/content/images/frontcover/VLo3EAAAQBAJ">
+  </div>
+  <h4>Analisis Data Kuantitatif</h4>
+  <div class="book-meta">
+    <span class="price">Rp 67.257</span>
+    <a class="btn-outline" href="https://play.google.com/store/books/details?id=VLo3EAAAQBAJ" target="_blank">Google Play</a>
+  </div>
+</div>
 
-        <!-- CARD 4 -->
-        <div class="card book-card">
-          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/lSs7EQAAQBAJ">
-          <h4>Metode Riset</h4>
-          <div class="book-meta">
-            <span class="price">Rp 41.625</span>
-            <a class="btn-outline" href="https://play.google.com/store/books/details?id=lSs7EQAAQBAJ" target="_blank">Google Play</a>
-          </div>
-        </div>
+<div class="card book-card">
+  <div class="book-3d">
+    <img src="https://books.google.co.id/books/publisher/content/images/frontcover/lSs7EQAAQBAJ">
+  </div>
+  <h4>Metode Riset</h4>
+  <div class="book-meta">
+    <span class="price">Rp 41.625</span>
+    <a class="btn-outline" href="https://play.google.com/store/books/details?id=lSs7EQAAQBAJ" target="_blank">Google Play</a>
+  </div>
+</div>
 
-        <!-- CARD 5 -->
-        <div class="card book-card">
-          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/w19LEQAAQBAJ">
-          <h4>Penelitian Eksperimental</h4>
-          <div class="book-meta">
-            <span class="price">Rp 29.692</span>
-            <a class="btn-outline" href="https://play.google.com/store/books/details?id=w19LEQAAQBAJ" target="_blank">Google Play</a>
-          </div>
-        </div>
+<div class="card book-card">
+  <div class="book-3d">
+    <img src="https://books.google.co.id/books/publisher/content/images/frontcover/w19LEQAAQBAJ">
+  </div>
+  <h4>Penelitian Eksperimental</h4>
+  <div class="book-meta">
+    <span class="price">Rp 29.692</span>
+    <a class="btn-outline" href="https://play.google.com/store/books/details?id=w19LEQAAQBAJ" target="_blank">Google Play</a>
+  </div>
+</div>
 
-        <!-- CARD 6 -->
-        <div class="card book-card">
-          <img src="https://books.google.co.id/books/publisher/content/images/frontcover/PEVvEAAAQBAJ">
-          <h4>Manajemen Risiko</h4>
-          <div class="book-meta">
-            <span class="price">Rp 27.750</span>
-            <a class="btn-outline" href="https://play.google.com/store/books/details?id=PEVvEAAAQBAJ" target="_blank">Google Play</a>
-          </div>
-        </div>
+<div class="card book-card">
+  <div class="book-3d">
+    <img src="https://books.google.co.id/books/publisher/content/images/frontcover/PEVvEAAAQBAJ">
+  </div>
+  <h4>Manajemen Risiko</h4>
+  <div class="book-meta">
+    <span class="price">Rp 27.750</span>
+    <a class="btn-outline" href="https://play.google.com/store/books/details?id=PEVvEAAAQBAJ" target="_blank">Google Play</a>
+  </div>
+</div>
+
 
       </div>
     </div>
