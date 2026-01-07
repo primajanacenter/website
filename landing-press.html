@@ -1,1 +1,561 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Primajana Press – Penerbit Buku Akademik & Ilmiah</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Primajana Press – Penerbit resmi PT Primajana Bagia Mesari. Terbitkan skripsi, tesis, disertasi, dan buku akademik dengan ISBN resmi & terindeks Google Scholar.">
 
+<link rel="icon" href="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont;
+  background:#f5f7fb;
+  color:#1f2937;
+}
+a{text-decoration:none}
+.container{max-width:1150px;margin:auto;padding:0 20px}
+section{padding:80px 0}
+.btn-primary{
+  background:#0d3b66;color:#fff;
+  padding:14px 26px;border-radius:10px;
+  font-weight:600;display:inline-block
+}
+.btn-outline{
+  border:2px solid #0d3b66;color:#0d3b66;
+  padding:12px 24px;border-radius:10px;
+  font-weight:600;display:inline-block
+}
+.card{
+  background:#fff;border-radius:18px;
+  padding:28px;
+  box-shadow:0 10px 35px rgba(0,0,0,.08)
+}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.price{color:#059669;font-weight:700;font-size:20px}
+.badge{
+  background:#e0ecff;color:#0d3b66;
+  padding:6px 14px;border-radius:20px;
+  font-size:13px;margin:4px
+}
+
+/* NAVBAR */
+header{
+  background:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+  position:sticky;top:0;z-index:100
+}
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0
+}
+.nav img{height:48px}
+.nav a{color:#374151;font-weight:500;margin-left:20px}
+.nav a:hover{color:#0d3b66}
+
+  /* === VISUAL EFFECTS === */
+
+/* Smooth reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(.19,1,.22,1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card hover premium */
+.card{
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.card:hover{
+  transform: translateY(-8px) scale(1.01);
+  box-shadow:0 20px 45px rgba(0,0,0,.12);
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  color:#ffffff;
+  padding:14px 28px;
+  border-radius:14px;
+  font-weight:700;
+  display:inline-block;
+  position:relative;
+  box-shadow:0 0 18px rgba(34,197,94,.65);
+  animation:pulseGlow 2s infinite;
+}
+
+/* animasi glow */
+@keyframes pulseGlow{
+  0%{box-shadow:0 0 10px rgba(34,197,94,.4)}
+  50%{box-shadow:0 0 26px rgba(34,197,94,.9)}
+  100%{box-shadow:0 0 10px rgba(34,197,94,.4)}
+}
+
+  .wa-float{
+ position:fixed;
+ bottom:25px;right:25px;
+ width:58px;height:58px;
+ background:#25d366;color:#fff;
+ border-radius:50%;
+ display:flex;align-items:center;justify-content:center;
+ font-size:28px;z-index:999;
+ box-shadow:0 10px 25px rgba(0,0,0,.25);
+ transition:.3s;
+}
+.wa-float:hover{
+ transform:scale(1.12);
+ box-shadow:0 18px 40px rgba(0,0,0,.35);
+}
+
+  /* === MOBILE RESPONSIVE FIX === */
+@media(max-width:768px){
+
+  section{
+    padding:50px 0;
+  }
+
+  h1{font-size:30px}
+  h2{font-size:24px}
+
+  .nav{
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .nav div:last-child{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+  }
+
+  .btn-primary,
+  .btn-outline{
+    width:100%;
+    text-align:center;
+    margin:6px 0;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .card{
+    padding:22px;
+  }
+
+  input{
+    margin-bottom:12px;
+  }
+
+  #tentang .grid{
+    gap:30px;
+  }
+
+  footer{
+    padding:25px 10px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<header>
+<div class="container nav">
+  <div>
+    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+  </div>
+  <div>
+    <a href="#tentang">Tentang</a>
+    <a href="#buku">Buku</a>
+    <a href="#royalti">Royalti</a>
+    <a href="#paket">Paket</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://wa.me/6285935201571?text=Halo%20Admin%20Primajana%20Press,%20saya%20ingin%20konsultasi%20penerbitan%20buku." class="btn-primary">Konsultasi Gratis</a>
+  </div>
+</div>
+</header>
+
+  <section id="tentang" class="reveal">
+  <div class="container">
+    <div class="grid" style="align-items:center">
+
+      <!-- HERO TEXT -->
+      <div>
+        <h1 style="font-size:40px;color:#0d3b66;margin-bottom:10px">
+          Primajana Press
+        </h1>
+        <p style="font-size:18px;color:#4b5563">
+          Unit penerbitan resmi PT Primajana Bagia Mesari yang berfokus pada penerbitan
+          buku akademik, ilmiah, dan karya riset dosen serta peneliti Indonesia.
+        </p>
+        <div style="margin:15px 0">
+          <span class="badge">ISBN Resmi</span>
+          <span class="badge">Terdaftar PERPUSNAS</span>
+          <span class="badge">Terindeks Google Scholar</span>
+          <span class="badge">Distribusi Nasional</span>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:18px">
+  <a href="https://wa.me/6285935201571?text=Halo%20Admin%20Primajana%20Press,%20saya%20ingin%20konsultasi%20penerbitan%20buku."
+     class="btn-primary">
+     <i class="fa-brands fa-whatsapp"></i> Konsultasi Gratis Sekarang
+  </a>
+
+  <a href="https://forms.gle/" class="btn-outline">
+     Ajukan Naskah
+  </a>
+</div>
+
+      <!-- PROFIL LEGALITAS -->
+      <div class="card">
+        <h3>Profil Penerbit</h3>
+        <p style="color:#4b5563">
+          <b>PT Primajana Bagia Mesari</b> merupakan badan hukum resmi yang berkomitmen
+          mendukung pengembangan literasi dan publikasi karya ilmiah di Indonesia.
+          Seluruh proses penerbitan dilakukan secara profesional dan transparan.
+        </p>
+        <ul style="padding-left:18px;color:#374151">
+          <li>Nomor Induk Berusaha (NIB) terverifikasi</li>
+          <li>Akta Pendirian Perseroan Terbatas</li>
+          <li>Terdaftar di Perpustakaan Nasional RI</li>
+          <li>Distribusi buku nasional & digital</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <section id="buku" class="reveal" style="background:#eef3ff">
+  <div class="container">
+    <h2 style="text-align:center;margin-bottom:10px">Buku Terbitan Primajana Press</h2>
+    <p style="text-align:center;color:#4b5563;margin-bottom:40px">
+      Sebagian karya dosen & peneliti yang telah diterbitkan bersama kami.
+    </p>
+
+    <div class="grid">
+
+      <div class="card">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/vYu0EAAAQBAJ"
+             style="width:100%;border-radius:12px">
+        <h4>Perilaku Kesehatan</h4>
+        <div class="price">Rp 53.781</div>
+        <a class="btn-outline" href="https://play.google.com/store/books/details?id=vYu0EAAAQBAJ" target="_blank">
+          Lihat di Google Play
+        </a>
+      </div>
+
+      <div class="card">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/OAdTEQAAQBAJ"
+             style="width:100%;border-radius:12px">
+        <h4>Kiat Jitu Penelitian</h4>
+        <div class="price">Rp 41.625</div>
+        <a class="btn-outline" href="https://play.google.com/store/books/details?id=OAdTEQAAQBAJ" target="_blank">
+          Lihat di Google Play
+        </a>
+      </div>
+
+      <div class="card">
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/VLo3EAAAQBAJ"
+             style="width:100%;border-radius:12px">
+        <h4>Analisis Data Kuantitatif</h4>
+        <div class="price">Rp 67.257</div>
+        <a class="btn-outline" href="https://play.google.com/store/books/details?id=VLo3EAAAQBAJ" target="_blank">
+          Lihat di Google Play
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <section id="royalti" class="reveal">
+  <div class="container">
+    <div class="grid" style="align-items:center">
+
+      <!-- INFO ROYALTI -->
+      <div>
+        <h2>Simulasi Royalti Penulis</h2>
+        <p style="color:#4b5563">
+          Hitung estimasi royalti Anda sebagai penulis buku di Primajana Press.
+          Skema pembagian: Google Play 39% + PPN 11% + Penerbit 10% + Penulis 40%.
+        </p>
+        <ul style="color:#374151">
+          <li>Hak royalti transparan & real-time</li>
+          <li>Laporan penjualan dapat diakses penulis</li>
+          <li>Royalti dibayarkan rutin</li>
+        </ul>
+      </div>
+
+      <!-- FORM KALKULATOR -->
+      <div class="card">
+        <label>Harga Buku (Rp)</label>
+        <input id="hargaBuku" type="number" value="100000">
+        <label style="margin-top:10px">Jumlah Terjual</label>
+        <input id="jumlahTerjual" type="number" value="100">
+
+        <button class="btn-primary" style="margin-top:15px" onclick="hitungRoyalti()">
+          Hitung Royalti
+        </button>
+
+        <div style="margin-top:15px;color:#065f46;font-weight:600">
+          Royalti Penulis:
+          <span id="hasilRoyalti">Rp 4.000.000</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<h3>Paket Penerbitan Buku</h3>
+<div class="grid">
+
+<!-- MANDIRI -->
+<div class="card">
+  <h4>Paket Mandiri</h4>
+  <div class="price">Rp 500.000</div>
+  <ul>
+    <li>Gratis ISBN</li>
+    <li>Gratis Sertifikat Terbit</li>
+    <li>Terindeks Google Scholar</li>
+    <li>Terdaftar PERPUSNAS</li>
+    <li>Terdaftar Gramedia Digital</li>
+    <li>Terdaftar Google Play Book</li>
+    <li>Distribusi Marketplace</li>
+    <li><s>Layout Buku</s></li>
+    <li><s>Desain Cover</s></li>
+    <li><s>Editing Naskah</s></li>
+    <li>Royalti Penulis 40%</li>
+  </ul>
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Mandiri">Pesan Paket Mandiri</a>
+</div>
+
+<!-- PROFESIONAL -->
+<div class="card">
+  <h4>Paket Profesional</h4>
+  <div class="price">Rp 1.275.000</div>
+  <ul>
+    <li>Gratis ISBN</li>
+    <li>Buku Hitam Putih</li>
+    <li>Gratis Sertifikat Terbit</li>
+    <li>Terindeks Google Scholar</li>
+    <li>Gratis Layout Buku</li>
+    <li>Gratis Desain Cover</li>
+    <li>Gratis Editing Naskah</li>
+    <li>Gratis Poster Promosi</li>
+    <li>Terdaftar PERPUSNAS</li>
+    <li>Terdaftar Gramedia Digital</li>
+    <li>Terdaftar Google Play Book</li>
+    <li>Distribusi Marketplace</li>
+    <li>Royalti Penulis 40%</li>
+  </ul>
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Profesional">Pesan Paket Profesional</a>
+</div>
+
+<!-- LENGKAP -->
+<div class="card">
+  <h4>Paket Lengkap</h4>
+  <div class="price">Rp 1.475.000</div>
+  <ul>
+    <li>Gratis ISBN</li>
+    <li>Buku Hitam Putih</li>
+    <li>Gratis Sertifikat Terbit</li>
+    <li>Terindeks Google Scholar</li>
+    <li>Gratis Layout Buku</li>
+    <li>Gratis Desain Cover</li>
+    <li>Gratis Editing Naskah</li>
+    <li>Gratis Pembatas Buku</li>
+    <li>Gratis Poster Promosi</li>
+    <li>Terdaftar PERPUSNAS</li>
+    <li>Terdaftar Gramedia Digital</li>
+    <li>Terdaftar Google Play Book</li>
+    <li>Distribusi Marketplace</li>
+    <li>Royalti Penulis 40%</li>
+    <li>Gratis Sertifikat HAKI</li>
+  </ul>
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Lengkap">Pesan Paket Lengkap</a>
+</div>
+
+</div>
+
+  <h3 style="margin-top:60px">Paket Transformasi Karya Ilmiah</h3>
+<p style="color:#4b5563;margin-bottom:30px">
+Layanan khusus untuk mengubah karya ilmiah Anda menjadi buku ajar / buku referensi
+siap publikasi nasional.
+</p>
+
+<div class="grid">
+
+<!-- BACHELOR -->
+<div class="card">
+  <h4>Bachelor Edition</h4>
+  <div class="price">Rp 2.000.000</div>
+  <ul>
+    <li>Transformasi Skripsi → Buku Ajar</li>
+    <li>Editing Bahasa Akademik</li>
+    <li>Restrukturisasi Bab Buku</li>
+    <li>Layout Profesional</li>
+    <li>Desain Cover Eksklusif</li>
+    <li>Gratis ISBN</li>
+    <li>Upload Google Play Book</li>
+    <li>Sertifikat Terbit</li>
+    <li>Gratis 10 Eksemplar Buku (A5, maks 200 halaman)</li>
+  </ul>
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Bachelor%20Edition">Pesan Bachelor Edition</a>
+</div>
+
+<!-- MASTER -->
+<div class="card">
+  <h4>Master / Research Edition</h4>
+  <div class="price">Rp 2.500.000</div>
+  <ul>
+    <li>Transformasi Tesis / Hasil Penelitian → Buku</li>
+    <li>Advanced Editing & Reframing</li>
+    <li>Penyusunan Buku Ajar Siap BKD</li>
+    <li>Layout & Cover Premium</li>
+    <li>Gratis ISBN</li>
+    <li>Upload Google Play Book</li>
+    <li>Landing Page Penulis</li>
+    <li>Gratis 10 Eksemplar Buku (A5, maks 250 halaman)</li>
+  </ul>
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Master%20Edition">Pesan Master Edition</a>
+</div>
+
+<!-- DOCTORAL -->
+<div class="card">
+  <h4>Doctoral Edition</h4>
+  <div class="price">Rp 3.000.000</div>
+  <ul>
+    <li>Transformasi Disertasi → Buku Referensi</li>
+    <li>Editorial Senior Handling</li>
+    <li>Reframing untuk Buku Referensi Nasional</li>
+    <li>Layout & Cover Eksklusif</li>
+    <li>Gratis ISBN</li>
+    <li>Upload Google Play Book</li>
+    <li>Sertifikat Terbit & Portofolio Penulis</li>
+    <li>Gratis 10 Eksemplar Buku (A5, maks 300 halaman)</li>
+  </ul>
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Doctoral%20Edition">Pesan Doctoral Edition</a>
+</div>
+
+</div>
+
+  <section id="testimoni" class="reveal">
+  <div class="container">
+    <h2 style="text-align:center;margin-bottom:40px">Testimoni Penulis</h2>
+
+    <div class="grid">
+      <div class="card">
+        <p>
+          “Proses konversi skripsi saya menjadi buku ajar berjalan sangat profesional.
+          Buku saya sekarang digunakan sebagai referensi di kampus.”
+        </p>
+        <b>Dr. Andi Prasetyo, M.Pd</b><br>
+        <small>Dosen Pendidikan</small>
+      </div>
+
+      <div class="card">
+        <p>
+          “Layout rapi, editing berkualitas, dan ISBN resmi. Sangat membantu untuk
+          pengurusan BKD.”
+        </p>
+        <b>Nurhayati, M.Kes</b><br>
+        <small>Dosen Kesehatan Masyarakat</small>
+      </div>
+
+      <div class="card">
+        <p>
+          “Tim Primajana Press komunikatif dan transparan dalam laporan royalti.
+          Sangat direkomendasikan.”
+        </p>
+        <b>Dr. Rudi Santoso</b><br>
+        <small>Peneliti Sosial</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="background:#eef3ff" class="reveal">
+  <div class="container">
+    <h2 style="text-align:center;margin-bottom:30px">Pertanyaan yang Sering Diajukan</h2>
+
+    <div class="card">
+      <details>
+        <summary><b>Apakah semua buku mendapatkan ISBN resmi?</b></summary>
+        <p>Ya. Seluruh paket penerbitan mendapatkan ISBN resmi dari Perpustakaan Nasional.</p>
+      </details>
+
+      <details>
+        <summary><b>Berapa lama proses penerbitan buku?</b></summary>
+        <p>Rata-rata proses penerbitan memerlukan waktu 2–4 minggu.</p>
+      </details>
+
+      <details>
+        <summary><b>Apakah buku dapat digunakan untuk BKD dosen?</b></summary>
+        <p>Bisa. Terutama pada paket Profesional, Lengkap, dan seluruh paket Transformasi Karya Ilmiah.</p>
+      </details>
+
+      <details>
+        <summary><b>Bagaimana sistem royalti dibayarkan?</b></summary>
+        <p>Royalti penulis sebesar 40% dan dibayarkan secara berkala sesuai laporan penjualan.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+  <footer>
+  <div class="container">
+    <p>© 2025 PT Primajana Bagia Mesari – Primajana Press</p>
+    <p style="font-size:13px;color:#6b7280">
+      Alamat redaksi dan dokumen legal tersedia atas permintaan resmi.
+    </p>
+  </div>
+</footer>
+
+<script>
+function hitungRoyalti(){
+  const harga = parseFloat(document.getElementById("hargaBuku").value || 0);
+  const jumlah = parseInt(document.getElementById("jumlahTerjual").value || 0);
+
+  const royaltiPenulis = harga * 0.40 * jumlah;
+
+  document.getElementById("hasilRoyalti").innerText =
+    "Rp " + royaltiPenulis.toLocaleString("id-ID");
+}
+</script>
+
+  <script>
+const reveals = document.querySelectorAll(".reveal");
+
+function revealOnScroll(){
+  reveals.forEach(el=>{
+    const top = el.getBoundingClientRect().top;
+    if(top < window.innerHeight - 80){
+      el.classList.add("active");
+    }
+  });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("load", revealOnScroll);
+</script>
+
+  <a href="https://wa.me/6285935201571?text=Halo%20Admin%20Primajana%20Press,%20saya%20ingin%20konsultasi%20penerbitan%20buku."
+class="wa-float">
+<i class="fa-brands fa-whatsapp"></i>
+</a>
+
+</body>
+</html>
+
+
+
+  
