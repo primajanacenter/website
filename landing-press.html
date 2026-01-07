@@ -472,6 +472,80 @@ section > p{
   }
 }
 
+.trust-icon{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  margin:0 auto 8px;
+  animation:floatIcon 3s ease-in-out infinite;
+}
+
+.trust-icon.blue{background:#e0ecff;color:#2563eb}
+.trust-icon.green{background:#dcfce7;color:#16a34a}
+.trust-icon.purple{background:#ede9fe;color:#7c3aed}
+.trust-icon.gold{background:#fef3c7;color:#f59e0b}
+
+@keyframes floatIcon{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+
+.package-card{
+  position:relative;
+  text-align:center;
+}
+
+.pkg-icon{
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  margin:0 auto 12px;
+  animation:floatIcon 3s ease-in-out infinite;
+}
+
+.pkg-icon.blue{background:#e0ecff;color:#2563eb}
+.pkg-icon.green{background:#dcfce7;color:#16a34a}
+.pkg-icon.purple{background:#ede9fe;color:#7c3aed}
+
+.pkg-list{
+  list-style:none;
+  padding:0;
+  margin:18px 0 22px;
+  text-align:left;
+}
+
+.pkg-list li{
+  font-size:14px;
+  margin-bottom:8px;
+  color:#374151;
+}
+
+.pkg-list li i{
+  margin-right:8px;
+  color:#22c55e;
+}
+
+.pkg-list li.off{
+  color:#9ca3af;
+}
+
+.pkg-list li.off i{
+  color:#ef4444;
+}
+
+@keyframes floatIcon{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+
 </style>
 </head>
 <body>
@@ -555,30 +629,33 @@ section > p{
 </section>
 
 <div class="trust-cards">
+
   <div class="trust-card">
-    <div class="trust-icon">📘</div>
+    <div class="trust-icon blue"><i class="fa-solid fa-book-open"></i></div>
     <div class="trust-value">120+</div>
     <div class="trust-label">Buku Terbit</div>
   </div>
 
   <div class="trust-card">
-    <div class="trust-icon">🎓</div>
+    <div class="trust-icon green"><i class="fa-solid fa-user-graduate"></i></div>
     <div class="trust-value">80+</div>
     <div class="trust-label">Dosen Aktif</div>
   </div>
 
   <div class="trust-card">
-    <div class="trust-icon">🏛</div>
+    <div class="trust-icon purple"><i class="fa-solid fa-landmark"></i></div>
     <div class="trust-value">Resmi</div>
     <div class="trust-label">Terdaftar PERPUSNAS</div>
   </div>
 
   <div class="trust-card">
-    <div class="trust-icon">⭐</div>
+    <div class="trust-icon gold"><i class="fa-solid fa-star"></i></div>
     <div class="trust-value">4.9 / 5</div>
     <div class="trust-label">Rating Penulis</div>
   </div>
+
 </div>
+
 
 
 <section id="buku" class="reveal" style="background:#eef3ff">
@@ -702,75 +779,87 @@ section > p{
   <div class="grid">
 
     <!-- MANDIRI -->
-    <div class="card">
-      <h4>Paket Mandiri</h4>
-      <div class="price">Rp 500.000</div>
-      <ul>
-        <li>Gratis ISBN</li>
-        <li>Gratis Sertifikat Terbit</li>
-        <li>Terindeks Google Scholar</li>
-        <li>Terdaftar PERPUSNAS</li>
-        <li>Terdaftar Primajana Digital</li>
-        <li>Terdaftar Google Play Book</li>
-        <li>Distribusi Marketplace</li>
-        <li><s>Layout Buku</s></li>
-        <li><s>Desain Cover</s></li>
-        <li><s>Editing Naskah</s></li>
-        <li>Royalti Penulis 40%</li>
-      </ul>
-      <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Mandiri">
-        Pesan Paket Mandiri
-      </a>
-    </div>
+    <div class="card package-card">
+  <div class="pkg-icon blue"><i class="fa-solid fa-feather"></i></div>
+  <h4>Paket Mandiri</h4>
+  <div class="price">Rp 500.000</div>
+
+  <ul class="pkg-list">
+    <li><i class="fa-solid fa-check"></i> Gratis ISBN</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Sertifikat Terbit</li>
+    <li><i class="fa-solid fa-check"></i> Terindeks Google Scholar</li>
+    <li><i class="fa-solid fa-check"></i> Terdaftar PERPUSNAS</li>
+    <li><i class="fa-solid fa-check"></i> Terdaftar Primajana Digital</li>
+    <li><i class="fa-solid fa-check"></i> Terdaftar Google Play Book</li>
+    <li><i class="fa-solid fa-check"></i> Distribusi Marketplace</li>
+    <li class="off"><i class="fa-solid fa-xmark"></i> Layout Buku</li>
+    <li class="off"><i class="fa-solid fa-xmark"></i> Desain Cover</li>
+    <li class="off"><i class="fa-solid fa-xmark"></i> Editing Naskah</li>
+    <li><i class="fa-solid fa-check"></i> Royalti Penulis 40%</li>
+  </ul>
+
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Mandiri">
+    Pesan Paket Mandiri
+  </a>
+</div>
+
 
     <!-- PROFESIONAL -->
-    <div class="card">
-      <h4>Paket Profesional</h4>
-      <div class="price">Rp 1.275.000</div>
-      <ul>
-        <li>Gratis ISBN</li>
-        <li>Buku Hitam Putih</li>
-        <li>Gratis Sertifikat Terbit</li>
-        <li>Terindeks Google Scholar</li>
-        <li>Gratis Layout Buku</li>
-        <li>Gratis Desain Cover</li>
-        <li>Gratis Editing Naskah</li>
-        <li>Gratis Poster Promosi</li>
-        <li>Terdaftar PERPUSNAS</li>
-        <li>Terdaftar Primajana Digital</li>
-        <li>Terdaftar Google Play Book</li>
-        <li>Distribusi Marketplace</li>
-        <li>Royalti Penulis 40%</li>
-      </ul>
-      <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Profesional">
-        Pesan Paket Profesional
-      </a>
-    </div>
+    <div class="card package-card">
+  <div class="pkg-icon green"><i class="fa-solid fa-medal"></i></div>
+  <h4>Paket Profesional</h4>
+  <div class="price">Rp 1.275.000</div>
+
+  <ul class="pkg-list">
+    <li><i class="fa-solid fa-check"></i> Gratis ISBN</li>
+    <li><i class="fa-solid fa-check"></i> Buku Hitam Putih</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Sertifikat Terbit</li>
+    <li><i class="fa-solid fa-check"></i> Terindeks Google Scholar</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Layout Buku</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Desain Cover</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Editing Naskah</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Poster Promosi</li>
+    <li><i class="fa-solid fa-check"></i> Terdaftar PERPUSNAS</li>
+    <li><i class="fa-solid fa-check"></i> Terdaftar Primajana Digital</li>
+    <li><i class="fa-solid fa-check"></i> Terdaftar Google Play Book</li>
+    <li><i class="fa-solid fa-check"></i> Distribusi Marketplace</li>
+    <li><i class="fa-solid fa-check"></i> Royalti Penulis 40%</li>
+  </ul>
+
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Profesional">
+    Pesan Paket Profesional
+  </a>
+</div>
+
 
     <!-- LENGKAP -->
-    <div class="card">
-      <h4>Paket Lengkap</h4>
-      <div class="price">Rp 1.475.000</div>
-      <ul>
-        <li>Gratis ISBN</li>
-        <li>Buku Hitam Putih</li>
-        <li>Terindeks Google Scholar</li>
-        <li>Gratis Layout Buku</li>
-        <li>Gratis Desain Cover</li>
-        <li>Gratis Editing Naskah</li>
-        <li>Gratis Pembatas Buku</li>
-        <li>Gratis Poster Promosi</li>
-        <li>Terdaftar PERPUSNAS</li>
-        <li>Terdaftar Primajana Digital</li>
-        <li>Terdaftar Google Play Book</li>
-        <li>Distribusi Marketplace</li>
-        <li>Royalti Penulis 40%</li>
-        <li>Gratis Sertifikat HAKI</li>
-      </ul>
-      <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Lengkap">
-        Pesan Paket Lengkap
-      </a>
-    </div>
+    <div class="card package-card">
+  <div class="pkg-icon purple"><i class="fa-solid fa-crown"></i></div>
+  <h4>Paket Lengkap</h4>
+  <div class="price">Rp 1.475.000</div>
+
+  <ul class="pkg-list">
+    <li><i class="fa-solid fa-check"></i> Gratis ISBN</li>
+    <li><i class="fa-solid fa-check"></i> Buku Hitam Putih</li>
+    <li><i class="fa-solid fa-check"></i> Terindeks Google Scholar</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Layout Buku</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Desain Cover</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Editing Naskah</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Pembatas Buku</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Poster Promosi</li>
+    <li><i class="fa-solid fa-check"></i> Terdaftar PERPUSNAS</li>
+    <li><i class="fa-solid fa-check"></i> Terdaftar Primajana Digital</li>
+    <li><i class="fa-solid fa-check"></i> Terdaftar Google Play Book</li>
+    <li><i class="fa-solid fa-check"></i> Distribusi Marketplace</li>
+    <li><i class="fa-solid fa-check"></i> Royalti Penulis 40%</li>
+    <li><i class="fa-solid fa-check"></i> Gratis Sertifikat HAKI</li>
+  </ul>
+
+  <a class="btn-primary" href="https://wa.me/6285935201571?text=Saya%20ingin%20memesan%20Paket%20Lengkap">
+    Pesan Paket Lengkap
+  </a>
+</div>
+
 
   </div>
 
