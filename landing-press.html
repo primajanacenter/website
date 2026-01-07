@@ -798,31 +798,132 @@ section > p{
   }
 }
 
+/* ================= BUTTON RESPONSIVE FIX ================= */
+
+/* Semua tombol di dalam card harus mengikuti lebar card */
+.card .btn-primary,
+.card .btn-outline{
+  max-width:100%;
+  width:100%;
+  box-sizing:border-box;
+  white-space:normal;
+  text-align:center;
+}
+
+/* Book card meta tetap rapi */
+.book-meta{
+  width:100%;
+}
+
+.book-meta .btn-outline{
+  width:100%;
+}
+
+/* Paket card */
+.package-card .btn-primary{
+  width:100%;
+}
+
+/* Royalti card */
+.royalty-card .btn-primary{
+  width:100%;
+}
+
+/* Mobile: pastikan padding tidak memaksa overflow */
+@media(max-width:768px){
+  .card{
+    overflow:hidden;
+  }
+
+  .card .btn-primary,
+  .card .btn-outline{
+    padding:10px 14px;
+    font-size:13px;
+  }
+}
+
+.side-header{
+  position:fixed;
+  top:0;left:0;
+  z-index:9999;
+}
+
+.header-bar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  background:#ffffffee;
+  border-bottom-right-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
+
+.logo{
+  height:36px;
+}
+
+.menu-btn{
+  background:#0d3b66;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:8px 10px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+#sideMenu{
+  position:absolute;
+  top:54px;
+  left:0;
+  background:#ffffffee;
+  backdrop-filter:blur(12px);
+  width:230px;
+  padding:18px;
+  border-bottom-right-radius:16px;
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+  transform:translateX(-110%);
+  transition:.4s cubic-bezier(.19,1,.22,1);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+#sideMenu a{
+  color:#0d3b66;
+  font-weight:600;
+}
+
+#sideMenu.active{
+  transform:translateX(0);
+}
+
 
 </style>
 </head>
 <body>
 
-<header class="glass-nav">
-  <div class="container nav">
-    <div class="logo-wrap">
-      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
-    </div>
-
-    <div class="menu-toggle" onclick="toggleMenu()">
+<header class="side-header">
+  <div class="header-bar">
+    <button class="menu-btn" onclick="toggleMenu()">
       <i class="fa-solid fa-bars"></i>
-    </div>
-
-    <nav id="mainMenu">
-      <a href="#tentang">Tentang</a>
-      <a href="#buku">Buku</a>
-      <a href="#royalti">Royalti</a>
-      <a href="#paket">Paket</a>
-      <a href="#faq">FAQ</a>
-      <a href="https://wa.me/6285935201571?text=Halo%20Admin%20Primajana%20Press,%20saya%20ingin%20konsultasi%20penerbitan%20buku." class="btn-primary">Konsultasi Gratis</a>
-    </nav>
+    </button>
+    <img class="logo" src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
   </div>
+
+  <nav id="sideMenu">
+    <a href="#tentang" onclick="toggleMenu()">Tentang</a>
+    <a href="#buku" onclick="toggleMenu()">Buku</a>
+    <a href="#royalti" onclick="toggleMenu()">Royalti</a>
+    <a href="#paket" onclick="toggleMenu()">Paket</a>
+    <a href="#faq" onclick="toggleMenu()">FAQ</a>
+    <a href="https://wa.me/6285935201571?text=Halo%20Admin%20Primajana%20Press,%20saya%20ingin%20konsultasi%20penerbitan%20buku."
+       class="btn-primary" style="margin-top:10px">
+       Konsultasi Gratis
+    </a>
+  </nav>
 </header>
+
 
 
 <section id="tentang" class="reveal">
@@ -1417,10 +1518,10 @@ class="wa-float">
 
 <script>
 function toggleMenu(){
-  document.getElementById("mainMenu").classList.toggle("active");
-  document.querySelector(".glass-nav").classList.toggle("active");
+  document.getElementById("sideMenu").classList.toggle("active");
 }
 </script>
+
 
 <script>
 let currentSlide = 0;
