@@ -730,26 +730,100 @@ section > p{
   box-shadow:0 18px 45px rgba(0,0,0,.35);
 }
 
+.glass-nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  background:rgba(255,255,255,.45);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.35);
+  transform:translateY(-70%);
+  transition:.6s cubic-bezier(.19,1,.22,1);
+  z-index:999;
+}
+
+.glass-nav:hover,
+.glass-nav.active{
+  transform:translateY(0);
+}
+
+.glass-nav nav{
+  display:flex;
+  align-items:center;
+  gap:26px;
+}
+
+.glass-nav a{
+  color:#0d3b66;
+  font-weight:600;
+  position:relative;
+}
+
+.glass-nav a:after{
+  content:"";
+  position:absolute;
+  left:0;bottom:-6px;
+  width:0;height:2px;
+  background:#16a34a;
+  transition:.3s;
+}
+
+.glass-nav a:hover:after{
+  width:100%;
+}
+
+.menu-toggle{
+  display:none;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .menu-toggle{display:block}
+
+  .glass-nav nav{
+    position:fixed;
+    top:64px;
+    left:0;right:0;
+    background:#ffffffee;
+    backdrop-filter:blur(12px);
+    flex-direction:column;
+    padding:22px;
+    transform:translateY(-120%);
+    transition:.4s;
+  }
+
+  .glass-nav nav.active{
+    transform:translateY(0);
+  }
+}
+
 
 </style>
 </head>
 <body>
 
-<header>
-<div class="container nav">
-  <div>
-    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+<header class="glass-nav">
+  <div class="container nav">
+    <div class="logo-wrap">
+      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+    </div>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <nav id="mainMenu">
+      <a href="#tentang">Tentang</a>
+      <a href="#buku">Buku</a>
+      <a href="#royalti">Royalti</a>
+      <a href="#paket">Paket</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://wa.me/6285935201571?text=Halo%20Admin%20Primajana%20Press,%20saya%20ingin%20konsultasi%20penerbitan%20buku." class="btn-primary">Konsultasi Gratis</a>
+    </nav>
   </div>
-  <div>
-    <a href="#tentang">Tentang</a>
-    <a href="#buku">Buku</a>
-    <a href="#royalti">Royalti</a>
-    <a href="#paket">Paket</a>
-    <a href="#faq">FAQ</a>
-    <a href="https://wa.me/6285935201571?text=Halo%20Admin%20Primajana%20Press,%20saya%20ingin%20konsultasi%20penerbitan%20buku." class="btn-primary">Konsultasi Gratis</a>
-  </div>
-</div>
 </header>
+
 
 <section id="tentang" class="reveal">
   <div class="container">
@@ -1340,6 +1414,13 @@ window.addEventListener("load", revealOnScroll);
 class="wa-float">
 <i class="fa-brands fa-whatsapp"></i>
 </a>
+
+<script>
+function toggleMenu(){
+  document.getElementById("mainMenu").classList.toggle("active");
+  document.querySelector(".glass-nav").classList.toggle("active");
+}
+</script>
 
 <script>
 let currentSlide = 0;
