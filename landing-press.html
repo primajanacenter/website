@@ -421,6 +421,57 @@ section > p{
   font-size:13px;
 }
 
+.process-flow{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:28px;
+}
+
+.process-step{
+  position:relative;
+}
+
+.step-number{
+  position:absolute;
+  top:-14px;left:-14px;
+  background:#0d3b66;
+  color:#fff;
+  width:36px;height:36px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  box-shadow:0 6px 16px rgba(0,0,0,.2);
+}
+
+.step-card{
+  background:#fff;
+  padding:28px 26px;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  height:100%;
+}
+
+.step-card h4{
+  margin:0 0 8px;
+  color:#0d3b66;
+}
+
+.step-card p{
+  font-size:14px;
+  color:#4b5563;
+  margin:0;
+}
+
+/* mobile */
+@media(max-width:768px){
+  .step-number{
+    left:50%;
+    transform:translateX(-50%);
+  }
+}
+
 </style>
 </head>
 <body>
@@ -492,7 +543,7 @@ section > p{
         </p>
 
         <ul style="padding-left:18px;color:#374151;margin:0">
-          <li>Nomor Induk Berusaha (NIB) terverifikasi</li>
+          <li>Nomor Induk Berusaha (NIB 0908250015244)</li>
           <li>Akta Pendirian Perseroan Terbatas</li>
           <li>Terdaftar di Perpustakaan Nasional RI</li>
           <li>Distribusi buku nasional & digital</li>
@@ -659,7 +710,7 @@ section > p{
         <li>Gratis Sertifikat Terbit</li>
         <li>Terindeks Google Scholar</li>
         <li>Terdaftar PERPUSNAS</li>
-        <li>Terdaftar Gramedia Digital</li>
+        <li>Terdaftar Primajana Digital</li>
         <li>Terdaftar Google Play Book</li>
         <li>Distribusi Marketplace</li>
         <li><s>Layout Buku</s></li>
@@ -686,7 +737,7 @@ section > p{
         <li>Gratis Editing Naskah</li>
         <li>Gratis Poster Promosi</li>
         <li>Terdaftar PERPUSNAS</li>
-        <li>Terdaftar Gramedia Digital</li>
+        <li>Terdaftar Primajana Digital</li>
         <li>Terdaftar Google Play Book</li>
         <li>Distribusi Marketplace</li>
         <li>Royalti Penulis 40%</li>
@@ -710,7 +761,7 @@ section > p{
         <li>Gratis Pembatas Buku</li>
         <li>Gratis Poster Promosi</li>
         <li>Terdaftar PERPUSNAS</li>
-        <li>Terdaftar Gramedia Digital</li>
+        <li>Terdaftar Primajana Digital</li>
         <li>Terdaftar Google Play Book</li>
         <li>Distribusi Marketplace</li>
         <li>Royalti Penulis 40%</li>
@@ -742,7 +793,7 @@ section > p{
     <li>Layout Profesional</li>
     <li>Desain Cover Eksklusif</li>
     <li>Gratis ISBN</li>
-    <li>Upload Google Play Book</li>
+    <li>Upload Google Play Book dan Primajana Digital</li>
     <li>Sertifikat Terbit</li>
     <li>Gratis 10 Eksemplar Buku (A5, maks 200 halaman)</li>
   </ul>
@@ -761,7 +812,7 @@ section > p{
     <li>Penyusunan Buku Ajar Siap BKD</li>
     <li>Layout & Cover Premium</li>
     <li>Gratis ISBN</li>
-    <li>Upload Google Play Book</li>
+    <li>Upload Google Play Book dan Primajana Digital</li>
     <li>Landing Page Penulis</li>
     <li>Gratis 10 Eksemplar Buku (A5, maks 250 halaman)</li>
   </ul>
@@ -780,7 +831,7 @@ section > p{
     <li>Reframing untuk Buku Referensi Nasional</li>
     <li>Layout & Cover Eksklusif</li>
     <li>Gratis ISBN</li>
-    <li>Upload Google Play Book</li>
+    <li>Upload Google Play Book dan Primajana Digital</li>
     <li>Sertifikat Terbit & Portofolio Penulis</li>
     <li>Gratis 10 Eksemplar Buku (A5, maks 300 halaman)</li>
   </ul>
@@ -796,80 +847,100 @@ section > p{
 
 
 </div>
-
-  <section id="testimoni" class="reveal">
+<!-- ================= ALUR PENERBITAN ================= -->
+<section class="reveal" style="background:#f9fbff">
   <div class="container">
-    <h2 style="text-align:center;margin-bottom:40px">Testimoni Penulis</h2>
+    <h2 class="section-title">Alur Penerbitan di Primajana Press</h2>
 
-    <div class="grid">
-      <div class="card">
-        <p>
-          “Proses konversi skripsi saya menjadi buku ajar berjalan sangat profesional.
-          Buku saya sekarang digunakan sebagai referensi di kampus.”
-        </p>
-        <b>Dr. Andi Prasetyo, M.Pd</b><br>
-        <small>Dosen Pendidikan</small>
+    <div class="process-flow">
+
+      <div class="process-step">
+        <span class="step-number">1</span>
+        <div class="step-card">
+          <h4>📩 Konsultasi & Pengajuan Naskah</h4>
+          <p>Diskusi awal & pengajuan naskah melalui WhatsApp atau Google Form.</p>
+        </div>
       </div>
 
-      <div class="card">
-        <p>
-          “Layout rapi, editing berkualitas, dan ISBN resmi. Sangat membantu untuk
-          pengurusan BKD.”
-        </p>
-        <b>Nurhayati, M.Kes</b><br>
-        <small>Dosen Kesehatan Masyarakat</small>
+      <div class="process-step">
+        <span class="step-number">2</span>
+        <div class="step-card">
+          <h4>✍ Editing & Layout Profesional</h4>
+          <p>Proses editorial, penyuntingan akademik, dan penataan layout buku.</p>
+        </div>
       </div>
 
-      <div class="card">
-        <p>
-          “Tim Primajana Press komunikatif dan transparan dalam laporan royalti.
-          Sangat direkomendasikan.”
-        </p>
-        <b>Dr. Rudi Santoso</b><br>
-        <small>Peneliti Sosial</small>
+      <div class="process-step">
+        <span class="step-number">3</span>
+        <div class="step-card">
+          <h4>🧾 ISBN & Legalitas</h4>
+          <p>Pendaftaran ISBN, kelengkapan administrasi, dan legalitas penerbitan.</p>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <span class="step-number">4</span>
+        <div class="step-card">
+          <h4>📚 Distribusi Nasional & Digital</h4>
+          <p>Distribusi ke marketplace, Google Play Book, Primajana Digital, dan Perpusnas.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONI ================= -->
+<section id="testimoni" class="reveal">
+  <div class="container">
+    <h2 class="section-title">Testimoni Penulis</h2>
+
+    <div class="grid testimonial-grid">
+      <div class="card testimonial-card">
+        <p>“Proses konversi skripsi saya menjadi buku ajar berjalan sangat profesional.”</p>
+        <strong>Dr. Andi Prasetyo, M.Pd</strong>
+        <span>Dosen Pendidikan</span>
+      </div>
+
+      <div class="card testimonial-card">
+        <p>“Layout rapi, editing berkualitas, dan ISBN resmi. Sangat membantu untuk BKD.”</p>
+        <strong>Nurhayati, M.Kes</strong>
+        <span>Dosen Kesehatan Masyarakat</span>
+      </div>
+
+      <div class="card testimonial-card">
+        <p>“Tim Primajana Press komunikatif dan transparan dalam laporan royalti.”</p>
+        <strong>Dr. Rudi Santoso</strong>
+        <span>Peneliti Sosial</span>
       </div>
     </div>
   </div>
 </section>
 
-<section class="reveal" style="background:#f9fbff">
-<div class="container">
-<h2 style="text-align:center">Alur Penerbitan di Primajana Press</h2>
-<div class="grid">
+<!-- ================= FAQ ================= -->
+<section id="faq" class="reveal" style="background:#eef3ff">
+  <div class="container faq-wrapper">
+    <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
 
-<div class="card">📩 Konsultasi & Pengajuan Naskah</div>
-<div class="card">✍ Editing & Layout Profesional</div>
-<div class="card">🧾 ISBN & Legalitas</div>
-<div class="card">📚 Distribusi Nasional & Digital</div>
-
-</div>
-</div>
-</section>
-
-      
-<section id="faq" style="background:#eef3ff" class="reveal">
-  <div class="container">
-    <h2 style="text-align:center;margin-bottom:30px">Pertanyaan yang Sering Diajukan</h2>
-
-    <div class="card">
+    <div class="card faq-card">
       <details>
-        <summary><b>Apakah semua buku mendapatkan ISBN resmi?</b></summary>
-        <p>Ya. Seluruh paket penerbitan mendapatkan ISBN resmi dari Perpustakaan Nasional.</p>
+        <summary>Apakah semua buku mendapatkan ISBN resmi?</summary>
+        <p>Ya, seluruh paket penerbitan mendapatkan ISBN resmi dari Perpustakaan Nasional.</p>
       </details>
 
       <details>
-        <summary><b>Berapa lama proses penerbitan buku?</b></summary>
+        <summary>Berapa lama proses penerbitan buku?</summary>
         <p>Rata-rata proses penerbitan memerlukan waktu 2–4 minggu.</p>
       </details>
 
       <details>
-        <summary><b>Apakah buku dapat digunakan untuk BKD dosen?</b></summary>
-        <p>Bisa. Terutama pada paket Profesional, Lengkap, dan seluruh paket Transformasi Karya Ilmiah.</p>
+        <summary>Apakah buku dapat digunakan untuk BKD dosen?</summary>
+        <p>Bisa, khusus paket Profesional, Lengkap, dan Transformasi Karya Ilmiah.</p>
       </details>
 
       <details>
-        <summary><b>Bagaimana sistem royalti dibayarkan?</b></summary>
-        <p>Royalti penulis sebesar 40% dan dibayarkan secara berkala sesuai laporan penjualan.</p>
+        <summary>Bagaimana sistem royalti dibayarkan?</summary>
+        <p>Royalti penulis sebesar 40% dan dibayarkan secara berkala.</p>
       </details>
     </div>
   </div>
@@ -877,7 +948,7 @@ section > p{
 
   <footer>
   <div class="container">
-    <p>© 2025 PT Primajana Bagia Mesari – Primajana Press</p>
+    <p>© 2026 PT Primajana Bagia Mesari – Primajana Press</p>
     <p style="font-size:13px;color:#6b7280">
       Alamat redaksi dan dokumen legal tersedia atas permintaan resmi.
     </p>
