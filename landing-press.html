@@ -1020,6 +1020,32 @@ section{
   }
 }
 
+.carousel-nav{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin-top:18px;
+}
+
+.carousel-nav button{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  border:none;
+  background:#ffffff;
+  box-shadow:0 8px 22px rgba(0,0,0,.12);
+  cursor:pointer;
+  font-size:16px;
+  color:#0d3b66;
+  transition:.3s;
+}
+
+.carousel-nav button:hover{
+  background:#0d3b66;
+  color:#fff;
+  transform:translateY(-2px);
+}
+
 
 </style>
 </head>
@@ -1249,6 +1275,17 @@ section{
       </div>
     </div>
   </div>
+  
+  <div class="carousel-nav">
+  <button onclick="scrollBook(-1)">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+  <button onclick="scrollBook(1)">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+</div>
+
+
 </section>
 
 
@@ -1708,6 +1745,17 @@ setInterval(()=>{
   const cardWidth = cards[0].offsetWidth + 28;
   carousel.style.transform = `translateX(-${currentSlide * cardWidth}px)`;
 }, 4000);
+</script>
+
+
+<script>
+function scrollBook(dir){
+  const wrap = document.querySelector(".book-snap-wrapper");
+  const card = document.querySelector(".book-snap .book-card");
+  const gap = 22;
+  const width = card.offsetWidth + gap;
+  wrap.scrollBy({ left: width * dir, behavior: "smooth" });
+}
 </script>
 
 
