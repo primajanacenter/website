@@ -127,11 +127,10 @@ h2{
 </div>
 
 <script>
-const BOOK_FILES = [
-  "buku000001.html",
-  "buku000002.html",
-  "buku000003.html",
-  "buku000004.html"   // ← TAMBAHKAN BARIS INI SAJA
+  const BOOK_FILES = [
+  "/press/buku000001.html",
+  "/press/buku000002.html",
+  "/press/buku000003.html"    // ← TAMBAHKAN BARIS INI SAJA
 ];
 
 </script>
@@ -144,7 +143,9 @@ Promise.all(
     fetch(file)
       .then(r=>r.text())
       .then(html=>{
-        const id = html.match(/BOOK_ID\s*=\s*["'](.*?)["']/)[1];
+        const m = html.match(/BOOK_ID\s*=\s*["'](.*?)["']/);
+if(!m) throw "BOOK_ID tidak ditemukan di "+file;
+const id = m[1];
         return fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
           .then(r=>r.json())
           .then(d=>({file,id,v:d.volumeInfo}));
