@@ -14,14 +14,12 @@ body{
   background:linear-gradient(135deg,#f5f7fb,#eef2ff);
   color:#1f2937;
 }
-
 header{
   background:#ffffffcc;
   backdrop-filter:blur(14px);
   box-shadow:0 4px 16px rgba(0,0,0,.08);
   position:sticky;top:0;z-index:100;
 }
-
 .header-wrap{
   display:flex;
   align-items:center;
@@ -30,15 +28,12 @@ header{
   margin:auto;
   padding:14px 20px;
 }
-
 .header-wrap img{height:42px}
-
 .container{
   max-width:1100px;
   margin:auto;
   padding:40px 20px;
 }
-
 .detail-card{
   background:#fff;
   border-radius:26px;
@@ -47,7 +42,6 @@ header{
   grid-template-columns:340px 1fr;
   overflow:hidden;
 }
-
 .cover-box{
   background:#eef3ff;
   display:flex;
@@ -55,7 +49,6 @@ header{
   justify-content:center;
   padding:36px;
 }
-
 .cover-box img{
   width:220px;
   border-radius:10px;
@@ -63,49 +56,32 @@ header{
   box-shadow:-14px 14px 30px rgba(0,0,0,.28);
   transition:.5s;
 }
-
 .cover-box img:hover{
   transform:rotateY(0deg) scale(1.05);
 }
-
-.info-box{
-  padding:42px;
-}
-
+.info-box{padding:42px}
 .info-box h1{
   font-size:30px;
   color:#0d3b66;
   margin:0 0 6px;
 }
-
 .author{
   font-size:14px;
   color:#6b7280;
   margin-bottom:24px;
 }
-
 .meta{
   border-left:4px solid #16a34a;
   padding-left:16px;
   margin-bottom:22px;
 }
-
-.meta p{
-  font-size:14px;
-  margin:6px 0;
-}
-
-.synopsis h3{
-  margin:12px 0 6px;
-  color:#0d3b66;
-}
-
+.meta p{font-size:14px;margin:6px 0}
+.synopsis h3{margin:12px 0 6px;color:#0d3b66}
 .synopsis p{
   font-size:14px;
   line-height:1.7;
   color:#374151;
 }
-
 .btn-primary{
   background:linear-gradient(135deg,#16a34a,#22c55e);
   color:#fff;
@@ -120,13 +96,11 @@ header{
   box-shadow:0 0 20px rgba(34,197,94,.7);
   animation:pulseGlow 2s infinite;
 }
-
 @keyframes pulseGlow{
   0%{box-shadow:0 0 10px rgba(34,197,94,.4)}
   50%{box-shadow:0 0 28px rgba(34,197,94,.9)}
   100%{box-shadow:0 0 10px rgba(34,197,94,.4)}
 }
-
 @media(max-width:768px){
   .detail-card{grid-template-columns:1fr}
   .cover-box img{width:180px}
@@ -175,23 +149,25 @@ header{
 </div>
 
 <script>
-const id = new URLSearchParams(location.search).get("id");
+const BOOK_ID = "Vw-HEQAAQBAJ"; // ← GANTI ID BUKU DI SINI SAJA
+const id = BOOK_ID;
 
 fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
 .then(r=>r.json())
 .then(d=>{
   const v = d.volumeInfo;
-  bookTitle.innerText = v.title || "-";
-  bookAuthors.innerText = (v.authors||[]).join(", ");
+
+  bookTitle.innerText   = v.title || "-";
+  bookAuthors.innerText= (v.authors||[]).join(", ");
   bookPublisher.innerText = v.publisher || "-";
-  bookYear.innerText = v.publishedDate?.substring(0,4) || "-";
-  bookISBN.innerText = v.industryIdentifiers?.[0]?.identifier || "-";
-  bookPages.innerText = v.pageCount || "-";
+  bookYear.innerText   = v.publishedDate?.substring(0,4) || "-";
+  bookISBN.innerText   = v.industryIdentifiers?.find(x=>x.type.includes("ISBN"))?.identifier || "-";
+  bookPages.innerText  = v.pageCount || "-";
   bookRating.innerText = v.averageRating ? "⭐ "+v.averageRating : "-";
-  bookDesc.innerText = v.description || "-";
+  bookDesc.innerText   = v.description || "-";
 
   bookCover.src = `https://books.google.co.id/books/publisher/content/images/frontcover/${id}?fife=w400-h600`;
-  bookLink.href  = `https://play.google.com/store/books/details?id=${id}`;
+  bookLink.href = `https://play.google.com/store/books/details?id=${id}`;
 });
 </script>
 
