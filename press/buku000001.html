@@ -164,7 +164,19 @@ fetch("https://www.googleapis.com/books/v1/volumes/" + BOOK_ID)
   document.getElementById("bookISBN").innerText      = v.industryIdentifiers?.find(x=>x.type.includes("ISBN"))?.identifier || "-";
   document.getElementById("bookPages").innerText     = v.pageCount || "-";
   document.getElementById("bookRating").innerText    = v.averageRating ? "⭐ " + v.averageRating : "-";
-  document.getElementById("bookDesc").innerText      = v.description || "-";
+  const descBox = document.getElementById("bookDesc");
+
+if(v.description){
+  const clean = v.description
+    .replace(/<br\s*\/?>/gi,"\n")
+    .replace(/<\/p>/gi,"\n\n")
+    .replace(/<[^>]+>/g,"");
+
+  descBox.innerText = clean.trim();
+}else{
+  descBox.innerText = "-";
+}
+
 
   document.getElementById("bookCover").src =
     "https://books.google.co.id/books/publisher/content/images/frontcover/" + BOOK_ID + "?fife=w400-h600";
