@@ -119,7 +119,6 @@ header{
 
 <div class="container">
   <div class="detail-card">
-
     <div class="cover-box">
       <img id="bookCover">
     </div>
@@ -149,25 +148,41 @@ header{
 </div>
 
 <script>
-const BOOK_ID = "OAdTEQAAQBAJ"; // ← GANTI ID BUKU DI SINI SAJA
-const id = BOOK_ID;
+/* ==== BOOK META (JANGAN DIUBAH FORMATNYA) ==== */
+const BOOK_ID = "OAdTEQAAQBAJ";
+/* ============================================ */
 
-fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
-.then(r=>r.json())
-.then(d=>{
-  const v = d.volumeInfo;
+fetch("https://www.googleapis.com/books/v1/volumes/" + BOOK_ID)
+.then(r => r.json())
+.then(d => {
+  const v = d.volumeInfo || {};
 
-  bookTitle.innerText   = v.title || "-";
-  bookAuthors.innerText= (v.authors||[]).join(", ");
-  bookPublisher.innerText = v.publisher || "-";
-  bookYear.innerText   = v.publishedDate?.substring(0,4) || "-";
-  bookISBN.innerText   = v.industryIdentifiers?.find(x=>x.type.includes("ISBN"))?.identifier || "-";
-  bookPages.innerText  = v.pageCount || "-";
-  bookRating.innerText = v.averageRating ? "⭐ "+v.averageRating : "-";
-  bookDesc.innerText   = v.description || "-";
+  document.getElementById("bookTitle").innerText     = v.title || "-";
+  document.getElementById("bookAuthors").innerText   = (v.authors || []).join(", ");
+  document.getElementById("bookPublisher").innerText = v.publisher || "-";
+  document.getElementById("bookYear").innerText      = v.publishedDate?.substring(0,4) || "-";
+  document.getElementById("bookISBN").innerText      = v.industryIdentifiers?.find(x=>x.type.includes("ISBN"))?.identifier || "-";
+  document.getElementById("bookPages").innerText     = v.pageCount || "-";
+  document.getElementById("bookRating").innerText    = v.averageRating ? "⭐ " + v.averageRating : "-";
+  const descBox = document.getElementById("bookDesc");
 
-  bookCover.src = `https://books.google.co.id/books/publisher/content/images/frontcover/${id}?fife=w400-h600`;
-  bookLink.href = `https://play.google.com/store/books/details?id=${id}`;
+if(v.description){
+  const clean = v.description
+    .replace(/<br\s*\/?>/gi,"\n")
+    .replace(/<\/p>/gi,"\n\n")
+    .replace(/<[^>]+>/g,"");
+
+  descBox.innerText = clean.trim();
+}else{
+  descBox.innerText = "-";
+}
+
+
+  document.getElementById("bookCover").src =
+    "https://books.google.co.id/books/publisher/content/images/frontcover/" + BOOK_ID + "?fife=w400-h600";
+
+  document.getElementById("bookLink").href =
+    "https://play.google.com/store/books/details?id=" + BOOK_ID;
 });
 </script>
 
