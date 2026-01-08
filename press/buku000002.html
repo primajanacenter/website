@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detail Buku – Primajana Press</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont;
+  background:linear-gradient(135deg,#f5f7fb,#eef2ff);
+  color:#1f2937;
+}
+header{
+  background:#ffffffcc;
+  backdrop-filter:blur(14px);
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
+  position:sticky;top:0;z-index:100;
+}
+.header-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  max-width:1100px;
+  margin:auto;
+  padding:14px 20px;
+}
+.header-wrap img{height:42px}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+}
+.detail-card{
+  background:#fff;
+  border-radius:26px;
+  box-shadow:0 20px 60px rgba(0,0,0,.1);
+  display:grid;
+  grid-template-columns:340px 1fr;
+  overflow:hidden;
+}
+.cover-box{
+  background:#eef3ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:36px;
+}
+.cover-box img{
+  width:220px;
+  border-radius:10px;
+  transform:rotateY(-15deg);
+  box-shadow:-14px 14px 30px rgba(0,0,0,.28);
+  transition:.5s;
+}
+.cover-box img:hover{
+  transform:rotateY(0deg) scale(1.05);
+}
+.info-box{padding:42px}
+.info-box h1{
+  font-size:30px;
+  color:#0d3b66;
+  margin:0 0 6px;
+}
+.author{
+  font-size:14px;
+  color:#6b7280;
+  margin-bottom:24px;
+}
+.meta{
+  border-left:4px solid #16a34a;
+  padding-left:16px;
+  margin-bottom:22px;
+}
+.meta p{font-size:14px;margin:6px 0}
+.synopsis h3{margin:12px 0 6px;color:#0d3b66}
+.synopsis p{
+  font-size:14px;
+  line-height:1.7;
+  color:#374151;
+}
+.btn-primary{
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  color:#fff;
+  padding:12px 28px;
+  border-radius:14px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:24px;
+  text-decoration:none;
+  box-shadow:0 0 20px rgba(34,197,94,.7);
+  animation:pulseGlow 2s infinite;
+}
+@keyframes pulseGlow{
+  0%{box-shadow:0 0 10px rgba(34,197,94,.4)}
+  50%{box-shadow:0 0 28px rgba(34,197,94,.9)}
+  100%{box-shadow:0 0 10px rgba(34,197,94,.4)}
+}
+@media(max-width:768px){
+  .detail-card{grid-template-columns:1fr}
+  .cover-box img{width:180px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-wrap">
+    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+    <strong>Primajana Press</strong>
+  </div>
+</header>
+
+<div class="container">
+  <div class="detail-card">
+
+    <div class="cover-box">
+      <img id="bookCover">
+    </div>
+
+    <div class="info-box">
+      <h1 id="bookTitle">Loading...</h1>
+      <div class="author" id="bookAuthors"></div>
+
+      <div class="meta">
+        <p><b>Penerbit:</b> <span id="bookPublisher"></span></p>
+        <p><b>Tahun:</b> <span id="bookYear"></span></p>
+        <p><b>ISBN:</b> <span id="bookISBN"></span></p>
+        <p><b>Halaman:</b> <span id="bookPages"></span></p>
+        <p><b>Rating:</b> <span id="bookRating"></span></p>
+      </div>
+
+      <div class="synopsis">
+        <h3>Sinopsis</h3>
+        <p id="bookDesc"></p>
+      </div>
+
+      <a id="bookLink" class="btn-primary" target="_blank">
+        <i class="fa-brands fa-google-play"></i> Pesan di Google Play
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const BOOK_ID = "OAdTEQAAQBAJ"; // ← GANTI ID BUKU DI SINI SAJA
+const id = BOOK_ID;
+
+fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
+.then(r=>r.json())
+.then(d=>{
+  const v = d.volumeInfo;
+
+  bookTitle.innerText   = v.title || "-";
+  bookAuthors.innerText= (v.authors||[]).join(", ");
+  bookPublisher.innerText = v.publisher || "-";
+  bookYear.innerText   = v.publishedDate?.substring(0,4) || "-";
+  bookISBN.innerText   = v.industryIdentifiers?.find(x=>x.type.includes("ISBN"))?.identifier || "-";
+  bookPages.innerText  = v.pageCount || "-";
+  bookRating.innerText = v.averageRating ? "⭐ "+v.averageRating : "-";
+  bookDesc.innerText   = v.description || "-";
+
+  bookCover.src = `https://books.google.co.id/books/publisher/content/images/frontcover/${id}?fife=w400-h600`;
+  bookLink.href = `https://play.google.com/store/books/details?id=${id}`;
+});
+</script>
+
+</body>
+</html>
