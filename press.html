@@ -1046,6 +1046,39 @@ section{
   transform:translateY(-2px);
 }
 
+  .view-all-card .book-3d{
+  height:230px;
+}
+
+.view-all-orbit{
+  width:120px;
+  height:160px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#e0ecff,#f0f9ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:orbitFloat 4s ease-in-out infinite;
+}
+
+.view-all-icon{
+  width:70px;
+  height:90px;
+  border-radius:10px;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  color:#2563eb;
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+}
+
+@keyframes orbitFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
 
 </style>
 </head>
@@ -1172,6 +1205,23 @@ section{
     <div class="book-snap-wrapper">
       <div class="book-snap">
 
+        <!-- CARD 7 : LIHAT SEMUA BUKU -->
+<div class="card book-card view-all-card">
+  <div class="book-3d">
+    <div class="view-all-orbit">
+      <div class="view-all-icon">
+        <i class="fa-solid fa-book-open"></i>
+      </div>
+    </div>
+  </div>
+  <h4>Lihat Semua Buku</h4>
+  <div class="book-meta">
+    <a class="btn-primary" href="#" target="_blank">
+      Lihat Katalog Lengkap
+    </a>
+  </div>
+</div>
+
         <!-- CARD 1 -->
         <div class="card book-card">
           <div class="book-3d">
@@ -1269,23 +1319,7 @@ section{
             </a>
           </div>
         </div>
-        
-        <!-- CARD 7 : LIHAT SEMUA BUKU -->
-<div class="card book-card view-all-card">
-  <div class="book-3d">
-    <div class="view-all-icon">
-      <i class="fa-solid fa-book-open"></i>
-    </div>
-  </div>
-  <h4>Lihat Semua Buku</h4>
-  <div class="book-meta">
-    <a class="btn-primary" href="#" target="_blank">
-      Lihat Katalog Lengkap
-    </a>
-  </div>
-</div>
-
-
+  
       </div>
     </div>
   </div>
