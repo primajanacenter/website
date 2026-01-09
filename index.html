@@ -480,6 +480,49 @@
     }
 }
 
+.layanan-section {
+    background: linear-gradient(180deg, #f9fafb, #ffffff);
+}
+
+.service-card {
+    height: 100%;
+    padding: 34px 22px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+    transition: all 0.35s ease;
+}
+
+.service-card i {
+    font-size: 2rem;
+    margin-bottom: 14px;
+    color: #4f46e5;
+}
+
+.service-card h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.service-card a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    color: #4f46e5;
+}
+
+.service-card:hover {
+    transform: translateY(-10px) scale(1.04);
+    box-shadow: 0 20px 55px rgba(79,70,229,0.18);
+}
+
         
     </style>
 </head>
@@ -564,58 +607,88 @@
 
 
 
-    <!-- Layanan Unggulan Kami -->
-    <section id="layanan" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5 fw-bold">Layanan Unggulan Kami</h2>
-            <div class="row text-center">
-                <!-- Card 1 -->
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 feature-card feature-card-service">
-                        <div class="card-body">
-                            <i class="bi bi-people card-icon"></i>
-                            <h4 class="card-title">Primajana Edukasi</h4>
-                            <p class="card-text">Belajar berbagai skills secara online dengan tenaga pengajar pilihan dan materi yang sesuai kebutuhan.</p>
-                            <a href="edukasi.html" class="btn btn-sm btn-outline-primary mt-3">Pelajari Lebih Lanjut</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 feature-card feature-card-service">
-                        <div class="card-body">
-                            <i class="bi bi-person-check card-icon"></i>
-                            <h4 class="card-title">Primajana Konsultan</h4>
-                            <p class="card-text">Menyelesaikan proyek atau kebutuhan hingga tuntas.</p>
-                            <a href="konsultan.html" class="btn btn-sm btn-outline-primary mt-3">Pelajari Lebih Lanjut</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 3 -->
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 feature-card feature-card-service">
-                        <div class="card-body">
-                            <i class="bi bi-gear card-icon"></i>
-                            <h4 class="card-title">Primajana Tools</h4>
-                            <p class="card-text">Alat untuk mempermudah, mempercepat, dan meningkatkan kualitas.</p>
-                            <a href="tools.html" class="btn btn-sm btn-outline-primary mt-3">Pelajari Lebih Lanjut</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 4 -->
-                <div class="col-md-3 mb-4">
-                    <div class="card h-100 feature-card feature-card-service">
-                        <div class="card-body">
-                            <i class="bi bi-journal-text card-icon"></i>
-                            <h4 class="card-title">Primajana Publikasi</h4>
-                            <p class="card-text">Membantu dalam melakukan publikasi buku dan jurnal.</p>
-                            <a href="publication.html" class="btn btn-sm btn-outline-primary mt-3">Pelajari Lebih Lanjut</a>
-                        </div>
-                    </div>
+<section id="layanan" class="py-5 layanan-section">
+    <div class="container">
+        <h2 class="text-center mb-5 fw-bold">Layanan Unggulan Kami</h2>
+
+        <div class="row g-4 text-center">
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-trophy"></i>
+                    <h5>Primajana Lomba & Pendanaan</h5>
+                    <p>Informasi lomba, hibah, dan pendanaan nasional hingga internasional.</p>
+                    <a href="lomba.html">Lihat Detail →</a>
                 </div>
             </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h5>Primajana Publikasi</h5>
+                    <p>Pendampingan publikasi buku, jurnal, dan prosiding bereputasi.</p>
+                    <a href="publication.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <h5>Primajana Beasiswa</h5>
+                    <p>Update dan bimbingan beasiswa dalam dan luar negeri.</p>
+                    <a href="beasiswa.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <h5>Primajana Tugas Akhir</h5>
+                    <p>Pendampingan skripsi, tesis, disertasi secara profesional.</p>
+                    <a href="tugas-akhir.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-landmark"></i>
+                    <h5>Primajana CPNS / PNS / BUMN</h5>
+                    <p>Persiapan seleksi ASN & BUMN berbasis CAT & simulasi.</p>
+                    <a href="cpns.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-child-reaching"></i>
+                    <h5>Primajana Kids</h5>
+                    <p>Program literasi, logika, dan kreativitas untuk anak.</p>
+                    <a href="kids.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h5>Alat Analisis Data</h5>
+                    <p>Tools statistik & visualisasi data untuk semua kalangan.</p>
+                    <a href="tools.html">Lihat Detail →</a>
+                </div>
+            </div>
+            
+            <div class="col-6 col-md-4 col-lg-3">
+    <div class="service-card">
+        <i class="fa-solid fa-certificate"></i>
+        <h5>Primajana Sertifikasi</h5>
+        <p>Pendampingan sertifikasi profesi nasional & internasional.</p>
+        <a href="sertifikasi.html">Lihat Detail →</a>
+    </div>
+</div>
+
         </div>
-    </section>
+    </div>
+</section>
+
 
     <!-- Mengapa Memilih Primajana -->
     <section class="py-5 bg-light">
