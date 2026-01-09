@@ -404,6 +404,63 @@
     animation: fadeIn .8s ease;
 }
 
+.service-card {
+    animation: fadeUp .8s ease forwards;
+    opacity: 0;
+}
+
+.service-card:nth-child(1){animation-delay:.1s}
+.service-card:nth-child(2){animation-delay:.2s}
+.service-card:nth-child(3){animation-delay:.3s}
+.service-card:nth-child(4){animation-delay:.4s}
+.service-card:nth-child(5){animation-delay:.5s}
+.service-card:nth-child(6){animation-delay:.6s}
+.service-card:nth-child(7){animation-delay:.7s}
+.service-card:nth-child(8){animation-delay:.8s}
+.service-card:nth-child(9){animation-delay:.9s}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+}
+
+.publication-card {
+    border-radius: 26px;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+    transition: all .35s ease;
+}
+
+.publication-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 22px 55px rgba(79,70,229,.18);
+}
+
+.card-icon-publication {
+    font-size: 2.4rem;
+    color: #4f46e5;
+    margin-bottom: 8px;
+}
+
+.btn-publikasi {
+    background: linear-gradient(135deg,#4f46e5,#6366f1);
+    color: #fff;
+    border-radius: 999px;
+    padding: 8px 22px;
+    transition: all .3s ease;
+}
+
+.btn-publikasi:hover {
+    background: #4338ca;
+    transform: scale(1.08);
+}
+
   </style>
 </head>
 <body>
@@ -1058,6 +1115,120 @@
     </div>
   </div>
 
+<div class="col-md-4 service-card">
+  <div class="card publication-card h-100 text-center">
+    <div class="card-body">
+      <i class="bi bi-person-lines-fill card-icon-publication"></i>
+      <h5 class="card-title-publication">Enumerator Penelitian</h5>
+      <p class="mb-1">
+        <span class="text-danger text-decoration-line-through">
+          Rp <span class="count" data-value="120000"></span>
+        </span>
+        <span class="badge bg-danger ms-2">-17%</span>
+      </p>
+      <p class="fw-bold text-dark mb-2">
+        Rp <span class="count" data-value="100000"></span>
+      </p>
+      <p class="text-muted small">
+        <i class="bi bi-people me-1"></i> <span class="count" data-value="42"></span> pengguna
+      </p>
+      <a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana,%20saya%20tertarik%20dengan%20layanan%20Enumerator%20Penelitian." class="btn btn-publikasi mt-2">Pesan Layanan</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-4 service-card">
+  <div class="card publication-card h-100 text-center">
+    <div class="card-body">
+      <i class="bi bi-megaphone card-icon-publication"></i>
+      <h5 class="card-title-publication">Banner / Flyer Digital</h5>
+      <p class="mb-1">
+        <span class="text-danger text-decoration-line-through">
+          Rp <span class="count" data-value="150000"></span>
+        </span>
+        <span class="badge bg-danger ms-2">-17%</span>
+      </p>
+      <p class="fw-bold text-dark mb-2">
+        Rp <span class="count" data-value="125000"></span>
+      </p>
+      <p class="text-muted small">
+        <i class="bi bi-people me-1"></i> <span class="count" data-value="51"></span> pengguna
+      </p>
+      <a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana,%20saya%20tertarik%20dengan%20layanan%20Desain%20Banner%20atau%20Flyer%20Digital." class="btn btn-publikasi mt-2">Pesan Layanan</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-4 service-card">
+  <div class="card publication-card h-100 text-center">
+    <div class="card-body">
+      <i class="bi bi-diagram-3 card-icon-publication"></i>
+      <h5 class="card-title-publication">Roadmap Program / Project Plan</h5>
+      <p class="mb-1">
+        <span class="text-danger text-decoration-line-through">
+          Rp <span class="count" data-value="180000"></span>
+        </span>
+        <span class="badge bg-danger ms-2">-17%</span>
+      </p>
+      <p class="fw-bold text-dark mb-2">
+        Rp <span class="count" data-value="150000"></span>
+      </p>
+      <p class="text-muted small">
+        <i class="bi bi-people me-1"></i> <span class="count" data-value="37"></span> pengguna
+      </p>
+      <a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana,%20saya%20tertarik%20dengan%20layanan%20Pembuatan%20Roadmap%20Program." class="btn btn-publikasi mt-2">Pesan Layanan</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-4 service-card">
+  <div class="card publication-card h-100 text-center">
+    <div class="card-body">
+      <i class="bi bi-file-earmark-text card-icon-publication"></i>
+      <h5 class="card-title-publication">Penyusunan TOR</h5>
+      <p class="mb-1">
+        <span class="text-danger text-decoration-line-through">
+          Rp <span class="count" data-value="150000"></span>
+        </span>
+        <span class="badge bg-danger ms-2">-17%</span>
+      </p>
+      <p class="fw-bold text-dark mb-2">
+        Rp <span class="count" data-value="125000"></span>
+      </p>
+      <p class="text-muted small">
+        <i class="bi bi-people me-1"></i> <span class="count" data-value="33"></span> pengguna
+      </p>
+      <a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana,%20saya%20tertarik%20dengan%20layanan%20Penyusunan%20TOR." class="btn btn-publikasi mt-2">Pesan Layanan</a>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-4 service-card">
+  <div class="card publication-card h-100 text-center">
+    <div class="card-body">
+      <i class="bi bi-building card-icon-publication"></i>
+      <h5 class="card-title-publication">Desain Profil Lembaga</h5>
+      <p class="mb-1">
+        <span class="text-danger text-decoration-line-through">
+          Rp <span class="count" data-value="240000"></span>
+        </span>
+        <span class="badge bg-danger ms-2">-17%</span>
+      </p>
+      <p class="fw-bold text-dark mb-2">
+        Rp <span class="count" data-value="200000"></span>
+      </p>
+      <p class="text-muted small">
+        <i class="bi bi-people me-1"></i> <span class="count" data-value="29"></span> pengguna
+      </p>
+      <a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana,%20saya%20tertarik%20dengan%20layanan%20Desain%20Profil%20Lembaga." class="btn btn-publikasi mt-2">Pesan Layanan</a>
+    </div>
+  </div>
+</div>
+
   
 </div>
 
@@ -1160,6 +1331,28 @@ document.addEventListener("DOMContentLoaded", () => {
     steps[current].classList.add("active");
     current = (current + 1) % steps.length;
   }, 2200);
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const counters = document.querySelectorAll(".count");
+
+  counters.forEach(counter => {
+    const update = () => {
+      const target = +counter.getAttribute("data-value");
+      const current = +counter.innerText.replace(/\D/g, '');
+      const increment = Math.ceil(target / 60);
+
+      if (current < target) {
+        counter.innerText = (current + increment).toLocaleString("id-ID");
+        setTimeout(update, 30);
+      } else {
+        counter.innerText = target.toLocaleString("id-ID");
+      }
+    };
+    update();
+  });
 });
 </script>
 
