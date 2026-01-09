@@ -598,6 +598,57 @@
     box-shadow: 0 24px 60px rgba(79,70,229,0.18);
 }
 
+.why-card {
+    position: relative;
+    height: 100%;
+    padding: 40px 26px;
+    border-radius: 26px;
+    text-align: center;
+    color: #1f2937;
+    background: #ffffff;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+    transition: all 0.35s ease;
+    overflow: hidden;
+}
+
+.why-card i {
+    font-size: 2.4rem;
+    margin-bottom: 16px;
+}
+
+.why-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 26px 70px rgba(0,0,0,0.18);
+}
+
+/* === VARIASI TIAP CARD === */
+
+.card-1 {
+    background: linear-gradient(135deg, #eef2ff, #ffffff);
+}
+.card-1 i { color: #4f46e5; }
+
+.card-2 {
+    background: linear-gradient(135deg, #fff7ed, #ffffff);
+}
+.card-2 i { color: #f97316; }
+
+.card-3 {
+    background: linear-gradient(135deg, #ecfeff, #ffffff);
+}
+.card-3 i { color: #06b6d4; }
+
+.card-4 {
+    background: linear-gradient(135deg, #f0fdf4, #ffffff);
+}
+.card-4 i { color: #10b981; }
+
+/* glow effect on hover */
+.card-1:hover { box-shadow: 0 30px 70px rgba(79,70,229,0.35); }
+.card-2:hover { box-shadow: 0 30px 70px rgba(249,115,22,0.35); }
+.card-3:hover { box-shadow: 0 30px 70px rgba(6,182,212,0.35); }
+.card-4:hover { box-shadow: 0 30px 70px rgba(16,185,129,0.35); }
+
         
     </style>
 </head>
@@ -796,44 +847,37 @@
         <div class="row g-4">
 
             <div class="col-md-6 col-lg-3">
-                <div class="why-card">
-                    <i class="fa-solid fa-layer-group"></i>
-                    <h5>Terlengkap</h5>
-                    <p>
-                        Dari lomba, beasiswa, publikasi, hingga tools analisis data — semua terintegrasi dalam satu platform.
-                    </p>
-                </div>
-            </div>
+    <div class="why-card card-1">
+        <i class="fa-solid fa-layer-group"></i>
+        <h5>Terlengkap</h5>
+        <p>Dari lomba, beasiswa, publikasi, hingga tools analisis data — semua terintegrasi dalam satu platform.</p>
+    </div>
+</div>
 
-            <div class="col-md-6 col-lg-3">
-                <div class="why-card">
-                    <i class="fa-solid fa-wallet"></i>
-                    <h5>Terjangkau</h5>
-                    <p>
-                        Skema harga fleksibel, transparan, dan dapat diakses oleh pelajar, mahasiswa, hingga profesional.
-                    </p>
-                </div>
-            </div>
+<div class="col-md-6 col-lg-3">
+    <div class="why-card card-2">
+        <i class="fa-solid fa-wallet"></i>
+        <h5>Terjangkau</h5>
+        <p>Skema harga fleksibel, transparan, dan dapat diakses oleh pelajar, mahasiswa, hingga profesional.</p>
+    </div>
+</div>
 
-            <div class="col-md-6 col-lg-3">
-                <div class="why-card">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <h5>Terpercaya</h5>
-                    <p>
-                        Didukung mentor & konsultan berpengalaman dengan ratusan klien yang telah berhasil.
-                    </p>
-                </div>
-            </div>
+<div class="col-md-6 col-lg-3">
+    <div class="why-card card-3">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h5>Terpercaya</h5>
+        <p>Didukung mentor & konsultan berpengalaman dengan ratusan klien yang telah berhasil.</p>
+    </div>
+</div>
 
-            <div class="col-md-6 col-lg-3">
-                <div class="why-card">
-                    <i class="fa-solid fa-rocket"></i>
-                    <h5>Berorientasi Dampak</h5>
-                    <p>
-                        Fokus pada hasil nyata: lolos pendanaan, publikasi terbit, karier meningkat.
-                    </p>
-                </div>
-            </div>
+<div class="col-md-6 col-lg-3">
+    <div class="why-card card-4">
+        <i class="fa-solid fa-rocket"></i>
+        <h5>Berorientasi Dampak</h5>
+        <p>Fokus pada hasil nyata: lolos pendanaan, publikasi terbit, karier meningkat.</p>
+    </div>
+</div>
+
 
         </div>
     </div>
