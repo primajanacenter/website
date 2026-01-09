@@ -523,6 +523,81 @@
     box-shadow: 0 20px 55px rgba(79,70,229,0.18);
 }
 
+.kolaborasi-section {
+    padding: 90px 0;
+    background: linear-gradient(180deg, #ffffff, #f5f7ff);
+}
+
+.kolaborasi-main-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 48px;
+    border-radius: 999px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    box-shadow: 0 18px 45px rgba(79,70,229,0.35);
+    transition: all 0.35s ease;
+}
+
+/* hover desktop */
+@media (hover:hover) {
+    .kolaborasi-main-btn:hover {
+        transform: translateY(-6px) scale(1.05);
+        box-shadow: 0 28px 60px rgba(79,70,229,0.45);
+    }
+}
+
+/* mobile responsive */
+@media (max-width: 576px) {
+    .kolaborasi-main-btn {
+        width: 100%;
+        max-width: 320px;
+        justify-content: center;
+    }
+}
+
+.why-section {
+    padding: 100px 0;
+    background: linear-gradient(180deg, #f9fafb, #ffffff);
+}
+
+.why-card {
+    height: 100%;
+    padding: 36px 26px;
+    text-align: center;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+    transition: all 0.35s ease;
+}
+
+.why-card i {
+    font-size: 2.2rem;
+    color: #4f46e5;
+    margin-bottom: 14px;
+}
+
+.why-card h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.why-card p {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+/* hover */
+.why-card:hover {
+    transform: translateY(-10px) scale(1.04);
+    box-shadow: 0 24px 60px rgba(79,70,229,0.18);
+}
+
         
     </style>
 </head>
@@ -689,45 +764,74 @@
     </div>
 </section>
 
+<!-- Primajana Kolaborasi -->
+<section id="kolaborasi" class="kolaborasi-section text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3">Primajana Kolaborasi</h2>
+        <p class="lead mb-4">
+            Ruang kolaborasi terbuka bagi siapa pun: pelajar, dosen, peneliti, praktisi, kreator, komunitas, hingga mitra industri.
+        </p>
 
-    <!-- Mengapa Memilih Primajana -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5 fw-bold">Mengapa Memilih Primajana?</h2>
-            <div class="row">
-                <!-- Card 1 -->
-                <div class="col-lg-4 mb-4">
-                    <div class="card h-100 feature-card feature-card-why">
-                        <div class="card-body text-center">
-                            <i class="bi bi-stack card-icon"></i>
-                            <h4 class="card-title">Terlengkap</h4>
-                            <p class="card-text">Menyediakan layanan mulai dari bimbingan, pendampingan, tools, publikasi, hingga informasi yang update.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="col-lg-4 mb-4">
-                    <div class="card h-100 feature-card feature-card-why">
-                        <div class="card-body text-center">
-                            <i class="bi bi-cash-coin card-icon"></i>
-                            <h4 class="card-title">Terjangkau</h4>
-                            <p class="card-text">Dapat dicapai atau diperoleh dengan mudah, baik dari segi harga maupun akses.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Card 3 -->
-                <div class="col-lg-4 mb-4">
-                    <div class="card h-100 feature-card feature-card-why">
-                        <div class="card-body text-center">
-                            <i class="bi bi-patch-check-fill card-icon"></i>
-                            <h4 class="card-title">Terpercaya</h4>
-                            <p class="card-text">Didukung oleh tim berpengalaman, sistem layanan profesional, serta rekam jejak dengan hasil positif dari klien.</p>
-                        </div>
-                    </div>
+        <a href="kolaborasi.html" class="kolaborasi-main-btn">
+            <i class="fa-solid fa-handshake-angle"></i>
+            Mulai Kolaborasi
+        </a>
+    </div>
+</section>
+
+<section id="why-primajana" class="why-section">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-3">Mengapa Memilih Primajana?</h2>
+        <p class="text-center text-muted mb-5">
+            Karena perjalanan belajar, riset, dan karier seharusnya tidak dijalani sendirian.
+        </p>
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-3">
+                <div class="why-card">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <h5>Terlengkap</h5>
+                    <p>
+                        Dari lomba, beasiswa, publikasi, hingga tools analisis data — semua terintegrasi dalam satu platform.
+                    </p>
                 </div>
             </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="why-card">
+                    <i class="fa-solid fa-wallet"></i>
+                    <h5>Terjangkau</h5>
+                    <p>
+                        Skema harga fleksibel, transparan, dan dapat diakses oleh pelajar, mahasiswa, hingga profesional.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="why-card">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h5>Terpercaya</h5>
+                    <p>
+                        Didukung mentor & konsultan berpengalaman dengan ratusan klien yang telah berhasil.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="why-card">
+                    <i class="fa-solid fa-rocket"></i>
+                    <h5>Berorientasi Dampak</h5>
+                    <p>
+                        Fokus pada hasil nyata: lolos pendanaan, publikasi terbit, karier meningkat.
+                    </p>
+                </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
+
 
     <section class="gallery-section">
         <div class="container">
@@ -806,7 +910,7 @@
     <footer class="footer">
             <hr class="my-4 text-white-50">
             <div class="text-center">
-                <p class="mb-0">© 2025 PT Primajana Bagia Mesari</p>
+                <p class="mb-0">© 2026 PT Primajana Bagia Mesari</p>
             </div>
         </div>
     </footer>
