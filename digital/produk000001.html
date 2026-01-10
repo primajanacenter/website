@@ -1,117 +1,13 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Primajana Digital – Detail Produk</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-body{margin:0;font-family:Inter,system-ui;background:linear-gradient(160deg,#f8fafc,#eef2ff);color:#0f172a}
-header{background:#ffffffdd;backdrop-filter:blur(16px);box-shadow:0 6px 20px rgba(0,0,0,.08);position:sticky;top:0}
-.header-wrap{max-width:1200px;margin:auto;display:flex;align-items:center;gap:12px;padding:16px}
-.header-wrap img{height:42px}
-.container{max-width:1100px;margin:auto;padding:60px 20px}
-.product-card{background:#fff;border-radius:32px;box-shadow:0 28px 70px rgba(15,23,42,.18);
-padding:42px;display:grid;grid-template-columns:1fr 360px;gap:36px}
-@media(max-width:900px){.product-card{grid-template-columns:1fr}}
-
-.badge{display:inline-block;background:#eef2ff;color:#4f46e5;padding:6px 16px;border-radius:999px;font-size:12px;margin-bottom:14px;font-weight:600}
-h1{margin:0 0 12px;font-size:28px;color:#1e3a8a}
-.desc{font-size:15px;line-height:1.7;color:#475569;margin-bottom:26px}
-
-.btn-group{display:flex;flex-wrap:wrap;gap:12px}
-.btn-primary,.btn-secondary{display:inline-flex;gap:10px;align-items:center;padding:14px 30px;border-radius:999px;font-weight:700;text-decoration:none;transition:.3s}
-.btn-primary{background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;box-shadow:0 0 26px rgba(99,102,241,.55)}
-.btn-primary:hover{transform:scale(1.05)}
-.btn-secondary{background:#fff;color:#4f46e5;border:2px solid #4f46e5}
-.btn-secondary:hover{background:#4f46e5;color:#fff;transform:scale(1.05)}
-
-.cover-box{background:#eef2ff;border-radius:22px;display:flex;align-items:center;justify-content:center;padding:26px}
-.cover-box img{width:220px;border-radius:10px;box-shadow:-12px 12px 28px rgba(0,0,0,.28);transition:.4s}
-.cover-box img:hover{transform:scale(1.05)}
-</style>
-</head>
-
-<body>
-
-<header>
-<div class="header-wrap">
-  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
-  <strong>Primajana Digital</strong>
-</div>
-</header>
-
-<div class="container">
-<div class="product-card">
-
-<div>
-  <span class="badge" id="type">Produk Digital</span>
-  <h1 id="title">Memuat produk…</h1>
-  <p class="desc" id="desc"></p>
-
-  <div class="btn-group">
-    <a id="btnGoogle" class="btn-primary" target="_blank">
-      <i class="fa-brands fa-google-play"></i> Pesan di Google Play
-    </a>
-    <a id="btnPrimajana" class="btn-secondary" target="_blank">
-      <i class="fa-solid fa-store"></i> Pesan di Primajana Digital
-    </a>
-  </div>
-</div>
-
-<div class="cover-box">
-  <img id="cover">
-</div>
-
-</div>
-</div>
-
 <script>
-/* ===== GANTI PRODUK DI SINI ===== */
-const GOOGLE_PLAY_LINK = "https://play.google.com/store/books/details?id=Vw-HEQAAQBAJ";
-const PRODUCT_META = {
-  title: "Template Proposal Pendanaan Juara",
-  desc: "Template siap pakai untuk proposal pendanaan nasional dan internasional.",
-  cover: "https://primajana.com/assets/img/produk/proposal-template.jpg",
-  link: "https://primajana.myr.id/course/pavio"
-};
-/* ================================= */
+const PRODUCT_URL =
+"https://primajana.myr.id/ebook/11-strategi-terbukti-menang-lomba-esai-ilmiah-populer-dipakai-para-juara";
 
-const title=document.getElementById("title");
-const desc=document.getElementById("desc");
-const cover=document.getElementById("cover");
-const type=document.getElementById("type");
-const btnGoogle=document.getElementById("btnGoogle");
-const btnPrimajana=document.getElementById("btnPrimajana");
-
-btnGoogle.href=GOOGLE_PLAY_LINK||"#";
-btnPrimajana.href=PRODUCT_META.link||"#";
-
-/* ===== MODE GOOGLE PLAY ===== */
-if(GOOGLE_PLAY_LINK){
-  const id=new URL(GOOGLE_PLAY_LINK).searchParams.get("id");
-  type.innerText="E-Book Premium";
-
-  fetch("https://www.googleapis.com/books/v1/volumes/"+id)
-  .then(r=>r.json()).then(d=>{
-    const v=d.volumeInfo||{};
-    title.innerText=v.title||"E-Book Digital";
-    desc.innerText=v.description?.replace(/<[^>]+>/g,"").slice(0,300)+"..."||"E-book premium dari Primajana.";
-    cover.src="https://books.google.co.id/books/publisher/content/images/frontcover/"+id+"?fife=w400-h600";
-  });
-}
-
-/* ===== MODE PRODUK DIGITAL ===== */
-if(PRODUCT_META && PRODUCT_META.cover){
-  type.innerText="Produk Digital";
-  title.innerText=PRODUCT_META.title;
-  desc.innerText=PRODUCT_META.desc;
-  cover.src=PRODUCT_META.cover;
-}
+fetch("/meta.php?url="+encodeURIComponent(PRODUCT_URL))
+.then(r=>r.json())
+.then(p=>{
+  document.getElementById("title").innerText=p.title;
+  document.getElementById("desc").innerText=p.description;
+  document.getElementById("cover").src=p.image;
+  document.getElementById("btnProduct").href=p.url;
+});
 </script>
-
-</body>
-</html>
