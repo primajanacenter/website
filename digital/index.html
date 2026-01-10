@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Primajana Digital – Produk Digital & E-Book</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont;
+  background:linear-gradient(135deg,#f5f7fb,#eef2ff);
+  color:#1f2937;
+}
+header{
+  background:#ffffffcc;
+  backdrop-filter:blur(14px);
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
+  position:sticky;top:0;z-index:100;
+}
+.header-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  max-width:1100px;
+  margin:auto;
+  padding:14px 20px;
+}
+.header-wrap img{height:42px}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+h2{
+  color:#0d3b66;
+  margin-bottom:6px;
+}
+.subtitle{
+  color:#4b5563;
+  font-size:14px;
+  margin-bottom:26px;
+}
+
+.search-box{
+  display:flex;
+  gap:10px;
+  margin-bottom:30px;
+}
+.search-box input{
+  flex:1;
+  padding:12px 16px;
+  border-radius:14px;
+  border:1px solid #d1d5db;
+  font-size:14px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:26px;
+}
+
+.card{
+  background:#fff;
+  border-radius:20px;
+  padding:22px 18px;
+  text-align:center;
+  box-shadow:0 14px 36px rgba(0,0,0,.1);
+  transition:.35s;
+}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 22px 46px rgba(0,0,0,.18);
+}
+.card img{
+  width:140px;
+  margin-bottom:12px;
+  border-radius:6px;
+  transform:rotateY(-12deg);
+  box-shadow:-10px 10px 20px rgba(0,0,0,.25);
+}
+.card h4{
+  font-size:15px;
+  color:#0d3b66;
+  margin:8px 0 2px;
+}
+.card .meta{
+  font-size:12px;
+  color:#6b7280;
+}
+.card .btn{
+  display:inline-block;
+  margin-top:12px;
+  padding:8px 20px;
+  background:linear-gradient(135deg,#4f46e5,#6366f1);
+  color:#fff;
+  border-radius:12px;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+  box-shadow:0 0 14px rgba(99,102,241,.6);
+}
+
+.badge-type{
+  display:inline-block;
+  background:#eef2ff;
+  color:#4f46e5;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:11px;
+  margin-bottom:6px;
+}
+
+@media(max-width:768px){
+  .card img{width:120px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-wrap">
+    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+    <strong>Primajana Digital</strong>
+  </div>
+</header>
+
+<div class="container">
+  <div class="subtitle">
+    Temukan berbagai produk digital pilihan — mulai dari e-book, template karya ilmiah, worksheet lomba, hingga tools pendukung riset & pendanaan.
+  </div>
+
+  <div class="search-box">
+    <input id="search" placeholder="Cari e-book, template, atau produk digital lainnya...">
+  </div>
+
+  <div class="grid" id="bookList"></div>
+</div>
+
+<script>
+const BOOK_FILES = [
+  "/press/buku000001.html",
+  "/press/buku000002.html"
+];
+</script>
+
+<script>
+const list = document.getElementById("bookList");
+
+Promise.all(
+  BOOK_FILES.map(file =>
+    fetch(file)
+      .then(r=>r.text())
+      .then(html=>{
+        const m = html.match(/BOOK_ID\s*=\s*["'](.*?)["']/);
+        if(!m) throw "BOOK_ID tidak ditemukan di "+file;
+        const id = m[1];
+        return fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
+          .then(r=>r.json())
+          .then(d=>({file,id,v:d.volumeInfo}));
+      })
+  )
+).then(data=>{
+  window.products=data;
+  render(data);
+});
+
+function render(data){
+  list.innerHTML="";
+  data.forEach(b=>{
+    list.innerHTML+=`
+      <div class="card"
+        data-title="${b.v.title.toLowerCase()}"
+        data-author="${(b.v.authors||[]).join(" ").toLowerCase()}">
+        <div class="badge-type">Produk Digital</div>
+        <img src="https://books.google.co.id/books/publisher/content/images/frontcover/${b.id}?fife=w200-h300">
+        <h4>${b.v.title}</h4>
+        <div class="meta">${(b.v.authors||[]).join(", ") || "Tim Primajana"}</div>
+        <a class="btn" href="${b.file}">Lihat Produk</a>
+      </div>`;
+  });
+}
+
+document.getElementById("search").addEventListener("input",e=>{
+  const q=e.target.value.toLowerCase();
+  document.querySelectorAll(".card").forEach(c=>{
+    const ok=c.dataset.title.includes(q)||c.dataset.author.includes(q);
+    c.style.display=ok?"block":"none";
+  });
+});
+</script>
+
+</body>
+</html>
