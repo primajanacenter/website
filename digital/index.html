@@ -3,78 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Primajana Digital</title>
+<title>Primajana Digital – Katalog Produk</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --main:#4f46e5;
-  --accent:#22c55e;
-}
+:root{--main:#4f46e5;--accent:#22c55e}
 body{
   margin:0;font-family:'Inter',system-ui;
-  background:linear-gradient(160deg,#f9fbff,#eef2ff);
+  background:linear-gradient(160deg,#f8fafc,#eef2ff);color:#0f172a
 }
 header{
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(18px);
+  background:#ffffffdd;backdrop-filter:blur(18px);
   position:sticky;top:0;z-index:99;
-  box-shadow:0 10px 30px rgba(0,0,0,.06);
+  box-shadow:0 10px 30px rgba(0,0,0,.08)
 }
 .header-wrap{
   max-width:1200px;margin:auto;padding:16px 22px;
-  display:flex;align-items:center;gap:12px;
+  display:flex;align-items:center;gap:12px
 }
 .container{max-width:1200px;margin:auto;padding:60px 22px}
-h2{color:#1e3a8a}
-.subtitle{color:#475569;margin-bottom:36px}
+.subtitle{color:#475569;margin-bottom:32px}
+
 .search-box input{
   width:100%;padding:14px 20px;border-radius:18px;
-  border:1px solid #dbeafe;font-size:14px;
+  border:1px solid #dbeafe;font-size:14px
 }
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:36px;
-  margin-top:36px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:36px;margin-top:36px
 }
 .card{
   background:#fff;border-radius:26px;padding:22px;
   box-shadow:0 20px 50px rgba(79,70,229,.08);
-  transition:.45s cubic-bezier(.4,0,.2,1);
-  position:relative;overflow:hidden;
-  animation:fadeUp .8s ease both;
+  transition:.4s;position:relative;overflow:hidden
 }
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1}}
-.card:hover{
-  transform:translateY(-10px) scale(1.01);
-  box-shadow:0 40px 80px rgba(79,70,229,.25);
-}
-.card img{
-  width:100%;height:240px;object-fit:cover;border-radius:18px;
-}
+.card:hover{transform:translateY(-8px);box-shadow:0 40px 80px rgba(79,70,229,.25)}
+.card img{width:100%;height:240px;object-fit:cover;border-radius:18px}
 .badge-type{
   position:absolute;top:16px;left:16px;
   background:linear-gradient(135deg,#6366f1,#4f46e5);
-  color:#fff;padding:6px 14px;font-size:11px;
-  border-radius:999px;
-  box-shadow:0 6px 16px rgba(79,70,229,.5);
+  color:#fff;padding:6px 14px;font-size:11px;border-radius:999px
 }
-.card h4{margin:14px 0 4px;color:#0f172a}
+.card h4{margin:14px 0 4px}
 .meta{font-size:12px;color:#64748b}
 .btn{
   margin-top:16px;display:block;text-align:center;
   padding:12px;border-radius:16px;
   background:linear-gradient(135deg,var(--accent),#4ade80);
-  color:#fff;font-weight:700;text-decoration:none;
-  box-shadow:0 0 18px rgba(34,197,94,.7);
-  animation:pulse 2s infinite;
-}
-@keyframes pulse{
-  0%,100%{box-shadow:0 0 12px rgba(34,197,94,.4)}
-  50%{box-shadow:0 0 28px rgba(34,197,94,.9)}
+  color:#fff;font-weight:700;text-decoration:none
 }
 </style>
 </head>
@@ -82,10 +60,10 @@ h2{color:#1e3a8a}
 <body>
 
 <header>
-  <div class="header-wrap">
-    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" height="42">
-    <strong>Primajana Digital</strong>
-  </div>
+<div class="header-wrap">
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" height="42">
+  <strong>Primajana Digital</strong>
+</div>
 </header>
 
 <div class="container">
@@ -104,21 +82,25 @@ const PRODUCT_FILES=[
 
 Promise.all(PRODUCT_FILES.map(f=>
  fetch(f).then(r=>r.text()).then(h=>{
-  if(h.includes("PRODUCT_META")){
-    const m=h.match(/const PRODUCT_META = ({[\s\S]*?});/);
-    const d=eval("("+m[1]+")");
+
+  /* ===== PRODUK DIGITAL ===== */
+  if(h.includes('id="PRODUCT_META"')){
+    const j=h.match(/<script id="PRODUCT_META"[^>]*>([\s\S]*?)<\/script>/);
+    const d=JSON.parse(j[1]);
     return{type:"Produk Digital",file:f,title:d.title,author:d.author,image:d.cover};
   }
+
+  /* ===== EBOOK GOOGLE BOOK ===== */
   const b=h.match(/BOOK_ID\s*=\s*["'](.*?)["']/);
   if(!b)return null;
   return fetch("https://www.googleapis.com/books/v1/volumes/"+b[1])
-  .then(r=>r.json()).then(d=>({
-    type:"E-Book",
-    file:f,
-    title:d.volumeInfo.title,
-    author:(d.volumeInfo.authors||["Primajana"]).join(", "),
-    image:"https://books.google.co.id/books/publisher/content/images/frontcover/"+b[1]+"?fife=w400-h600"
-  }));
+   .then(r=>r.json()).then(d=>({
+     type:"E-Book",
+     file:f,
+     title:d.volumeInfo.title,
+     author:(d.volumeInfo.authors||["Primajana"]).join(", "),
+     image:"https://books.google.co.id/books/publisher/content/images/frontcover/"+b[1]+"?fife=w400-h600"
+   }));
  })
 )).then(data=>{
  const list=document.getElementById("productList");
