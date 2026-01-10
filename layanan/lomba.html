@@ -852,6 +852,53 @@
   font-size:.9rem;
 }
 
+.digital-icons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.digital-icon{
+  width:110px;
+  height:110px;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 10px 30px rgba(79,70,229,.15);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  text-decoration:none;
+  color:#1e3a8a;
+  font-size:12px;
+  font-weight:600;
+  transition:.35s;
+  cursor:pointer;
+}
+
+.digital-icon i{
+  font-size:22px;
+}
+
+.digital-icon:hover{
+  transform:translateY(-8px) scale(1.05);
+  box-shadow:0 18px 50px rgba(79,70,229,.35);
+}
+
+.digital-icon.idea{background:linear-gradient(135deg,#fff7ed,#ffffff)}
+.digital-icon.essay{background:linear-gradient(135deg,#ecfeff,#ffffff)}
+.digital-icon.proposal{background:linear-gradient(135deg,#eef2ff,#ffffff)}
+.digital-icon.info{background:linear-gradient(135deg,#f0fdf4,#ffffff)}
+.digital-icon.plan{background:linear-gradient(135deg,#fef2f2,#ffffff)}
+
+.btn-digital{
+  padding:12px 30px;
+  font-weight:700;
+  border-radius:999px;
+}
+
 
   </style>
 </head>
@@ -932,21 +979,50 @@
 
   <!-- ICON PRODUK -->
   <div class="digital-icons mb-4">
-    <div class="digital-icon idea"><i class="fa-solid fa-lightbulb"></i><span>Ide Lomba</span></div>
-    <div class="digital-icon essay"><i class="fa-solid fa-feather-pointed"></i><span>Esai</span></div>
-    <div class="digital-icon proposal"><i class="fa-solid fa-diagram-project"></i><span>Proposal</span></div>
-    <div class="digital-icon info"><i class="fa-solid fa-chart-line"></i><span>Infografis</span></div>
-    <div class="digital-icon plan"><i class="fa-solid fa-briefcase"></i><span>Business Plan</span></div>
+
+    <a href="https://primajana.myr.id/"
+       target="_blank" class="digital-icon idea">
+      <i class="fa-solid fa-lightbulb"></i>
+      <span>Ide Lomba</span>
+    </a>
+
+    <a href="https://primajana.myr.id/"
+       target="_blank" class="digital-icon essay">
+      <i class="fa-solid fa-feather-pointed"></i>
+      <span>Esai</span>
+    </a>
+
+    <a href="https://primajana.myr.id/"
+       target="_blank" class="digital-icon proposal">
+      <i class="fa-solid fa-diagram-project"></i>
+      <span>Proposal</span>
+    </a>
+
+    <a href="https://primajana.myr.id/"
+       target="_blank" class="digital-icon info">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>Infografis</span>
+    </a>
+
+    <a href="https://primajana.myr.id/"
+       target="_blank" class="digital-icon plan">
+      <i class="fa-solid fa-briefcase"></i>
+      <span>Business Plan</span>
+    </a>
+
   </div>
 
   <!-- TOMBOL LIHAT SEMUA PRODUK -->
   <div class="text-center mb-4">
-    <a href="https://primajana.myr.id/" class="btn btn-publikasi btn-digital">
+    <a href="https://primajana.myr.id/"
+       target="_blank"
+       class="btn btn-publikasi btn-digital">
       <i class="fa-solid fa-layer-group me-2"></i> Lihat Semua Produk
     </a>
   </div>
 
 </div>
+
 
 <div class="program-divider"><span></span></div>
 
