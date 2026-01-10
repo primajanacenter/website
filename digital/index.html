@@ -156,25 +156,40 @@ const list = document.getElementById("productList");
 
 Promise.all(PRODUCT_FILES.map(file =>
   fetch(file).then(r=>r.text()).then(html=>{
+
+    /* === Cek apakah DIGITAL PRODUCT === */
+    if(html.includes("PRODUCT_META")){
+      const meta = html.match(/const PRODUCT_META = ({[\s\S]*?});/);
+      const data = eval("("+meta[1]+")");
+      return {
+        type:data.type || "Produk Digital",
+        file,
+        title:data.title,
+        author:data.author,
+        image:data.cover
+      };
+    }
+
+    /* === Jika E-BOOK === */
     const m = html.match(/BOOK_ID\s*=\s*["'](.*?)["']/);
-    if(!m) return {type:"Produk Digital",file,title:"Produk Primajana",author:"Tim Primajana",image:"https://via.placeholder.com/400x600?text=Produk"};
+    if(!m) return null;
     const id=m[1];
+
     return fetch("https://www.googleapis.com/books/v1/volumes/"+id)
       .then(r=>r.json())
       .then(d=>{
         const v=d.volumeInfo||{};
         return {
-          type:file.includes("/press/")?"E-Book":"Produk Digital",
+          type:"E-Book",
           file,
-          title:v.title||"Produk Digital",
+          title:v.title || "E-Book Digital",
           author:(v.authors||["Tim Primajana"]).join(", "),
           image:"https://books.google.co.id/books/publisher/content/images/frontcover/"+id+"?fife=w400-h600"
         };
       });
   })
 )).then(data=>{
-  window.products=data;
-  render(data);
+  render(data.filter(Boolean));
 });
 
 function render(data){
@@ -186,19 +201,14 @@ function render(data){
         <img src="${p.image}">
         <h4>${p.title}</h4>
         <div class="meta">${p.author}</div>
-        <a class="btn" href="${p.file}"><i class="fa-solid fa-arrow-right"></i>&nbsp;Lihat Produk</a>
+        <a class="btn" href="${p.file}">
+          <i class="fa-solid fa-arrow-right"></i>&nbsp;Lihat Produk
+        </a>
       </div>`;
   });
 }
-
-document.getElementById("search").addEventListener("input",e=>{
-  const q=e.target.value.toLowerCase();
-  document.querySelectorAll(".card").forEach(c=>{
-    const ok=c.dataset.title.includes(q)||c.dataset.author.includes(q);
-    c.style.display=ok?"block":"none";
-  });
-});
 </script>
+
 
 </body>
 </html>
