@@ -3,119 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Primajana Digital – Produk Digital & E-Book</title>
+<title>Primajana Digital</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --main:#4f46e5;
+  --accent:#22c55e;
+}
 body{
-  margin:0;
-  font-family:'Inter',system-ui,-apple-system;
-  background:linear-gradient(160deg,#f8fafc,#eef2ff);
-  color:#1f2937;
+  margin:0;font-family:'Inter',system-ui;
+  background:linear-gradient(160deg,#f9fbff,#eef2ff);
 }
 header{
-  background:#ffffffdd;
-  backdrop-filter:blur(16px);
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
-  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(18px);
+  position:sticky;top:0;z-index:99;
+  box-shadow:0 10px 30px rgba(0,0,0,.06);
 }
 .header-wrap{
-  display:flex;align-items:center;gap:12px;
   max-width:1200px;margin:auto;padding:16px 22px;
+  display:flex;align-items:center;gap:12px;
 }
-.header-wrap img{height:44px}
-
-.container{max-width:1200px;margin:auto;padding:50px 22px}
-
-h2{
-  font-size:32px;
-  color:#1e3a8a;
-  margin-bottom:6px;
-}
-.subtitle{
-  font-size:15px;
-  color:#475569;
-  margin-bottom:32px;
-}
-
-.search-box{margin-bottom:36px}
+.container{max-width:1200px;margin:auto;padding:60px 22px}
+h2{color:#1e3a8a}
+.subtitle{color:#475569;margin-bottom:36px}
 .search-box input{
-  width:100%;
-  padding:14px 18px;
-  border-radius:16px;
-  border:1px solid #dbeafe;
-  font-size:14px;
-  outline:none;
+  width:100%;padding:14px 20px;border-radius:18px;
+  border:1px solid #dbeafe;font-size:14px;
 }
-.search-box input:focus{
-  border-color:#6366f1;
-  box-shadow:0 0 0 4px rgba(99,102,241,.15);
-}
-
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-  gap:32px;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:36px;
+  margin-top:36px;
 }
-
 .card{
-  background:#fff;
-  border-radius:22px;
-  padding:22px;
-  text-align:left;
-  box-shadow:0 12px 30px rgba(15,23,42,.08);
-  transition:.35s cubic-bezier(.4,0,.2,1);
-  position:relative;
-  overflow:hidden;
+  background:#fff;border-radius:26px;padding:22px;
+  box-shadow:0 20px 50px rgba(79,70,229,.08);
+  transition:.45s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+  animation:fadeUp .8s ease both;
 }
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1}}
 .card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 30px 60px rgba(79,70,229,.25);
+  transform:translateY(-10px) scale(1.01);
+  box-shadow:0 40px 80px rgba(79,70,229,.25);
 }
 .card img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-  border-radius:14px;
-  margin-bottom:14px;
+  width:100%;height:240px;object-fit:cover;border-radius:18px;
 }
 .badge-type{
-  position:absolute;
-  top:14px;left:14px;
-  background:linear-gradient(135deg,#4f46e5,#6366f1);
-  color:#fff;
-  padding:6px 12px;
-  font-size:11px;
-  font-weight:600;
+  position:absolute;top:16px;left:16px;
+  background:linear-gradient(135deg,#6366f1,#4f46e5);
+  color:#fff;padding:6px 14px;font-size:11px;
   border-radius:999px;
-  box-shadow:0 6px 14px rgba(99,102,241,.4);
+  box-shadow:0 6px 16px rgba(79,70,229,.5);
 }
-.card h4{
-  font-size:15px;
-  color:#0f172a;
-  margin:6px 0;
-  min-height:40px;
+.card h4{margin:14px 0 4px;color:#0f172a}
+.meta{font-size:12px;color:#64748b}
+.btn{
+  margin-top:16px;display:block;text-align:center;
+  padding:12px;border-radius:16px;
+  background:linear-gradient(135deg,var(--accent),#4ade80);
+  color:#fff;font-weight:700;text-decoration:none;
+  box-shadow:0 0 18px rgba(34,197,94,.7);
+  animation:pulse 2s infinite;
 }
-.card .meta{
-  font-size:12px;
-  color:#64748b;
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 12px rgba(34,197,94,.4)}
+  50%{box-shadow:0 0 28px rgba(34,197,94,.9)}
 }
-.card .btn{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-top:16px;
-  padding:10px 18px;
-  border-radius:14px;
-  background:linear-gradient(135deg,#16a34a,#22c55e);
-  color:#fff;
-  font-size:13px;
-  font-weight:700;
-  text-decoration:none;
-  box-shadow:0 0 18px rgba(34,197,94,.6);
-}
-.card .btn:hover{filter:brightness(1.08)}
 </style>
 </head>
 
@@ -123,92 +83,57 @@ h2{
 
 <header>
   <div class="header-wrap">
-    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" height="42">
     <strong>Primajana Digital</strong>
   </div>
 </header>
 
 <div class="container">
-  <h2>Primajana Digital</h2>
-  <div class="subtitle">
-    Temukan berbagai produk digital pilihan — mulai dari e-book, template, worksheet lomba, hingga tools pendukung riset & pendanaan.
-  </div>
-
+  <div class="subtitle">Koleksi produk digital premium untuk lomba, pendanaan & akademik.</div>
   <div class="search-box">
-    <input id="search" placeholder="Cari produk digital, e-book, template, dll...">
+    <input id="search" placeholder="Cari produk...">
   </div>
-
   <div class="grid" id="productList"></div>
 </div>
 
 <script>
-const PRODUCT_FILES = [
+const PRODUCT_FILES=[
   "/press/buku000001.html",
-  "/press/buku000002.html",
-  "/press/buku000003.html",
-  "/digital/produk000001.html",
-  "/digital/produk000002.html"
+  "/digital/produk000001.html"
 ];
-</script>
 
-<script>
-const list = document.getElementById("productList");
-
-Promise.all(PRODUCT_FILES.map(file =>
-  fetch(file).then(r=>r.text()).then(html=>{
-
-    /* === Cek apakah DIGITAL PRODUCT === */
-    if(html.includes("PRODUCT_META")){
-      const meta = html.match(/const PRODUCT_META = ({[\s\S]*?});/);
-      const data = eval("("+meta[1]+")");
-      return {
-        type:data.type || "Produk Digital",
-        file,
-        title:data.title,
-        author:data.author,
-        image:data.cover
-      };
-    }
-
-    /* === Jika E-BOOK === */
-    const m = html.match(/BOOK_ID\s*=\s*["'](.*?)["']/);
-    if(!m) return null;
-    const id=m[1];
-
-    return fetch("https://www.googleapis.com/books/v1/volumes/"+id)
-      .then(r=>r.json())
-      .then(d=>{
-        const v=d.volumeInfo||{};
-        return {
-          type:"E-Book",
-          file,
-          title:v.title || "E-Book Digital",
-          author:(v.authors||["Tim Primajana"]).join(", "),
-          image:"https://books.google.co.id/books/publisher/content/images/frontcover/"+id+"?fife=w400-h600"
-        };
-      });
-  })
+Promise.all(PRODUCT_FILES.map(f=>
+ fetch(f).then(r=>r.text()).then(h=>{
+  if(h.includes("PRODUCT_META")){
+    const m=h.match(/const PRODUCT_META = ({[\s\S]*?});/);
+    const d=eval("("+m[1]+")");
+    return{type:"Produk Digital",file:f,title:d.title,author:d.author,image:d.cover};
+  }
+  const b=h.match(/BOOK_ID\s*=\s*["'](.*?)["']/);
+  if(!b)return null;
+  return fetch("https://www.googleapis.com/books/v1/volumes/"+b[1])
+  .then(r=>r.json()).then(d=>({
+    type:"E-Book",
+    file:f,
+    title:d.volumeInfo.title,
+    author:(d.volumeInfo.authors||["Primajana"]).join(", "),
+    image:"https://books.google.co.id/books/publisher/content/images/frontcover/"+b[1]+"?fife=w400-h600"
+  }));
+ })
 )).then(data=>{
-  render(data.filter(Boolean));
+ const list=document.getElementById("productList");
+ data.filter(Boolean).forEach(p=>{
+  list.innerHTML+=`
+   <div class="card">
+     <div class="badge-type">${p.type}</div>
+     <img src="${p.image}">
+     <h4>${p.title}</h4>
+     <div class="meta">${p.author}</div>
+     <a class="btn" href="${p.file}">Lihat Produk</a>
+   </div>`;
+ });
 });
-
-function render(data){
-  list.innerHTML="";
-  data.forEach(p=>{
-    list.innerHTML+=`
-      <div class="card" data-title="${p.title.toLowerCase()}" data-author="${p.author.toLowerCase()}">
-        <div class="badge-type">${p.type}</div>
-        <img src="${p.image}">
-        <h4>${p.title}</h4>
-        <div class="meta">${p.author}</div>
-        <a class="btn" href="${p.file}">
-          <i class="fa-solid fa-arrow-right"></i>&nbsp;Lihat Produk
-        </a>
-      </div>`;
-  });
-}
 </script>
-
 
 </body>
 </html>
