@@ -6,6 +6,7 @@
 <title>Primajana Digital – Detail Produk</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 body{margin:0;font-family:Inter,system-ui;background:linear-gradient(160deg,#f8fafc,#eef2ff);color:#0f172a}
@@ -22,12 +23,10 @@ h1{margin:0 0 12px;font-size:28px;color:#1e3a8a}
 .desc{font-size:15px;line-height:1.7;color:#475569;margin-bottom:26px}
 
 .btn-group{display:flex;flex-wrap:wrap;gap:12px}
-.btn-primary{display:inline-flex;gap:10px;align-items:center;padding:14px 30px;background:linear-gradient(135deg,#4f46e5,#6366f1);
-color:#fff;border-radius:999px;font-weight:700;text-decoration:none;box-shadow:0 0 26px rgba(99,102,241,.55);transition:.3s}
+.btn-primary,.btn-secondary{display:inline-flex;gap:10px;align-items:center;padding:14px 30px;border-radius:999px;font-weight:700;text-decoration:none;transition:.3s}
+.btn-primary{background:linear-gradient(135deg,#4f46e5,#6366f1);color:#fff;box-shadow:0 0 26px rgba(99,102,241,.55)}
 .btn-primary:hover{transform:scale(1.05)}
-
-.btn-secondary{display:inline-flex;gap:10px;align-items:center;padding:14px 28px;background:#ffffff;
-color:#4f46e5;border:2px solid #4f46e5;border-radius:999px;font-weight:700;text-decoration:none;transition:.3s}
+.btn-secondary{background:#fff;color:#4f46e5;border:2px solid #4f46e5}
 .btn-secondary:hover{background:#4f46e5;color:#fff;transform:scale(1.05)}
 
 .cover-box{background:#eef2ff;border-radius:22px;display:flex;align-items:center;justify-content:center;padding:26px}
@@ -51,7 +50,7 @@ color:#4f46e5;border:2px solid #4f46e5;border-radius:999px;font-weight:700;text-
 <div>
   <span class="badge" id="type">Produk Digital</span>
   <h1 id="title">Memuat produk…</h1>
-  <p class="desc" id="desc">Menyiapkan deskripsi produk.</p>
+  <p class="desc" id="desc"></p>
 
   <div class="btn-group">
     <a id="btnGoogle" class="btn-primary" target="_blank">
@@ -71,21 +70,28 @@ color:#4f46e5;border:2px solid #4f46e5;border-radius:999px;font-weight:700;text-
 </div>
 
 <script>
-/* ===== GANTI LINK PRODUK DI SINI ===== */
+/* ===== GANTI PRODUK DI SINI ===== */
 const GOOGLE_PLAY_LINK = "https://play.google.com/store/books/details?id=Vw-HEQAAQBAJ";
-const PRIMAJANA_LINK   = "https://primajana.myr.id/course/pavio";
-/* ==================================== */
+const PRODUCT_META = {
+  title: "Template Proposal Pendanaan Juara",
+  desc: "Template siap pakai untuk proposal pendanaan nasional dan internasional.",
+  cover: "https://primajana.com/assets/img/produk/proposal-template.jpg",
+  link: "https://primajana.myr.id/course/pavio"
+};
+/* ================================= */
 
 const title=document.getElementById("title");
 const desc=document.getElementById("desc");
 const cover=document.getElementById("cover");
 const type=document.getElementById("type");
+const btnGoogle=document.getElementById("btnGoogle");
+const btnPrimajana=document.getElementById("btnPrimajana");
 
-document.getElementById("btnGoogle").href=GOOGLE_PLAY_LINK;
-document.getElementById("btnPrimajana").href=PRIMAJANA_LINK;
+btnGoogle.href=GOOGLE_PLAY_LINK||"#";
+btnPrimajana.href=PRODUCT_META.link||"#";
 
-// Google Play Book
-if(GOOGLE_PLAY_LINK.includes("play.google.com/store/books/details")){
+/* ===== MODE GOOGLE PLAY ===== */
+if(GOOGLE_PLAY_LINK){
   const id=new URL(GOOGLE_PLAY_LINK).searchParams.get("id");
   type.innerText="E-Book Premium";
 
@@ -93,21 +99,18 @@ if(GOOGLE_PLAY_LINK.includes("play.google.com/store/books/details")){
   .then(r=>r.json()).then(d=>{
     const v=d.volumeInfo||{};
     title.innerText=v.title||"E-Book Digital";
-    desc.innerText=v.description?.replace(/<[^>]+>/g,"").slice(0,320)+"..."||"E-book premium dari Primajana.";
+    desc.innerText=v.description?.replace(/<[^>]+>/g,"").slice(0,300)+"..."||"E-book premium dari Primajana.";
     cover.src="https://books.google.co.id/books/publisher/content/images/frontcover/"+id+"?fife=w400-h600";
   });
 }
-</script>
 
-  <script>
-/* ==== DIGITAL PRODUCT META ==== */
-const PRODUCT_META = {
-  title: "Template Proposal Pendanaan Juara",
-  author: "Primajana Digital",
-  cover: "https://primajana.com/assets/img/produk/proposal-template.jpg",
-  link: "https://primajana.myr.id/course/pavio",
-  type: "Produk Digital"
-};
+/* ===== MODE PRODUK DIGITAL ===== */
+if(PRODUCT_META && PRODUCT_META.cover){
+  type.innerText="Produk Digital";
+  title.innerText=PRODUCT_META.title;
+  desc.innerText=PRODUCT_META.desc;
+  cover.src=PRODUCT_META.cover;
+}
 </script>
 
 </body>
