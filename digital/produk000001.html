@@ -1,13 +1,20 @@
-<script>
-const PRODUCT_URL =
-"https://primajana.myr.id/ebook/11-strategi-terbukti-menang-lomba-esai-ilmiah-populer-dipakai-para-juara";
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Primajana Digital – Produk</title>
 
-fetch("/meta.php?url="+encodeURIComponent(PRODUCT_URL))
-.then(r=>r.json())
-.then(p=>{
-  document.getElementById("title").innerText=p.title;
-  document.getElementById("desc").innerText=p.description;
-  document.getElementById("cover").src=p.image;
-  document.getElementById("btnProduct").href=p.url;
-});
+<script id="PRODUCT_META" type="application/json">
+{
+  "title":"11 Strategi Terbukti Menang Lomba Esai Ilmiah",
+  "author":"Primajana Digital",
+  "cover":"https://primajana.com/assets/img/cover/ebook-11-strategi.jpg",
+  "url":"https://primajana.myr.id/ebook/11-strategi-terbukti-menang-lomba-esai-ilmiah-populer-dipakai-para-juara"
+}
 </script>
+
+</head>
+<body>
+</body>
+</html>
