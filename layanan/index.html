@@ -8,6 +8,13 @@
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  
   <style>
     /* Palet Warna & Font */
     :root {
@@ -461,49 +468,72 @@
     transform: scale(1.08);
 }
 
-.testimoni-section{
-  padding:80px 0;
-  background:#f9fafb;
+.testimoni-premium{
+  padding:90px 0;
+  background:linear-gradient(180deg,#f9fafb,#ffffff);
 }
 
-.testimoni-card{
+.testimonial-card{
   background:#ffffff;
-  border-radius:18px;
-  padding:28px 24px;
+  border-radius:22px;
+  padding:36px 30px;
   height:100%;
-  box-shadow:0 12px 30px rgba(0,0,0,.06);
   position:relative;
-  transition:.35s ease;
+  box-shadow:0 10px 28px rgba(0,0,0,.05);
+  transition:.45s cubic-bezier(.4,0,.2,1);
 }
 
-.testimoni-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 18px 40px rgba(79,70,229,.18);
+.testimonial-card:hover{
+  transform:translateY(-10px) scale(1.015);
+  box-shadow:0 20px 50px rgba(79,70,229,.28);
 }
 
-.quote-icon{
-  font-size:1.5rem;
-  color:#6366f1;
-  position:absolute;
-  top:18px;
-  right:18px;
-  opacity:.3;
+/* ===== WARNA VARIASI BERDASAR URUTAN GRID ===== */
+.row > div:nth-child(1) .testimonial-card{
+  background:linear-gradient(135deg,#eef2ff,#ffffff);
+}
+.row > div:nth-child(2) .testimonial-card{
+  background:linear-gradient(135deg,#ecfeff,#ffffff);
+}
+.row > div:nth-child(3) .testimonial-card{
+  background:linear-gradient(135deg,#fff7ed,#ffffff);
 }
 
-.testimoni-text{
-  font-size:.95rem;
-  line-height:1.6;
+/* ===== ICON FLAT + GLOW ===== */
+.testimonial-icon{
+  width:56px;
+  height:56px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#4f46e5,#6366f1);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.3rem;
+  margin-bottom:18px;
+  animation:iconGlow 2.6s ease-in-out infinite;
+}
+
+@keyframes iconGlow{
+  0%,100%{box-shadow:0 0 0 rgba(79,70,229,0)}
+  50%{box-shadow:0 0 20px rgba(99,102,241,.65)}
+}
+
+.testimonial-text{
+  font-size:.96rem;
+  line-height:1.7;
   color:#374151;
   margin-bottom:22px;
 }
 
-.testimoni-user{
+.testimonial-user{
   display:flex;
   align-items:center;
   gap:12px;
 }
 
-.avatar{
+/* ===== AVATAR PULSE ===== */
+.avatar-circle{
   width:42px;
   height:42px;
   border-radius:50%;
@@ -513,7 +543,14 @@
   align-items:center;
   justify-content:center;
   font-weight:600;
+  animation:pulseAvatar 3s ease-in-out infinite;
 }
+
+@keyframes pulseAvatar{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+}
+
 
   </style>
 </head>
@@ -1104,39 +1141,43 @@
   
 </div>
 
-<section id="testimoni" class="testimoni-section">
+<section id="testimoni" class="testimoni-premium">
   <div class="container">
     <div class="text-center mb-5">
       <h4 class="fw-bold">Apa Kata Mereka?</h4>
-      <p class="text-muted">Cerita nyata dari klien yang telah menggunakan layanan Primajana.</p>
+      <p class="text-muted">Cerita nyata dari klien yang sudah merasakan dampaknya.</p>
     </div>
 
     <div class="row g-4">
 
       <div class="col-md-4">
-        <div class="testimoni-card">
-          <i class="fa-solid fa-quote-left quote-icon"></i>
-          <p class="testimoni-text">
-            "Esai lomba saya lolos nasional. Admin responsif dan hasilnya jauh di atas ekspektasi."
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fa-solid fa-award"></i>
+          </div>
+          <p class="testimonial-text">
+            "Esai lomba saya tembus nasional. Prosesnya cepat dan hasilnya sangat profesional."
           </p>
-          <div class="testimoni-user">
-            <div class="avatar">A</div>
+          <div class="testimonial-user">
+            <span class="avatar-circle">A</span>
             <div>
               <strong>Alya</strong><br>
-              <small>Mahasiswa - Bandung</small>
+              <small>Mahasiswa – Bandung</small>
             </div>
           </div>
         </div>
       </div>
 
       <div class="col-md-4">
-        <div class="testimoni-card">
-          <i class="fa-solid fa-quote-left quote-icon"></i>
-          <p class="testimoni-text">
-            "Analisis data saya selesai tepat waktu. Revisi cepat dan komunikasinya sangat enak."
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fa-solid fa-graduation-cap"></i>
+          </div>
+          <p class="testimonial-text">
+            "Penelitian saya selesai tepat waktu. Revisi jelas dan komunikasi sangat nyaman."
           </p>
-          <div class="testimoni-user">
-            <div class="avatar">R</div>
+          <div class="testimonial-user">
+            <span class="avatar-circle">R</span>
             <div>
               <strong>Rizki</strong><br>
               <small>Fresh Graduate</small>
@@ -1146,13 +1187,15 @@
       </div>
 
       <div class="col-md-4">
-        <div class="testimoni-card">
-          <i class="fa-solid fa-quote-left quote-icon"></i>
-          <p class="testimoni-text">
-            "Bantu proposal pendanaan kampus sampai lolos. Recommended buat pejuang riset."
+        <div class="testimonial-card">
+          <div class="testimonial-icon">
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+          <p class="testimonial-text">
+            "Proposal pendanaan kami lolos. Sangat membantu untuk tim riset kampus."
           </p>
-          <div class="testimoni-user">
-            <div class="avatar">D</div>
+          <div class="testimonial-user">
+            <span class="avatar-circle">D</span>
             <div>
               <strong>Dewi</strong><br>
               <small>Dosen</small>
@@ -1164,6 +1207,7 @@
     </div>
   </div>
 </section>
+
 
 
   <footer class="footer">
