@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sample Size Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f2f4f8;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      padding: 30px;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+    h1 span {
+      font-size: 14px;
+      color: #777;
+      display: block;
+    }
+    h2 {
+      font-size: 18px;
+      margin-top: 30px;
+      color: #444;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .case-study {
+      background-color: #e9f5ff;
+      border-left: 4px solid #007bff;
+      padding: 15px 20px;
+      margin-top: 25px;
+      border-radius: 8px;
+    }
+    .case-study h2 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #0056b3;
+      border-bottom: none;
+    }
+    .case-study p {
+      margin-bottom: 5px;
+      line-height: 1.6;
+      color: #333;
+      font-size: 14px;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    input:focus, select:focus {
+      border-color: #5ab0f7;
+      outline: none;
+    }
+    .tooltip {
+      font-size: 13px;
+      color: #777;
+      margin-top: 4px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result, .history {
+      background-color: #f9f9f9;
+      padding: 15px 20px;
+      margin-top: 30px;
+      border-radius: 10px;
+      border-left: 4px solid #007bff;
+    }
+    .result strong {
+      color: #333;
+    }
+    ul {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    #downloadButtons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #777;
+    }
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px;
+      }
+    }
+    @media print {
+      button, .tooltip, #downloadButtons, .case-study {
+        display: none !important;
+      }
+    }
+    
+    .popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.popup-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.popup-box h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.popup-box p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.popup-box input {
+  box-sizing: border-box;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 100%;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  margin: 1.2rem 0;
+  font-size: 1rem;
+  outline: none;
+}
+
+.popup-box button {
+  margin: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-akses {
+  background-color: #f97316;
+  color: white;
+}
+
+.btn-akses:hover {
+  background-color: #c2410c;
+}
+
+.btn-premium {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-premium:hover {
+  background-color: #388e3c;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" id="outputArea">
+      <h1>Perhitungan Sampel Dua Proporsi <span>Two Proportions Sample Size Calculation</span></h1>
+
+      <div class="case-study">
+        <h2>📘 Contoh Studi Kasus</h2>
+        <p>Seorang peneliti ingin membandingkan efektivitas dua jenis iklan digital: <strong>Iklan A (Kelompok 1)</strong> dan <strong>Iklan B (Kelompok 2)</strong>. Tujuannya adalah untuk melihat apakah ada perbedaan signifikan dalam proporsi audiens yang melakukan pembelian setelah melihat iklan tersebut.</p>
+        <p>Dari studi pilot, diperkirakan <strong>proporsi pembelian dari Iklan A (p1)</strong> adalah <strong>60% (0.6)</strong>, sedangkan <strong>proporsi dari Iklan B (p2)</strong> adalah <strong>50% (0.5)</strong>. Peneliti ingin mengetahui berapa jumlah sampel yang dibutuhkan per kelompok untuk dapat menyatakan adanya perbedaan, dengan tingkat kepercayaan 95% dan margin of error sebesar 5%.</p>
+      </div>
+      <h2>⚙️ Masukkan Parameter Perhitungan</h2>
+      <form id="twoProportionsForm">
+        <label for="prop1">Proporsi Kelompok 1 (p1):</label>
+        <input type="number" step="0.01" id="prop1" required min="0" max="1" />
+        <div class="tooltip">Contoh: 0.6 untuk 60% proporsi</div>
+
+        <label for="prop2">Proporsi Kelompok 2 (p2):</label>
+        <input type="number" step="0.01" id="prop2" required min="0" max="1" />
+        <div class="tooltip">Contoh: 0.5 untuk 50% proporsi</div>
+
+        <label for="zScore">Z-score (Tingkat Kepercayaan):</label>
+        <select id="zScore" required>
+          <option value="1.645">90% (Z=1.645)</option>
+          <option value="1.96" selected>95% (Z=1.96)</option>
+          <option value="2.576">99% (Z=2.576)</option>
+        </select>
+
+        <label for="margin">Margin of Error (e):</label>
+        <input type="number" step="0.01" id="margin" required min="0.01" max="1" />
+        <div class="tooltip">Contoh: 0.05 untuk margin of error 5%</div>
+
+        <button type="submit">🔍 Hitung Sampel</button>
+      </form>
+
+      <div id="result" class="result" style="display:none;"></div>
+
+      <div class="history">
+        <h2>📊 Riwayat Perhitungan</h2>
+        <ul id="history"></ul>
+      </div>
+
+      <footer>
+        &copy; 2025 PT Primajana Bagia Mesari
+      </footer>
+    </div>
+
+    <div id="downloadButtons">
+      <button id="downloadPNG">🖼️ Download PNG</button>
+    </div>
+  </div>
+
+<!-- POPUP MODAL -->
+<div class="popup-overlay" id="popup-access">
+  <div class="popup-box">
+    <h2>Akses Premium</h2>
+    <p>
+      Ingin membuka seluruh fitur ini? Yuk mulai berlangganan sekarang.<br>
+      Jika Anda sudah memiliki kode akses, masukkan di bawah ini:
+    </p>
+    <input type="text" id="access-code" placeholder="Masukkan Kode Akses" />
+    <div>
+      <button class="btn-akses" onclick="checkAccess()">Gunakan Kode</button>
+      <button class="btn-premium" onclick="window.location.href='https://lynk.id/primajanaedu/2q46wjnpngky/checkout'">Berlangganan Sekarang</button>
+    </div>
+  </div>
+</div>
+
+
+  <script>
+    const form = document.getElementById("twoProportionsForm");
+    const resultDiv = document.getElementById("result");
+    const historyList = document.getElementById("history");
+    const pngBtn = document.getElementById("downloadPNG");
+    const outputArea = document.getElementById("outputArea");
+
+    let history = [];
+
+    function convertCommaToDot(value) {
+      return value.replace(',', '.');
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      let p1 = convertCommaToDot(document.getElementById("prop1").value);
+      let p2 = convertCommaToDot(document.getElementById("prop2").value);
+      let Z = parseFloat(document.getElementById("zScore").value);
+      let margin = convertCommaToDot(document.getElementById("margin").value);
+
+      p1 = parseFloat(p1);
+      p2 = parseFloat(p2);
+      margin = parseFloat(margin);
+
+      if (isNaN(p1) || p1 < 0 || p1 > 1) {
+        alert("Proporsi p1 harus antara 0 dan 1.");
+        return;
+      }
+
+      if (isNaN(p2) || p2 < 0 || p2 > 1) {
+        alert("Proporsi p2 harus antara 0 dan 1.");
+        return;
+      }
+
+      if (isNaN(Z)) {
+        alert("Pilih Z-score untuk tingkat kepercayaan.");
+        return;
+      }
+
+      if (isNaN(margin) || margin <= 0 || margin >= 1) {
+        alert("Margin of error harus antara 0 dan 1.");
+        return;
+      }
+
+      if (p1 === p2) {
+        alert("p₁ dan p₂ tidak boleh sama. Perbedaan harus ada agar sampel bisa dihitung.");
+        return;
+      }
+
+      const numerator = (p1 * (1 - p1)) + (p2 * (1 - p2));
+      const denominator = Math.pow(p1 - p2, 2);
+      let n = Math.ceil((Math.pow(Z, 2) * numerator) / denominator);
+
+      const nWithMargin = Math.ceil(n * 1.1);
+
+      const explanation = `
+        <strong>Hasil Perhitungan:</strong><br/>
+        n = (Z² × ((p₁(1 - p₁)) + (p₂(1 - p₂)))) / (p₁ - p₂)²<br/>
+        n = (${Z}² × ((${p1} × (1 - ${p1})) + (${p2} × (1 - ${p2})))) / (${p1} - ${p2})²<br/>
+        <strong>n = ${n}</strong><br/><br/>
+
+        <strong>Rekomendasi tambahan (10% cadangan):</strong><br/>
+        Jumlah sampel yang disarankan setelah tambahan 10% cadangan: <strong>${nWithMargin}</strong> responden.
+      `;
+
+      resultDiv.innerHTML = explanation;
+      resultDiv.style.display = "block";
+
+      const historyItem = `p₁=${p1}, p₂=${p2}, Z=${Z}, e=${margin} → n=${n} (dengan cadangan 10%) → n dengan cadangan=${nWithMargin}`;
+      history.unshift(historyItem);
+      updateHistory();
+    });
+
+    function updateHistory() {
+      historyList.innerHTML = "";
+      history.slice(0, 5).forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        historyList.appendChild(li);
+      });
+    }
+
+    pngBtn.addEventListener("click", () => {
+      html2canvas(outputArea).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "hasil-perhitungan-dua-proporsi.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    });
+  </script>
+  
+  <script>
+  window.addEventListener('load', () => {
+    const alreadyAccessed = sessionStorage.getItem("hasAccess");
+    if (!alreadyAccessed) {
+      setTimeout(() => {
+        document.getElementById('popup-access').style.display = 'flex';
+      }, 20000); // 20 detik setelah halaman dimuat
+    }
+  });
+
+  function checkAccess() {
+    const code = document.getElementById('access-code').value.trim();
+    const validCode = "8188"; // Ganti sesuai kebutuhan
+    if (code === validCode) {
+      sessionStorage.setItem("hasAccess", "true");
+      document.getElementById('popup-access').style.display = 'none';
+    } else {
+      alert("Kode akses salah. Silakan coba lagi.");
+    }
+  }
+</script>
+
+  
+</body>
+</html>
