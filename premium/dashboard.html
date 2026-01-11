@@ -46,6 +46,8 @@ body{margin:0;background:#f5f7fb;font-family:system-ui;}
  Status Langganan:
  <span id="substatus" class="lock">Memuat...</span>
  <div id="countdown"></div>
+ <br>
+ <button id="payBtn" class="btn" style="display:none" onclick="subscribe()">Berlangganan / Perpanjang</button>
 </div>
 
 <div class="grid">
@@ -64,26 +66,30 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 const SUPABASE_URL = "https://jzrqalbhvjkgradpnbcp.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cnFhbGJodmprZ3JhZHBuYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NzQ2NTksImV4cCI6MjA4MzI1MDY1OX0.yOGN7e7Bu6Yvm1gDaF1URHF7Mjcj7aVHfJ5URHRWyaE";
 
+const MAYAR_LINK = "https://primajana.myr.id/membership/primajana-tools-membership-bulanan";
+
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// expose for inline HTML
-window.openApp = function(u){ location.href = u; }
+window.openApp = u => location.href = u;
 
 window.logout = async function(){
   await supabase.auth.signOut();
   location.href = "login.html";
 }
 
-const { data:{ session } } = await supabase.auth.getSession();
-if(!session){
-  location.href="login.html";
+window.subscribe = function(){
+  location.href = MAYAR_LINK;
 }
+
+const { data:{ session } } = await supabase.auth.getSession();
+if(!session) location.href="login.html";
 
 const { data } = await supabase.from("subscriptions").select("*").single();
 
 if(data && data.active){
   substatus.innerText = "AKTIF";
   substatus.className = "status";
+
   const exp = new Date(data.expired_at);
   setInterval(()=>{
     const d = Math.max(0, Math.floor((exp - new Date()) / 86400000));
@@ -91,6 +97,7 @@ if(data && data.active){
   },1000);
 }else{
   substatus.innerText = "TIDAK AKTIF";
+  document.getElementById("payBtn").style.display="inline-block";
 }
 </script>
 
