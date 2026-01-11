@@ -878,29 +878,24 @@ body {
 </head>
 <body>
 
-<!-- ================= HTML ASLI (NAVBAR, CARD, FOOTER, DLL) ================= -->
-<!-- seluruh body dari research-tools.html kamu tetap sama persis -->
-<!-- ======================================================================= -->
-<body>
-
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 
- <section class="category-section">
+<section class="category-section">
       <h2>Alat Analisis Data</h2>
       <div class="features-grid">
         <div class="feature-card">
@@ -964,76 +959,50 @@ body {
       </div>
     </section>
 
-
-
-  <footer class="footer">
-    <div class="container">
-      <hr class="my-3 text-white-50">
-      <div class="text-center">
-        <p class="mb-0">© 2025 PT Primajana Bagia Mesari</p>
-      </div>
+<footer class="footer">
+  <div class="container">
+    <hr class="my-3 text-white-50">
+    <div class="text-center">
+      <p class="mb-0">© 2025 PT Primajana Bagia Mesari</p>
     </div>
-  </footer>
+  </div>
+</footer>
 
-<a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana%20Center,%20saya%20tertarik%20dengan%20layanan%20Anda." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Hubungi Kami via WhatsApp">
-        <i class="bi bi-whatsapp"></i>
-    </a>
+<a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana%20Center,%20saya%20tertarik%20dengan%20layanan%20Anda."
+   class="whatsapp-float" target="_blank">
+  <i class="bi bi-whatsapp"></i>
+</a>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- ================= PROTEKSI PREMIUM ================= -->
-<script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+<!-- ============ VALIDASI TOKEN DARI DASHBOARD ============ -->
+<script>
+const params = new URLSearchParams(window.location.search);
+const token = params.get("token");
 
-const SUPABASE_URL = "https://jzrqalbhvjkgradpnbcp.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cnFhbGJodmprZ3JhZHBuYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NzQ2NTksImV4cCI6MjA4MzI1MDY1OX0.yOGN7e7Bu6Yvm1gDaF1URHF7Mjcj7aVHfJ5URHRWyaE";
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// cek login
-const { data:{ session } } = await supabase.auth.getSession();
-if(!session){
-  parent.location.href = "login.html";
-}
-
-// cek status langganan
-const { data } = await supabase.from("subscriptions").select("active").single();
-if(!data || !data.active){
-  alert("🔒 Menu ini hanya dapat diakses oleh pengguna premium.");
-  parent.location.href = "dashboard.html";
+if(!token){
+  document.body.innerHTML =
+    "<h2 style='text-align:center;margin-top:100px'>🔒 Akses dibatasi.<br>Buka halaman ini dari Dashboard Premium.</h2>";
 }
 </script>
 
-<!-- ===== Redirect klik tool agar buka di halaman utama (bukan iframe) ===== -->
-<script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-const supabase = createClient(
-  "https://jzrqalbhvjkgradpnbcp.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cnFhbGJodmprZ3JhZHBuYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NzQ2NTksImV4cCI6MjA4MzI1MDY1OX0.yOGN7e7Bu6Yvm1gDaF1URHF7Mjcj7aVHfJ5URHRWyaE"
-);
-
-const params = new URLSearchParams(window.location.search);
+<!-- ============ REDIRECT MENU KE PARENT DASHBOARD ============ -->
+<script>
 const isEmbedded = params.get("embedded") === "1";
 
-// cek login
-if (window.self !== window.top) {
-  console.warn("Embedded mode - redirect dibatalkan");
-} else {
-  location.href = "login.html";
-}
+document.querySelectorAll("a.btn").forEach(btn=>{
+  btn.addEventListener("click", function(e){
+    e.preventDefault();
+    const target = this.getAttribute("href");
 
-
-// cek status premium
-const { data } = await supabase.from("subscriptions").select("active").single();
-if(!data || !data.active){
-  if(!isEmbedded){
-    alert("🔒 Menu ini hanya untuk pengguna premium.");
-    location.href="dashboard.html";
-  }
-}
+    if(isEmbedded && window.self !== window.top){
+      window.parent.location.href = target;
+    }else{
+      window.location.href = target;
+    }
+  });
+});
 </script>
-
 
 </body>
 </html>
