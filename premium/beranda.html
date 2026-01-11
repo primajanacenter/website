@@ -1006,13 +1006,25 @@ if(!data || !data.active){
 
 <!-- ===== Redirect klik tool agar buka di halaman utama (bukan iframe) ===== -->
 <script>
+const params = new URLSearchParams(window.location.search);
+const isEmbedded = params.get("embedded") === "1";
+
 document.querySelectorAll("a.btn").forEach(btn=>{
   btn.addEventListener("click", function(e){
     e.preventDefault();
-    parent.location.href = this.getAttribute("href");
+    const target = this.getAttribute("href");
+
+    if(isEmbedded && window.self !== window.top){
+      // buka di parent dashboard
+      window.parent.location.href = target;
+    }else{
+      // buka normal jika halaman diakses langsung
+      window.location.href = target;
+    }
   });
 });
 </script>
+
 
 </body>
 </html>
