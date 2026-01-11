@@ -274,18 +274,19 @@
     </footer>
   </div>
 
-<!-- POPUP MODAL -->
+<!-- POPUP CTA SUBSCRIPTION -->
 <div class="popup-overlay" id="popup-access">
   <div class="popup-box">
-    <h2>Akses Premium</h2>
+    <h2>🚀 Ayo Berlangganan</h2>
     <p>
-      Ingin membuka seluruh fitur ini? Yuk mulai berlangganan sekarang.<br>
-      Jika Anda sudah memiliki kode akses, masukkan di bawah ini:
+      Dapatkan akses penuh seluruh fitur premium Primajana.<br>
+      Mulai dari <b>Rp 19.000 / bulan</b> saja!
     </p>
-    <input type="text" id="access-code" placeholder="Masukkan Kode Akses" />
+
     <div>
-      <button class="btn-akses" onclick="checkAccess()">Gunakan Kode</button>
-      <button class="btn-premium" onclick="window.location.href='https://lynk.id/primajanaedu/2q46wjnpngky/checkout'">Berlangganan Sekarang</button>
+      <button class="btn-premium" onclick="startSubscribe()">
+        💎 Mulai Berlangganan
+      </button>
     </div>
   </div>
 </div>
@@ -374,6 +375,31 @@
     });
   </script>
   
+<script>
+let popupShown = false;
+
+function showPopup(){
+  if(!popupShown){
+    document.getElementById("popup-access").style.display = "flex";
+    popupShown = true;
+  }
+}
+
+function startSubscribe(){
+  window.location.href = "https://primajana.com/premium/login";
+}
+
+// Tampilkan popup setelah 20 detik
+setTimeout(showPopup, 20000);
+</script>
+
+<script>
+document.getElementById("popup-access").addEventListener("click", function(e){
+  if(e.target === this){
+    this.style.display = "none";
+  }
+});
+</script>
 
   
 </body>
