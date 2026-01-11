@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools</title>
+  <link rel="icon" href="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" type="image/x-icon">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* Palet Warna & Font */
+    :root {
+      --primary-blue: #0056b3;
+      --accent-green: #28a745;
+      --highlight-purple: #6f42c1;
+      --light-bg: #f8f9fa;
+      --dark-text: #343a40;
+      --secondary-text: #6c757d;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--dark-text);
+      background-color: #fff;
+    }
+
+    /* Navigasi */
+    .navbar {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      color: var(--primary-blue) !important;
+      display: flex;
+      align-items: center;
+      height: auto;
+      transition: transform 0.3s ease-in-out;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .navbar-brand img {
+      max-height: 70px;
+      width: auto;
+      margin-right: 10px;
+    }
+
+    .navbar-brand:hover {
+      transform: scale(1.03);
+    }
+
+    .nav-link {
+      color: var(--secondary-text) !important;
+      transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+      padding: 0.5rem 1rem;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-blue) !important;
+      transform: translateY(-2px);
+    }
+
+    /* Section */
+    .publication-section {
+      padding: 140px 0 100px; /* padding bawah lebih besar untuk jarak ke footer */
+      background-color: var(--light-bg);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .hero-title {
+      font-weight: 700;
+      color: var(--primary-blue);
+    }
+
+    .subtitle-text {
+      font-size: 0.95rem;
+      color: var(--secondary-text);
+      max-width: 850px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    /* Banner Daftar Pengajar */
+    .teacher-banner {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .teacher-banner img {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .teacher-banner h3 {
+      color: var(--primary-blue);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .teacher-banner p {
+      color: var(--secondary-text);
+      font-size: 1rem;
+    }
+
+    .btn-publikasi {
+      background-color: #fff;
+      color: var(--primary-blue);
+      border: 2px solid var(--primary-blue);
+      font-weight: 600;
+      transition: all 0.3s ease-in-out;
+      border-radius: 25px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .btn-publikasi:hover {
+      background-color: var(--primary-blue);
+      color: #fff;
+      border-color: var(--primary-blue);
+    }
+
+    /* Card Publikasi */
+    .publication-card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      overflow: hidden;
+      background-color: #fff;
+      text-align: center;
+      padding: 25px 20px;
+    }
+
+    .publication-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-icon-publication {
+      font-size: 3.8rem;
+      color: var(--primary-blue);
+      margin-bottom: 1rem;
+      display: block;
+      transition: transform 0.4s ease-in-out, color 0.4s ease-in-out;
+    }
+
+    .publication-card:hover .card-icon-publication {
+      transform: scale(1.08);
+      color: var(--accent-green);
+    }
+
+    .card-title-publication {
+      color: var(--primary-blue);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+      color: var(--secondary-text);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--dark-text);
+      color: white;
+      padding: 15px 0;
+    }
+
+    .footer a {
+      color: #adb5bd;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .footer a:hover {
+      color: white;
+    }
+
+    /* Animasi */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .navbar-brand img {
+        max-height: 60px;
+      }
+      .publication-section {
+        padding: 120px 0 80px;
+      }
+      .teacher-banner img {
+        max-width: 250px;
+      }
+    }
+
+    .teacher-img-custom {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 30px;
+      right: 30px;
+      background-color: #25d366;
+      color: #FFF;
+      border-radius: 50%;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .whatsapp-float i {
+      font-size: 32px;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+
+    /* Efek Berkedip untuk teks "Halaman ini sedang diperbaharui" */
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .blinking-text {
+      font-size: 3rem;
+      color: red;
+      animation: blink 1s infinite;
+      padding: 30px 15px;
+      margin-bottom: 80px; /* jarak ke footer */
+    }
+    
+    :root {
+      --primary-color: #f97316;
+      --primary-dark: #c2410c;
+      --secondary-color: #333;
+      --light-bg: #f9f9fb;
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --light-text: #666;
+      --border-color: #eee;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+body {
+  padding-top: 100px; /* sesuaikan tinggi navbar */
+}
+
+    header {
+      padding: 3.5rem 2rem;
+      text-align: center;
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      animation: fadeInDown 1s ease-out;
+    }
+
+    header img {
+      max-width: 250px;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 0 0 1rem 0;
+      color: var(--secondary-color);
+    }
+
+    p.lead {
+      font-size: 1.4rem;
+      color: var(--light-text);
+      max-width: 750px;
+      margin: 1.5rem auto 0;
+    }
+
+    .main-menu-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2.8rem;
+      padding: 4.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+  background: var(--card-bg);
+  padding: 2.8rem;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.09);
+  transition: transform 0.4s, box-shadow 0.4s, border-color 0.3s;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  border: 2px solid transparent;
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+  height: 100%;
+}
+
+
+    .menu-card:nth-child(1) { animation-delay: 0.2s; }
+    .menu-card:nth-child(2) { animation-delay: 0.4s; }
+    .menu-card:nth-child(3) { animation-delay: 0.6s; }
+
+    .menu-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-color);
+    }
+
+    .menu-card .icon {
+      font-size: 4.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s;
+    }
+
+    .menu-card:hover .icon {
+      transform: scale(1.1);
+    }
+
+    .menu-card h2 {
+      font-size: 2.1rem;
+      color: var(--secondary-color);
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+
+    .menu-card p {
+      font-size: 1.15rem;
+      color: var(--light-text);
+      margin-bottom: 2.2rem;
+      flex-grow: 1;
+    }
+
+    .menu-card .btn {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 1rem 2.4rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-card .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      color: #aaa;
+      font-size: 0.95rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+    }
+
+    .help-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .help-button:hover {
+      background-color: #43a047;
+      transform: scale(1.1) translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+     :root {
+      --primary-orange: #f97316;
+      --dark-grey: #333;
+      --light-bg: #f9f9fb;
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --light-text: #666;
+      --border-color: #eee;
+      --blue-accent: #1565c0;
+      --green-accent: #2e7d32;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-brand img {
+      height: 48px;
+      width: 48px;
+      object-fit: contain;
+    }
+
+    .header-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--dark-grey);
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--light-text);
+    }
+
+    .main-content {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .category-section {
+      margin-bottom: 4rem;
+    }
+
+    .category-section h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--dark-grey);
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .category-section h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background-color: var(--primary-orange);
+      border-radius: 2px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      padding: 1.8rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--border-color);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-card h3 {
+      margin-top: 0;
+      font-size: 1.35rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--dark-grey);
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 svg,
+    .feature-card h3 .icon {
+      width: 28px;
+      height: 28px;
+      stroke: var(--dark-grey);
+      stroke-width: 2;
+      fill: none;
+      color: var(--dark-grey); /* For Font Awesome icons */
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      color: var(--light-text);
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .feature-card .btn {
+      display: inline-block;
+      margin-top: auto;
+      background-color: var(--dark-grey);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-align: center;
+    }
+
+    .feature-card .btn:hover {
+      background-color: #000;
+      transform: translateY(-2px);
+    }
+
+
+    /* Specific card styles */
+    .elearning-card {
+      background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+      border: 1px solid #bbdefb;
+      box-shadow: 0 6px 18px rgba(100, 181, 246, 0.1);
+    }
+
+    .elearning-card h3 {
+      color: var(--blue-accent);
+    }
+
+    .elearning-card h3 svg,
+    .elearning-card h3 .icon {
+      stroke: var(--blue-accent);
+      color: var(--blue-accent);
+    }
+
+    .elearning-card .btn {
+      background-color: var(--blue-accent);
+    }
+
+    .elearning-card .btn:hover {
+      background-color: #0d47a1;
+    }
+
+    .pelatihan-card {
+      background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%);
+      border: 1px solid #a5d6a7;
+      box-shadow: 0 6px 18px rgba(76, 175, 80, 0.1);
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    .pelatihan-card h3 {
+      color: var(--green-accent);
+    }
+
+    .pelatihan-card h3 svg,
+    .pelatihan-card h3 .icon {
+      stroke: var(--green-accent);
+      color: var(--green-accent);
+    }
+
+    .pelatihan-card .btn {
+      background-color: var(--green-accent);
+    }
+
+    .pelatihan-card .btn:hover {
+      background-color: #1b5e20;
+    }
+
+    @keyframes pulseGlow {
+      0%,
+      100% {
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.15);
+      }
+      50% {
+        box-shadow: 0 0 18px rgba(76, 175, 80, 0.35);
+      }
+    }
+
+    .dataset-card {
+      background: linear-gradient(135deg, #f3e5f5 0%, #ffffff 100%); /* Slightly different gradient */
+      border: 1px solid #ce93d8;
+      box-shadow: 0 6px 18px rgba(156, 39, 176, 0.1);
+      display: flex; /* Make it a flex container */
+      flex-direction: column; /* Stack children vertically */
+      justify-content: space-between; /* Push content to top and bottom */
+    }
+
+    .dataset-card h3 {
+      color: #8e24aa; /* Darker purple */
+    }
+
+    .dataset-card h3 .icon-circle {
+      background-color: #e1bee7; /* Lighter purple for circle */
+      padding: 8px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dataset-card h3 svg,
+    .dataset-card h3 .icon {
+      stroke: #8e24aa;
+      color: #8e24aa;
+    }
+
+    .dataset-card p {
+      margin-top: 0.5rem;
+      margin-bottom: 1rem; /* Adjust margin */
+    }
+
+    .dataset-card a {
+      color: #6a1b9a; /* Even darker purple for links */
+      font-weight: 600;
+      text-decoration: none;
+      position: relative;
+      display: block; /* Make links block level for better spacing */
+      margin-bottom: 0.5rem; /* Space between links */
+    }
+
+    .dataset-card a:last-child {
+      margin-bottom: 0;
+    }
+
+    .dataset-card a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: -2px;
+      background-color: #6a1b9a;
+      transition: width 0.3s ease;
+    }
+
+    .dataset-card a:hover::after {
+      width: 100%;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-top: 4rem; /* Add some space above footer */
+      border-top: 1px solid var(--border-color);
+      background-color: var(--card-bg);
+    }
+
+    /* Floating Help Button */
+    .help-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #25d366; /* WhatsApp brand color */
+      color: white;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .help-button:hover {
+      background-color: #1da851;
+      transform: scale(1.05) translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem 1.5rem;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .header-brand {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .main-content {
+        padding: 0 1.5rem;
+      }
+
+      .category-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .feature-card {
+        padding: 1.5rem;
+      }
+
+      .feature-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .feature-card p {
+        font-size: 0.95rem;
+      }
+
+      .feature-card .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      .help-button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.8rem;
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 0.8rem 1rem;
+      }
+
+      .header-brand img {
+        height: 40px;
+        width: 40px;
+      }
+
+      .header-text h1 {
+        font-size: 1.3rem;
+      }
+
+      .header-text p {
+        font-size: 0.85rem;
+      }
+
+      .main-content {
+        padding: 0 1rem;
+      }
+
+      .category-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .feature-card {
+        padding: 1.2rem;
+      }
+
+      .feature-card h3 {
+        font-size: 1.1rem;
+        gap: 0.5rem;
+      }
+
+      .feature-card h3 svg,
+      .feature-card h3 .icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      .feature-card p {
+        font-size: 0.9rem;
+      }
+
+      .feature-card .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .help-button {
+        width: 45px;
+        height: 45px;
+        font-size: 1.6rem;
+        bottom: 15px;
+        right: 15px;
+      }
+    }
+    
+      body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9fb;
+      color: #333;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-brand img {
+      height: 48px;
+      width: 48px;
+      object-fit: contain;
+    }
+
+    .header-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #777;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 960px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+
+    .feature {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature h3 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .feature ul {
+      padding-left: 1.2rem;
+      margin-top: 0.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature ul li {
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: #333;
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-link:hover {
+      background-color: #000;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    .feature img {
+    max-width: 100%;
+    height: auto;
+    }
+    
+    .accordion-box {
+  margin-top: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #e0f7fa;
+}
+
+details summary {
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  outline: none;
+}
+
+details[open] summary::after {
+  content: "▲";
+  float: right;
+}
+
+details summary::after {
+  content: "▼";
+  float: right;
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+details p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+    /* Floating Help Button */
+    .help-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .help-button:hover {
+      background-color: #43a047;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" alt="Logo Primajana Center">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="about.html">Tentang Kami</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Kontak</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+ <section class="features">
+  <!-- CARD: Rumus Slovin (Untuk Survei) -->
+  <div class="feature">
+    <h3>🎛️ Rumus Slovin (Untuk Survei)</h3>
+    <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Rumus Slovin digunakan untuk menghitung ukuran sampel yang diperlukan dalam penelitian survei, ketika jumlah total populasi sangat besar dan tidak mungkin untuk menyurvei seluruh populasi. Dengan rumus ini, peneliti dapat menentukan jumlah sampel yang cukup representatif dengan mempertimbangkan margin kesalahan yang diinginkan.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Misalkan sebuah kota memiliki populasi sebesar 50.000 orang, dan peneliti ingin mengukur preferensi pemilih terhadap kandidat dalam pemilihan umum dengan margin kesalahan 5% (e = 0.05). Dengan menggunakan Rumus Slovin, peneliti dapat menghitung ukuran sampel yang diperlukan untuk penelitian tersebut.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Sangat mudah digunakan untuk penelitian survei dengan populasi besar.<br>
+    &bullet; Tidak memerlukan informasi tentang varians populasi.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Tidak selalu akurat jika populasi tidak homogen atau data tidak terdistribusi secara acak.<br>
+    &bullet; Margin kesalahan yang lebih kecil membutuhkan sampel yang lebih besar.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Tejada, J. J., & Punzalan, J. R. B. (2012). On the misuse of Slovin’s formula.<em>The philippine statistician, 61</em> (1), 129-136.<br>
+    &bullet; Ryan, T. P. (2013).<em>Sample size determination and power.</em> ohn Wiley & Sons.
+  </p>
+</details>
+    <h4>Formula:</h4>
+    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745558625/Picture1_xd2r11.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+    <strong>Di mana:</strong>
+    <ul>
+      <li>n = jumlah sampel.</li>
+      <li>N = ukuran populasi.</li>
+      <li>e = margin kesalahan yang diinginkan (misalnya, 0.05 untuk 5%).</li>
+    </ul>
+    <a href="sample_slovin.html" class="btn-link">Hitung Sampel</a>
+  </div>
+  
+<!-- CARD: Perhitungan Sampel untuk Proporsi Tunggal (Single Proportion) -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Proporsi Tunggal (Single Proportion)</h3>
+  <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Digunakan untuk menghitung ukuran sampel yang diperlukan ketika penelitian ingin memperkirakan proporsi suatu kejadian dalam populasi. Misalnya, peneliti ingin mengetahui proporsi orang yang memilih suatu kandidat politik, atau proporsi keberhasilan dalam percobaan.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Sebuah survei ingin mengukur proporsi pemilih yang mendukung kandidat politik tertentu. Dari survei awal, diperkirakan 60% pemilih akan mendukung kandidat tersebut. Peneliti ingin menggunakan tingkat kepercayaan 95% dan margin of error 5%. Maka perhitungan ukuran sampel dapat dilakukan dengan rumus ini.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Sederhana dan mudah digunakan untuk estimasi proporsi.<br>
+    &bullet; Cocok untuk penelitian sosial dan pemilu.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Membutuhkan estimasi proporsi awal yang mungkin tidak selalu akurat.<br>
+    &bullet; Tidak berlaku untuk perbandingan antara dua kelompok atau lebih.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Gonçalves, L., de Oliveira, M. R., Pascoal, C., & Pires, A. (2012). Sample size for estimating a binomial proportion: comparison of different methods. <em>Journal of Applied Statistics, 39 </em> (11), 2453-2473.<br>
+    &bullet; Vasudevan, S. (2024). Sample size calculation in various medical research. <em>International Journal of Medical Sciences and Nursing Research, 4 </em> (3), 22-29.
+  </p>
+</details>
+
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745558915/Picture2_nkn7o1.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>n = jumlah sampel yang dibutuhkan.</li>
+    <li>Z = skor Z untuk tingkat kepercayaan (misalnya, 1.96 untuk 95% confidence level).</li>
+    <li>p = perkiraan proporsi dalam populasi.</li>
+    <li>E = margin kesalahan yang diinginkan (misalnya, 0.05 untuk 5%).</li>
+  </ul>
+  <a href="sample_proporsi_tunggal.html" class="btn-link">Hitung Sampel</a>
+
+</div>
+<!-- CARD: Perhitungan Sampel untuk Dua Proporsi (Two Proportions) -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Dua Proporsi (Two Proportions)</h3>
+   <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Digunakan ketika peneliti ingin membandingkan dua proporsi (persentase) antara dua kelompok yang independen. Contohnya, membandingkan tingkat keberhasilan suatu pengobatan (proporsi sembuh) antara dua kelompok yang diberi pengobatan berbeda.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Sebuah penelitian ingin mengetahui apakah ada perbedaan proporsi keberhasilan antara dua jenis vaksin dalam mencegah infeksi. Diketahui bahwa proporsi keberhasilan vaksin A adalah 80% (P1), sedangkan vaksin B memiliki proporsi keberhasilan 70% (P2). Peneliti menggunakan tingkat signifikansi 5% dan kekuatan uji 80%.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Dapat digunakan untuk perbandingan antara dua proporsi dalam populasi yang berbeda.<br>
+    &bullet; Cocok untuk studi klinis atau eksperimen yang melibatkan kategori binomial (misalnya, sukses/gagal).<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Asumsi independensi antara dua kelompok harus dipenuhi.<br>
+    &bullet; Membutuhkan estimasi proporsi yang cukup akurat untuk menghitung ukuran sampel dengan benar.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Gonçalves, L., de Oliveira, M. R., Pascoal, C., & Pires, A. (2012). Sample size for estimating a binomial proportion: comparison of different methods. <em>Journal of Applied Statistics, 39 </em> (11), 2453-2473.<br>
+    &bullet; Vasudevan, S. (2024). Sample size calculation in various medical research. <em>International Journal of Medical Sciences and Nursing Research, 4 </em> (3), 22-29.
+  </p>
+</details>
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745559107/Picture3_d1iaav.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>p1 dan p2 = proporsi dalam dua kelompok yang dibandingkan.</li>
+    <li>n = jumlah sampel per kelompok.</li>
+    <li>Z = skor Z untuk tingkat kepercayaan (misalnya, 1.96 untuk 95% confidence level).</li>
+  </ul>
+  <a href="sample_dua_proporsi.html" class="btn-link">Hitung Sampel</a>
+
+</div>
+<!-- CARD: Perhitungan Sampel untuk Dua Rata-Rata Independen -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Dua Rata-Rata Independen</h3>
+  <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Digunakan ketika peneliti ingin membandingkan dua rata-rata dari dua kelompok yang <em>independen</em> (tidak saling berhubungan), misalnya kelompok kontrol vs. kelompok perlakuan. Metode ini berguna dalam uji hipotesis parametrik untuk membuktikan adanya perbedaan yang signifikan secara statistik antara kedua kelompok.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Sebuah penelitian ingin mengetahui perbedaan rata-rata kadar gula darah antara pasien yang diberikan obat A dan pasien yang diberikan obat B. Diketahui varians populasi dari kedua kelompok, tingkat signifikansi 5% (Zα/2 = 1.96), serta kekuatan uji 80% (Zβ = 0.84). Perbedaan rata-rata yang dianggap signifikan adalah 10 mg/dL.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Memungkinkan perbandingan dua kelompok secara langsung dengan mempertimbangkan variasi data.<br>
+    &bullet; Cocok untuk desain penelitian eksperimental sederhana.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Membutuhkan asumsi normalitas distribusi dan homogenitas varians kedua kelompok.<br>
+    &bullet; Perlu data varians populasi yang sering kali tidak selalu tersedia.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Gonçalves, L., de Oliveira, M. R., Pascoal, C., & Pires, A. (2012). Sample size for estimating a binomial proportion: comparison of different methods. <em>Journal of Applied Statistics, 39 </em> (11), 2453-2473.<br>
+    &bullet; Vasudevan, S. (2024). Sample size calculation in various medical research. <em>International Journal of Medical Sciences and Nursing Research, 4 </em> (3), 22-29.
+  </p>
+</details>
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745559451/Picture4_rz3vgj.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>σ2 = varians populasi.</li>
+    <li>Δ = perbedaan rata-rata yang diinginkan antara dua kelompok.</li>
+    <li>Zα/2 = skor Z sesuai tingkat signifikansi (misalnya 1.96 untuk 95%).</li>
+    <li>Zβ = skor Z sesuai kekuatan uji yang diinginkan (misalnya 0.84 untuk 80%).</li>
+  </ul>
+  <a href="sample_rerata_independen.html" class="btn-link">Hitung Sampel</a>
+
+</div>
+<!-- CARD: Perhitungan Sampel untuk Studi Kohort -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Studi Kohort</h3>
+  <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Perhitungan ini digunakan dalam studi kohort untuk menentukan ukuran sampel yang diperlukan agar dapat mendeteksi perbedaan signifikan antara dua kelompok berdasarkan proporsi kejadian suatu peristiwa, seperti perbandingan antara kelompok yang terpapar dan yang tidak terpapar suatu faktor risiko.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Sebuah penelitian ingin mengetahui apakah merokok meningkatkan risiko terkena kanker paru-paru. Kelompok pertama (eksposur) terdiri dari perokok, dan kelompok kedua (non-eksposur) terdiri dari non-perokok. Diketahui bahwa proporsi kejadian kanker paru-paru pada perokok adalah 10% (P1), sedangkan pada non-perokok adalah 2% (P2). Penelitian ini menginginkan tingkat signifikansi 5% dan kekuatan uji 80%.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Dapat digunakan untuk membandingkan kejadian penyakit atau kondisi tertentu pada dua kelompok dengan faktor eksposur yang berbeda.<br>
+    &bullet; Bermanfaat untuk menentukan besar sampel yang tepat berdasarkan perbedaan proporsi kejadian.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Membutuhkan data proporsi kejadian yang akurat untuk kedua kelompok.<br>
+    &bullet; Hasil dapat dipengaruhi oleh bias seleksi atau informasi jika pengumpulan data tidak hati-hati.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Liu, H., Shen, Y., Ning, J., & Qin, J. (2017). Sample size calculations for prevalent cohort designs. <em>Statistical methods in medical research, 26</em> (1), 280-291.<br>
+    &bullet; Mitra, A. K. (2023). Sample Size Estimation. <em>In Statistical Approaches for Epidemiology: From Concept to Application</em> (pp. 275-292). Cham: Springer International Publishing.
+  </p>
+</details>
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745559614/Picture5_o2scsu.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>p1 dan p2 = proporsi dari dua kelompok yang dibandingkan.</li>
+    <li>(p1 - p2) = perbedaan proporsi yang diharapkan.</li>
+    <li>Z = skor Z untuk tingkat kepercayaan (misalnya, 1.96 untuk 95% confidence level).</li>
+  </ul>
+  <a href="sample_kohort.html" class="btn-link">Hitung Sampel</a>
+
+</div>
+<!-- CARD: Perhitungan Sampel untuk Studi Kasus-Kontrol -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Studi Kasus-Kontrol</h3>
+  <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Digunakan untuk menghitung jumlah sampel yang dibutuhkan dalam penelitian dengan desain studi kasus-kontrol. Studi ini umumnya digunakan untuk membandingkan proporsi kejadian atau eksposur antara dua kelompok: <em>kelompok kasus</em> (yang memiliki penyakit atau kondisi) dan <em>kelompok kontrol</em> (yang tidak memiliki penyakit atau kondisi).
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Dalam sebuah penelitian untuk mengetahui hubungan antara merokok dan kanker paru-paru, 100 orang dengan kanker paru-paru (kelompok kasus) dibandingkan dengan 100 orang yang sehat tanpa kanker paru-paru (kelompok kontrol). Peneliti ingin mengetahui proporsi orang yang merokok pada kedua kelompok tersebut. Dalam hal ini, rumus perhitungan sampel digunakan untuk menentukan ukuran sampel yang cukup agar hasilnya dapat dipercaya.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Memungkinkan perbandingan proporsi kejadian antara kelompok kasus dan kontrol.<br>
+    &bullet; Sangat berguna dalam penelitian retrospektif.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Membutuhkan data yang akurat mengenai proporsi kejadian pada masing-masing kelompok.<br>
+    &bullet; Bisa memerlukan banyak sampel jika perbedaan antara proporsi sangat kecil.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Kubota, K., & Wakana, A. (2011). Sample-size formula for case-cohort studies. <em>Epidemiology, 22</em> (2), 279.<br>
+    &bullet; Woolson, R. F., Bean, J. A., & Rojas, P. B. (1986). Sample size for case-control studies using Cochran's statistic. <em>Biometrics</em>, 927-932.
+  </p>
+</details>
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745559614/Picture5_o2scsu.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>(Formula ini mirip dengan perhitungan untuk studi kohort, digunakan untuk kasus-kontrol dengan perbedaan proporsi).</li>
+  </ul>
+  <a href="sample_kasus_kontrol.html" class="btn-link">Hitung Sampel</a>
+
+</div>
+<!-- CARD: Perhitungan Sampel untuk Studi Longitudinal -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Studi Longitudinal</h3>
+  <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong>
+    Perhitungan sampel untuk studi longitudinal digunakan ketika peneliti ingin mengukur perubahan dalam kelompok yang sama selama beberapa periode waktu. Studi ini berfokus pada pengukuran berulang pada individu yang sama untuk melihat efek dari intervensi atau perubahan seiring waktu.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong>
+    Penelitian ingin mengetahui perubahan tekanan darah di kelompok pasien yang menerima pengobatan hipertensi selama 6 bulan. Data tekanan darah diukur pada tiga waktu yang berbeda. Peneliti ingin mendeteksi perubahan rata-rata tekanan darah di antara waktu tersebut dan menggunakan tingkat signifikansi 5% dan kekuatan uji 80%.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Mampu mengidentifikasi perubahan yang terjadi dalam waktu.<br>
+    &bullet; Menggunakan data pengukuran berulang yang dapat meningkatkan efisiensi sampel.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Membutuhkan kontrol yang ketat terhadap faktor pengganggu yang dapat mempengaruhi pengukuran berulang.<br>
+    &bullet; Memerlukan metode analisis statistik yang lebih kompleks, seperti analisis varians berulang (ANOVA) atau model campuran.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Fitzmaurice, G. M., Laird, N. M., & Ware, J. H. (2011). <em>Applied Longitudinal Analysis</em> (2nd ed.). Wiley.<br>
+    &bullet; Diggle, P. J., Heagerty, P., Liang, K. Y., & Zeger, S. L. (2002). <em>Analysis of Longitudinal Data</em> (2nd ed.). Oxford University Press.
+  </p>
+</details>
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745559870/Picture7_lmvjru.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>σ2 = varians pengukuran dalam studi longitudinal.</li>
+    <li>Δ = perbedaan yang diinginkan antara dua titik waktu.</li>
+    <li>Zα/2 = skor Z sesuai tingkat signifikansi (misalnya 1.96 untuk 95%).</li>
+    <li>Zβ = skor Z sesuai kekuatan uji yang diinginkan (misalnya 0.84 untuk 80%).</li>
+  </ul>
+  <a href="sample_longitudinal.html" class="btn-link">Hitung Sampel</a>
+
+</div>
+<!-- CARD: Perhitungan Sampel untuk Uji T (Independent Two-Sample T-Test) -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Uji T (Independent Two-Sample T-Test)</h3>
+   <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Uji T Independen digunakan untuk membandingkan dua kelompok yang <em>independen</em> (tidak saling berhubungan) berdasarkan rata-rata mereka, untuk melihat apakah terdapat perbedaan yang signifikan secara statistik. Biasanya digunakan ketika kedua kelompok tidak saling mempengaruhi satu sama lain dan memiliki distribusi data yang relatif normal.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Sebuah penelitian ingin mengetahui apakah terdapat perbedaan signifikan dalam rata-rata berat badan antara pria dan wanita yang mengikuti program diet yang sama. Diketahui varians berat badan dari masing-masing kelompok, tingkat signifikansi 5% (Zα/2 = 1.96), dan ukuran sampel yang akan digunakan untuk setiap kelompok.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Sederhana dan mudah diterapkan untuk dua kelompok.<br>
+    &bullet; Cocok untuk eksperimen yang membandingkan dua kelompok dengan distribusi normal.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Memerlukan asumsi tentang normalitas data dan kesetaraan varians antar kelompok (homoskedastisitas).<br>
+    &bullet; Rentan terhadap outliers yang bisa mempengaruhi hasil.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Field, A. (2013). <em>Discovering Statistics Using IBM SPSS Statistics</em> (4th ed.). SAGE Publications.<br>
+    &bullet; Weiss, N. A. (2005). <em>Introductory Statistics</em> (8th ed.). Pearson Prentice Hall.
+  </p>
+</details>
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745560014/Picture8_hthafk.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>σ2 = varians populasi.</li>
+    <li>Δ = perbedaan yang diinginkan antara dua rata-rata.</li>
+    <li>Zα/2 = skor Z sesuai tingkat signifikansi (misalnya 1.96 untuk 95%).</li>
+    <li>Zβ = skor Z sesuai kekuatan uji yang diinginkan (misalnya 0.84 untuk 80%).</li>
+  </ul>
+  <a href="sample_independen_t.html" class="btn-link">Hitung Sampel</a>
+
+</div>
+<!-- CARD: Perhitungan Sampel untuk Uji Paired T-Test -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Uji Paired T-Test</h3>
+   <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Digunakan untuk menghitung jumlah sampel yang diperlukan dalam uji statistik <em>paired t-test</em>, yang membandingkan dua set data yang saling berhubungan. Uji ini digunakan ketika data yang diambil berasal dari dua pengukuran yang dilakukan pada unit yang sama (misalnya, pengukuran sebelum dan sesudah perlakuan pada subjek yang sama).
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Sebuah studi ingin mengetahui apakah ada perubahan signifikan dalam berat badan pasien setelah mengikuti program diet selama 6 bulan. Data yang tersedia adalah pengukuran berat badan sebelum dan setelah program diet untuk setiap pasien. Berdasarkan data yang ada, peneliti perlu menghitung jumlah sampel yang dibutuhkan untuk mendeteksi perubahan rata-rata berat badan yang signifikan.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Cocok untuk eksperimen dengan pengukuran berulang pada subjek yang sama.<br>
+    &bullet; Mengurangi variabilitas dengan membandingkan dua kondisi pada individu yang sama.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Hanya dapat digunakan jika data berpasangan, sehingga tidak cocok untuk kelompok yang independen.<br>
+    &bullet; Perlu asumsi bahwa perbedaan antara dua pengukuran berdistribusi normal.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Altman, D. G. (1991). <em>Practical Statistics for Medical Research</em>. CRC Press.<br>
+    &bullet; Bland, M. (2015). <em>An Introduction to Medical Statistics</em> (4th ed.). Oxford University Press.
+  </p>
+</details>
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745560014/Picture8_hthafk.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>σ2 = varians perbedaan antara pasangan.</li>
+    <li>Δ = perbedaan yang diinginkan dalam rata-rata.</li>
+    <li>Zα/2 = skor Z sesuai tingkat signifikansi (misalnya 1.96 untuk 95%).</li>
+    <li>Zβ = skor Z sesuai kekuatan uji yang diinginkan (misalnya 0.84 untuk 80%).</li>
+  </ul>
+  <a href="sample_paired_t.html" class="btn-link">Hitung Sampel</a>
+
+</div>
+<!-- CARD: Perhitungan Sampel untuk Uji Chi-Square (Goodness of Fit atau Homogeneity) -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Uji Chi-Square (Goodness of Fit atau Homogeneity)</h3>
+  <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong>
+    Uji Chi-Square digunakan untuk menentukan apakah ada perbedaan yang signifikan antara distribusi frekuensi yang diamati (observed) dan yang diharapkan (expected) dalam kategori tertentu. Uji ini dapat digunakan dalam dua bentuk:
+    <br>
+    &bullet; <strong>Goodness of Fit</strong>: Digunakan untuk menguji apakah data yang diamati sesuai dengan distribusi teoretis yang diharapkan.<br>
+    &bullet; <strong>Homogeneity</strong>: Digunakan untuk menguji apakah dua atau lebih sampel independen berasal dari populasi yang memiliki distribusi yang sama.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong>
+    Misalkan seorang peneliti ingin mengetahui apakah ada hubungan antara jenis kelamin dan preferensi warna di kalangan siswa. Mereka mengumpulkan data frekuensi preferensi warna dari sampel siswa laki-laki dan perempuan. Uji Chi-Square akan digunakan untuk membandingkan distribusi warna yang diamati dengan distribusi yang diharapkan berdasarkan hipotesis nol bahwa tidak ada perbedaan preferensi warna antara siswa laki-laki dan perempuan.
+  </p>
+
+  <p><strong>Langkah-Langkah Penghitungan:</strong>
+    1. Tentukan hipotesis nol (H₀) dan hipotesis alternatif (H₁).<br>
+    2. Hitung frekuensi yang diharapkan (E) untuk setiap kategori.<br>
+    3. Hitung nilai chi-square (χ²) dengan rumus: 
+    <br>
+    <em>χ² = Σ [(O - E)² / E]</em>, di mana O adalah frekuensi yang diamati dan E adalah frekuensi yang diharapkan.<br>
+    4. Tentukan derajat kebebasan (df), yaitu (k - 1) untuk <em>Goodness of Fit</em> dan (r - 1)(c - 1) untuk <em>Homogeneity</em>.<br>
+    5. Bandingkan nilai χ² yang dihitung dengan nilai χ² tabel untuk menentukan apakah hipotesis nol dapat ditolak.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Tidak memerlukan asumsi distribusi normal.<br>
+    &bullet; Dapat digunakan untuk data kategorikal.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Memerlukan ukuran sampel yang cukup besar agar hasil uji dapat dipercaya.<br>
+    &bullet; Tidak cocok untuk kategori dengan frekuensi yang sangat rendah (<5).
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Agresti, A. (2007). <em>An Introduction to Categorical Data Analysis</em>. Wiley-Interscience.<br>
+    &bullet; Everett, B. (2015). <em>Practical Statistics for Data Scientists</em>. O'Reilly Media.
+  </p>
+</details>
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745560294/Picture10_gu2uwj.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>p = proporsi yang diharapkan dalam kategori.</li>
+    <li>Δ = margin kesalahan yang diinginkan.</li>
+    <li>Z = skor Z untuk tingkat kepercayaan (misalnya, 1.96 untuk 95% confidence level).</li>
+  </ul>
+  <a href="sample_chisquare.html" class="btn-link">Hitung Sampel</a>
+
+</div>
+<!-- CARD: Perhitungan Sampel untuk Varians (Single Variance) -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Varians (Single Variance)</h3>
+  <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Digunakan untuk menentukan ukuran sampel yang diperlukan saat kita ingin memperkirakan <em>varians populasi</em> dengan tingkat kepercayaan tertentu. Ini sering digunakan dalam uji statistik yang berkaitan dengan sebaran atau variabilitas data dalam sebuah populasi tunggal.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Sebuah perusahaan ingin memperkirakan varians waktu yang dibutuhkan pelanggan untuk melakukan pembelian. Mereka menginginkan margin kesalahan tidak lebih dari 5 detik, dengan tingkat kepercayaan 95%. Perusahaan tersebut harus menghitung ukuran sampel yang diperlukan berdasarkan varians yang telah diketahui dari data sampel awal.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Memungkinkan penentuan ukuran sampel yang diperlukan untuk memperkirakan varians dengan presisi yang tinggi.<br>
+    &bullet; Berguna dalam penelitian yang melibatkan data numerik yang sangat bervariasi.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Memerlukan estimasi awal dari varians populasi yang dapat mempengaruhi akurasi hasil.<br>
+    &bullet; Asumsi normalitas sangat penting untuk perhitungan yang tepat.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.<br>
+    &bullet; Kish, L. (1965). <em>Sociological Methodology</em>. John Wiley & Sons.
+  </p>
+</details>
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745560618/Picture11_rxw8gw.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>Z = Skor Z yang digunakan berdasarkan tingkat kepercayaan (misalnya 1.96 untuk 95% confidence level).</li>
+    <li>E = Margin kesalahan atau batas ketepatan yang diinginkan.</li>
+    <li>σ2 = Varians populasi atau sampel.</li>
+  </ul>
+  <a href="sample_varian_tunggal.html" class="btn-link">Hitung Sampel</a>
+
+</div>
+<!-- CARD: Perhitungan Sampel untuk Penelitian Eksperimental (Randomized Controlled Trial / RCT) -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel untuk Penelitian Eksperimental (Randomized Controlled Trial / RCT)</h3>
+  <h4>Formula 1. Jika berbasis perbandingan dua proporsi:</h4>
+  <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Digunakan ketika peneliti ingin membandingkan dua proporsi kejadian antara dua kelompok dalam penelitian eksperimen, seperti RCT (Randomized Controlled Trial). Ini sering digunakan untuk mengukur efektivitas pengobatan atau intervensi dengan membandingkan dua grup, misalnya grup yang diberi perlakuan dan grup kontrol.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Sebuah penelitian ingin mengetahui apakah obat A lebih efektif daripada obat B dalam mengurangi kejadian penyakit X. Dari uji coba sebelumnya, proporsi kejadian penyakit X pada grup obat A adalah 30% (P1 = 0.30), dan pada grup obat B adalah 50% (P2 = 0.50). Diketahui tingkat signifikansi 5% (Zα/2 = 1.96) dan kekuatan uji 80% (Zβ = 0.84).
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Memungkinkan penilaian yang kuat terhadap perbedaan antara dua grup dalam penelitian eksperimental.<br>
+    &bullet; Cocok untuk eksperimen dengan dua intervensi atau dua kelompok yang berbeda.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Membutuhkan asumsi proporsi yang dapat dihitung dengan baik di populasi.<br>
+    &bullet; Tidak cocok jika data tidak dapat dipasangkan atau kelompok tidak independen.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Freedman, L. S., Pisani, R., & Purves, R. (2007). <em>Statistics: The Art and Science of Learning from Data</em>. Pearson.<br>
+    &bullet; Piantadosi, S. (2017). <em>Clinical Trials: A Methodologic Perspective</em> (2nd ed.). Wiley-Interscience.
+  </p>
+</details>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745588843/Picture12_eyekzb.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>p1,p2 = proporsi keberhasilan pada masing-masing kelompok.</li>
+    <li>p = (p1+p2)/2.</li>
+    <li>Zα/2 = skor Z sesuai tingkat signifikansi (misalnya 1.96 untuk 95%).</li>
+    <li>Zβ = skor Z sesuai kekuatan uji yang diinginkan (misalnya 0.84 untuk 80%).</li>
+  <a href="sample_rct1.html" class="btn-link">Hitung Sampel</a>
+
+  <h4>Formula 2. Jika berbasis perbandingan dua rata-rata:</h4>
+   <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong> 
+    Rumus ini digunakan dalam penelitian eksperimental, khususnya untuk desain penelitian dengan dua kelompok yang diberikan perlakuan berbeda. Dalam konteks <i>Randomized Controlled Trial (RCT)</i>, rumus ini digunakan untuk menentukan jumlah sampel yang dibutuhkan untuk membandingkan dua rata-rata kelompok yang diacak.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong> 
+    Sebuah RCT dilakukan untuk menguji efektivitas dua jenis obat terhadap penurunan tekanan darah. Kelompok 1 diberikan obat A dan kelompok 2 diberikan obat B. Peneliti ingin mengetahui perbedaan rata-rata tekanan darah antara kedua kelompok dengan tingkat signifikansi 5% dan kekuatan uji 80%. Varians pada masing-masing kelompok diketahui, dan perbedaan rata-rata yang dianggap signifikan adalah 10 mmHg.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Menyediakan pembanding yang jelas antara dua kelompok perlakuan yang berbeda dalam uji klinis.<br>
+    &bullet; Sesuai untuk desain penelitian terkontrol dengan acakan.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Memerlukan varians populasi yang dapat diperkirakan atau diestimasi dari sampel.<br>
+    &bullet; Asumsi bahwa varians di kedua kelompok adalah homogen (sama) terkadang sulit dipenuhi.
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Piantadosi, S. (2005). <em>Clinical Trials: A Methodologic Perspective</em> (2nd ed.). Wiley-Interscience.<br>
+    &bullet; Machin, D., Campbell, M. J., & Tan, S. B. (2011). <em>Sample Sizes for Clinical, Epidemiological, and Social Research</em> (2nd ed.). Wiley.
+  </p>
+</details>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1745588920/Picture14_se16kr.png" alt="Rumus Slovin" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>σ2 = varians dari pengukuran (asumsi sama untuk kedua kelompok).</li>
+    <li> Δ = perbedaan rata-rata yang dianggap signifikan secara klinis.</li>
+    <li>Zα/2 = skor Z sesuai tingkat signifikansi (misalnya 1.96 untuk 95%).</li>
+    <li>Zβ = skor Z sesuai kekuatan uji yang diinginkan (misalnya 0.84 untuk 80%).</li>
+  </ul>
+  <a href="sample_rct2.html" class="btn-link">Hitung Sampel</a>
+  
+</div>
+
+<!-- CARD: Perhitungan Sampel Krejcie-Morgan -->
+<div class="feature">
+  <h3>🎛️ Perhitungan Sampel Krejcie-Morgan</h3>
+  <details class="accordion-box">
+  <summary>🔍 Penjelasan Lengkap</summary>
+  <p><strong>Kapan Digunakan:</strong>
+    Rumus Krejcie-Morgan digunakan untuk menentukan ukuran sampel yang dibutuhkan berdasarkan jumlah populasi yang diketahui secara pasti. Cocok untuk penelitian survei atau kuantitatif dengan populasi terbatas, dan mempertimbangkan tingkat kepercayaan serta margin of error.
+  </p>
+
+  <p><strong>Contoh Penerapan (Studi Kasus):</strong>
+    Jika seorang peneliti ingin meneliti persepsi guru di sebuah kota dengan populasi 500 orang, dan menginginkan tingkat kepercayaan 95% serta margin of error 5%, maka rumus Krejcie-Morgan dapat digunakan untuk menentukan jumlah responden yang representatif.
+  </p>
+
+  <p><strong>Kelebihan dan Kelemahan:</strong><br>
+    ✅ <u>Kelebihan:</u><br>
+    &bullet; Tidak memerlukan nilai standar deviasi populasi.<br>
+    &bullet; Praktis dan cepat digunakan, terutama jika dibantu tabel Krejcie-Morgan.<br><br>
+    ❌ <u>Kelemahan:</u><br>
+    &bullet; Tidak fleksibel untuk margin of error dan tingkat kepercayaan yang berbeda dari standar.<br>
+    &bullet; Kurang akurat untuk populasi yang sangat besar atau sangat kecil (karena asumsi umum proporsi).
+  </p>
+
+  <p><strong>Referensi:</strong><br>
+    &bullet; Krejcie, R. V., & Morgan, D. W. (1970). Determining Sample Size for Research Activities. <em>Educational and Psychological Measurement, 30</em>(3), 607–610.<br>
+    &bullet; Israel, G. D. (1992). <em>Determining Sample Size</em>. University of Florida IFAS Extension.
+  </p>
+</details>
+  <h4>Formula:</h4>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1746282048/Picture13_fuft1o.png" alt="Rumus Krejcie-Morgan" style="display: block; margin: 0.5rem 0;" />
+  <strong>Di mana:</strong>
+  <ul>
+    <li>S = ukuran sampel.</li>
+    <li>X² = nilai chi-square pada df = 1 dan tingkat signifikansi 0.05 (biasanya 3.841).</li>
+    <li>N = jumlah populasi.</li>
+    <li>P = proporsi populasi (umumnya diasumsikan 0.5).</li>
+    <li>d = margin of error yang dapat diterima (umumnya 0.05).</li>
+  </ul>
+  <a href="sample_krejcie_morgan.html" class="btn-link">Hitung Sampel</a>
+</div>
+</div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <hr class="my-3 text-white-50">
+      <div class="text-center">
+        <p class="mb-0">© 2026 PT Primajana Bagia Mesari</p>
+      </div>
+    </div>
+  </footer>
+
+<a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana%20Center,%20saya%20tertarik%20dengan%20layanan%20Anda." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Hubungi Kami via WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
