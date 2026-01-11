@@ -551,6 +551,24 @@
   50%{transform:scale(1.1)}
 }
 
+.rating-stars{
+  display:flex;
+  gap:4px;
+  margin-bottom:12px;
+  justify-content:center;
+  color:#fbbf24;
+  animation: starGlow 2.5s ease-in-out infinite;
+}
+
+.rating-stars i{
+  font-size:0.95rem;
+  text-shadow:0 0 6px rgba(251,191,36,.6);
+}
+
+@keyframes starGlow{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+}
 
   </style>
 </head>
@@ -1150,55 +1168,88 @@
 
     <div class="row g-4">
 
+      <!-- Testimoni 1 -->
       <div class="col-md-4">
         <div class="testimonial-card">
           <div class="testimonial-icon">
             <i class="fa-solid fa-award"></i>
           </div>
+
+          <div class="rating-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+
           <p class="testimonial-text">
-            "Esai lomba saya tembus nasional. Prosesnya cepat dan hasilnya sangat profesional."
+            "Suka banget sama layanan Primajana, detail sama kreatif PPT-nya. Enak banget buat dipresentasiin."
           </p>
+
           <div class="testimonial-user">
             <span class="avatar-circle">A</span>
             <div>
               <strong>Alya</strong><br>
-              <small>Mahasiswa – Bandung</small>
+              <small>Rating 5.0</small>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Testimoni 2 -->
       <div class="col-md-4">
         <div class="testimonial-card">
           <div class="testimonial-icon">
             <i class="fa-solid fa-graduation-cap"></i>
           </div>
+
+          <div class="rating-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star-half-stroke"></i>
+          </div>
+
           <p class="testimonial-text">
-            "Penelitian saya selesai tepat waktu. Revisi jelas dan komunikasi sangat nyaman."
+            "Terima kasih Primajana, saya bisa keterima kerja karena order layanan CV dari Primajana"
           </p>
+
           <div class="testimonial-user">
             <span class="avatar-circle">R</span>
             <div>
               <strong>Rizki</strong><br>
-              <small>Fresh Graduate</small>
+              <small>Rating 4.5</small>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Testimoni 3 -->
       <div class="col-md-4">
         <div class="testimonial-card">
           <div class="testimonial-icon">
             <i class="fa-solid fa-lightbulb"></i>
           </div>
+
+          <div class="rating-stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star-half-stroke"></i>
+          </div>
+
           <p class="testimonial-text">
-            "Proposal pendanaan kami lolos. Sangat membantu untuk tim riset kampus."
+            "Tidak usah diragukan, tim di sini profesional dan berpengalaman banget hasil kerjanya"
           </p>
+
           <div class="testimonial-user">
             <span class="avatar-circle">D</span>
             <div>
               <strong>Dewi</strong><br>
-              <small>Dosen</small>
+              <small>Rating 4.5</small>
             </div>
           </div>
         </div>
@@ -1207,7 +1258,6 @@
     </div>
   </div>
 </section>
-
 
 
   <footer class="footer">
