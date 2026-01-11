@@ -83,6 +83,16 @@
   background-color: #388e3c;
 }
 
+.locked-page {
+  pointer-events: none;
+  user-select: none;
+  filter: blur(4px) grayscale(0.6);
+}
+
+body.lock-scroll {
+  overflow: hidden;
+}
+
 </style>
 <body class="bg-white text-gray-800 p-6 flex flex-col min-h-screen">
   <div class="max-w-4xl mx-auto space-y-6 flex-grow" id="printable">
@@ -137,21 +147,20 @@
     © 2025 PT Primajana Bagia Mesari
   </footer>
   
-<!-- POPUP MODAL -->
+<!-- POPUP CTA SUBSCRIPTION -->
 <div class="popup-overlay" id="popup-access">
   <div class="popup-box">
-    <h2>Akses Premium</h2>
+    <h2>🚀 Yuk Mulai Berlangganan Primajana</h2>
     <p>
-      Ingin membuka seluruh fitur ini? Yuk mulai berlangganan sekarang.<br>
-      Jika Anda sudah memiliki kode akses, masukkan di bawah ini:
+      Dapatkan akses premium ke seluruh fitur Primajana.<br>
+      Mulai dari <b>Rp 19.000 / bulan</b> saja!
     </p>
-    <input type="text" id="access-code" placeholder="Masukkan Kode Akses" />
-    <div>
-      <button class="btn-akses" onclick="checkAccess()">Gunakan Kode</button>
-      <button class="btn-premium" onclick="window.location.href='https://lynk.id/primajanaedu/2q46wjnpngky/checkout'">Berlangganan Sekarang</button>
-    </div>
+    <button class="btn-premium" onclick="startSubscribe()">
+      💎 Mulai Berlangganan
+    </button>
   </div>
 </div>
+
 
   <script>
     let csvData = {};
@@ -342,27 +351,33 @@
 }
   </script>
   
-  <script>
-  window.addEventListener('load', () => {
-    const alreadyAccessed = sessionStorage.getItem("hasAccess");
-    if (!alreadyAccessed) {
-      setTimeout(() => {
-        document.getElementById('popup-access').style.display = 'flex';
-      }, 20000); // 20 detik setelah halaman dimuat
-    }
-  });
+<script>
+let locked = false;
 
-  function checkAccess() {
-    const code = document.getElementById('access-code').value.trim();
-    const validCode = "8188"; // Ganti sesuai kebutuhan
-    if (code === validCode) {
-      sessionStorage.setItem("hasAccess", "true");
-      document.getElementById('popup-access').style.display = 'none';
-    } else {
-      alert("Kode akses salah. Silakan coba lagi.");
-    }
+function lockPage(){
+  if(locked) return;
+  locked = true;
+
+  document.getElementById("popup-access").style.display = "flex";
+  document.getElementById("captureArea").classList.add("locked-page");
+  document.body.classList.add("lock-scroll");
+
+  sessionStorage.setItem("premiumLocked", "true");
+}
+
+function startSubscribe(){
+  window.location.href = "https://primajana.com/premium/login.html";
+}
+
+window.addEventListener("load", () => {
+  if(sessionStorage.getItem("premiumLocked")==="true"){
+    lockPage();
+  } else {
+    setTimeout(lockPage, 10000); // 10 detik
   }
+});
 </script>
+
 
 </body>
 </html>
