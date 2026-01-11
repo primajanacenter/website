@@ -1017,12 +1017,12 @@ const params = new URLSearchParams(window.location.search);
 const isEmbedded = params.get("embedded") === "1";
 
 // cek login
-const { data:{ session } } = await supabase.auth.getSession();
-if(!session){
-  if(!isEmbedded){
-    location.href="login.html";
-  }
+if (window.self !== window.top) {
+  console.warn("Embedded mode - redirect dibatalkan");
+} else {
+  location.href = "login.html";
 }
+
 
 // cek status premium
 const { data } = await supabase.from("subscriptions").select("active").single();
