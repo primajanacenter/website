@@ -121,11 +121,11 @@ async function init(){
   let { data } = await supabase.from("subscriptions").select("*").maybeSingle();
 
   if(!data){
-    await supabase.from("subscriptions").insert([
-      { id: session.user.id, active: false }
-    ]);
-    return location.reload();
-  }
+  document.getElementById("substatus").innerText = "TIDAK AKTIF";
+  document.getElementById("payBtn").style.display="inline-block";
+  return;
+}
+
 
   const substatus = document.getElementById("substatus");
   const countdown = document.getElementById("countdown");
