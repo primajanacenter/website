@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Peta Choropleth Indonesia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+<body class="bg-gray-100 flex flex-col items-center">
+  <div class="container max-w-5xl w-full p-6 mt-10 bg-white shadow-lg rounded-lg">
+    <h2 class="text-2xl text-center font-semibold text-gray-800 mb-4">Upload CSV dan Tampilkan Peta Choropleth</h2>
+    <input type="file" id="csvFile" accept=".csv" class="px-4 py-2 border rounded-lg mb-4 w-full bg-gray-100" />
+    <div id="status" class="text-gray-600 mb-4">Silakan upload file CSV berisi data latitude, longitude, dan variabel numerik.</div>
+    
+    <div class="mb-4">
+      <label for="geojsonLevel" class="block text-gray-700 font-semibold mb-1">Pilih Level Wilayah:</label>
+      <select id="geojsonLevel" class="w-full bg-gray-100 border px-2 py-1 rounded">
+        <option value="provinsi">Provinsi</option>
+        <option value="kabupaten">Kabupaten</option>
+        <option value="kecamatan">Kecamatan (unggah manual)</option>
+      </select>
+    </div>
+
+    <div class="mb-4">
+      <label for="geojsonFile" class="block text-gray-700 font-semibold mb-1">Unggah GeoJSON Tambahan (opsional):</label>
+      <input type="file" id="geojsonFile" accept=".geojson" class="w-full bg-gray-100 border px-2 py-1 rounded" />
+    </div>
+
+    <div id="filterContainer" class="mb-4 hidden">
+      <label for="filterSelect" class="block text-gray-700 font-semibold mb-1">Pilih Kolom Filter (opsional):</label>
+      <select id="filterSelect" class="w-full bg-gray-100 border px-2 py-1 rounded"></select>
+    </div>
+
+    <div id="valueContainer" class="mb-4 hidden">
+      <label for="valueSelect" class="block text-gray-700 font-semibold mb-1">Pilih Nilai Filter:</label>
+      <select id="valueSelect" class="w-full bg-gray-100 border px-2 py-1 rounded"></select>
+    </div>
+
+    <div id="dependentContainer" class="mb-4 hidden">
+      <label for="dependentSelect" class="block text-gray-700 font-semibold mb-1">Pilih Variabel Numerik:</label>
+      <select id="dependentSelect" class="w-full bg-gray-100 border px-2 py-1 rounded"></select>
+    </div>
+
+    <button id="showMapBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 w-full mb-2" disabled>
+      Tampilkan Peta & Interpretasi
+    </button>
+
+    <div id="interpretationBox" class="mt-6 hidden">
+      <h3 class="text-xl font-semibold text-gray-700">Interpretasi:</h3>
+      <div id="interpretation" class="mt-2 bg-blue-50 p-4 rounded text-sm"></div>
+    </div>
+
+    <div id="map" class="mt-6 rounded-lg border" style="height: 500px;"></div>
+  </div>
+  <footer class="text-sm text-gray-500 text-center mt-10">&copy; 2025 PT Primajana Bagia Mesari</footer>
+
+  <script>
+    const map = L.map('map').setView([-2.5, 118], 5);
+    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    let parsedData = [], geojsonData = null, geojsonLayer = null;
+
+    function getColor(value, min, max) {
+      const ratio = (value - min) / (max - min);
+      const hue = ((1 - ratio) * 240).toString(10);
+      return `hsl(${hue}, 100%, 50%)`;
+    }
+
+    function updateLegend(min, max) {
+      if (window.legendControl) map.removeControl(window.legendControl);
+      window.legendControl = L.control({ position: 'bottomright' });
+      window.legendControl.onAdd = function () {
+        const div = L.DomUtil.create('div', 'info legend bg-white p-2 rounded shadow');
+        div.innerHTML = '<strong>Legenda:</strong><br>';
+        const grades = 5;
+        for (let i = 0; i <= grades; i++) {
+          const value = min + (i * (max - min) / grades);
+          const color = getColor(value, min, max);
+          div.innerHTML += `<i style="background:${color}; width:12px; height:12px; display:inline-block; margin-right:8px; border-radius:50%;"></i>${value.toFixed(2)}<br>`;
+        }
+        return div;
+      };
+      window.legendControl.addTo(map);
+    }
+
+    function plotChoropleth(data, depCol) {
+  if (geojsonLayer) map.removeLayer(geojsonLayer);
+
+  const level = document.getElementById('geojsonLevel').value;
+  const regionKey = level;
+
+  const regionValues = {};
+  data.forEach(row => {
+    const region = row[regionKey];
+    const value = parseFloat(row[depCol]);
+    if (!isNaN(value)) {
+      if (!regionValues[region]) regionValues[region] = [];
+      regionValues[region].push(value);
+    }
+  });
+
+  console.log("Region values:", regionValues);  // Debugging output
+
+  const regionStats = {};
+  for (const region in regionValues) {
+    const values = regionValues[region];
+    const sum = values.reduce((a, b) => a + b, 0);
+    regionStats[region] = sum / values.length;
+  }
+
+  const values = Object.values(regionStats);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+
+  console.log("Region stats:", regionStats);  // Debugging output
+
+  geojsonLayer = L.geoJson(geojsonData, {
+    style: function (feature) {
+      const name = feature.properties.NAME_1 || feature.properties.NAME_2 || feature.properties.NAME_3;
+      const value = regionStats[name];
+      console.log("Feature name and value:", name, value);  // Debugging output
+      return {
+        fillColor: value !== undefined ? getColor(value, min, max) : '#ccc',
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        fillOpacity: 0.7
+      };
+    },
+    onEachFeature: function (feature, layer) {
+      const name = feature.properties.NAME_1 || feature.properties.NAME_2 || feature.properties.NAME_3;
+      const value = regionStats[name];
+      layer.bindPopup(`<strong>${name}</strong><br>${value ? value.toFixed(2) : 'Data tidak tersedia'}`);
+    }
+  }).addTo(map);
+
+  updateLegend(min, max);
+}
+
+
+    function updateInterpretation(data, depCol) {
+      const values = data.map(row => parseFloat(row[depCol])).filter(v => !isNaN(v));
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const avg = values.reduce((sum, v) => sum + v, 0) / values.length;
+      document.getElementById('interpretation').innerHTML = `
+        <strong>Minimum:</strong> ${min.toFixed(2)}<br>
+        <strong>Maksimum:</strong> ${max.toFixed(2)}<br>
+        <strong>Rata-rata:</strong> ${avg.toFixed(2)}
+      `;
+      document.getElementById('interpretationBox').style.display = 'block';
+    }
+
+    function populateDependentSelect(columns) {
+      const select = document.getElementById('dependentSelect');
+      select.innerHTML = '';
+      columns.forEach(col => {
+        const option = document.createElement('option');
+        option.value = col;
+        option.textContent = col;
+        select.appendChild(option);
+      });
+    }
+
+    function populateFilterOptions(headers) {
+      const select = document.getElementById('filterSelect');
+      select.innerHTML = '<option value="">(Tanpa Filter)</option>';
+      headers.forEach(col => {
+        const option = document.createElement('option');
+        option.value = col;
+        option.textContent = col;
+        select.appendChild(option);
+      });
+    }
+
+    function updateFilterValues(column) {
+      const uniqueValues = [...new Set(parsedData.map(row => row[column]))];
+      const valueSelect = document.getElementById('valueSelect');
+      valueSelect.innerHTML = '';
+      uniqueValues.forEach(val => {
+        const option = document.createElement('option');
+        option.value = val;
+        option.textContent = val;
+        valueSelect.appendChild(option);
+      });
+      document.getElementById('valueContainer').classList.remove('hidden');
+    }
+
+    document.getElementById('csvFile').addEventListener('change', e => {
+      Papa.parse(e.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          parsedData = results.data;
+          const headers = Object.keys(parsedData[0]);
+
+          let level = null;
+          if (headers.includes('kecamatan')) level = 'kecamatan';
+          else if (headers.includes('kabupaten')) level = 'kabupaten';
+          else if (headers.includes('provinsi')) level = 'provinsi';
+
+          if (level) {
+            document.getElementById('geojsonLevel').value = level;
+            document.getElementById('geojsonLevel').disabled = true;
+            document.getElementById('geojsonFile').disabled = (level !== 'kecamatan');
+
+            const geojsonURL = level === 'provinsi'
+              ? 'https://raw.githubusercontent.com/superpikar/indonesia-geojson/master/provinces.json'
+              : 'https://raw.githubusercontent.com/superpikar/indonesia-geojson/master/regencies.json';
+
+            if (level !== 'kecamatan') {
+              fetch(geojsonURL).then(res => res.json()).then(data => geojsonData = data);
+            }
+          }
+
+          const numericColumns = headers.filter(col => {
+            return parsedData.every(row => {
+              const val = row[col];
+              return val === null || val === '' || !isNaN(parseFloat(val));
+            }) && parsedData.some(row => !isNaN(parseFloat(row[col])));
+          });
+
+          populateDependentSelect(numericColumns);
+          populateFilterOptions(headers);
+
+          document.getElementById('dependentContainer').classList.remove('hidden');
+          document.getElementById('filterContainer').classList.remove('hidden');
+          document.getElementById('showMapBtn').disabled = false;
+        }
+      });
+    });
+
+    document.getElementById('filterSelect').addEventListener('change', e => {
+      const col = e.target.value;
+      if (col) {
+        updateFilterValues(col);
+      } else {
+        document.getElementById('valueContainer').classList.add('hidden');
+      }
+    });
+
+    document.getElementById('geojsonFile').addEventListener('change', e => {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        geojsonData = JSON.parse(event.target.result);
+      };
+      reader.readAsText(e.target.files[0]);
+    });
+
+    document.getElementById('showMapBtn').addEventListener('click', () => {
+      let filtered = parsedData;
+      const filterCol = document.getElementById('filterSelect').value;
+      const filterVal = document.getElementById('valueSelect').value;
+      if (filterCol && filterVal) {
+        filtered = parsedData.filter(row => row[filterCol] === filterVal);
+      }
+      const depCol = document.getElementById('dependentSelect').value;
+      if (filtered.length > 0 && depCol) {
+        plotChoropleth(filtered, depCol);
+        updateInterpretation(filtered, depCol);
+      }
+    });
+
+    fetch('https://raw.githubusercontent.com/superpikar/indonesia-geojson/master/provinces.json')
+      .then(res => res.json())
+      .then(data => geojsonData = data);
+  </script>
+</body>
+</html>

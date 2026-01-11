@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> Uji Kendall’s Tau dengan Trendline</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a2d0c8e163.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.4/jstat.min.js"></script>
+</head>
+<style>.popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.popup-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.popup-box h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.popup-box p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.popup-box input {
+  box-sizing: border-box;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 100%;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  margin: 1.2rem 0;
+  font-size: 1rem;
+  outline: none;
+}
+
+.popup-box button {
+  margin: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-akses {
+  background-color: #f97316;
+  color: white;
+}
+
+.btn-akses:hover {
+  background-color: #c2410c;
+}
+
+.btn-premium {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-premium:hover {
+  background-color: #388e3c;
+}
+
+.locked-page {
+  pointer-events: none;
+  user-select: none;
+  filter: blur(4px) grayscale(0.6);
+}
+
+body.lock-scroll {
+  overflow: hidden;
+}
+
+
+</style>
+<body class="bg-white text-gray-800 p-6 flex flex-col min-h-screen">
+
+  <div class="max-w-5xl mx-auto flex-grow space-y-6" id="mainContainer">
+    <h1 class="text-3xl font-bold text-center mb-6">📊 Analisis Kendall’s Tau dengan Trendline</h1>
+
+    <!-- Upload Section -->
+    <div class="bg-gray-50 p-6 rounded-xl shadow space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1">Upload CSV:</label>
+        <input type="file" id="csvFile" accept=".csv" class="w-full border rounded px-3 py-2" onchange="handleCSVUpload(event)"/>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Pilih Variabel 1:</label>
+          <select id="columnA" class="w-full border rounded px-3 py-2" disabled></select>
+          <small class="text-gray-500">*Pilih variabel ordinal</small>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Pilih Variabel 2:</label>
+          <select id="columnB" class="w-full border rounded px-3 py-2" disabled></select>
+          <small class="text-gray-500">*Pilih variabel ordinal</small>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button id="prosesBtn" onclick="prosesAnalisis()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50" disabled>
+          <i class="fa-solid fa-magnifying-glass-chart mr-2"></i>Proses Analisis
+        </button>
+      </div>
+    </div>
+
+    <!-- Output Section -->
+    <div id="outputSection" class="bg-white rounded-xl shadow p-6 space-y-6 mt-6">
+      <div id="hasil"></div>
+
+      <div id="chartsContainer" class="relative min-h-[400px]"></div>
+
+      <div id="downloadSection" class="text-center mt-6">
+        <button id="downloadBtn" onclick="downloadAsPNG()" class="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700 disabled:opacity-50" disabled>
+          Download PNG
+        </button>
+        <div id="loadingDownload" class="hidden text-sm text-gray-600 mt-2">Mengunduh...</div>
+      </div>
+
+      <!-- Footer -->
+      <div id="footer" class="text-center text-sm text-gray-500 mt-12 pt-6 border-t">
+        © 2025 PT Primajana Bagia Mesari
+      </div>
+
+    </div>
+  </div>
+<!-- POPUP CTA SUBSCRIPTION -->
+<div class="popup-overlay" id="popup-access">
+  <div class="popup-box">
+    <h2>🚀 Yuk Mulai Berlangganan Primajana</h2>
+    <p>
+      Dapatkan akses premium ke seluruh fitur Primajana.<br>
+      Mulai dari <b>Rp 19.000 / bulan</b> saja!
+    </p>
+    <button class="btn-premium" onclick="startSubscribe()">
+      💎 Mulai Berlangganan
+    </button>
+  </div>
+</div>
+
+
+
+  <script>
+    let csvData = {};
+    let groupA = [], groupB = [];
+    let chartInstance = null;
+
+    function handleCSVUpload(event) {
+      resetOutput();
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const lines = e.target.result.split(/\r?\n/);
+        const delimiter = detectDelimiter(lines[0]);
+        const headers = lines[0].split(delimiter);
+
+        csvData = {};
+        headers.forEach(h => csvData[h] = []);
+
+        for (let i = 1; i < lines.length; i++) {
+          const values = lines[i].split(delimiter);
+          headers.forEach((h, idx) => {
+            const num = parseFloat(values[idx]);
+            if (!isNaN(num)) csvData[h].push(num);
+          });
+        }
+
+        document.getElementById("columnA").innerHTML = headers.map(h => `<option value="${h}">${h}</option>`).join('');
+        document.getElementById("columnB").innerHTML = headers.map(h => `<option value="${h}">${h}</option>`).join('');
+        document.getElementById("columnA").disabled = false;
+        document.getElementById("columnB").disabled = false;
+        document.getElementById("prosesBtn").disabled = false;
+      };
+      reader.readAsText(file);
+    }
+
+    function resetOutput() {
+      document.getElementById("hasil").innerHTML = "";
+      document.getElementById("chartsContainer").innerHTML = "";
+      if (chartInstance) chartInstance.destroy();
+      document.getElementById("downloadBtn").disabled = true;
+    }
+
+    function detectDelimiter(firstLine) {
+      if (firstLine.indexOf(',') > -1) return ',';
+      if (firstLine.indexOf(';') > -1) return ';';
+      return '\t';
+    }
+
+    function prosesAnalisis() {
+      const colA = document.getElementById("columnA").value;
+      const colB = document.getElementById("columnB").value;
+      if (!colA || !colB) return;
+
+      groupA = csvData[colA] || [];
+      groupB = csvData[colB] || [];
+
+      if (groupA.length < 2 || groupB.length < 2) {
+        alert('Masing-masing grup harus memiliki minimal 2 data ordinal!');
+        return;
+      }
+
+      const kendallResult = kendallTau(groupA, groupB);
+
+      let interpretation = kendallResult.pValue < 0.05 
+        ? `Terdapat korelasi signifikan antara Variabel 1 dan Variabel 2 (τ = ${kendallResult.tau.toFixed(2)}, p = ${kendallResult.pValue.toFixed(4)}).`
+        : `Tidak terdapat korelasi signifikan antara Variabel 1 dan Variabel 2 (τ = ${kendallResult.tau.toFixed(2)}, p = ${kendallResult.pValue.toFixed(4)}).`;
+
+      document.getElementById("hasil").innerHTML = `
+        <h3 class="text-lg font-semibold mb-4">Hasil Analisis Kendall's Tau</h3>
+        <div class="space-y-2">
+          <p><b>Korelasi Kendall's Tau (τ):</b> ${kendallResult.tau.toFixed(2)}</p>
+          <p><b>p-Value:</b> ${kendallResult.pValue.toFixed(4)}</p>
+          <p class="mt-2">${interpretation}</p>
+        </div>
+      `;
+
+      generateChart();
+      document.getElementById("downloadBtn").disabled = false;
+    }
+
+    function kendallTau(x, y) {
+      const n = x.length;
+      let concordant = 0, discordant = 0, tied = 0;
+
+      for (let i = 0; i < n - 1; i++) {
+        for (let j = i + 1; j < n; j++) {
+          const xi = x[i], yi = y[i];
+          const xj = x[j], yj = y[j];
+          
+          if (xi === xj || yi === yj) tied++;
+          else if ((xi - xj) * (yi - yj) > 0) concordant++;
+          else discordant++;
+        }
+      }
+
+      const tau = (concordant - discordant) / Math.sqrt((concordant + discordant + tied) * (concordant + discordant));
+      const pValue = 2 * (1 - jStat.studentt.cdf(Math.abs(tau), n - 2));
+
+      return { tau, pValue };
+    }
+
+    function generateChart() {
+      const ctxId = "chartCanvas";
+      document.getElementById("chartsContainer").innerHTML = `<canvas id="${ctxId}"></canvas>`;
+      const ctx = document.getElementById(ctxId).getContext('2d');
+      if (chartInstance) chartInstance.destroy();
+
+      // Menghitung koefisien regresi linier (trendline)
+      const trendlineData = calculateTrendline(groupA, groupB);
+
+      chartInstance = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+          datasets: [{
+            label: 'Hubungan Variabel 1 dan 2',
+            data: groupA.map((value, index) => ({ x: value, y: groupB[index] })),
+            backgroundColor: '#4FD1C5',
+            borderColor: '#4FD1C5',
+            borderWidth: 2,
+            pointRadius: 5
+          }, {
+            label: 'Trendline',
+            data: trendlineData,
+            borderColor: '#FF6347',
+            borderWidth: 2,
+            fill: false,
+            pointRadius: 0,
+            type: 'line',  // Penting: Tentukan ini agar Trendline digambar dengan tipe 'line'
+            lineTension: 0,  // Mengatur untuk membuat garis lurus
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: true }
+          },
+          scales: {
+            x: { title: { display: true, text: 'Variabel 1' } },
+            y: { title: { display: true, text: 'Variabel 2' } }
+          }
+        }
+      });
+    }
+
+    function calculateTrendline(x, y) {
+      const n = x.length;
+      const sumX = x.reduce((acc, val) => acc + val, 0);
+      const sumY = y.reduce((acc, val) => acc + val, 0);
+      const sumXY = x.reduce((acc, val, idx) => acc + val * y[idx], 0);
+      const sumX2 = x.reduce((acc, val) => acc + val * val, 0);
+
+      const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+      const intercept = (sumY - slope * sumX) / n;
+
+      return x.map(val => ({ x: val, y: slope * val + intercept }));
+    }
+
+    function downloadAsPNG() {
+      const downloadBtn = document.getElementById("downloadBtn");
+      const loading = document.getElementById("loadingDownload");
+      loading.classList.remove('hidden');
+      downloadBtn.disabled = true;
+
+      const outputSection = document.getElementById("outputSection");
+      html2canvas(outputSection, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'hasil_kendalls_tau_with_trendline.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        loading.classList.add('hidden');
+        downloadBtn.disabled = false;
+      });
+    }
+
+<script>
+let locked = false;
+
+function lockPage(){
+  if(locked) return;
+  locked = true;
+
+  document.getElementById("popup-access").style.display = "flex";
+  document.getElementById("captureArea").classList.add("locked-page");
+  document.body.classList.add("lock-scroll");
+
+  sessionStorage.setItem("premiumLocked", "true");
+}
+
+function startSubscribe(){
+  window.location.href = "https://primajana.com/premium/login.html";
+}
+
+window.addEventListener("load", () => {
+  if(sessionStorage.getItem("premiumLocked")==="true"){
+    lockPage();
+  } else {
+    setTimeout(lockPage, 10000); // 10 detik
+  }
+});
+</script>
+
+
+</body>
+</html>

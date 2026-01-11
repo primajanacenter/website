@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analisis Klasifikasi</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f9f9f9;
+    }
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label, select {
+      display: block;
+      margin: 0.5rem 0;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #3f51b5;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #303f9f;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      background: #eee;
+    }
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      cursor: help;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 220px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -110px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+<main id="content">
+  <h2>Analisis Klasifikasi</h2>
+  <input type="file" id="csvInput" accept=".csv" />
+  <div id="selectors"></div>
+  <button onclick="analyze()">Hitung Analisis Klasifikasi</button>
+  <button onclick="downloadAsPNG()">Download Hasil (PNG)</button>
+
+  <div id="results"></div>
+  <canvas id="rocChart" width="400" height="300"></canvas>
+</main>
+
+<footer>
+  &copy; 2025 2025 PT Primajana Bagia Mesari
+</footer>
+
+<script>
+let rawData = [];
+let rocChartInstance = null;
+
+csvInput.addEventListener("change", function (e) {
+  Papa.parse(e.target.files[0], {
+    header: true,
+    dynamicTyping: true,
+    skipEmptyLines: true,
+    complete: function (results) {
+      rawData = results.data;
+      showSelectors(Object.keys(rawData[0]));
+    },
+  });
+});
+
+function showSelectors(columns) {
+  const container = document.getElementById("selectors");
+  container.innerHTML = `
+    <label>Kolom Aktual (Label Kebenaran)
+      <span class="tooltip">&#9432;<span class="tooltiptext">Kolom yang berisi label asli (0 dan 1)</span></span>
+    </label>
+    <select id="actualCol">${columns
+      .map((c) => `<option value="${c}">${c}</option>`)}</select>
+
+    <label>Kolom Prediksi (Nilai Prediksi/Probabilitas)
+      <span class="tooltip">&#9432;<span class="tooltiptext">Kolom yang berisi hasil prediksi model, bisa berupa nilai 0/1 atau probabilitas</span></span>
+    </label>
+    <select id="predictedCol">${columns
+      .map((c) => `<option value="${c}">${c}</option>`)}</select>
+
+    <label>Jenis Prediksi
+      <span class="tooltip">&#9432;<span class="tooltiptext">Pilih apakah prediksi berupa angka biner atau probabilitas</span></span>
+    </label>
+    <select id="predictionType">
+      <option value="binary">Biner (0/1)</option>
+      <option value="probability">Probabilitas (0-1)</option>
+    </select>
+  `;
+}
+
+function analyze() {
+  const actual = rawData.map((row) => Number(row[document.getElementById('actualCol').value]));
+  let predictedRaw = rawData.map((row) => Number(row[document.getElementById('predictedCol').value]));
+
+  let predicted;
+  if (document.getElementById('predictionType').value === "probability") {
+    predicted = predictedRaw.map((v) => (v >= 0.5 ? 1 : 0));
+  } else {
+    predicted = predictedRaw;
+  }
+
+  let TP = 0, TN = 0, FP = 0, FN = 0;
+  for (let i = 0; i < actual.length; i++) {
+    if (actual[i] === 1 && predicted[i] === 1) TP++;
+    else if (actual[i] === 0 && predicted[i] === 0) TN++;
+    else if (actual[i] === 0 && predicted[i] === 1) FP++;
+    else if (actual[i] === 1 && predicted[i] === 0) FN++;
+  }
+
+  const sensitivity = TP / (TP + FN || 1);
+  const specificity = TN / (TN + FP || 1);
+  const ppv = TP / (TP + FP || 1);
+  const npv = TN / (TN + FN || 1);
+
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = `
+    <h3>Confusion Matrix</h3>
+    <table>
+      <tr><th></th><th>Pred 0</th><th>Pred 1</th></tr>
+      <tr><th>Actual 0</th><td>${TN}</td><td>${FP}</td></tr>
+      <tr><th>Actual 1</th><td>${FN}</td><td>${TP}</td></tr>
+    </table>
+    <h3>Hasil Analisis</h3>
+    <table>
+      <tr><th>Sensitivitas</th><td>${sensitivity.toFixed(3)}</td></tr>
+      <tr><th>Spesifisitas</th><td>${specificity.toFixed(3)}</td></tr>
+      <tr><th>Positive Predictive Value (PPV)</th><td>${ppv.toFixed(3)}</td></tr>
+      <tr><th>Negative Predictive Value (NPV)</th><td>${npv.toFixed(3)}</td></tr>
+    </table>
+  `;
+
+  if (document.getElementById('predictionType').value === "probability") {
+    drawROC(actual, predictedRaw);
+  }
+}
+
+function drawROC(actual, probs) {
+  const thresholds = Array.from({ length: 101 }, (_, i) => i / 100);
+  const rocData = [];
+
+  thresholds.forEach((threshold) => {
+    let TP = 0, TN = 0, FP = 0, FN = 0;
+
+    const predicted = probs.map((p) => p >= threshold ? 1 : 0);
+
+    for (let i = 0; i < actual.length; i++) {
+      if (actual[i] === 1 && predicted[i] === 1) TP++;
+      else if (actual[i] === 0 && predicted[i] === 0) TN++;
+      else if (actual[i] === 0 && predicted[i] === 1) FP++;
+      else if (actual[i] === 1 && predicted[i] === 0) FN++;
+    }
+
+    const TPR = TP / (TP + FN) || 0;
+    const FPR = FP / (FP + TN) || 0;
+    rocData.push({ x: FPR, y: TPR });
+  });
+
+  // Urutkan berdasarkan FPR agar garisnya tidak kacau
+  rocData.sort((a, b) => a.x - b.x);
+
+  // Hitung AUC menggunakan aturan trapezoid
+  let auc = 0;
+  for (let i = 1; i < rocData.length; i++) {
+    const x1 = rocData[i - 1].x;
+    const x2 = rocData[i].x;
+    const y1 = rocData[i - 1].y;
+    const y2 = rocData[i].y;
+    auc += (x2 - x1) * (y1 + y2) / 2;
+  }
+
+  // Gambar ROC Curve menggunakan Chart.js
+  const ctx = document.getElementById("rocChart").getContext("2d");
+  if (window.rocChartInstance) {
+    window.rocChartInstance.destroy(); // Hapus chart sebelumnya jika ada
+  }
+
+  window.rocChartInstance = new Chart(ctx, {
+    type: "scatter",
+    data: {
+      datasets: [
+        {
+          label: `ROC Curve (AUC = ${auc.toFixed(3)})`,
+          data: rocData,
+          borderColor: "blue",
+          backgroundColor: "transparent",
+          showLine: true,
+          fill: false,
+          borderWidth: 2,
+        },
+        {
+          label: "Random Guess",
+          data: [
+            { x: 0, y: 0 },
+            { x: 1, y: 1 },
+          ],
+          borderColor: "gray",
+          borderDash: [5, 5],
+          backgroundColor: "transparent",
+          showLine: true,
+          fill: false,
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          title: { display: true, text: "False Positive Rate" },
+          min: 0,
+          max: 1,
+        },
+        y: {
+          title: { display: true, text: "True Positive Rate" },
+          min: 0,
+          max: 1,
+        },
+      },
+    },
+  });
+}
+
+
+
+function downloadAsPNG() {
+  html2canvas(document.getElementById("content")).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "hasil-klasifikasi.png";
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
+</script>
+</body>
+</html>

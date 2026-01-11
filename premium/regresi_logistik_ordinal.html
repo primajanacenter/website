@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regresi Logistik Ordinal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 p-6">
+  <div class="max-w-4xl mx-auto">
+    <h1 class="text-2xl font-bold mb-6">Regresi Logistik Ordinal</h1>
+
+    <div class="space-y-4">
+      <div>
+        <label class="font-semibold">Unggah File CSV:</label>
+        <input type="file" id="csvFile" accept=".csv" class="block mt-1" />
+      </div>
+
+      <div>
+        <label class="font-semibold">Variabel Dependen (Harus Ordinal):</label>
+        <select id="dependent" class="mt-1 w-full border p-2 rounded"></select>
+      </div>
+
+      <div>
+        <label class="font-semibold">Pilih Variabel Independen:</label>
+        <div id="independentCheckboxes" class="grid grid-cols-2 gap-2 mt-1"></div>
+      </div>
+
+      <div id="referenceSelectors" class="space-y-2"></div>
+
+      <button id="analyzeBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Proses Analisis</button>
+    </div>
+
+    <div id="results" class="mt-10 bg-white p-4 rounded shadow" style="min-height: 300px;"></div>
+
+    <footer class="mt-10 text-center text-sm text-gray-600">
+      © 2025 PT Primajana Bagia Mesari
+    </footer>
+  </div>
+
+  <script>
+    let data = [];
+    let headers = [];
+    let categoricalRefs = {};
+
+    const csvFileInput = document.getElementById("csvFile");
+    const dependentSelect = document.getElementById("dependent");
+    const independentDiv = document.getElementById("independentCheckboxes");
+    const referenceDiv = document.getElementById("referenceSelectors");
+    const analyzeBtn = document.getElementById("analyzeBtn");
+    const resultsDiv = document.getElementById("results");
+
+    csvFileInput.addEventListener("change", (e) => {
+      Papa.parse(e.target.files[0], {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          data = results.data;
+          headers = results.meta.fields;
+
+          dependentSelect.innerHTML = headers.map(h => `<option value="${h}">${h}</option>`).join("");
+          updateIndependentCheckboxes();
+        }
+      });
+    });
+
+    dependentSelect.addEventListener("change", updateIndependentCheckboxes);
+
+    function updateIndependentCheckboxes() {
+      const depVar = dependentSelect.value;
+      independentDiv.innerHTML = headers
+        .filter(h => h !== depVar)
+        .map(h => `<label class="flex items-center">
+                    <input type="checkbox" value="${h}" class="mr-2" /> ${h}
+                  </label>`).join("");
+    }
+
+    independentDiv.addEventListener("change", () => {
+      referenceDiv.innerHTML = "";
+      const selected = [...independentDiv.querySelectorAll("input:checked")].map(cb => cb.value);
+      selected.forEach(varName => {
+        const uniqueVals = [...new Set(data.map(row => row[varName]))];
+        const isNumeric = typeof uniqueVals[0] === "number";
+        if (!isNumeric) {
+          referenceDiv.innerHTML += `
+            <div>
+              <label class="font-semibold">Kategori referensi untuk <b>${varName}</b>:</label>
+              <select data-var="${varName}" class="ref-select mt-1 w-full border p-1 rounded">
+                ${uniqueVals.map(v => `<option value="${v}">${v}</option>`).join("")}
+              </select>
+            </div>`;
+        }
+      });
+    });
+
+    analyzeBtn.addEventListener("click", () => {
+      const dep = dependentSelect.value;
+      const depVals = [...new Set(data.map(d => d[dep]))];
+      if (depVals.length <= 1) {
+        alert("Variabel dependen harus memiliki lebih dari satu kategori.");
+        return;
+      }
+
+      const selectedIndep = [...independentDiv.querySelectorAll("input:checked")].map(cb => cb.value);
+      if (selectedIndep.length === 0) return alert("Pilih setidaknya satu variabel independen.");
+
+      const refSelects = referenceDiv.querySelectorAll(".ref-select");
+      refSelects.forEach(sel => categoricalRefs[sel.dataset.var] = sel.value);
+
+      let X = [], y = [], labels = [];
+      y = data.map(row => row[dep]);
+
+      selectedIndep.forEach(varName => {
+        const uniqueVals = [...new Set(data.map(d => d[varName]))];
+        if (typeof uniqueVals[0] === "string" || uniqueVals.length <= 10) {
+          const ref = categoricalRefs[varName];
+          const dummies = uniqueVals.filter(v => v !== ref);
+          dummies.forEach(dummy => {
+            X.push(data.map(row => row[varName] === dummy ? 1 : 0));
+            labels.push(`${varName} = ${dummy}`);
+          });
+        } else {
+          X.push(data.map(row => row[varName]));
+          labels.push(varName);
+        }
+      });
+
+      X = X[0].map((_, i) => X.map(col => col[i]));
+      logisticRegression(X, y, labels);
+    });
+
+    function logisticRegression(X, y, labels) {
+      const n = X.length, m = X[0].length;
+      let weights = Array(m).fill(0);
+      const sigmoid = z => z > 100 ? 1 : z < -100 ? 0 : 1 / (1 + Math.exp(-z));
+      const learningRate = 0.01, epochs = 500;
+
+      for (let ep = 0; ep < epochs; ep++) {
+        let grad = Array(m).fill(0);
+        for (let i = 0; i < n; i++) {
+          const z = X[i].reduce((s, xj, j) => s + weights[j] * xj, 0);
+          const h = sigmoid(z);
+          for (let j = 0; j < m; j++) grad[j] += (h - y[i]) * X[i][j];
+        }
+        for (let j = 0; j < m; j++) weights[j] -= learningRate * grad[j] / n;
+      }
+
+      let se = Array(m).fill(0), pVals = Array(m).fill(0), ORs = weights.map(w => Math.exp(w));
+      for (let j = 0; j < m; j++) {
+        let sumSq = 0;
+        for (let i = 0; i < n; i++) {
+          const z = X[i].reduce((s, xj, k) => s + weights[k] * xj, 0);
+          const p = sigmoid(z);
+          sumSq += p * (1 - p) * X[i][j] * X[i][j];
+        }
+        se[j] = Math.sqrt(sumSq || 1e-10);
+        const z = weights[j] / se[j];
+        pVals[j] = 2 * (1 - normalCDF(Math.abs(z)));
+      }
+
+      let html = `<h2 class='text-xl font-bold mb-4'>Hasil Analisis</h2>`;
+      html += `<table class='table-auto w-full border'><thead><tr class='bg-gray-100'>
+                <th class='border px-2'>Variabel</th>
+                <th class='border px-2'>OR</th>
+                <th class='border px-2'>Range CI (Lower Bound, Upper Bound)</th>
+                <th class='border px-2'>p-value</th></tr></thead><tbody>`;
+
+      let interpretations = [];
+
+      for (let i = 0; i < m; i++) {
+        const ciLow = Math.exp(weights[i] - 1.96 * se[i]);
+        const ciHigh = Math.exp(weights[i] + 1.96 * se[i]);
+        const or = ORs[i];
+        const p = pVals[i];
+
+        html += `<tr>
+                  <td class='border px-2'>${labels[i]}</td>
+                  <td class='border px-2'>${or.toFixed(2)}</td>
+                  <td class='border px-2'>(${ciLow.toFixed(2)}, ${ciHigh.toFixed(2)})</td>
+                  <td class='border px-2'>${p.toFixed(3)}</td>
+                </tr>`;
+
+        let interpret = `Variabel <strong>${labels[i]}</strong> memiliki OR sebesar <strong>${or.toFixed(2)}</strong>`;
+        if (p < 0.05) {
+          interpret += ` dan <span class="text-green-600 font-semibold">bermakna</span> (p = ${p.toFixed(3)}), `;
+          interpret += or > 1
+            ? `yang berarti peningkatan variabel ini meningkatkan kemungkinan kejadian pada variabel dependen.`
+            : `yang berarti peningkatan variabel ini menurunkan kemungkinan kejadian pada variabel dependen.`;
+        } else {
+          interpret += ` namun <span class="text-red-600 font-semibold">tidak bermakna</span> (p = ${p.toFixed(3)}), sehingga pengaruhnya tidak signifikan.`;
+        }
+        interpretations.push(`<p>${interpret}</p>`);
+      }
+
+      html += '</tbody></table>';
+      html += `<div class="mt-6"><h3 class="text-lg font-semibold mb-2">Interpretasi Naratif</h3>${interpretations.join("")}</div>`;
+      resultsDiv.innerHTML = html;
+    }
+
+    function normalCDF(z) {
+      return 0.5 * (1 + erf(z / Math.sqrt(2)));
+    }
+
+    function erf(x) {
+      const sign = x >= 0 ? 1 : -1;
+      x = Math.abs(x);
+      const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741;
+      const a4 = -1.453152027, a5 = 1.061405429, p = 0.3275911;
+      const t = 1 / (1 + p * x);
+      const y = 1 - (((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t) * Math.exp(-x * x);
+      return sign * y;
+    }
+  </script>
+</body>
+
+</html>
