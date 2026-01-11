@@ -251,7 +251,7 @@
     </div>
 
     <footer>
-      &copy; 2025 PT Primajana Bagia Mesari
+      &copy; 2026 PT Primajana Bagia Mesari
     </footer>
   </div>
 
@@ -334,27 +334,6 @@
     });
   </script>
   
-  <script>
-  window.addEventListener('load', () => {
-    const alreadyAccessed = sessionStorage.getItem("hasAccess");
-    if (!alreadyAccessed) {
-      setTimeout(() => {
-        document.getElementById('popup-access').style.display = 'flex';
-      }, 20000); // 20 detik setelah halaman dimuat
-    }
-  });
-
-  function checkAccess() {
-    const code = document.getElementById('access-code').value.trim();
-    const validCode = "8188"; // Ganti sesuai kebutuhan
-    if (code === validCode) {
-      sessionStorage.setItem("hasAccess", "true");
-      document.getElementById('popup-access').style.display = 'none';
-    } else {
-      alert("Kode akses salah. Silakan coba lagi.");
-    }
-  }
-</script>
 
 </body>
 </html>
