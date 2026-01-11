@@ -1641,7 +1641,7 @@ const supabase = createClient(
 
 const { data:{ session } } = await supabase.auth.getSession();
 if(!session){
-  location.href="../login.html";
+  location.href="../premium/login.html";
 }
 
 const { data } = await supabase
@@ -1651,7 +1651,7 @@ const { data } = await supabase
 
 if(!data || !data.active){
   alert("🔒 Fitur ini hanya tersedia untuk pengguna premium.");
-  location.href="../dashboard.html";
+  location.href="../premium/dashboard.html";
 }
 </script>
 
