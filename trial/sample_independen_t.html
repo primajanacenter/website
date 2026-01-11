@@ -266,12 +266,13 @@ body.lock-scroll {
     </footer>
   </div>
 
-<!-- POPUP MODAL -->
+<!-- POPUP CTA SUBSCRIPTION -->
 <div class="popup-overlay" id="popup-access">
   <div class="popup-box">
     <h2>🚀 Yuk Mulai Berlangganan Primajana</h2>
     <p>
-      Akses seluruh fitur premium hanya <b>Rp 19.000 / bulan</b>.
+      Dapatkan akses premium ke seluruh fitur Primajana.<br>
+      Mulai dari <b>Rp 19.000 / bulan</b> saja!
     </p>
     <button class="btn-premium" onclick="startSubscribe()">
       💎 Mulai Berlangganan
@@ -365,7 +366,7 @@ window.addEventListener("load", () => {
   if(sessionStorage.getItem("premiumLocked")==="true"){
     lockPage();
   } else {
-    setTimeout(lockPage, 10000);
+    setTimeout(lockPage, 20000);
   }
 });
 </script>
