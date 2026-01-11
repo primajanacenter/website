@@ -1631,30 +1631,6 @@ details p {
         <i class="bi bi-whatsapp"></i>
     </a>
 
-  <script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-const supabase = createClient(
-  "https://jzrqalbhvjkgradpnbcp.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cnFhbGJodmprZ3JhZHBuYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NzQ2NTksImV4cCI6MjA4MzI1MDY1OX0.yOGN7e7Bu6Yvm1gDaF1URHF7Mjcj7aVHfJ5URHRWyaE"
-);
-
-const { data:{ session } } = await supabase.auth.getSession();
-if(!session){
-  location.href="../premium/login.html";
-}
-
-const { data } = await supabase
-  .from("subscriptions")
-  .select("active, expired_at")
-  .single();
-
-if(!data || !data.active){
-  alert("🔒 Fitur ini hanya tersedia untuk pengguna premium.");
-  location.href="../premium/dashboard.html";
-}
-</script>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
