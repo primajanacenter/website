@@ -39,7 +39,6 @@ iframe{
 
 <div class="main">
 
-<!-- STATUS LANGGANAN -->
 <div class="card">
  <b>Status Berlangganan:</b>
  <span id="substatus" class="status-inactive">Memuat...</span><br><br>
@@ -47,7 +46,6 @@ iframe{
  <button id="payBtn" class="btn" style="display:none;margin-top:12px" onclick="subscribe()">Berlangganan / Perpanjang</button>
 </div>
 
-<!-- LIST APLIKASI PREMIUM -->
 <div class="card">
  <b>Daftar Aplikasi Premium</b>
  <iframe id="appFrame" src=""></iframe>
@@ -59,7 +57,7 @@ iframe{
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
 const SUPABASE_URL = "https://jzrqalbhvjkgradpnbcp.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cnFhbGJodmprZ3JhZHBuYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NzQ2NTksImV4cCI6MjA4MzI1MDY1OX0.yOGN7e7Bu6Yvm1gDaF1URHF7Mjcj7aVHfJ5URHRWyaE";
+const SUPABASE_ANON_KEY = "YOUR_ANON_KEY";
 const MAYAR_LINK = "https://primajana.myr.id/membership/primajana-tools-membership-bulanan";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -85,7 +83,10 @@ if(data && data.active){
     <b>${exp.toLocaleDateString("id-ID",{day:"2-digit",month:"long",year:"numeric"})}</b>
   `;
 
-  document.getElementById("appFrame").src = "https://primajana.com/premium/beranda.html?embedded=1";
+  // kirim token ke iframe
+  const token = session.access_token;
+  document.getElementById("appFrame").src =
+    "https://primajana.com/premium/beranda.html?embedded=1&token=" + token;
 
 }else{
   substatus.innerText = "TIDAK AKTIF";
@@ -96,4 +97,5 @@ if(data && data.active){
 </script>
 
 </body>
+
 </html>
