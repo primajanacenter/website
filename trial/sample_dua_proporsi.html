@@ -219,10 +219,12 @@ body.lock-scroll {
   overflow: hidden;
 }
 
+
   </style>
 </head>
 <body>
-  <div class="container">
+<body>
+  <div class="container" id="lockArea">
     <div class="card" id="outputArea">
       <h1>Perhitungan Sampel Dua Proporsi <span>Two Proportions Sample Size Calculation</span></h1>
 
@@ -277,8 +279,7 @@ body.lock-scroll {
   <div class="popup-box">
     <h2>🚀 Yuk Mulai Berlangganan Primajana</h2>
     <p>
-      Dapatkan akses premium ke seluruh fitur Primajana.<br>
-      Mulai dari <b>Rp 19.000 / bulan</b> saja!
+      Akses seluruh fitur premium hanya <b>Rp 19.000 / bulan</b>.
     </p>
     <button class="btn-premium" onclick="startSubscribe()">
       💎 Mulai Berlangganan
@@ -389,10 +390,10 @@ function lockPage(){
   locked = true;
 
   document.getElementById("popup-access").style.display = "flex";
-  document.getElementById("captureArea").classList.add("locked-page");
+  document.getElementById("lockArea").classList.add("locked-page");
   document.body.classList.add("lock-scroll");
 
-  sessionStorage.setItem("premiumLocked", "true");
+  sessionStorage.setItem("premiumLocked","true");
 }
 
 function startSubscribe(){
@@ -403,7 +404,7 @@ window.addEventListener("load", () => {
   if(sessionStorage.getItem("premiumLocked")==="true"){
     lockPage();
   } else {
-    setTimeout(lockPage, 10000); // 10 detik
+    setTimeout(lockPage, 10000);
   }
 });
 </script>
