@@ -255,21 +255,29 @@
     </footer>
   </div>
 
-<!-- POPUP MODAL -->
-<div class="popup-overlay" id="popup-access">
-  <div class="popup-box">
-    <h2>Akses Premium</h2>
-    <p>
-      Ingin membuka seluruh fitur ini? Yuk mulai berlangganan sekarang.<br>
-      Jika Anda sudah memiliki kode akses, masukkan di bawah ini:
-    </p>
-    <input type="text" id="access-code" placeholder="Masukkan Kode Akses" />
-    <div>
-      <button class="btn-akses" onclick="checkAccess()">Gunakan Kode</button>
-      <button class="btn-premium" onclick="window.location.href='https://lynk.id/primajanaedu/2q46wjnpngky/checkout'">Berlangganan Sekarang</button>
-    </div>
-  </div>
-</div>
+  <script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://jzrqalbhvjkgradpnbcp.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cnFhbGJodmprZ3JhZHBuYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NzQ2NTksImV4cCI6MjA4MzI1MDY1OX0.yOGN7e7Bu6Yvm1gDaF1URHF7Mjcj7aVHfJ5URHRWyaE"
+);
+
+const { data:{ session } } = await supabase.auth.getSession();
+if(!session){
+  location.href="../premium/login.html";
+}
+
+const { data } = await supabase
+  .from("subscriptions")
+  .select("active, expired_at")
+  .single();
+
+if(!data || !data.active){
+  alert("🔒 Fitur ini hanya tersedia untuk pengguna premium.");
+  location.href="../premium/dashboard.html";
+}
+</script>
 
   <script>
     const form = document.getElementById("tTestForm");
@@ -333,28 +341,6 @@
       });
     });
   </script>
-  
-  <script>
-  window.addEventListener('load', () => {
-    const alreadyAccessed = sessionStorage.getItem("hasAccess");
-    if (!alreadyAccessed) {
-      setTimeout(() => {
-        document.getElementById('popup-access').style.display = 'flex';
-      }, 20000); // 20 detik setelah halaman dimuat
-    }
-  });
-
-  function checkAccess() {
-    const code = document.getElementById('access-code').value.trim();
-    const validCode = "8188"; // Ganti sesuai kebutuhan
-    if (code === validCode) {
-      sessionStorage.setItem("hasAccess", "true");
-      document.getElementById('popup-access').style.display = 'none';
-    } else {
-      alert("Kode akses salah. Silakan coba lagi.");
-    }
-  }
-</script>
 
 </body>
 </html>
