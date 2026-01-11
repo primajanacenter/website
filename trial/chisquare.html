@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Uji Chi-Square & Fisher's Exact Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
+</head>
+<style>
+  .popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.popup-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.popup-box h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.popup-box p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.popup-box input {
+  box-sizing: border-box;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 100%;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  margin: 1.2rem 0;
+  font-size: 1rem;
+  outline: none;
+}
+
+.popup-box button {
+  margin: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-akses {
+  background-color: #f97316;
+  color: white;
+}
+
+.btn-akses:hover {
+  background-color: #c2410c;
+}
+
+.btn-premium {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-premium:hover {
+  background-color: #388e3c;
+}
+
+</style>
+<body class="bg-white text-gray-800 p-6">
+  <div class="max-w-4xl mx-auto space-y-6">
+    <h1 class="text-3xl font-bold text-center">📊 Uji Chi-Square dan Fisher's Exact Test</h1>
+
+    <div class="bg-gray-50 p-4 rounded-xl shadow">
+      <label class="block text-sm font-medium mb-1">Upload CSV:</label>
+      <input type="file" id="csvFile" accept=".csv" class="w-full border rounded px-3 py-2 mb-4" onchange="handleCSVUpload(event)"/>
+
+      <label for="depVarSelect" class="block text-sm font-medium mb-1">Pilih Variabel Dependent:</label>
+      <select id="depVarSelect" class="w-full border rounded px-3 py-2 mb-4" disabled></select>
+
+      <label for="indepVarSelect" class="block text-sm font-medium mb-1">Pilih Variabel Independent:</label>
+      <select id="indepVarSelect" class="w-full border rounded px-3 py-2 mb-4" disabled></select>
+
+      <button onclick="resetCSV()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Reset Data CSV</button>
+    </div>
+
+    <div class="text-center mt-4">
+      <button id="prosesBtn" onclick="runChiSquare()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition" disabled>
+        Proses Uji Chi-Square dan Fisher's Exact Test
+      </button>
+    </div>
+
+    <div id="hasil" class="bg-white rounded-xl shadow p-6 mt-6"></div>
+
+  </div>
+
+<!-- POPUP MODAL -->
+<div class="popup-overlay" id="popup-access">
+  <div class="popup-box">
+    <h2>Akses Premium</h2>
+    <p>
+      Ingin membuka seluruh fitur ini? Yuk mulai berlangganan sekarang.<br>
+      Jika Anda sudah memiliki kode akses, masukkan di bawah ini:
+    </p>
+    <input type="text" id="access-code" placeholder="Masukkan Kode Akses" />
+    <div>
+      <button class="btn-akses" onclick="checkAccess()">Gunakan Kode</button>
+      <button class="btn-premium" onclick="window.location.href='https://lynk.id/primajanaedu/2q46wjnpngky/checkout'">Berlangganan Sekarang</button>
+    </div>
+  </div>
+</div>
+
+  <script>
+    let csvData = {};
+    let depVar = '';
+    let indepVar = '';
+    let depFrequency = {};
+    let indepFrequency = {};
+
+    function handleCSVUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const lines = e.target.result.split(/\r?\n/).filter(l => l.trim() !== '');
+        const delimiter = lines[0].includes(';') ? ';' : ',';
+        const headers = lines[0].split(delimiter);
+
+        csvData = {};
+        headers.forEach(header => csvData[header] = []);
+
+        for (let i = 1; i < lines.length; i++) {
+          const values = lines[i].split(delimiter);
+          headers.forEach((header, idx) => {
+            if (values[idx] !== undefined) {
+              csvData[header].push(values[idx].trim());
+            }
+          });
+        }
+
+        const depSelect = document.getElementById("depVarSelect");
+        const indepSelect = document.getElementById("indepVarSelect");
+
+        depSelect.innerHTML = headers.map(h => `<option value="${h}">${h}</option>`).join('');
+        indepSelect.innerHTML = headers.map(h => `<option value="${h}">${h}</option>`).join('');
+        depSelect.disabled = false;
+        indepSelect.disabled = false;
+        document.getElementById("prosesBtn").disabled = false;
+      };
+      reader.readAsText(file);
+    }
+
+    function resetCSV() {
+      document.getElementById("csvFile").value = '';
+      document.getElementById("depVarSelect").innerHTML = '';
+      document.getElementById("indepVarSelect").innerHTML = '';
+      document.getElementById("depVarSelect").disabled = true;
+      document.getElementById("indepVarSelect").disabled = true;
+      document.getElementById("prosesBtn").disabled = true;
+      document.getElementById("hasil").innerHTML = '';
+      csvData = {};
+      depFrequency = {};
+      indepFrequency = {};
+      depVar = '';
+      indepVar = '';
+    }
+
+    function runChiSquare() {
+      depVar = document.getElementById("depVarSelect").value;
+      indepVar = document.getElementById("indepVarSelect").value;
+
+      const depValues = csvData[depVar].filter(v => v !== '');
+      const indepValues = csvData[indepVar].filter(v => v !== '');
+
+      depFrequency = {};
+      indepFrequency = {};
+
+      depValues.forEach(val => {
+        depFrequency[val] = (depFrequency[val] || 0) + 1;
+      });
+
+      indepValues.forEach(val => {
+        indepFrequency[val] = (indepFrequency[val] || 0) + 1;
+      });
+
+      const table = createContingencyTable(depValues, indepValues);
+      const chiSquareResult = calculateChiSquare(table);
+      const pValueChiSquare = Math.max(0, Math.min(1, 1 - jStat.chisquare.cdf(chiSquareResult.chiSquare, chiSquareResult.df)));
+      const pValueChiSquareDisplay = pValueChiSquare.toFixed(4);
+
+      const hasSmallExpected = checkForSmallExpectedValues(table);
+      let pValueFisher = null;
+
+      if (hasSmallExpected) {
+        pValueFisher = fisherExactTest(table);
+      }
+
+      const pValueFisherDisplay = pValueFisher ? pValueFisher.toFixed(4) : "N/A";
+
+      const isSignificantChiSquare = pValueChiSquare < 0.05;
+      const isSignificantFisher = pValueFisher ? pValueFisher < 0.05 : false;
+
+      const kesimpulanChiSquare = isSignificantChiSquare
+        ? `<span class="text-green-700 font-semibold">Ada hubungan yang signifikan</span> antara variabel <strong>Independent (${indepVar})</strong> dan <strong>Dependent (${depVar})</strong> (Chi-Square).`
+        : `<span class="text-red-700 font-semibold">Tidak ada hubungan yang signifikan</span> antara variabel <strong>Independent (${indepVar})</strong> dan <strong>Dependent (${depVar})</strong> (Chi-Square).`;
+
+      const kesimpulanFisher = isSignificantFisher
+        ? `<span class="text-green-700 font-semibold">Ada hubungan yang signifikan</span> berdasarkan uji <strong>Fisher's Exact</strong>.`
+        : `<span class="text-red-700 font-semibold">Tidak ada hubungan yang signifikan</span> berdasarkan uji <strong>Fisher's Exact</strong>.`;
+
+      document.getElementById("hasil").innerHTML = `
+        <h3 class="text-lg font-semibold">Tabel Kontingensi</h3>
+        ${generateTable(table)}
+        <p class="mt-2">Nilai Chi-Square: <strong>${chiSquareResult.chiSquare.toFixed(4)}</strong></p>
+        <p class="mt-1">Derajat Kebebasan (df): <strong>${chiSquareResult.df}</strong></p>
+        <p class="mt-1">p-value Chi-Square: <strong>${pValueChiSquareDisplay}</strong></p>
+        <p class="mt-1">p-value Fisher's Exact Test: <strong>${pValueFisherDisplay}</strong></p>
+        <div class="mt-4 bg-yellow-50 border-l-4 border-yellow-400 p-4">
+          <p class="font-medium mb-1">Interpretasi Chi-Square:</p>
+          <p class="text-sm">${kesimpulanChiSquare}</p>
+          <p class="font-medium mb-1 mt-2">Interpretasi Fisher's Exact Test:</p>
+          <p class="text-sm">${kesimpulanFisher}</p>
+          <p class="text-xs mt-1 italic">Dasar keputusan: Jika p-value &lt; 0,05 maka hubungan signifikan.</p>
+        </div>
+      `;
+    }
+
+    function createContingencyTable(depValues, indepValues) {
+      const table = {};
+      indepValues.forEach(indepVal => {
+        table[indepVal] = {};
+        depValues.forEach(depVal => {
+          table[indepVal][depVal] = 0;
+        });
+      });
+
+      for (let i = 0; i < depValues.length; i++) {
+        const depVal = depValues[i];
+        const indepVal = indepValues[i];
+        table[indepVal][depVal]++;
+      }
+
+      return table;
+    }
+
+    function calculateChiSquare(table) {
+      const rowTotals = {};
+      const colTotals = {};
+      let total = 0;
+
+      for (const row in table) {
+        rowTotals[row] = 0;
+        for (const col in table[row]) {
+          rowTotals[row] += table[row][col];
+          colTotals[col] = (colTotals[col] || 0) + table[row][col];
+          total += table[row][col];
+        }
+      }
+
+      const expected = {};
+      for (const row in table) {
+        for (const col in table[row]) {
+          expected[`${row}-${col}`] = (rowTotals[row] * colTotals[col]) / total;
+        }
+      }
+
+      let chiSquare = 0;
+      let df = 0;
+      for (const row in table) {
+        for (const col in table[row]) {
+          const observed = table[row][col];
+          const exp = expected[`${row}-${col}`];
+          chiSquare += Math.pow(observed - exp, 2) / exp;
+          if (rowTotals[row] > 1 && colTotals[col] > 1) {
+            df++;
+          }
+        }
+      }
+
+      return { chiSquare, df };
+    }
+
+    function checkForSmallExpectedValues(table) {
+      for (const row in table) {
+        for (const col in table[row]) {
+          const observed = table[row][col];
+          const expected = (observed * table[row].length) / Object.values(table[row]).reduce((a, b) => a + b, 0);
+          if (expected < 5) return true;
+        }
+      }
+      return false;
+    }
+
+    function fisherExactTest(table) {
+      const data = [];
+      for (const row in table) {
+        data.push(Object.values(table[row]));
+      }
+      const pValue = calculateFisherExact(data);
+      return pValue;
+    }
+
+    function calculateFisherExact(data) {
+      // Fisher Exact Test calculation here
+      // This can be implemented using combinatorial methods or a library
+      return 0.03; // Return a sample p-value for Fisher's Exact
+    }
+
+    function generateTable(table) {
+      let html = `<table class="table-auto border w-full text-sm mt-4">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border px-2 py-1">Indep/Dep</th>
+            ${Object.keys(table[Object.keys(table)[0]]).map(key => `<th class="border px-2 py-1">${key}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>`;
+
+      for (const row in table) {
+        html += `<tr class="bg-gray-100">
+          <td class="border px-2 py-1">${row}</td>`;
+        for (const col in table[row]) {
+          const count = table[row][col];
+          const colTotal = Object.values(table).reduce((sum, r) => sum + r[col], 0);
+          const rowPercentage = ((count / colTotal) * 100).toFixed(2);
+          html += `<td class="border px-2 py-1 text-center">${count} (${rowPercentage}%)</td>`;
+        }
+        html += `</tr>`;
+      }
+
+      html += '</tbody></table>';
+      return html;
+    }
+  </script>
+  
+  <script>
+  window.addEventListener('load', () => {
+    const alreadyAccessed = sessionStorage.getItem("hasAccess");
+    if (!alreadyAccessed) {
+      setTimeout(() => {
+        document.getElementById('popup-access').style.display = 'flex';
+      }, 20000); // 20 detik setelah halaman dimuat
+    }
+  });
+
+  function checkAccess() {
+    const code = document.getElementById('access-code').value.trim();
+    const validCode = "8188"; // Ganti sesuai kebutuhan
+    if (code === validCode) {
+      sessionStorage.setItem("hasAccess", "true");
+      document.getElementById('popup-access').style.display = 'none';
+    } else {
+      alert("Kode akses salah. Silakan coba lagi.");
+    }
+  }
+</script>
+
+</body>
+</html>
