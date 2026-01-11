@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Statistik Deskriptif Numerik</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a2d0c8e163.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<style>
+  .popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.popup-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.popup-box h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.popup-box p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.popup-box input {
+  box-sizing: border-box;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 100%;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  margin: 1.2rem 0;
+  font-size: 1rem;
+  outline: none;
+}
+
+.popup-box button {
+  margin: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-akses {
+  background-color: #f97316;
+  color: white;
+}
+
+.btn-akses:hover {
+  background-color: #c2410c;
+}
+
+.btn-premium {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-premium:hover {
+  background-color: #388e3c;
+}
+
+</style>
+<body class="bg-white text-gray-800 p-6 flex flex-col min-h-screen">
+  <div class="max-w-4xl mx-auto space-y-6 flex-grow" id="printable">
+    <h1 class="text-3xl font-bold text-center">📊 Statistik Deskriptif: Numerik</h1>
+
+    <div class="bg-gray-50 p-4 rounded-xl shadow" id="uploadSection">
+      <label class="block text-sm font-medium mb-1">Upload CSV:</label>
+      <input type="file" id="csvFile" accept=".csv" class="w-full border rounded px-3 py-2 mb-4" onchange="handleCSVUpload(event)"/>
+
+      <label for="columnSelect" class="block text-sm font-medium mb-1">Pilih Variabel:</label>
+      <select id="columnSelect" class="w-full border rounded px-3 py-2 mb-4" disabled></select>
+
+      <button id="resetCSVBtn" onclick="resetCSV()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Reset Data CSV</button>
+    </div>
+
+    <div class="text-center mt-4">
+      <button id="prosesBtn" onclick="prosesAnalisis()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition" disabled>
+        <i class="fa-solid fa-magnifying-glass-chart mr-2"></i>Proses Analisis
+      </button>
+    </div>
+
+    <div id="outputSection" class="bg-white rounded-xl shadow p-6 mt-6 space-y-6">
+      <div id="hasil"></div>
+      <div id="chartsContainer" class="relative h-[400px]"></div>
+    </div>
+
+    <div id="visualisasiPrompt" class="text-center mt-6 hidden">
+      <p class="text-lg font-semibold">Ingin visualisasi data?</p>
+      <div class="mt-2">
+        <button onclick="tampilkanVisualOptions(true)" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Ya</button>
+        <button onclick="tampilkanVisualOptions(false)" class="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 ml-2">Tidak</button>
+      </div>
+    </div>
+
+    <div id="visualOptions" class="hidden mt-4">
+      <label for="chartType" class="block text-sm font-medium mb-1">Pilih Jenis Grafik:</label>
+      <select id="chartType" class="w-full border rounded px-3 py-2 mb-4">
+        <option value="bar">Histogram</option>
+        <option value="scatter">Scatterplot</option>
+      </select>
+      <div class="text-center">
+        <button onclick="generateChart()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">Tampilkan Grafik</button>
+      </div>
+    </div>
+
+    <div id="downloadSection" class="hidden text-center mt-6">
+      <button onclick="downloadAsPNG()" class="bg-teal-600 text-white px-6 py-2 rounded-lg hover:bg-teal-700">Download PNG</button>
+    </div>
+  </div>
+
+  <footer class="text-center text-sm text-gray-500 mt-12 pt-6 border-t" id="footer">
+    © 2025 PT Primajana Bagia Mesari
+  </footer>
+  
+<!-- POPUP MODAL -->
+<div class="popup-overlay" id="popup-access">
+  <div class="popup-box">
+    <h2>Akses Premium</h2>
+    <p>
+      Ingin membuka seluruh fitur ini? Yuk mulai berlangganan sekarang.<br>
+      Jika Anda sudah memiliki kode akses, masukkan di bawah ini:
+    </p>
+    <input type="text" id="access-code" placeholder="Masukkan Kode Akses" />
+    <div>
+      <button class="btn-akses" onclick="checkAccess()">Gunakan Kode</button>
+      <button class="btn-premium" onclick="window.location.href='https://lynk.id/primajanaedu/2q46wjnpngky/checkout'">Berlangganan Sekarang</button>
+    </div>
+  </div>
+</div>
+
+  <script>
+    let csvData = {};
+    let currentData = [];
+    let chartInstance = null;
+
+    function handleCSVUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const lines = e.target.result.split(/\r?\n/);
+        const delimiter = detectDelimiter(lines[0]);
+        const headers = lines[0].split(delimiter);
+
+        csvData = {};
+        headers.forEach(header => csvData[header] = []);
+
+        for (let i = 1; i < lines.length; i++) {
+          const values = lines[i].split(delimiter);
+          headers.forEach((header, idx) => {
+            const num = parseFloat(values[idx]);
+            if (!isNaN(num)) csvData[header].push(num);
+          });
+        }
+
+        const select = document.getElementById("columnSelect");
+        select.innerHTML = headers.map(h => `<option value="${h}">${h}</option>`).join('');
+        select.disabled = false;
+        document.getElementById("prosesBtn").disabled = false;
+      };
+      reader.readAsText(file);
+    }
+
+    function detectDelimiter(firstLine) {
+      if (firstLine.indexOf(',') > -1) return ',';
+      if (firstLine.indexOf(';') > -1) return ';';
+      return '\t';
+    }
+
+    function prosesAnalisis() {
+      const column = document.getElementById("columnSelect").value;
+      if (!column || !csvData[column]) return;
+      currentData = csvData[column];
+
+      const data = [...currentData];
+      const mean = data.reduce((a, b) => a + b, 0) / data.length;
+      const sorted = [...data].sort((a, b) => a - b);
+      const median = sorted[Math.floor(sorted.length / 2)];
+      const modus = getModus(data);
+      const min = Math.min(...data);
+      const max = Math.max(...data);
+      const range = max - min;
+      const q1 = getQuantile(sorted, 0.25);
+      const q3 = getQuantile(sorted, 0.75);
+      const iqr = q3 - q1;
+      const variance = data.reduce((sum, num) => sum + Math.pow(num - mean, 2), 0) / data.length;
+      const stddev = Math.sqrt(variance);
+
+      document.getElementById("hasil").innerHTML = `
+        <h3 class="text-lg font-semibold">Statistik untuk Variabel: ${column}</h3>
+        <table class="table-auto border mt-2 w-full text-sm">
+          <thead><tr><th class="border px-2 py-1">Statistik</th><th class="border px-2 py-1">Nilai</th></tr></thead>
+          <tbody>
+            <tr><td class="border px-2 py-1">Rata-rata</td><td class="border px-2 py-1">${mean.toFixed(2)}</td></tr>
+            <tr><td class="border px-2 py-1">Median</td><td class="border px-2 py-1">${median}</td></tr>
+            <tr><td class="border px-2 py-1">Modus</td><td class="border px-2 py-1">${modus}</td></tr>
+            <tr><td class="border px-2 py-1">Min</td><td class="border px-2 py-1">${min}</td></tr>
+            <tr><td class="border px-2 py-1">Max</td><td class="border px-2 py-1">${max}</td></tr>
+            <tr><td class="border px-2 py-1">Range</td><td class="border px-2 py-1">${range}</td></tr>
+            <tr><td class="border px-2 py-1">Q1</td><td class="border px-2 py-1">${q1}</td></tr>
+            <tr><td class="border px-2 py-1">Q3</td><td class="border px-2 py-1">${q3}</td></tr>
+            <tr><td class="border px-2 py-1">IQR</td><td class="border px-2 py-1">${iqr}</td></tr>
+            <tr><td class="border px-2 py-1">Variansi</td><td class="border px-2 py-1">${variance.toFixed(2)}</td></tr>
+            <tr><td class="border px-2 py-1">Simpangan Baku</td><td class="border px-2 py-1">${stddev.toFixed(2)}</td></tr>
+          </tbody>
+        </table>`;
+
+      document.getElementById("visualOptions").classList.remove("hidden");
+      generateChart();
+      document.getElementById("downloadSection").classList.remove("hidden");
+    }
+
+    function getModus(arr) {
+      const freq = {};
+      arr.forEach(val => freq[val] = (freq[val] || 0) + 1);
+      const maxFreq = Math.max(...Object.values(freq));
+      return Object.keys(freq).filter(key => freq[key] === maxFreq).join(', ');
+    }
+
+    function getQuantile(arr, q) {
+      const pos = (arr.length - 1) * q;
+      const base = Math.floor(pos);
+      const rest = pos - base;
+      return arr[base + 1] !== undefined ? arr[base] + rest * (arr[base + 1] - arr[base]) : arr[base];
+    }
+
+    function generateChart() {
+      const type = document.getElementById("chartType").value || "bar";
+      const canvasId = "chartCanvas";
+      document.getElementById("chartsContainer").innerHTML = `<canvas id="${canvasId}" class="w-full h-full"></canvas>`;
+      const ctx = document.getElementById(canvasId).getContext('2d');
+
+      if (chartInstance) chartInstance.destroy();
+
+      let data;
+      if (type === "bar") {
+        const freq = {};
+        currentData.forEach(n => {
+          const key = n.toFixed(2);
+          freq[key] = (freq[key] || 0) + 1;
+        });
+        data = {
+          labels: Object.keys(freq),
+          datasets: [{
+            label: 'Frekuensi',
+            data: Object.values(freq),
+            backgroundColor: 'rgba(75,192,192,0.6)'
+          }]
+        };
+      } else {
+        data = {
+          datasets: [{
+            label: 'Nilai',
+            data: currentData.map((v, i) => ({ x: i + 1, y: v })),
+            backgroundColor: 'rgba(153,102,255,0.6)'
+          }]
+        };
+      }
+
+      chartInstance = new Chart(ctx, {
+        type: type === 'scatter' ? 'scatter' : 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { title: { display: true, text: type === 'scatter' ? 'Index' : 'Nilai' } },
+            y: { beginAtZero: true, title: { display: true, text: 'Frekuensi / Nilai' } }
+          }
+        }
+      });
+    }
+
+    function downloadAsPNG() {
+  const outputSection = document.getElementById("outputSection");
+  const footer = document.getElementById("footer");
+
+  // Buat elemen wrapper yang tidak tampak di layar
+  const printable = document.createElement("div");
+  printable.style.backgroundColor = "#ffffff";
+  printable.style.padding = "20px";
+  printable.style.width = "1000px"; // ukuran tetap untuk konsistensi tampilan
+  printable.style.fontFamily = "sans-serif";
+
+  // Clone hasil statistik (tabel)
+  const hasilClone = document.getElementById("hasil").cloneNode(true);
+  printable.appendChild(hasilClone);
+
+  // Tambahkan grafik sebagai image dari canvas
+  const chartCanvas = document.getElementById("chartsContainer").querySelector("canvas");
+  if (chartCanvas) {
+    const chartImage = new Image();
+    chartImage.src = chartCanvas.toDataURL("image/png");
+    chartImage.style.marginTop = "20px";
+    chartImage.style.maxWidth = "100%";
+    printable.appendChild(chartImage);
+  }
+
+  // Tambahkan footer
+  const footerClone = footer.cloneNode(true);
+  footerClone.style.marginTop = "40px";
+  printable.appendChild(footerClone);
+
+  // Tambahkan ke DOM sementara (off-screen)
+  printable.style.position = "absolute";
+  printable.style.left = "-9999px";
+  document.body.appendChild(printable);
+
+  // Screenshot bagian wrapper
+  html2canvas(printable, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "statistik_dengan_grafik.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+    document.body.removeChild(printable);
+  });
+}
+  </script>
+  
+  <script>
+  window.addEventListener('load', () => {
+    const alreadyAccessed = sessionStorage.getItem("hasAccess");
+    if (!alreadyAccessed) {
+      setTimeout(() => {
+        document.getElementById('popup-access').style.display = 'flex';
+      }, 20000); // 20 detik setelah halaman dimuat
+    }
+  });
+
+  function checkAccess() {
+    const code = document.getElementById('access-code').value.trim();
+    const validCode = "8188"; // Ganti sesuai kebutuhan
+    if (code === validCode) {
+      sessionStorage.setItem("hasAccess", "true");
+      document.getElementById('popup-access').style.display = 'none';
+    } else {
+      alert("Kode akses salah. Silakan coba lagi.");
+    }
+  }
+</script>
+
+</body>
+</html>
