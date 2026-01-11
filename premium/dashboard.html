@@ -32,70 +32,65 @@ iframe{
 </head>
 <body>
 
-<div class="header">
- <b>Dashboard Premium</b>
- <button class="btn" onclick="logout()">Logout</button>
-</div>
+<section class="category-section">
+  <h2>Alat Analisis Data</h2>
+  <div class="features-grid">
 
-<div class="main">
+    <div class="feature-card">
+      <h3><i class="fas fa-calculator icon"></i>Perhitungan Besar Sampel</h3>
+      <p>Hitung jumlah sampel: proporsi, rerata, korelasi.</p>
+      <a href="sampel.html" class="btn">Hitung Sampel</a>
+    </div>
 
-<div class="card">
- <b>Status Berlangganan:</b>
- <span id="substatus" class="status-inactive">Memuat...</span><br><br>
- <div id="expiredInfo"></div>
- <button id="payBtn" class="btn" style="display:none;margin-top:12px" onclick="subscribe()">Berlangganan / Perpanjang</button>
-</div>
+    <div class="feature-card">
+      <h3><i class="fas fa-chart-bar icon"></i>Statistik Deskriptif</h3>
+      <p>Rangkuman data: rata-rata, median, modus, histogram, pie chart, boxplot.</p>
+      <a href="deskriptif.html" class="btn">Lihat Statistik</a>
+    </div>
 
-<div class="card">
- <b>Daftar Aplikasi Premium</b>
- <iframe id="appFrame" src=""></iframe>
-</div>
+    <div class="feature-card">
+      <h3><i class="fas fa-arrows-alt-h icon"></i>Uji Perbedaan (Inferensial)</h3>
+      <p>Bandingkan kelompok: t-test, ANOVA, Chi-square, Fisher's Exact.</p>
+      <a href="inferensial.html" class="btn">Mulai Uji Perbedaan</a>
+    </div>
 
-</div>
+    <div class="feature-card">
+      <h3><i class="fas fa-link icon"></i>Uji Hubungan (Korelasi)</h3>
+      <p>Lihat hubungan variabel: Pearson, Spearman, regresi sederhana.</p>
+      <a href="korelasi.html" class="btn">Uji Hubungan</a>
+    </div>
 
-<script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    <div class="feature-card">
+      <h3><i class="fas fa-cubes icon"></i>Analisis Multivariat</h3>
+      <p>Regresi ganda, regresi logistik, PCA.</p>
+      <a href="multivariat.html" class="btn">Mulai Multivariat</a>
+    </div>
 
-const SUPABASE_URL = "https://jzrqalbhvjkgradpnbcp.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR_ANON_KEY";
-const MAYAR_LINK = "https://primajana.myr.id/membership/primajana-tools-membership-bulanan";
+    <div class="feature-card">
+      <h3><i class="fas fa-stethoscope icon"></i>Uji Diagnostik &amp; Validasi</h3>
+      <p>Evaluasi model: QQ plot, ROC, sensitivitas, spesifisitas.</p>
+      <a href="diagnostik.html" class="btn">Validasi Model</a>
+    </div>
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    <div class="feature-card">
+      <h3><i class="fas fa-map-marked-alt icon"></i>Peta (Mapping)</h3>
+      <p>Visualisasi spasial: peta sebaran, peta panas, dan titik koordinat.</p>
+      <a href="pemetaan.html" class="btn">Lihat Peta</a>
+    </div>
 
-window.logout = async()=>{
-  await supabase.auth.signOut();
-  location.href="login.html";
-}
-window.subscribe = ()=> location.href = MAYAR_LINK;
+  </div>
+</section>
 
-const { data:{ session } } = await supabase.auth.getSession();
-if(!session) location.href="login.html";
-
-const { data } = await supabase.from("subscriptions").select("*").single();
-
-if(data && data.active){
-  substatus.innerText = "AKTIF";
-  substatus.className = "status-active";
-
-  const exp = new Date(data.expired_at);
-  expiredInfo.innerHTML = `
-    Masa aktif sampai:
-    <b>${exp.toLocaleDateString("id-ID",{day:"2-digit",month:"long",year:"numeric"})}</b>
-  `;
-
-  // kirim token ke iframe
-  const token = session.access_token;
-  document.getElementById("appFrame").src =
-    "https://primajana.com/premium/beranda.html?embedded=1&token=" + token;
-
-}else{
-  substatus.innerText = "TIDAK AKTIF";
-  substatus.className = "status-inactive";
-  expiredInfo.innerText = "Silakan berlangganan untuk membuka semua aplikasi premium.";
-  payBtn.style.display="inline-block";
-}
+<script>
+document.querySelectorAll("a.btn").forEach(btn=>{
+  btn.addEventListener("click", e=>{
+    e.preventDefault();
+    window.location.href = btn.getAttribute("href");
+  });
+});
 </script>
 
 </body>
+
 
 </html>
