@@ -45,6 +45,50 @@
     © 2025 2025 PT Primajana Bagia Mesari
   </footer>
 
+  <script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const MAYAR_LINK = "https://primajana.myr.id/membership/primajana-tools-membership-bulanan";
+
+const supabase = createClient(
+  "https://jzrqalbhvjkgradpnbcp.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cnFhbGJodmprZ3JhZHBuYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NzQ2NTksImV4cCI6MjA4MzI1MDY1OX0.yOGN7e7Bu6Yvm1gDaF1URHF7Mjcj7aVHfJ5URHRWyaE"
+);
+
+// cek login
+const { data:{ session } } = await supabase.auth.getSession();
+if(!session){
+  location.href="../premium/login.html";
+}
+
+// cek langganan
+const { data } = await supabase
+  .from("subscriptions")
+  .select("active, expired_at")
+  .single();
+
+if(!data || !data.active){
+  document.body.innerHTML = `
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f8fafc;">
+      <div style="background:#fff;padding:50px 40px;border-radius:18px;max-width:420px;width:100%;text-align:center;
+                  box-shadow:0 20px 40px rgba(0,0,0,.12)">
+        <h2 style="margin-bottom:12px;color:#1f2937">🔒 Akses Premium</h2>
+        <p style="color:#6b7280;margin-bottom:26px;font-size:15px">
+          Fitur ini hanya tersedia untuk pengguna premium.<br>
+          Aktifkan langganan sekarang untuk membuka semua tools.
+        </p>
+        <a href="${MAYAR_LINK}" 
+           style="display:inline-block;background:#0d6efd;color:#fff;padding:12px 28px;
+                  border-radius:10px;text-decoration:none;font-weight:600">
+          Ayo Berlangganan Sekarang
+        </a>
+      </div>
+    </div>
+  `;
+}
+</script>
+
+  
   <script>
     let data = [];
     let headers = [];
