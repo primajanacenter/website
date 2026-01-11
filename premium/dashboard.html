@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Dashboard</title>
+<title>Dashboard Premium</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -17,45 +17,40 @@ body{margin:0;background:#f5f7fb;font-family:system-ui;}
 .card{
  background:#fff;border-radius:18px;padding:22px;
  box-shadow:0 8px 25px rgba(0,0,0,.05);
+ margin-bottom:22px;
 }
-.grid{
- margin-top:20px;
- display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;
-}
-.tool{
- padding:22px;border-radius:14px;border:1px solid #eee;
- text-align:center;font-weight:600;cursor:pointer;
- transition:.2s;
-}
-.tool:hover{background:#f0f5ff;}
 .btn{background:#0d6efd;color:#fff;border:none;border-radius:8px;padding:6px 16px;cursor:pointer;}
-.status{color:#198754;font-weight:700;}
-.lock{color:#dc3545;font-weight:700;}
+.status-active{color:#198754;font-weight:700;}
+.status-inactive{color:#dc3545;font-weight:700;}
+iframe{
+ width:100%;
+ min-height:520px;
+ border:none;
+ border-radius:14px;
+}
 </style>
 </head>
 <body>
 
 <div class="header">
- <b>Dashboard</b>
+ <b>Dashboard Premium</b>
  <button class="btn" onclick="logout()">Logout</button>
 </div>
 
 <div class="main">
 
+<!-- STATUS LANGGANAN -->
 <div class="card">
- Status Langganan:
- <span id="substatus" class="lock">Memuat...</span>
- <div id="countdown"></div>
- <br>
- <button id="payBtn" class="btn" style="display:none" onclick="subscribe()">Berlangganan / Perpanjang</button>
+ <b>Status Berlangganan:</b>
+ <span id="substatus" class="status-inactive">Memuat...</span><br><br>
+ <div id="expiredInfo"></div>
+ <button id="payBtn" class="btn" style="display:none;margin-top:12px" onclick="subscribe()">Berlangganan / Perpanjang</button>
 </div>
 
-<div class="grid">
- <div class="tool" onclick="openApp('app-regresi.html')">📈 Regresi</div>
- <div class="tool" onclick="openApp('app-chisquare.html')">📊 Chi-Square</div>
- <div class="tool" onclick="openApp('app-dotmap.html')">🗺 Dotmap</div>
- <div class="tool">💳 Riwayat Pembayaran</div>
- <div class="tool">🎁 Promo</div>
+<!-- LIST APLIKASI PREMIUM -->
+<div class="card">
+ <b>Daftar Aplikasi Premium</b>
+ <iframe id="appFrame" src=""></iframe>
 </div>
 
 </div>
@@ -65,21 +60,15 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 const SUPABASE_URL = "https://jzrqalbhvjkgradpnbcp.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6cnFhbGJodmprZ3JhZHBuYmNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2NzQ2NTksImV4cCI6MjA4MzI1MDY1OX0.yOGN7e7Bu6Yvm1gDaF1URHF7Mjcj7aVHfJ5URHRWyaE";
-
 const MAYAR_LINK = "https://primajana.myr.id/membership/primajana-tools-membership-bulanan";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-window.openApp = u => location.href = u;
-
-window.logout = async function(){
+window.logout = async()=>{
   await supabase.auth.signOut();
-  location.href = "login.html";
+  location.href="login.html";
 }
-
-window.subscribe = function(){
-  location.href = MAYAR_LINK;
-}
+window.subscribe = ()=> location.href = MAYAR_LINK;
 
 const { data:{ session } } = await supabase.auth.getSession();
 if(!session) location.href="login.html";
@@ -88,16 +77,21 @@ const { data } = await supabase.from("subscriptions").select("*").single();
 
 if(data && data.active){
   substatus.innerText = "AKTIF";
-  substatus.className = "status";
+  substatus.className = "status-active";
 
   const exp = new Date(data.expired_at);
-  setInterval(()=>{
-    const d = Math.max(0, Math.floor((exp - new Date()) / 86400000));
-    countdown.innerText = "Berakhir dalam " + d + " hari";
-  },1000);
+  expiredInfo.innerHTML = `
+    Masa aktif sampai:
+    <b>${exp.toLocaleDateString("id-ID",{day:"2-digit",month:"long",year:"numeric"})}</b>
+  `;
+
+  document.getElementById("appFrame").src = "beranda.html";
+
 }else{
   substatus.innerText = "TIDAK AKTIF";
-  document.getElementById("payBtn").style.display="inline-block";
+  substatus.className = "status-inactive";
+  expiredInfo.innerText = "Silakan berlangganan untuk membuka semua aplikasi premium.";
+  payBtn.style.display="inline-block";
 }
 </script>
 
