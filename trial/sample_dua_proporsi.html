@@ -279,7 +279,8 @@ body.lock-scroll {
   <div class="popup-box">
     <h2>🚀 Yuk Mulai Berlangganan Primajana</h2>
     <p>
-      Akses seluruh fitur premium hanya <b>Rp 19.000 / bulan</b>.
+      Dapatkan akses premium ke seluruh fitur Primajana.<br>
+      Mulai dari <b>Rp 19.000 / bulan</b> saja!
     </p>
     <button class="btn-premium" onclick="startSubscribe()">
       💎 Mulai Berlangganan
@@ -287,8 +288,7 @@ body.lock-scroll {
   </div>
 </div>
 
-
-
+  
   <script>
     const form = document.getElementById("twoProportionsForm");
     const resultDiv = document.getElementById("result");
@@ -404,7 +404,7 @@ window.addEventListener("load", () => {
   if(sessionStorage.getItem("premiumLocked")==="true"){
     lockPage();
   } else {
-    setTimeout(lockPage, 10000);
+    setTimeout(lockPage, 20000);
   }
 });
 </script>
