@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sample Size Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f2f4f8;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .card {
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      padding: 30px;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #333;
+      text-align: center;
+    }
+    h1 span {
+      font-size: 14px;
+      color: #777;
+      display: block;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    input:focus, select:focus {
+      border-color: #5ab0f7;
+      outline: none;
+    }
+    .tooltip {
+      font-size: 13px;
+      color: #777;
+      margin-top: 4px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .result, .history {
+      background-color: #f9f9f9;
+      padding: 15px 20px;
+      margin-top: 30px;
+      border-radius: 10px;
+      border-left: 4px solid #007bff;
+    }
+    .result strong {
+      color: #333;
+    }
+    ul {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    h2 {
+      font-size: 18px;
+      margin-top: 40px;
+      color: #444;
+    }
+    .case-study {
+      background-color: #eef6ff;
+      border-left: 4px solid #007bff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+    .case-study h2 {
+      font-size: 18px;
+      margin: 0 0 10px 0;
+      color: #007bff;
+    }
+    #downloadButtons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+    }
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px;
+      }
+    }
+    @media print {
+      button, .tooltip, #downloadButtons {
+        display: none !important;
+      }
+    }
+    
+    .popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.popup-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.popup-box h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.popup-box p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.popup-box input {
+  box-sizing: border-box;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 100%;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  margin: 1.2rem 0;
+  font-size: 1rem;
+  outline: none;
+}
+
+.popup-box button {
+  margin: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-akses {
+  background-color: #f97316;
+  color: white;
+}
+
+.btn-akses:hover {
+  background-color: #c2410c;
+}
+
+.btn-premium {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-premium:hover {
+  background-color: #388e3c;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" id="outputArea">
+      <h1>Perhitungan Besar Sampel <span>Uji T Dua Sampel Independen</span></h1>
+
+      <div class="case-study">
+        <h2>📚 Contoh Studi Kasus</h2>
+        <p>Seorang peneliti ingin mengetahui apakah terdapat perbedaan rata-rata skor ujian matematika antara siswa yang mengikuti kelas tambahan dan yang tidak. Berdasarkan data awal, standar deviasi skor di kedua kelompok diperkirakan sama, yaitu 5 poin. Peneliti ingin mendeteksi perbedaan rata-rata minimal 5 poin dengan tingkat kepercayaan 95% dan power 80%.</p>
+      </div>
+
+      <form id="tTestForm">
+        <label for="variance">Varians Populasi (σ²):</label>
+        <input type="number" step="any" id="variance" required />
+        <div class="tooltip">Contoh: 25 (jika standar deviasi = 5, maka varians = 5² = 25)</div>
+
+        <label for="difference">Perbedaan yang Diharapkan (Δ):</label>
+        <input type="number" step="any" id="difference" required />
+        <div class="tooltip">Contoh: 5 (misal ingin mendeteksi perbedaan rata-rata sebesar 5 poin)</div>
+
+        <label for="ci">Confidence Level (Zα/2):</label>
+        <select id="ci">
+          <option value="1.64">90%</option>
+          <option value="1.96" selected>95%</option>
+          <option value="2.58">99%</option>
+        </select>
+        <div class="tooltip">Pilih tingkat keyakinan (Confidence Level). 95% biasa digunakan untuk penelitian umum.</div>
+
+        <label for="power">Power (Zβ):</label>
+        <select id="power">
+          <option value="0.84" selected>80%</option>
+          <option value="1.28">90%</option>
+        </select>
+        <div class="tooltip">Pilih kekuatan uji (Power). 80% umum digunakan agar bisa mendeteksi efek dengan baik.</div>
+
+        <button type="submit">🔍 Hitung Sampel</button>
+      </form>
+
+      <div id="result" class="result" style="display:none;"></div>
+
+      <div class="history">
+        <h2>📊 Riwayat Perhitungan</h2>
+        <ul id="history"></ul>
+      </div>
+    </div>
+
+    <div id="downloadButtons">
+      <button id="downloadPNG">🖼️ Download PNG</button>
+    </div>
+
+    <footer>
+      &copy; 2025 PT Primajana Bagia Mesari
+    </footer>
+  </div>
+
+<!-- POPUP MODAL -->
+<div class="popup-overlay" id="popup-access">
+  <div class="popup-box">
+    <h2>Akses Premium</h2>
+    <p>
+      Ingin membuka seluruh fitur ini? Yuk mulai berlangganan sekarang.<br>
+      Jika Anda sudah memiliki kode akses, masukkan di bawah ini:
+    </p>
+    <input type="text" id="access-code" placeholder="Masukkan Kode Akses" />
+    <div>
+      <button class="btn-akses" onclick="checkAccess()">Gunakan Kode</button>
+      <button class="btn-premium" onclick="window.location.href='https://lynk.id/primajanaedu/2q46wjnpngky/checkout'">Berlangganan Sekarang</button>
+    </div>
+  </div>
+</div>
+
+  <script>
+    const form = document.getElementById("tTestForm");
+    const resultDiv = document.getElementById("result");
+    const historyList = document.getElementById("history");
+    const pngBtn = document.getElementById("downloadPNG");
+    const outputArea = document.getElementById("outputArea");
+
+    let history = [];
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const sigma2 = parseFloat(document.getElementById("variance").value);
+      const delta = parseFloat(document.getElementById("difference").value);
+      const zAlpha = parseFloat(document.getElementById("ci").value);
+      const zBeta = parseFloat(document.getElementById("power").value);
+
+      if (isNaN(sigma2) || sigma2 <= 0 || isNaN(delta) || delta <= 0) {
+        alert("Harap isi varians dan perbedaan dengan angka positif.");
+        return;
+      }
+
+      const nPerGroup = Math.ceil((2 * Math.pow(zAlpha + zBeta, 2) * sigma2) / Math.pow(delta, 2));
+      const nTotal = nPerGroup * 2;
+      const nTotalRecommended = Math.ceil(nTotal * 1.1);
+
+      const explanation = `
+        <strong>Hasil Perhitungan:</strong><br/>
+        n per grup = (2 × (Zα/2 + Zβ)² × σ²) / Δ²<br/>
+        = (2 × (${zAlpha} + ${zBeta})² × ${sigma2}) / ${delta}²<br/>
+        <strong>n per grup = ${nPerGroup}</strong><br/>
+        Total = ${nTotal}<br/><br/>
+        <strong>Rekomendasi:</strong><br/>
+        Tambahkan 10% cadangan sampel: <strong>${nTotalRecommended} responden total</strong>
+      `;
+
+      resultDiv.innerHTML = explanation;
+      resultDiv.style.display = "block";
+
+      const historyItem = `σ²=${sigma2}, Δ=${delta}, Zα/2=${zAlpha}, Zβ=${zBeta} → n/grup=${nPerGroup}, total=${nTotal}`;
+      history.unshift(historyItem);
+      updateHistory();
+    });
+
+    function updateHistory() {
+      historyList.innerHTML = "";
+      history.slice(0, 5).forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        historyList.appendChild(li);
+      });
+    }
+
+    pngBtn.addEventListener("click", () => {
+      html2canvas(document.querySelector('.container')).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "perhitungan-sampel-uji-t.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    });
+  </script>
+  
+  <script>
+  window.addEventListener('load', () => {
+    const alreadyAccessed = sessionStorage.getItem("hasAccess");
+    if (!alreadyAccessed) {
+      setTimeout(() => {
+        document.getElementById('popup-access').style.display = 'flex';
+      }, 20000); // 20 detik setelah halaman dimuat
+    }
+  });
+
+  function checkAccess() {
+    const code = document.getElementById('access-code').value.trim();
+    const validCode = "8188"; // Ganti sesuai kebutuhan
+    if (code === validCode) {
+      sessionStorage.setItem("hasAccess", "true");
+      document.getElementById('popup-access').style.display = 'none';
+    } else {
+      alert("Kode akses salah. Silakan coba lagi.");
+    }
+  }
+</script>
+
+</body>
+</html>
