@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dotmap (Peta Kasus)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- PapaParse -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center">
+  <div class="container max-w-5xl w-full p-6 mt-10 bg-white shadow-lg rounded-lg">
+    <h2 class="text-2xl text-center font-semibold text-gray-800 mb-4">Upload CSV dan Tampilkan Dotmap</h2>
+
+    <input type="file" id="csvFile" accept=".csv" class="px-4 py-2 border rounded-lg mb-4 w-full bg-gray-100" />
+  
+    <div id="status" class="text-gray-600 mb-4">Silakan upload file CSV berisi latitude & longitude.</div>
+
+    <div id="dependentContainer" class="mb-4 hidden">
+      <label for="dependentSelect" class="block text-gray-700 font-semibold mb-1">Pilih Variabel Dependen (warna titik):</label>
+      <select id="dependentSelect" class="w-full bg-gray-100 border px-2 py-1 rounded"></select>
+    </div>
+
+    <div id="filterContainer" class="space-y-4 hidden">
+      <h3 class="text-xl font-semibold text-gray-700">Filter Data:</h3>
+      <div id="filters"></div>
+      <button id="addFilter" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">+ Tambahkan Filter</button>
+      <button id="resetFilter" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded ml-2">Reset Filter</button>
+    </div>
+
+<br>
+  <button id="showMapBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 w-full mb-2" disabled>Tampilkan Peta & Interpretasi</button>
+
+    <div id="interpretationBox" class="mt-6 hidden">
+      <h3 class="text-xl font-semibold text-gray-700">Interpretasi:</h3>
+      <div id="interpretation" class="mt-2 bg-blue-50 p-4 rounded text-sm"></div>
+    </div>
+
+    <div id="map" class="mt-6 rounded-lg border" style="height: 500px;"></div>
+  </div>
+
+  <script>
+    const map = L.map('map').setView([-2.5, 118], 5);
+    const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles © Esri'
+    });
+    L.control.layers({ 'OpenStreetMap': osmLayer, 'Satellite': satelliteLayer }).addTo(map);
+
+    let parsedData = [], latKey, lonKey, allColumns = [], filterCount = 0, legendControl;
+    const maxFilters = 5;
+
+    function detectLatLonFields(headers) {
+      const latCandidates = ['lat', 'latitude', 'Latitude'];
+      const lonCandidates = ['lon', 'lng', 'long', 'longitude', 'Longitude'];
+      let lat = null, lon = null;
+      headers.forEach(key => {
+        const lower = key.toLowerCase();
+        if (!lat && latCandidates.includes(lower)) lat = key;
+        if (!lon && lonCandidates.includes(lower)) lon = key;
+      });
+      return { latKey: lat, lonKey: lon };
+    }
+
+    function getUniqueValues(data, column) {
+      return [...new Set(data.map(row => row[column]))].filter(Boolean);
+    }
+
+    function getCategoryColor(value, categories) {
+      const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A1FF33', '#33FFF0', '#FFC300'];
+      const idx = categories.indexOf(value);
+      return colors[idx % colors.length];
+    }
+
+    function updateLegend(data, column) {
+      const categories = getUniqueValues(data, column);
+      const freqMap = {};
+      data.forEach(row => {
+        const val = row[column];
+        freqMap[val] = (freqMap[val] || 0) + 1;
+      });
+      if (legendControl) map.removeControl(legendControl);
+      legendControl = L.control({ position: 'bottomright' });
+      legendControl.onAdd = function () {
+        const div = L.DomUtil.create('div', 'info legend bg-white p-2 rounded shadow');
+        div.innerHTML = '<strong>Legenda:</strong><br>';
+        categories.forEach(cat => {
+          const color = getCategoryColor(cat, categories);
+          const count = freqMap[cat] || 0;
+          const pct = ((count / data.length) * 100).toFixed(1);
+          div.innerHTML += `<i style="background:${color}; width:12px; height:12px; display:inline-block; margin-right:8px; border-radius:50%;"></i>${cat} ${count} (${pct}%)<br>`;
+        });
+        return div;
+      };
+      legendControl.addTo(map);
+    }
+
+    function applyFilters() {
+      const filters = [];
+      document.querySelectorAll('.filter-group').forEach(group => {
+        const column = group.querySelector('select').value;
+        const checked = [...group.querySelectorAll('input[type=checkbox]:checked')].map(cb => cb.value);
+        if (column && checked.length > 0) filters.push({ column, values: checked });
+      });
+
+      let filtered = parsedData;
+      filters.forEach(f => {
+        filtered = filtered.filter(row => f.values.includes(row[f.column]));
+      });
+
+      const depCol = document.getElementById('dependentSelect').value;
+      plotPoints(filtered, depCol);
+
+      if (filtered.length > 0 && depCol) {
+        document.getElementById('interpretationBox').style.display = 'block';
+        updateLegend(filtered, depCol);
+        updateInterpretation(filtered, depCol);
+      }
+    }
+
+    function plotPoints(data, depCol) {
+      map.eachLayer(layer => {
+        if (layer instanceof L.CircleMarker) map.removeLayer(layer);
+      });
+      const bounds = [], categories = getUniqueValues(data, depCol);
+      data.forEach(row => {
+        const lat = parseFloat(row[latKey]);
+        const lon = parseFloat(row[lonKey]);
+        if (!isNaN(lat) && !isNaN(lon)) {
+          L.circleMarker([lat, lon], {
+            radius: 5,
+            fillColor: getCategoryColor(row[depCol], categories),
+            color: "#fff",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.85
+          }).addTo(map);
+          bounds.push([lat, lon]);
+        }
+      });
+      if (bounds.length > 0) map.fitBounds(bounds, { padding: [20, 20] });
+    }
+
+    function updateInterpretation(data, column) {
+      const freqMap = {};
+      data.forEach(row => {
+        const val = row[column];
+        freqMap[val] = (freqMap[val] || 0) + 1;
+      });
+      const total = data.length;
+      const sorted = Object.entries(freqMap).sort((a, b) => b[1] - a[1]);
+      const summary = sorted.map(([cat, count]) => `${count} (${((count / total) * 100).toFixed(1)}%) dalam kategori <strong>${cat}</strong>`);
+      const sentence = `Dari ${total} titik, ${summary.join(', ').replace(/, ([^,]*)$/, ', dan $1')}.`;
+      document.getElementById('interpretation').innerHTML = sentence;
+    }
+
+    function addFilterUI() {
+      if (filterCount >= maxFilters) return;
+      filterCount++;
+      const filterEl = document.createElement('div');
+      filterEl.classList.add('filter-group', 'border', 'p-3', 'rounded');
+      const select = document.createElement('select');
+      select.className = 'mb-2 block w-full bg-gray-100 border px-2 py-1 rounded';
+      select.innerHTML = '<option disabled selected>Pilih Kolom Kategori</option>' +
+        allColumns.filter(c => c !== latKey && c !== lonKey).map(c => `<option value="${c}">${c}</option>`).join('');
+      const checkboxContainer = document.createElement('div');
+      select.addEventListener('change', () => {
+        const values = getUniqueValues(parsedData, select.value);
+        checkboxContainer.innerHTML = values.map(v => `<label class='block'><input type='checkbox' value='${v}' class='mr-2'>${v}</label>`).join('');
+      });
+      filterEl.appendChild(select);
+      filterEl.appendChild(checkboxContainer);
+      document.getElementById('filters').appendChild(filterEl);
+    }
+
+    document.getElementById('addFilter').addEventListener('click', addFilterUI);
+    document.getElementById('resetFilter').addEventListener('click', () => {
+      filterCount = 0;
+      document.getElementById('filters').innerHTML = '';
+      document.getElementById('interpretationBox').style.display = 'none';
+      if (legendControl) map.removeControl(legendControl);
+    });
+    document.getElementById('showMapBtn').addEventListener('click', applyFilters);
+
+    document.getElementById('csvFile').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          const headers = results.meta.fields;
+          const detected = detectLatLonFields(headers);
+          if (!detected.latKey || !detected.lonKey) {
+            document.getElementById('status').textContent = "Kolom latitude/longitude tidak ditemukan.";
+            return;
+          }
+          latKey = detected.latKey;
+          lonKey = detected.lonKey;
+          parsedData = results.data.filter(row => !isNaN(row[latKey]) && !isNaN(row[lonKey]));
+          allColumns = headers;
+          document.getElementById('status').textContent = `Berhasil memuat ${parsedData.length} titik.`;
+          document.getElementById('dependentContainer').style.display = 'block';
+          document.getElementById('dependentSelect').innerHTML = '<option disabled selected>Pilih variabel dependen</option>' +
+            allColumns.filter(c => c !== latKey && c !== lonKey).map(c => `<option value="${c}">${c}</option>`).join('');
+          document.getElementById('filterContainer').style.display = 'block';
+          document.getElementById('showMapBtn').disabled = false;
+          addFilterUI();
+        }
+      });
+    });
+  </script>
+</body>
+
+<footer class="text-sm text-gray-500 text-center mt-10">&copy; 2025 PT Primajana Bagia Mesari.</footer>
+
+</html>
