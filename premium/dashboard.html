@@ -103,56 +103,48 @@ const MAYAR_LINK = "https://primajana.myr.id/membership/primajana-tools-membersh
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-window.openApp = u => location.href = u;
-
-window.logout = async function(){
-  await supabase.auth.signOut();
-  location.href = "login.html";
-}
-
-window.subscribe = function(){
-  location.href = MAYAR_LINK;
-}
+window.go = u => location.href = u;
+window.logout = async()=>{ await supabase.auth.signOut(); location.href="login.html"; }
+window.subscribe = ()=> location.href = MAYAR_LINK;
 
 async function init(){
+
   const { data:{session} } = await supabase.auth.getSession();
   if(!session) return location.href="login.html";
 
-  let { data, error } = await supabase.from("subscriptions").select("*").maybeSingle();
+  const substatus = document.getElementById("substatus");
+  const expiredInfo = document.getElementById("expiredInfo");
+  const payBtn = document.getElementById("payBtn");
 
-if(!data){
-  await supabase.from("subscriptions").insert([
-    { id: session.user.id, active: false }
-  ]);
-  return location.reload();
-}
-
+  let { data } = await supabase.from("subscriptions").select("*").maybeSingle();
 
   if(!data){
-  document.getElementById("substatus").innerText = "TIDAK AKTIF";
-  document.getElementById("payBtn").style.display="inline-block";
-  return;
-}
-
-
-  const substatus = document.getElementById("substatus");
-  const countdown = document.getElementById("countdown");
-  const payBtn = document.getElementById("payBtn");
+    const { error } = await supabase.from("subscriptions").insert([
+      { id: session.user.id, active: false }
+    ]);
+    if(error){
+      substatus.innerText = "ERROR DB";
+      console.error(error);
+      return;
+    }
+    substatus.innerText = "TIDAK AKTIF";
+    payBtn.style.display="inline-block";
+    return;
+  }
 
   if(data.active){
     substatus.innerText = "AKTIF";
-    substatus.className = "status";
+    substatus.className = "badge active";
 
     const exp = new Date(data.expired_at);
-    setInterval(()=>{
-      const d = Math.max(0, Math.floor((exp - new Date()) / 86400000));
-      countdown.innerText = "Berakhir dalam " + d + " hari";
-    },1000);
+    expiredInfo.innerHTML = `Aktif sampai <b>${exp.toLocaleDateString("id-ID")}</b>`;
   } else {
     substatus.innerText = "TIDAK AKTIF";
+    substatus.className = "badge inactive";
     payBtn.style.display="inline-block";
   }
 }
 
 init();
 </script>
+
