@@ -870,6 +870,39 @@ body {
         right: 15px;
       }
     }
+    
+    .auth-action {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.btn-auth {
+  background: linear-gradient(135deg,#f97316,#fb923c);
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 28px;
+  font-weight: 700;
+  font-size: .95rem;
+  text-decoration: none;
+  box-shadow: 0 0 18px rgba(249,115,22,.6);
+  animation: pulseAuth 2.4s infinite;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-auth:hover {
+  background: #c2410c;
+  transform: scale(1.07);
+  color: #fff;
+}
+
+@keyframes pulseAuth{
+  0%,100%{box-shadow:0 0 10px rgba(249,115,22,.4)}
+  50%{box-shadow:0 0 26px rgba(249,115,22,.9)}
+}
+
+
   </style>
 </head>
 <body>
@@ -892,7 +925,14 @@ body {
   </nav>
 
  <section class="category-section">
-      <h2>Alat Analisis Data</h2>
+  <h2>Alat Analisis Data</h2>
+
+  <div class="auth-action">
+    <a href="https://primajana.com/premium/login.html" class="btn-auth">
+      <i class="bi bi-person-circle"></i> Daftar / Login untuk Akses Premium
+    </a>
+  </div>
+
       <div class="features-grid">
         <div class="feature-card">
           <h3><i class="fas fa-calculator icon"></i>Perhitungan Besar Sampel</h3>
