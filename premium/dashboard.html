@@ -118,7 +118,15 @@ async function init(){
   const { data:{session} } = await supabase.auth.getSession();
   if(!session) return location.href="login.html";
 
-  let { data } = await supabase.from("subscriptions").select("*").maybeSingle();
+  let { data, error } = await supabase.from("subscriptions").select("*").maybeSingle();
+
+if(!data){
+  await supabase.from("subscriptions").insert([
+    { id: session.user.id, active: false }
+  ]);
+  return location.reload();
+}
+
 
   if(!data){
   document.getElementById("substatus").innerText = "TIDAK AKTIF";
