@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Buku - Penerbit Primajana Bagia Mesari</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Animasi muncul */
+    @keyframes zoomIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .animate-zoomIn { animation: zoomIn 0.3s ease-out forwards; }
+
+    /* Animasi keluar */
+    @keyframes zoomOut {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.8); }
+    }
+    .animate-zoomOut { animation: zoomOut 0.3s ease-in forwards; }
+
+    /* Tombol glow */
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0px rgba(34,197,94,0.5); }
+      50% { box-shadow: 0 0 15px rgba(34,197,94,0.6); }
+    }
+    .pulse-glow { animation: pulseGlow 2.5s infinite; }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-sky-50 via-white to-blue-50 text-gray-800 min-h-screen font-sans flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md sticky top-0 z-50 transition duration-300 hover:shadow-lg">
+    <div class="max-w-6xl mx-auto flex items-center p-4">
+      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" 
+           alt="Logo Penerbit Primajana Bagia Mesari" 
+           class="h-12 mr-3 transition-transform duration-500 hover:rotate-6 hover:scale-110 drop-shadow">
+      <h1 class="text-2xl font-bold text-gray-700 tracking-wide">Penerbit Primajana Bagia Mesari</h1>
+    </div>
+  </header>
+
+  <!-- Konten Buku -->
+  <main class="max-w-5xl mx-auto p-6 flex-grow">
+    <div class="bg-white rounded-3xl shadow-lg overflow-hidden flex flex-col md:flex-row transition-all duration-700 hover:shadow-2xl">
+      
+      <!-- Cover -->
+      <div class="md:w-1/3 flex justify-center items-center bg-gray-50 p-6">
+        <img id="bookCover"
+             src="https://res.cloudinary.com/djexglfns/image/upload/v1770385462/Frontcover_whjmpp.png" 
+             alt="Cover Buku" 
+             class="cursor-pointer rounded-xl shadow-md object-contain max-h-[500px] w-full transition-transform duration-700 hover:scale-105 hover:rotate-1">
+      </div>
+      
+      <!-- Info Buku -->
+      <div class="p-8 md:w-2/3 flex flex-col space-y-6">
+        <div>
+          <h2 class="text-4xl font-serif font-bold mb-2 text-gray-900 tracking-tight">Integrasi Pembangunan Kesehatan dan SDGs: Kajian Literatur dalam Konteks Indonesia</h2>
+          <p class="text-lg text-gray-600 italic">oleh <span class="font-medium not-italic">Ngakan Putu Anom Harjana, Mellysa Kowara, Shiva Aflahiyah, Ni Luh Putu Putri Kencana, Putu Cynthia Devi Irmayanti</span></p>
+        </div>
+
+        <!-- Detail -->
+        <div class="space-y-3 border-l-4 border-green-500 pl-4">
+          <p><span class="font-semibold">Penerbit:</span> Primajana Bagia Mesari</p>
+          <p><span class="font-semibold">Tahun Terbit:</span> 2026</p>
+          <p><span class="font-semibold">ISBN:</span> XXX-XXX-XX-XXXX-X (diproses)</p>
+          <p><span class="font-semibold">Genre:</span> Buku Referensi</p>
+          <p><span class="font-semibold">Bahasa:</span> Indonesia</p>
+          <p><span class="font-semibold">Jumlah Halaman:</span> 100</p>
+          <p><span class="font-semibold">Rating:</span> ⭐⭐⭐⭐☆ (4.2/5)</p>
+        </div>
+
+        <!-- Sinopsis -->
+        <div>
+          <h3 class="text-2xl font-serif font-semibold mb-3 text-gray-800">Sinopsis</h3>
+          <p class="text-gray-700 leading-relaxed">
+            Buku Integrasi Pembangunan Kesehatan dan SDGs: Kajian Literatur dalam Konteks Indonesia membahas peran strategis kesehatan dalam agenda Sustainable Development Goals (SDGs) serta tantangan integrasinya dalam pembangunan nasional. Melalui kajian literatur yang sistematis, buku ini mengulas kerangka konseptual, kebijakan, capaian, dan kesenjangan pembangunan kesehatan di Indonesia, serta menawarkan arah strategis untuk memperkuat pencapaian target kesehatan menuju 2030. Buku ini ditujukan bagi akademisi, mahasiswa, praktisi, dan pembuat kebijakan yang membutuhkan rujukan ringkas dan berbasis bukti mengenai pembangunan kesehatan berkelanjutan di Indonesia.
+          </p>
+        </div>
+
+        <!-- Tombol -->
+        <div class="pt-4">
+          <a href="https://wa.me/+6285935201571"
+             target="_blank"
+             class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white px-8 py-3 rounded-full shadow-md hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out pulse-glow">
+            Pesan Sekarang
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Pop-up -->
+  <div id="coverModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
+    <div id="modalContent" class="bg-white rounded-2xl shadow-2xl p-6 w-11/12 md:w-2/3 lg:w-1/2 relative">
+      <button id="closeModal" class="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-2xl">&times;</button>
+      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1757420316/WhatsApp_Image_2025-09-09_at_7.14.48_PM_ihfq8b.jpg" 
+           alt="Cover Buku Popup"
+           class="rounded-xl shadow-md mb-6 w-full max-h-[80vh] object-contain">
+      <div class="text-center">
+        <a href="https://play.google.com/store/books/details?id=Vw-HEQAAQBAJ"
+           target="_blank"
+           class="inline-block bg-green-500 text-white px-6 py-3 rounded-full shadow-md hover:bg-green-600 hover:shadow-xl transform hover:scale-105 transition">
+          Pesan Sekarang
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 text-gray-600 text-center py-6 mt-12">
+    <p class="text-sm">&copy; 2026 Penerbit Primajana Bagia Mesari. </p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const cover = document.getElementById('bookCover');
+    const modal = document.getElementById('coverModal');
+    const modalContent = document.getElementById('modalContent');
+    const closeBtn = document.getElementById('closeModal');
+
+    cover.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      modalContent.classList.remove('animate-zoomOut');
+      modalContent.classList.add('animate-zoomIn');
+    });
+
+    function closeModal() {
+      modalContent.classList.remove('animate-zoomIn');
+      modalContent.classList.add('animate-zoomOut');
+      setTimeout(() => {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  </script>
+
+</body>
+</html>
