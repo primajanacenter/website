@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Sesi 8 – Simulasi SKB CAT & Pembahasan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --warning:#f59e0b;
+  --bg:#f8fafc;
+  --card:#ffffff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.8;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:50px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:820px;margin:12px auto 0;opacity:.95}
+
+/* CONTAINER */
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:32px;
+  margin-bottom:32px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+  animation:fadeUp .6s ease;
+}
+
+.card h2{margin-top:0;color:var(--primary)}
+.card h3{color:#334155}
+
+/* HIGHLIGHT */
+.highlight{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:18px;
+  border-radius:12px;
+  margin:24px 0;
+}
+
+/* CASE */
+.case{
+  background:#f1f5f9;
+  padding:20px;
+  border-radius:12px;
+  margin:20px 0;
+}
+
+/* QUESTION */
+.question{
+  margin:20px 0;
+}
+
+.option{
+  display:block;
+  padding:12px;
+  margin-bottom:10px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.option:hover{
+  background:#f8fafc;
+}
+
+/* RESULT */
+.result{
+  display:none;
+  margin-top:20px;
+}
+
+/* BUTTON */
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:12px 20px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+button.alt{background:#64748b}
+button.warn{background:var(--warning)}
+button:hover{opacity:.9}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Sesi 8 – Simulasi SKB CAT & Pembahasan</h1>
+  <p>Melatih penalaran akademik berbasis kasus dan mengevaluasi kesiapan SKB CAT</p>
+</header>
+
+<div class="container">
+
+<!-- TUJUAN -->
+<div class="card">
+<h2>🎯 Tujuan Pembelajaran</h2>
+<ul>
+  <li>Mengalami simulasi SKB CAT berbasis aplikasi konsep</li>
+  <li>Mengidentifikasi pola soal SKB CAT</li>
+  <li>Memahami alasan jawaban terbaik dipilih</li>
+  <li>Menilai kesiapan akademik menuju tahap akhir seleksi</li>
+</ul>
+</div>
+
+<!-- MINDSET -->
+<div class="card">
+<h2>📌 Mindset Simulasi SKB CAT</h2>
+<p>
+Simulasi ini bertujuan untuk:
+</p>
+<ul>
+  <li>Melatih berpikir cepat dan tepat</li>
+  <li>Mengaitkan teori dengan konteks nyata</li>
+  <li>Menghindari jawaban “terlihat pintar tapi tidak relevan”</li>
+</ul>
+
+<div class="highlight">
+🎯 Prinsip utama:  
+<strong>Jawaban terbaik = paling relevan + paling aplikatif.</strong>
+</div>
+</div>
+
+<!-- SIMULASI -->
+<div class="card">
+<h2>🧪 Simulasi Soal SKB CAT</h2>
+
+<div class="question">
+<p><strong>Soal:</strong><br>
+Dalam proses pembelajaran, dosen menemukan bahwa mahasiswa pasif dan kurang terlibat
+dalam diskusi kelas. Pendekatan yang PALING tepat adalah:</p>
+
+<label class="option">
+  <input type="radio" name="q1" value="0">
+  Menyampaikan materi secara lebih rinci melalui ceramah
+</label>
+
+<label class="option">
+  <input type="radio" name="q1" value="1">
+  Menggunakan metode pembelajaran aktif berbasis diskusi dan studi kasus
+</label>
+
+<label class="option">
+  <input type="radio" name="q1" value="0">
+  Memberikan tugas tambahan individu tanpa diskusi
+</label>
+
+<label class="option">
+  <input type="radio" name="q1" value="0">
+  Mengurangi interaksi agar materi selesai tepat waktu
+</label>
+
+<button onclick="checkAnswer()">Kunci Jawaban & Pembahasan</button>
+
+<div class="result" id="resultBox">
+  <div class="highlight">
+    ✅ <strong>Jawaban terbaik:</strong>  
+    Menggunakan metode pembelajaran aktif berbasis diskusi dan studi kasus.
+  </div>
+  <p>
+    <strong>Alasan:</strong><br>
+    Jawaban ini menunjukkan pemahaman teori pembelajaran aktif dan penerapannya
+    dalam konteks kelas nyata. Opsi lain bersifat pasif atau tidak menyelesaikan masalah inti.
+  </p>
+</div>
+
+</div>
+</div>
+
+<!-- EVALUASI -->
+<div class="card">
+<h2>📊 Evaluasi Kesiapan SKB CAT</h2>
+<ul>
+  <li>Apakah Anda langsung mengenali konsep inti?</li>
+  <li>Apakah Anda membaca konteks sebelum memilih jawaban?</li>
+  <li>Apakah jawaban Anda aplikatif, bukan deskriptif?</li>
+</ul>
+
+<div class="case">
+<strong>Refleksi:</strong><br>
+Jika Anda ragu memilih jawaban aplikatif, berarti masih perlu penguatan konsep inti (Sesi 7).
+</div>
+</div>
+
+<!-- KESALAHAN -->
+<div class="card">
+<h2>🚫 Kesalahan Umum Saat SKB CAT</h2>
+<ol>
+  <li>Menjawab terlalu teoritis</li>
+  <li>Memilih jawaban “terdengar ilmiah” tapi tidak relevan</li>
+  <li>Tidak membaca konteks soal secara utuh</li>
+  <li>Terpaku pada istilah, bukan makna</li>
+</ol>
+</div>
+
+<!-- TRANSISI -->
+<div class="card">
+<h2>➡️ Transisi ke SKB Non-CAT</h2>
+<p>
+Jika SKB CAT menguji <strong>apa yang Anda pahami</strong>,  
+maka SKB Non-CAT menguji <strong>siapa Anda sebagai dosen ASN</strong>.
+</p>
+
+<div class="highlight">
+🎯 Sesi berikutnya akan fokus pada:
+<ul>
+  <li>Pedagogik</li>
+  <li>Tri Dharma Perguruan Tinggi</li>
+  <li>Wawancara dan microteaching</li>
+</ul>
+</div>
+</div>
+
+<!-- OUTPUT -->
+<div class="card">
+<h2>📌 Output Sesi</h2>
+<ul>
+  <li>Pengalaman simulasi SKB CAT</li>
+  <li>Pemahaman pola soal aplikasi</li>
+  <li>Kesiapan mental menuju SKB Non-CAT</li>
+</ul>
+
+<div class="highlight">
+🎯 <strong>SKB CAT adalah ujian kedewasaan akademik.</strong>
+</div>
+</div>
+
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+function checkAnswer(){
+  const selected = document.querySelector('input[name="q1"]:checked');
+  if(!selected){
+    alert("Silakan pilih jawaban terlebih dahulu.");
+    return;
+  }
+  document.getElementById("resultBox").style.display = "block";
+}
+</script>
+
+</body>
+</html>
