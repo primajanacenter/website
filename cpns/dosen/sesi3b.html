@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Sesi 3 – Contoh & Studi Kasus TIU </title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --highlight:#fff7ed;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.9;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:48px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:920px;margin:12px auto 0;opacity:.95}
+
+/* CONTAINER */
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 14px 36px rgba(0,0,0,.07);
+}
+
+/* READABLE BLOCK */
+.readable > *{
+  transition:background .35s, box-shadow .35s;
+  padding:6px 8px;
+  border-radius:8px;
+}
+
+.reading{
+  background:var(--highlight);
+  box-shadow:inset 0 0 0 2px #fdba74;
+}
+
+/* BOXES */
+.highlight-box{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:20px;
+  border-radius:14px;
+  margin:26px 0;
+}
+
+.case{
+  background:#f1f5f9;
+  padding:22px;
+  border-radius:14px;
+  margin:26px 0;
+}
+
+/* CONTROLS */
+.controls{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:24px;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+button.alt{background:#64748b}
+button.stop{background:#dc2626}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Sesi 3 – Contoh & Studi Kasus TIU</h1>
+  <p>Melatih cara berpikir logis, numerik cepat, dan strategi waktu dalam TIU</p>
+</header>
+
+<div class="container">
+
+<div class="controls">
+  <button onclick="startReading()">🔊 Bacakan</button>
+  <button class="alt" onclick="pauseReading()">⏸ Jeda</button>
+  <button class="stop" onclick="stopReading()">⏹ Hentikan</button>
+</div>
+
+<div class="card readable" id="content">
+
+<h2>Pendahuluan: TIU Bukan Tes Matematika Sulit</h2>
+<p>
+Banyak peserta CPNS menganggap Tes Intelegensia Umum sebagai bagian paling menakutkan
+karena identik dengan hitung-hitungan dan logika abstrak. Akibatnya, mereka merasa
+tertekan sejak awal dan kehilangan banyak waktu pada soal-soal tertentu.
+</p>
+
+<div class="highlight-box">
+Padahal, TIU dirancang untuk menilai <strong>cara berpikir logis, sistematis,
+dan efisien</strong>, bukan kemampuan matematika tingkat lanjut.
+</div>
+
+<h2>Studi Kasus 1: Terlalu Pintar tapi Kehabisan Waktu</h2>
+
+<div class="case">
+Peserta E memiliki latar belakang teknik dan sangat mahir berhitung.
+Ia mencoba menyelesaikan semua soal TIU dengan perhitungan lengkap.
+</div>
+
+<p>
+Saat ujian, Peserta E menghabiskan waktu terlalu lama pada beberapa soal numerik
+yang kompleks. Akibatnya, banyak soal mudah di bagian akhir tidak sempat dikerjakan.
+</p>
+
+<div class="highlight-box">
+<strong>Analisis:</strong><br>
+Kesalahan Peserta E bukan pada kemampuan logika,
+melainkan pada <strong>manajemen waktu dan strategi memilih soal</strong>.
+</div>
+
+<h2>Studi Kasus 2: Strategi Sederhana yang Efektif</h2>
+
+<div class="case">
+Peserta F tidak merasa unggul dalam matematika.
+Namun, ia melatih numerik dasar dan logika sederhana secara konsisten.
+</div>
+
+<p>
+Dalam ujian, Peserta F melewati soal yang terlihat panjang,
+mengerjakan soal-soal mudah terlebih dahulu,
+dan kembali ke soal sulit jika waktu memungkinkan.
+</p>
+
+<div class="highlight-box">
+Hasilnya, Peserta F memperoleh skor TIU lebih tinggi
+karena <strong>memaksimalkan soal yang bisa dijawab cepat dan benar</strong>.
+</div>
+
+<h2>Logika Analitis: Cari Kesimpulan Aman</h2>
+
+<p>
+Pada soal penalaran logis, kesalahan umum peserta adalah menarik kesimpulan
+yang terlalu jauh dari informasi yang diberikan.
+</p>
+
+<div class="case">
+<strong>Contoh pola soal:</strong><br>
+Semua dosen adalah pendidik.  
+Sebagian pendidik adalah peneliti.
+</div>
+
+<div class="highlight-box">
+Kesimpulan yang aman:
+<strong>sebagian dosen mungkin peneliti</strong>,
+bukan “semua dosen adalah peneliti”.
+</div>
+
+<h2>Numerik Cepat: Gunakan Logika, Bukan Rumus Panjang</h2>
+
+<p>
+Sebagian besar soal numerik TIU dapat diselesaikan
+dengan pendekatan logika sederhana dan perkiraan cepat.
+</p>
+
+<div class="case">
+<strong>Contoh:</strong><br>
+Jika 20% dari suatu bilangan adalah 40, maka bilangan tersebut adalah?
+</div>
+
+<div class="highlight-box">
+Strategi cepat:
+20% = 1/5 → 40 × 5 = <strong>200</strong>.
+</div>
+
+<h2>Analogi Verbal: Pahami Hubungan, Bukan Kata</h2>
+
+<p>
+Soal analogi sering menjebak peserta yang hanya melihat kesamaan kata,
+bukan hubungan makna.
+</p>
+
+<div class="case">
+<strong>Contoh:</strong><br>
+Guru : Murid = Dokter : ?
+</div>
+
+<div class="highlight-box">
+Hubungan profesi → objek layanan  
+Jawaban tepat: <strong>Pasien</strong>.
+</div>
+
+<h2>Refleksi Strategis TIU</h2>
+
+<p>
+Setelah mempelajari studi kasus TIU, peserta diharapkan merefleksikan:
+</p>
+
+<ul>
+  <li>Apakah saya terlalu lama di satu soal?</li>
+  <li>Apakah saya memprioritaskan soal yang bisa dijawab cepat?</li>
+  <li>Apakah saya sudah berani melewati soal sulit?</li>
+</ul>
+
+<div class="highlight-box">
+<strong>Pesan kunci Sesi 3:</strong><br>
+Skor TIU tinggi diperoleh dari <strong>strategi dan efisiensi</strong>,
+bukan dari mengerjakan semua soal dengan sempurna.
+</div>
+
+</div>
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+let elements = [];
+let index = 0;
+let synth = window.speechSynthesis;
+let currentUtterance = null;
+
+function collectElements(){
+  elements = Array.from(document.querySelectorAll(
+    "#content p, #content li, #content h2, #content .highlight-box, #content .case"
+  ));
+}
+
+function clearHighlight(){
+  elements.forEach(el => el.classList.remove("reading"));
+}
+
+function startReading(){
+  stopReading();
+  collectElements();
+  index = 0;
+  readNext();
+}
+
+function readNext(){
+  if(index >= elements.length) return;
+
+  clearHighlight();
+  const el = elements[index];
+  el.classList.add("reading");
+
+  currentUtterance = new SpeechSynthesisUtterance(el.innerText);
+  currentUtterance.lang = "id-ID";
+  currentUtterance.rate = 1;
+  currentUtterance.pitch = 1;
+  currentUtterance.onend = () => {
+    index++;
+    readNext();
+  };
+
+  synth.speak(currentUtterance);
+}
+
+function pauseReading(){
+  if(synth.speaking) synth.pause();
+}
+
+function stopReading(){
+  if(synth.speaking || synth.paused){
+    synth.cancel();
+  }
+  clearHighlight();
+}
+</script>
+
+</body>
+</html>
