@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Sesi 5 – Simulasi SKD Full CAT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --danger:#dc2626;
+  --bg:#f8fafc;
+  --card:#ffffff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.8;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:50px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:800px;margin:12px auto 0;opacity:.95}
+
+/* CONTAINER */
+.container{
+  max-width:1100px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:32px;
+  margin-bottom:32px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+  animation:fadeUp .6s ease;
+}
+
+.card h2{margin-top:0;color:var(--primary)}
+.card h3{color:#334155}
+
+/* HIGHLIGHT */
+.highlight{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:18px;
+  border-radius:12px;
+  margin:24px 0;
+}
+
+/* CASE */
+.case{
+  background:#f1f5f9;
+  padding:20px;
+  border-radius:12px;
+  margin:20px 0;
+}
+
+/* SCORE BOX */
+.score{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+
+.score div{
+  background:#f8fafc;
+  border-radius:12px;
+  padding:20px;
+  text-align:center;
+  border:1px solid #e5e7eb;
+}
+
+/* BUTTON */
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:12px 20px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:1rem;
+}
+
+button.alt{background:#64748b}
+button.danger{background:var(--danger)}
+button:hover{opacity:.9}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Sesi 5 – Simulasi SKD Full CAT</h1>
+  <p>Mengukur kesiapan nyata, menganalisis skor, dan menyusun strategi perbaikan</p>
+</header>
+
+<div class="container">
+
+<!-- TUJUAN -->
+<div class="card">
+<h2>🎯 Tujuan Pembelajaran</h2>
+<ul>
+  <li>Mengalami simulasi SKD seperti ujian CAT sesungguhnya</li>
+  <li>Mengevaluasi skor TWK, TIU, dan TKP secara objektif</li>
+  <li>Mengidentifikasi kelemahan utama peserta</li>
+  <li>Menyusun strategi perbaikan berbasis data</li>
+</ul>
+</div>
+
+<!-- MINDSET -->
+<div class="card">
+<h2>📌 Mindset Simulasi SKD</h2>
+<p>
+Simulasi bukan untuk mencari nilai sempurna, tetapi untuk:
+</p>
+<ul>
+  <li>Mengukur kesiapan aktual</li>
+  <li>Melatih fokus & stamina</li>
+  <li>Menguji strategi waktu</li>
+</ul>
+
+<div class="highlight">
+🎯 Prinsip utama: <strong>Simulasi jujur → evaluasi tajam → perbaikan cepat.</strong>
+</div>
+</div>
+
+<!-- STRUKTUR -->
+<div class="card">
+<h2>🧭 Struktur Simulasi SKD</h2>
+<ul>
+  <li>TWK – 30 soal</li>
+  <li>TIU – 35 soal</li>
+  <li>TKP – 45 soal</li>
+  <li>Total waktu: 100 menit</li>
+</ul>
+
+<div class="case">
+<strong>Aturan emas simulasi:</strong><br>
+Kerjakan seperti ujian asli. Jangan berhenti, jangan buka catatan.
+</div>
+</div>
+
+<!-- INPUT SKOR -->
+<div class="card">
+<h2>📊 Input Skor Simulasi</h2>
+<p>Masukkan hasil simulasi Anda:</p>
+
+<div class="score">
+  <div>
+    <h3>TWK</h3>
+    <input type="number" id="twk" placeholder="0–150">
+  </div>
+  <div>
+    <h3>TIU</h3>
+    <input type="number" id="tiu" placeholder="0–175">
+  </div>
+  <div>
+    <h3>TKP</h3>
+    <input type="number" id="tkp" placeholder="0–225">
+  </div>
+</div>
+
+<br>
+<button onclick="analyze()">Analisis Skor</button>
+</div>
+
+<!-- HASIL -->
+<div class="card" id="result" style="display:none;">
+<h2>📈 Analisis Kesiapan</h2>
+<p id="summary"></p>
+
+<div class="highlight" id="recommendation"></div>
+</div>
+
+<!-- STRATEGI -->
+<div class="card">
+<h2>⚖️ Strategi Perbaikan Cepat</h2>
+<ul>
+  <li>TWK rendah → perkuat pemahaman nilai & konteks</li>
+  <li>TIU rendah → latih logika & numerik cepat</li>
+  <li>TKP rendah → ubah cara berpikir, bukan hafalan</li>
+</ul>
+
+<div class="case">
+<strong>Catatan penting:</strong><br>
+Naik 10–20 poin TKP sering lebih mudah dibandingkan menaikkan TWK/TIU.
+</div>
+</div>
+
+<!-- KESALAHAN -->
+<div class="card">
+<h2>🚫 Kesalahan Fatal Saat Simulasi</h2>
+<ol>
+  <li>Tidak mengukur waktu</li>
+  <li>Menghentikan simulasi di tengah</li>
+  <li>Tidak menganalisis hasil</li>
+  <li>Mengulang simulasi tanpa strategi baru</li>
+</ol>
+</div>
+
+<!-- OUTPUT -->
+<div class="card">
+<h2>📌 Output Sesi</h2>
+<ul>
+  <li>Skor SKD aktual</li>
+  <li>Diagnosis kekuatan & kelemahan</li>
+  <li>Strategi belajar lanjutan (Sesi 6+)</li>
+</ul>
+
+<div class="highlight">
+🎯 <strong>Jika SKD adalah pintu, simulasi adalah kuncinya.</strong>
+</div>
+</div>
+
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+function analyze(){
+  const twk = Number(document.getElementById('twk').value);
+  const tiu = Number(document.getElementById('tiu').value);
+  const tkp = Number(document.getElementById('tkp').value);
+
+  const total = twk + tiu + tkp;
+
+  let msg = `Total skor Anda: <strong>${total}</strong><br>`;
+  let rec = "";
+
+  if(twk < 65){
+    rec += "🔴 TWK perlu penguatan konsep nilai dan konteks.<br>";
+  }
+  if(tiu < 80){
+    rec += "🔴 TIU perlu latihan logika & numerik cepat.<br>";
+  }
+  if(tkp < 140){
+    rec += "🔴 TKP perlu perubahan pola pikir ASN.<br>";
+  }
+  if(rec === ""){
+    rec = "🟢 Kesiapan SKD sangat baik. Fokus ke SKB.";
+  }
+
+  document.getElementById('summary').innerHTML = msg;
+  document.getElementById('recommendation').innerHTML = rec;
+  document.getElementById('result').style.display = "block";
+}
+</script>
+
+</body>
+</html>
