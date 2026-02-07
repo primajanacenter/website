@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Sesi 5 – Simulasi SKD & Analisis Skor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --highlight:#fff7ed;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.9;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:48px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:940px;margin:12px auto 0;opacity:.95}
+
+/* CONTAINER */
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 14px 36px rgba(0,0,0,.07);
+}
+
+/* READABLE BLOCK */
+.readable > *{
+  transition:background .35s, box-shadow .35s;
+  padding:6px 8px;
+  border-radius:8px;
+}
+
+.reading{
+  background:var(--highlight);
+  box-shadow:inset 0 0 0 2px #fdba74;
+}
+
+/* BOXES */
+.highlight-box{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:20px;
+  border-radius:14px;
+  margin:26px 0;
+}
+
+.case{
+  background:#f1f5f9;
+  padding:22px;
+  border-radius:14px;
+  margin:26px 0;
+}
+
+/* CONTROLS */
+.controls{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:24px;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+button.alt{background:#64748b}
+button.stop{background:#dc2626}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Sesi 5 – Simulasi SKD & Analisis Skor</h1>
+  <p>Belajar membaca hasil simulasi dan menyusun strategi perbaikan yang tepat</p>
+</header>
+
+<div class="container">
+
+<div class="controls">
+  <button onclick="startReading()">🔊 Bacakan</button>
+  <button class="alt" onclick="pauseReading()">⏸ Jeda</button>
+  <button class="stop" onclick="stopReading()">⏹ Hentikan</button>
+</div>
+
+<div class="card readable" id="content">
+
+<h2>Pendahuluan: Simulasi Bukan Sekadar Latihan</h2>
+<p>
+Banyak peserta CPNS mengikuti simulasi SKD hanya untuk mengetahui nilai akhir,
+tanpa melakukan analisis lebih lanjut. Akibatnya, simulasi tidak memberikan
+perubahan signifikan terhadap hasil ujian sesungguhnya.
+</p>
+
+<div class="highlight-box">
+Simulasi SKD seharusnya diperlakukan sebagai
+<strong>alat diagnosis strategi</strong>, bukan sekadar latihan soal.
+</div>
+
+<h2>Studi Kasus 1: Nilai Tinggi tapi Tidak Aman</h2>
+
+<div class="case">
+Peserta I mengikuti simulasi SKD dan memperoleh total skor cukup tinggi.
+Namun, nilai TKP hanya sedikit di atas passing grade,
+sementara TWK dan TIU relatif aman.
+</div>
+
+<p>
+Peserta I merasa optimis karena total skor besar,
+tetapi mengabaikan fakta bahwa TKP memiliki risiko tinggi
+jika terjadi sedikit penurunan performa.
+</p>
+
+<div class="highlight-box">
+<strong>Analisis:</strong><br>
+Total skor tinggi tidak menjamin kelulusan jika salah satu komponen
+berada di batas minimal.
+</div>
+
+<h2>Studi Kasus 2: Skor Sedang tapi Stabil</h2>
+
+<div class="case">
+Peserta J memperoleh skor SKD yang tidak terlalu tinggi,
+namun semua komponen (TWK, TIU, TKP) berada jauh di atas passing grade.
+</div>
+
+<p>
+Peserta J menggunakan hasil simulasi untuk mengidentifikasi
+kelemahan kecil dan melakukan perbaikan terfokus.
+</p>
+
+<div class="highlight-box">
+Peserta J berada dalam posisi lebih aman karena
+<strong>risiko kegagalan lebih rendah</strong>.
+</div>
+
+<h2>Cara Membaca Hasil Simulasi SKD</h2>
+
+<p>
+Analisis hasil simulasi sebaiknya tidak hanya melihat total skor,
+tetapi memperhatikan pola berikut:
+</p>
+
+<ul>
+  <li>Komponen paling lemah</li>
+  <li>Selisih skor dengan passing grade</li>
+  <li>Konsistensi performa antar simulasi</li>
+</ul>
+
+<div class="highlight-box">
+Prinsip utama:
+<strong>perbaiki bagian paling berisiko terlebih dahulu</strong>.
+</div>
+
+<h2>Strategi Remedial Berbasis Simulasi</h2>
+
+<p>
+Setelah kelemahan teridentifikasi, peserta perlu menyusun
+strategi perbaikan yang spesifik.
+</p>
+
+<div class="case">
+<strong>Contoh:</strong><br>
+Jika TKP lemah → latih pola nilai ASN  
+Jika TIU lemah → fokus soal cepat  
+Jika TWK lemah → pahami konteks nilai kebangsaan
+</div>
+
+<div class="highlight-box">
+Hindari memperbaiki semua bagian sekaligus.
+<strong>Fokus pada 1–2 titik kritis.</strong>
+</div>
+
+<h2>Simulasi sebagai Latihan Mental</h2>
+
+<p>
+Simulasi SKD juga berfungsi melatih ketahanan mental,
+manajemen waktu, dan fokus dalam tekanan.
+</p>
+
+<ul>
+  <li>Biasakan mengerjakan simulasi full</li>
+  <li>Gunakan waktu sesuai kondisi CAT</li>
+  <li>Evaluasi emosi saat menghadapi soal sulit</li>
+</ul>
+
+<div class="highlight-box">
+Semakin realistis simulasi,
+semakin kecil kejutan di hari ujian.
+</div>
+
+<h2>Refleksi Strategis Sesi 5</h2>
+
+<p>
+Setelah mempelajari studi kasus simulasi SKD,
+peserta diharapkan merefleksikan:
+</p>
+
+<ul>
+  <li>Bagian mana yang paling berisiko bagi saya?</li>
+  <li>Apakah saya terlalu fokus pada total skor?</li>
+  <li>Strategi remedial apa yang harus saya lakukan?</li>
+</ul>
+
+<div class="highlight-box">
+<strong>Pesan kunci Sesi 5:</strong><br>
+Simulasi SKD bernilai jika diikuti
+<strong>analisis dan perbaikan strategi</strong>.
+</div>
+
+</div>
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+let elements = [];
+let index = 0;
+let synth = window.speechSynthesis;
+let currentUtterance = null;
+
+function collectElements(){
+  elements = Array.from(document.querySelectorAll(
+    "#content p, #content li, #content h2, #content .highlight-box, #content .case"
+  ));
+}
+
+function clearHighlight(){
+  elements.forEach(el => el.classList.remove("reading"));
+}
+
+function startReading(){
+  stopReading();
+  collectElements();
+  index = 0;
+  readNext();
+}
+
+function readNext(){
+  if(index >= elements.length) return;
+
+  clearHighlight();
+  const el = elements[index];
+  el.classList.add("reading");
+
+  currentUtterance = new SpeechSynthesisUtterance(el.innerText);
+  currentUtterance.lang = "id-ID";
+  currentUtterance.rate = 1;
+  currentUtterance.pitch = 1;
+  currentUtterance.onend = () => {
+    index++;
+    readNext();
+  };
+
+  synth.speak(currentUtterance);
+}
+
+function pauseReading(){
+  if(synth.speaking) synth.pause();
+}
+
+function stopReading(){
+  if(synth.speaking || synth.paused){
+    synth.cancel();
+  }
+  clearHighlight();
+}
+</script>
+
+</body>
+</html>
