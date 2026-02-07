@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Sesi 6 – Contoh & Studi Kasus SKB CPNS Dosen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --highlight:#fff7ed;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.9;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:48px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:960px;margin:12px auto 0;opacity:.95}
+
+/* CONTAINER */
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 14px 36px rgba(0,0,0,.07);
+}
+
+/* READABLE BLOCK */
+.readable > *{
+  transition:background .35s, box-shadow .35s;
+  padding:6px 8px;
+  border-radius:8px;
+}
+
+.reading{
+  background:var(--highlight);
+  box-shadow:inset 0 0 0 2px #fdba74;
+}
+
+/* BOXES */
+.highlight-box{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:20px;
+  border-radius:14px;
+  margin:26px 0;
+}
+
+.case{
+  background:#f1f5f9;
+  padding:22px;
+  border-radius:14px;
+  margin:26px 0;
+}
+
+/* CONTROLS */
+.controls{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:24px;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+button.alt{background:#64748b}
+button.stop{background:#dc2626}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Sesi 6 – Contoh & Studi Kasus SKB CPNS Dosen</h1>
+  <p>Memahami SKB sebagai tahap penentu akhir dan transisi dari peserta menjadi calon dosen ASN</p>
+</header>
+
+<div class="container">
+
+<div class="controls">
+  <button onclick="startReading()">🔊 Bacakan</button>
+  <button class="alt" onclick="pauseReading()">⏸ Jeda</button>
+  <button class="stop" onclick="stopReading()">⏹ Hentikan</button>
+</div>
+
+<div class="card readable" id="content">
+
+<h2>Pendahuluan: Kesalahan Besar Setelah Lolos SKD</h2>
+<p>
+Banyak peserta CPNS merasa perjuangan utama telah selesai setelah lolos SKD.
+Akibatnya, mereka terlambat mempersiapkan diri untuk Seleksi Kompetensi Bidang,
+padahal justru pada tahap inilah kelulusan akhir ditentukan.
+</p>
+
+<div class="highlight-box">
+SKD hanya berfungsi sebagai <strong>penyaring</strong>,  
+sedangkan SKB adalah <strong>penentu peringkat dan kelulusan</strong>.
+</div>
+
+<h2>Mengenal Struktur SKB CPNS Dosen</h2>
+
+<p>
+SKB CPNS Dosen umumnya terdiri dari dua bentuk utama:
+</p>
+
+<ul>
+  <li><strong>SKB CAT</strong> – menguji substansi keilmuan</li>
+  <li><strong>SKB Non-CAT</strong> – menguji pedagogik, sikap, dan kesiapan sebagai dosen ASN</li>
+</ul>
+
+<div class="highlight-box">
+Kesalahan umum peserta adalah hanya fokus pada salah satu
+dan mengabaikan yang lain.
+</div>
+
+<h2>Studi Kasus 1: Unggul SKD, Gagal SKB</h2>
+
+<div class="case">
+Peserta K memperoleh skor SKD sangat tinggi dan berada di peringkat atas.
+Ia hanya mempersiapkan SKB CAT dengan belajar ulang materi keilmuannya.
+</div>
+
+<p>
+Saat SKB Non-CAT, Peserta K tidak mampu menjelaskan konsep pedagogik,
+Tri Dharma, dan visi sebagai dosen ASN secara terstruktur.
+</p>
+
+<div class="highlight-box">
+<strong>Analisis:</strong><br>
+Keunggulan akademik tidak cukup tanpa
+<strong>kemampuan pedagogik dan sikap profesional</strong>.
+</div>
+
+<h2>Studi Kasus 2: Persiapan Seimbang yang Berbuah Lulus</h2>
+
+<div class="case">
+Peserta L lolos SKD dengan skor sedang.
+Ia langsung mempelajari format SKB CAT dan Non-CAT secara bersamaan.
+</div>
+
+<p>
+Peserta L menyiapkan materi keilmuan inti,
+konsep OBE, Tri Dharma, serta narasi diri sebagai dosen ASN.
+</p>
+
+<div class="highlight-box">
+Hasilnya, Peserta L unggul di SKB dan
+<strong>menyalip peserta dengan skor SKD lebih tinggi</strong>.
+</div>
+
+<h2>Ekspektasi Penilaian dalam SKB</h2>
+
+<p>
+Dalam SKB, penilai tidak hanya mencari jawaban benar,
+tetapi menilai kualitas berpikir dan sikap profesional.
+</p>
+
+<ul>
+  <li>Apakah jawaban aplikatif?</li>
+  <li>Apakah mencerminkan peran dosen?</li>
+  <li>Apakah sejalan dengan nilai ASN?</li>
+</ul>
+
+<div class="highlight-box">
+Prinsip utama:
+<strong>jawaban dewasa dan relevan selalu unggul</strong>.
+</div>
+
+<h2>Kesalahan Umum Peserta SKB</h2>
+
+<p>
+Beberapa kesalahan yang sering menjatuhkan peserta pada tahap SKB antara lain:
+</p>
+
+<ul>
+  <li>Berpikir SKB hanya soal akademik</li>
+  <li>Terlambat mempersiapkan Non-CAT</li>
+  <li>Menjawab tanpa struktur</li>
+  <li>Tidak memahami peran dosen ASN</li>
+</ul>
+
+<div class="highlight-box">
+Kesalahan ini bukan karena kurang pintar,
+tetapi karena <strong>salah memahami tujuan SKB</strong>.
+</div>
+
+<h2>Refleksi Strategis Sesi 6</h2>
+
+<p>
+Setelah mempelajari studi kasus SKB,
+peserta diharapkan melakukan refleksi berikut:
+</p>
+
+<ul>
+  <li>Apakah saya sudah siap untuk SKB CAT dan Non-CAT?</li>
+  <li>Bagian mana yang paling lemah bagi saya?</li>
+  <li>Kapan saya mulai mempersiapkan pedagogik dan wawancara?</li>
+</ul>
+
+<div class="highlight-box">
+<strong>Pesan kunci Sesi 6:</strong><br>
+SKB bukan ujian tambahan,
+melainkan <strong>tahap utama penentu kelulusan CPNS Dosen</strong>.
+</div>
+
+</div>
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+let elements = [];
+let index = 0;
+let synth = window.speechSynthesis;
+let currentUtterance = null;
+
+function collectElements(){
+  elements = Array.from(document.querySelectorAll(
+    "#content p, #content li, #content h2, #content .highlight-box, #content .case"
+  ));
+}
+
+function clearHighlight(){
+  elements.forEach(el => el.classList.remove("reading"));
+}
+
+function startReading(){
+  stopReading();
+  collectElements();
+  index = 0;
+  readNext();
+}
+
+function readNext(){
+  if(index >= elements.length) return;
+
+  clearHighlight();
+  const el = elements[index];
+  el.classList.add("reading");
+
+  currentUtterance = new SpeechSynthesisUtterance(el.innerText);
+  currentUtterance.lang = "id-ID";
+  currentUtterance.rate = 1;
+  currentUtterance.pitch = 1;
+  currentUtterance.onend = () => {
+    index++;
+    readNext();
+  };
+
+  synth.speak(currentUtterance);
+}
+
+function pauseReading(){
+  if(synth.speaking) synth.pause();
+}
+
+function stopReading(){
+  if(synth.speaking || synth.paused){
+    synth.cancel();
+  }
+  clearHighlight();
+}
+</script>
+
+</body>
+</html>
