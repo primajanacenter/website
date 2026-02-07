@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Rencana Pembelajaran CPNS Dosen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --highlight:#fff3cd;
+}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.8;
+}
+
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:48px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.4rem}
+header p{max-width:900px;margin:14px auto 0;opacity:.95}
+
+.container{
+  max-width:1100px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:20px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 16px 40px rgba(0,0,0,.08);
+  animation:fade .5s ease;
+}
+
+@keyframes fade{
+  from{opacity:0; transform:translateY(20px)}
+  to{opacity:1; transform:translateY(0)}
+}
+
+h2{color:var(--primary)}
+
+.progress-wrap{
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
+  margin:18px 0;
+}
+.progress{
+  height:14px;
+  width:0%;
+  background:linear-gradient(90deg,var(--accent),#16a34a);
+  transition:.6s;
+}
+
+.options{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+  margin-top:18px;
+}
+
+.option{
+  border:2px solid #e5e7eb;
+  border-radius:16px;
+  padding:18px;
+  cursor:pointer;
+  transition:.25s;
+  background:#fff;
+}
+.option:hover{transform:translateY(-4px)}
+.option.selected{
+  border-color:var(--accent);
+  background:#ecfdf5;
+  pointer-events:none;
+}
+
+.hidden{display:none}
+.reading{background:var(--highlight)}
+
+.controls{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Rencana Pembelajaran CPNS Dosen</h1>
+  <p>Rencana Belajar Personal · Satu Keputusan · Strategi Tepat</p>
+</header>
+
+<div class="container">
+
+<!-- PROGRESS -->
+<div class="card">
+<h2>🎯 Progres Perencanaan</h2>
+<div class="progress-wrap"><div class="progress" id="progress"></div></div>
+<p id="progressText">0% selesai</p>
+</div>
+
+<!-- AUDIO -->
+<div class="card">
+<div class="controls">
+  <button onclick="startReading()">🔊 Bacakan</button>
+  <button onclick="pauseReading()">⏸️ Jeda</button>
+  <button onclick="resumeReading()">▶️ Lanjutkan</button>
+  <button onclick="stopReading()">⏹️ Stop</button>
+</div>
+<p class="tts">
+Modul ini akan meminta Anda membuat beberapa keputusan penting.
+Setiap keputusan hanya boleh satu.
+Dari sanalah strategi belajar Anda akan diturunkan secara personal.
+</p>
+</div>
+
+<!-- STEP 1 -->
+<div class="card">
+<h2>Langkah 1 – Waktu Belajar Nyata per Hari</h2>
+<div class="options" data-step="time">
+  <div class="option" onclick="choose('time','limited',this)">≤ 1 jam</div>
+  <div class="option" onclick="choose('time','medium',this)">1–2 jam</div>
+  <div class="option" onclick="choose('time','high',this)">≥ 3 jam</div>
+</div>
+</div>
+
+<!-- STEP 2 -->
+<div class="card hidden" id="step-deadline">
+<h2>Langkah 2 – Jarak ke Hari H</h2>
+<div class="options" data-step="deadline">
+  <div class="option" onclick="choose('deadline','near',this)">≤ 30 hari</div>
+  <div class="option" onclick="choose('deadline','mid',this)">1–3 bulan</div>
+  <div class="option" onclick="choose('deadline','far',this)">> 3 bulan</div>
+</div>
+</div>
+
+<!-- STEP 3 -->
+<div class="card hidden" id="step-energy">
+<h2>Langkah 3 – Energi Mental Saat Belajar</h2>
+<div class="options" data-step="energy">
+  <div class="option" onclick="choose('energy','low',this)">Cepat lelah</div>
+  <div class="option" onclick="choose('energy','stable',this)">Stabil</div>
+  <div class="option" onclick="choose('energy','high',this)">Sangat fokus</div>
+</div>
+</div>
+
+<!-- RESULT -->
+<div class="card hidden" id="result">
+<h2>📌 Rencana Belajar Personal Anda</h2>
+<p class="tts" id="strategyText"></p>
+
+<h3>Fokus Utama</h3>
+<ul class="tts" id="focusList"></ul>
+
+<h3>Ritme Mingguan Realistis</h3>
+<ul class="tts" id="routineList"></ul>
+</div>
+
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+let state={}, progress=0;
+
+function updateProgress(val){
+  progress+=val;
+  document.getElementById("progress").style.width=progress+"%";
+  document.getElementById("progressText").innerText=progress+"% selesai";
+}
+
+function choose(step,value,el){
+  state[step]=value;
+  el.classList.add("selected");
+
+  const parent=el.parentElement;
+  parent.querySelectorAll(".option").forEach(o=>{
+    if(o!==el) o.style.opacity=0.4;
+  });
+
+  if(step==="time"){
+    document.getElementById("step-deadline").classList.remove("hidden");
+    updateProgress(33);
+  }
+  if(step==="deadline"){
+    document.getElementById("step-energy").classList.remove("hidden");
+    updateProgress(33);
+  }
+  if(step==="energy"){
+    updateProgress(34);
+    generatePlan();
+  }
+}
+
+function generatePlan(){
+  const s=document.getElementById("strategyText");
+  const f=document.getElementById("focusList");
+  const r=document.getElementById("routineList");
+
+  let strategy="", focus=[], routine=[];
+
+  if(state.time==="limited" && state.deadline==="near"){
+    strategy="Strategi Survival Aman. Target utama Anda adalah mengamankan passing grade SKD, khususnya TKP dan TWK. Hindari eksplorasi berlebihan.";
+    focus=["TKP sebagai pengunci skor","TWK aman (nilai & konteks)","TIU minimal lulus"];
+    routine=["Audio learning 30 menit/hari","Latihan singkat 3x/minggu","Simulasi SKD tiap akhir pekan"];
+  }
+  else if(state.time==="high" && state.deadline==="far"){
+    strategy="Strategi Jangka Panjang Optimal. Anda memiliki ruang untuk membangun fondasi SKD dan SKB secara bertahap dan matang.";
+    focus=["SKD stabil + SKB awal","Pendalaman substansi keilmuan","Latihan pedagogik"];
+    routine=["Materi inti harian","Latihan kontekstual","Simulasi berkala"];
+  }
+  else{
+    strategy="Strategi Seimbang dan Realistis. Fokus pada konsistensi, bukan intensitas ekstrem.";
+    focus=["SKD inti (80/20)","TKP konsisten","SKB bertahap"];
+    routine=["1 sesi fokus/hari","Latihan ringan","Simulasi berkala"];
+  }
+
+  s.innerText=strategy;
+  focus.forEach(i=>f.innerHTML+=`<li>${i}</li>`);
+  routine.forEach(i=>r.innerHTML+=`<li>${i}</li>`);
+
+  document.getElementById("result").classList.remove("hidden");
+}
+
+/* TTS */
+const elements=document.querySelectorAll(".tts");
+let index=0, utterance=null, paused=false;
+function clearH(){elements.forEach(e=>e.classList.remove("reading"))}
+function startReading(){stopReading();index=0;read()}
+function read(){
+  if(index>=elements.length) return;
+  clearH();
+  const el=elements[index];
+  el.classList.add("reading");
+  utterance=new SpeechSynthesisUtterance(el.innerText);
+  utterance.lang="id-ID";
+  utterance.onend=()=>{if(!paused){index++;read()}};
+  speechSynthesis.speak(utterance);
+}
+function pauseReading(){paused=true;speechSynthesis.pause()}
+function resumeReading(){paused=false;speechSynthesis.resume()}
+function stopReading(){paused=false;speechSynthesis.cancel();clearH()}
+</script>
+
+</body>
+</html>
