@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Sesi 2 – Contoh & Studi Kasus TWK</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --highlight:#fff7ed;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.9;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:48px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:920px;margin:12px auto 0;opacity:.95}
+
+/* CONTAINER */
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 14px 36px rgba(0,0,0,.07);
+}
+
+/* READABLE BLOCK */
+.readable > *{
+  transition:background .35s, box-shadow .35s;
+  padding:6px 8px;
+  border-radius:8px;
+}
+
+.reading{
+  background:var(--highlight);
+  box-shadow:inset 0 0 0 2px #fdba74;
+}
+
+/* BOXES */
+.highlight-box{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:20px;
+  border-radius:14px;
+  margin:26px 0;
+}
+
+.case{
+  background:#f1f5f9;
+  padding:22px;
+  border-radius:14px;
+  margin:26px 0;
+}
+
+/* CONTROLS */
+.controls{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:24px;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+button.alt{background:#64748b}
+button.stop{background:#dc2626}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Sesi 2 – Contoh & Studi Kasus TWK</h1>
+  <p>Memahami TWK sebagai tes nilai kebangsaan dan sikap ASN, bukan hafalan pasal</p>
+</header>
+
+<div class="container">
+
+<div class="controls">
+  <button onclick="startReading()">🔊 Bacakan</button>
+  <button class="alt" onclick="pauseReading()">⏸ Jeda</button>
+  <button class="stop" onclick="stopReading()">⏹ Hentikan</button>
+</div>
+
+<div class="card readable" id="content">
+
+<h2>Pendahuluan: Cara Pandang yang Salah tentang TWK</h2>
+<p>
+Banyak peserta CPNS memandang Tes Wawasan Kebangsaan sebagai ujian hafalan Pancasila,
+UUD 1945, dan sistem ketatanegaraan. Akibatnya, mereka menghabiskan waktu menghafal
+pasal demi pasal tanpa memahami makna dan penerapannya.
+</p>
+
+<div class="highlight-box">
+Padahal, TWK dirancang untuk menilai <strong>cara berpikir kebangsaan sebagai ASN</strong>,
+bukan kemampuan mengingat teks hukum.
+</div>
+
+<h2>Studi Kasus 1: Hafal Tapi Salah Menjawab</h2>
+
+<div class="case">
+Peserta C menghafal seluruh sila Pancasila dan pasal-pasal penting UUD 1945.
+Ia yakin TWK adalah bagian termudah dari SKD.
+</div>
+
+<p>
+Dalam ujian, Peserta C menghadapi soal berbentuk narasi konflik sosial.
+Ia memilih jawaban yang paling ideal secara moral, tetapi tidak
+mencerminkan prinsip persatuan dan keutuhan NKRI.
+</p>
+
+<div class="highlight-box">
+<strong>Analisis:</strong><br>
+Kesalahan terjadi karena peserta menjawab berdasarkan opini pribadi,
+bukan berdasarkan <strong>nilai kebangsaan dan peran ASN</strong>.
+</div>
+
+<h2>Studi Kasus 2: Pemahaman Nilai Mengalahkan Hafalan</h2>
+
+<div class="case">
+Peserta D tidak menghafal banyak pasal, tetapi memahami nilai inti Pancasila
+dan prinsip Bhinneka Tunggal Ika.
+</div>
+
+<p>
+Saat menghadapi soal konflik antar kelompok masyarakat, Peserta D memilih
+jawaban yang menekankan toleransi, dialog, dan persatuan nasional.
+</p>
+
+<div class="highlight-box">
+Hasilnya, Peserta D konsisten menjawab benar karena
+<strong>berpikir sebagai ASN</strong>, bukan sebagai individu.
+</div>
+
+<h2>Pancasila dalam Soal TWK Kontekstual</h2>
+
+<p>
+Soal TWK jarang menanyakan bunyi sila secara langsung.
+Yang diuji adalah bagaimana nilai Pancasila diterapkan
+dalam situasi nyata, seperti perbedaan pendapat, konflik sosial,
+atau pelayanan publik.
+</p>
+
+<div class="highlight-box">
+Jawaban dengan skor tertinggi hampir selalu:
+<ul>
+  <li>Menjaga persatuan</li>
+  <li>Menghargai perbedaan</li>
+  <li>Mengutamakan kepentingan bangsa</li>
+</ul>
+</div>
+
+<h2>UUD 1945 dan NKRI: Fokus pada Makna</h2>
+
+<p>
+Dalam TWK, pemahaman UUD 1945 tidak diukur dari seberapa banyak pasal yang dihafal,
+melainkan dari kemampuan mengaitkan tujuan negara dengan kebijakan dan tindakan.
+</p>
+
+<div class="case">
+<strong>Contoh narasi soal:</strong><br>
+Negara menghadapi kesenjangan akses pendidikan di daerah terpencil.
+Prinsip konstitusional apa yang relevan?
+</div>
+
+<div class="highlight-box">
+Jawaban terbaik mengarah pada
+<strong>kewajiban negara menjamin kesejahteraan dan pendidikan</strong>,
+bukan pada pasal teknis semata.
+</div>
+
+<h2>Sistem Ketatanegaraan: Hindari Jebakan Teknis</h2>
+
+<p>
+Soal sistem ketatanegaraan sering menjebak peserta dengan istilah teknis.
+Padahal, yang dinilai adalah pemahaman fungsi lembaga negara secara umum.
+</p>
+
+<ul>
+  <li>Eksekutif → pelaksana kebijakan</li>
+  <li>Legislatif → pembuat dan pengawas kebijakan</li>
+  <li>Yudikatif → penegak hukum</li>
+</ul>
+
+<div class="highlight-box">
+Jika ragu, pilih jawaban yang
+<strong>paling menjaga keseimbangan kekuasaan dan konstitusi</strong>.
+</div>
+
+<h2>Refleksi Strategis TWK</h2>
+
+<p>
+Setelah mempelajari studi kasus TWK, peserta diharapkan melakukan refleksi:
+</p>
+
+<ul>
+  <li>Apakah saya masih menjawab berdasarkan opini pribadi?</li>
+  <li>Apakah saya sudah berpikir sebagai ASN?</li>
+  <li>Apakah saya mencari makna atau sekadar menghafal?</li>
+</ul>
+
+<div class="highlight-box">
+<strong>Pesan kunci Sesi 2:</strong><br>
+TWK menguji <strong>sikap kebangsaan dan cara berpikir ASN</strong>,
+bukan kemampuan menghafal teks hukum.
+</div>
+
+</div>
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+let elements = [];
+let index = 0;
+let synth = window.speechSynthesis;
+let currentUtterance = null;
+
+function collectElements(){
+  elements = Array.from(document.querySelectorAll(
+    "#content p, #content li, #content h2, #content .highlight-box, #content .case"
+  ));
+}
+
+function clearHighlight(){
+  elements.forEach(el => el.classList.remove("reading"));
+}
+
+function startReading(){
+  stopReading();
+  collectElements();
+  index = 0;
+  readNext();
+}
+
+function readNext(){
+  if(index >= elements.length) return;
+
+  clearHighlight();
+  const el = elements[index];
+  el.classList.add("reading");
+
+  currentUtterance = new SpeechSynthesisUtterance(el.innerText);
+  currentUtterance.lang = "id-ID";
+  currentUtterance.rate = 1;
+  currentUtterance.pitch = 1;
+  currentUtterance.onend = () => {
+    index++;
+    readNext();
+  };
+
+  synth.speak(currentUtterance);
+}
+
+function pauseReading(){
+  if(synth.speaking) synth.pause();
+}
+
+function stopReading(){
+  if(synth.speaking || synth.paused){
+    synth.cancel();
+  }
+  clearHighlight();
+}
+</script>
+
+</body>
+</html>
