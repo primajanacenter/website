@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>E-Learning Persiapan CPNS Dosen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#f59e0b;
+  --bg:#f8fafc;
+  --card:#ffffff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.7;
+}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:60px 20px;
+  text-align:center;
+}
+
+header h1{
+  margin:0;
+  font-size:2.4rem;
+}
+
+header p{
+  max-width:800px;
+  margin:16px auto 0;
+  opacity:.95;
+}
+
+/* CONTAINER */
+.container{
+  max-width:1100px;
+  margin:50px auto;
+  padding:0 20px;
+}
+
+/* SECTION TITLE */
+.section-title{
+  margin-bottom:30px;
+}
+
+.section-title h2{
+  color:var(--primary);
+  margin-bottom:8px;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+
+/* CARD */
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:28px;
+  box-shadow:0 14px 30px rgba(0,0,0,.06);
+  animation:fadeUp .6s ease;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.card h3{
+  margin-top:0;
+  color:#1e40af;
+}
+
+.card p{
+  font-size:.95rem;
+}
+
+.card a{
+  margin-top:16px;
+  text-decoration:none;
+  background:var(--primary);
+  color:white;
+  padding:10px 16px;
+  border-radius:10px;
+  text-align:center;
+  font-weight:500;
+}
+
+.card a.locked{
+  background:#94a3b8;
+  pointer-events:none;
+}
+
+.card span{
+  font-size:.85rem;
+  color:#64748b;
+}
+
+/* BADGE */
+.badge{
+  display:inline-block;
+  background:#eef2ff;
+  color:#1e40af;
+  padding:4px 10px;
+  border-radius:20px;
+  font-size:.8rem;
+  margin-bottom:10px;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:40px 20px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>E-Learning Persiapan CPNS Dosen</h1>
+  <p>
+    Program pembelajaran terstruktur berbasis strategi 80/20,  
+    dirancang untuk membantu Anda lulus SKD dan unggul di SKB
+  </p>
+</header>
+
+<div class="container">
+
+<div class="section-title">
+  <h2>📚 Daftar Sesi Pembelajaran</h2>
+  <p>Ikuti sesi secara berurutan untuk hasil optimal.</p>
+</div>
+
+<div class="grid">
+
+<!-- SESI 1 -->
+<div class="card">
+  <span class="badge">Fondasi</span>
+  <h3>Sesi 1 – Orientasi CPNS Dosen & Strategi Lulus</h3>
+  <p>
+    Memahami alur seleksi, passing grade, strategi skor,
+    serta kesalahan fatal yang harus dihindari.
+  </p>
+  <span>Output: rencana belajar personal</span>
+  <a href="sesi1.html">Mulai Sesi</a>
+</div>
+
+<!-- SESI 2 -->
+<div class="card">
+  <span class="badge">SKD</span>
+  <h3>Sesi 2 – TWK Inti (80/20)</h3>
+  <p>
+    Fokus nilai kebangsaan, Pancasila, UUD 1945,
+    dan pola soal TWK paling produktif.
+  </p>
+  <span>Output: skor TWK stabil</span>
+  <a class="locked">Terkunci</a>
+</div>
+
+<!-- SESI 3 -->
+<div class="card">
+  <span class="badge">SKD</span>
+  <h3>Sesi 3 – TIU Inti: Logika & Numerik</h3>
+  <p>
+    Penalaran logis, numerik cepat, dan strategi
+    menjawab soal TIU secara efisien.
+  </p>
+  <span>Output: kecepatan & akurasi</span>
+  <a class="locked">Terkunci</a>
+</div>
+
+<!-- SESI 4 -->
+<div class="card">
+  <span class="badge">SKD</span>
+  <h3>Sesi 4 – TKP Inti: Strategi Skor Maksimal</h3>
+  <p>
+    Memahami pola nilai ASN dan strategi memilih
+    jawaban dengan skor tertinggi.
+  </p>
+  <span>Output: optimalisasi TKP</span>
+  <a class="locked">Terkunci</a>
+</div>
+
+<!-- SESI 5 -->
+<div class="card">
+  <span class="badge">Simulasi</span>
+  <h3>Sesi 5 – Simulasi SKD CAT & Analisis</h3>
+  <p>
+    Simulasi penuh SKD, analisis kelemahan,
+    dan strategi perbaikan cepat.
+  </p>
+  <span>Output: peta kesiapan SKD</span>
+  <a class="locked">Terkunci</a>
+</div>
+
+<!-- SESI 6 -->
+<div class="card">
+  <span class="badge">SKB</span>
+  <h3>Sesi 6 – Pengenalan SKB CAT & Non-CAT</h3>
+  <p>
+    Memahami aturan terbaru SKB CPNS Dosen
+    dan ekspektasi penilaian.
+  </p>
+  <span>Output: mindset SKB</span>
+  <a class="locked">Terkunci</a>
+</div>
+
+<!-- SESI 7 -->
+<div class="card">
+  <span class="badge">SKB CAT</span>
+  <h3>Sesi 7 – SKB CAT: Substansi Keilmuan</h3>
+  <p>
+    Konsep inti keilmuan dan problem solving
+    sesuai rumpun bidang.
+  </p>
+  <span>Output: kesiapan substansi</span>
+  <a class="locked">Terkunci</a>
+</div>
+
+<!-- SESI 8 -->
+<div class="card">
+  <span class="badge">Simulasi</span>
+  <h3>Sesi 8 – Simulasi SKB CAT</h3>
+  <p>
+    Latihan soal SKB CAT disertai pembahasan
+    jawaban ideal.
+  </p>
+  <span>Output: evaluasi kompetensi</span>
+  <a class="locked">Terkunci</a>
+</div>
+
+<!-- SESI 9 -->
+<div class="card">
+  <span class="badge">SKB Non-CAT</span>
+  <h3>Sesi 9 – Pedagogik & Tri Dharma</h3>
+  <p>
+    OBE, RPS, CPL, CPMK, dan peran dosen
+    sebagai ASN.
+  </p>
+  <span>Output: kesiapan pedagogik</span>
+  <a class="locked">Terkunci</a>
+</div>
+
+<!-- SESI 10 -->
+<div class="card">
+  <span class="badge">SKB Non-CAT</span>
+  <h3>Sesi 10 – Wawancara, Portofolio & Microteaching</h3>
+  <p>
+    Strategi wawancara, presentasi diri,
+    dan praktik mengajar singkat.
+  </p>
+  <span>Output: performa profesional</span>
+  <a class="locked">Terkunci</a>
+</div>
+
+<!-- SESI 11 -->
+<div class="card">
+  <span class="badge">Final</span>
+  <h3>Sesi 11 – Simulasi Akhir & Strategi H-1</h3>
+  <p>
+    Final review, simulasi gabungan,
+    dan checklist hari ujian.
+  </p>
+  <span>Output: siap ujian</span>
+  <a class="locked">Terkunci</a>
+</div>
+
+</div>
+</div>
+
+<footer>
+© E-Learning Persiapan CPNS Dosen · PT Primajana Bagia Mesari
+</footer>
+
+</body>
+</html>
