@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-Learning TWK CPNS – Audio Reader</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Pengantar TKP CPNS</h1>
+  <p>Tes Karakteristik Pribadi</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- TKP – INTEGRITAS -->
+<div class="card">
+  <h2><i class="fa-solid fa-shield-halved"></i> Integritas</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Integritas adalah kesesuaian antara nilai, ucapan, dan tindakan
+    dalam menjalankan tugas dan tanggung jawab, khususnya sebagai aparatur negara.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Kejujuran dalam menjalankan tugas</li>
+    <li class="readable">Konsistensi antara aturan dan tindakan</li>
+    <li class="readable">Menolak gratifikasi dan penyalahgunaan wewenang</li>
+    <li class="readable">Tanggung jawab atas keputusan yang diambil</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Respon terhadap pelanggaran aturan</li>
+    <li class="readable">Sikap saat menghadapi konflik kepentingan</li>
+    <li class="readable">Keputusan etis dalam situasi sulit</li>
+  </ul>
+</div>
+
+<!-- TKP – PELAYANAN PUBLIK -->
+<div class="card">
+  <h2><i class="fa-solid fa-handshake-angle"></i> Pelayanan Publik</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Pelayanan publik adalah upaya pemenuhan kebutuhan masyarakat
+    yang dilakukan oleh aparatur negara secara profesional, adil, dan berorientasi pada kepuasan publik.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Pelayanan yang cepat, tepat, dan transparan</li>
+    <li class="readable">Sikap ramah dan empati kepada masyarakat</li>
+    <li class="readable">Tidak diskriminatif dalam melayani</li>
+    <li class="readable">Komitmen terhadap standar pelayanan</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Menghadapi keluhan masyarakat</li>
+    <li class="readable">Prioritas kepentingan publik</li>
+    <li class="readable">Sikap profesional dalam tekanan</li>
+  </ul>
+</div>
+
+<!-- TKP – KERJA TIM -->
+<div class="card">
+  <h2><i class="fa-solid fa-people-arrows"></i> Kerja Tim</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Kerja tim adalah kemampuan untuk bekerja sama dengan orang lain
+    secara efektif demi mencapai tujuan bersama.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Komunikasi terbuka dan saling menghargai</li>
+    <li class="readable">Kesediaan menerima perbedaan pendapat</li>
+    <li class="readable">Berbagi tanggung jawab dan peran</li>
+    <li class="readable">Mendukung keputusan bersama</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Menghadapi konflik dalam tim</li>
+    <li class="readable">Peran individu dalam kerja kelompok</li>
+    <li class="readable">Mendahulukan tujuan bersama</li>
+  </ul>
+</div>
+
+<!-- TKP – SOSIAL BUDAYA -->
+<div class="card">
+  <h2><i class="fa-solid fa-earth-asia"></i> Sosial Budaya</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Sosial budaya berkaitan dengan kemampuan memahami dan menghargai
+    keberagaman latar belakang sosial, budaya, agama, dan adat istiadat masyarakat.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Toleransi terhadap perbedaan</li>
+    <li class="readable">Menghormati adat dan norma lokal</li>
+    <li class="readable">Sikap inklusif dalam interaksi sosial</li>
+    <li class="readable">Menghindari stereotip dan prasangka</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Sikap terhadap perbedaan budaya</li>
+    <li class="readable">Penanganan konflik berbasis SARA</li>
+    <li class="readable">Interaksi ASN dengan masyarakat majemuk</li>
+  </ul>
+</div>
+
+<!-- TKP – ADAPTASI & PENGENDALIAN DIRI -->
+<div class="card">
+  <h2><i class="fa-solid fa-arrows-rotate"></i> Adaptasi & Pengendalian Diri</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Adaptasi dan pengendalian diri adalah kemampuan menyesuaikan diri
+    dengan perubahan serta mengelola emosi secara positif dalam berbagai situasi kerja.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Fleksibilitas terhadap perubahan tugas dan lingkungan</li>
+    <li class="readable">Kemampuan mengendalikan emosi negatif</li>
+    <li class="readable">Tetap tenang dalam tekanan</li>
+    <li class="readable">Respon konstruktif terhadap kritik</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Menghadapi perubahan kebijakan mendadak</li>
+    <li class="readable">Sikap saat menghadapi tekanan kerja</li>
+    <li class="readable">Pengendalian emosi dalam konflik</li>
+  </ul>
+</div>
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
