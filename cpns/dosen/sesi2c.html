@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tips & Trik Sesi 2 – TWK CPNS Dosen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --highlight:#fff3cd;
+}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.9;
+}
+
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:50px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:900px;margin:12px auto 0;opacity:.95}
+
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+
+.card h2{color:var(--primary)}
+
+.highlight-box{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:20px;
+  border-radius:12px;
+  margin:24px 0;
+}
+
+.reading{
+  background:var(--highlight);
+  transition:background .3s;
+}
+
+.controls{
+  display:flex;
+  gap:12px;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:.95rem;
+}
+
+button.alt{background:#64748b}
+button:hover{opacity:.9}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Tips & Trik Sesi 2 – TWK Inti</h1>
+  <p>Wawasan Kebangsaan 80/20 – Cara Menjawab Soal TWK dengan Aman dan Konsisten</p>
+</header>
+
+<div class="container">
+
+<!-- CONTROL -->
+<div class="card">
+<div class="controls">
+  <button onclick="startReading()">🔊 Bacakan</button>
+  <button class="alt" onclick="pauseReading()">⏸️ Jeda</button>
+  <button class="alt" onclick="resumeReading()">▶️ Lanjutkan</button>
+  <button class="alt" onclick="stopReading()">⏹️ Stop</button>
+</div>
+<p><em>Teks yang sedang dibacakan akan disorot otomatis.</em></p>
+</div>
+
+<!-- CONTENT -->
+<div class="card content">
+
+<p class="tts">
+TWK adalah bagian SKD yang paling sering menjebak peserta CPNS,
+bukan karena sulit secara akademik,
+melainkan karena banyak peserta salah memahami apa yang sebenarnya diuji.
+TWK bukan tes hafalan pasal,
+melainkan tes cara berpikir kebangsaan sebagai aparatur negara.
+</p>
+
+<h2>Tip 1 – TWK Menguji Sikap Kebangsaan, Bukan Daya Ingat</h2>
+<p class="tts">
+Kesalahan paling umum dalam TWK adalah menghafal terlalu banyak
+tanpa memahami makna dan arah nilai yang diuji.
+Soal TWK modern hampir selalu berbentuk narasi dan konteks,
+bukan pertanyaan langsung tentang bunyi pasal.
+</p>
+
+<div class="highlight-box tts">
+Jika Anda ragu antara dua jawaban,
+pilih yang paling mencerminkan persatuan,
+keadilan, dan kepentingan bangsa.
+</div>
+
+<h2>Tip 2 – Pancasila Selalu Hadir sebagai Nilai, Bukan Urutan Sila</h2>
+<p class="tts">
+Pancasila jarang diuji sebagai urutan sila,
+tetapi hampir selalu muncul sebagai nilai dalam situasi nyata.
+Toleransi, keadilan sosial, kemanusiaan,
+dan musyawarah adalah kata kunci yang harus langsung Anda kenali.
+</p>
+
+<h2>Tip 3 – UUD 1945 Dipahami dari Tujuan, Bukan Pasal Teknis</h2>
+<p class="tts">
+Dalam TWK, UUD 1945 lebih sering diuji dari pembukaan dan tujuannya,
+seperti perlindungan warga negara,
+pendidikan, dan kesejahteraan.
+Menghafal pasal tanpa memahami arahnya justru memperbesar risiko salah jawab.
+</p>
+
+<h2>Tip 4 – NKRI dan Bhinneka Tunggal Ika adalah Jawaban Aman</h2>
+<p class="tts">
+Jika soal menyentuh isu konflik, perbedaan,
+atau potensi perpecahan,
+jawaban yang menegaskan persatuan,
+keutuhan NKRI,
+dan toleransi hampir selalu menjadi pilihan terbaik.
+</p>
+
+<h2>Tip 5 – Hindari Jawaban Ekstrem dan Emosional</h2>
+<p class="tts">
+TWK sering memberikan opsi jawaban yang terdengar tegas,
+namun bersifat ekstrem atau emosional.
+ASN tidak dinilai dari sikap keras,
+melainkan dari kemampuan menjaga stabilitas dan harmoni sosial.
+</p>
+
+<h2>Penutup – Strategi Aman adalah Kunci Lolos TWK</h2>
+<p class="tts">
+Dalam TWK, tujuan utama bukan mendapatkan skor sempurna,
+melainkan memastikan lolos passing grade tanpa risiko besar.
+Strategi aman, konsisten,
+dan berbasis nilai kebangsaan
+adalah pendekatan paling rasional.
+</p>
+
+</div>
+
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+const elements = document.querySelectorAll(".tts");
+let index = 0;
+let utterance = null;
+let paused = false;
+
+function clearHighlight(){
+  elements.forEach(el => el.classList.remove("reading"));
+}
+
+function startReading(){
+  stopReading();
+  index = 0;
+  readNext();
+}
+
+function readNext(){
+  if(index >= elements.length) return;
+
+  clearHighlight();
+  const el = elements[index];
+  el.classList.add("reading");
+
+  utterance = new SpeechSynthesisUtterance(el.innerText);
+  utterance.lang = "id-ID";
+  utterance.rate = 1;
+  utterance.pitch = 1;
+
+  utterance.onend = () => {
+    if(!paused){
+      index++;
+      readNext();
+    }
+  };
+
+  speechSynthesis.speak(utterance);
+}
+
+function pauseReading(){
+  if(speechSynthesis.speaking){
+    paused = true;
+    speechSynthesis.pause();
+  }
+}
+
+function resumeReading(){
+  if(paused){
+    paused = false;
+    speechSynthesis.resume();
+  }
+}
+
+function stopReading(){
+  paused = false;
+  speechSynthesis.cancel();
+  clearHighlight();
+}
+</script>
+
+</body>
+</html>
