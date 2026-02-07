@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tips & Trik Sesi 6 – SKB CPNS Dosen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --highlight:#fff3cd;
+}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.9;
+}
+
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:50px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:900px;margin:12px auto 0;opacity:.95}
+
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+
+.card h2{color:var(--primary)}
+
+.highlight-box{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:20px;
+  border-radius:12px;
+  margin:24px 0;
+}
+
+.reading{
+  background:var(--highlight);
+  transition:background .3s;
+}
+
+.controls{
+  display:flex;
+  gap:12px;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:.95rem;
+}
+
+button.alt{background:#64748b}
+button:hover{opacity:.9}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Tips & Trik Sesi 6 – SKB Dosen</h1>
+  <p>Memahami SKB CAT & Non-CAT sebagai Penentu Akhir Kelulusan</p>
+</header>
+
+<div class="container">
+
+<!-- CONTROL -->
+<div class="card">
+<div class="controls">
+  <button onclick="startReading()">🔊 Bacakan</button>
+  <button class="alt" onclick="pauseReading()">⏸️ Jeda</button>
+  <button class="alt" onclick="resumeReading()">▶️ Lanjutkan</button>
+  <button class="alt" onclick="stopReading()">⏹️ Stop</button>
+</div>
+<p><em>Teks yang sedang dibacakan akan disorot otomatis.</em></p>
+</div>
+
+<!-- CONTENT -->
+<div class="card content">
+
+<p class="tts">
+Memasuki tahap SKB adalah titik balik dalam seleksi CPNS Dosen.
+Di tahap ini, hampir semua peserta adalah orang-orang yang kompeten.
+Perbedaannya bukan lagi pada kepintaran dasar,
+melainkan pada kesiapan peran sebagai dosen ASN.
+</p>
+
+<h2>Tip 1 – SKB Bukan Kelanjutan SKD</h2>
+<p class="tts">
+Kesalahan paling fatal adalah memperlakukan SKB
+seperti SKD versi sulit.
+SKB tidak menguji kecepatan menjawab soal,
+melainkan kedalaman pemahaman,
+konteks keilmuan,
+dan kecocokan Anda dengan peran dosen.
+</p>
+
+<div class="highlight-box tts">
+Jika SKD menilai “layak lolos”,
+SKB menilai “layak diangkat”.
+</div>
+
+<h2>Tip 2 – Pahami Perbedaan SKB CAT dan Non-CAT</h2>
+<p class="tts">
+SKB CAT menguji substansi keilmuan dan aplikasi konsep.
+Sementara SKB Non-CAT menguji pedagogik,
+etika,
+komunikasi,
+dan profesionalisme.
+Gagal memahami perbedaan ini
+akan membuat persiapan Anda tidak fokus.
+</p>
+
+<h2>Tip 3 – SKB Menilai Relevansi, Bukan Kelengkapan Materi</h2>
+<p class="tts">
+Dalam SKB,
+mengetahui banyak hal tidak selalu menguntungkan.
+Yang dinilai adalah apakah pengetahuan Anda relevan
+dengan konteks soal,
+kebutuhan institusi,
+dan peran dosen.
+Jawaban panjang tanpa fokus sering justru menurunkan nilai.
+</p>
+
+<h2>Tip 4 – Dosen ASN Dinilai sebagai Bagian dari Sistem</h2>
+<p class="tts">
+SKB tidak mencari individu yang bekerja sendiri,
+melainkan dosen yang mampu bekerja dalam sistem pendidikan tinggi.
+Jawaban yang terlalu individualistis,
+heroik,
+atau mengabaikan aturan institusi
+sering menjadi sinyal negatif bagi penilai.
+</p>
+
+<div class="highlight-box tts">
+Narasi aman SKB:
+kolaborasi, kontribusi institusi, dan keberlanjutan.
+</div>
+
+<h2>Tip 5 – Jangan Menunda Persiapan SKB</h2>
+<p class="tts">
+Banyak peserta menunggu lolos SKD
+baru mulai belajar SKB.
+Ini adalah kesalahan strategi.
+Persiapan SKB seharusnya sudah dimulai
+sejak tahap SKD,
+meskipun dengan porsi yang lebih kecil.
+</p>
+
+<h2>Tip 6 – Bangun Identitas Dosen Sejak Sekarang</h2>
+<p class="tts">
+Di SKB,
+penilai ingin melihat konsistensi.
+Bagaimana Anda berpikir,
+berbicara,
+dan mengambil keputusan
+harus mencerminkan identitas dosen ASN.
+Ini bukan sesuatu yang bisa dibangun dalam semalam.
+</p>
+
+<h2>Penutup – SKB adalah Seleksi Karakter Profesional</h2>
+<p class="tts">
+SKB bukan tahap yang perlu ditakuti,
+tetapi tahap yang perlu dipahami.
+Peserta yang memahami apa yang dinilai,
+mengapa dinilai,
+dan bagaimana menampilkan diri secara tepat
+memiliki peluang sangat besar untuk lulus.
+</p>
+
+</div>
+
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+const elements = document.querySelectorAll(".tts");
+let index = 0;
+let utterance = null;
+let paused = false;
+
+function clearHighlight(){
+  elements.forEach(el => el.classList.remove("reading"));
+}
+
+function startReading(){
+  stopReading();
+  index = 0;
+  readNext();
+}
+
+function readNext(){
+  if(index >= elements.length) return;
+
+  clearHighlight();
+  const el = elements[index];
+  el.classList.add("reading");
+
+  utterance = new SpeechSynthesisUtterance(el.innerText);
+  utterance.lang = "id-ID";
+  utterance.rate = 1;
+  utterance.pitch = 1;
+
+  utterance.onend = () => {
+    if(!paused){
+      index++;
+      readNext();
+    }
+  };
+
+  speechSynthesis.speak(utterance);
+}
+
+function pauseReading(){
+  if(speechSynthesis.speaking){
+    paused = true;
+    speechSynthesis.pause();
+  }
+}
+
+function resumeReading(){
+  if(paused){
+    paused = false;
+    speechSynthesis.resume();
+  }
+}
+
+function stopReading(){
+  paused = false;
+  speechSynthesis.cancel();
+  clearHighlight();
+}
+</script>
+
+</body>
+</html>
