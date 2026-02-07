@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tips & Trik Sesi 8 – Simulasi SKB CAT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --highlight:#fff3cd;
+}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.9;
+}
+
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:50px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:900px;margin:12px auto 0;opacity:.95}
+
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+
+.card h2{color:var(--primary)}
+
+.highlight-box{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:20px;
+  border-radius:12px;
+  margin:24px 0;
+}
+
+.reading{
+  background:var(--highlight);
+  transition:background .3s;
+}
+
+.controls{
+  display:flex;
+  gap:12px;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:.95rem;
+}
+
+button.alt{background:#64748b}
+button:hover{opacity:.9}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Tips & Trik Sesi 8 – Simulasi SKB CAT</h1>
+  <p>Menguji Kesiapan Nyata & Membaca Pola Jawaban Bernilai Tinggi</p>
+</header>
+
+<div class="container">
+
+<!-- CONTROL -->
+<div class="card">
+<div class="controls">
+  <button onclick="startReading()">🔊 Bacakan</button>
+  <button class="alt" onclick="pauseReading()">⏸️ Jeda</button>
+  <button class="alt" onclick="resumeReading()">▶️ Lanjutkan</button>
+  <button class="alt" onclick="stopReading()">⏹️ Stop</button>
+</div>
+<p><em>Teks yang sedang dibacakan akan disorot otomatis.</em></p>
+</div>
+
+<!-- CONTENT -->
+<div class="card content">
+
+<p class="tts">
+Simulasi SKB CAT bukan sekadar latihan soal,
+melainkan simulasi cara berpikir di bawah tekanan seleksi akhir.
+Di tahap ini, semua peserta relatif menguasai materi.
+Yang membedakan adalah ketepatan membaca soal,
+kedewasaan memilih jawaban,
+dan kemampuan menghindari opsi yang menjebak.
+</p>
+
+<h2>Tip 1 – Simulasi SKB CAT Harus Dikerjakan dalam Mode “Serius”</h2>
+<p class="tts">
+Simulasi SKB CAT hanya bermanfaat
+jika dikerjakan dengan kondisi mendekati ujian sesungguhnya.
+Kerjakan dalam satu waktu,
+tanpa membuka referensi,
+dan dengan batas waktu ketat.
+Jika simulasi dilakukan sambil berhenti atau berdiskusi,
+hasilnya tidak valid sebagai alat ukur kesiapan.
+</p>
+
+<div class="highlight-box tts">
+Simulasi yang baik adalah yang membuat Anda tidak nyaman,
+karena itulah kondisi ujian sebenarnya.
+</div>
+
+<h2>Tip 2 – Jangan Langsung Mencari Jawaban, Pahami Soalnya</h2>
+<p class="tts">
+Kesalahan umum dalam SKB CAT adalah langsung membaca opsi jawaban
+tanpa benar-benar memahami pertanyaan.
+Soal SKB CAT sering mengandung kata kunci tersembunyi
+yang menentukan konteks jawaban.
+Salah membaca konteks berarti salah sejak awal.
+</p>
+
+<h2>Tip 3 – Jawaban Terbaik Bukan yang Paling Ilmiah</h2>
+<p class="tts">
+Dalam SKB CAT,
+jawaban yang paling terdengar akademik
+belum tentu yang paling benar.
+Sering kali ada jawaban yang secara teori benar,
+tetapi tidak relevan dengan kasus yang ditanyakan.
+Jawaban terbaik adalah yang paling sesuai konteks,
+bukan yang paling canggih istilahnya.
+</p>
+
+<div class="highlight-box tts">
+Ingat:
+SKB CAT menilai relevansi,
+bukan pamer pengetahuan.
+</div>
+
+<h2>Tip 4 – Waspadai Jawaban “Hampir Tepat”</h2>
+<p class="tts">
+Opsi jawaban SKB CAT sering dirancang sangat mirip.
+Perbedaannya tipis,
+namun krusial.
+Satu opsi mungkin benar secara umum,
+namun mengabaikan satu aspek penting dari soal.
+Latih diri Anda untuk membandingkan opsi secara kritis,
+bukan memilih yang terasa paling familiar.
+</p>
+
+<h2>Tip 5 – Evaluasi Simulasi dengan Pertanyaan yang Tepat</h2>
+<p class="tts">
+Setelah simulasi,
+jangan hanya bertanya berapa skor Anda.
+Ajukan pertanyaan yang lebih strategis:
+apakah kesalahan Anda karena tidak paham konsep,
+salah membaca konteks,
+atau tergesa-gesa memilih jawaban?
+Jenis kesalahan ini menentukan arah perbaikan Anda.
+</p>
+
+<h2>Tip 6 – Fokus pada Pola Salah, Bukan Soal Salah</h2>
+<p class="tts">
+Satu atau dua soal salah tidak terlalu berarti.
+Yang berbahaya adalah pola kesalahan yang berulang,
+misalnya selalu salah pada soal kasus,
+atau selalu tertipu opsi yang terlalu teoritis.
+Memperbaiki pola jauh lebih efektif
+daripada mengulang seluruh materi.
+</p>
+
+<h2>Penutup – Simulasi SKB CAT adalah Gladi Bersih Mental Akademik</h2>
+<p class="tts">
+Simulasi SKB CAT bukan hanya menguji ilmu,
+tetapi juga kedewasaan akademik.
+Peserta yang mampu tetap tenang,
+fokus pada konteks,
+dan memilih jawaban secara sadar
+memiliki peluang besar untuk unggul di tahap akhir.
+</p>
+
+</div>
+
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+const elements = document.querySelectorAll(".tts");
+let index = 0;
+let utterance = null;
+let paused = false;
+
+function clearHighlight(){
+  elements.forEach(el => el.classList.remove("reading"));
+}
+
+function startReading(){
+  stopReading();
+  index = 0;
+  readNext();
+}
+
+function readNext(){
+  if(index >= elements.length) return;
+
+  clearHighlight();
+  const el = elements[index];
+  el.classList.add("reading");
+
+  utterance = new SpeechSynthesisUtterance(el.innerText);
+  utterance.lang = "id-ID";
+  utterance.rate = 1;
+  utterance.pitch = 1;
+
+  utterance.onend = () => {
+    if(!paused){
+      index++;
+      readNext();
+    }
+  };
+
+  speechSynthesis.speak(utterance);
+}
+
+function pauseReading(){
+  if(speechSynthesis.speaking){
+    paused = true;
+    speechSynthesis.pause();
+  }
+}
+
+function resumeReading(){
+  if(paused){
+    paused = false;
+    speechSynthesis.resume();
+  }
+}
+
+function stopReading(){
+  paused = false;
+  speechSynthesis.cancel();
+  clearHighlight();
+}
+</script>
+
+</body>
+</html>
