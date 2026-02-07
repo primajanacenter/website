@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tips & Trik Sesi 3 – TIU CPNS Dosen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --highlight:#fff3cd;
+}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.9;
+}
+
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:50px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:900px;margin:12px auto 0;opacity:.95}
+
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+
+.card h2{color:var(--primary)}
+
+.highlight-box{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:20px;
+  border-radius:12px;
+  margin:24px 0;
+}
+
+.reading{
+  background:var(--highlight);
+  transition:background .3s;
+}
+
+.controls{
+  display:flex;
+  gap:12px;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:.95rem;
+}
+
+button.alt{background:#64748b}
+button:hover{opacity:.9}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Tips & Trik Sesi 3 – TIU Inti</h1>
+  <p>Logika & Numerik Produktif – Cara Mendapat Skor TIU Tinggi Tanpa Terjebak Rumus</p>
+</header>
+
+<div class="container">
+
+<!-- CONTROL -->
+<div class="card">
+<div class="controls">
+  <button onclick="startReading()">🔊 Bacakan</button>
+  <button class="alt" onclick="pauseReading()">⏸️ Jeda</button>
+  <button class="alt" onclick="resumeReading()">▶️ Lanjutkan</button>
+  <button class="alt" onclick="stopReading()">⏹️ Stop</button>
+</div>
+<p><em>Teks yang sedang dibacakan akan disorot otomatis.</em></p>
+</div>
+
+<!-- CONTENT -->
+<div class="card content">
+
+<p class="tts">
+TIU adalah bagian SKD yang paling sering membuat peserta kehabisan waktu,
+bukan karena soalnya sulit,
+tetapi karena banyak peserta menggunakan pendekatan yang salah.
+TIU tidak menguji kemampuan matematika tingkat tinggi,
+melainkan cara berpikir logis, efisien, dan terkontrol.
+</p>
+
+<h2>Tip 1 – TIU Menguji Cara Berpikir, Bukan Kecanggihan Rumus</h2>
+<p class="tts">
+Kesalahan paling umum di TIU adalah mencoba mengingat terlalu banyak rumus.
+Padahal, sebagian besar soal TIU dapat diselesaikan
+dengan logika dasar dan perhitungan sederhana.
+Semakin panjang rumus yang Anda gunakan,
+semakin besar risiko salah dan kehabisan waktu.
+</p>
+
+<div class="highlight-box tts">
+Jika sebuah soal bisa disederhanakan,
+itu hampir pasti memang dimaksudkan untuk disederhanakan.
+</div>
+
+<h2>Tip 2 – Penalaran Logis adalah Sumber Skor Paling Stabil</h2>
+<p class="tts">
+Soal penalaran logis dan analitis relatif lebih konsisten
+dan tidak bergantung pada hitungan panjang.
+Peserta yang tenang dan teliti biasanya lebih unggul di bagian ini
+dibandingkan peserta yang tergesa-gesa.
+</p>
+
+<h2>Tip 3 – Numerik Cepat: Hitung yang Perlu, Abaikan yang Tidak</h2>
+<p class="tts">
+Dalam TIU numerik,
+Anda tidak diminta menghitung dengan presisi tinggi,
+melainkan menentukan hubungan dan kecenderungan angka.
+Persentase, perbandingan, dan pola
+lebih penting daripada hasil akhir yang sangat detail.
+</p>
+
+<div class="highlight-box tts">
+Contoh pola berpikir benar:
+dua puluh lima persen berarti seperempat,
+bukan perhitungan panjang dengan kalkulasi detail.
+</div>
+
+<h2>Tip 4 – Analogi Verbal Dibaca dari Hubungan, Bukan Kata</h2>
+<p class="tts">
+Dalam soal analogi,
+kesalahan paling sering adalah mencari kata yang mirip,
+bukan hubungan yang sama.
+Selalu tanyakan terlebih dahulu:
+hubungan apa yang sedang diuji?
+</p>
+
+<h2>Tip 5 – Teknik Eliminasi Lebih Penting daripada Menemukan Jawaban Sempurna</h2>
+<p class="tts">
+TIU bukan lomba menemukan jawaban paling elegan,
+melainkan memilih jawaban paling masuk akal dari opsi yang tersedia.
+Mengeliminasi dua jawaban jelas salah
+sudah meningkatkan peluang Anda secara signifikan.
+</p>
+
+<h2>Tip 6 – Manajemen Waktu adalah Kunci Lolos TIU</h2>
+<p class="tts">
+Tidak semua soal TIU layak dikerjakan.
+Soal yang terlihat panjang dan rumit sejak awal
+sering kali memang bukan prioritas.
+Lebih baik melewatinya dan mengamankan skor dari soal lain.
+</p>
+
+<h2>Penutup – Strategi Rasional Lebih Penting daripada Kecepatan Membabi Buta</h2>
+<p class="tts">
+TIU bukan tentang siapa yang paling cepat,
+melainkan siapa yang paling konsisten dan terkendali.
+Dengan strategi logis, numerik sederhana,
+dan eliminasi cerdas,
+passing grade TIU adalah target yang sangat realistis.
+</p>
+
+</div>
+
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+const elements = document.querySelectorAll(".tts");
+let index = 0;
+let utterance = null;
+let paused = false;
+
+function clearHighlight(){
+  elements.forEach(el => el.classList.remove("reading"));
+}
+
+function startReading(){
+  stopReading();
+  index = 0;
+  readNext();
+}
+
+function readNext(){
+  if(index >= elements.length) return;
+
+  clearHighlight();
+  const el = elements[index];
+  el.classList.add("reading");
+
+  utterance = new SpeechSynthesisUtterance(el.innerText);
+  utterance.lang = "id-ID";
+  utterance.rate = 1;
+  utterance.pitch = 1;
+
+  utterance.onend = () => {
+    if(!paused){
+      index++;
+      readNext();
+    }
+  };
+
+  speechSynthesis.speak(utterance);
+}
+
+function pauseReading(){
+  if(speechSynthesis.speaking){
+    paused = true;
+    speechSynthesis.pause();
+  }
+}
+
+function resumeReading(){
+  if(paused){
+    paused = false;
+    speechSynthesis.resume();
+  }
+}
+
+function stopReading(){
+  paused = false;
+  speechSynthesis.cancel();
+  clearHighlight();
+}
+</script>
+
+</body>
+</html>
