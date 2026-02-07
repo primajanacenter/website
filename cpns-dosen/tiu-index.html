@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-Learning TWK CPNS – Audio Reader</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Pengantar TIU CPNS</h1>
+  <p>Tes Intelegensi Umum</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===================== -->
+<!-- TIU : TES INTELEGENSI UMUM -->
+<!-- ===================== -->
+
+<!-- TIU -->
+<div class="card">
+  <h2><i class="fa-solid fa-brain"></i> TIU (Tes Intelegensi Umum)</h2>
+
+  <h3>Konsep Umum</h3>
+  <p class="readable">
+    Tes Intelegensi Umum bertujuan mengukur kemampuan kognitif peserta
+    dalam berpikir logis, analitis, dan sistematis.
+    Soal TIU tidak menguji hafalan, melainkan cara berpikir dan ketepatan analisis.
+  </p>
+</div>
+
+<!-- LOGIKA VERBAL -->
+<div class="card">
+  <h2><i class="fa-solid fa-language"></i> Logika Verbal</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Logika verbal menguji kemampuan memahami, menganalisis,
+    dan menarik kesimpulan dari informasi berbentuk kata, kalimat, atau wacana.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Sinonim (persamaan kata)</li>
+    <li class="readable">Antonim (lawan kata)</li>
+    <li class="readable">Analogi kata dan hubungan makna</li>
+    <li class="readable">Pemahaman bacaan dan penarikan kesimpulan</li>
+    <li class="readable">Penalaran logis berbasis pernyataan verbal</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Menentukan makna kata yang paling tepat</li>
+    <li class="readable">Mencari hubungan logis antar kata atau kalimat</li>
+    <li class="readable">Menarik kesimpulan yang valid dari suatu pernyataan</li>
+  </ul>
+</div>
+
+<!-- LOGIKA NUMERIK -->
+<div class="card">
+  <h2><i class="fa-solid fa-calculator"></i> Logika Numerik</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Logika numerik mengukur kemampuan peserta dalam memahami pola angka,
+    melakukan perhitungan sederhana, serta menyelesaikan masalah berbasis kuantitatif.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Deret angka dan pola bilangan</li>
+    <li class="readable">Operasi hitung dasar (penjumlahan, pengurangan, perkalian, pembagian)</li>
+    <li class="readable">Perbandingan dan rasio</li>
+    <li class="readable">Persentase dan aritmetika dasar</li>
+    <li class="readable">Soal cerita berbasis logika numerik</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Menentukan angka selanjutnya dalam suatu pola</li>
+    <li class="readable">Menyelesaikan soal hitungan secara cepat dan tepat</li>
+    <li class="readable">Menganalisis informasi numerik dalam bentuk cerita</li>
+  </ul>
+</div>
+
+<!-- LOGIKA FIGURAL -->
+<div class="card">
+  <h2><i class="fa-solid fa-shapes"></i> Logika Figural</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Logika figural menguji kemampuan berpikir visual dan spasial
+    melalui pola gambar, bentuk, dan susunan visual tertentu.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Pola gambar dan transformasi bentuk</li>
+    <li class="readable">Rotasi, refleksi, dan pergeseran objek</li>
+    <li class="readable">Hubungan antar bentuk visual</li>
+    <li class="readable">Pengelompokan dan klasifikasi gambar</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Menentukan gambar yang sesuai dengan pola</li>
+    <li class="readable">Memprediksi bentuk selanjutnya</li>
+    <li class="readable">Mengidentifikasi hubungan visual antar gambar</li>
+  </ul>
+</div>
+
+<!-- ANALISIS & PENALARAN -->
+<div class="card">
+  <h2><i class="fa-solid fa-magnifying-glass-chart"></i> Analisis & Penalaran</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Analisis dan penalaran mengukur kemampuan berpikir kritis
+    dalam memecahkan masalah secara logis, sistematis, dan berbasis data.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Penalaran deduktif dan induktif</li>
+    <li class="readable">Hubungan sebab-akibat</li>
+    <li class="readable">Pemecahan masalah berbasis logika</li>
+    <li class="readable">Evaluasi pernyataan dan kesimpulan</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Menentukan kesimpulan yang paling logis</li>
+    <li class="readable">Menguji validitas suatu argumen</li>
+    <li class="readable">Menyelesaikan kasus dengan pendekatan analitis</li>
+  </ul>
+</div>
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
