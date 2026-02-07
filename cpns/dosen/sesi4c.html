@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tips & Trik Sesi 4 – TKP CPNS Dosen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --primary:#1e40af;
+  --secondary:#0f172a;
+  --accent:#22c55e;
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --highlight:#fff3cd;
+}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:var(--bg);
+  color:#1f2937;
+  line-height:1.9;
+}
+
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;
+  padding:50px 20px;
+  text-align:center;
+}
+
+header h1{margin:0;font-size:2.2rem}
+header p{max-width:900px;margin:12px auto 0;opacity:.95}
+
+.container{
+  max-width:1000px;
+  margin:40px auto;
+  padding:0 20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:36px;
+  margin-bottom:36px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+
+.card h2{color:var(--primary)}
+
+.highlight-box{
+  background:#eef2ff;
+  border-left:6px solid var(--primary);
+  padding:20px;
+  border-radius:12px;
+  margin:24px 0;
+}
+
+.reading{
+  background:var(--highlight);
+  transition:background .3s;
+}
+
+.controls{
+  display:flex;
+  gap:12px;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:.95rem;
+}
+
+button.alt{background:#64748b}
+button:hover{opacity:.9}
+
+footer{
+  text-align:center;
+  padding:30px;
+  color:#6b7280;
+  font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Tips & Trik Sesi 4 – TKP Inti</h1>
+  <p>Strategi Skor Maksimal – Memilih Jawaban ala ASN, Bukan Opini Pribadi</p>
+</header>
+
+<div class="container">
+
+<!-- CONTROL -->
+<div class="card">
+<div class="controls">
+  <button onclick="startReading()">🔊 Bacakan</button>
+  <button class="alt" onclick="pauseReading()">⏸️ Jeda</button>
+  <button class="alt" onclick="resumeReading()">▶️ Lanjutkan</button>
+  <button class="alt" onclick="stopReading()">⏹️ Stop</button>
+</div>
+<p><em>Teks yang sedang dibacakan akan disorot otomatis.</em></p>
+</div>
+
+<!-- CONTENT -->
+<div class="card content">
+
+<p class="tts">
+TKP adalah bagian SKD yang paling sering disalahpahami.
+Banyak peserta mengira TKP adalah tes kepribadian,
+padahal TKP adalah tes perilaku peran sebagai ASN.
+Yang dinilai bukan siapa diri Anda sebenarnya,
+melainkan bagaimana seharusnya ASN bertindak.
+</p>
+
+<h2>Tip 1 – TKP Bukan Tentang Benar atau Salah, tapi Tinggi atau Rendah Skor</h2>
+<p class="tts">
+Berbeda dengan TWK dan TIU,
+semua jawaban TKP pada dasarnya bisa dianggap benar.
+Namun, setiap jawaban memiliki bobot skor yang berbeda.
+Tujuan Anda bukan memilih jawaban yang masuk akal,
+melainkan jawaban dengan skor tertinggi.
+</p>
+
+<div class="highlight-box tts">
+Pertanyaan kunci TKP:
+jawaban mana yang PALING mencerminkan nilai ASN?
+</div>
+
+<h2>Tip 2 – Nilai ASN Selalu Lebih Penting daripada Emosi Pribadi</h2>
+<p class="tts">
+Banyak peserta terjebak menjawab sesuai perasaan pribadi,
+seperti marah, kecewa, atau ingin membela diri.
+Dalam TKP, emosi hampir selalu menurunkan skor.
+ASN dinilai dari profesionalisme, stabilitas,
+dan kemampuan menjaga hubungan kerja.
+</p>
+
+<h2>Tip 3 – Pola Jawaban Skor Tertinggi Hampir Selalu Kolaboratif</h2>
+<p class="tts">
+Jawaban TKP dengan skor tertinggi biasanya mengandung
+inisiatif, komunikasi, dan kerja sama.
+Jawaban yang menyalahkan orang lain,
+menyendiri, atau bersikap ekstrem
+hampir selalu memiliki skor lebih rendah.
+</p>
+
+<div class="highlight-box tts">
+Urutan aman jawaban TKP:
+koordinasi, solusi bersama, evaluasi.
+</div>
+
+<h2>Tip 4 – Jawaban Heroik Justru Sering Menjebak</h2>
+<p class="tts">
+Jawaban yang terdengar sangat berani atau heroik
+sering kali tidak sesuai dengan sistem birokrasi.
+ASN tidak dinilai dari tindakan individual ekstrem,
+melainkan dari kepatuhan prosedur
+dan kerja dalam sistem organisasi.
+</p>
+
+<h2>Tip 5 – Hindari Jawaban Pasif dan Diam</h2>
+<p class="tts">
+Jawaban yang menunjukkan sikap pasif,
+seperti membiarkan masalah atau menunggu tanpa tindakan,
+hampir selalu mendapat skor rendah.
+TKP menghargai inisiatif yang terukur,
+bukan sikap menghindar.
+</p>
+
+<h2>Tip 6 – Konsistensi Pola Jawaban Lebih Penting daripada Satu Jawaban Ideal</h2>
+<p class="tts">
+Penilai TKP melihat pola besar,
+bukan hanya satu soal.
+Jika jawaban Anda konsisten mencerminkan
+integritas, pelayanan, dan kerja sama,
+maka skor TKP Anda akan relatif stabil dan tinggi.
+</p>
+
+<h2>Penutup – TKP adalah Sumber Skor Terbesar jika Dipahami</h2>
+<p class="tts">
+TKP sering menjadi penentu apakah peserta lolos atau gugur.
+Dengan memahami bahwa TKP adalah tes perilaku peran ASN,
+bukan tes kepribadian,
+Anda dapat mengamankan skor besar
+tanpa menghafal apa pun.
+</p>
+
+</div>
+
+</div>
+
+<footer>
+© PT Primajana Bagia Mesari
+</footer>
+
+<script>
+const elements = document.querySelectorAll(".tts");
+let index = 0;
+let utterance = null;
+let paused = false;
+
+function clearHighlight(){
+  elements.forEach(el => el.classList.remove("reading"));
+}
+
+function startReading(){
+  stopReading();
+  index = 0;
+  readNext();
+}
+
+function readNext(){
+  if(index >= elements.length) return;
+
+  clearHighlight();
+  const el = elements[index];
+  el.classList.add("reading");
+
+  utterance = new SpeechSynthesisUtterance(el.innerText);
+  utterance.lang = "id-ID";
+  utterance.rate = 1;
+  utterance.pitch = 1;
+
+  utterance.onend = () => {
+    if(!paused){
+      index++;
+      readNext();
+    }
+  };
+
+  speechSynthesis.speak(utterance);
+}
+
+function pauseReading(){
+  if(speechSynthesis.speaking){
+    paused = true;
+    speechSynthesis.pause();
+  }
+}
+
+function resumeReading(){
+  if(paused){
+    paused = false;
+    speechSynthesis.resume();
+  }
+}
+
+function stopReading(){
+  paused = false;
+  speechSynthesis.cancel();
+  clearHighlight();
+}
+</script>
+
+</body>
+</html>
