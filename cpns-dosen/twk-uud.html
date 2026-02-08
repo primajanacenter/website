@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> UUD 1945</h1>
+  <p>Tes Wawasan Kebangsaan</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- SEJARAH PERUMUSAN UUD 1945 -->
+<div class="card">
+  <h2><i class="fa-solid fa-clock-rotate-left"></i> Sejarah Perumusan UUD 1945</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    UUD 1945 dirumuskan sebagai dasar hukum negara Indonesia
+    melalui proses sejarah yang melibatkan badan-badan persiapan
+    kemerdekaan sebelum dan sesudah Proklamasi 17 Agustus 1945.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">BPUPKI sebagai badan perumus dasar negara dan rancangan UUD</li>
+    <li class="readable">PPKI sebagai badan yang mengesahkan UUD 1945</li>
+    <li class="readable">Sidang BPUPKI I dan II dalam perumusan UUD</li>
+    <li class="readable">Piagam Jakarta sebagai cikal bakal Pembukaan UUD 1945</li>
+    <li class="readable">Perubahan tujuh kata dalam Piagam Jakarta</li>
+    <li class="readable">Pengesahan UUD 1945 pada 18 Agustus 1945</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Peran BPUPKI dan PPKI dalam perumusan UUD</li>
+    <li class="readable">Makna perubahan Piagam Jakarta</li>
+    <li class="readable">Kronologi pengesahan UUD 1945</li>
+  </ul>
+</div>
+
+<!-- KEDUDUKAN DAN FUNGSI UUD 1945 -->
+<div class="card">
+  <h2><i class="fa-solid fa-gavel"></i> Kedudukan dan Fungsi UUD 1945</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    UUD 1945 memiliki kedudukan sebagai hukum dasar tertulis
+    yang menjadi landasan penyelenggaraan negara.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">UUD 1945 sebagai hukum dasar negara</li>
+    <li class="readable">UUD 1945 sebagai sumber hukum tertinggi</li>
+    <li class="readable">Fungsi UUD 1945 sebagai pedoman penyelenggaraan negara</li>
+    <li class="readable">Hubungan UUD 1945 dengan Pancasila</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Kedudukan UUD 1945 dalam hierarki peraturan</li>
+    <li class="readable">Hubungan Pancasila dan UUD 1945</li>
+  </ul>
+</div>
+
+<!-- SISTEMATIKA UUD 1945 -->
+<div class="card">
+  <h2><i class="fa-solid fa-diagram-project"></i> Sistematika UUD 1945</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Sistematika UUD 1945 menunjukkan susunan dan bagian-bagian
+    yang membentuk keseluruhan konstitusi negara.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Pembukaan UUD 1945</li>
+    <li class="readable">Batang Tubuh UUD 1945</li>
+    <li class="readable">Aturan Peralihan</li>
+    <li class="readable">Aturan Tambahan</li>
+    <li class="readable">Penjelasan UUD 1945 sebelum amandemen</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Struktur dan bagian UUD 1945</li>
+    <li class="readable">Perbedaan Pembukaan dan Batang Tubuh</li>
+  </ul>
+</div>
+
+<!-- PEMBUKAAN UUD 1945 -->
+<div class="card">
+  <h2><i class="fa-solid fa-scroll"></i> Pembukaan UUD 1945</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Pembukaan UUD 1945 memuat dasar filosofis, yuridis,
+    dan sosiologis berdirinya negara Indonesia.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Makna filosofis Pembukaan UUD 1945</li>
+    <li class="readable">Makna yuridis Pembukaan UUD 1945</li>
+    <li class="readable">Makna sosiologis Pembukaan UUD 1945</li>
+    <li class="readable">Nilai tiap alinea Pembukaan</li>
+    <li class="readable">Hubungan Pembukaan dengan Pancasila</li>
+  </ul>
+
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Makna alinea Pembukaan</li>
+    <li class="readable">Kedudukan Pembukaan yang tidak dapat diubah</li>
+  </ul>
+</div>
+
+<!-- BATANG TUBUH UUD 1945 -->
+<div class="card">
+  <h2><i class="fa-solid fa-building-columns"></i> Batang Tubuh UUD 1945</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Batang Tubuh UUD 1945 berisi pasal-pasal yang mengatur
+    penyelenggaraan negara dan hubungan antara negara dan warga negara.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Pasal-pasal penting dalam UUD 1945</li>
+    <li class="readable">Pengaturan lembaga negara</li>
+    <li class="readable">Hak dan kewajiban warga negara</li>
+    <li class="readable">Hubungan antar lembaga negara</li>
+  </ul>
+</div>
+
+<!-- AMANDEMEN UUD 1945 -->
+<div class="card">
+  <h2><i class="fa-solid fa-pen-to-square"></i> Amandemen UUD 1945</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Amandemen UUD 1945 dilakukan untuk menyempurnakan sistem ketatanegaraan
+    tanpa mengubah jati diri bangsa.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Latar belakang amandemen UUD 1945</li>
+    <li class="readable">Tujuan amandemen</li>
+    <li class="readable">Empat kali amandemen (1999–2002)</li>
+    <li class="readable">Perubahan sebelum dan sesudah amandemen</li>
+    <li class="readable">Hal-hal yang tidak dapat diubah</li>
+  </ul>
+</div>
+
+<!-- SISTEM KETATANEGARAAN -->
+<div class="card">
+  <h2><i class="fa-solid fa-sitemap"></i> Sistem Ketatanegaraan Indonesia</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Sistem ketatanegaraan Indonesia mengatur pembagian kekuasaan
+    dan hubungan antar lembaga negara.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Sistem pemerintahan sebelum dan sesudah amandemen</li>
+    <li class="readable">Kekuasaan eksekutif, legislatif, dan yudikatif</li>
+    <li class="readable">Prinsip checks and balances</li>
+  </ul>
+</div>
+
+<!-- HAM -->
+<div class="card">
+  <h2><i class="fa-solid fa-scale-unbalanced"></i> Hak Asasi Manusia dalam UUD 1945</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    UUD 1945 menjamin perlindungan Hak Asasi Manusia
+    sebagai hak dasar yang melekat pada setiap warga negara.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Pengaturan HAM dalam Pasal 28A sampai 28J</li>
+    <li class="readable">Kewajiban negara dalam pemenuhan HAM</li>
+    <li class="readable">Pembatasan HAM menurut UUD 1945</li>
+  </ul>
+</div>
+
+<!-- KEWAJIBAN WARGA NEGARA -->
+<div class="card">
+  <h2><i class="fa-solid fa-user-check"></i> Kewajiban Warga Negara</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Selain hak, setiap warga negara memiliki kewajiban
+    yang harus dilaksanakan demi kepentingan bangsa dan negara.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Kewajiban bela negara</li>
+    <li class="readable">Ketaatan terhadap hukum</li>
+    <li class="readable">Menghormati hak orang lain</li>
+  </ul>
+</div>
+
+<!-- IMPLEMENTASI UUD 1945 -->
+<div class="card">
+  <h2><i class="fa-solid fa-check-double"></i> Implementasi UUD 1945</h2>
+
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Implementasi UUD 1945 mencerminkan sejauh mana konstitusi
+    dijalankan dalam kehidupan berbangsa dan bernegara.
+  </p>
+
+  <h3>Substansi</h3>
+  <ul>
+    <li class="readable">Contoh penerapan UUD 1945 dalam kehidupan sehari-hari</li>
+    <li class="readable">Bentuk pelanggaran terhadap UUD 1945</li>
+    <li class="readable">Peran warga negara dalam menjaga konstitusi</li>
+  </ul>
+</div>
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
