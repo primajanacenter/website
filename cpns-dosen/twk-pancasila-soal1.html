@@ -593,27 +593,58 @@ function updateGamification() {
 }
 
 /* ===============================
-   📄 LOAD SOAL
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
 ================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (OPSINYA DIAKAC)
+================================ */
+let currentQuestion = null;
+
 function loadQuestion() {
   answered = false;
-  const q = questions[index];
+
+  // clone soal agar bank asli tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
 
   document.getElementById("progress").innerText =
     `Soal ${index + 1} dari ${questions.length}`;
-  document.getElementById("question").innerText = q.q;
+  document.getElementById("question").innerText = currentQuestion.q;
   document.getElementById("explanation").style.display = "none";
 
   const optionsDiv = document.getElementById("options");
   optionsDiv.innerHTML = "";
 
-  q.o.forEach((opt, i) => {
+  currentQuestion.o.forEach((opt, i) => {
     const btn = document.createElement("button");
     btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
     btn.onclick = () => selectAnswer(i);
     optionsDiv.appendChild(btn);
   });
 
+  // start timer hanya sekali
   if (index === 0 && !startTime) {
     startTime = new Date();
     startTimer();
@@ -627,7 +658,7 @@ function selectAnswer(i) {
   if (answered) return;
   answered = true;
 
-  const q = questions[index];
+  const q = currentQuestion;
   const buttons = document.querySelectorAll(".options button");
 
   buttons.forEach((b, idx) => {
@@ -661,6 +692,7 @@ function nextQuestion() {
     finishExam();
   }
 }
+
 
 /* ===============================
    🏁 SELESAI UJIAN
