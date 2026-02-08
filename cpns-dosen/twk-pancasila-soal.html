@@ -275,10 +275,13 @@ header {
 /* ===============================
    ⏱️ TIMER BKN
 ================================ */
-let totalTime = 20 * 60; // 20 menit
+let totalTime = 20 * 60;
 let timerInterval;
+let startTime = null;
 
 function startTimer() {
+  if (timerInterval) return;
+
   timerInterval = setInterval(() => {
     totalTime--;
 
@@ -295,11 +298,12 @@ function startTimer() {
 }
 
 /* ===============================
-   📘 BANK SOAL TWK – PANCASILA (20 SOAL HOTS)
+   📘 BANK SOAL (20 SOAL FIX)
 ================================ */
 const questions = [
-
-/* ===== LEVEL MUDAH–MENENGAH (KONSEPTUAL) ===== */
+  /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
+  
+  /* ===== LEVEL MUDAH–MENENGAH (KONSEPTUAL) ===== */
 
 {
   q: "Keberagaman suku, agama, dan budaya di Indonesia menuntut adanya dasar negara yang mampu mempersatukan seluruh elemen bangsa. Fungsi Pancasila yang paling tepat dalam konteks tersebut adalah …",
@@ -567,14 +571,8 @@ const questions = [
   e: "Relevansi Pancasila terletak pada keluwesan penerapan nilai dasarnya.",
   c: "Kedudukan dan Fungsi Pancasila"
 }
-
+  
 ];
-
-
-// Duplikasi → total 20 soal
-while (questions.length < 20) {
-  questions.push({ ...questions[questions.length % 5] });
-}
 
 /* ===============================
    🔢 STATE & GAMIFIKASI
@@ -582,10 +580,8 @@ while (questions.length < 20) {
 let index = 0;
 let score = 0;
 let answered = false;
-
 let kp = 0;
 let level = 1;
-
 let analytics = {};
 
 /* ===============================
@@ -618,7 +614,10 @@ function loadQuestion() {
     optionsDiv.appendChild(btn);
   });
 
-  if (index === 0) startTimer();
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
 }
 
 /* ===============================
@@ -664,79 +663,128 @@ function nextQuestion() {
 }
 
 /* ===============================
-   🏁 SELESAI UJIAN (ANALITIK LENGKAP + DASHBOARD)
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
 ================================ */
 function finishExam() {
   clearInterval(timerInterval);
 
-  // Sembunyikan quiz, tampilkan result
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
   document.getElementById("quiz").style.display = "none";
   document.getElementById("result").style.display = "block";
 
-  /* ===== ISI RINGKASAN NILAI (BOX ATAS) ===== */
   document.getElementById("finalScore").innerText =
     `${score} / ${questions.length * 5}`;
   document.getElementById("finalKP").innerText = kp;
   document.getElementById("finalLevel").innerText = level;
 
-  /* ===== ANALITIK AREA LEMAH ===== */
-  let analysisHTML = "";
-
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
   if (Object.keys(analytics).length > 0) {
-
-    const sortedWeakAreas = Object.entries(analytics)
-      .sort((a, b) => b[1] - a[1]);
-
-    analysisHTML += `
-      <ul>
-    `;
-
-    sortedWeakAreas.forEach(([area, count]) => {
-      analysisHTML += `
-        <li>
-          <strong>${area}</strong><br>
-          <span style="color:#64748b">
-            ${count} jawaban salah
-          </span>
-        </li>
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
       `;
     });
+  }
 
-    analysisHTML += `
-      </ul>
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
     `;
-
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
   } else {
-    analysisHTML = `
-      <p>
-        🎉 <strong>Excellent!</strong><br>
-        Semua area TWK dikuasai dengan sangat baik.
-      </p>
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
     `;
   }
 
-  /* ===== SIMPAN RIWAYAT KE LOCAL STORAGE ===== */
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
   const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
   history.push({
     date: new Date().toLocaleString(),
     score,
     kp,
     level,
-    weakAreas: analytics
+    durationSec,
+    avgTime,
+    analytics
   });
   localStorage.setItem("twkHistory", JSON.stringify(history));
-
-  /* ===== TAMPILKAN ANALISIS KE UI ===== */
-  document.getElementById("scoreText").innerHTML = analysisHTML;
 }
-
 
 /* ===============================
    🚀 START
 ================================ */
 loadQuestion();
-
 </script>
+
+
 
 </body>
 </html>
