@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal TWK CPNS – Pancasila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Latihan Soal TWK CPNS</h1>
+  <p>Materi Pancasila · Standar CPNS</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan TWK</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area TWK</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60; // 20 menit
+let timerInterval;
+
+function startTimer() {
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL TWK – PANCASILA (20 SOAL HOTS)
+================================ */
+const questions = [
+
+/* ===== LEVEL MUDAH–MENENGAH (KONSEPTUAL) ===== */
+
+{
+  q: "Keberagaman suku, agama, dan budaya di Indonesia menuntut adanya dasar negara yang mampu mempersatukan seluruh elemen bangsa. Fungsi Pancasila yang paling tepat dalam konteks tersebut adalah …",
+  o: [
+    "Pandangan hidup individu",
+    "Ideologi tertutup",
+    "Alat pemersatu bangsa",
+    "Sumber hukum formal",
+    "Kontrak sosial masyarakat"
+  ],
+  a: 2,
+  e: "Dalam konteks kemajemukan, Pancasila berfungsi utama sebagai alat pemersatu bangsa.",
+  c: "Kedudukan dan Fungsi Pancasila"
+},
+{
+  q: "Peran BPUPKI dalam proses perumusan dasar negara Indonesia adalah …",
+  o: [
+    "Mengesahkan UUD 1945",
+    "Menetapkan presiden dan wakil presiden",
+    "Merumuskan dasar dan bentuk negara",
+    "Melaksanakan pemerintahan sementara",
+    "Membentuk kabinet pertama"
+  ],
+  a: 2,
+  e: "BPUPKI bertugas merumuskan dasar negara dan rancangan konstitusi.",
+  c: "Sejarah Perumusan Pancasila"
+},
+{
+  q: "Perubahan sila pertama Piagam Jakarta menjadi seperti sekarang dilakukan karena …",
+  o: [
+    "Tekanan dari negara asing",
+    "Keinginan menghapus nilai agama",
+    "Upaya menjaga persatuan nasional",
+    "Tuntutan kelompok mayoritas",
+    "Penyesuaian dengan hukum internasional"
+  ],
+  a: 2,
+  e: "Perubahan dilakukan demi menjaga persatuan bangsa Indonesia yang majemuk.",
+  c: "Sejarah Perumusan Pancasila"
+},
+{
+  q: "Pancasila disebut sebagai ideologi terbuka karena …",
+  o: [
+    "Dapat diubah sewaktu-waktu",
+    "Nilainya bersumber dari luar bangsa",
+    "Mampu menyesuaikan perkembangan zaman tanpa kehilangan jati diri",
+    "Bersifat absolut dan dogmatis",
+    "Hanya berlaku dalam kondisi tertentu"
+  ],
+  a: 2,
+  e: "Ideologi terbuka bersifat dinamis namun tetap berpegang pada nilai dasar.",
+  c: "Kedudukan dan Fungsi Pancasila"
+},
+{
+  q: "Nilai praksis dalam Pancasila tercermin paling nyata dalam …",
+  o: [
+    "Pembukaan UUD 1945",
+    "Pidato kenegaraan",
+    "Perilaku warga negara sehari-hari",
+    "Ketetapan MPR",
+    "Teori filsafat negara"
+  ],
+  a: 2,
+  e: "Nilai praksis adalah penerapan konkret Pancasila dalam kehidupan sehari-hari.",
+  c: "Nilai-nilai Pancasila"
+},
+
+/* ===== LEVEL MENENGAH (APLIKATIF) ===== */
+
+{
+  q: "Musyawarah mufakat dalam pengambilan keputusan di lingkungan kerja mencerminkan pengamalan Pancasila terutama sila …",
+  o: [
+    "Ketuhanan Yang Maha Esa",
+    "Kemanusiaan yang adil dan beradab",
+    "Persatuan Indonesia",
+    "Kerakyatan yang dipimpin oleh hikmat kebijaksanaan",
+    "Keadilan sosial bagi seluruh rakyat Indonesia"
+  ],
+  a: 3,
+  e: "Musyawarah merupakan inti sila keempat Pancasila.",
+  c: "Makna Setiap Sila"
+},
+{
+  q: "Jika terdapat peraturan daerah yang bertentangan dengan nilai keadilan sosial, maka secara konstitusional peraturan tersebut …",
+  o: [
+    "Tetap berlaku karena otonomi daerah",
+    "Dapat diterapkan secara terbatas",
+    "Harus diuji dan dibatalkan",
+    "Menjadi kewenangan DPRD",
+    "Tidak dapat diganggu gugat"
+  ],
+  a: 2,
+  e: "Semua peraturan harus bersumber dan tidak bertentangan dengan Pancasila.",
+  c: "Pancasila sebagai Sumber Hukum"
+},
+{
+  q: "Sikap intoleransi atas nama mayoritas bertentangan dengan Pancasila karena …",
+  o: [
+    "Menghambat pembangunan nasional",
+    "Melanggar hukum positif semata",
+    "Tidak sesuai dengan nilai kemanusiaan dan persatuan",
+    "Mengurangi kewibawaan pemerintah",
+    "Tidak sejalan dengan globalisasi"
+  ],
+  a: 2,
+  e: "Intoleransi bertentangan dengan sila kedua dan ketiga Pancasila.",
+  c: "Nilai-nilai Pancasila"
+},
+{
+  q: "Pancasila sebagai pandangan hidup bangsa berarti Pancasila dijadikan …",
+  o: [
+    "Alat kekuasaan pemerintah",
+    "Pedoman bersikap dan bertindak",
+    "Hukum tertinggi negara",
+    "Sumber hukum formal semata",
+    "Dokumen sejarah"
+  ],
+  a: 1,
+  e: "Sebagai pandangan hidup, Pancasila menjadi pedoman perilaku bangsa.",
+  c: "Kedudukan dan Fungsi Pancasila"
+},
+{
+  q: "Globalisasi dapat mengancam nilai Pancasila apabila …",
+  o: [
+    "Mendorong kemajuan teknologi",
+    "Meningkatkan interaksi antarbangsa",
+    "Menumbuhkan sikap individualisme berlebihan",
+    "Membuka pasar internasional",
+    "Meningkatkan mobilitas penduduk"
+  ],
+  a: 2,
+  e: "Individualisme berlebihan bertentangan dengan nilai kebersamaan Pancasila.",
+  c: "Pengamalan Pancasila"
+},
+
+/* ===== LEVEL TINGGI / HOTS (ANALISIS & EVALUASI) ===== */
+
+{
+  q: "Seorang pejabat mengambil kebijakan yang sah secara hukum, tetapi merugikan kelompok masyarakat tertentu. Ditinjau dari Pancasila, kondisi ini menunjukkan bahwa …",
+  o: [
+    "Hukum lebih tinggi dari Pancasila",
+    "Legalitas selalu menjamin keadilan",
+    "Nilai Pancasila belum sepenuhnya dijadikan dasar kebijakan",
+    "Keadilan sosial bersifat relatif",
+    "Pancasila tidak relevan"
+  ],
+  a: 2,
+  e: "Kebijakan harus tidak hanya legal, tetapi juga sesuai nilai keadilan Pancasila.",
+  c: "Implementasi Pancasila"
+},
+{
+  q: "Upaya paling tepat untuk menjaga relevansi Pancasila di era digital adalah …",
+  o: [
+    "Menghafalkan teks Pancasila",
+    "Menjadikan Pancasila doktrin kaku",
+    "Menginternalisasi nilai Pancasila dalam kebijakan dan perilaku digital",
+    "Membatasi arus informasi",
+    "Menghindari budaya global"
+  ],
+  a: 2,
+  e: "Internalisasi nilai lebih penting daripada sekadar hafalan.",
+  c: "Pengamalan Pancasila"
+},
+{
+  q: "Hubungan antar sila Pancasila bersifat hierarkis dan saling menjiwai. Artinya …",
+  o: [
+    "Sila pertama paling penting",
+    "Sila dapat diterapkan terpisah",
+    "Setiap sila tidak berdiri sendiri",
+    "Sila kelima bersifat opsional",
+    "Sila dapat diubah urutannya"
+  ],
+  a: 2,
+  e: "Setiap sila saling berkaitan dan membentuk satu kesatuan nilai.",
+  c: "Makna Setiap Sila"
+},
+{
+  q: "Penolakan terhadap kelompok minoritas dengan alasan stabilitas bertentangan dengan Pancasila karena …",
+  o: [
+    "Menghambat investasi",
+    "Bertentangan dengan HAM dan persatuan",
+    "Tidak sesuai hukum internasional",
+    "Mengurangi kewibawaan negara",
+    "Melanggar norma sosial"
+  ],
+  a: 1,
+  e: "Diskriminasi melanggar nilai kemanusiaan dan persatuan.",
+  c: "Nilai-nilai Pancasila"
+},
+{
+  q: "Jika suatu undang-undang bertentangan dengan nilai Pancasila, maka secara prinsip …",
+  o: [
+    "Tetap berlaku hingga dicabut",
+    "Menjadi kewenangan pemerintah daerah",
+    "Harus diuji secara konstitusional",
+    "Menjadi norma sosial saja",
+    "Tidak dapat diganggu gugat"
+  ],
+  a: 2,
+  e: "Pancasila adalah sumber dari segala sumber hukum.",
+  c: "Pancasila sebagai Sumber Hukum"
+},
+{
+  q: "Penguatan nilai Pancasila di kalangan ASN paling efektif dilakukan melalui …",
+  o: [
+    "Ceramah rutin",
+    "Sanksi administratif",
+    "Keteladanan dan sistem kerja berintegritas",
+    "Doktrin ideologis",
+    "Pengawasan ketat semata"
+  ],
+  a: 2,
+  e: "Keteladanan dan sistem berintegritas lebih efektif daripada indoktrinasi.",
+  c: "Pengamalan Pancasila"
+},
+{
+  q: "Radikalisme menjadi ancaman bagi Pancasila karena …",
+  o: [
+    "Menghambat pembangunan",
+    "Bertentangan dengan nilai persatuan dan toleransi",
+    "Melanggar hukum positif",
+    "Tidak sesuai budaya lokal",
+    "Mengganggu stabilitas ekonomi"
+  ],
+  a: 1,
+  e: "Radikalisme bertentangan dengan nilai persatuan dan toleransi Pancasila.",
+  c: "Ancaman terhadap Pancasila"
+},
+{
+  q: "Pancasila sebagai ideologi terbuka memungkinkan …",
+  o: [
+    "Perubahan nilai dasar",
+    "Penyesuaian dalam penerapan tanpa mengubah nilai dasar",
+    "Penghapusan sila tertentu",
+    "Dominasi ideologi asing",
+    "Penerapan terbatas pada kondisi tertentu"
+  ],
+  a: 1,
+  e: "Nilai dasar tetap, penerapan dapat menyesuaikan zaman.",
+  c: "Kedudukan dan Fungsi Pancasila"
+},
+{
+  q: "Sikap mengutamakan kepentingan bersama di atas kepentingan pribadi mencerminkan nilai Pancasila terutama sila …",
+  o: [
+    "Pertama",
+    "Kedua",
+    "Ketiga",
+    "Keempat",
+    "Kelima"
+  ],
+  a: 2,
+  e: "Mengutamakan kepentingan bersama mencerminkan sila Persatuan Indonesia.",
+  c: "Makna Setiap Sila"
+},
+{
+  q: "Pancasila tetap relevan sebagai dasar negara karena …",
+  o: [
+    "Tidak pernah diuji",
+    "Bersifat kaku",
+    "Mampu menjadi pedoman dalam berbagai perubahan zaman",
+    "Didukung oleh kekuasaan negara",
+    "Tidak memiliki alternatif"
+  ],
+  a: 2,
+  e: "Relevansi Pancasila terletak pada keluwesan penerapan nilai dasarnya.",
+  c: "Kedudukan dan Fungsi Pancasila"
+}
+
+];
+
+
+// Duplikasi → total 20 soal
+while (questions.length < 20) {
+  questions.push({ ...questions[questions.length % 5] });
+}
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+
+let kp = 0;
+let level = 1;
+
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   📄 LOAD SOAL
+================================ */
+function loadQuestion() {
+  answered = false;
+  const q = questions[index];
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById("question").innerText = q.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  q.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  if (index === 0) startTimer();
+}
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[index];
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+/* ===============================
+   🏁 SELESAI UJIAN (ANALITIK LENGKAP + DASHBOARD)
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  // Sembunyikan quiz, tampilkan result
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  /* ===== ISI RINGKASAN NILAI (BOX ATAS) ===== */
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===== ANALITIK AREA LEMAH ===== */
+  let analysisHTML = "";
+
+  if (Object.keys(analytics).length > 0) {
+
+    const sortedWeakAreas = Object.entries(analytics)
+      .sort((a, b) => b[1] - a[1]);
+
+    analysisHTML += `
+      <ul>
+    `;
+
+    sortedWeakAreas.forEach(([area, count]) => {
+      analysisHTML += `
+        <li>
+          <strong>${area}</strong><br>
+          <span style="color:#64748b">
+            ${count} jawaban salah
+          </span>
+        </li>
+      `;
+    });
+
+    analysisHTML += `
+      </ul>
+    `;
+
+  } else {
+    analysisHTML = `
+      <p>
+        🎉 <strong>Excellent!</strong><br>
+        Semua area TWK dikuasai dengan sangat baik.
+      </p>
+    `;
+  }
+
+  /* ===== SIMPAN RIWAYAT KE LOCAL STORAGE ===== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    weakAreas: analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+
+  /* ===== TAMPILKAN ANALISIS KE UI ===== */
+  document.getElementById("scoreText").innerHTML = analysisHTML;
+}
+
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+
+</script>
+
+</body>
+</html>
