@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Pancasila</h1>
+  <p>Tes Wawasan Kebangsaan</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- SEJARAH PERUMUSAN PANCASILA -->
+<div class="card">
+  <h2><i class="fa-solid fa-hourglass-start"></i> Sejarah Perumusan Pancasila</h2>
+
+  <h3>Latar Belakang Lahirnya Pancasila</h3>
+  <p class="readable">
+    Pancasila lahir sebagai dasar negara Indonesia dalam konteks perjuangan
+    kemerdekaan dan kebutuhan akan dasar filosofis yang mampu mempersatukan
+    bangsa Indonesia yang majemuk.
+  </p>
+
+  <h3>Peran BPUPKI dan PPKI</h3>
+  <ul>
+    <li class="readable">BPUPKI berperan merumuskan dasar dan bentuk negara Indonesia</li>
+    <li class="readable">PPKI berperan mengesahkan Pancasila dan UUD 1945</li>
+  </ul>
+
+  <h3>Usulan Rumusan Pancasila</h3>
+  <ul>
+    <li class="readable">Moh. Yamin mengusulkan lima asas kebangsaan dan kemanusiaan</li>
+    <li class="readable">Soepomo menekankan negara integralistik</li>
+    <li class="readable">Ir. Soekarno memperkenalkan istilah Pancasila pada 1 Juni 1945</li>
+  </ul>
+
+  <h3>Piagam Jakarta</h3>
+  <ul>
+    <li class="readable">Piagam Jakarta menjadi cikal bakal Pembukaan UUD 1945</li>
+    <li class="readable">Perubahan sila pertama dilakukan demi persatuan bangsa</li>
+  </ul>
+</div>
+
+<!-- KEDUDUKAN DAN FUNGSI PANCASILA -->
+<div class="card">
+  <h2><i class="fa-solid fa-scale-unbalanced"></i> Kedudukan dan Fungsi Pancasila</h2>
+
+  <h3>Pancasila sebagai Dasar Negara</h3>
+  <p class="readable">
+    Pancasila menjadi landasan utama dalam penyelenggaraan negara
+    dan menjadi sumber legitimasi kekuasaan negara.
+  </p>
+
+  <h3>Pancasila sebagai Ideologi Negara</h3>
+  <p class="readable">
+    Sebagai ideologi terbuka, Pancasila mampu menyesuaikan diri
+    dengan perkembangan zaman tanpa kehilangan nilai dasarnya.
+  </p>
+
+  <h3>Pancasila sebagai Pandangan Hidup Bangsa</h3>
+  <p class="readable">
+    Pancasila menjadi pedoman dalam bersikap dan bertindak
+    bagi seluruh warga negara Indonesia.
+  </p>
+
+  <h3>Pancasila sebagai Sumber dari Segala Sumber Hukum</h3>
+  <p class="readable">
+    Seluruh peraturan perundang-undangan di Indonesia
+    harus bersumber dan tidak bertentangan dengan nilai Pancasila.
+  </p>
+</div>
+
+<!-- NILAI-NILAI DALAM PANCASILA -->
+<div class="card">
+  <h2><i class="fa-solid fa-gem"></i> Nilai-nilai dalam Pancasila</h2>
+
+  <h3>Jenis Nilai dalam Pancasila</h3>
+  <ul>
+    <li class="readable">Nilai dasar sebagai prinsip fundamental</li>
+    <li class="readable">Nilai instrumental sebagai penjabaran dalam kebijakan</li>
+    <li class="readable">Nilai praksis sebagai penerapan nyata dalam kehidupan</li>
+  </ul>
+
+  <h3>Nilai Setiap Sila</h3>
+  <ul>
+    <li class="readable">Nilai ketuhanan dan toleransi beragama</li>
+    <li class="readable">Nilai kemanusiaan dan penghormatan HAM</li>
+    <li class="readable">Nilai persatuan dan nasionalisme</li>
+    <li class="readable">Nilai kerakyatan dan demokrasi</li>
+    <li class="readable">Nilai keadilan sosial bagi seluruh rakyat</li>
+  </ul>
+
+  <h3>Contoh Penerapan Nilai Pancasila</h3>
+  <ul>
+    <li class="readable">Menghormati perbedaan keyakinan</li>
+    <li class="readable">Menjunjung tinggi keadilan dan kemanusiaan</li>
+    <li class="readable">Mengutamakan musyawarah dalam pengambilan keputusan</li>
+  </ul>
+</div>
+
+<!-- MAKNA SETIAP SILA -->
+<div class="card">
+  <h2><i class="fa-solid fa-layer-group"></i> Makna Setiap Sila Pancasila</h2>
+
+  <h3>Makna Filosofis Sila I–V</h3>
+  <ul>
+    <li class="readable">Sila pertama menegaskan ketuhanan yang toleran</li>
+    <li class="readable">Sila kedua menekankan kemanusiaan yang adil dan beradab</li>
+    <li class="readable">Sila ketiga mengutamakan persatuan bangsa</li>
+    <li class="readable">Sila keempat menegaskan demokrasi permusyawaratan</li>
+    <li class="readable">Sila kelima menjamin keadilan sosial</li>
+  </ul>
+
+  <h3>Hubungan Antar Sila</h3>
+  <p class="readable">
+    Setiap sila saling menjiwai dan tidak dapat dipisahkan,
+    membentuk satu kesatuan nilai yang utuh.
+  </p>
+
+  <h3>Implementasi Sila</h3>
+  <p class="readable">
+    Implementasi Pancasila tercermin dalam kebijakan negara
+    dan perilaku warga negara sehari-hari.
+  </p>
+</div>
+
+<!-- PANCASILA DALAM SISTEM KETATANEGARAAN -->
+<div class="card">
+  <h2><i class="fa-solid fa-building-columns"></i> Pancasila dalam Sistem Ketatanegaraan</h2>
+
+  <h3>Hubungan Pancasila dengan UUD 1945</h3>
+  <p class="readable">
+    Pancasila menjadi dasar filosofis bagi Pembukaan dan pasal-pasal UUD 1945.
+  </p>
+
+  <h3>Penyelenggaraan Negara</h3>
+  <p class="readable">
+    Seluruh penyelenggaraan negara harus berlandaskan nilai Pancasila.
+  </p>
+
+  <h3>Pembentukan Peraturan Perundang-undangan</h3>
+  <p class="readable">
+    Pancasila menjadi tolok ukur keadilan dan kebenaran
+    dalam pembentukan hukum nasional.
+  </p>
+</div>
+
+<!-- PENGAMALAN PANCASILA -->
+<div class="card">
+  <h2><i class="fa-solid fa-hand-holding-heart"></i> Pengamalan Pancasila</h2>
+
+  <h3>P4</h3>
+  <p class="readable">
+    Pedoman Penghayatan dan Pengamalan Pancasila
+    merupakan upaya sistematis untuk membumikan Pancasila.
+  </p>
+
+  <h3>Tantangan Globalisasi</h3>
+  <p class="readable">
+    Globalisasi membawa tantangan berupa lunturnya nilai kebangsaan
+    dan meningkatnya individualisme.
+  </p>
+
+  <h3>Ancaman terhadap Nilai Pancasila</h3>
+  <ul>
+    <li class="readable">Radikalisme dan ekstremisme</li>
+    <li class="readable">Intoleransi dan diskriminasi</li>
+    <li class="readable">Individualisme dan materialisme</li>
+  </ul>
+</div>
+
+<!-- PANCASILA DAN KEHIDUPAN BERBANGSA -->
+<div class="card">
+  <h2><i class="fa-solid fa-people-roof"></i> Pancasila dan Kehidupan Berbangsa</h2>
+
+  <h3>Pancasila sebagai Pemersatu Bangsa</h3>
+  <p class="readable">
+    Pancasila berperan sebagai perekat bangsa
+    dalam menghadapi perbedaan dan konflik.
+  </p>
+
+  <h3>Pancasila dalam Keberagaman</h3>
+  <p class="readable">
+    Nilai Pancasila sejalan dengan prinsip Bhinneka Tunggal Ika
+    dalam kehidupan masyarakat majemuk.
+  </p>
+
+  <h3>Peran Warga Negara</h3>
+  <p class="readable">
+    Setiap warga negara memiliki tanggung jawab
+    untuk menjaga dan mengamalkan Pancasila.
+  </p>
+</div>
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
