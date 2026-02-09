@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Logika Numerik</h1>
+  <p>Tes Intelegensi Umum</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+
+<!-- ===============================
+     🔢 LOGIKA NUMERIK
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-calculator"></i> Logika Numerik</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Logika numerik mengukur kemampuan peserta dalam memahami pola angka,
+    melakukan perhitungan matematis dasar, serta menyelesaikan
+    permasalahan berbasis kuantitatif secara logis, sistematis, dan efisien.
+  </p>
+
+  <p class="readable">
+    Dalam Tes CPNS (khususnya TIU), logika numerik tidak menekankan
+    rumus yang rumit, melainkan kemampuan berpikir cepat,
+    mengenali pola, dan memilih strategi hitung yang paling tepat.
+  </p>
+
+  <!-- ===============================
+       KEMAMPUAN YANG DIUJI
+  ================================= -->
+  <h3>Kemampuan yang Diukur</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-arrow-up-1-9"></i>
+      Memahami <strong>pola dan deret angka</strong>.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-percent"></i>
+      Melakukan <strong>perhitungan aritmatika dasar</strong>
+      (penjumlahan, pengurangan, perkalian, pembagian).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      Menganalisis <strong>perbandingan dan rasio</strong>.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-chart-line"></i>
+      Menyelesaikan <strong>masalah kuantitatif kontekstual</strong>.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-bolt"></i>
+      Kecepatan dan ketepatan pengambilan keputusan numerik.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MATERI UTAMA LOGIKA NUMERIK
+  ================================= -->
+  <h3>Ruang Lingkup Materi Logika Numerik</h3>
+  <ul>
+    <li class="readable">
+      <strong>Deret Aritmatika</strong> → Selisih antar angka konstan  
+      <br><em>Contoh pola:</em> +2, +5, −3
+    </li>
+    <li class="readable">
+      <strong>Deret Geometri</strong> → Perkalian atau pembagian konstan  
+      <br><em>Contoh pola:</em> ×2, ÷3
+    </li>
+    <li class="readable">
+      <strong>Pola Campuran</strong> → Kombinasi lebih dari satu operasi
+    </li>
+    <li class="readable">
+      <strong>Perbandingan & Rasio</strong> → Senilai dan berbalik nilai
+    </li>
+    <li class="readable">
+      <strong>Soal Cerita Numerik</strong> → Penerapan angka dalam konteks nyata
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA & SIMBOL PENTING
+  ================================= -->
+  <h3>Formula & Simbol Penting</h3>
+  <ul>
+    <li class="readable">
+      Deret Aritmatika:  
+      <strong>a, a+d, a+2d, a+3d, …</strong>
+    </li>
+    <li class="readable">
+      Deret Geometri:  
+      <strong>a, ar, ar², ar³, …</strong>
+    </li>
+    <li class="readable">
+      Perbandingan:  
+      <strong>a : b = c : d</strong>
+    </li>
+    <li class="readable">
+      Persentase:  
+      <strong>p% = (bagian / total) × 100%</strong>
+    </li>
+    <li class="readable">
+      Kecepatan dasar:  
+      <strong>v = s / t</strong>
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI CEPAT CPNS
+  ================================= -->
+  <h3>Strategi Cepat Mengerjakan Soal</h3>
+  <ul>
+    <li class="readable">
+      Periksa <strong>selisih atau rasio</strong> terlebih dahulu.
+    </li>
+    <li class="readable">
+      Cek apakah pola <strong>bergantian</strong> (misal: +2, ×2).
+    </li>
+    <li class="readable">
+      Jangan langsung menghitung semua pilihan—gunakan eliminasi.
+    </li>
+    <li class="readable">
+      Jika waktu terbatas, cari pola paling sederhana.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal Logika Numerik</h3>
+
+  <p class="readable">
+    <strong>Soal 1:</strong><br>
+    Perhatikan deret angka berikut:<br>
+    <strong>3, 6, 12, 24, …</strong><br>
+    Angka berikutnya adalah …
+  </p>
+
+  <ul>
+    <li class="readable">A. 36</li>
+    <li class="readable">B. 42</li>
+    <li class="readable">C. 48</li>
+    <li class="readable">D. 60</li>
+    <li class="readable">E. 72</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Pola angka dikalikan 2 setiap langkah:  
+    3 × 2 = 6 → 6 × 2 = 12 → 12 × 2 = 24 → 24 × 2 = <strong>48</strong>
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban: C</strong>
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL KONTEKSTUAL
+  ================================= -->
+  <h3>Contoh Soal Numerik Kontekstual</h3>
+
+  <p class="readable">
+    <strong>Soal 2:</strong><br>
+    Jika 4 orang dapat menyelesaikan suatu pekerjaan dalam 12 hari,
+    berapa hari yang dibutuhkan oleh 6 orang dengan kemampuan yang sama?
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Ini adalah perbandingan berbalik nilai:<br>
+    4 × 12 = 6 × x → x = 8
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban: 8 hari</strong>
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan angka berikutnya dalam suatu pola.
+    </li>
+    <li class="readable">
+      Mengidentifikasi operasi matematis tersembunyi.
+    </li>
+    <li class="readable">
+      Menyelesaikan soal cerita berbasis perhitungan logis.
+    </li>
+    <li class="readable">
+      Menghitung rasio, persentase, dan perbandingan sederhana.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔢 DERET ANGKA & POLA BILANGAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-chart-line"></i> Deret Angka & Pola Bilangan</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Deret angka dan pola bilangan adalah rangkaian bilangan
+    yang disusun berdasarkan aturan atau pola tertentu.
+    Peserta diminta mengenali pola tersebut untuk menentukan
+    suku berikutnya, suku yang hilang, atau hubungan antar bilangan.
+  </p>
+
+  <p class="readable">
+    Dalam Tes CPNS (khususnya TIU), soal deret angka menguji
+    kemampuan penalaran logis, konsistensi berpikir,
+    dan kecepatan analisis pola numerik.
+  </p>
+
+  <!-- ===============================
+       TUJUAN & KOMPETENSI
+  ================================= -->
+  <h3>Tujuan dan Kompetensi yang Diukur</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-brain"></i>
+      Mengidentifikasi pola numerik secara cepat dan tepat.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-magnifying-glass-chart"></i>
+      Menentukan hubungan matematis antar bilangan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-bolt"></i>
+      Melatih ketelitian dan kecepatan berpikir logis.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS-JENIS POLA BILANGAN
+  ================================= -->
+  <h3>Jenis-Jenis Deret Angka yang Sering Muncul</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>Deret Aritmetika</strong><br>
+      Pola berdasarkan penambahan atau pengurangan tetap.<br>
+      <span class="formula">
+        Rumus: a, a+d, a+2d, a+3d, ...
+      </span>
+    </li>
+
+    <li class="readable">
+      <strong>Deret Geometri</strong><br>
+      Pola berdasarkan perkalian atau pembagian tetap.<br>
+      <span class="formula">
+        Rumus: a, ar, ar², ar³, ...
+      </span>
+    </li>
+
+    <li class="readable">
+      <strong>Deret Campuran</strong><br>
+      Kombinasi lebih dari satu operasi
+      (misal: × lalu +, atau + lalu ×).
+    </li>
+
+    <li class="readable">
+      <strong>Deret Selang-seling</strong><br>
+      Terdiri dari dua pola berbeda yang berselang-seling
+      (misal: suku ganjil dan suku genap).
+    </li>
+
+    <li class="readable">
+      <strong>Deret Bilangan Khusus</strong><br>
+      Termasuk bilangan kuadrat (n²),
+      kubik (n³), prima, atau faktorial (n!).
+    </li>
+
+    <li class="readable">
+      <strong>Deret Pola Visual/Logika</strong><br>
+      Pola berdasarkan posisi, urutan, atau logika non-aritmetika.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI CEPAT MENGERJAKAN
+  ================================= -->
+  <h3>Strategi Cepat Mengerjakan Soal Deret Angka</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-arrow-right-arrow-left"></i>
+      Hitung selisih antar bilangan terlebih dahulu.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-xmark"></i>
+      Jika selisih tidak konsisten, coba pembagian atau perkalian.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-code-branch"></i>
+      Pisahkan suku ganjil dan genap untuk pola selang-seling.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-shapes"></i>
+      Cek kemungkinan bilangan kuadrat, kubik, atau prima.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-stopwatch"></i>
+      Lewati sementara jika terlalu kompleks, kembali di akhir.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL 1
+  ================================= -->
+  <h3>Contoh Soal 1 (Deret Aritmetika)</h3>
+  <p class="readable">
+    Tentukan angka selanjutnya dari deret berikut:
+  </p>
+
+  <p class="readable formula">
+    3, 7, 11, 15, ...
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Selisih antar bilangan adalah +4.<br>
+    Maka suku berikutnya:
+  </p>
+
+  <p class="readable formula">
+    15 + 4 = <strong>19</strong>
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 2
+  ================================= -->
+  <h3>Contoh Soal 2 (Deret Campuran)</h3>
+  <p class="readable">
+    Tentukan angka yang tepat untuk melengkapi deret berikut:
+  </p>
+
+  <p class="readable formula">
+    2, 6, 7, 21, 22, ...
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Pola selang-seling:
+  </p>
+
+  <ul>
+    <li class="readable">2 → 6 (×3)</li>
+    <li class="readable">6 → 7 (+1)</li>
+    <li class="readable">7 → 21 (×3)</li>
+    <li class="readable">21 → 22 (+1)</li>
+  </ul>
+
+  <p class="readable">
+    Maka suku berikutnya:
+  </p>
+
+  <p class="readable formula">
+    22 × 3 = <strong>66</strong>
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 3
+  ================================= -->
+  <h3>Contoh Soal 3 (Deret Kuadrat)</h3>
+  <p class="readable">
+    Tentukan angka selanjutnya dari deret:
+  </p>
+
+  <p class="readable formula">
+    1, 4, 9, 16, ...
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Pola bilangan kuadrat:
+  </p>
+
+  <p class="readable formula">
+    1², 2², 3², 4² → 5² = <strong>25</strong>
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan suku berikutnya dari suatu deret angka.
+    </li>
+    <li class="readable">
+      Mengidentifikasi pola tersembunyi (selang-seling atau campuran).
+    </li>
+    <li class="readable">
+      Menentukan angka yang hilang di tengah deret.
+    </li>
+    <li class="readable">
+      Soal dengan batas waktu singkat untuk menguji kecepatan logika.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔢 OPERASI HITUNG DASAR
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-calculator"></i> Operasi Hitung Dasar</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Operasi hitung dasar adalah kemampuan fundamental dalam matematika
+    yang meliputi <strong>penjumlahan (+)</strong>, <strong>pengurangan (−)</strong>,
+    <strong>perkalian (×)</strong>, dan <strong>pembagian (÷)</strong>.
+    Operasi ini menjadi dasar untuk menyelesaikan soal numerik,
+    logika angka, dan perhitungan kuantitatif dalam Tes Intelegensia Umum (TIU).
+  </p>
+
+  <p class="readable">
+    Dalam konteks CPNS, operasi hitung dasar tidak berdiri sendiri,
+    tetapi sering muncul dalam bentuk <em>cerita singkat</em>,
+    <em>perbandingan</em>, <em>pola angka</em>, dan <em>perhitungan cepat</em>.
+  </p>
+
+  <!-- ===============================
+       ATURAN URUTAN OPERASI
+  ================================= -->
+  <h3>Aturan Urutan Operasi Hitung</h3>
+  <p class="readable">
+    Untuk menyelesaikan soal dengan benar, digunakan aturan
+    <strong>urutan operasi</strong>:
+  </p>
+
+  <p class="readable" style="font-size:1.1em;">
+    <strong>( ) → × ÷ → + −</strong>
+  </p>
+
+  <p class="readable">
+    Artinya:
+    <ul>
+      <li class="readable">Hitung yang di dalam tanda kurung terlebih dahulu</li>
+      <li class="readable">Kemudian perkalian dan pembagian</li>
+      <li class="readable">Terakhir penjumlahan dan pengurangan</li>
+    </ul>
+  </p>
+
+  <!-- ===============================
+       PENJUMLAHAN
+  ================================= -->
+  <h3><i class="fa-solid fa-plus"></i> Penjumlahan (+)</h3>
+  <p class="readable">
+    Penjumlahan adalah operasi untuk <strong>menggabungkan dua bilangan atau lebih</strong>.
+  </p>
+
+  <p class="readable">
+    <strong>Rumus:</strong><br>
+    a + b = c
+  </p>
+
+  <p class="readable">
+    <strong>Contoh:</strong><br>
+    125 + 375 = 500
+  </p>
+
+  <!-- ===============================
+       PENGURANGAN
+  ================================= -->
+  <h3><i class="fa-solid fa-minus"></i> Pengurangan (−)</h3>
+  <p class="readable">
+    Pengurangan adalah operasi untuk <strong>mengambil atau mengurangi nilai</strong>
+    dari suatu bilangan.
+  </p>
+
+  <p class="readable">
+    <strong>Rumus:</strong><br>
+    a − b = c
+  </p>
+
+  <p class="readable">
+    <strong>Contoh:</strong><br>
+    800 − 275 = 525
+  </p>
+
+  <!-- ===============================
+       PERKALIAN
+  ================================= -->
+  <h3><i class="fa-solid fa-xmark"></i> Perkalian (×)</h3>
+  <p class="readable">
+    Perkalian adalah bentuk <strong>penjumlahan berulang</strong>.
+  </p>
+
+  <p class="readable">
+    <strong>Rumus:</strong><br>
+    a × b = c
+  </p>
+
+  <p class="readable">
+    <strong>Makna:</strong><br>
+    4 × 5 = 5 + 5 + 5 + 5
+  </p>
+
+  <p class="readable">
+    <strong>Contoh:</strong><br>
+    12 × 8 = 96
+  </p>
+
+  <!-- ===============================
+       PEMBAGIAN
+  ================================= -->
+  <h3><i class="fa-solid fa-divide"></i> Pembagian (÷)</h3>
+  <p class="readable">
+    Pembagian adalah operasi untuk <strong>membagi suatu bilangan
+    menjadi beberapa bagian yang sama besar</strong>.
+  </p>
+
+  <p class="readable">
+    <strong>Rumus:</strong><br>
+    a ÷ b = c
+  </p>
+
+  <p class="readable">
+    <strong>Contoh:</strong><br>
+    144 ÷ 12 = 12
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal 1</strong><br>
+    120 + 45 × 4 − 30 = …
+  </p>
+
+  <p class="readable">
+    <strong>Penyelesaian:</strong><br>
+    45 × 4 = 180<br>
+    120 + 180 − 30 = 270
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> 270
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 2</strong><br>
+    (360 ÷ 6) + (45 − 15) = …
+  </p>
+
+  <p class="readable">
+    <strong>Penyelesaian:</strong><br>
+    360 ÷ 6 = 60<br>
+    45 − 15 = 30<br>
+    60 + 30 = 90
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> 90
+  </p>
+
+  <!-- ===============================
+       TIPS CEPAT TIU
+  ================================= -->
+  <h3>Tips Cepat Menghadapi Soal TIU</h3>
+  <ul>
+    <li class="readable">
+      Dahulukan perkalian dan pembagian sebelum penjumlahan/pengurangan.
+    </li>
+    <li class="readable">
+      Sederhanakan angka (misalnya bagi dulu jika memungkinkan).
+    </li>
+    <li class="readable">
+      Hati-hati dengan tanda kurung dan tanda negatif.
+    </li>
+    <li class="readable">
+      Latih perhitungan cepat tanpa kalkulator.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔢 PERBANDINGAN DAN RASIO
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-scale-balanced"></i> Perbandingan dan Rasio</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Perbandingan dan rasio adalah konsep matematika dasar yang digunakan
+    untuk membandingkan dua atau lebih besaran sejenis berdasarkan nilai,
+    jumlah, atau ukuran tertentu.
+  </p>
+
+  <p class="readable">
+    Dalam Tes CPNS (khususnya TIU), perbandingan dan rasio sering digunakan
+    untuk menguji kemampuan logika numerik, penalaran proporsional,
+    serta ketelitian dalam memahami hubungan antar kuantitas.
+  </p>
+
+  <!-- ===============================
+       PENGERTIAN & NOTASI
+  ================================= -->
+  <h3>Pengertian dan Notasi</h3>
+  <ul>
+    <li class="readable">
+      <strong>Perbandingan</strong> adalah hubungan antara dua besaran
+      yang dinyatakan dalam bentuk:
+      <br>
+      <strong>a : b</strong>
+    </li>
+    <li class="readable">
+      <strong>Rasio</strong> adalah bentuk sederhana dari perbandingan
+      setelah disederhanakan.
+    </li>
+    <li class="readable">
+      Perbandingan hanya berlaku untuk besaran <strong>sejenis</strong>
+      (misalnya: kg dengan kg, orang dengan orang).
+    </li>
+  </ul>
+
+  <!-- ===============================
+       RUMUS & SIMBOL PENTING
+  ================================= -->
+  <h3>Rumus dan Simbol Penting</h3>
+  <ul>
+    <li class="readable">
+      <strong>Rasio dasar</strong>:
+      <br>
+      <span class="math">a : b = a / b</span>
+    </li>
+    <li class="readable">
+      <strong>Perbandingan senilai</strong>:
+      <br>
+      <span class="math">a₁ / b₁ = a₂ / b₂</span>
+    </li>
+    <li class="readable">
+      <strong>Perbandingan berbalik nilai</strong>:
+      <br>
+      <span class="math">a₁ × b₁ = a₂ × b₂</span>
+    </li>
+    <li class="readable">
+      <strong>Total bagian</strong>:
+      <br>
+      Jika rasio = x : y, maka total bagian = x + y
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS-JENIS PERBANDINGAN
+  ================================= -->
+  <h3>Jenis-Jenis Perbandingan</h3>
+
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-arrow-up-right-dots"></i>
+      <strong>Perbandingan Senilai</strong><br>
+      Jika satu besaran bertambah, besaran lain juga bertambah
+      secara proporsional.
+      <br><em>Contoh:</em> jumlah barang dan total harga.
+    </li>
+
+    <li class="readable">
+      <i class="fa-solid fa-arrow-down-up-across-line"></i>
+      <strong>Perbandingan Berbalik Nilai</strong><br>
+      Jika satu besaran bertambah, besaran lain justru berkurang.
+      <br><em>Contoh:</em> jumlah pekerja dan waktu penyelesaian.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       APLIKASI DALAM SOAL CPNS
+  ================================= -->
+  <h3>Aplikasi Perbandingan dan Rasio dalam Soal CPNS</h3>
+  <ul>
+    <li class="readable">
+      Perbandingan jumlah orang, pegawai, atau peserta.
+    </li>
+    <li class="readable">
+      Pembagian anggaran atau hasil secara proporsional.
+    </li>
+    <li class="readable">
+      Perbandingan waktu, kecepatan, dan produktivitas kerja.
+    </li>
+    <li class="readable">
+      Analisis data sederhana berbasis rasio.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL 1
+  ================================= -->
+  <h3><i class="fa-solid fa-pen-to-square"></i> Contoh Soal 1 (Dasar)</h3>
+  <p class="readable">
+    Perbandingan jumlah pegawai laki-laki dan perempuan di sebuah instansi
+    adalah 3 : 5. Jika jumlah seluruh pegawai adalah 160 orang,
+    berapa jumlah pegawai perempuan?
+  </p>
+
+  <p class="readable">
+    <strong>Penyelesaian:</strong><br>
+    Total rasio = 3 + 5 = 8<br>
+    Setiap 1 bagian = 160 ÷ 8 = 20<br>
+    Jumlah pegawai perempuan = 5 × 20 = <strong>100 orang</strong>
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 2
+  ================================= -->
+  <h3><i class="fa-solid fa-pen-to-square"></i> Contoh Soal 2 (Senilai)</h3>
+  <p class="readable">
+    Jika 6 mesin dapat memproduksi 120 unit barang dalam 4 jam,
+    berapa unit barang yang dihasilkan oleh 9 mesin dalam waktu yang sama?
+  </p>
+
+  <p class="readable">
+    <strong>Penyelesaian:</strong><br>
+    Perbandingan senilai (mesin ↑ → produksi ↑)<br>
+    <span class="math">6 : 9 = 120 : x</span><br>
+    x = (9 × 120) ÷ 6 = <strong>180 unit</strong>
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 3
+  ================================= -->
+  <h3><i class="fa-solid fa-pen-to-square"></i> Contoh Soal 3 (Berbalik Nilai)</h3>
+  <p class="readable">
+    Sebuah pekerjaan dapat diselesaikan oleh 12 orang dalam 10 hari.
+    Jika jumlah pekerja ditambah menjadi 20 orang,
+    berapa hari pekerjaan tersebut dapat diselesaikan?
+  </p>
+
+  <p class="readable">
+    <strong>Penyelesaian:</strong><br>
+    Perbandingan berbalik nilai<br>
+    <span class="math">12 × 10 = 20 × x</span><br>
+    x = 120 ÷ 20 = <strong>6 hari</strong>
+  </p>
+
+  <!-- ===============================
+       TIPS CEPAT CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-lightbulb"></i> Tips Cepat Mengerjakan Soal CPNS</h3>
+  <ul>
+    <li class="readable">
+      Selalu tentukan dulu apakah soal <strong>senilai</strong>
+      atau <strong>berbalik nilai</strong>.
+    </li>
+    <li class="readable">
+      Jumlahkan rasio sebelum menghitung nilai sebenarnya.
+    </li>
+    <li class="readable">
+      Hati-hati dengan satuan (orang, jam, hari, unit).
+    </li>
+    <li class="readable">
+      Gunakan operasi silang (×) untuk mempercepat perhitungan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan nilai berdasarkan rasio tertentu.
+    </li>
+    <li class="readable">
+      Membedakan perbandingan senilai dan berbalik nilai.
+    </li>
+    <li class="readable">
+      Soal cerita kontekstual terkait pekerjaan dan waktu.
+    </li>
+    <li class="readable">
+      Optimalisasi perhitungan cepat dan logis.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔢 PERSENTASE & ARITMETIKA DASAR
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-calculator"></i> Persentase & Aritmetika Dasar</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Persentase dan aritmetika dasar merupakan kemampuan numerik fundamental
+    yang digunakan untuk memahami perbandingan, perubahan nilai,
+    serta perhitungan sederhana dalam kehidupan sehari-hari.
+  </p>
+
+  <p class="readable">
+    Dalam Tes CPNS (khususnya TIU), materi ini menguji ketelitian,
+    kecepatan berpikir, dan kemampuan menerapkan logika matematika
+    pada situasi praktis seperti diskon, kenaikan, data statistik,
+    dan perhitungan sederhana.
+  </p>
+
+  <!-- ===============================
+       ARITMETIKA DASAR
+  ================================= -->
+  <h3><i class="fa-solid fa-plus-minus"></i> Aritmetika Dasar</h3>
+
+  <p class="readable">
+    Aritmetika dasar mencakup empat operasi hitung utama
+    yang menjadi fondasi seluruh perhitungan matematika:
+  </p>
+
+  <ul>
+    <li class="readable">
+      <strong>Penjumlahan (+)</strong> → Menggabungkan dua atau lebih bilangan
+    </li>
+    <li class="readable">
+      <strong>Pengurangan (−)</strong> → Menghitung selisih antar bilangan
+    </li>
+    <li class="readable">
+      <strong>Perkalian (×)</strong> → Penjumlahan berulang
+    </li>
+    <li class="readable">
+      <strong>Pembagian (÷)</strong> → Membagi bilangan secara merata
+    </li>
+  </ul>
+
+  <p class="readable">
+    <strong>Urutan Operasi (Prioritas Hitung)</strong>:
+  </p>
+  <p class="readable" style="font-family: monospace;">
+    ( ) → × ÷ → + −
+  </p>
+
+  <!-- ===============================
+       PERSENTASE
+  ================================= -->
+  <h3><i class="fa-solid fa-percent"></i> Konsep Persentase</h3>
+
+  <p class="readable">
+    Persentase adalah cara menyatakan perbandingan
+    suatu nilai terhadap keseluruhan dalam bentuk per seratus.
+  </p>
+
+  <p class="readable"><strong>Rumus Dasar Persentase:</strong></p>
+  <p class="readable" style="font-family: monospace;">
+    Persentase = (Bagian / Total) × 100%
+  </p>
+
+  <ul>
+    <li class="readable">
+      25% = 25/100 = 0,25
+    </li>
+    <li class="readable">
+      0,4 = 40%
+    </li>
+    <li class="readable">
+      3/5 = 60%
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS SOAL PERSENTASE CPNS
+  ================================= -->
+  <h3>Jenis Perhitungan Persentase yang Sering Muncul</h3>
+  <ul>
+    <li class="readable">
+      Persentase kenaikan dan penurunan
+    </li>
+    <li class="readable">
+      Diskon dan harga akhir
+    </li>
+    <li class="readable">
+      Perbandingan bagian terhadap total
+    </li>
+    <li class="readable">
+      Persentase dari persentase
+    </li>
+  </ul>
+
+  <!-- ===============================
+       RUMUS PENTING
+  ================================= -->
+  <h3><i class="fa-solid fa-square-root-variable"></i> Rumus Penting</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>Kenaikan:</strong><br>
+      Nilai akhir = Nilai awal × (1 + p/100)
+    </li>
+    <li class="readable">
+      <strong>Penurunan:</strong><br>
+      Nilai akhir = Nilai awal × (1 − p/100)
+    </li>
+    <li class="readable">
+      <strong>Diskon:</strong><br>
+      Harga bayar = Harga awal − (Diskon × Harga awal)
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL & PEMBAHASAN
+  ================================= -->
+  <h3><i class="fa-solid fa-pen-to-square"></i> Contoh Soal CPNS</h3>
+
+  <p class="readable"><strong>Soal 1:</strong></p>
+  <p class="readable">
+    Sebuah instansi memiliki 200 pegawai. Sebanyak 30% di antaranya
+    adalah pegawai perempuan. Berapa jumlah pegawai perempuan?
+  </p>
+
+  <p class="readable"><strong>Pembahasan:</strong></p>
+  <p class="readable" style="font-family: monospace;">
+    30% × 200 = 0,3 × 200 = 60
+  </p>
+  <p class="readable">
+    Jadi, jumlah pegawai perempuan adalah <strong>60 orang</strong>.
+  </p>
+
+  <hr>
+
+  <p class="readable"><strong>Soal 2:</strong></p>
+  <p class="readable">
+    Gaji seorang pegawai adalah Rp4.000.000.
+    Gaji tersebut naik sebesar 10%.
+    Berapa gaji setelah kenaikan?
+  </p>
+
+  <p class="readable"><strong>Pembahasan:</strong></p>
+  <p class="readable" style="font-family: monospace;">
+    Gaji baru = 4.000.000 × (1 + 10/100)<br>
+    = 4.000.000 × 1,1 = 4.400.000
+  </p>
+  <p class="readable">
+    Jadi, gaji setelah kenaikan adalah <strong>Rp4.400.000</strong>.
+  </p>
+
+  <hr>
+
+  <p class="readable"><strong>Soal 3:</strong></p>
+  <p class="readable">
+    Sebuah barang seharga Rp250.000 mendapat diskon 20%.
+    Berapa harga yang harus dibayar?
+  </p>
+
+  <p class="readable"><strong>Pembahasan:</strong></p>
+  <p class="readable" style="font-family: monospace;">
+    Diskon = 20% × 250.000 = 50.000<br>
+    Harga bayar = 250.000 − 50.000 = 200.000
+  </p>
+
+  <p class="readable">
+    Harga yang harus dibayar adalah <strong>Rp200.000</strong>.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Perhitungan cepat persentase dalam konteks sehari-hari
+    </li>
+    <li class="readable">
+      Identifikasi rumus yang tepat untuk kenaikan/penurunan
+    </li>
+    <li class="readable">
+      Soal cerita numerik yang membutuhkan ketelitian hitung
+    </li>
+    <li class="readable">
+      Kombinasi aritmetika dasar dan persentase
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔢 SOAL CERITA BERBASIS LOGIKA NUMERIK
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-calculator"></i> Soal Cerita Berbasis Logika Numerik</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Soal cerita berbasis logika numerik adalah jenis soal yang menguji
+    kemampuan peserta dalam memahami informasi berbentuk narasi,
+    mengubahnya menjadi model matematika sederhana,
+    lalu menarik kesimpulan secara logis dan sistematis.
+  </p>
+
+  <p class="readable">
+    Pada tes CPNS (khususnya TIU), soal ini tidak menekankan rumus rumit,
+    melainkan <strong>ketepatan membaca konteks, konsistensi logika,
+    dan kecepatan pengambilan keputusan numerik</strong>.
+  </p>
+
+  <!-- ===============================
+       KARAKTERISTIK SOAL
+  ================================= -->
+  <h3>Karakteristik Soal Logika Numerik</h3>
+  <ul>
+    <li class="readable">
+      Informasi disajikan dalam bentuk cerita atau kasus sehari-hari.
+    </li>
+    <li class="readable">
+      Mengandung angka, rasio, urutan waktu, atau hubungan kuantitatif.
+    </li>
+    <li class="readable">
+      Memerlukan penalaran bertahap (step-by-step), bukan hitungan kompleks.
+    </li>
+    <li class="readable">
+      Sering menyisipkan informasi pengecoh (distractor).
+    </li>
+  </ul>
+
+  <!-- ===============================
+       POLA UMUM SOAL
+  ================================= -->
+  <h3>Pola Umum Soal Cerita Numerik</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-users"></i>
+      <strong>Perbandingan & Rasio</strong>  
+      (jumlah orang, usia, gaji, pekerjaan).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-clock"></i>
+      <strong>Waktu & Kecepatan</strong>  
+      (lama kerja, selang waktu, produktivitas).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-coins"></i>
+      <strong>Distribusi & Proporsi</strong>  
+      (pembagian barang, anggaran, hasil kerja).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-arrow-trend-up"></i>
+      <strong>Pola Pertumbuhan / Penurunan</strong>  
+      (kenaikan bertahap, akumulasi).
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA & SIMBOL LOGIKA
+  ================================= -->
+  <h3>Formula & Simbol Logika yang Sering Digunakan</h3>
+  <ul>
+    <li class="readable">
+      <strong>Rasio</strong> → A : B = a : b
+    </li>
+    <li class="readable">
+      <strong>Proporsi</strong> → A / B = a / b
+    </li>
+    <li class="readable">
+      <strong>Total</strong> → Σ (jumlah keseluruhan)
+    </li>
+    <li class="readable">
+      <strong>Selisih</strong> → Δ = nilai akhir − nilai awal
+    </li>
+    <li class="readable">
+      <strong>Produktivitas</strong> → Output / Waktu
+    </li>
+  </ul>
+
+  <p class="readable">
+    💡 <em>Catatan penting:</em> dalam CPNS, formula hanya alat bantu.
+    Fokus utama adalah <strong>alur logika cerita → angka → kesimpulan</strong>.
+  </p>
+
+  <!-- ===============================
+       STRATEGI MENGERJAKAN
+  ================================= -->
+  <h3>Strategi Cepat Mengerjakan Soal</h3>
+  <ol>
+    <li class="readable">
+      Identifikasi <strong>apa yang diketahui</strong> dan <strong>apa yang ditanya</strong>.
+    </li>
+    <li class="readable">
+      Ubah cerita menjadi bentuk angka atau tabel sederhana.
+    </li>
+    <li class="readable">
+      Abaikan informasi yang tidak memengaruhi hasil akhir.
+    </li>
+    <li class="readable">
+      Hitung secara bertahap, jangan lompat logika.
+    </li>
+  </ol>
+
+  <!-- ===============================
+       CONTOH SOAL 1
+  ================================= -->
+  <h3>Contoh Soal 1</h3>
+  <p class="readable">
+    Sebuah tim terdiri dari 4 orang dapat menyelesaikan sebuah pekerjaan
+    dalam 12 hari. Jika jumlah anggota tim ditambah menjadi 6 orang
+    dengan kemampuan kerja yang sama, berapa hari pekerjaan tersebut
+    dapat diselesaikan?
+  </p>
+
+  <p class="readable">
+    <strong>Penyelesaian:</strong><br>
+    Total beban kerja = 4 × 12 = 48 orang-hari  
+    Waktu baru = 48 / 6 = <strong>8 hari</strong>
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> 8 hari
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 2
+  ================================= -->
+  <h3>Contoh Soal 2</h3>
+  <p class="readable">
+    Perbandingan jumlah pegawai laki-laki dan perempuan di sebuah instansi
+    adalah 3 : 5. Jika jumlah pegawai seluruhnya 80 orang,
+    berapa jumlah pegawai perempuan?
+  </p>
+
+  <p class="readable">
+    <strong>Penyelesaian:</strong><br>
+    Total rasio = 3 + 5 = 8  
+    Setiap 1 rasio = 80 / 8 = 10  
+    Pegawai perempuan = 5 × 10 = <strong>50 orang</strong>
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> 50 orang
+  </p>
+
+  <!-- ===============================
+       KESALAHAN UMUM
+  ================================= -->
+  <h3>Kesalahan Umum yang Harus Dihindari</h3>
+  <ul>
+    <li class="readable">
+      Terlalu cepat menghitung tanpa memahami cerita.
+    </li>
+    <li class="readable">
+      Salah menafsirkan rasio atau total keseluruhan.
+    </li>
+    <li class="readable">
+      Menggunakan rumus berlebihan yang justru memperlambat.
+    </li>
+    <li class="readable">
+      Terjebak informasi pengecoh dalam soal.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan hasil akhir berdasarkan cerita numerik sederhana.
+    </li>
+    <li class="readable">
+      Menilai konsistensi logika perhitungan.
+    </li>
+    <li class="readable">
+      Mengidentifikasi informasi relevan dan tidak relevan.
+    </li>
+    <li class="readable">
+      Soal berbasis konteks kerja, organisasi, dan aktivitas sehari-hari.
+    </li>
+  </ul>
+
+</div>
+
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
