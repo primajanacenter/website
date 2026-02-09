@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Pelayanan Publik</h1>
+  <p>Tes Karakteristik Pribadi</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     🏢 PELAYANAN PUBLIK
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-handshake-angle"></i> Pelayanan Publik</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3><i class="fa-solid fa-circle-info"></i> Konsep Dasar</h3>
+  <p class="readable">
+    Pelayanan publik adalah upaya pemenuhan kebutuhan masyarakat
+    atas barang, jasa, dan/atau pelayanan administratif
+    yang diselenggarakan oleh aparatur negara
+    secara <strong>profesional</strong>, <strong>adil</strong>,
+    <strong>transparan</strong>, dan <strong>berorientasi pada kepuasan publik</strong>.
+  </p>
+
+  <p class="readable">
+    Dalam konteks ASN, pelayanan publik merupakan wujud nyata
+    pengabdian kepada negara dan masyarakat,
+    sekaligus indikator keberhasilan tata kelola pemerintahan yang baik
+    (<em>good governance</em>).
+  </p>
+
+  <!-- ===============================
+       TUJUAN PELAYANAN PUBLIK
+  ================================= -->
+  <h3><i class="fa-solid fa-bullseye"></i> Tujuan Pelayanan Publik</h3>
+  <ul>
+    <li class="readable">
+      Memenuhi hak dasar masyarakat sebagai warga negara.
+    </li>
+    <li class="readable">
+      Mewujudkan kepuasan dan kepercayaan publik terhadap pemerintah.
+    </li>
+    <li class="readable">
+      Menjamin keadilan, kepastian hukum, dan kesetaraan layanan.
+    </li>
+    <li class="readable">
+      Meningkatkan kualitas hidup dan kesejahteraan masyarakat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PRINSIP-PRINSIP PELAYANAN PUBLIK
+  ================================= -->
+  <h3><i class="fa-solid fa-scale-balanced"></i> Prinsip-Prinsip Pelayanan Publik</h3>
+  <ul>
+    <li class="readable">
+      <strong>Transparansi</strong> → Prosedur, biaya, dan waktu pelayanan jelas dan terbuka.
+    </li>
+    <li class="readable">
+      <strong>Akuntabilitas</strong> → Setiap tindakan pelayanan dapat dipertanggungjawabkan.
+    </li>
+    <li class="readable">
+      <strong>Kesetaraan</strong> → Tidak diskriminatif terhadap latar belakang apa pun.
+    </li>
+    <li class="readable">
+      <strong>Partisipatif</strong> → Masyarakat dapat memberi masukan dan pengawasan.
+    </li>
+    <li class="readable">
+      <strong>Profesionalitas</strong> → Dilakukan oleh ASN yang kompeten dan beretika.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STANDAR PELAYANAN PUBLIK
+  ================================= -->
+  <h3><i class="fa-solid fa-clipboard-check"></i> Standar Pelayanan Publik</h3>
+  <p class="readable">
+    Standar pelayanan publik menjadi tolok ukur kualitas layanan
+    yang wajib dipenuhi oleh penyelenggara pelayanan.
+  </p>
+
+  <ul>
+    <li class="readable">Persyaratan pelayanan</li>
+    <li class="readable">Prosedur dan alur pelayanan</li>
+    <li class="readable">Waktu penyelesaian</li>
+    <li class="readable">Biaya/tarif pelayanan</li>
+    <li class="readable">Produk hasil pelayanan</li>
+    <li class="readable">Sarana, prasarana, dan kompetensi petugas</li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA SEDERHANA (SIMBOLIK)
+  ================================= -->
+  <h3><i class="fa-solid fa-square-root-variable"></i> Ilustrasi Konsep (Simbolik)</h3>
+  <p class="readable">
+    Kualitas Pelayanan Publik dapat digambarkan secara sederhana sebagai:
+  </p>
+
+  <p class="readable" style="font-weight:bold; text-align:center;">
+    Kualitas Layanan = (Kecepatan ⏱️ + Ketepatan 🎯 + Sikap Petugas 🙂) ÷ Diskriminasi ❌
+  </p>
+
+  <p class="readable">
+    Artinya, semakin cepat, tepat, dan ramah pelayanan,
+    serta semakin kecil unsur diskriminasi,
+    maka kualitas pelayanan publik akan semakin tinggi.
+  </p>
+
+  <!-- ===============================
+       PERILAKU ASN DALAM PELAYANAN PUBLIK
+  ================================= -->
+  <h3><i class="fa-solid fa-user-tie"></i> Perilaku ASN dalam Pelayanan Publik</h3>
+  <ul>
+    <li class="readable">
+      Melayani dengan sopan, empatik, dan responsif.
+    </li>
+    <li class="readable">
+      Tidak meminta imbalan di luar ketentuan.
+    </li>
+    <li class="readable">
+      Memberikan informasi yang benar dan mudah dipahami.
+    </li>
+    <li class="readable">
+      Mengutamakan kepentingan masyarakat di atas kepentingan pribadi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH KASUS & SOAL CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-pen-to-square"></i> Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN di loket pelayanan mempercepat pengurusan dokumen
+    hanya untuk pemohon yang dikenal secara pribadi,
+    sementara pemohon lain harus menunggu lebih lama.
+    Tindakan ASN tersebut bertentangan dengan prinsip pelayanan publik, yaitu …
+  </p>
+
+  <ul>
+    <li class="readable">A. Akuntabilitas</li>
+    <li class="readable">B. Transparansi</li>
+    <li class="readable">C. Kesetaraan</li>
+    <li class="readable">D. Partisipatif</li>
+    <li class="readable">E. Efektivitas</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C. <strong>Kesetaraan</strong><br>
+    <em>Pembahasan:</em> Pelayanan publik harus diberikan secara adil
+    tanpa diskriminasi atau perlakuan khusus berdasarkan hubungan pribadi.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-compass"></i> Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi prinsip pelayanan publik dalam studi kasus.
+    </li>
+    <li class="readable">
+      Penilaian sikap ASN yang sesuai atau melanggar etika pelayanan.
+    </li>
+    <li class="readable">
+      Analisis konflik antara kepentingan pribadi dan kepentingan publik.
+    </li>
+    <li class="readable">
+      Penerapan pelayanan publik yang adil, transparan, dan profesional.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     ⚡ PELAYANAN CEPAT, TEPAT, DAN TRANSPARAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-gauge-high"></i> Pelayanan yang Cepat, Tepat, dan Transparan</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Pelayanan publik yang cepat, tepat, dan transparan merupakan
+    perwujudan nilai profesionalisme aparatur negara dalam
+    melaksanakan tugas pelayanan kepada masyarakat.
+  </p>
+
+  <p class="readable">
+    Prinsip ini bertujuan untuk meningkatkan kepercayaan publik,
+    menjamin kepastian layanan, serta mencegah praktik maladministrasi
+    seperti penundaan berlarut, pungutan liar, dan diskriminasi.
+  </p>
+
+  <!-- ===============================
+       MAKNA SETIAP PRINSIP
+  ================================= -->
+  <h3>Makna Setiap Prinsip Pelayanan</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-bolt"></i>
+      <strong>Cepat</strong> → Pelayanan diberikan tanpa penundaan yang
+      tidak perlu, sesuai standar waktu yang telah ditetapkan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-bullseye"></i>
+      <strong>Tepat</strong> → Pelayanan sesuai prosedur, ketentuan hukum,
+      dan kebutuhan pemohon.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-eye"></i>
+      <strong>Transparan</strong> → Proses, biaya, persyaratan, dan waktu
+      pelayanan dapat diketahui secara terbuka oleh masyarakat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA KONSEPTUAL PELAYANAN PUBLIK
+  ================================= -->
+  <h3>Formula Konseptual Pelayanan Berkualitas</h3>
+  <p class="readable">
+    Untuk memudahkan pemahaman dalam konteks tes CPNS,
+    prinsip pelayanan dapat diringkas dalam formula berikut:
+  </p>
+
+  <p class="readable" style="font-weight:bold; text-align:center;">
+    ⚙️ Pelayanan Berkualitas = Cepat ⏱️ + Tepat 🎯 + Transparan 🔍
+  </p>
+
+  <p class="readable">
+    Jika salah satu unsur tidak terpenuhi, maka kualitas pelayanan
+    publik dianggap tidak optimal.
+  </p>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM PRAKTIK ASN
+  ================================= -->
+  <h3>Implementasi dalam Praktik ASN</h3>
+  <ul>
+    <li class="readable">
+      Menyelesaikan layanan sesuai standar operasional prosedur (SOP)
+      dan standar waktu pelayanan.
+    </li>
+    <li class="readable">
+      Memberikan informasi yang benar, lengkap, dan tidak menyesatkan
+      kepada masyarakat.
+    </li>
+    <li class="readable">
+      Menolak segala bentuk pungutan di luar ketentuan resmi.
+    </li>
+    <li class="readable">
+      Menggunakan sistem antrean, aplikasi, atau nomor layanan
+      untuk menjamin keadilan dan kepastian.
+    </li>
+    <li class="readable">
+      Bersikap ramah, responsif, dan profesional
+      dalam menghadapi pengguna layanan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH KASUS PELAYANAN PUBLIK
+  ================================= -->
+  <h3>Contoh Penerapan dalam Kehidupan Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      Petugas pelayanan administrasi kependudukan menjelaskan
+      persyaratan pembuatan KTP secara terbuka dan memprosesnya
+      sesuai waktu yang ditentukan.
+    </li>
+    <li class="readable">
+      ASN di rumah sakit pemerintah memberikan pelayanan medis
+      tanpa membedakan status sosial pasien.
+    </li>
+    <li class="readable">
+      Informasi biaya dan durasi layanan dipasang di ruang pelayanan
+      atau media informasi resmi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       BENTUK PELANGGARAN
+  ================================= -->
+  <h3>Bentuk Pelanggaran Prinsip Pelayanan</h3>
+  <ul>
+    <li class="readable">
+      Menunda pelayanan tanpa alasan yang sah
+      <i class="fa-solid fa-hourglass-end"></i>
+    </li>
+    <li class="readable">
+      Memberikan informasi yang tidak jelas atau berubah-ubah
+      <i class="fa-solid fa-circle-question"></i>
+    </li>
+    <li class="readable">
+      Meminta imbalan di luar ketentuan
+      <i class="fa-solid fa-ban"></i>
+    </li>
+    <li class="readable">
+      Membedakan pelayanan berdasarkan kedekatan atau jabatan
+      <i class="fa-solid fa-scale-unbalanced"></i>
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal 1</strong><br>
+    Seorang ASN menunda penyelesaian layanan administrasi
+    meskipun seluruh persyaratan telah lengkap, dengan alasan
+    menunggu instruksi atasan tanpa kejelasan waktu.
+    Prinsip pelayanan publik yang dilanggar adalah …
+  </p>
+
+  <ul class="readable">
+    <li>A. Transparansi</li>
+    <li>B. Akuntabilitas</li>
+    <li>C. Kecepatan</li>
+    <li>D. Kepastian hukum</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C<br>
+    <strong>Pembahasan:</strong> Penundaan tanpa alasan jelas
+    melanggar prinsip pelayanan yang cepat.
+  </p>
+
+  <p class="readable">
+    <strong>Soal 2</strong><br>
+    Informasi biaya dan prosedur layanan tidak diumumkan secara terbuka
+    sehingga masyarakat sering bingung dan salah paham.
+    Prinsip yang belum diterapkan secara optimal adalah …
+  </p>
+
+  <ul class="readable">
+    <li>A. Efektivitas</li>
+    <li>B. Transparansi</li>
+    <li>C. Responsivitas</li>
+    <li>D. Profesionalitas</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi prinsip pelayanan publik dalam studi kasus.
+    </li>
+    <li class="readable">
+      Penilaian perilaku ASN sesuai atau bertentangan
+      dengan prinsip cepat, tepat, dan transparan.
+    </li>
+    <li class="readable">
+      Analisis bentuk maladministrasi dalam pelayanan publik.
+    </li>
+    <li class="readable">
+      Penerapan nilai profesionalisme dan etika pelayanan ASN.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     😊 SIKAP RAMAH & EMPATI KEPADA MASYARAKAT
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-handshake-angle"></i> Sikap Ramah dan Empati kepada Masyarakat</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Sikap ramah dan empati kepada masyarakat merupakan perilaku aparatur negara
+    yang mencerminkan kemampuan memahami perasaan, kebutuhan, dan kondisi
+    masyarakat serta mengekspresikannya melalui pelayanan yang sopan,
+    menghargai, dan berorientasi pada kepentingan publik.
+  </p>
+
+  <p class="readable">
+    Dalam konteks ASN, sikap ramah dan empati bukan sekadar etika personal,
+    tetapi bagian dari kewajiban profesional dalam mewujudkan pelayanan publik
+    yang humanis, adil, dan berkeadilan sosial.
+  </p>
+
+  <!-- ===============================
+       MAKNA & PRINSIP UTAMA
+  ================================= -->
+  <h3>Makna dan Prinsip Utama</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-face-smile"></i>
+      <strong>Ramah</strong> → Bersikap sopan, santun, komunikatif,
+      dan menghargai setiap warga tanpa diskriminasi.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-heart"></i>
+      <strong>Empati</strong> → Kemampuan memahami perasaan dan
+      sudut pandang masyarakat, terutama kelompok rentan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Adil dan Objektif</strong> → Tetap profesional tanpa
+      membedakan latar belakang sosial, ekonomi, atau budaya.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-user-shield"></i>
+      <strong>Pelayanan Berbasis Hak</strong> → Masyarakat dipandang
+      sebagai pemegang hak, bukan pihak yang “meminta belas kasihan”.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA KONSEPTUAL (SIMBOLIK)
+  ================================= -->
+  <h3>Formula Sikap Pelayanan ASN</h3>
+  <p class="readable">
+    Dalam konteks pelayanan publik, sikap ideal ASN dapat digambarkan dengan
+    formula konseptual berikut:
+  </p>
+
+  <p class="readable" style="font-weight: bold; text-align: center;">
+    😊 Pelayanan Berkualitas = Ramah + Empati + Profesionalitas + Keadilan
+  </p>
+
+  <p class="readable">
+    Jika salah satu unsur tidak terpenuhi (misalnya ramah tetapi tidak adil),
+    maka kualitas pelayanan publik menjadi tidak optimal.
+  </p>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM PELAYANAN PUBLIK
+  ================================= -->
+  <h3>Implementasi Sikap Ramah dan Empati dalam Pelayanan Publik</h3>
+  <ul>
+    <li class="readable">
+      Menyambut masyarakat dengan bahasa yang sopan dan nada bicara yang tenang,
+      meskipun dalam situasi kerja yang padat.
+    </li>
+    <li class="readable">
+      Mendengarkan keluhan masyarakat secara aktif tanpa memotong pembicaraan.
+    </li>
+    <li class="readable">
+      Menjelaskan prosedur pelayanan dengan bahasa yang mudah dipahami,
+      terutama kepada masyarakat awam.
+    </li>
+    <li class="readable">
+      Menunjukkan kepedulian terhadap kelompok rentan
+      (lansia, penyandang disabilitas, masyarakat kurang mampu).
+    </li>
+    <li class="readable">
+      Tetap menjaga profesionalitas dan aturan meskipun bersikap empatik.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERILAKU YANG TIDAK MENCERMINKAN EMPATI
+  ================================= -->
+  <h3>Perilaku yang Tidak Mencerminkan Sikap Ramah dan Empati</h3>
+  <ul>
+    <li class="readable">
+      Melayani masyarakat dengan nada kasar atau ekspresi tidak peduli.
+    </li>
+    <li class="readable">
+      Mengabaikan keluhan masyarakat tanpa penjelasan yang layak.
+    </li>
+    <li class="readable">
+      Bersikap diskriminatif berdasarkan status sosial atau ekonomi.
+    </li>
+    <li class="readable">
+      Menyalahkan masyarakat atas ketidaktahuan prosedur pelayanan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH KASUS SINGKAT
+  ================================= -->
+  <h3>Contoh Kasus Penerapan</h3>
+  <p class="readable">
+    Seorang warga lanjut usia datang ke kantor pelayanan dengan dokumen
+    yang tidak lengkap dan tampak kebingungan.
+    ASN yang bertugas tetap menjelaskan prosedur secara perlahan,
+    membantu menunjukkan dokumen yang perlu dilengkapi,
+    dan mempersilakan warga tersebut duduk dengan nyaman.
+  </p>
+
+  <p class="readable">
+    <strong>Nilai yang tercermin:</strong> empati, ramah, pelayanan publik yang manusiawi.
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL TES CPNS
+  ================================= -->
+  <h3>Contoh Soal Tes CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN melayani warga yang emosional karena merasa proses
+    pelayanan terlalu lama. Sikap paling tepat yang mencerminkan
+    nilai empati adalah:
+  </p>
+
+  <ul>
+    <li class="readable">A. Menegur warga karena bersikap tidak sopan</li>
+    <li class="readable">B. Mengabaikan keluhan dan melanjutkan pekerjaan</li>
+    <li class="readable">C. Mendengarkan keluhan dengan tenang dan menjelaskan prosedur secara jelas</li>
+    <li class="readable">D. Meminta warga datang kembali di hari lain tanpa penjelasan</li>
+    <li class="readable">E. Menyalahkan sistem dan rekan kerja</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban Benar:</strong> C
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Sikap empati ditunjukkan dengan kemampuan memahami emosi masyarakat,
+    tetap tenang, serta memberikan penjelasan yang membantu tanpa
+    melanggar aturan pelayanan.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi perilaku ASN yang mencerminkan sikap empati dan ramah.
+    </li>
+    <li class="readable">
+      Penilaian respons ASN terhadap keluhan atau emosi masyarakat.
+    </li>
+    <li class="readable">
+      Analisis pelayanan publik yang humanis versus tidak profesional.
+    </li>
+    <li class="readable">
+      Studi kasus pelayanan terhadap kelompok rentan.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🤝 TIDAK DISKRIMINATIF DALAM MELAYANI
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-scale-balanced"></i> Tidak Diskriminatif dalam Melayani</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Tidak diskriminatif dalam melayani adalah prinsip pelayanan publik
+    yang menuntut aparatur negara memberikan layanan secara adil,
+    setara, dan objektif kepada seluruh warga negara tanpa
+    membedakan latar belakang pribadi atau sosial.
+  </p>
+
+  <p class="readable">
+    Prinsip ini merupakan perwujudan nilai Pancasila, UUD 1945,
+    serta etika profesi ASN yang menempatkan setiap warga negara
+    memiliki kedudukan dan hak yang sama dalam pelayanan publik.
+  </p>
+
+  <!-- ===============================
+       LANDASAN NILAI & KONSTITUSI
+  ================================= -->
+  <h3>Landasan Nilai dan Konstitusional</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-star"></i>
+      <strong>Pancasila</strong> → Sila ke-2 (Kemanusiaan yang Adil dan Beradab)
+      dan Sila ke-5 (Keadilan Sosial bagi Seluruh Rakyat Indonesia).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-book"></i>
+      <strong>UUD 1945</strong> → Prinsip persamaan kedudukan warga negara
+      di hadapan hukum dan pemerintahan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-user-tie"></i>
+      <strong>Etika ASN</strong> → Profesional, netral, dan berorientasi
+      pada kepentingan publik.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MAKNA DISKRIMINASI DALAM PELAYANAN
+  ================================= -->
+  <h3>Apa yang Dimaksud Diskriminasi dalam Pelayanan?</h3>
+  <p class="readable">
+    Diskriminasi dalam pelayanan publik adalah perlakuan berbeda
+    yang tidak objektif dan tidak berdasarkan aturan,
+    melainkan pada faktor subjektif tertentu.
+  </p>
+
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-xmark"></i>
+      Membedakan layanan karena suku, agama, ras, atau golongan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-xmark"></i>
+      Mengutamakan kerabat, kolega, atau pihak tertentu.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-xmark"></i>
+      Memberikan layanan lebih lambat atau dipersulit
+      karena status sosial atau ekonomi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PRINSIP PELAYANAN TIDAK DISKRIMINATIF
+  ================================= -->
+  <h3>Prinsip Pelayanan Tidak Diskriminatif</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-equals"></i>
+      <strong>Kesetaraan</strong> → Semua warga dilayani dengan standar yang sama.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-eye"></i>
+      <strong>Objektivitas</strong> → Keputusan layanan berdasarkan aturan,
+      bukan preferensi pribadi.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Keadilan</strong> → Memberikan sesuai hak dan kebutuhan,
+      bukan perlakuan istimewa.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-lock"></i>
+      <strong>Netralitas</strong> → Bebas dari pengaruh politik, ekonomi,
+      atau tekanan pihak tertentu.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA KONSEPTUAL (SIMBOLIK)
+  ================================= -->
+  <h3>Formula Konseptual Pelayanan Tidak Diskriminatif</h3>
+  <p class="readable">
+    Prinsip ini dapat dipahami melalui formula sederhana berikut:
+  </p>
+
+  <p class="readable" style="font-weight:bold; text-align:center;">
+    Pelayanan Publik = Aturan + Hak Warga − Faktor Subjektif
+  </p>
+
+  <p class="readable">
+    Artinya, kualitas layanan ditentukan oleh aturan dan hak warga negara,
+    bukan oleh latar belakang pribadi pemohon layanan.
+  </p>
+
+  <!-- ===============================
+       CONTOH IMPLEMENTASI NYATA
+  ================================= -->
+  <h3>Contoh Implementasi Tidak Diskriminatif dalam Pelayanan</h3>
+  <ul>
+    <li class="readable">
+      Petugas loket melayani seluruh pemohon sesuai nomor antrean,
+      tanpa mendahulukan kenalan atau pejabat tertentu.
+    </li>
+    <li class="readable">
+      ASN memberikan informasi yang sama lengkap dan jelas
+      kepada seluruh masyarakat, tanpa membedakan tingkat pendidikan.
+    </li>
+    <li class="readable">
+      Penyandang disabilitas mendapatkan akses layanan yang layak
+      tanpa perlakuan merendahkan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DAMPAK NEGATIF DISKRIMINASI
+  ================================= -->
+  <h3>Dampak Jika ASN Bersikap Diskriminatif</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      Menurunnya kepercayaan publik terhadap pemerintah.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      Timbulnya konflik sosial dan ketidakpuasan masyarakat.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      Pelanggaran etika ASN dan potensi sanksi disiplin.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN mendahulukan pelayanan kepada kerabatnya
+    meskipun ada warga lain yang sudah mengantre lebih dahulu.
+    Sikap ASN tersebut bertentangan dengan prinsip…
+  </p>
+
+  <ul>
+    <li class="readable">A. Efisiensi pelayanan</li>
+    <li class="readable">B. Netralitas dan keadilan</li>
+    <li class="readable">C. Kecepatan pelayanan</li>
+    <li class="readable">D. Profesionalitas teknis</li>
+    <li class="readable">E. Fleksibilitas birokrasi</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban: B</strong><br>
+    <em>Pembahasan:</em> Mendahulukan kerabat merupakan bentuk
+    diskriminasi dan melanggar prinsip netralitas serta keadilan
+    dalam pelayanan publik.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi perilaku diskriminatif dalam studi kasus pelayanan publik.
+    </li>
+    <li class="readable">
+      Penentuan sikap ASN yang paling sesuai dengan prinsip keadilan dan kesetaraan.
+    </li>
+    <li class="readable">
+      Analisis dampak negatif diskriminasi terhadap kepercayaan publik.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🏅 KOMITMEN TERHADAP STANDAR PELAYANAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-handshake-angle"></i> Komitmen terhadap Standar Pelayanan</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Komitmen terhadap standar pelayanan adalah kesungguhan aparatur negara
+    dalam memberikan layanan publik yang berkualitas, profesional,
+    transparan, dan berorientasi pada kepuasan masyarakat
+    sesuai dengan ketentuan peraturan perundang-undangan.
+  </p>
+
+  <p class="readable">
+    Standar pelayanan menjadi tolok ukur minimal yang wajib dipenuhi
+    oleh penyelenggara layanan publik agar hak masyarakat terpenuhi
+    dan kepercayaan publik terhadap negara terjaga.
+  </p>
+
+  <!-- ===============================
+       LANDASAN NILAI & PRINSIP
+  ================================= -->
+  <h3>Landasan Nilai dan Prinsip Pelayanan Publik</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Akuntabilitas</strong> → Setiap layanan dapat dipertanggungjawabkan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-eye"></i>
+      <strong>Transparansi</strong> → Prosedur, biaya, dan waktu layanan jelas.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-users"></i>
+      <strong>Non-diskriminasi</strong> → Semua warga dilayani setara.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-stopwatch"></i>
+      <strong>Ketepatan Waktu</strong> → Layanan sesuai standar waktu yang ditetapkan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-heart"></i>
+      <strong>Empati</strong> → Mengutamakan kepentingan dan kebutuhan masyarakat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KOMPONEN STANDAR PELAYANAN
+  ================================= -->
+  <h3>Komponen Standar Pelayanan</h3>
+  <ul>
+    <li class="readable">
+      <strong>Persyaratan Pelayanan</strong> → Dokumen dan ketentuan yang harus dipenuhi.
+    </li>
+    <li class="readable">
+      <strong>Prosedur Pelayanan</strong> → Alur dan tahapan layanan yang jelas.
+    </li>
+    <li class="readable">
+      <strong>Waktu Penyelesaian</strong> → Batas maksimal penyelesaian layanan.
+    </li>
+    <li class="readable">
+      <strong>Biaya/Tarif</strong> → Biaya resmi (jika ada) dan bebas pungli.
+    </li>
+    <li class="readable">
+      <strong>Produk Layanan</strong> → Hasil akhir layanan yang diterima masyarakat.
+    </li>
+    <li class="readable">
+      <strong>Mekanisme Pengaduan</strong> → Saluran keluhan dan tindak lanjutnya.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA / SIMBOL KUALITAS LAYANAN
+  ================================= -->
+  <h3>Indikator Kualitas Pelayanan (Ilustratif)</h3>
+  <p class="readable">
+    Kualitas pelayanan dapat dipahami secara sederhana melalui ilustrasi berikut:
+  </p>
+
+  <p class="readable">
+    <strong>📊 Kualitas Pelayanan (KP)</strong> =
+    <strong>(Ketepatan Waktu + Kejelasan Prosedur + Sikap Petugas + Kepastian Biaya)</strong>
+    ÷ <strong>4</strong>
+  </p>
+
+  <p class="readable">
+    Semakin tinggi nilai setiap komponen, semakin baik kualitas pelayanan
+    yang dirasakan masyarakat.
+  </p>
+
+  <!-- ===============================
+       IMPLEMENTASI OLEH ASN
+  ================================= -->
+  <h3>Implementasi Komitmen Standar Pelayanan oleh ASN</h3>
+  <ul>
+    <li class="readable">
+      Melayani masyarakat sesuai SOP tanpa menambah atau mengurangi prosedur.
+    </li>
+    <li class="readable">
+      Menolak gratifikasi, pungutan liar, dan perlakuan istimewa.
+    </li>
+    <li class="readable">
+      Memberikan informasi yang benar, jelas, dan mudah dipahami.
+    </li>
+    <li class="readable">
+      Menindaklanjuti pengaduan masyarakat secara profesional.
+    </li>
+    <li class="readable">
+      Mengutamakan kepentingan publik di atas kepentingan pribadi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH KASUS IMPLEMENTASI
+  ================================= -->
+  <h3>Contoh Kasus Implementasi</h3>
+  <p class="readable">
+    Seorang ASN di loket pelayanan perizinan tetap memproses permohonan
+    sesuai antrean dan SOP meskipun pemohon tersebut adalah kerabat dekatnya.
+  </p>
+
+  <p class="readable">
+    ✔️ Tindakan tersebut mencerminkan komitmen terhadap standar pelayanan,
+    prinsip keadilan, dan integritas ASN.
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal Tes CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN mempercepat proses layanan kepada seorang warga
+    karena memiliki hubungan pribadi, sementara warga lain harus
+    mengikuti prosedur normal. Sikap ASN tersebut bertentangan dengan
+    prinsip standar pelayanan publik karena melanggar prinsip…
+  </p>
+
+  <ul>
+    <li class="readable">A. Akuntabilitas</li>
+    <li class="readable">B. Transparansi</li>
+    <li class="readable">C. Non-diskriminasi</li>
+    <li class="readable">D. Efektivitas</li>
+    <li class="readable">E. Responsivitas</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban: C. Non-diskriminasi</strong><br>
+    <span>
+      Karena ASN memberikan perlakuan berbeda berdasarkan hubungan pribadi,
+      bukan berdasarkan ketentuan standar pelayanan.
+    </span>
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi perilaku ASN yang sesuai atau melanggar standar pelayanan.
+    </li>
+    <li class="readable">
+      Analisis kasus pelayanan publik berbasis nilai integritas dan keadilan.
+    </li>
+    <li class="readable">
+      Hubungan antara standar pelayanan, etika ASN, dan kepuasan masyarakat.
+    </li>
+    <li class="readable">
+      Sikap ASN dalam menghadapi tekanan, konflik kepentingan, dan gratifikasi.
+    </li>
+  </ul>
+
+</div>
+
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
