@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Bhinneka Tunggal Ika</h1>
+  <p>Tes Wawasan Kebangsaan</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     🌏 BHINNEKA TUNGGAL IKA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-group"></i> Bhinneka Tunggal Ika</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Bhinneka Tunggal Ika berarti <em>“berbeda-beda tetapi tetap satu”</em>.
+    Semboyan ini menegaskan bahwa keberagaman suku, agama, ras,
+    budaya, dan bahasa bukanlah ancaman,
+    melainkan kekuatan fundamental bangsa Indonesia.
+  </p>
+
+  <p class="readable">
+    Indonesia sebagai negara majemuk dibangun di atas realitas sosial
+    yang heterogen. Perbedaan tersebut merupakan konsekuensi historis,
+    geografis, dan kultural dari bangsa kepulauan yang luas dan beragam.
+    Oleh karena itu, persatuan nasional hanya dapat terwujud
+    jika setiap warga negara mampu menerima, menghargai,
+    dan mengelola perbedaan secara bijaksana.
+  </p>
+
+  <p class="readable">
+    Dalam konteks negara modern, Bhinneka Tunggal Ika berfungsi
+    sebagai prinsip pemersatu yang menjaga stabilitas sosial,
+    mencegah konflik horizontal,
+    serta memperkuat integrasi nasional dalam bingkai Negara Kesatuan Republik Indonesia.
+  </p>
+
+  <!-- ===============================
+       KEDUDUKAN BHINNEKA TUNGGAL IKA
+  ================================= -->
+  <h3>Kedudukan Bhinneka Tunggal Ika</h3>
+  <ul>
+    <li class="readable">
+      Sebagai <strong>semboyan negara</strong> yang tercantum pada lambang Garuda Pancasila.
+    </li>
+    <li class="readable">
+      Sebagai <strong>nilai dasar persatuan</strong> dalam kehidupan berbangsa dan bernegara.
+    </li>
+    <li class="readable">
+      Sebagai <strong>landasan sosial dan kultural</strong>
+      dalam mengelola keberagaman Indonesia.
+    </li>
+    <li class="readable">
+      Sebagai <strong>prinsip integrasi nasional</strong>
+      yang sejalan dengan Pancasila dan UUD 1945.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MAKNA STRATEGIS DALAM NEGARA MAJEMUK
+  ================================= -->
+  <h3>Makna Strategis Bhinneka Tunggal Ika dalam Negara Majemuk</h3>
+  <ul>
+    <li class="readable">
+      Menjadi dasar sikap toleransi dan saling menghormati
+      antar kelompok masyarakat.
+    </li>
+    <li class="readable">
+      Menolak segala bentuk diskriminasi, intoleransi,
+      dan eksklusivisme sosial.
+    </li>
+    <li class="readable">
+      Mengutamakan kepentingan nasional
+      di atas kepentingan golongan atau identitas sempit.
+    </li>
+    <li class="readable">
+      Memperkuat rasa kebangsaan
+      tanpa menghilangkan identitas kedaerahan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM KEHIDUPAN SEHARI-HARI
+  ================================= -->
+  <h3>Implementasi Bhinneka Tunggal Ika dalam Kehidupan Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      Menghormati perbedaan agama dan keyakinan
+      dalam kehidupan bermasyarakat.
+    </li>
+    <li class="readable">
+      Bekerja sama lintas suku, budaya, dan latar belakang
+      dalam lingkungan kerja dan pendidikan.
+    </li>
+    <li class="readable">
+      Menyelesaikan perbedaan pendapat melalui dialog
+      dan musyawarah, bukan kekerasan.
+    </li>
+    <li class="readable">
+      Menghindari ujaran kebencian dan provokasi
+      yang dapat memecah persatuan bangsa.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM KEHIDUPAN ASN
+  ================================= -->
+  <h3>Implementasi Bhinneka Tunggal Ika dalam Kehidupan ASN</h3>
+  <ul>
+    <li class="readable">
+      Memberikan pelayanan publik secara adil
+      tanpa diskriminasi apa pun.
+    </li>
+    <li class="readable">
+      Menghormati keberagaman latar belakang
+      rekan kerja dan masyarakat yang dilayani.
+    </li>
+    <li class="readable">
+      Bersikap netral dan profesional
+      dalam menghadapi perbedaan pandangan sosial dan budaya.
+    </li>
+    <li class="readable">
+      Menjadi teladan dalam menjaga persatuan
+      dan keharmonisan sosial.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       TANTANGAN DALAM PENERAPAN
+  ================================= -->
+  <h3>Tantangan dalam Penerapan Bhinneka Tunggal Ika</h3>
+  <ul>
+    <li class="readable">
+      Meningkatnya intoleransi dan politik identitas.
+    </li>
+    <li class="readable">
+      Penyebaran hoaks dan ujaran kebencian
+      melalui media sosial.
+    </li>
+    <li class="readable">
+      Ketimpangan sosial dan ekonomi
+      yang memicu kecemburuan antar kelompok.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap yang mencerminkan
+      atau bertentangan dengan nilai Bhinneka Tunggal Ika.
+    </li>
+    <li class="readable">
+      Analisis konflik sosial dan solusi
+      berdasarkan prinsip persatuan dalam keberagaman.
+    </li>
+    <li class="readable">
+      Perilaku ASN yang mencerminkan
+      toleransi dan non-diskriminasi.
+    </li>
+    <li class="readable">
+      Hubungan Bhinneka Tunggal Ika
+      dengan Pancasila dan UUD 1945.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🌏 LANDASAN NILAI BHINNEKA TUNGGAL IKA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-group"></i> Landasan Nilai Bhinneka Tunggal Ika</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Bhinneka Tunggal Ika merupakan prinsip fundamental bangsa Indonesia
+    yang menegaskan bahwa keberagaman bukanlah pemecah persatuan,
+    melainkan kekuatan dalam kehidupan berbangsa dan bernegara.
+  </p>
+
+  <p class="readable">
+    Prinsip ini tidak berdiri sendiri, tetapi berakar pada nilai-nilai luhur
+    yang hidup dan berkembang dalam sejarah, budaya, serta sistem nilai bangsa Indonesia,
+    terutama Pancasila dan etika sosial kebangsaan.
+  </p>
+
+  <!-- ===============================
+       NILAI LUHUR BUDAYA BANGSA
+  ================================= -->
+  <h3>Nilai Luhur Budaya Bangsa</h3>
+  <p class="readable">
+    Landasan utama Bhinneka Tunggal Ika bersumber dari realitas historis
+    dan budaya Indonesia sebagai negara kepulauan dengan masyarakat
+    multietnis, multibahasa, dan multikultural.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Bangsa Indonesia sejak dahulu hidup dalam keberagaman suku,
+      adat istiadat, bahasa, dan kepercayaan.
+    </li>
+    <li class="readable">
+      Tradisi gotong royong mencerminkan kemampuan masyarakat
+      untuk bekerja sama meskipun berbeda latar belakang.
+    </li>
+    <li class="readable">
+      Kearifan lokal mengajarkan toleransi, musyawarah,
+      dan penyelesaian konflik secara damai.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Nilai budaya ini menjadi fondasi sosial yang memungkinkan
+    persatuan nasional tetap terjaga dalam keberagaman.
+  </p>
+
+  <!-- ===============================
+       BHINNEKA TUNGGAL IKA & PANCASILA
+  ================================= -->
+  <h3>Nilai Pancasila sebagai Landasan Bhinneka Tunggal Ika</h3>
+  <p class="readable">
+    Prinsip Bhinneka Tunggal Ika memiliki keterkaitan erat dengan Pancasila
+    sebagai dasar negara dan ideologi nasional.
+    Bhinneka Tunggal Ika merupakan perwujudan konkret nilai-nilai Pancasila
+    dalam kehidupan sosial.
+  </p>
+
+  <ul>
+    <li class="readable">
+      <strong>Sila ke-2: Kemanusiaan yang Adil dan Beradab</strong><br>
+      Menegaskan pengakuan terhadap harkat dan martabat setiap manusia
+      tanpa diskriminasi atas dasar suku, agama, ras, atau golongan.
+    </li>
+    <li class="readable">
+      <strong>Sila ke-3: Persatuan Indonesia</strong><br>
+      Menjadi landasan utama semangat persatuan di tengah keberagaman
+      demi kepentingan nasional di atas kepentingan kelompok.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Dengan demikian, Bhinneka Tunggal Ika tidak dapat dipisahkan dari Pancasila,
+    melainkan merupakan pengejawantahan nilai-nilainya dalam kehidupan nyata.
+  </p>
+
+  <!-- ===============================
+       ETIKA SOSIAL & KEBANGSAAN
+  ================================= -->
+  <h3>Etika Sosial dan Kebangsaan</h3>
+  <p class="readable">
+    Etika sosial dan kebangsaan adalah seperangkat norma dan sikap
+    yang mengatur hubungan antarindividu dan kelompok
+    dalam masyarakat yang majemuk.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Menghormati perbedaan pendapat, keyakinan, dan identitas budaya.
+    </li>
+    <li class="readable">
+      Menjaga sikap toleran dan inklusif dalam kehidupan bermasyarakat.
+    </li>
+    <li class="readable">
+      Menghindari ujaran kebencian, diskriminasi, dan provokasi konflik sosial.
+    </li>
+    <li class="readable">
+      Mengutamakan dialog dan musyawarah dalam menyelesaikan perbedaan.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Etika ini menjadi pedoman penting bagi warga negara dan aparatur negara
+    dalam menjaga harmoni sosial dan persatuan nasional.
+  </p>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM KEHIDUPAN ASN
+  ================================= -->
+  <h3>Implementasi Nilai Bhinneka Tunggal Ika dalam Kehidupan ASN</h3>
+  <ul>
+    <li class="readable">
+      Memberikan pelayanan publik yang adil dan tidak diskriminatif.
+    </li>
+    <li class="readable">
+      Menghormati keberagaman latar belakang masyarakat yang dilayani.
+    </li>
+    <li class="readable">
+      Menjaga netralitas dan profesionalitas dalam menghadapi perbedaan.
+    </li>
+    <li class="readable">
+      Menjadi teladan dalam sikap toleran dan persatuan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CATATAN PENTING CPNS
+  ================================= -->
+  <h3>Catatan Penting untuk Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Soal sering menanyakan hubungan Bhinneka Tunggal Ika
+      dengan nilai-nilai Pancasila, terutama sila ke-2 dan ke-3.
+    </li>
+    <li class="readable">
+      Bhinneka Tunggal Ika <strong>bukan ideologi yang berdiri sendiri</strong>,
+      melainkan prinsip pemersatu yang bersumber dari Pancasila.
+    </li>
+    <li class="readable">
+      Soal berbentuk studi kasus biasanya menguji sikap toleransi,
+      anti-diskriminasi, dan kemampuan menjaga persatuan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi nilai Pancasila yang menjadi dasar Bhinneka Tunggal Ika.
+    </li>
+    <li class="readable">
+      Analisis kasus konflik sosial berdasarkan prinsip Bhinneka Tunggal Ika.
+    </li>
+    <li class="readable">
+      Penilaian perilaku ASN yang mencerminkan atau melanggar prinsip keberagaman.
+    </li>
+    <li class="readable">
+      Perbandingan antara persatuan semu dan persatuan berdasarkan nilai Pancasila.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🌏 BHINNEKA TUNGGAL IKA
+     SUBSTANSI UTAMA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-globe"></i> Substansi Utama Bhinneka Tunggal Ika</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+
+  <p class="readable">
+    Dalam konteks ketatanegaraan dan kehidupan sosial,
+    Bhinneka Tunggal Ika berfungsi sebagai pedoman etika sosial,
+    dasar toleransi, serta instrumen pemersatu di tengah pluralitas bangsa.
+  </p>
+
+  <!-- ===============================
+       A. KEBERAGAMAN SEBAGAI KENYATAAN SOSIAL
+  ================================= -->
+  <h3>A. Keberagaman sebagai Kenyataan Sosial</h3>
+  <p class="readable">
+    Indonesia merupakan negara multikultural yang terdiri dari
+    ratusan suku bangsa, bahasa daerah, adat istiadat,
+    serta tradisi budaya yang tersebar di seluruh wilayah nusantara.
+  </p>
+
+  <p class="readable">
+    Keberagaman tersebut adalah fakta sosial dan historis
+    yang tidak dapat dihilangkan, sehingga harus diterima
+    dan dikelola secara bijaksana.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Keberagaman adalah <strong>kekayaan nasional</strong>
+      yang memperkuat identitas bangsa.
+    </li>
+    <li class="readable">
+      Keberagaman mendorong inovasi sosial, budaya,
+      dan pemikiran dalam pembangunan nasional.
+    </li>
+    <li class="readable">
+      Penolakan terhadap keberagaman berpotensi
+      menimbulkan konflik dan perpecahan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       B. TOLERANSI DAN SALING MENGHORMATI
+  ================================= -->
+  <h3>B. Toleransi dan Saling Menghormati</h3>
+  <p class="readable">
+    Toleransi adalah sikap menerima dan menghormati perbedaan
+    tanpa harus mengorbankan keyakinan pribadi.
+    Toleransi menjadi kunci utama kehidupan damai
+    dalam masyarakat yang majemuk.
+  </p>
+
+  <p class="readable">
+    Toleransi dalam kerangka Bhinneka Tunggal Ika mencakup:
+  </p>
+
+  <ul>
+    <li class="readable">
+      Menghormati perbedaan keyakinan, pandangan,
+      dan latar belakang budaya.
+    </li>
+    <li class="readable">
+      Tidak memaksakan kehendak pribadi atau kelompok
+      kepada orang lain.
+    </li>
+    <li class="readable">
+      Menghargai hak setiap individu untuk berpikir,
+      berpendapat, dan menjalankan keyakinannya.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Dalam konteks aparatur negara, toleransi tercermin
+    dalam pelayanan publik yang adil, netral,
+    dan bebas dari prasangka.
+  </p>
+
+  <!-- ===============================
+       C. ANTI DISKRIMINASI DAN INKLUSIVITAS
+  ================================= -->
+  <h3>C. Anti Diskriminasi dan Inklusivitas</h3>
+  <p class="readable">
+    Prinsip Bhinneka Tunggal Ika menolak segala bentuk diskriminasi
+    dan menjunjung tinggi inklusivitas,
+    yaitu keterlibatan seluruh warga negara
+    tanpa pengecualian.
+  </p>
+
+  <p class="readable">
+    Bentuk diskriminasi yang bertentangan dengan nilai
+    Bhinneka Tunggal Ika antara lain diskriminasi berdasarkan:
+  </p>
+
+  <ul>
+    <li class="readable">
+      Suku, agama, ras, dan antargolongan (SARA).
+    </li>
+    <li class="readable">
+      Gender dan latar belakang sosial-ekonomi.
+    </li>
+    <li class="readable">
+      Kondisi fisik, disabilitas, atau perbedaan kemampuan.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Inklusivitas menuntut negara dan masyarakat
+    untuk memberikan kesempatan yang setara
+    bagi seluruh warga negara
+    dalam pendidikan, pekerjaan, dan pelayanan publik.
+  </p>
+
+  <!-- ===============================
+       D. PERSATUAN SEBAGAI KEKUATAN BANGSA
+  ================================= -->
+  <h3>D. Persatuan sebagai Kekuatan Bangsa</h3>
+  <p class="readable">
+    Persatuan nasional merupakan hasil dari pengelolaan
+    keberagaman yang dilandasi toleransi
+    dan sikap anti diskriminasi.
+  </p>
+
+  <p class="readable">
+    Persatuan menjadi modal strategis bangsa Indonesia dalam:
+  </p>
+
+  <ul>
+    <li class="readable">
+      Menghadapi tantangan global
+      seperti persaingan ekonomi dan perubahan geopolitik.
+    </li>
+    <li class="readable">
+      Mencegah konflik sosial
+      yang dipicu oleh perbedaan identitas.
+    </li>
+    <li class="readable">
+      Menangkal ancaman disintegrasi bangsa,
+      radikalisme, dan ekstremisme.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Bagi ASN dan warga negara,
+    menjaga persatuan berarti mengutamakan
+    kepentingan nasional di atas kepentingan kelompok.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap atau perilaku
+      yang mencerminkan nilai Bhinneka Tunggal Ika.
+    </li>
+    <li class="readable">
+      Analisis kasus konflik sosial
+      dan solusi berdasarkan prinsip toleransi.
+    </li>
+    <li class="readable">
+      Penilaian tindakan ASN
+      yang diskriminatif atau inklusif.
+    </li>
+    <li class="readable">
+      Hubungan antara keberagaman,
+      persatuan, dan keutuhan NKRI.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🌈 IMPLEMENTASI BHINNEKA TUNGGAL IKA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-group"></i> Implementasi Bhinneka Tunggal Ika dalam Kehidupan Sehari-hari</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Implementasi Bhinneka Tunggal Ika tidak berhenti pada
+    pengakuan terhadap perbedaan, tetapi diwujudkan
+    melalui sikap toleransi, saling menghormati,
+    dan kerja sama dalam kehidupan sehari-hari,
+    baik di lingkungan sosial maupun dalam penyelenggaraan negara.
+  </p>
+
+  <!-- ===============================
+       NILAI-NILAI UTAMA BHINNEKA TUNGGAL IKA
+  ================================= -->
+  <h3>Nilai-Nilai Utama Bhinneka Tunggal Ika</h3>
+  <ul>
+    <li class="readable">
+      <strong>Toleransi</strong> → Menghormati perbedaan keyakinan,
+      pandangan, dan latar belakang sosial.
+    </li>
+    <li class="readable">
+      <strong>Kesetaraan</strong> → Mengakui bahwa setiap warga negara
+      memiliki kedudukan dan hak yang sama.
+    </li>
+    <li class="readable">
+      <strong>Persatuan</strong> → Mengutamakan kepentingan bersama
+      di atas kepentingan kelompok.
+    </li>
+    <li class="readable">
+      <strong>Dialog dan Musyawarah</strong> → Menyelesaikan perbedaan
+      secara damai dan bermartabat.
+    </li>
+  </ul>
+
+
+  <!-- ===============================
+       CONTOH SITUASI SOSIAL (KONTEKSTUAL)
+  ================================= -->
+  <h3>Contoh Situasi Sosial Kontekstual</h3>
+  <ul>
+    <li class="readable">
+      Perbedaan pendapat dalam rapat warga disikapi
+      dengan mendengarkan semua pihak
+      dan mencari solusi bersama.
+    </li>
+    <li class="readable">
+      Perayaan hari besar keagamaan dilaksanakan
+      dengan saling menghormati antar pemeluk agama.
+    </li>
+    <li class="readable">
+      Konflik antar kelompok diselesaikan
+      melalui mediasi dan dialog, bukan kekerasan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH & POLA SOAL CPNS
+  ================================= -->
+  <h3>Arah dan Pola Soal CPNS</h3>
+  <ul>
+    <li class="readable">
+      Soal berbentuk <strong>situasi sosial sehari-hari</strong>,
+      bukan definisi teoritis Bhinneka Tunggal Ika.
+    </li>
+    <li class="readable">
+      Peserta diminta memilih sikap atau tindakan
+      yang paling mencerminkan toleransi dan persatuan.
+    </li>
+    <li class="readable">
+      Fokus pada perilaku konkret,
+      seperti respon terhadap perbedaan,
+      konflik, dan isu SARA.
+    </li>
+    <li class="readable">
+      Opsi jawaban biasanya mirip,
+      namun hanya satu yang paling inklusif,
+      moderat, dan berorientasi persatuan.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🌏 IMPLEMENTASI BHINNEKA TUNGGAL IKA DALAM PERAN ASN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-group"></i> Implementasi Bhinneka Tunggal Ika dalam Peran ASN</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Dalam konteks aparatur negara, Bhinneka Tunggal Ika bukan sekadar semboyan,
+    melainkan prinsip kerja dan etika pelayanan publik yang harus diwujudkan
+    secara konkret dalam setiap tindakan ASN.
+  </p>
+
+  <p class="readable">
+    ASN memiliki posisi strategis sebagai penghubung antara negara dan masyarakat,
+    sehingga sikap ASN sangat menentukan terjaganya persatuan nasional
+    di tengah keberagaman.
+  </p>
+
+  <!-- ===============================
+       URGENSI BHINNEKA TUNGGAL IKA BAGI ASN
+  ================================= -->
+  <h3>Urgensi Bhinneka Tunggal Ika bagi ASN</h3>
+  <ul>
+    <li class="readable">
+      ASN melayani masyarakat yang sangat beragam dari sisi agama,
+      budaya, bahasa, dan status sosial.
+    </li>
+    <li class="readable">
+      Sikap diskriminatif ASN berpotensi memicu konflik sosial
+      dan merusak kepercayaan publik terhadap negara.
+    </li>
+    <li class="readable">
+      ASN menjadi representasi negara dalam praktik sehari-hari,
+      sehingga perilakunya mencerminkan nilai persatuan bangsa.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       BENTUK IMPLEMENTASI DALAM TUGAS ASN
+  ================================= -->
+  <h3>Bentuk Implementasi Bhinneka Tunggal Ika dalam Tugas ASN</h3>
+  <ul>
+    <li class="readable">
+      <strong>Pelayanan Publik yang Adil dan Setara</strong><br>
+      Memberikan pelayanan kepada seluruh masyarakat tanpa membedakan
+      suku, agama, ras, golongan, jenis kelamin, atau pandangan politik.
+    </li>
+
+    <li class="readable">
+      <strong>Netralitas ASN</strong><br>
+      Tidak memihak atau menunjukkan keberpihakan berdasarkan
+      latar belakang masyarakat, baik dalam pelayanan maupun kebijakan.
+    </li>
+
+    <li class="readable">
+      <strong>Keteladanan dalam Kerukunan</strong><br>
+      Menjadi contoh dalam menghormati perbedaan,
+      menjaga suasana kerja yang harmonis,
+      serta menghindari ujaran atau tindakan intoleran.
+    </li>
+
+    <li class="readable">
+      <strong>Pengelolaan Perbedaan Pendapat</strong><br>
+      Mengelola perbedaan pandangan sebagai sumber ide,
+      inovasi, dan kolaborasi, bukan sebagai sumber konflik.
+    </li>
+
+    <li class="readable">
+      <strong>Dukungan terhadap Kebijakan Inklusif</strong><br>
+      Mendukung dan melaksanakan kebijakan publik
+      yang berpihak pada keadilan sosial
+      dan perlindungan kelompok rentan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH KONKRET DALAM KEHIDUPAN KERJA ASN
+  ================================= -->
+  <h3>Contoh Konkret dalam Kehidupan Kerja ASN</h3>
+  <ul>
+    <li class="readable">
+      ASN melayani administrasi kependudukan tanpa membedakan
+      latar belakang agama atau etnis pemohon.
+    </li>
+    <li class="readable">
+      ASN tidak menggunakan simbol atau pernyataan
+      yang berpotensi menyinggung kelompok tertentu di ruang kerja.
+    </li>
+    <li class="readable">
+      ASN memfasilitasi musyawarah ketika terjadi perbedaan pendapat
+      di lingkungan kerja atau masyarakat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DAMPAK JIKA TIDAK DILAKSANAKAN
+  ================================= -->
+  <h3>Dampak Jika Prinsip Bhinneka Tunggal Ika Tidak Dilaksanakan</h3>
+  <ul>
+    <li class="readable">
+      Munculnya diskriminasi dan ketidakadilan dalam pelayanan publik.
+    </li>
+    <li class="readable">
+      Menurunnya kepercayaan masyarakat terhadap aparatur negara.
+    </li>
+    <li class="readable">
+      Potensi konflik sosial dan melemahnya persatuan nasional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TWK CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan TWK CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap ASN yang paling mencerminkan
+      prinsip Bhinneka Tunggal Ika dalam studi kasus.
+    </li>
+    <li class="readable">
+      Penilaian tindakan ASN yang diskriminatif
+      vs tindakan yang inklusif dan adil.
+    </li>
+    <li class="readable">
+      Penyelesaian konflik sosial dengan pendekatan persatuan dan toleransi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KUNCI JAWABAN TWK (HIGHLIGHT)
+  ================================= -->
+  <div class="highlight">
+    <p class="readable">
+      📌 <strong>Kunci TWK CPNS:</strong><br>
+      Jawaban yang benar hampir selalu menggambarkan ASN yang
+      <strong>netral, adil, tidak diskriminatif, inklusif,
+      menghargai perbedaan, mengedepankan musyawarah,
+      serta profesional dalam pelayanan publik</strong>.
+    </p>
+  </div>
+
+</div>
+
+
+<!-- ===============================
+     🌏 BHINNEKA TUNGGAL IKA & KONFLIK SOSIAL
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-group"></i> Bhinneka Tunggal Ika dalam Penanganan Konflik Sosial</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Dalam konteks konflik sosial, Bhinneka Tunggal Ika berfungsi
+    sebagai prinsip normatif dan etis yang mengarahkan
+    pencegahan, pengelolaan, dan penyelesaian konflik
+    agar tidak berujung pada perpecahan bangsa.
+  </p>
+
+  <p class="readable">
+    Konflik sosial yang tidak dikelola berdasarkan nilai
+    Bhinneka Tunggal Ika berpotensi memicu disintegrasi,
+    kekerasan horizontal, dan melemahnya kepercayaan
+    terhadap negara.
+  </p>
+
+  <!-- ===============================
+       BHINNEKA TUNGGAL IKA SEBAGAI PRINSIP
+  ================================= -->
+  <h3>Bhinneka Tunggal Ika sebagai Prinsip Penanganan Konflik</h3>
+  <ul>
+    <li class="readable">
+      Mengakui dan menghormati perbedaan sebagai realitas sosial,
+      bukan ancaman.
+    </li>
+    <li class="readable">
+      Menempatkan persatuan dan kepentingan bangsa
+      di atas kepentingan kelompok atau identitas tertentu.
+    </li>
+    <li class="readable">
+      Menolak sikap eksklusif, intoleran, dan diskriminatif
+      dalam kehidupan bermasyarakat.
+    </li>
+    <li class="readable">
+      Mengedepankan solusi damai dan berkeadilan
+      dalam setiap konflik sosial.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PENDEKATAN UTAMA PENANGANAN KONFLIK
+  ================================= -->
+  <h3>Pendekatan Utama dalam Penanganan Konflik Sosial</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>Dialog dan Komunikasi Terbuka</strong><br>
+      Konflik diselesaikan melalui musyawarah, dialog lintas kelompok,
+      dan komunikasi yang jujur untuk menghindari kesalahpahaman
+      serta penyebaran hoaks.
+    </li>
+
+    <li class="readable">
+      <strong>Keadilan dan Kesetaraan Perlakuan</strong><br>
+      Negara dan aparatur wajib bersikap adil,
+      tidak memihak, serta memberikan perlakuan yang sama
+      kepada seluruh kelompok masyarakat.
+    </li>
+
+    <li class="readable">
+      <strong>Penghormatan terhadap Hak Setiap Kelompok</strong><br>
+      Setiap kelompok memiliki hak untuk diakui,
+      dihormati, dan dilindungi selama tidak melanggar hukum
+      dan hak pihak lain.
+    </li>
+
+    <li class="readable">
+      <strong>Penolakan terhadap Kekerasan dan Provokasi</strong><br>
+      Segala bentuk kekerasan, ujaran kebencian,
+      dan provokasi berbasis identitas harus ditolak
+      karena bertentangan dengan nilai persatuan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERAN NEGARA & ASN
+  ================================= -->
+  <h3>Peran Negara dan ASN dalam Penanganan Konflik Sosial</h3>
+  <ul>
+    <li class="readable">
+      Menjadi mediator yang netral dan dipercaya
+      oleh semua pihak yang berkonflik.
+    </li>
+    <li class="readable">
+      Menegakkan hukum secara adil tanpa diskriminasi.
+    </li>
+    <li class="readable">
+      Mencegah eskalasi konflik melalui pendekatan persuasif
+      dan preventif.
+    </li>
+    <li class="readable">
+      Memberikan edukasi kebangsaan dan penguatan nilai
+      toleransi di masyarakat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       TUJUAN PENYELESAIAN KONFLIK
+  ================================= -->
+  <h3>Tujuan Penyelesaian Konflik Sosial</h3>
+  <p class="readable">
+    Penyelesaian konflik sosial berdasarkan Bhinneka Tunggal Ika
+    tidak bertujuan memenangkan salah satu pihak,
+    melainkan mengembalikan harmoni sosial
+    dan memperkuat persatuan bangsa.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Terwujudnya rekonsiliasi antar kelompok masyarakat.
+    </li>
+    <li class="readable">
+      Pulihnya rasa keadilan dan kepercayaan sosial.
+    </li>
+    <li class="readable">
+      Terciptanya kehidupan bersama yang damai,
+      aman, dan saling menghormati.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH KONTEKS KONFLIK SOSIAL
+  ================================= -->
+  <h3>Contoh Konteks Konflik Sosial yang Relevan</h3>
+  <ul>
+    <li class="readable">
+      Konflik antar kelompok masyarakat akibat perbedaan
+      suku, agama, atau budaya.
+    </li>
+    <li class="readable">
+      Penolakan kelompok minoritas dalam kehidupan sosial.
+    </li>
+    <li class="readable">
+      Provokasi identitas melalui media sosial
+      yang memicu ketegangan horizontal.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap yang mencerminkan Bhinneka Tunggal Ika
+      dalam situasi konflik sosial.
+    </li>
+    <li class="readable">
+      Penilaian tindakan ASN dalam menangani konflik berbasis identitas.
+    </li>
+    <li class="readable">
+      Pemilihan solusi paling tepat untuk mencegah eskalasi konflik.
+    </li>
+    <li class="readable">
+      Analisis perilaku yang berpotensi memicu
+      disintegrasi bangsa.
+    </li>
+  </ul>
+
+</div>
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
