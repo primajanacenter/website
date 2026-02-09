@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Sejarah & Sistem Ketatanegaraan</h1>
+  <p>Tes Wawasan Kebangsaan</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+
+<!-- ===============================
+     🏛️ SISTEM KETATANEGARAAN INDONESIA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-scale-balanced"></i> Sistem Ketatanegaraan Indonesia</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Sistem ketatanegaraan Indonesia adalah keseluruhan prinsip, aturan,
+    dan praktik penyelenggaraan kekuasaan negara yang mengatur hubungan
+    antar lembaga negara serta hubungan antara negara dengan warga negara.
+  </p>
+
+  <p class="readable">
+    Sistem ini mencakup pengaturan tentang pembagian kekuasaan,
+    kewenangan lembaga negara, mekanisme pengambilan keputusan,
+    serta jaminan hak dan kewajiban warga negara dalam kerangka negara hukum.
+  </p>
+
+  <p class="readable">
+    Dengan demikian, sistem ketatanegaraan tidak hanya bersifat normatif
+    (tertulis dalam konstitusi), tetapi juga tercermin dalam praktik
+    penyelenggaraan pemerintahan sehari-hari.
+  </p>
+
+  <!-- ===============================
+       KARAKTER DINAMIS SISTEM KETATANEGARAAN
+  ================================= -->
+  <h3>Sifat Dinamis Sistem Ketatanegaraan</h3>
+  <p class="readable">
+    Sistem ketatanegaraan Indonesia tidak bersifat statis atau kaku.
+    Ia berkembang seiring dinamika politik, sosial, dan hukum
+    yang dihadapi bangsa Indonesia.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Perubahan politik dapat memengaruhi distribusi dan praktik kekuasaan negara.
+    </li>
+    <li class="readable">
+      Perkembangan sosial menuntut perlindungan hak asasi dan partisipasi publik
+      yang lebih luas.
+    </li>
+    <li class="readable">
+      Perkembangan hukum mendorong penyesuaian regulasi dan lembaga negara
+      agar tetap konstitusional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERIODE PERKEMBANGAN UTAMA
+  ================================= -->
+  <h3>Periode Perkembangan Sistem Ketatanegaraan</h3>
+  <ul>
+    <li class="readable">
+      <strong>Periode Orde Lama</strong><br>
+      Ditandai oleh ketidakstabilan politik dan pergantian konstitusi,
+      sehingga sistem ketatanegaraan belum berjalan konsisten.
+    </li>
+
+    <li class="readable">
+      <strong>Periode Orde Baru</strong><br>
+      Menekankan stabilitas dan pembangunan, namun praktik ketatanegaraan
+      cenderung sentralistik dengan dominasi kekuasaan eksekutif.
+    </li>
+
+    <li class="readable">
+      <strong>Era Reformasi</strong><br>
+      Mengarah pada demokratisasi, pembatasan kekuasaan,
+      serta penguatan lembaga pengawasan dan peradilan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       TUJUAN PERUBAHAN SISTEM KETATANEGARAAN
+  ================================= -->
+  <h3>Tujuan Perubahan Sistem Ketatanegaraan Indonesia</h3>
+  <p class="readable">
+    Perubahan sistem ketatanegaraan Indonesia bukan bertujuan
+    mengganti dasar negara, melainkan menyempurnakan mekanisme
+    penyelenggaraan kekuasaan agar sesuai dengan nilai konstitusi.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Mewujudkan pemerintahan yang demokratis
+      dan menghormati kedaulatan rakyat.
+    </li>
+    <li class="readable">
+      Menjamin prinsip negara hukum (rule of law),
+      bukan kekuasaan semata (rule by power).
+    </li>
+    <li class="readable">
+      Mencegah pemusatan kekuasaan melalui pembagian
+      dan pembatasan kewenangan lembaga negara.
+    </li>
+    <li class="readable">
+      Menjamin perlindungan hak asasi manusia
+      dan kepastian hukum bagi seluruh warga negara.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       IMPLIKASI DALAM PRAKTIK PEMERINTAHAN
+  ================================= -->
+  <h3>Implikasi Sistem Ketatanegaraan dalam Praktik Pemerintahan</h3>
+  <ul>
+    <li class="readable">
+      Setiap lembaga negara bekerja berdasarkan kewenangan konstitusional,
+      bukan kehendak pribadi atau politik semata.
+    </li>
+    <li class="readable">
+      Hubungan antar lembaga negara bersifat saling mengawasi
+      dan saling mengimbangi.
+    </li>
+    <li class="readable">
+      Warga negara memiliki ruang partisipasi
+      serta mekanisme perlindungan hak konstitusional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Pemahaman konsep sistem ketatanegaraan
+      sebagai satu kesatuan yang utuh.
+    </li>
+    <li class="readable">
+      Analisis perubahan sistem ketatanegaraan
+      dari Orde Lama hingga Reformasi.
+    </li>
+    <li class="readable">
+      Identifikasi tujuan dan dampak perubahan ketatanegaraan.
+    </li>
+    <li class="readable">
+      Penilaian tindakan lembaga negara
+      apakah sesuai dengan prinsip ketatanegaraan.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🕰️ PERIODISASI SEJARAH KETATANEGARAAN INDONESIA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-clock-rotate-left"></i> Periodisasi Sejarah Ketatanegaraan Indonesia</h2>
+
+  <!-- ===============================
+       KONSEP UMUM PERIODISASI
+  ================================= -->
+  <h3>Konsep Umum Periodisasi</h3>
+  <p class="readable">
+    Periodisasi sejarah ketatanegaraan Indonesia merupakan pembagian fase
+    perkembangan sistem ketatanegaraan berdasarkan perubahan konstitusi,
+    struktur kekuasaan, praktik pemerintahan, serta dinamika politik nasional.
+  </p>
+
+  <p class="readable">
+    Pembagian ini penting untuk memahami bagaimana prinsip demokrasi,
+    kedaulatan rakyat, dan negara hukum berkembang dari waktu ke waktu,
+    serta menjadi dasar analisis dalam soal-soal CPNS.
+  </p>
+
+  <!-- ===============================
+       MASA ORDE LAMA
+  ================================= -->
+  <h3>Masa Orde Lama (1945–1966)</h3>
+  <p class="readable">
+    Masa Orde Lama merupakan periode awal pembentukan negara Indonesia
+    yang ditandai oleh ketidakstabilan politik, eksperimen sistem pemerintahan,
+    dan pergantian konstitusi.
+  </p>
+
+  <h4>Ciri Utama</h4>
+  <ul>
+    <li class="readable">
+      Sistem pemerintahan belum stabil dan sering berubah.
+    </li>
+    <li class="readable">
+      Dominasi kekuasaan eksekutif, khususnya Presiden.
+    </li>
+    <li class="readable">
+      Peran lembaga legislatif dan yudikatif relatif lemah.
+    </li>
+    <li class="readable">
+      Pengaruh ideologi politik sangat kuat dalam praktik pemerintahan.
+    </li>
+  </ul>
+
+  <h4>Konstitusi yang Pernah Berlaku</h4>
+  <ul>
+    <li class="readable">
+      <strong>UUD 1945 (1945–1949)</strong> → Sistem presidensial,
+      namun dalam praktik terjadi penyimpangan ke arah parlementer.
+    </li>
+    <li class="readable">
+      <strong>Konstitusi RIS (1949–1950)</strong> → Negara berbentuk federal
+      dengan sistem pemerintahan parlementer.
+    </li>
+    <li class="readable">
+      <strong>UUD Sementara 1950 (1950–1959)</strong> → Negara kesatuan
+      dengan sistem parlementer.
+    </li>
+  </ul>
+
+  <h4>Karakter Ketatanegaraan</h4>
+  <p class="readable">
+    Pada akhir Orde Lama, kekuasaan Presiden semakin dominan
+    melalui penerapan Demokrasi Terpimpin,
+    yang mengurangi prinsip demokrasi dan checks and balances.
+  </p>
+
+  <!-- ===============================
+       MASA ORDE BARU
+  ================================= -->
+  <h3>Masa Orde Baru (1966–1998)</h3>
+  <p class="readable">
+    Masa Orde Baru lahir sebagai koreksi atas penyimpangan
+    ketatanegaraan Orde Lama dengan tujuan utama
+    stabilitas politik dan pembangunan nasional.
+  </p>
+
+  <h4>Ciri Utama</h4>
+  <ul>
+    <li class="readable">
+      Stabilitas politik dijadikan prioritas utama.
+    </li>
+    <li class="readable">
+      Pembangunan ekonomi terencana dan terpusat.
+    </li>
+    <li class="readable">
+      Sentralisasi kekuasaan pada pemerintah pusat.
+    </li>
+    <li class="readable">
+      Pembatasan kebebasan politik dan oposisi.
+    </li>
+  </ul>
+
+  <h4>Sistem Pemerintahan</h4>
+  <p class="readable">
+    Secara konstitusional, Indonesia menganut sistem presidensial
+    berdasarkan UUD 1945. Namun dalam praktiknya,
+    kekuasaan Presiden sangat dominan,
+    sedangkan DPR dan lembaga pengawasan lainnya
+    memiliki peran yang terbatas.
+  </p>
+
+  <h4>Karakter Ketatanegaraan</h4>
+  <ul>
+    <li class="readable">
+      MPR sebagai lembaga tertinggi negara.
+    </li>
+    <li class="readable">
+      Presiden sebagai mandataris MPR dengan masa jabatan panjang.
+    </li>
+    <li class="readable">
+      Prinsip checks and balances belum berjalan efektif.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MASA REFORMASI
+  ================================= -->
+  <h3>Masa Reformasi (1998–sekarang)</h3>
+  <p class="readable">
+    Masa Reformasi ditandai oleh perubahan fundamental
+    dalam sistem ketatanegaraan Indonesia
+    untuk menciptakan pemerintahan yang demokratis,
+    transparan, dan akuntabel.
+  </p>
+
+  <h4>Ciri Utama</h4>
+  <ul>
+    <li class="readable">
+      Demokratisasi dan keterbukaan politik.
+    </li>
+    <li class="readable">
+      Penegakan hak asasi manusia.
+    </li>
+    <li class="readable">
+      Pembatasan kekuasaan eksekutif.
+    </li>
+    <li class="readable">
+      Penguatan peran lembaga negara.
+    </li>
+  </ul>
+
+  <h4>Amandemen UUD 1945</h4>
+  <p class="readable">
+    Reformasi ketatanegaraan diwujudkan melalui empat kali
+    amandemen UUD 1945 (1999–2002) yang bertujuan:
+  </p>
+
+  <ul>
+    <li class="readable">
+      Mempertegas sistem presidensial.
+    </li>
+    <li class="readable">
+      Memperkuat prinsip checks and balances.
+    </li>
+    <li class="readable">
+      Menjamin hak asasi manusia secara konstitusional.
+    </li>
+    <li class="readable">
+      Membatasi masa jabatan Presiden.
+    </li>
+  </ul>
+
+  <h4>Karakter Ketatanegaraan</h4>
+  <ul>
+    <li class="readable">
+      Presiden dipilih langsung oleh rakyat.
+    </li>
+    <li class="readable">
+      MPR tidak lagi sebagai lembaga tertinggi negara.
+    </li>
+    <li class="readable">
+      Kehadiran Mahkamah Konstitusi dan Komisi Yudisial.
+    </li>
+    <li class="readable">
+      Sistem checks and balances berjalan lebih seimbang.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi ciri ketatanegaraan pada masing-masing periode.
+    </li>
+    <li class="readable">
+      Perbandingan sistem pemerintahan Orde Lama,
+      Orde Baru, dan Reformasi.
+    </li>
+    <li class="readable">
+      Analisis dampak perubahan konstitusi terhadap demokrasi.
+    </li>
+    <li class="readable">
+      Pengenalan praktik penyimpangan dan perbaikan ketatanegaraan.
+    </li>
+    <li class="readable">
+      Penerapan prinsip checks and balances dalam konteks Reformasi.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔄 PERUBAHAN SISTEM PEMERINTAHAN INDONESIA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-arrows-rotate"></i> Perubahan Sistem Pemerintahan Indonesia</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Sistem pemerintahan adalah pola hubungan kerja antara lembaga eksekutif,
+    legislatif, dan yudikatif dalam menjalankan kekuasaan negara.
+    Sistem ini menentukan bagaimana kekuasaan dijalankan,
+    diawasi, dan dipertanggungjawabkan.
+  </p>
+
+  <p class="readable">
+    Secara konstitusional, Indonesia menganut sistem pemerintahan presidensial,
+    di mana Presiden berkedudukan sebagai kepala negara sekaligus
+    kepala pemerintahan. Namun, dalam praktik sejarahnya,
+    sistem ini mengalami pergeseran sesuai dengan dinamika politik
+    dan ketatanegaraan di setiap periode.
+  </p>
+
+  <!-- ===============================
+       SISTEM PEMERINTAHAN PRESIDENSIAL
+  ================================= -->
+  <h3>Ciri Sistem Pemerintahan Presidensial</h3>
+  <ul>
+    <li class="readable">
+      Presiden dipilih secara langsung atau melalui mekanisme konstitusional
+      dan memiliki masa jabatan tetap.
+    </li>
+    <li class="readable">
+      Presiden tidak dapat dijatuhkan oleh parlemen
+      melalui mosi tidak percaya.
+    </li>
+    <li class="readable">
+      Presiden bertanggung jawab langsung kepada rakyat,
+      bukan kepada parlemen.
+    </li>
+    <li class="readable">
+      Pemisahan kekuasaan yang jelas antara eksekutif,
+      legislatif, dan yudikatif.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERIODE AWAL KEMERDEKAAN
+  ================================= -->
+  <h3>Sistem Pemerintahan pada Awal Kemerdekaan</h3>
+  <p class="readable">
+    Pada awal kemerdekaan (1945–1959), Indonesia secara formal
+    menganut sistem presidensial berdasarkan UUD 1945.
+    Namun, dalam praktiknya, sistem ini belum berjalan konsisten.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Presiden memegang kekuasaan pemerintahan,
+      tetapi peran parlemen sangat dominan.
+    </li>
+    <li class="readable">
+      Terjadi pengaruh kuat sistem parlementer,
+      terutama pada masa berlakunya UUDS 1950.
+    </li>
+    <li class="readable">
+      Kabinet sering berganti karena bertanggung jawab
+      kepada parlemen.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Kondisi ini menyebabkan instabilitas politik
+    dan lemahnya efektivitas pemerintahan.
+  </p>
+
+  <!-- ===============================
+       SISTEM PEMERINTAHAN ORDE BARU
+  ================================= -->
+  <h3>Sistem Pemerintahan pada Masa Orde Baru</h3>
+  <p class="readable">
+    Pada masa Orde Baru (1966–1998), sistem presidensial
+    dijalankan secara sangat kuat dan terpusat.
+    Presiden memiliki kewenangan yang luas
+    dalam hampir seluruh aspek pemerintahan.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Presiden menjadi pusat kekuasaan eksekutif
+      sekaligus memiliki pengaruh besar terhadap legislatif.
+    </li>
+    <li class="readable">
+      Mekanisme pengawasan DPR berjalan lemah
+      dan tidak efektif.
+    </li>
+    <li class="readable">
+      Masa jabatan Presiden dapat berlangsung lama
+      melalui pemilihan oleh MPR.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Meskipun stabilitas politik dan pembangunan ekonomi
+    menjadi fokus utama, sistem ini dinilai minim kontrol
+    dan membuka peluang penyalahgunaan kekuasaan.
+  </p>
+
+  <!-- ===============================
+       SISTEM PEMERINTAHAN ERA REFORMASI
+  ================================= -->
+  <h3>Sistem Pemerintahan pada Era Reformasi</h3>
+  <p class="readable">
+    Era Reformasi (1998–sekarang) menandai perubahan besar
+    dalam sistem pemerintahan Indonesia.
+    Sistem presidensial tetap dipertahankan,
+    namun diperkuat dengan mekanisme pengawasan
+    dan pembatasan kekuasaan.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Presiden dan Wakil Presiden dipilih langsung oleh rakyat.
+    </li>
+    <li class="readable">
+      Masa jabatan Presiden dibatasi maksimal dua periode.
+    </li>
+    <li class="readable">
+      DPR memiliki fungsi legislasi, anggaran,
+      dan pengawasan yang lebih kuat.
+    </li>
+    <li class="readable">
+      Dibentuk lembaga baru seperti Mahkamah Konstitusi
+      untuk menjaga konstitusionalitas.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Perubahan ini bertujuan menciptakan pemerintahan
+    yang demokratis, transparan, dan akuntabel
+    sesuai prinsip checks and balances.
+  </p>
+
+  <!-- ===============================
+       PERBANDINGAN ANTAR PERIODE
+  ================================= -->
+  <h3>Garis Besar Perbandingan Antar Periode</h3>
+  <ul>
+    <li class="readable">
+      <strong>Awal Kemerdekaan</strong> → Presidensial secara formal,
+      parlementer dalam praktik.
+    </li>
+    <li class="readable">
+      <strong>Orde Baru</strong> → Presidensial kuat,
+      pengawasan lemah.
+    </li>
+    <li class="readable">
+      <strong>Reformasi</strong> → Presidensial dengan pengawasan ketat
+      dan pembatasan kekuasaan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi ciri sistem pemerintahan presidensial
+      dalam suatu periode tertentu.
+    </li>
+    <li class="readable">
+      Perbandingan praktik sistem pemerintahan
+      antara Orde Lama, Orde Baru, dan Reformasi.
+    </li>
+    <li class="readable">
+      Analisis dampak penguatan atau pelemahan
+      mekanisme pengawasan terhadap demokrasi.
+    </li>
+    <li class="readable">
+      Penentuan periode sejarah berdasarkan
+      karakteristik sistem pemerintahan.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🏛️ LEMBAGA NEGARA SEBELUM AMANDEMEN UUD 1945
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-building-columns"></i> Lembaga Negara Sebelum Amandemen UUD 1945</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Sebelum amandemen UUD 1945 (1999–2002), sistem ketatanegaraan Indonesia
+    menganut konsep supremasi Majelis Permusyawaratan Rakyat (MPR)
+    sebagai lembaga tertinggi negara.
+  </p>
+
+  <p class="readable">
+    Dalam sistem ini, kedaulatan rakyat dilaksanakan sepenuhnya oleh MPR,
+    sedangkan lembaga negara lain berada di bawahnya dan menjalankan
+    kewenangan sesuai dengan mandat MPR.
+  </p>
+
+  <p class="readable">
+    Struktur ketatanegaraan sebelum amandemen menunjukkan
+    pembagian kekuasaan yang belum seimbang,
+    dengan dominasi kekuasaan eksekutif dalam praktik.
+  </p>
+
+  <!-- ===============================
+       MPR SEBAGAI LEMBAGA TERTINGGI
+  ================================= -->
+  <h3>MPR sebagai Lembaga Tertinggi Negara</h3>
+  <p class="readable">
+    Majelis Permusyawaratan Rakyat (MPR) merupakan lembaga tertinggi negara
+    yang memegang dan melaksanakan kedaulatan rakyat.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Menetapkan dan mengubah Undang-Undang Dasar.
+    </li>
+    <li class="readable">
+      Menetapkan Garis-Garis Besar Haluan Negara (GBHN)
+      sebagai pedoman penyelenggaraan pemerintahan.
+    </li>
+    <li class="readable">
+      Mengangkat dan memberhentikan Presiden dan Wakil Presiden.
+    </li>
+    <li class="readable">
+      Meminta pertanggungjawaban Presiden
+      sebagai mandataris MPR.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Dalam sistem ini, MPR berada di puncak hierarki ketatanegaraan,
+    sehingga tidak ada lembaga lain yang dapat mengawasi atau
+    mengoreksi keputusan MPR.
+  </p>
+
+  <!-- ===============================
+       PRESIDEN SEBAGAI MANDATARIS MPR
+  ================================= -->
+  <h3>Presiden sebagai Mandataris MPR</h3>
+  <p class="readable">
+    Presiden sebelum amandemen UUD 1945 berkedudukan sebagai
+    mandataris MPR, artinya Presiden menerima mandat langsung
+    dari MPR untuk menjalankan pemerintahan.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Presiden bertanggung jawab kepada MPR,
+      bukan kepada rakyat secara langsung.
+    </li>
+    <li class="readable">
+      Presiden memegang kekuasaan eksekutif
+      sekaligus memiliki pengaruh besar terhadap legislatif.
+    </li>
+    <li class="readable">
+      Masa jabatan Presiden dapat diperpanjang
+      tanpa batas yang tegas melalui keputusan MPR.
+    </li>
+    <li class="readable">
+      Presiden berperan dominan dalam penentuan arah kebijakan negara.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Dalam praktiknya, posisi Presiden sangat kuat
+    karena minimnya mekanisme pengawasan yang efektif.
+  </p>
+
+  <!-- ===============================
+       DPR SEBELUM AMANDEMEN
+  ================================= -->
+  <h3>DPR dengan Fungsi Legislasi yang Terbatas</h3>
+  <p class="readable">
+    Dewan Perwakilan Rakyat (DPR) sebelum amandemen
+    memiliki fungsi legislasi, namun kewenangannya
+    relatif terbatas dibandingkan Presiden dan MPR.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Pembentukan undang-undang sangat bergantung
+      pada persetujuan Presiden.
+    </li>
+    <li class="readable">
+      Fungsi pengawasan terhadap pemerintah
+      belum berjalan secara optimal.
+    </li>
+    <li class="readable">
+      DPR belum memiliki posisi sejajar
+      dalam sistem checks and balances.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Akibatnya, DPR cenderung bersifat pasif
+    dan kurang efektif dalam mengontrol kekuasaan eksekutif.
+  </p>
+
+  <!-- ===============================
+       MA DAN BPK
+  ================================= -->
+  <h3>MA dan BPK sebagai Lembaga Yudikatif dan Pemeriksa Keuangan</h3>
+
+  <h4>Mahkamah Agung (MA)</h4>
+  <ul>
+    <li class="readable">
+      Memegang kekuasaan kehakiman
+      sebagai lembaga peradilan tertinggi.
+    </li>
+    <li class="readable">
+      Belum memiliki kewenangan
+      pengujian undang-undang terhadap UUD 1945.
+    </li>
+    <li class="readable">
+      Independensi peradilan masih terbatas
+      dalam praktik ketatanegaraan.
+    </li>
+  </ul>
+
+  <h4>Badan Pemeriksa Keuangan (BPK)</h4>
+  <ul>
+    <li class="readable">
+      Bertugas memeriksa pengelolaan
+      dan tanggung jawab keuangan negara.
+    </li>
+    <li class="readable">
+      Hasil pemeriksaan disampaikan kepada DPR,
+      namun tindak lanjutnya masih terbatas.
+    </li>
+    <li class="readable">
+      Peran pengawasan keuangan negara
+      belum sekuat setelah amandemen.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KARAKTERISTIK UMUM SISTEM SEBELUM AMANDEMEN
+  ================================= -->
+  <h3>Karakteristik Umum Sistem Ketatanegaraan Sebelum Amandemen</h3>
+  <ul>
+    <li class="readable">
+      Supremasi MPR sebagai lembaga tertinggi negara.
+    </li>
+    <li class="readable">
+      Dominasi kekuasaan eksekutif (Presiden).
+    </li>
+    <li class="readable">
+      Lemahnya mekanisme checks and balances.
+    </li>
+    <li class="readable">
+      Pengawasan terhadap pemerintah belum efektif.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi kedudukan MPR sebelum amandemen UUD 1945.
+    </li>
+    <li class="readable">
+      Perbedaan posisi Presiden sebelum dan sesudah amandemen.
+    </li>
+    <li class="readable">
+      Analisis keterbatasan fungsi DPR sebelum reformasi.
+    </li>
+    <li class="readable">
+      Peran MA dan BPK dalam sistem ketatanegaraan lama.
+    </li>
+    <li class="readable">
+      Alasan perlunya reformasi dan amandemen UUD 1945.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🏛️ LEMBAGA NEGARA SETELAH AMANDEMEN UUD 1945
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-building-columns"></i> Lembaga Negara Setelah Amandemen UUD 1945</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Amandemen UUD 1945 (1999–2002) membawa perubahan mendasar
+    dalam struktur ketatanegaraan Indonesia. Salah satu perubahan
+    terpenting adalah dihapuskannya konsep lembaga tertinggi negara
+    dan diterapkannya prinsip <em>separation of powers</em>
+    serta <em>checks and balances</em>.
+  </p>
+
+  <p class="readable">
+    Setelah amandemen, seluruh lembaga negara berkedudukan setara
+    sesuai fungsi dan kewenangannya masing-masing,
+    serta saling mengawasi untuk mencegah pemusatan kekuasaan.
+  </p>
+
+  <!-- ===============================
+       MPR SETELAH AMANDEMEN
+  ================================= -->
+  <h3>Majelis Permusyawaratan Rakyat (MPR)</h3>
+  <p class="readable">
+    Setelah amandemen UUD 1945, MPR tidak lagi berkedudukan
+    sebagai lembaga tertinggi negara dan tidak lagi memegang
+    kedaulatan rakyat secara penuh.
+  </p>
+
+  <ul>
+    <li class="readable">
+      MPR merupakan lembaga negara setara dengan lembaga negara lainnya.
+    </li>
+    <li class="readable">
+      Anggota MPR terdiri dari anggota DPR dan anggota DPD.
+    </li>
+    <li class="readable">
+      Kewenangan utama MPR:
+      <ul>
+        <li>mengubah dan menetapkan UUD</li>
+        <li>melantik Presiden dan Wakil Presiden</li>
+        <li>memberhentikan Presiden dan/atau Wakil Presiden
+            sesuai mekanisme konstitusi</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PRESIDEN SETELAH AMANDEMEN
+  ================================= -->
+  <h3>Presiden</h3>
+  <p class="readable">
+    Presiden merupakan kepala negara sekaligus kepala pemerintahan
+    dalam sistem presidensial Indonesia.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Presiden dan Wakil Presiden dipilih langsung oleh rakyat
+      melalui pemilihan umum.
+    </li>
+    <li class="readable">
+      Presiden tidak bertanggung jawab kepada MPR,
+      melainkan kepada rakyat melalui mekanisme pemilu.
+    </li>
+    <li class="readable">
+      Masa jabatan Presiden dibatasi maksimal dua periode.
+    </li>
+    <li class="readable">
+      Presiden tidak dapat membubarkan DPR.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DPR SETELAH AMANDEMEN
+  ================================= -->
+  <h3>Dewan Perwakilan Rakyat (DPR)</h3>
+  <p class="readable">
+    DPR mengalami penguatan peran dan kewenangan setelah amandemen
+    UUD 1945 sebagai representasi rakyat dalam sistem demokrasi.
+  </p>
+
+  <ul>
+    <li class="readable">
+      <strong>Fungsi Legislasi</strong> → Membentuk undang-undang
+      bersama Presiden.
+    </li>
+    <li class="readable">
+      <strong>Fungsi Anggaran</strong> → Membahas dan menyetujui APBN.
+    </li>
+    <li class="readable">
+      <strong>Fungsi Pengawasan</strong> → Mengawasi pelaksanaan undang-undang
+      dan kebijakan pemerintah.
+    </li>
+    <li class="readable">
+      DPR memiliki hak interpelasi, hak angket, dan hak menyatakan pendapat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DPD
+  ================================= -->
+  <h3>Dewan Perwakilan Daerah (DPD)</h3>
+  <p class="readable">
+    DPD dibentuk sebagai lembaga perwakilan daerah
+    untuk memperkuat prinsip Negara Kesatuan Republik Indonesia.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Anggota DPD dipilih melalui pemilu dan mewakili provinsi.
+    </li>
+    <li class="readable">
+      DPD berwenang mengajukan dan membahas RUU
+      yang berkaitan dengan otonomi daerah, hubungan pusat–daerah,
+      dan perimbangan keuangan.
+    </li>
+    <li class="readable">
+      DPD tidak memiliki kewenangan pengambilan keputusan akhir
+      dalam pembentukan undang-undang.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MAHKAMAH KONSTITUSI
+  ================================= -->
+  <h3>Mahkamah Konstitusi (MK)</h3>
+  <p class="readable">
+    Mahkamah Konstitusi dibentuk sebagai penjaga konstitusi
+    (<em>guardian of the constitution</em>) pasca amandemen UUD 1945.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Menguji undang-undang terhadap UUD 1945.
+    </li>
+    <li class="readable">
+      Memutus sengketa kewenangan antar lembaga negara.
+    </li>
+    <li class="readable">
+      Memutus pembubaran partai politik.
+    </li>
+    <li class="readable">
+      Memutus perselisihan hasil pemilu.
+    </li>
+    <li class="readable">
+      Memberikan putusan atas pendapat DPR
+      terkait dugaan pelanggaran oleh Presiden/Wakil Presiden.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KOMISI YUDISIAL
+  ================================= -->
+  <h3>Komisi Yudisial (KY)</h3>
+  <p class="readable">
+    Komisi Yudisial dibentuk untuk menjaga integritas
+    dan kehormatan kekuasaan kehakiman.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Mengusulkan pengangkatan hakim agung.
+    </li>
+    <li class="readable">
+      Menjaga dan menegakkan kehormatan,
+      keluhuran martabat, serta perilaku hakim.
+    </li>
+    <li class="readable">
+      KY tidak memiliki kewenangan menjatuhkan putusan pengadilan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CHECKS AND BALANCES
+  ================================= -->
+  <h3>Prinsip Checks and Balances Antar Lembaga</h3>
+  <ul>
+    <li class="readable">
+      DPR mengawasi Presiden, tetapi Presiden dipilih langsung oleh rakyat.
+    </li>
+    <li class="readable">
+      MK dapat membatalkan undang-undang yang dibuat DPR dan Presiden
+      jika bertentangan dengan UUD 1945.
+    </li>
+    <li class="readable">
+      KY mengawasi perilaku hakim tanpa mencampuri independensi peradilan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Perbedaan kedudukan MPR sebelum dan sesudah amandemen UUD 1945.
+    </li>
+    <li class="readable">
+      Identifikasi kewenangan masing-masing lembaga negara.
+    </li>
+    <li class="readable">
+      Kasus “lembaga mana yang berwenang?” (MK, MA, DPR, atau KY).
+    </li>
+    <li class="readable">
+      Penerapan prinsip checks and balances dalam sistem presidensial.
+    </li>
+    <li class="readable">
+      Analisis hubungan Presiden–DPR–MK dalam praktik ketatanegaraan.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     ⚖️ PRINSIP CHECKS AND BALANCES
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-scale-balanced"></i> Prinsip Checks and Balances</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Prinsip checks and balances adalah mekanisme ketatanegaraan
+    yang mengatur hubungan saling mengawasi dan saling mengimbangi
+    antar lembaga negara guna mencegah terjadinya pemusatan
+    kekuasaan dan penyalahgunaan wewenang.
+  </p>
+
+  <p class="readable">
+    Prinsip ini merupakan ciri utama negara demokratis dan negara hukum,
+    di mana tidak ada satu lembaga pun yang memiliki kekuasaan absolut.
+    Setiap kekuasaan dibatasi oleh kekuasaan lain sesuai konstitusi.
+  </p>
+
+  <!-- ===============================
+       LANDASAN KONSTITUSIONAL
+  ================================= -->
+  <h3>Landasan Konstitusional</h3>
+  <p class="readable">
+    Prinsip checks and balances di Indonesia berlandaskan pada
+    Undang-Undang Dasar Negara Republik Indonesia Tahun 1945,
+    khususnya setelah amandemen, yang menempatkan lembaga negara
+    dalam posisi setara dan saling mengontrol.
+  </p>
+
+  <!-- ===============================
+       TUJUAN CHECKS AND BALANCES
+  ================================= -->
+  <h3>Tujuan Penerapan Checks and Balances</h3>
+  <ul>
+    <li class="readable">
+      Mencegah penyalahgunaan kekuasaan (abuse of power).
+    </li>
+    <li class="readable">
+      Menjamin penyelenggaraan pemerintahan yang demokratis
+      dan akuntabel.
+    </li>
+    <li class="readable">
+      Menegakkan prinsip negara hukum (rule of law).
+    </li>
+    <li class="readable">
+      Melindungi hak asasi manusia dan kepentingan rakyat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       BENTUK CHECKS AND BALANCES ANTAR LEMBAGA
+  ================================= -->
+  <h3>Bentuk Checks and Balances Antar Lembaga Negara</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>Hubungan Presiden dan DPR</strong><br>
+      Presiden memiliki hak mengajukan Rancangan Undang-Undang (RUU),
+      namun pembahasan dan persetujuan RUU merupakan kewenangan DPR.
+      Undang-undang hanya dapat berlaku jika disetujui bersama.
+    </li>
+
+    <li class="readable">
+      <strong>Fungsi Pengawasan DPR</strong><br>
+      DPR berwenang melakukan pengawasan terhadap kebijakan pemerintah
+      melalui hak interpelasi, hak angket, dan hak menyatakan pendapat.
+      Namun, DPR tidak dapat menjatuhkan Presiden secara sepihak
+      tanpa mekanisme konstitusional.
+    </li>
+
+    <li class="readable">
+      <strong>Peran Mahkamah Konstitusi</strong><br>
+      Mahkamah Konstitusi berwenang menguji undang-undang
+      terhadap UUD 1945 dan membatalkan undang-undang
+      yang bertentangan dengan konstitusi.
+    </li>
+
+    <li class="readable">
+      <strong>Hubungan Kekuasaan Eksekutif dan Yudikatif</strong><br>
+      Kekuasaan kehakiman bersifat independen dan bebas dari
+      campur tangan kekuasaan eksekutif maupun legislatif.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CHECKS AND BALANCES DALAM PRAKTIK
+  ================================= -->
+  <h3>Checks and Balances dalam Praktik Ketatanegaraan</h3>
+  <p class="readable">
+    Dalam praktiknya, checks and balances diwujudkan melalui
+    mekanisme hukum dan politik yang saling membatasi kewenangan,
+    namun tetap memungkinkan kerja sama antar lembaga negara.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Presiden dapat menerbitkan kebijakan, tetapi kebijakan tersebut
+      dapat diuji secara hukum.
+    </li>
+    <li class="readable">
+      DPR menyusun dan mengesahkan anggaran negara,
+      tetapi pelaksanaannya diawasi oleh lembaga lain.
+    </li>
+    <li class="readable">
+      Lembaga peradilan memastikan seluruh tindakan negara
+      sesuai dengan konstitusi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DAMPAK JIKA CHECKS AND BALANCES TIDAK BERJALAN
+  ================================= -->
+  <h3>Dampak Jika Checks and Balances Tidak Berjalan</h3>
+  <ul>
+    <li class="readable">
+      Terjadi pemusatan kekuasaan pada satu lembaga.
+    </li>
+    <li class="readable">
+      Meningkatnya potensi korupsi dan penyalahgunaan wewenang.
+    </li>
+    <li class="readable">
+      Melemahnya demokrasi dan perlindungan HAM.
+    </li>
+    <li class="readable">
+      Hilangnya kepercayaan publik terhadap negara.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi mekanisme checks and balances
+      dalam suatu kasus ketatanegaraan.
+    </li>
+    <li class="readable">
+      Analisis hubungan kewenangan Presiden, DPR,
+      dan lembaga peradilan.
+    </li>
+    <li class="readable">
+      Menentukan lembaga yang berwenang mengoreksi
+      pelanggaran konstitusi.
+    </li>
+    <li class="readable">
+      Menilai apakah suatu tindakan lembaga negara
+      sesuai prinsip checks and balances.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🗳️ DEMOKRASI & REFORMASI KETATANEGARAAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-scale-balanced"></i> Demokrasi dan Reformasi Ketatanegaraan</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Demokrasi adalah sistem pemerintahan yang menempatkan rakyat
+    sebagai pemegang kedaulatan tertinggi, baik secara langsung
+    maupun melalui perwakilan.
+  </p>
+
+  <p class="readable">
+    Reformasi ketatanegaraan merupakan proses perubahan mendasar
+    dalam sistem politik dan ketatanegaraan Indonesia
+    yang dimulai sejak tahun 1998 sebagai respons terhadap
+    praktik pemerintahan yang otoriter, sentralistik,
+    dan lemahnya perlindungan hak asasi manusia.
+  </p>
+
+  <p class="readable">
+    Tujuan utama reformasi ketatanegaraan adalah memperkuat demokrasi,
+    menjamin HAM, serta menegakkan prinsip negara hukum
+    melalui perubahan konstitusi dan tata kelola kekuasaan negara.
+  </p>
+
+  <!-- ===============================
+       LATAR BELAKANG REFORMASI
+  ================================= -->
+  <h3>Latar Belakang Reformasi Ketatanegaraan</h3>
+  <ul>
+    <li class="readable">
+      Konsentrasi kekuasaan yang terlalu besar pada Presiden
+      pada masa Orde Baru.
+    </li>
+    <li class="readable">
+      Lemahnya mekanisme pengawasan terhadap penyelenggara negara.
+    </li>
+    <li class="readable">
+      Terbatasnya kebebasan politik, pers, dan berpendapat.
+    </li>
+    <li class="readable">
+      Maraknya praktik korupsi, kolusi, dan nepotisme (KKN).
+    </li>
+    <li class="readable">
+      Tuntutan masyarakat akan pemerintahan yang demokratis,
+      transparan, dan bertanggung jawab.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       AMANDEMEN UUD 1945
+  ================================= -->
+  <h3>Amandemen UUD 1945 sebagai Instrumen Reformasi</h3>
+  <p class="readable">
+    Amandemen UUD 1945 merupakan instrumen utama reformasi ketatanegaraan
+    yang dilakukan dalam empat tahap (1999–2002)
+    untuk menyesuaikan sistem ketatanegaraan
+    dengan prinsip demokrasi modern dan negara hukum.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Mempertegas prinsip kedaulatan rakyat
+      (Pasal 1 ayat (2)).
+    </li>
+    <li class="readable">
+      Memperkuat sistem presidensial
+      dengan pembatasan masa jabatan Presiden.
+    </li>
+    <li class="readable">
+      Menjamin dan memperluas perlindungan HAM
+      melalui Bab XA tentang Hak Asasi Manusia.
+    </li>
+    <li class="readable">
+      Menciptakan mekanisme checks and balances
+      antar lembaga negara.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DEMOKRASI PASCA REFORMASI
+  ================================= -->
+  <h3>Demokrasi Pasca Reformasi</h3>
+  <ul>
+    <li class="readable">
+      Pemilihan umum yang dilaksanakan secara langsung,
+      umum, bebas, rahasia, jujur, dan adil.
+    </li>
+    <li class="readable">
+      Presiden dan Wakil Presiden dipilih langsung oleh rakyat.
+    </li>
+    <li class="readable">
+      Kebebasan berserikat, berkumpul, dan berpendapat
+      semakin dijamin oleh konstitusi.
+    </li>
+    <li class="readable">
+      Peran masyarakat sipil dan media
+      dalam mengawasi penyelenggaraan negara semakin kuat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       NEGARA HUKUM & HAM
+  ================================= -->
+  <h3>Negara Hukum dan Perlindungan HAM</h3>
+  <p class="readable">
+    Reformasi ketatanegaraan menegaskan Indonesia sebagai
+    negara hukum (rechtsstaat),
+    di mana seluruh tindakan penyelenggara negara
+    harus berdasarkan hukum dan konstitusi.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Persamaan kedudukan warga negara di hadapan hukum.
+    </li>
+    <li class="readable">
+      Jaminan perlindungan hak asasi manusia
+      tanpa diskriminasi.
+    </li>
+    <li class="readable">
+      Peradilan yang independen dan bebas dari intervensi kekuasaan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       TANTANGAN DEMOKRASI
+  ================================= -->
+  <h3>Tantangan Demokrasi dan Reformasi Ketatanegaraan</h3>
+  <ul>
+    <li class="readable">
+      Politik uang dan rendahnya kualitas partisipasi politik.
+    </li>
+    <li class="readable">
+      Penyalahgunaan kebebasan berekspresi.
+    </li>
+    <li class="readable">
+      Lemahnya penegakan hukum dan integritas aparatur negara.
+    </li>
+    <li class="readable">
+      Polarisasi politik dan konflik sosial.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Tujuan dan latar belakang reformasi ketatanegaraan.
+    </li>
+    <li class="readable">
+      Perubahan mendasar sebelum dan sesudah amandemen UUD 1945.
+    </li>
+    <li class="readable">
+      Hubungan demokrasi, HAM, dan negara hukum.
+    </li>
+    <li class="readable">
+      Identifikasi praktik demokrasi yang sesuai
+      atau bertentangan dengan konstitusi.
+    </li>
+    <li class="readable">
+      Peran warga negara dan ASN dalam menjaga demokrasi konstitusional.
+    </li>
+  </ul>
+
+</div>
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
