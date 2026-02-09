@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    
+    <style>
+/* ===== BASIC SHAPES ===== */
+.shape-row {
+  display: flex;
+  gap: 14px;
+  margin: 10px 0;
+  align-items: center;
+}
+
+.shape {
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+}
+
+/* Circle */
+.circle {
+  border-radius: 50%;
+  background: #333;
+}
+.circle.empty {
+  background: transparent;
+  border: 3px solid #333;
+}
+
+/* Square */
+.square {
+  background: #333;
+}
+.square.empty {
+  background: transparent;
+  border: 3px solid #333;
+}
+
+/* Triangle */
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 36px solid #333;
+}
+.triangle.down {
+  border-bottom: none;
+  border-top: 36px solid #333;
+}
+
+/* Arrow */
+.arrow-right {
+  width: 0;
+  height: 0;
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  border-left: 36px solid #333;
+}
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  border-right: 36px solid #333;
+}
+
+/* Size variations */
+.small { transform: scale(0.7); }
+.large { transform: scale(1.3); }
+
+/* Helper text */
+.caption {
+  font-size: 12px;
+  color: #555;
+  margin-top: 4px;
+}
+</style>
+
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Logika Figural</h1>
+  <p>Tes Intelegensi Umum</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+
+<!-- ===============================
+     🧠 LOGIKA FIGURAL (TIU)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-shapes"></i> Logika Figural</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Logika figural menguji kemampuan berpikir visual dan spasial melalui
+    pola gambar, bentuk geometri, arah, serta susunan visual tertentu.
+    Tes ini tidak berbasis bahasa atau angka, melainkan kemampuan
+    mengenali pola tersembunyi secara cepat dan akurat.
+  </p>
+
+  <p class="readable">
+    Dalam Tes Intelegensia Umum (TIU) CPNS, logika figural digunakan
+    untuk mengukur kecerdasan visual, ketelitian, konsentrasi,
+    serta kemampuan analisis non-verbal calon ASN.
+  </p>
+
+  <!-- ===============================
+       TUJUAN PENGUKURAN
+  ================================= -->
+  <h3>Tujuan Pengukuran Logika Figural</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-eye"></i>
+      Mengukur kemampuan mengenali pola visual secara cepat.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-arrows-rotate"></i>
+      Menguji pemahaman rotasi, refleksi, dan transformasi bentuk.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-layer-group"></i>
+      Menilai kemampuan melihat hubungan antar gambar.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      Mengukur ketelitian terhadap detail kecil.
+    </li>
+  </ul>
+
+
+  <!-- ===============================
+       STRATEGI MENGERJAKAN
+  ================================= -->
+  <h3>Strategi Cepat Mengerjakan Soal Logika Figural</h3>
+  <ul>
+    <li class="readable">
+      Fokus pada <strong>satu jenis perubahan</strong> terlebih dahulu
+      (rotasi, jumlah, arah).
+    </li>
+    <li class="readable">
+      Amati pola <strong>dari kiri ke kanan</strong> atau
+      <strong>dari atas ke bawah</strong>.
+    </li>
+    <li class="readable">
+      Abaikan detail estetika, fokus pada <strong>struktur pola</strong>.
+    </li>
+    <li class="readable">
+      Gunakan eliminasi opsi yang jelas tidak sesuai.
+    </li>
+  </ul>
+  
+  <!-- ===============================
+       ARAH PERTANYAAN TIU CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan TIU CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan gambar selanjutnya dalam suatu pola.
+    </li>
+    <li class="readable">
+      Menemukan hubungan analogi antar gambar.
+    </li>
+    <li class="readable">
+      Mengidentifikasi gambar yang tidak sesuai pola.
+    </li>
+    <li class="readable">
+      Menentukan hasil rotasi atau refleksi suatu bangun.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔄 POLA GAMBAR & TRANSFORMASI BENTUK
+================================ -->
+<div class="card">
+
+<h2>🔄 Pola Gambar dan Transformasi Bentuk</h2>
+
+<!-- ===============================
+     KONSEP DASAR
+================================ -->
+<h3>Konsep Dasar</h3>
+<p class="readable">
+Pola gambar dan transformasi bentuk adalah kemampuan
+mengidentifikasi <strong>perubahan teratur</strong> pada suatu rangkaian
+gambar, baik dari segi bentuk, arah, ukuran, jumlah, maupun isian.
+</p>
+
+<p class="readable">
+Pada TIU CPNS, soal ini menguji kemampuan
+<strong>memprediksi gambar berikutnya</strong>
+berdasarkan pola perubahan yang konsisten.
+</p>
+
+<hr>
+
+<!-- ===============================
+     JENIS TRANSFORMASI
+================================ -->
+<h3>Jenis Transformasi yang Sering Muncul</h3>
+
+<ul>
+  <li class="readable"><strong>Rotasi</strong> → perubahan arah (⟳ ⟲)</li>
+  <li class="readable"><strong>Refleksi</strong> → pencerminan kiri–kanan / atas–bawah</li>
+  <li class="readable"><strong>Translasi</strong> → perpindahan posisi</li>
+  <li class="readable"><strong>Perubahan jumlah</strong> → bertambah / berkurang</li>
+  <li class="readable"><strong>Perubahan ukuran</strong> → kecil → besar</li>
+  <li class="readable"><strong>Perubahan isian</strong> → penuh ↔ kosong</li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     ILUSTRASI ROTASI
+================================ -->
+<h3>Ilustrasi Pola Rotasi</h3>
+
+<div class="shape-row">
+  <div class="triangle"></div>
+  <div class="triangle down"></div>
+  <div class="triangle"></div>
+</div>
+
+<p class="readable">
+Arah segitiga berubah secara bergantian:
+<strong>atas → bawah → atas</strong>.
+</p>
+
+<hr>
+
+<!-- ===============================
+     ILUSTRASI PERUBAHAN JUMLAH
+================================ -->
+<h3>Ilustrasi Pola Jumlah</h3>
+
+<div class="shape-row">
+  <div class="shape circle"></div>
+</div>
+
+<div class="shape-row">
+  <div class="shape circle"></div>
+  <div class="shape circle"></div>
+</div>
+
+<div class="shape-row">
+  <div class="shape circle"></div>
+  <div class="shape circle"></div>
+  <div class="shape circle"></div>
+</div>
+
+<p class="readable">
+Jumlah lingkaran bertambah satu setiap langkah.
+</p>
+
+<hr>
+
+<!-- ===============================
+     FORMULA LOGIKA POLA
+================================ -->
+<h3>Formula Logika Pola Gambar</h3>
+
+<div class="formula-box">
+  <p class="readable">
+    <strong>Pola = (Arah ⊕ Jumlah ⊕ Ukuran ⊕ Isian ⊕ Posisi)</strong>
+  </p>
+  <p class="readable">
+    Jika satu elemen sudah konsisten,
+    <strong>jangan dicari yang lain</strong>.
+  </p>
+</div>
+
+<hr>
+
+<!-- ===============================
+     CONTOH SOAL 1
+================================ -->
+<h3>Contoh Soal CPNS – Pola Rotasi</h3>
+
+<p class="readable">
+Perhatikan rangkaian gambar berikut:
+</p>
+
+<div class="shape-row">
+  <div class="arrow-right"></div>
+  <div class="arrow-down"></div>
+  <div class="arrow-left"></div>
+</div>
+
+<p class="readable">
+Arah panah berubah <strong>searah jarum jam</strong>.
+Gambar selanjutnya adalah:
+</p>
+
+<div class="shape-row">
+  <div class="arrow-up"></div>
+</div>
+
+<p class="readable">
+<strong>Jawaban:</strong> Panah ke atas
+</p>
+
+<hr>
+
+<!-- ===============================
+     CONTOH SOAL 2
+================================ -->
+<h3>Contoh Soal CPNS – Pola Isian</h3>
+
+<div class="shape-row">
+  <div class="shape square"></div>
+  <div class="shape square empty"></div>
+  <div class="shape square"></div>
+</div>
+
+<p class="readable">
+Pola isian: <strong>penuh → kosong → penuh</strong>
+</p>
+
+<p class="readable">
+Gambar berikutnya adalah:
+</p>
+
+<div class="shape-row">
+  <div class="shape square empty"></div>
+</div>
+
+<p class="readable">
+<strong>Jawaban:</strong> Persegi kosong
+</p>
+
+<hr>
+
+<!-- ===============================
+     STRATEGI CEPAT
+================================ -->
+<h3>Strategi Cepat Mengerjakan</h3>
+<ul>
+  <li class="readable">
+    Baca perubahan dari kiri ke kanan, bukan per gambar.
+  </li>
+  <li class="readable">
+    Cek urutan arah terlebih dahulu (paling sering muncul).
+  </li>
+  <li class="readable">
+    Jangan tertipu banyak bentuk — fokus satu pola utama.
+  </li>
+  <li class="readable">
+    Jika pola tidak ketemu, cek <strong>isian dan jumlah</strong>.
+  </li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     ARAH PERTANYAAN CPNS
+================================ -->
+<h3>Arah Pertanyaan Tes CPNS</h3>
+<ul>
+  <li class="readable">
+    Menentukan gambar lanjutan dalam rangkaian
+  </li>
+  <li class="readable">
+    Mengidentifikasi jenis transformasi
+  </li>
+  <li class="readable">
+    Menentukan pola perubahan visual
+  </li>
+  <li class="readable">
+    Menguji konsistensi dan prediksi logika visual
+  </li>
+</ul>
+
+</div>
+
+
+<!-- ===============================
+     🔁 POLA GAMBAR & TRANSFORMASI BENTUK (LANJUTAN)
+================================ -->
+<div class="card">
+
+<h2>🔁 Pola Gambar dan Transformasi Bentuk (Lanjutan)</h2>
+
+<!-- ===============================
+     PENGUATAN KONSEP
+================================ -->
+<h3>Penguatan Konsep</h3>
+<p class="readable">
+Pada tingkat lanjutan, pola gambar tidak lagi berdiri tunggal,
+melainkan merupakan <strong>kombinasi dua atau lebih transformasi</strong>
+yang berjalan secara bersamaan dan konsisten.
+</p>
+
+<p class="readable">
+Soal TIU CPNS sering dirancang untuk menjebak peserta
+agar hanya melihat satu pola,
+padahal pola sebenarnya terletak pada <strong>interaksi antar unsur</strong>.
+</p>
+
+<hr>
+
+<!-- ===============================
+     JENIS POLA KOMBINASI
+================================ -->
+<h3>Jenis Pola Kombinasi yang Sering Muncul</h3>
+
+<ul>
+  <li class="readable">
+    <strong>Arah + Jumlah</strong> → arah berubah, jumlah bertambah/berkurang
+  </li>
+  <li class="readable">
+    <strong>Bentuk + Isian</strong> → bentuk tetap, isian berganti
+  </li>
+  <li class="readable">
+    <strong>Ukuran + Posisi</strong> → besar–kecil berpindah tempat
+  </li>
+  <li class="readable">
+    <strong>Rotasi + Refleksi</strong> → diputar lalu dicerminkan
+  </li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     ILUSTRASI KOMBINASI ARAH + JUMLAH
+================================ -->
+<h3>Ilustrasi Pola Kombinasi Arah dan Jumlah</h3>
+
+<div class="shape-row">
+  <div class="arrow-right"></div>
+</div>
+
+<div class="shape-row">
+  <div class="arrow-down"></div>
+  <div class="arrow-down"></div>
+</div>
+
+<div class="shape-row">
+  <div class="arrow-left"></div>
+  <div class="arrow-left"></div>
+  <div class="arrow-left"></div>
+</div>
+
+<p class="readable">
+Pola yang terjadi:
+<br>
+<strong>Arah</strong>: kanan → bawah → kiri (rotasi searah jarum jam)
+<br>
+<strong>Jumlah</strong>: 1 → 2 → 3 (bertambah satu)
+</p>
+
+<p class="readable">
+Maka gambar selanjutnya adalah:
+</p>
+
+<div class="shape-row">
+  <div class="arrow-up"></div>
+  <div class="arrow-up"></div>
+  <div class="arrow-up"></div>
+  <div class="arrow-up"></div>
+</div>
+
+<hr>
+
+<!-- ===============================
+     ILUSTRASI BENTUK + ISIAN
+================================ -->
+<h3>Ilustrasi Pola Bentuk dan Isian</h3>
+
+<div class="shape-row">
+  <div class="shape circle"></div>
+  <div class="shape square empty"></div>
+</div>
+
+<div class="shape-row">
+  <div class="shape square"></div>
+  <div class="shape circle empty"></div>
+</div>
+
+<p class="readable">
+Terjadi dua pola sekaligus:
+</p>
+<ul>
+  <li class="readable">Bentuk saling bertukar (lingkaran ↔ persegi)</li>
+  <li class="readable">Isian berganti (penuh ↔ kosong)</li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     FORMULA LOGIKA LANJUTAN
+================================ -->
+<h3>Formula Logika Visual (Lanjutan)</h3>
+
+<div class="formula-box">
+  <p class="readable">
+    <strong>Pola = (Transformasi 1) + (Transformasi 2)</strong>
+  </p>
+  <p class="readable">
+    Jika satu transformasi sudah jelas,
+    <strong>jangan berhenti — cari pasangan polanya</strong>.
+  </p>
+</div>
+
+<hr>
+
+<!-- ===============================
+     CONTOH SOAL KOMBINASI
+================================ -->
+<h3>Contoh Soal CPNS – Pola Kombinasi</h3>
+
+<p class="readable">
+Perhatikan rangkaian berikut:
+</p>
+
+<div class="shape-row">
+  <div class="shape triangle"></div>
+</div>
+
+<div class="shape-row">
+  <div class="shape triangle down"></div>
+  <div class="shape triangle down"></div>
+</div>
+
+<div class="shape-row">
+  <div class="shape triangle"></div>
+  <div class="shape triangle"></div>
+  <div class="shape triangle"></div>
+</div>
+
+<p class="readable">
+Pola yang terjadi:
+</p>
+<ul>
+  <li class="readable">Arah: atas → bawah → atas</li>
+  <li class="readable">Jumlah: 1 → 2 → 3</li>
+</ul>
+
+<p class="readable">
+Gambar selanjutnya adalah:
+</p>
+
+<div class="shape-row">
+  <div class="shape triangle down"></div>
+  <div class="shape triangle down"></div>
+  <div class="shape triangle down"></div>
+  <div class="shape triangle down"></div>
+</div>
+
+<p class="readable">
+<strong>Jawaban:</strong> Empat segitiga menghadap ke bawah
+</p>
+
+<hr>
+
+<!-- ===============================
+     JEBakan UMUM TIU
+================================ -->
+<h3>Jebakan Umum dalam Soal TIU</h3>
+<ul>
+  <li class="readable">
+    Terpaku pada satu pola dan mengabaikan pola kedua
+  </li>
+  <li class="readable">
+    Menganggap pola acak padahal urutannya teratur
+  </li>
+  <li class="readable">
+    Terlalu fokus bentuk, lupa arah atau jumlah
+  </li>
+  <li class="readable">
+    Mencari pola rumit padahal polanya sederhana
+  </li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     STRATEGI MASTER TIU
+================================ -->
+<h3>Strategi Master Pola Gambar</h3>
+<ul>
+  <li class="readable">
+    Selalu cek <strong>arah → jumlah → isian → ukuran</strong> secara berurutan
+  </li>
+  <li class="readable">
+    Tandai perubahan yang <strong>konsisten</strong>, abaikan yang tetap
+  </li>
+  <li class="readable">
+    Jika ada 4–5 gambar, cek pola ganjil–genap
+  </li>
+  <li class="readable">
+    Jangan menebak sebelum menemukan minimal satu pola pasti
+  </li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     ARAH PERTANYAAN CPNS
+================================ -->
+<h3>Arah Pertanyaan Tes CPNS</h3>
+<ul>
+  <li class="readable">
+    Menentukan gambar lanjutan dengan pola ganda
+  </li>
+  <li class="readable">
+    Mengidentifikasi dua transformasi sekaligus
+  </li>
+  <li class="readable">
+    Menguji konsistensi logika visual tingkat menengah–tinggi
+  </li>
+  <li class="readable">
+    Menyaring peserta dengan ketelitian tinggi
+  </li>
+</ul>
+
+</div>
+
+
+<!-- ===============================
+     🔁 ROTASI
+================================ -->
+<div class="card">
+
+<h2>🔁 Rotasi</h2>
+
+<!-- ===============================
+     KONSEP DASAR
+================================ -->
+<h3>Konsep Dasar</h3>
+<p class="readable">
+Rotasi adalah perubahan posisi suatu gambar
+berdasarkan <strong>perputaran arah</strong>
+dengan sudut tertentu dan pola yang konsisten.
+</p>
+
+<p class="readable">
+Dalam soal TIU CPNS, rotasi umumnya muncul sebagai:
+<strong>perputaran searah atau berlawanan arah jarum jam</strong>,
+baik 90°, 180°, maupun pola bolak-balik.
+</p>
+
+<hr>
+
+<!-- ===============================
+     CIRI UTAMA ROTASI
+================================ -->
+<h3>Ciri Utama Pola Rotasi</h3>
+<ul>
+  <li class="readable">Bentuk tetap sama (tidak berubah jenis)</li>
+  <li class="readable">Yang berubah hanya <strong>arah</strong></li>
+  <li class="readable">Perubahan arah bersifat teratur</li>
+  <li class="readable">Sering dikombinasikan dengan pola jumlah atau isian</li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     ILUSTRASI ROTASI SEGITIGA
+================================ -->
+<h3>Ilustrasi Rotasi Segitiga</h3>
+
+<div class="shape-row">
+  <div class="triangle"></div>
+  <div class="triangle down"></div>
+  <div class="triangle"></div>
+</div>
+
+<p class="readable">
+Arah segitiga berubah secara <strong>bergantian</strong>:
+atas → bawah → atas.
+</p>
+
+<hr>
+
+<!-- ===============================
+     ILUSTRASI ROTASI PANAH
+================================ -->
+<h3>Ilustrasi Rotasi Panah</h3>
+
+<div class="shape-row">
+  <div class="arrow-right"></div>
+  <div class="arrow-left"></div>
+  <div class="arrow-right"></div>
+</div>
+
+<p class="readable">
+Pola rotasi:
+<strong>kanan → kiri → kanan</strong>
+(membalik arah secara konsisten).
+</p>
+
+<hr>
+
+<!-- ===============================
+     JENIS POLA ROTASI CPNS
+================================ -->
+<h3>Jenis Pola Rotasi yang Sering Muncul</h3>
+<ul>
+  <li class="readable"><strong>Rotasi bolak-balik</strong> → kanan–kiri–kanan</li>
+  <li class="readable"><strong>Rotasi dua arah</strong> → atas–bawah–atas</li>
+  <li class="readable"><strong>Rotasi tetap</strong> → satu arah berulang</li>
+  <li class="readable"><strong>Rotasi + isian</strong> → arah + penuh/kosong</li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     FORMULA LOGIKA ROTASI
+================================ -->
+<h3>Formula Logika Rotasi</h3>
+
+<div class="formula-box">
+  <p class="readable">
+    <strong>Rotasi = Arah(n) → Arah(n+1)</strong>
+  </p>
+  <p class="readable">
+    Jika bentuk dan jumlah sama,
+    maka <strong>fokus 100% pada arah</strong>.
+  </p>
+</div>
+
+<hr>
+
+<!-- ===============================
+     CONTOH SOAL 1
+================================ -->
+<h3>Contoh Soal CPNS – Rotasi Sederhana</h3>
+
+<p class="readable">
+Perhatikan rangkaian gambar berikut:
+</p>
+
+<div class="shape-row">
+  <div class="arrow-right"></div>
+  <div class="arrow-left"></div>
+  <div class="arrow-right"></div>
+</div>
+
+<p class="readable">
+Gambar berikutnya adalah:
+</p>
+
+<div class="shape-row">
+  <div class="arrow-left"></div>
+</div>
+
+<p class="readable">
+<strong>Jawaban:</strong> Panah ke kiri<br>
+<strong>Pembahasan:</strong> Pola rotasi bolak-balik kanan–kiri.
+</p>
+
+<hr>
+
+<!-- ===============================
+     CONTOH SOAL 2
+================================ -->
+<h3>Contoh Soal CPNS – Rotasi Segitiga</h3>
+
+<div class="shape-row">
+  <div class="triangle"></div>
+  <div class="triangle down"></div>
+  <div class="triangle"></div>
+</div>
+
+<p class="readable">
+Arah segitiga berubah secara bergantian.
+Gambar berikutnya adalah:
+</p>
+
+<div class="shape-row">
+  <div class="triangle down"></div>
+</div>
+
+<p class="readable">
+<strong>Jawaban:</strong> Segitiga menghadap ke bawah
+</p>
+
+<hr>
+
+<!-- ===============================
+     KESALAHAN UMUM PESERTA
+================================ -->
+<h3>Kesalahan Umum Peserta</h3>
+<ul>
+  <li class="readable">Terlalu fokus ke bentuk, padahal bentuk tetap</li>
+  <li class="readable">Mengira ada perubahan ukuran padahal hanya arah</li>
+  <li class="readable">Tidak konsisten membaca urutan gambar</li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     STRATEGI CEPAT ROTASI
+================================ -->
+<h3>Strategi Cepat Mengerjakan Soal Rotasi</h3>
+<ul>
+  <li class="readable">
+    Abaikan detail lain, cek arah dulu.
+  </li>
+  <li class="readable">
+    Ucapkan urutan arah secara lisan: kanan–kiri–kanan.
+  </li>
+  <li class="readable">
+    Jika arah bolak-balik, jawaban pasti kebalikannya.
+  </li>
+  <li class="readable">
+    Jangan mencari pola rumit jika pola sederhana sudah konsisten.
+  </li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     ARAH PERTANYAAN CPNS
+================================ -->
+<h3>Arah Pertanyaan Tes CPNS</h3>
+<ul>
+  <li class="readable">Menentukan gambar lanjutan berdasarkan arah</li>
+  <li class="readable">Mengidentifikasi jenis rotasi</li>
+  <li class="readable">Membedakan rotasi dan refleksi</li>
+  <li class="readable">Menguji konsistensi logika visual</li>
+</ul>
+
+</div>
+
+
+<!-- ===============================
+     🪞 REFLEKSI (PENCERMINAN)
+================================ -->
+<div class="card">
+
+<h2>🪞 Refleksi (Pencerminan)</h2>
+
+<!-- ===============================
+     KONSEP DASAR
+================================ -->
+<h3>Konsep Dasar</h3>
+<p class="readable">
+Refleksi atau pencerminan adalah transformasi gambar
+di mana suatu bentuk <strong>dipantulkan</strong> terhadap suatu sumbu,
+sehingga menghasilkan bayangan yang simetris.
+</p>
+
+<p class="readable">
+Dalam soal TIU CPNS, refleksi menguji kemampuan peserta
+untuk mengenali <strong>arah, posisi relatif, dan simetri visual</strong>.
+</p>
+
+<hr>
+
+<!-- ===============================
+     JENIS REFLEKSI
+================================ -->
+<h3>Jenis Refleksi yang Sering Muncul</h3>
+
+<ul>
+  <li class="readable">
+    <strong>Refleksi Horizontal</strong> → cermin kiri ↔ kanan (│)
+  </li>
+  <li class="readable">
+    <strong>Refleksi Vertikal</strong> → cermin atas ↔ bawah (─)
+  </li>
+  <li class="readable">
+    <strong>Refleksi Diagonal</strong> → jarang, tapi mungkin muncul
+  </li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     SIMBOL LOGIKA REFLEKSI
+================================ -->
+<h3>Simbol dan Logika Refleksi</h3>
+
+<div class="formula-box">
+  <p class="readable">
+    <strong>A → | → A′</strong>
+  </p>
+  <p class="readable">
+    Jarak ke sumbu cermin = jarak bayangan ke sumbu cermin
+  </p>
+</div>
+
+<p class="readable">
+Artinya: posisi boleh berubah,
+<strong>bentuk dan ukuran harus tetap sama</strong>.
+</p>
+
+<hr>
+
+<!-- ===============================
+     ILUSTRASI REFLEKSI HORIZONTAL
+================================ -->
+<h3>Ilustrasi Refleksi Kiri–Kanan</h3>
+
+<div class="shape-row">
+  <div class="arrow-right"></div>
+  <span class="readable">│</span>
+  <div class="arrow-left"></div>
+</div>
+
+<p class="readable">
+Panah ke kanan setelah dicerminkan secara horizontal
+menjadi panah ke kiri.
+</p>
+
+<hr>
+
+<!-- ===============================
+     ILUSTRASI REFLEKSI VERTIKAL
+================================ -->
+<h3>Ilustrasi Refleksi Atas–Bawah</h3>
+
+<div class="shape-row">
+  <div class="triangle"></div>
+  <span class="readable">─</span>
+  <div class="triangle down"></div>
+</div>
+
+<p class="readable">
+Segitiga menghadap atas setelah dicerminkan vertikal
+menjadi segitiga menghadap bawah.
+</p>
+
+<hr>
+
+<!-- ===============================
+     POLA UMUM REFLEKSI CPNS
+================================ -->
+<h3>Pola Umum Refleksi dalam Soal CPNS</h3>
+
+<ul>
+  <li class="readable">
+    Arah berubah, bentuk tetap
+  </li>
+  <li class="readable">
+    Jarak terhadap garis cermin selalu sama
+  </li>
+  <li class="readable">
+    Tidak ada rotasi (kecuali soal jebakan)
+  </li>
+  <li class="readable">
+    Ukuran dan jumlah elemen tetap
+  </li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     CONTOH SOAL 1
+================================ -->
+<h3>Contoh Soal CPNS – Refleksi Horizontal</h3>
+
+<p class="readable">
+Perhatikan gambar berikut:
+</p>
+
+<div class="shape-row">
+  <div class="arrow-right"></div>
+  <span class="readable">│</span>
+  <span class="readable">?</span>
+</div>
+
+<p class="readable">
+Jika gambar dicerminkan terhadap garis vertikal,
+maka hasilnya adalah:
+</p>
+
+<div class="shape-row">
+  <div class="arrow-left"></div>
+</div>
+
+<p class="readable">
+<strong>Jawaban:</strong> Panah ke kiri
+</p>
+
+<hr>
+
+<!-- ===============================
+     CONTOH SOAL 2
+================================ -->
+<h3>Contoh Soal CPNS – Refleksi Vertikal</h3>
+
+<div class="shape-row">
+  <div class="shape square"></div>
+  <span class="readable">─</span>
+  <span class="readable">?</span>
+</div>
+
+<p class="readable">
+Persegi dicerminkan secara vertikal.
+</p>
+
+<p class="readable">
+<strong>Jawaban:</strong> Tetap persegi penuh  
+<br>
+<strong>Pembahasan:</strong> Persegi simetris,
+refleksi tidak mengubah bentuk.
+</p>
+
+<hr>
+
+<!-- ===============================
+     JEBakan UMUM
+================================ -->
+<h3>Jebakan Umum dalam Soal Refleksi</h3>
+<ul>
+  <li class="readable">
+    Mengira refleksi sebagai rotasi
+  </li>
+  <li class="readable">
+    Mengubah ukuran atau jumlah (salah)
+  </li>
+  <li class="readable">
+    Salah menentukan sumbu cermin
+  </li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     STRATEGI CEPAT
+================================ -->
+<h3>Strategi Cepat Mengerjakan</h3>
+<ul>
+  <li class="readable">
+    Tentukan dulu garis cermin (│ atau ─)
+  </li>
+  <li class="readable">
+    Bayangkan bayangan di kaca, bukan diputar
+  </li>
+  <li class="readable">
+    Fokus pada arah panah atau puncak segitiga
+  </li>
+  <li class="readable">
+    Abaikan detail kecil jika bentuk simetris
+  </li>
+</ul>
+
+<hr>
+
+<!-- ===============================
+     ARAH PERTANYAAN CPNS
+================================ -->
+<h3>Arah Pertanyaan Tes CPNS</h3>
+<ul>
+  <li class="readable">
+    Menentukan hasil pencerminan gambar
+  </li>
+  <li class="readable">
+    Membedakan refleksi dan rotasi
+  </li>
+  <li class="readable">
+    Mengidentifikasi sumbu refleksi
+  </li>
+  <li class="readable">
+    Menguji ketelitian arah dan posisi
+  </li>
+</ul>
+
+</div>
+
+
+<!-- ===============================
+     ➡️ PERGESERAN OBJEK
+================================ -->
+<div class="card">
+
+<h2>➡️ Pergeseran Objek</h2>
+
+<h3>Konsep Dasar</h3>
+<p class="readable">
+Pergeseran objek adalah transformasi di mana suatu bentuk
+<strong>berpindah lokasi secara nyata</strong>
+ke arah tertentu dengan jarak yang konsisten,
+tanpa mengalami perubahan bentuk, ukuran, arah, atau isian.
+</p>
+
+<p class="readable">
+Dalam TIU CPNS, pergeseran harus dikenali dari
+<strong>perubahan posisi visual yang jelas</strong>,
+bukan dari asumsi atau urutan logika saja.
+</p>
+
+<hr>
+
+<!-- ===============================
+     ILUSTRASI PERGESERAN NYATA
+================================ -->
+<h3>Ilustrasi Pergeseran Horizontal (Nyata)</h3>
+
+<p class="readable"><strong>Langkah 1</strong></p>
+<div style="height:50px; position:relative;">
+  <div class="shape square" style="position:absolute; left:0;"></div>
+</div>
+
+<p class="readable"><strong>Langkah 2</strong></p>
+<div style="height:50px; position:relative;">
+  <div class="shape square" style="position:absolute; left:40px;"></div>
+</div>
+
+<p class="readable"><strong>Langkah 3</strong></p>
+<div style="height:50px; position:relative;">
+  <div class="shape square" style="position:absolute; left:80px;"></div>
+</div>
+
+<p class="readable">
+Persegi bergeser <strong>40 piksel ke kanan</strong>
+pada setiap langkah → inilah pergeseran objek.
+</p>
+
+<hr>
+
+<!-- ===============================
+     ILUSTRASI PERGESERAN VERTIKAL
+================================ -->
+<h3>Ilustrasi Pergeseran Vertikal (Nyata)</h3>
+
+<p class="readable"><strong>Langkah 1</strong></p>
+<div style="height:50px; position:relative;">
+  <div class="shape circle" style="position:absolute; top:0;"></div>
+</div>
+
+<p class="readable"><strong>Langkah 2</strong></p>
+<div style="height:70px; position:relative;">
+  <div class="shape circle" style="position:absolute; top:20px;"></div>
+</div>
+
+<p class="readable"><strong>Langkah 3</strong></p>
+<div style="height:90px; position:relative;">
+  <div class="shape circle" style="position:absolute; top:40px;"></div>
+</div>
+
+<p class="readable">
+Lingkaran bergeser <strong>20 piksel ke bawah</strong> setiap langkah.
+</p>
+
+<hr>
+
+<!-- ===============================
+     FORMULA LOGIKA PERGESERAN
+================================ -->
+<h3>Formula Logika Pergeseran</h3>
+
+<div class="formula-box">
+  <p class="readable">
+    <strong>Pergeseran = (x + Δx, y + Δy)</strong>
+  </p>
+  <p class="readable">
+    Jika Δx ≠ 0 → geser horizontal<br>
+    Jika Δy ≠ 0 → geser vertikal
+  </p>
+</div>
+
+<hr>
+
+<!-- ===============================
+     CONTOH SOAL CPNS
+================================ -->
+<h3>Contoh Soal CPNS – Pergeseran Objek</h3>
+
+<p class="readable"><strong>Gambar 1</strong></p>
+<div style="height:50px; position:relative;">
+  <div class="shape triangle" style="position:absolute; left:0;"></div>
+</div>
+
+<p class="readable"><strong>Gambar 2</strong></p>
+<div style="height:50px; position:relative;">
+  <div class="shape triangle" style="position:absolute; left:40px;"></div>
+</div>
+
+<p class="readable"><strong>Gambar 3</strong></p>
+<div style="height:50px; position:relative;">
+  <div class="shape triangle" style="position:absolute; left:80px;"></div>
+</div>
+
+<p class="readable">
+Jika pola berlanjut, maka gambar ke-4 berada di:
+</p>
+
+<div style="height:50px; position:relative;">
+  <div class="shape triangle" style="position:absolute; left:120px;"></div>
+</div>
+
+<p class="readable">
+<strong>Jawaban:</strong> Segitiga bergeser +40 piksel ke kanan.
+</p>
+
+<hr>
+
+<h3>Kesalahan Umum Peserta</h3>
+<ul>
+  <li class="readable">Mengira urutan tanpa perubahan posisi adalah pergeseran</li>
+  <li class="readable">Tidak mengukur jarak perpindahan</li>
+  <li class="readable">Terkecoh bentuk padahal posisi yang diuji</li>
+</ul>
+
+<hr>
+
+<h3>Strategi Cepat Mengerjakan</h3>
+<ul>
+  <li class="readable">Perhatikan posisi relatif terhadap tepi bidang</li>
+  <li class="readable">Hitung jarak perpindahan (Δx / Δy)</li>
+  <li class="readable">Pastikan bentuk tidak berubah</li>
+  <li class="readable">Gunakan logika koordinat sederhana</li>
+</ul>
+
+<hr>
+
+<h3>Arah Pertanyaan Tes CPNS</h3>
+<ul>
+  <li class="readable">Menentukan posisi objek selanjutnya</li>
+  <li class="readable">Menentukan arah dan jarak pergeseran</li>
+  <li class="readable">Membedakan pergeseran dengan rotasi/refleksi</li>
+  <li class="readable">Menguji ketelitian visual spasial</li>
+</ul>
+
+</div>
+
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
