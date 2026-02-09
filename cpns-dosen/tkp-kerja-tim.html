@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Kerja Tim</h1>
+  <p>Tes Karakteristik Pribadi</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+
+<!-- ===============================
+     🤝 KERJA TIM (TEAMWORK)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-group"></i> Kerja Tim</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Kerja tim adalah kemampuan individu untuk bekerja sama secara efektif
+    dengan orang lain yang memiliki latar belakang, peran, dan pandangan
+    berbeda demi mencapai tujuan bersama.
+  </p>
+
+  <p class="readable">
+    Dalam konteks organisasi publik dan ASN, kerja tim bukan hanya
+    tentang menyelesaikan tugas, tetapi juga membangun sinergi,
+    komunikasi yang sehat, dan tanggung jawab kolektif.
+  </p>
+
+  <p class="readable">
+    <strong>Ilustrasi Konsep:</strong><br>
+    <span style="font-size:1.1em">
+      👤 + 👤 + 👤 → 🎯 (Tujuan Bersama)
+    </span>
+  </p>
+
+  <!-- ===============================
+       PRINSIP DASAR KERJA TIM
+  ================================= -->
+  <h3>Prinsip Dasar Kerja Tim</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-comments"></i>
+      <strong>Komunikasi Terbuka</strong> → Setiap anggota tim
+      menyampaikan ide, kritik, dan masukan secara jelas dan sopan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-handshake"></i>
+      <strong>Kepercayaan dan Saling Menghargai</strong> → Menghormati
+      perbedaan pendapat dan keahlian masing-masing anggota.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-bullseye"></i>
+      <strong>Tujuan Bersama</strong> → Kepentingan tim dan organisasi
+      didahulukan dibanding kepentingan pribadi.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Pembagian Peran yang Jelas</strong> → Setiap anggota
+      memahami tugas, tanggung jawab, dan batas kewenangannya.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KERJA TIM DALAM LINGKUNGAN ASN
+  ================================= -->
+  <h3>Kerja Tim dalam Lingkungan ASN</h3>
+  <p class="readable">
+    Dalam birokrasi pemerintahan, kerja tim sangat penting karena
+    pelayanan publik jarang diselesaikan oleh satu individu saja.
+    Kinerja organisasi sangat bergantung pada kolaborasi lintas unit,
+    lintas jabatan, dan lintas disiplin.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Berkolaborasi antar bidang untuk menyelesaikan tugas pelayanan publik.
+    </li>
+    <li class="readable">
+      Membantu rekan kerja yang mengalami kesulitan tanpa menunggu perintah.
+    </li>
+    <li class="readable">
+      Menyelesaikan konflik internal secara profesional dan konstruktif.
+    </li>
+    <li class="readable">
+      Menjaga suasana kerja yang kondusif dan saling mendukung.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       SIMBOL & FORMULA KONSEPTUAL
+  ================================= -->
+  <h3>Formula Konseptual Kerja Tim</h3>
+  <p class="readable">
+    Kerja tim yang efektif dapat digambarkan dengan formula sederhana:
+  </p>
+
+  <p class="readable" style="font-size:1.2em; font-weight:bold;">
+    Sinergi Tim = (Komunikasi + Kepercayaan + Peran Jelas) × Komitmen
+  </p>
+
+  <p class="readable">
+    Artinya, tanpa komitmen dan sikap kolaboratif, kemampuan individu
+    yang tinggi sekalipun tidak akan menghasilkan kinerja tim yang optimal.
+  </p>
+
+  <!-- ===============================
+       PERILAKU POSITIF & NEGATIF
+  ================================= -->
+  <h3>Perilaku yang Mencerminkan Kerja Tim</h3>
+  <ul>
+    <li class="readable">
+      Aktif mendengarkan pendapat anggota tim lain.
+    </li>
+    <li class="readable">
+      Bersedia menerima kritik demi perbaikan bersama.
+    </li>
+    <li class="readable">
+      Mendukung keputusan tim meskipun berbeda dengan pendapat pribadi.
+    </li>
+    <li class="readable">
+      Berinisiatif membantu tanpa mengharapkan pujian.
+    </li>
+  </ul>
+
+  <h3>Perilaku yang Tidak Mencerminkan Kerja Tim</h3>
+  <ul>
+    <li class="readable">
+      Mementingkan ego dan kepentingan pribadi.
+    </li>
+    <li class="readable">
+      Menyalahkan rekan kerja saat terjadi kesalahan.
+    </li>
+    <li class="readable">
+      Menolak bekerja sama dengan anggota tim tertentu.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS (TKP)
+  ================================= -->
+  <h3>Contoh Soal CPNS (TKP – Kerja Tim)</h3>
+
+  <p class="readable">
+    Anda tergabung dalam sebuah tim pelayanan publik dengan tenggat waktu
+    yang ketat. Salah satu anggota tim mengalami kesulitan menyelesaikan tugasnya,
+    sehingga berpotensi menghambat kinerja tim. Apa yang sebaiknya Anda lakukan?
+  </p>
+
+  <ul>
+    <li class="readable">A. Membiarkannya karena itu bukan tanggung jawab Anda.</li>
+    <li class="readable">B. Melaporkan langsung kepada atasan tanpa berdiskusi.</li>
+    <li class="readable">C. Membantu sebisanya dan mengajak anggota tim lain berdiskusi.</li>
+    <li class="readable">D. Mengambil alih seluruh tugasnya agar pekerjaan cepat selesai.</li>
+    <li class="readable">E. Menyalahkan anggota tersebut di depan tim.</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban Paling Tepat:</strong> C
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Opsi C mencerminkan kerja tim yang ideal, yaitu kolaborasi,
+    kepedulian terhadap anggota tim, serta upaya menjaga
+    kinerja tim secara kolektif tanpa merendahkan pihak lain.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Respons individu terhadap konflik atau perbedaan pendapat dalam tim.
+    </li>
+    <li class="readable">
+      Sikap mendahulukan kepentingan tim dibanding kepentingan pribadi.
+    </li>
+    <li class="readable">
+      Kemampuan berkolaborasi dalam tekanan waktu dan target.
+    </li>
+    <li class="readable">
+      Pilihan tindakan paling etis dan profesional dalam kerja kelompok.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🗣️ KOMUNIKASI TERBUKA & SALING MENGHARGAI
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-comments"></i> Komunikasi Terbuka dan Saling Menghargai</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Komunikasi terbuka dan saling menghargai adalah kemampuan menyampaikan
+    dan menerima informasi secara jujur, jelas, dan bertanggung jawab
+    dengan tetap menghormati perbedaan pendapat, latar belakang,
+    serta martabat setiap individu.
+  </p>
+
+  <p class="readable">
+    Dalam konteks ASN dan pelayanan publik, komunikasi bukan sekadar
+    menyampaikan pesan, tetapi juga membangun kepercayaan, kolaborasi,
+    dan iklim kerja yang sehat serta profesional.
+  </p>
+
+  <!-- ===============================
+       PRINSIP UTAMA
+  ================================= -->
+  <h3>Prinsip Utama Komunikasi Terbuka dan Menghargai</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-eye"></i>
+      <strong>Keterbukaan</strong> → Informasi disampaikan secara jujur,
+      transparan, dan tidak ditutup-tutupi.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-ear-listen"></i>
+      <strong>Saling Mendengarkan</strong> → Memberi ruang bagi pihak lain
+      untuk menyampaikan pendapat tanpa dipotong atau diremehkan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-handshake"></i>
+      <strong>Saling Menghargai</strong> → Menghormati perbedaan pandangan,
+      budaya, jabatan, dan latar belakang.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Objektivitas</strong> → Fokus pada masalah dan solusi,
+      bukan pada pribadi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       RUMUS / SIMBOL KOMUNIKASI EFEKTIF
+  ================================= -->
+  <h3>Rumus Sederhana Komunikasi Efektif</h3>
+  <p class="readable">
+    Dalam konteks kerja dan pelayanan publik, komunikasi efektif dapat
+    dirumuskan secara sederhana sebagai:
+  </p>
+
+  <p class="readable" style="font-weight:bold; text-align:center;">
+    🗣️ Pesan Jelas + 👂 Mendengar Aktif + 🤝 Sikap Menghargai = ✅ Komunikasi Efektif
+  </p>
+
+  <p class="readable">
+    Jika salah satu unsur tidak terpenuhi, maka potensi konflik,
+    kesalahpahaman, dan penurunan kinerja akan meningkat.
+  </p>
+
+  <!-- ===============================
+       BENTUK KOMUNIKASI TERBUKA
+  ================================= -->
+  <h3>Bentuk Komunikasi Terbuka di Lingkungan Kerja ASN</h3>
+  <ul>
+    <li class="readable">
+      Menyampaikan pendapat atau kritik secara sopan dan konstruktif.
+    </li>
+    <li class="readable">
+      Memberikan umpan balik (feedback) berbasis fakta, bukan emosi.
+    </li>
+    <li class="readable">
+      Menghargai keputusan bersama meskipun berbeda pendapat.
+    </li>
+    <li class="readable">
+      Tidak menyebarkan informasi yang belum jelas kebenarannya.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH PENERAPAN SEHARI-HARI
+  ================================= -->
+  <h3>Contoh Penerapan dalam Kehidupan Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      ASN melayani masyarakat dengan bahasa yang sopan,
+      jelas, dan tidak bernada merendahkan.
+    </li>
+    <li class="readable">
+      Diskusi tim dilakukan dengan musyawarah,
+      bukan paksaan atau intimidasi.
+    </li>
+    <li class="readable">
+      Atasan menerima masukan bawahan
+      tanpa memandang jabatan.
+    </li>
+    <li class="readable">
+      Perbedaan pendapat diselesaikan melalui dialog,
+      bukan konflik pribadi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DAMPAK POSITIF
+  ================================= -->
+  <h3>Dampak Positif Komunikasi Terbuka dan Saling Menghargai</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-arrow-up-right-dots"></i>
+      Meningkatkan kinerja dan produktivitas kerja.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-people-group"></i>
+      Menciptakan kerja sama tim yang solid.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-shield-heart"></i>
+      Mengurangi konflik dan kesalahpahaman.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-building-columns"></i>
+      Meningkatkan kepercayaan publik terhadap institusi pemerintah.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal Tes CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN tidak setuju dengan kebijakan baru di unit kerjanya.
+    Sikap yang paling mencerminkan komunikasi terbuka dan saling menghargai adalah:
+  </p>
+
+  <ul>
+    <li class="readable">A. Menolak kebijakan tersebut secara terbuka dengan nada emosional</li>
+    <li class="readable">B. Membicarakan kebijakan tersebut di belakang atasan</li>
+    <li class="readable">C. Menyampaikan pendapat secara sopan disertai alasan dan solusi</li>
+    <li class="readable">D. Diam saja meskipun tidak setuju</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban Benar:</strong> ✅ C
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Pilihan C mencerminkan keterbukaan, sikap profesional,
+    dan penghargaan terhadap mekanisme kerja serta perbedaan pendapat.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap komunikasi yang paling etis dan profesional.
+    </li>
+    <li class="readable">
+      Penilaian perilaku ASN dalam menghadapi perbedaan pendapat.
+    </li>
+    <li class="readable">
+      Analisis dampak komunikasi buruk vs komunikasi terbuka.
+    </li>
+    <li class="readable">
+      Studi kasus konflik kerja dan solusi berbasis saling menghargai.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🤝 KESIAPAN MENERIMA PERBEDAAN PENDAPAT
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-arrows"></i> Kesediaan Menerima Perbedaan Pendapat</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Kesediaan menerima perbedaan pendapat adalah sikap mental dan perilaku
+    terbuka dalam menghargai pandangan, ide, dan pendapat orang lain
+    yang berbeda dengan pandangan pribadi atau kelompoknya.
+  </p>
+
+  <p class="readable">
+    Sikap ini merupakan fondasi penting dalam kehidupan demokratis,
+    keberagaman sosial, serta budaya kerja aparatur negara
+    yang profesional dan beretika.
+  </p>
+
+  <p class="readable">
+    Dalam konteks kebangsaan, kesediaan menerima perbedaan pendapat
+    mencerminkan pengamalan nilai Pancasila, khususnya
+    <strong>persatuan, kemanusiaan, dan demokrasi</strong>.
+  </p>
+
+  <!-- ===============================
+       LANDASAN NILAI & PRINSIP
+  ================================= -->
+  <h3>Landasan Nilai dan Prinsip</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Demokrasi</strong> → Setiap warga negara memiliki hak
+      menyampaikan pendapat secara bertanggung jawab.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-heart"></i>
+      <strong>Kemanusiaan</strong> → Menghargai martabat dan hak orang lain,
+      meskipun berbeda pandangan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-flag"></i>
+      <strong>Persatuan</strong> → Perbedaan pendapat tidak boleh
+      merusak persatuan dan kepentingan bersama.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MAKNA DALAM KEHIDUPAN BERNEGARA
+  ================================= -->
+  <h3>Makna dalam Kehidupan Berbangsa dan Bernegara</h3>
+  <ul>
+    <li class="readable">
+      Perbedaan pendapat dipandang sebagai kekayaan pemikiran,
+      bukan ancaman.
+    </li>
+    <li class="readable">
+      Keputusan bersama dihasilkan melalui musyawarah,
+      bukan pemaksaan kehendak.
+    </li>
+    <li class="readable">
+      Konflik diselesaikan secara dialogis dan konstitusional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DALAM LINGKUNGAN ASN
+  ================================= -->
+  <h3>Kesediaan Menerima Perbedaan Pendapat dalam Lingkungan ASN</h3>
+  <ul>
+    <li class="readable">
+      Bersikap terbuka terhadap kritik, saran, dan masukan
+      dari rekan kerja maupun masyarakat.
+    </li>
+    <li class="readable">
+      Mengutamakan kepentingan publik dibanding ego pribadi
+      atau kelompok.
+    </li>
+    <li class="readable">
+      Menyelesaikan perbedaan pendapat melalui mekanisme organisasi
+      dan aturan yang berlaku.
+    </li>
+    <li class="readable">
+      Menghindari sikap defensif, arogan, dan merasa paling benar.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       RUMUS SIKAP IDEAL (SIMBOLIK)
+  ================================= -->
+  <h3>Rumus Sikap Ideal (Simbolik)</h3>
+  <p class="readable">
+    Dalam konteks TWK/CPNS, sikap ideal dapat dirumuskan secara sederhana:
+  </p>
+
+  <p class="readable" style="font-weight:bold; text-align:center;">
+    🧠 Keterbukaan + 🤝 Sikap Hormat − 😡 Ego Pribadi = ✅ Sikap Demokratis
+  </p>
+
+  <!-- ===============================
+       PERILAKU YANG SESUAI & TIDAK SESUAI
+  ================================= -->
+  <h3>Perilaku yang Sesuai dan Tidak Sesuai</h3>
+  <ul>
+    <li class="readable">
+      <strong>Sesuai:</strong> Mendengarkan pendapat orang lain sampai selesai
+      sebelum menanggapi.
+    </li>
+    <li class="readable">
+      <strong>Sesuai:</strong> Menyampaikan ketidaksetujuan dengan bahasa santun
+      dan argumentatif.
+    </li>
+    <li class="readable">
+      <strong>Tidak Sesuai:</strong> Memotong pembicaraan atau merendahkan
+      pendapat orang lain.
+    </li>
+    <li class="readable">
+      <strong>Tidak Sesuai:</strong> Memaksakan kehendak dengan alasan jabatan
+      atau senioritas.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Dalam sebuah rapat kantor, Anda memiliki pendapat berbeda dengan
+    mayoritas peserta rapat. Sikap yang paling tepat sebagai ASN adalah:
+  </p>
+
+  <ul>
+    <li class="readable">A. Tetap bersikeras mempertahankan pendapat sendiri</li>
+    <li class="readable">B. Mengalah tanpa menyampaikan pendapat</li>
+    <li class="readable">C. Menyampaikan pendapat secara santun dan menerima keputusan bersama</li>
+    <li class="readable">D. Menolak hasil rapat karena tidak sesuai keinginan pribadi</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban Tepat:</strong> ✅ <strong>C</strong><br>
+    <strong>Pembahasan:</strong> ASN dituntut bersikap terbuka,
+    menghargai perbedaan pendapat, dan tetap mendukung
+    keputusan bersama demi kepentingan organisasi.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap paling tepat saat terjadi perbedaan pendapat.
+    </li>
+    <li class="readable">
+      Penilaian perilaku ASN dalam situasi konflik atau diskusi.
+    </li>
+    <li class="readable">
+      Pilihan tindakan yang mencerminkan sikap demokratis dan profesional.
+    </li>
+    <li class="readable">
+      Studi kasus rapat, pelayanan publik, atau kerja tim.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🤝 BERBAGI TANGGUNG JAWAB DAN PERAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-arrows"></i> Berbagi Tanggung Jawab dan Peran</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Berbagi tanggung jawab dan peran adalah prinsip dasar kehidupan
+    bermasyarakat, berbangsa, dan bernegara yang menekankan bahwa
+    setiap individu dan institusi memiliki kewajiban serta fungsi
+    sesuai kedudukan dan kapasitasnya.
+  </p>
+
+  <p class="readable">
+    Prinsip ini bertujuan menciptakan keteraturan sosial,
+    efektivitas penyelenggaraan negara, serta keadilan
+    dalam menjalankan hak dan kewajiban.
+  </p>
+
+  <p class="readable">
+    Dalam konteks CPNS dan ASN, pemahaman pembagian peran
+    sangat penting untuk mencegah tumpang tindih kewenangan,
+    konflik kepentingan, dan penyalahgunaan kekuasaan.
+  </p>
+
+  <!-- ===============================
+       LANDASAN NILAI & KONSTITUSIONAL
+  ================================= -->
+  <h3>Landasan Nilai dan Konstitusional</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      Prinsip keadilan dan persamaan kedudukan warga negara.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-landmark"></i>
+      Pembagian kekuasaan dan kewenangan antar lembaga negara.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-users-gear"></i>
+      Kerja sama antara negara dan warga dalam mencapai tujuan nasional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA KONSEPTUAL (SIMPLIFIKASI)
+  ================================= -->
+  <h3>Formula Konseptual Pembagian Peran</h3>
+  <p class="readable">
+    Untuk memudahkan pemahaman dalam soal analisis CPNS,
+    pembagian tanggung jawab dapat dirumuskan secara sederhana:
+  </p>
+
+  <p class="readable">
+    <strong>
+      Keteraturan Sosial = Hak (H) + Kewajiban (K) + Peran (P)
+    </strong>
+  </p>
+
+  <p class="readable">
+    Jika salah satu unsur diabaikan (misalnya kewajiban tidak dijalankan),
+    maka akan muncul ketimpangan, konflik, atau pelanggaran hukum.
+  </p>
+
+  <!-- ===============================
+       PEMBAGIAN PERAN DALAM NEGARA
+  ================================= -->
+  <h3>Pembagian Tanggung Jawab dan Peran dalam Negara</h3>
+  <ul>
+    <li class="readable">
+      <strong>Warga Negara</strong> 🧍‍♂️<br>
+      Mematuhi hukum, membayar pajak, menjaga ketertiban,
+      serta berpartisipasi dalam kehidupan demokrasi.
+    </li>
+    <li class="readable">
+      <strong>Pemerintah / ASN</strong> 🏛️<br>
+      Memberikan pelayanan publik, menegakkan hukum,
+      serta melaksanakan kebijakan sesuai peraturan.
+    </li>
+    <li class="readable">
+      <strong>Lembaga Negara</strong> ⚖️<br>
+      Menjalankan fungsi sesuai kewenangan (legislatif,
+      eksekutif, yudikatif) secara profesional dan saling mengawasi.
+    </li>
+    <li class="readable">
+      <strong>Masyarakat Sipil</strong> 🌐<br>
+      Mengawasi jalannya pemerintahan dan menyuarakan kepentingan publik.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH DALAM KEHIDUPAN SEHARI-HARI
+  ================================= -->
+  <h3>Contoh Berbagi Tanggung Jawab dalam Kehidupan Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      Pemerintah menyediakan fasilitas pendidikan,
+      warga negara wajib mengikuti pendidikan dasar.
+    </li>
+    <li class="readable">
+      Negara menjamin kebebasan berpendapat,
+      warga berkewajiban menyampaikan pendapat secara bertanggung jawab.
+    </li>
+    <li class="readable">
+      ASN melayani masyarakat,
+      masyarakat wajib mematuhi prosedur dan aturan pelayanan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       RISIKO JIKA PERAN TIDAK DIJALANKAN
+  ================================= -->
+  <h3>Dampak Jika Tanggung Jawab dan Peran Tidak Dijalankan</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      Terjadi konflik sosial dan ketidakadilan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-ban"></i>
+      Penyalahgunaan kewenangan dan pelanggaran hukum.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-chart-line-down"></i>
+      Menurunnya kepercayaan publik terhadap pemerintah.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Dalam suatu daerah, pemerintah telah menyediakan layanan
+    administrasi kependudukan secara gratis dan transparan.
+    Namun sebagian masyarakat masih menggunakan jasa calo
+    untuk mempercepat proses. Sikap yang paling mencerminkan
+    prinsip berbagi tanggung jawab dan peran adalah …
+  </p>
+
+  <ul>
+    <li class="readable">A. Membiarkan praktik tersebut karena sudah menjadi kebiasaan</li>
+    <li class="readable">B. Menyalahkan sepenuhnya aparat pemerintah</li>
+    <li class="readable">C. Menggunakan jasa calo agar urusan cepat selesai</li>
+    <li class="readable">D. Mengikuti prosedur resmi dan melaporkan penyimpangan</li>
+    <li class="readable">E. Tidak mengurus dokumen kependudukan sama sekali</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban Benar:</strong> D ✅
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Pemerintah telah menjalankan perannya dengan menyediakan layanan.
+    Warga negara juga harus menjalankan perannya dengan mematuhi aturan
+    dan ikut menjaga sistem agar tetap bersih dan adil.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi peran dan tanggung jawab masing-masing pihak dalam suatu kasus.
+    </li>
+    <li class="readable">
+      Analisis akibat jika salah satu pihak tidak menjalankan kewajibannya.
+    </li>
+    <li class="readable">
+      Penilaian sikap ASN dan warga yang paling tepat dalam situasi sosial tertentu.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🤝 MENDUKUNG KEPUTUSAN BERSAMA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-handshake"></i> Mendukung Keputusan Bersama</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Mendukung keputusan bersama adalah sikap menerima, melaksanakan,
+    dan bertanggung jawab atas hasil musyawarah atau keputusan kolektif,
+    meskipun keputusan tersebut tidak sepenuhnya sesuai dengan
+    pendapat pribadi.
+  </p>
+
+  <p class="readable">
+    Sikap ini merupakan perwujudan nilai <strong>Sila ke-4 Pancasila</strong>,
+    yaitu Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan
+    dalam Permusyawaratan/Perwakilan, serta mencerminkan etika
+    demokrasi dan profesionalitas, khususnya bagi ASN.
+  </p>
+
+  <!-- ===============================
+       LANDASAN NILAI & KONSTITUSIONAL
+  ================================= -->
+  <h3>Landasan Nilai dan Konstitusional</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-star"></i>
+      <strong>Pancasila</strong> → Sila ke-4: Musyawarah, kebijaksanaan,
+      dan kepentingan bersama di atas kepentingan pribadi.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>UUD 1945</strong> → Prinsip demokrasi, kedaulatan rakyat,
+      dan pengambilan keputusan secara sah dan konstitusional.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-user-tie"></i>
+      <strong>Etika ASN</strong> → Loyal pada kebijakan yang sah,
+      profesional, dan bertanggung jawab.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MAKNA & PRINSIP UTAMA
+  ================================= -->
+  <h3>Makna dan Prinsip Utama</h3>
+  <ul>
+    <li class="readable">
+      <strong>Musyawarah</strong> → Proses pertukaran pendapat secara terbuka
+      dan setara.
+    </li>
+    <li class="readable">
+      <strong>Mufakat</strong> → Keputusan diambil berdasarkan kesepakatan
+      bersama atau mekanisme yang disepakati.
+    </li>
+    <li class="readable">
+      <strong>Tanggung Jawab</strong> → Semua pihak wajib melaksanakan
+      keputusan yang telah ditetapkan.
+    </li>
+    <li class="readable">
+      <strong>Loyalitas Kritis</strong> → Patuh pada keputusan,
+      namun tetap etis dan konstitusional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA / SIMBOL KONSEPTUAL
+  ================================= -->
+  <h3>Formula Konseptual (Ilustratif)</h3>
+  <p class="readable">
+    Dalam konteks etika publik dan CPNS, mendukung keputusan bersama
+    dapat dipahami melalui formula berikut:
+  </p>
+
+  <p class="readable" style="font-weight: bold; text-align: center;">
+    🧠 Pendapat Pribadi + 🤝 Musyawarah → ✅ Keputusan Bersama → 📌 Tanggung Jawab Kolektif
+  </p>
+
+  <p class="readable">
+    Artinya, setelah keputusan diambil secara sah,
+    fokus ASN bukan lagi pada siapa yang menang,
+    tetapi pada bagaimana keputusan tersebut dijalankan
+    demi kepentingan organisasi dan masyarakat.
+  </p>
+
+  <!-- ===============================
+       CONTOH DALAM KEHIDUPAN SEHARI-HARI
+  ================================= -->
+  <h3>Contoh Penerapan dalam Kehidupan Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      Dalam rapat kantor, usulan Anda tidak dipilih,
+      namun Anda tetap melaksanakan hasil keputusan
+      dengan profesional.
+    </li>
+    <li class="readable">
+      Keputusan pimpinan diambil berdasarkan rapat resmi,
+      meskipun berbeda dengan preferensi unit Anda,
+      keputusan tetap dijalankan tanpa sabotase.
+    </li>
+    <li class="readable">
+      Hasil musyawarah warga disepakati,
+      lalu seluruh anggota masyarakat mendukung
+      pelaksanaannya secara gotong royong.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERILAKU YANG TIDAK SESUAI
+  ================================= -->
+  <h3>Perilaku yang Tidak Sesuai dengan Prinsip Ini</h3>
+  <ul>
+    <li class="readable">
+      Menolak melaksanakan keputusan bersama
+      karena alasan pribadi.
+    </li>
+    <li class="readable">
+      Menghasut pihak lain untuk menentang keputusan
+      yang telah disepakati.
+    </li>
+    <li class="readable">
+      Melaksanakan keputusan setengah hati
+      atau dengan niat menggagalkan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Dalam sebuah rapat unit kerja, Anda mengusulkan kebijakan A.
+    Namun, hasil musyawarah memutuskan kebijakan B yang berbeda
+    dengan pendapat Anda. Sikap yang paling tepat sebagai ASN adalah:
+  </p>
+
+  <ul class="readable">
+    <li>A. Tetap menolak kebijakan B karena tidak sesuai dengan pendapat pribadi</li>
+    <li>B. Melaksanakan kebijakan B dengan penuh tanggung jawab</li>
+    <li>C. Melaksanakan kebijakan B tetapi sambil mengkritik pimpinan di depan umum</li>
+    <li>D. Menunda pelaksanaan kebijakan B sampai kebijakan A dipertimbangkan kembali</li>
+    <li>E. Melaksanakan kebijakan B hanya jika diawasi atasan</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban yang Tepat:</strong> <span style="font-weight: bold;">B</span>
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Mendukung keputusan bersama berarti menerima dan melaksanakan
+    hasil musyawarah secara profesional dan bertanggung jawab,
+    meskipun berbeda dengan pendapat pribadi.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Studi kasus perbedaan pendapat dalam rapat atau organisasi.
+    </li>
+    <li class="readable">
+      Sikap ASN setelah keputusan bersama ditetapkan.
+    </li>
+    <li class="readable">
+      Penerapan nilai musyawarah dan mufakat.
+    </li>
+    <li class="readable">
+      Identifikasi perilaku yang mencerminkan
+      loyalitas dan profesionalitas.
+    </li>
+  </ul>
+
+</div>
+
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
