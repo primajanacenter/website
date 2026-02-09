@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Negara Kesatuan Republik Indonesia (NKRI)</h1>
+  <p>Tes Wawasan Kebangsaan</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     🇮🇩 NEGARA KESATUAN REPUBLIK INDONESIA (NKRI)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-flag"></i> Negara Kesatuan Republik Indonesia (NKRI)</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Negara Kesatuan Republik Indonesia (NKRI) merupakan bentuk negara
+    yang bersifat final dan tidak dapat diubah. Hal ini menegaskan bahwa
+    Indonesia adalah satu negara, satu pemerintahan, dan satu kedaulatan
+    yang membentang dari Sabang sampai Merauke.
+  </p>
+
+  <p class="readable">
+    NKRI dibentuk untuk menjamin persatuan bangsa Indonesia yang majemuk,
+    baik dari segi suku, agama, budaya, bahasa, maupun kondisi geografis.
+    Bentuk negara kesatuan dipilih sebagai jalan terbaik untuk mencegah
+    perpecahan dan disintegrasi bangsa.
+  </p>
+
+  <p class="readable">
+    Keutuhan NKRI merupakan harga mati yang wajib dijaga oleh seluruh
+    warga negara, khususnya aparatur negara, karena menyangkut
+    eksistensi bangsa, kedaulatan negara, dan keberlanjutan kehidupan nasional.
+  </p>
+
+  <!-- ===============================
+       DASAR KONSTITUSIONAL NKRI
+  ================================= -->
+  <h3>Dasar Konstitusional NKRI</h3>
+  <ul>
+    <li class="readable">
+      Pasal 1 ayat (1) UUD 1945: Indonesia adalah negara kesatuan
+      yang berbentuk republik.
+    </li>
+    <li class="readable">
+      Pembukaan UUD 1945 alinea keempat menegaskan tujuan negara
+      untuk melindungi segenap bangsa dan seluruh tumpah darah Indonesia.
+    </li>
+    <li class="readable">
+      Pancasila, khususnya Sila ke-3 (Persatuan Indonesia),
+      menjadi landasan ideologis NKRI.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MAKNA NEGARA KESATUAN
+  ================================= -->
+  <h3>Makna Negara Kesatuan</h3>
+  <p class="readable">
+    Bentuk negara kesatuan berarti bahwa kekuasaan tertinggi
+    berada pada pemerintah pusat. Pemerintah pusat memegang
+    kedaulatan penuh atas seluruh wilayah negara.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Tidak ada negara di dalam negara.
+    </li>
+    <li class="readable">
+      Daerah tidak memiliki kedaulatan sendiri.
+    </li>
+    <li class="readable">
+      Seluruh kebijakan strategis nasional ditetapkan oleh pemerintah pusat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DESENTRALISASI & OTONOMI DAERAH
+  ================================= -->
+  <h3>Desentralisasi dan Otonomi Daerah dalam NKRI</h3>
+  <p class="readable">
+    Meskipun berbentuk negara kesatuan, Indonesia menerapkan prinsip
+    desentralisasi melalui otonomi daerah. Hal ini bertujuan untuk
+    meningkatkan efektivitas pemerintahan dan pelayanan publik.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Pemerintah pusat melimpahkan sebagian kewenangan kepada pemerintah daerah.
+    </li>
+    <li class="readable">
+      Daerah berhak mengatur dan mengurus urusan pemerintahan tertentu
+      sesuai peraturan perundang-undangan.
+    </li>
+    <li class="readable">
+      Otonomi daerah tidak boleh bertentangan dengan kepentingan nasional
+      dan keutuhan NKRI.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ANCAMAN TERHADAP KEUTUHAN NKRI
+  ================================= -->
+  <h3>Ancaman terhadap Keutuhan NKRI</h3>
+  <ul>
+    <li class="readable">
+      Gerakan separatisme dan disintegrasi bangsa.
+    </li>
+    <li class="readable">
+      Konflik horizontal berbasis suku, agama, ras, dan golongan.
+    </li>
+    <li class="readable">
+      Radikalisme dan ekstremisme yang bertentangan dengan Pancasila.
+    </li>
+    <li class="readable">
+      Penyalahgunaan otonomi daerah untuk kepentingan sempit.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERAN APARATUR NEGARA
+  ================================= -->
+  <h3>Peran Aparatur Negara dalam Menjaga NKRI</h3>
+  <ul>
+    <li class="readable">
+      Menjunjung tinggi Pancasila, UUD 1945, dan Bhinneka Tunggal Ika.
+    </li>
+    <li class="readable">
+      Bersikap netral dan tidak mendukung paham yang mengancam persatuan bangsa.
+    </li>
+    <li class="readable">
+      Memberikan pelayanan publik secara adil dan merata di seluruh wilayah.
+    </li>
+    <li class="readable">
+      Menjadi teladan dalam menjaga persatuan dan kesatuan bangsa.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERAN WARGA NEGARA
+  ================================= -->
+  <h3>Peran Warga Negara dalam Menjaga Keutuhan NKRI</h3>
+  <ul>
+    <li class="readable">
+      Menumbuhkan rasa cinta tanah air dan nasionalisme.
+    </li>
+    <li class="readable">
+      Menghargai keberagaman dan perbedaan.
+    </li>
+    <li class="readable">
+      Mematuhi hukum dan peraturan perundang-undangan.
+    </li>
+    <li class="readable">
+      Berpartisipasi aktif dalam menjaga ketertiban dan persatuan masyarakat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Makna NKRI sebagai bentuk negara yang bersifat final.
+    </li>
+    <li class="readable">
+      Perbedaan negara kesatuan dan negara federal.
+    </li>
+    <li class="readable">
+      Hubungan antara NKRI dan otonomi daerah.
+    </li>
+    <li class="readable">
+      Identifikasi sikap atau tindakan yang mengancam keutuhan NKRI.
+    </li>
+    <li class="readable">
+      Peran ASN dalam menjaga persatuan dan kesatuan bangsa.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🇮🇩 BENTUK NEGARA KESATUAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-flag"></i> Bentuk Negara Kesatuan</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Negara Kesatuan Republik Indonesia (NKRI) adalah bentuk negara
+    di mana kedaulatan berada sepenuhnya di tangan pemerintah pusat,
+    dan seluruh wilayah negara merupakan satu kesatuan yang tidak terpisahkan.
+  </p>
+
+  <p class="readable">
+    Bentuk negara kesatuan menegaskan bahwa Indonesia bukan negara federasi.
+    Daerah-daerah tidak memiliki kedaulatan sendiri, melainkan hanya
+    memperoleh kewenangan dari pemerintah pusat dalam kerangka otonomi daerah.
+  </p>
+
+  <p class="readable">
+    Prinsip negara kesatuan menjadi fondasi utama dalam menjaga
+    keutuhan wilayah, persatuan bangsa, dan stabilitas nasional.
+  </p>
+
+  <!-- ===============================
+       DASAR KONSTITUSIONAL
+  ================================= -->
+  <h3>Dasar Konstitusional Negara Kesatuan</h3>
+  <ul>
+    <li class="readable">
+      Pasal 1 ayat (1) UUD 1945 menegaskan bahwa Indonesia adalah
+      negara kesatuan yang berbentuk republik.
+    </li>
+    <li class="readable">
+      Kedaulatan negara tidak terbagi-bagi ke dalam negara bagian.
+    </li>
+    <li class="readable">
+      Seluruh peraturan daerah harus sejalan dan tidak boleh
+      bertentangan dengan peraturan pusat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CIRI-CIRI NEGARA KESATUAN
+  ================================= -->
+  <h3>Ciri-ciri Negara Kesatuan</h3>
+  <ul>
+    <li class="readable">
+      Pemerintah pusat memegang kekuasaan tertinggi
+      dalam seluruh aspek kedaulatan negara.
+    </li>
+    <li class="readable">
+      Hanya ada satu konstitusi, satu kepala negara,
+      dan satu sistem hukum nasional.
+    </li>
+    <li class="readable">
+      Daerah tidak memiliki kewenangan membuat
+      kebijakan yang bersifat kedaulatan.
+    </li>
+    <li class="readable">
+      Hubungan pusat dan daerah bersifat hierarkis
+      dalam kerangka negara kesatuan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KEWENANGAN PEMERINTAH PUSAT
+  ================================= -->
+  <h3>Kewenangan Pemerintah Pusat</h3>
+  <p class="readable">
+    Dalam negara kesatuan, pemerintah pusat memegang
+    kewenangan strategis yang menyangkut eksistensi negara.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Politik luar negeri
+    </li>
+    <li class="readable">
+      Pertahanan dan keamanan negara
+    </li>
+    <li class="readable">
+      Yustisi dan sistem peradilan nasional
+    </li>
+    <li class="readable">
+      Moneter dan kebijakan fiskal nasional
+    </li>
+    <li class="readable">
+      Standar nasional pendidikan, agama, dan kebijakan makro lainnya
+    </li>
+  </ul>
+
+  <!-- ===============================
+       OTONOMI DAERAH
+  ================================= -->
+  <h3>Otonomi Daerah dalam Negara Kesatuan</h3>
+  <p class="readable">
+    Otonomi daerah adalah pelimpahan sebagian kewenangan
+    dari pemerintah pusat kepada pemerintah daerah
+    untuk mengatur dan mengurus urusan pemerintahan tertentu.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Bertujuan meningkatkan efektivitas pemerintahan
+      dan pelayanan publik.
+    </li>
+    <li class="readable">
+      Mendorong pemerataan pembangunan dan kesejahteraan rakyat.
+    </li>
+    <li class="readable">
+      Tidak dimaksudkan untuk membentuk negara dalam negara.
+    </li>
+    <li class="readable">
+      Tetap berada dalam bingkai NKRI dan tunduk
+      pada kebijakan nasional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERBEDAAN DENGAN NEGARA FEDERASI
+  ================================= -->
+  <h3>Perbedaan Negara Kesatuan dan Negara Federasi</h3>
+  <ul>
+    <li class="readable">
+      Negara kesatuan → kedaulatan berada di pusat,
+      daerah hanya memiliki kewenangan administratif.
+    </li>
+    <li class="readable">
+      Negara federasi → kedaulatan dibagi antara
+      pemerintah federal dan negara bagian.
+    </li>
+    <li class="readable">
+      Indonesia pernah berbentuk federasi (RIS),
+      namun tidak sesuai dengan karakter bangsa.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       SEPARATISME & ANCAMAN NKRI
+  ================================= -->
+  <h3>Separatisme dan Ancaman terhadap Negara Kesatuan</h3>
+  <p class="readable">
+    Setiap bentuk gerakan separatisme merupakan ancaman serius
+    terhadap keutuhan NKRI dan bertentangan dengan
+    prinsip negara kesatuan.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Upaya memisahkan diri dari NKRI melanggar konstitusi.
+    </li>
+    <li class="readable">
+      Separatisme dapat mengancam persatuan nasional
+      dan stabilitas negara.
+    </li>
+    <li class="readable">
+      Negara berhak mengambil langkah hukum dan politik
+      untuk menjaga keutuhan wilayah.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERAN ASN & WARGA NEGARA
+  ================================= -->
+  <h3>Peran ASN dan Warga Negara dalam Menjaga NKRI</h3>
+  <ul>
+    <li class="readable">
+      Menjunjung tinggi persatuan dan kesatuan bangsa.
+    </li>
+    <li class="readable">
+      Melaksanakan kebijakan pusat dan daerah
+      sesuai konstitusi.
+    </li>
+    <li class="readable">
+      Menolak ideologi dan gerakan yang bertentangan
+      dengan NKRI.
+    </li>
+    <li class="readable">
+      Mengutamakan kepentingan nasional
+      di atas kepentingan kelompok.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi ciri negara kesatuan
+      dalam studi kasus pemerintahan.
+    </li>
+    <li class="readable">
+      Perbedaan kewenangan pusat dan daerah.
+    </li>
+    <li class="readable">
+      Penilaian kebijakan daerah
+      apakah melanggar prinsip NKRI.
+    </li>
+    <li class="readable">
+      Analisis sikap ASN terhadap
+      isu separatisme dan disintegrasi bangsa.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🌏 WAWASAN NUSANTARA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-earth-asia"></i> Wawasan Nusantara sebagai Cara Pandang Kebangsaan</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Wawasan Nusantara adalah cara pandang dan sikap bangsa Indonesia
+    mengenai diri dan lingkungannya sebagai satu kesatuan wilayah,
+    bangsa, dan negara yang utuh dan tidak terpisahkan.
+  </p>
+
+  <p class="readable">
+    Wawasan Nusantara berlandaskan Pancasila dan UUD 1945,
+    serta dipengaruhi oleh kondisi geografis Indonesia
+    sebagai negara kepulauan yang majemuk dari segi suku,
+    agama, ras, budaya, dan bahasa.
+  </p>
+
+  <p class="readable">
+    Sebagai cara pandang kebangsaan, Wawasan Nusantara menjadi pedoman
+    dalam penyelenggaraan kehidupan nasional agar seluruh aspek kehidupan
+    diarahkan pada persatuan dan kesatuan bangsa.
+  </p>
+
+  <!-- ===============================
+       LANDASAN WAWASAN NUSANTARA
+  ================================= -->
+  <h3>Landasan Wawasan Nusantara</h3>
+  <ul>
+    <li class="readable">
+      <strong>Landasan Idiil</strong> → Pancasila sebagai sistem nilai dasar
+      dalam kehidupan berbangsa dan bernegara.
+    </li>
+    <li class="readable">
+      <strong>Landasan Konstitusional</strong> → UUD 1945 yang mengatur
+      keutuhan wilayah, kedaulatan negara, dan persatuan bangsa.
+    </li>
+    <li class="readable">
+      <strong>Landasan Visional</strong> → Wawasan nasional sebagai
+      pedoman mencapai tujuan nasional.
+    </li>
+    <li class="readable">
+      <strong>Landasan Operasional</strong> → Kebijakan dan strategi
+      nasional di berbagai bidang kehidupan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       HAKIKAT WAWASAN NUSANTARA
+  ================================= -->
+  <h3>Hakikat Wawasan Nusantara</h3>
+  <p class="readable">
+    Hakikat Wawasan Nusantara adalah keutuhan dan kesatuan
+    bangsa dan wilayah Indonesia dalam seluruh aspek kehidupan nasional.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Menempatkan seluruh wilayah Indonesia sebagai satu kesatuan
+      yang tidak dapat dipisahkan secara politik, ekonomi,
+      sosial budaya, dan pertahanan keamanan.
+    </li>
+    <li class="readable">
+      Memandang perbedaan sebagai kekayaan dan potensi bangsa,
+      bukan sebagai sumber perpecahan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       WAWASAN NUSANTARA DALAM BERBAGAI BIDANG
+  ================================= -->
+  <h3>Wawasan Nusantara dalam Berbagai Bidang</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>Bidang Politik</strong><br>
+      Seluruh wilayah Indonesia merupakan satu kesatuan politik
+      yang berada di bawah kedaulatan Negara Kesatuan Republik Indonesia.
+    </li>
+
+    <li class="readable">
+      <strong>Bidang Ekonomi</strong><br>
+      Kekayaan alam dan potensi ekonomi di seluruh wilayah Indonesia
+      adalah modal bersama untuk kemakmuran rakyat secara adil dan merata.
+    </li>
+
+    <li class="readable">
+      <strong>Bidang Sosial Budaya</strong><br>
+      Keberagaman budaya dipandang sebagai identitas nasional
+      yang memperkaya kebudayaan Indonesia secara keseluruhan.
+    </li>
+
+    <li class="readable">
+      <strong>Bidang Pertahanan dan Keamanan</strong><br>
+      Ancaman terhadap satu wilayah Indonesia dipandang sebagai
+      ancaman terhadap seluruh bangsa dan negara.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       NILAI-NILAI UTAMA
+  ================================= -->
+  <h3>Nilai-Nilai Utama dalam Wawasan Nusantara</h3>
+  <ul>
+    <li class="readable">
+      Mengutamakan kepentingan nasional
+      di atas kepentingan daerah atau golongan.
+    </li>
+    <li class="readable">
+      Menjaga persatuan dan kesatuan bangsa
+      dalam segala situasi dan kondisi.
+    </li>
+    <li class="readable">
+      Menghargai perbedaan suku, agama, ras,
+      dan budaya sebagai kekuatan bangsa.
+    </li>
+    <li class="readable">
+      Menumbuhkan rasa cinta tanah air
+      dan nasionalisme.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM KEHIDUPAN SEHARI-HARI
+  ================================= -->
+  <h3>Implementasi Wawasan Nusantara dalam Kehidupan Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      Menghormati adat, budaya, dan keyakinan masyarakat
+      dari daerah lain.
+    </li>
+    <li class="readable">
+      Tidak bersikap diskriminatif
+      dalam pergaulan sosial maupun pelayanan publik.
+    </li>
+    <li class="readable">
+      Mendukung kebijakan negara
+      yang bertujuan menjaga keutuhan NKRI.
+    </li>
+    <li class="readable">
+      Menghindari sikap kedaerahan sempit
+      dan fanatisme berlebihan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       WAWASAN NUSANTARA & PERSATUAN
+  ================================= -->
+  <h3>Peran Wawasan Nusantara dalam Menjaga Persatuan Bangsa</h3>
+  <p class="readable">
+    Wawasan Nusantara menjadi landasan utama dalam menjaga persatuan
+    di tengah kondisi geografis Indonesia yang berupa kepulauan
+    serta masyarakat yang sangat beragam.
+  </p>
+
+  <p class="readable">
+    Tanpa Wawasan Nusantara, perbedaan wilayah dan budaya
+    berpotensi memicu konflik dan disintegrasi bangsa.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap atau kebijakan
+      yang mencerminkan Wawasan Nusantara.
+    </li>
+    <li class="readable">
+      Analisis kasus konflik daerah
+      berdasarkan prinsip Wawasan Nusantara.
+    </li>
+    <li class="readable">
+      Perilaku ASN yang mengutamakan
+      kepentingan nasional di atas kepentingan golongan.
+    </li>
+    <li class="readable">
+      Hubungan Wawasan Nusantara
+      dengan persatuan dan keutuhan NKRI.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🇮🇩 ANCAMAN TERHADAP KEUTUHAN NKRI
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-shield-halved"></i> Ancaman terhadap Keutuhan NKRI</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Keutuhan Negara Kesatuan Republik Indonesia (NKRI) merupakan kondisi
+    utuhnya wilayah, kedaulatan, persatuan, dan kesatuan bangsa Indonesia
+    yang harus dijaga dari berbagai bentuk ancaman.
+  </p>
+
+  <p class="readable">
+    Ancaman terhadap keutuhan NKRI dapat bersifat internal maupun eksternal,
+    langsung maupun tidak langsung, serta muncul dalam berbagai dimensi:
+    ideologi, politik, sosial budaya, ekonomi, dan keamanan.
+  </p>
+
+  <p class="readable">
+    Dalam konteks ketatanegaraan modern, ancaman tidak selalu berbentuk
+    serangan fisik, tetapi juga dapat berupa perang informasi, infiltrasi ideologi,
+    dan pelemahan nilai kebangsaan.
+  </p>
+
+  <!-- ===============================
+       KLASIFIKASI ANCAMAN NKRI
+  ================================= -->
+  <h3>Klasifikasi Ancaman terhadap NKRI</h3>
+  <ul>
+    <li class="readable">
+      <strong>Berdasarkan Sumber</strong> → Ancaman internal dan ancaman eksternal.
+    </li>
+    <li class="readable">
+      <strong>Berdasarkan Sifat</strong> → Ancaman militer dan nonmiliter.
+    </li>
+    <li class="readable">
+      <strong>Berdasarkan Dampak</strong> → Ancaman langsung dan tidak langsung
+      terhadap persatuan bangsa.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ANCAMAN IDEOLOGI
+  ================================= -->
+  <h3>Ancaman Ideologi</h3>
+  <p class="readable">
+    Ancaman ideologi adalah upaya menggantikan atau melemahkan
+    ideologi Pancasila sebagai dasar negara dan pemersatu bangsa.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Penyebaran paham radikalisme dan ekstremisme
+      yang menolak nilai kebangsaan.
+    </li>
+    <li class="readable">
+      Ideologi transnasional yang bertentangan
+      dengan Pancasila dan UUD 1945.
+    </li>
+    <li class="readable">
+      Doktrin intoleran yang menganggap kelompok lain
+      sebagai musuh atau ancaman.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Ancaman ideologi sangat berbahaya karena dapat menggerus
+    kesadaran berbangsa dan memecah persatuan dari dalam.
+  </p>
+
+  <!-- ===============================
+       ANCAMAN POLITIK
+  ================================= -->
+  <h3>Ancaman Politik</h3>
+  <p class="readable">
+    Ancaman politik berkaitan dengan upaya melemahkan stabilitas politik,
+    legitimasi pemerintahan, dan sistem demokrasi.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Gerakan separatisme yang ingin memisahkan diri dari NKRI.
+    </li>
+    <li class="readable">
+      Konflik elite politik yang berkepanjangan
+      dan berdampak pada stabilitas nasional.
+    </li>
+    <li class="readable">
+      Manipulasi isu SARA untuk kepentingan politik praktis.
+    </li>
+    <li class="readable">
+      Intervensi asing dalam proses politik nasional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ANCAMAN SOSIAL BUDAYA
+  ================================= -->
+  <h3>Ancaman Sosial Budaya</h3>
+  <p class="readable">
+    Ancaman sosial budaya muncul dari melemahnya nilai toleransi,
+    gotong royong, dan kebhinekaan dalam masyarakat.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Intoleransi antarumat beragama dan antarkelompok sosial.
+    </li>
+    <li class="readable">
+      Penyebaran disinformasi dan hoaks melalui media digital.
+    </li>
+    <li class="readable">
+      Ujaran kebencian yang memicu konflik horizontal.
+    </li>
+    <li class="readable">
+      Lunturnya identitas nasional akibat pengaruh budaya asing
+      yang tidak tersaring.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ANCAMAN EKONOMI
+  ================================= -->
+  <h3>Ancaman Ekonomi</h3>
+  <p class="readable">
+    Ancaman ekonomi berkaitan dengan ketimpangan dan ketidakadilan
+    yang dapat memicu keresahan sosial dan konflik.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Ketimpangan pembangunan antarwilayah.
+    </li>
+    <li class="readable">
+      Tingginya angka kemiskinan dan pengangguran.
+    </li>
+    <li class="readable">
+      Ketidakadilan distribusi sumber daya alam.
+    </li>
+    <li class="readable">
+      Ketergantungan ekonomi terhadap pihak asing.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Ketidakadilan ekonomi dapat menjadi pintu masuk
+    bagi radikalisme dan konflik sosial.
+  </p>
+
+  <!-- ===============================
+       ANCAMAN KEAMANAN
+  ================================= -->
+  <h3>Ancaman Keamanan</h3>
+  <p class="readable">
+    Ancaman keamanan adalah ancaman yang secara langsung
+    mengganggu stabilitas dan keselamatan negara.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Aksi terorisme dan jaringan teror bersenjata.
+    </li>
+    <li class="readable">
+      Pemberontakan bersenjata dan konflik bersenjata lokal.
+    </li>
+    <li class="readable">
+      Konflik horizontal antar kelompok masyarakat.
+    </li>
+    <li class="readable">
+      Kejahatan lintas negara yang mengancam kedaulatan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       UPAYA MENGHADAPI ANCAMAN NKRI
+  ================================= -->
+  <h3>Upaya Menghadapi Ancaman terhadap NKRI</h3>
+  <ul>
+    <li class="readable">
+      Penguatan nilai Pancasila, UUD 1945, dan wawasan kebangsaan.
+    </li>
+    <li class="readable">
+      Penegakan hukum yang adil dan tegas.
+    </li>
+    <li class="readable">
+      Peningkatan kesejahteraan dan keadilan sosial.
+    </li>
+    <li class="readable">
+      Literasi digital untuk menangkal hoaks dan disinformasi.
+    </li>
+    <li class="readable">
+      Sinergi TNI, Polri, pemerintah, dan masyarakat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERAN ASN & WARGA NEGARA
+  ================================= -->
+  <h3>Peran ASN dan Warga Negara</h3>
+  <ul>
+    <li class="readable">
+      ASN bersikap netral, profesional, dan setia kepada NKRI.
+    </li>
+    <li class="readable">
+      Menjadi teladan dalam toleransi dan persatuan.
+    </li>
+    <li class="readable">
+      Aktif menangkal hoaks dan ujaran kebencian.
+    </li>
+    <li class="readable">
+      Warga negara menjaga persatuan dan taat hukum.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi jenis ancaman NKRI dalam suatu kasus.
+    </li>
+    <li class="readable">
+      Perbedaan ancaman ideologi, politik, sosial budaya,
+      ekonomi, dan keamanan.
+    </li>
+    <li class="readable">
+      Peran ASN dalam menghadapi ancaman terhadap NKRI.
+    </li>
+    <li class="readable">
+      Solusi berbasis Pancasila dan UUD 1945
+      terhadap konflik kebangsaan.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🛡️ UPAYA BELA NEGARA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-shield-halved"></i> Upaya Bela Negara</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Bela negara merupakan sikap dan perilaku warga negara
+    yang dilandasi oleh kecintaan kepada tanah air,
+    kesadaran berbangsa dan bernegara,
+    serta keyakinan terhadap Pancasila sebagai ideologi negara.
+  </p>
+
+  <p class="readable">
+    Bela negara tidak selalu identik dengan angkat senjata.
+    Dalam konteks negara demokratis dan damai,
+    bela negara diwujudkan melalui peran aktif warga negara
+    sesuai profesi, fungsi, dan kedudukannya masing-masing.
+  </p>
+
+  <p class="readable">
+    Setiap warga negara memiliki hak dan kewajiban
+    untuk ikut serta dalam upaya pembelaan negara,
+    sebagaimana diamanatkan dalam konstitusi.
+  </p>
+
+  <!-- ===============================
+       LANDASAN BELA NEGARA
+  ================================= -->
+  <h3>Landasan Upaya Bela Negara</h3>
+  <ul>
+    <li class="readable">
+      Landasan ideologis: Pancasila sebagai dasar nilai
+      dan kepribadian bangsa.
+    </li>
+    <li class="readable">
+      Landasan konstitusional: UUD 1945 yang mengatur
+      hak dan kewajiban warga negara dalam pembelaan negara.
+    </li>
+    <li class="readable">
+      Landasan sosiologis: Keberagaman masyarakat Indonesia
+      yang membutuhkan semangat persatuan dan toleransi.
+    </li>
+    <li class="readable">
+      Landasan historis: Pengalaman perjuangan bangsa
+      dalam merebut dan mempertahankan kemerdekaan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       BENTUK-BENTUK UPAYA BELA NEGARA
+  ================================= -->
+  <h3>Bentuk-Bentuk Upaya Bela Negara</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>Menjunjung tinggi Pancasila, UUD 1945, dan NKRI</strong><br>
+      Mewujudkan nilai Pancasila dalam sikap dan perilaku,
+      menaati konstitusi, serta menjaga persatuan dan kesatuan bangsa
+      dalam kehidupan sehari-hari.
+    </li>
+
+    <li class="readable">
+      <strong>Taat hukum dan disiplin sebagai warga negara</strong><br>
+      Mematuhi peraturan perundang-undangan,
+      menghormati aparat penegak hukum,
+      serta menjalankan kewajiban sebagai warga negara secara bertanggung jawab.
+    </li>
+
+    <li class="readable">
+      <strong>Menolak ideologi dan gerakan yang mengancam NKRI</strong><br>
+      Tidak terlibat dalam paham radikalisme, separatisme,
+      terorisme, maupun ideologi yang bertentangan dengan Pancasila
+      dan mengancam keutuhan negara.
+    </li>
+
+    <li class="readable">
+      <strong>Berkontribusi positif sesuai profesi masing-masing</strong><br>
+      Mengabdi dan berkarya secara profesional di bidangnya,
+      termasuk sebagai ASN yang memberikan pelayanan publik
+      secara adil, jujur, dan berintegritas.
+    </li>
+
+    <li class="readable">
+      <strong>Bijak dalam menggunakan media sosial</strong><br>
+      Tidak menyebarkan hoaks, ujaran kebencian,
+      provokasi, atau informasi yang dapat memecah belah persatuan bangsa.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       BELA NEGARA DALAM KONTEKS ASN
+  ================================= -->
+  <h3>Bela Negara dalam Konteks ASN</h3>
+  <ul>
+    <li class="readable">
+      Menjaga netralitas politik dan loyalitas kepada negara,
+      bukan kepada golongan atau kepentingan tertentu.
+    </li>
+    <li class="readable">
+      Memberikan pelayanan publik yang profesional,
+      adil, dan tidak diskriminatif.
+    </li>
+    <li class="readable">
+      Menjadi teladan dalam ketaatan hukum,
+      disiplin, dan etika birokrasi.
+    </li>
+    <li class="readable">
+      Menolak korupsi, kolusi, dan nepotisme
+      sebagai bentuk ancaman terhadap ketahanan negara.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       TANTANGAN BELA NEGARA DI ERA MODERN
+  ================================= -->
+  <h3>Tantangan Bela Negara di Era Modern</h3>
+  <ul>
+    <li class="readable">
+      Penyebaran hoaks dan disinformasi di ruang digital.
+    </li>
+    <li class="readable">
+      Radikalisme dan ekstremisme berbasis ideologi atau agama.
+    </li>
+    <li class="readable">
+      Lunturnya nasionalisme akibat globalisasi tanpa filter.
+    </li>
+    <li class="readable">
+      Konflik sosial yang dipicu isu SARA dan politik identitas.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap atau perilaku yang mencerminkan bela negara.
+    </li>
+    <li class="readable">
+      Penilaian tindakan ASN yang sesuai dengan nilai bela negara.
+    </li>
+    <li class="readable">
+      Analisis kasus penyebaran hoaks dan ancaman ideologi terhadap NKRI.
+    </li>
+    <li class="readable">
+      Penerapan bela negara dalam konteks profesi dan kehidupan sehari-hari.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🇮🇩 PERAN ASN DALAM MENJAGA KEUTUHAN NKRI
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-flag"></i> Peran ASN dalam Menjaga Keutuhan NKRI</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Aparatur Sipil Negara (ASN) memiliki peran strategis sebagai unsur
+    perekat persatuan dan kesatuan bangsa. Dalam kedudukannya sebagai
+    pelaksana kebijakan publik, pelayan masyarakat, dan perekat NKRI,
+    ASN wajib menjunjung tinggi nilai Pancasila, UUD 1945, Bhinneka Tunggal Ika,
+    serta komitmen terhadap Negara Kesatuan Republik Indonesia.
+  </p>
+
+  <p class="readable">
+    Peran ASN dalam menjaga keutuhan NKRI tidak hanya bersifat normatif,
+    tetapi juga tercermin dalam sikap, perilaku, dan keputusan sehari-hari
+    baik di lingkungan kerja maupun dalam kehidupan bermasyarakat.
+  </p>
+
+  <!-- ===============================
+       LANDASAN PERAN ASN
+  ================================= -->
+  <h3>Landasan Peran ASN dalam Menjaga NKRI</h3>
+  <ul>
+    <li class="readable">
+      Nilai-nilai Pancasila sebagai ideologi dan pemersatu bangsa.
+    </li>
+    <li class="readable">
+      UUD 1945 sebagai dasar hukum dan konstitusi negara.
+    </li>
+    <li class="readable">
+      Prinsip Bhinneka Tunggal Ika dalam kehidupan berbangsa dan bernegara.
+    </li>
+    <li class="readable">
+      Peraturan perundang-undangan yang mengatur netralitas
+      dan profesionalitas ASN.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       NETRALITAS POLITIK ASN
+  ================================= -->
+  <h3>Menjaga Netralitas Politik ASN</h3>
+  <p class="readable">
+    Netralitas politik merupakan prinsip fundamental ASN.
+    ASN dilarang berpihak kepada kepentingan politik tertentu
+    serta tidak boleh terlibat dalam aktivitas politik praktis
+    yang dapat merusak kepercayaan publik dan persatuan bangsa.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Tidak terlibat dalam kampanye, propaganda, atau dukungan
+      terhadap partai politik atau calon tertentu.
+    </li>
+    <li class="readable">
+      Tidak memanfaatkan jabatan dan fasilitas negara
+      untuk kepentingan politik.
+    </li>
+    <li class="readable">
+      Menolak dan melaporkan ajakan atau tekanan politik
+      yang bertentangan dengan prinsip netralitas.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MENOLAK RADIKALISME & SEPARATISME
+  ================================= -->
+  <h3>Menolak Gerakan Separatis dan Paham Radikal</h3>
+  <p class="readable">
+    ASN wajib setia kepada NKRI dan tidak boleh terlibat,
+    mendukung, atau membiarkan berkembangnya paham radikal,
+    ekstremisme, dan gerakan separatis yang mengancam
+    kedaulatan dan persatuan bangsa.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Menjaga sikap dan perilaku yang mencerminkan komitmen
+      terhadap keutuhan wilayah NKRI.
+    </li>
+    <li class="readable">
+      Tidak menyebarkan ujaran kebencian, intoleransi,
+      atau ideologi yang bertentangan dengan Pancasila.
+    </li>
+    <li class="readable">
+      Bersikap kritis terhadap informasi provokatif,
+      hoaks, dan narasi yang memecah belah bangsa.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PELAYANAN PUBLIK YANG ADIL
+  ================================= -->
+  <h3>Memberikan Pelayanan Publik yang Adil dan Tidak Diskriminatif</h3>
+  <p class="readable">
+    Pelayanan publik yang adil dan merata merupakan wujud nyata
+    peran ASN dalam menjaga persatuan bangsa.
+    Ketidakadilan dan diskriminasi berpotensi memicu konflik sosial
+    dan melemahkan keutuhan NKRI.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Memberikan layanan kepada seluruh warga negara
+      tanpa membedakan suku, agama, ras, golongan,
+      atau pandangan politik.
+    </li>
+    <li class="readable">
+      Menjamin akses pelayanan publik yang setara
+      bagi seluruh lapisan masyarakat.
+    </li>
+    <li class="readable">
+      Bersikap profesional, transparan, dan akuntabel
+      dalam setiap proses pelayanan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       TELADAN PERSATUAN & TOLERANSI
+  ================================= -->
+  <h3>Menjadi Teladan Persatuan dan Toleransi</h3>
+  <p class="readable">
+    ASN berperan sebagai role model di lingkungan kerja
+    dan masyarakat dalam menjunjung tinggi persatuan,
+    toleransi, dan sikap saling menghormati dalam keberagaman.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Menghormati perbedaan agama, budaya, dan latar belakang
+      di lingkungan kerja.
+    </li>
+    <li class="readable">
+      Menyelesaikan perbedaan pendapat melalui dialog
+      dan musyawarah.
+    </li>
+    <li class="readable">
+      Menghindari sikap eksklusif dan provokatif
+      yang dapat menimbulkan konflik.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PELAKSANAAN KEBIJAKAN PEMERINTAH
+  ================================= -->
+  <h3>Melaksanakan Kebijakan Pemerintah secara Konstitusional</h3>
+  <p class="readable">
+    ASN wajib melaksanakan kebijakan pemerintah pusat dan daerah
+    secara konsisten, taat hukum, dan bertanggung jawab,
+    selama kebijakan tersebut tidak bertentangan dengan
+    peraturan perundang-undangan.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Melaksanakan kebijakan secara profesional
+      tanpa kepentingan pribadi atau golongan.
+    </li>
+    <li class="readable">
+      Menjaga sinergi antara pemerintah pusat dan daerah
+      dalam kerangka NKRI.
+    </li>
+    <li class="readable">
+      Menolak perintah yang bertentangan dengan hukum
+      dan melaporkannya melalui mekanisme yang sah.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap ASN yang mencerminkan
+      komitmen menjaga keutuhan NKRI.
+    </li>
+    <li class="readable">
+      Analisis pelanggaran netralitas ASN
+      dalam studi kasus.
+    </li>
+    <li class="readable">
+      Penilaian tindakan ASN terhadap isu
+      radikalisme, intoleransi, dan separatisme.
+    </li>
+    <li class="readable">
+      Perilaku pelayanan publik yang berpotensi
+      memperkuat atau melemahkan persatuan bangsa.
+    </li>
+  </ul>
+
+</div>
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
