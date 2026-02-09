@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Integritas</h1>
+  <p>Tes Karakteristik Pribadi</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+
+<!-- ===============================
+     🛡️ INTEGRITAS
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-shield-heart"></i> Integritas</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Integritas adalah kesesuaian antara <strong>nilai</strong>,
+    <strong>ucapan</strong>, dan <strong>tindakan</strong> dalam menjalankan
+    tugas dan tanggung jawab. Bagi aparatur negara, integritas menjadi
+    fondasi utama kepercayaan publik dan penyelenggaraan pemerintahan
+    yang bersih.
+  </p>
+
+  <p class="readable">
+    Integritas menuntut konsistensi moral, kejujuran, keberanian
+    menolak penyimpangan, serta komitmen pada aturan dan etika,
+    meskipun berada dalam tekanan atau situasi sulit.
+  </p>
+
+  <!-- ===============================
+       FORMULA KONSEPTUAL INTEGRITAS
+  ================================= -->
+  <h3>Formula Konseptual Integritas</h3>
+  <p class="readable">
+    Untuk memudahkan pemahaman dalam konteks CPNS, integritas dapat
+    dirumuskan secara sederhana sebagai:
+  </p>
+
+  <p class="readable" style="font-size:1.1em; font-weight:bold;">
+    🧭 INTEGRITAS = NILAI + UCAPAN + TINDAKAN (KONSISTEN)
+  </p>
+
+  <ul>
+    <li class="readable">Jika salah satu unsur tidak selaras → integritas runtuh.</li>
+    <li class="readable">Integritas diuji saat tidak ada pengawasan.</li>
+  </ul>
+
+  <!-- ===============================
+       NILAI-NILAI UTAMA INTEGRITAS
+  ================================= -->
+  <h3>Nilai-Nilai Utama Integritas</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-circle-check"></i>
+      <strong>Kejujuran</strong> → Tidak memanipulasi data, informasi, atau keputusan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Konsistensi</strong> → Bertindak sesuai prinsip meskipun ada tekanan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-gavel"></i>
+      <strong>Kepatuhan pada Aturan</strong> → Menjalankan tugas sesuai hukum dan SOP.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-hand-holding-heart"></i>
+      <strong>Tanggung Jawab</strong> → Siap menerima konsekuensi atas keputusan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-eye"></i>
+      <strong>Transparansi</strong> → Terbuka dan dapat dipertanggungjawabkan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       INTEGRITAS DALAM TUGAS ASN
+  ================================= -->
+  <h3>Integritas dalam Pelaksanaan Tugas ASN</h3>
+  <ul>
+    <li class="readable">
+      Melaksanakan pelayanan publik tanpa diskriminasi dan kepentingan pribadi.
+    </li>
+    <li class="readable">
+      Menolak gratifikasi, suap, dan intervensi yang melanggar aturan.
+    </li>
+    <li class="readable">
+      Menggunakan kewenangan secara proporsional dan bertanggung jawab.
+    </li>
+    <li class="readable">
+      Menjaga kerahasiaan data dan informasi negara.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH PERILAKU BERINTEGRITAS
+  ================================= -->
+  <h3>Contoh Perilaku Berintegritas</h3>
+  <ul>
+    <li class="readable">
+      Menolak hadiah dari pihak yang sedang mengurus perizinan.
+    </li>
+    <li class="readable">
+      Tetap melaporkan kesalahan administrasi meskipun merugikan diri sendiri.
+    </li>
+    <li class="readable">
+      Tidak mengubah laporan kinerja demi terlihat baik di mata atasan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH PELANGGARAN INTEGRITAS
+  ================================= -->
+  <h3>Contoh Pelanggaran Integritas</h3>
+  <ul>
+    <li class="readable">
+      Menerima imbalan untuk mempercepat atau memuluskan layanan publik.
+    </li>
+    <li class="readable">
+      Memanfaatkan jabatan untuk kepentingan keluarga atau kelompok.
+    </li>
+    <li class="readable">
+      Memanipulasi data kinerja atau laporan keuangan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS – Integritas</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Anda adalah seorang ASN yang bertugas di bidang pelayanan perizinan.
+    Seorang pemohon menawarkan hadiah sebagai tanda terima kasih agar
+    proses perizinannya dipercepat. Apa sikap paling tepat?
+  </p>
+
+  <ul class="readable">
+    <li>A. Menerima hadiah karena tidak diminta secara langsung</li>
+    <li>B. Menolak hadiah dan tetap memproses sesuai prosedur</li>
+    <li>C. Menerima hadiah tetapi tetap memproses normal</li>
+    <li>D. Menunda proses agar tidak menimbulkan kecurigaan</li>
+    <li>E. Menyerahkan hadiah kepada rekan kerja</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban yang Tepat:</strong> ✅ <strong>B</strong><br>
+    <em>Alasan:</em> Integritas menuntut kejujuran, penolakan gratifikasi,
+    dan konsistensi dalam menjalankan aturan tanpa pengaruh kepentingan pribadi.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi perilaku yang mencerminkan atau melanggar integritas.
+    </li>
+    <li class="readable">
+      Dilema etika ASN dalam situasi tekanan atau konflik kepentingan.
+    </li>
+    <li class="readable">
+      Penerapan nilai integritas dalam pelayanan publik.
+    </li>
+    <li class="readable">
+      Perbandingan tindakan yang benar secara etika vs menguntungkan pribadi.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🧭 KEJUJURAN DALAM MENJALANKAN TUGAS
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-scale-balanced"></i> Kejujuran dalam Menjalankan Tugas</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Kejujuran dalam menjalankan tugas adalah sikap dan perilaku aparatur negara
+    serta warga negara untuk selalu bertindak sesuai fakta, aturan,
+    dan nilai moral tanpa manipulasi, kebohongan, atau penyalahgunaan wewenang.
+  </p>
+
+  <p class="readable">
+    Dalam konteks ASN, kejujuran merupakan fondasi utama integritas
+    dan menjadi prasyarat terciptanya pemerintahan yang bersih,
+    akuntabel, dan dipercaya masyarakat.
+  </p>
+
+  <!-- ===============================
+       LANDASAN NILAI & KONSTITUSIONAL
+  ================================= -->
+  <h3>Landasan Nilai dan Konstitusional</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-star"></i>
+      Nilai Pancasila, terutama <strong>Sila ke-2</strong>
+      (Kemanusiaan yang Adil dan Beradab) dan <strong>Sila ke-5</strong>
+      (Keadilan Sosial).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-book"></i>
+      Prinsip negara hukum dalam UUD 1945:
+      persamaan di hadapan hukum dan pemerintahan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-user-shield"></i>
+      Kode etik dan kode perilaku ASN
+      yang menekankan integritas dan tanggung jawab.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MAKNA KEJUJURAN DALAM TUGAS
+  ================================= -->
+  <h3>Makna Kejujuran dalam Menjalankan Tugas</h3>
+  <ul>
+    <li class="readable">
+      Menyampaikan informasi secara benar dan tidak menyesatkan.
+    </li>
+    <li class="readable">
+      Tidak menyalahgunakan jabatan untuk kepentingan pribadi atau kelompok.
+    </li>
+    <li class="readable">
+      Tidak menerima atau meminta imbalan di luar ketentuan resmi.
+    </li>
+    <li class="readable">
+      Bertanggung jawab atas setiap keputusan dan tindakan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA ETIKA KEJUJURAN
+  ================================= -->
+  <h3>Formula Etika Kejujuran</h3>
+  <p class="readable">
+    Untuk memudahkan pemahaman dalam soal CPNS,
+    kejujuran ASN dapat dirumuskan secara sederhana sebagai:
+  </p>
+
+  <p class="readable" style="font-weight:bold; text-align:center;">
+    <i class="fa-solid fa-calculator"></i>
+    KEJUJURAN = KEBENARAN + KEPATUHAN ATURAN + TANGGUNG JAWAB
+  </p>
+
+  <p class="readable">
+    Jika salah satu unsur hilang, maka tindakan tersebut
+    <strong>tidak dapat dikategorikan sebagai perilaku jujur</strong>.
+  </p>
+
+  <!-- ===============================
+       CONTOH PENERAPAN DALAM TUGAS
+  ================================= -->
+  <h3>Contoh Penerapan Kejujuran dalam Tugas Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-file-invoice"></i>
+      Melaporkan realisasi anggaran sesuai kondisi sebenarnya,
+      tanpa penggelembungan (mark-up).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-clock"></i>
+      Mengisi daftar hadir dan laporan kinerja sesuai jam kerja nyata.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-handshake-angle"></i>
+      Menolak gratifikasi atau hadiah yang berkaitan dengan jabatan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-comments"></i>
+      Memberikan informasi pelayanan publik secara transparan dan apa adanya.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       BENTUK PELANGGARAN KEJUJURAN
+  ================================= -->
+  <h3>Bentuk Pelanggaran Kejujuran dalam Tugas</h3>
+  <ul>
+    <li class="readable">
+      Memalsukan data, laporan, atau dokumen resmi.
+    </li>
+    <li class="readable">
+      Menerima suap, gratifikasi, atau komisi ilegal.
+    </li>
+    <li class="readable">
+      Menyembunyikan kesalahan yang berdampak pada kepentingan publik.
+    </li>
+    <li class="readable">
+      Menggunakan fasilitas negara untuk kepentingan pribadi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DAMPAK KEJUJURAN & KETIDAKJUJURAN
+  ================================= -->
+  <h3>Dampak Kejujuran dan Ketidakjujuran</h3>
+  <ul>
+    <li class="readable">
+      <strong>Dampak Kejujuran</strong>:
+      meningkatnya kepercayaan publik, kinerja organisasi yang sehat,
+      dan stabilitas birokrasi.
+    </li>
+    <li class="readable">
+      <strong>Dampak Ketidakjujuran</strong>:
+      rusaknya kepercayaan masyarakat, sanksi hukum dan disiplin,
+      serta melemahnya wibawa negara.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal Tes CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN mengetahui adanya kesalahan administrasi
+    yang dapat merugikan negara, namun memilih diam
+    karena kesalahan tersebut dilakukan oleh atasannya.
+    Sikap yang paling sesuai dengan nilai kejujuran adalah …
+  </p>
+
+  <ul>
+    <li class="readable">A. Mengabaikan kesalahan demi menjaga hubungan kerja</li>
+    <li class="readable">B. Menunggu hingga masalah tersebut diketahui publik</li>
+    <li class="readable">C. Melaporkan sesuai prosedur dan ketentuan yang berlaku</li>
+    <li class="readable">D. Menyebarkan informasi tersebut ke rekan kerja</li>
+    <li class="readable">E. Memperbaiki sendiri tanpa melibatkan pihak lain</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban benar:</strong> <strong>C</strong><br>
+    <strong>Pembahasan:</strong>
+    Kejujuran menuntut penyampaian kebenaran melalui mekanisme resmi,
+    bukan menutup-nutupi atau menyebarkan secara tidak bertanggung jawab.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi perilaku jujur dan tidak jujur dalam studi kasus ASN.
+    </li>
+    <li class="readable">
+      Penentuan sikap paling etis saat menghadapi konflik kepentingan.
+    </li>
+    <li class="readable">
+      Konsekuensi hukum dan etika dari ketidakjujuran dalam jabatan.
+    </li>
+    <li class="readable">
+      Penerapan nilai integritas dan kejujuran dalam pelayanan publik.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     ⚖️ KONSISTENSI ANTARA ATURAN DAN TINDAKAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-scale-balanced"></i> Konsistensi antara Aturan dan Tindakan</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Konsistensi antara aturan dan tindakan adalah kesesuaian antara norma hukum,
+    kebijakan, serta peraturan perundang-undangan dengan perilaku nyata
+    penyelenggara negara dan warga negara dalam praktik sehari-hari.
+  </p>
+
+  <p class="readable">
+    Dalam negara hukum, aturan tidak hanya berhenti sebagai teks tertulis,
+    tetapi harus diwujudkan secara nyata melalui tindakan yang adil,
+    transparan, dan bertanggung jawab.
+  </p>
+
+  <p class="readable">
+    Prinsip ini menjadi indikator utama kualitas tata kelola pemerintahan
+    (good governance) dan integritas aparatur negara.
+  </p>
+
+  <!-- ===============================
+       PRINSIP DASAR
+  ================================= -->
+  <h3>Prinsip Dasar Konsistensi Aturan dan Tindakan</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-book-law"></i>
+      <strong>Supremasi Hukum</strong> → Semua tindakan harus tunduk pada hukum,
+      tidak ada perlakuan istimewa.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-equals"></i>
+      <strong>Persamaan di Hadapan Hukum</strong> → Aturan diterapkan sama
+      kepada semua pihak tanpa diskriminasi.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-eye"></i>
+      <strong>Transparansi</strong> → Kebijakan dan tindakan dapat diawasi publik.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-shield-halved"></i>
+      <strong>Akuntabilitas</strong> → Setiap tindakan dapat dipertanggungjawabkan
+      secara hukum dan moral.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA KONSEPTUAL (SIMBOLIK)
+  ================================= -->
+  <h3>Formula Konseptual Konsistensi</h3>
+  <p class="readable">
+    Konsistensi antara aturan dan tindakan dapat dipahami secara simbolik sebagai:
+  </p>
+
+  <p class="readable" style="font-weight: bold; text-align: center;">
+    ⚖️ Konsistensi = Aturan yang Jelas + Implementasi yang Patuh + Pengawasan yang Efektif
+  </p>
+
+  <p class="readable">
+    Jika salah satu unsur tidak berjalan, maka konsistensi akan melemah
+    dan berpotensi menimbulkan ketidakadilan serta penyalahgunaan wewenang.
+  </p>
+
+  <!-- ===============================
+       CONTOH IMPLEMENTASI KONSISTEN
+  ================================= -->
+  <h3>Contoh Konsistensi antara Aturan dan Tindakan</h3>
+  <ul>
+    <li class="readable">
+      Penerapan sanksi disiplin ASN sesuai peraturan tanpa melihat jabatan
+      atau kedekatan personal.
+    </li>
+    <li class="readable">
+      Pelayanan publik mengikuti standar operasional prosedur (SOP)
+      tanpa pungutan liar.
+    </li>
+    <li class="readable">
+      Penegakan aturan lalu lintas yang berlaku sama
+      bagi masyarakat umum maupun pejabat.
+    </li>
+    <li class="readable">
+      Proses rekrutmen dan promosi ASN berbasis merit system,
+      bukan hubungan pribadi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH INKONSISTENSI (PELANGGARAN)
+  ================================= -->
+  <h3>Contoh Ketidakkonsistenan Aturan dan Tindakan</h3>
+  <ul>
+    <li class="readable">
+      Aturan melarang gratifikasi, tetapi praktiknya tetap dibiarkan.
+    </li>
+    <li class="readable">
+      Penegakan hukum yang tegas kepada masyarakat kecil,
+      namun lunak kepada pejabat.
+    </li>
+    <li class="readable">
+      SOP pelayanan ada, tetapi tidak dijalankan dalam praktik.
+    </li>
+    <li class="readable">
+      Kebijakan transparansi anggaran, namun informasi sulit diakses publik.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DAMPAK KETIDAKKONSISTENAN
+  ================================= -->
+  <h3>Dampak Ketidakkonsistenan antara Aturan dan Tindakan</h3>
+  <ul>
+    <li class="readable">
+      Menurunnya kepercayaan masyarakat terhadap pemerintah.
+    </li>
+    <li class="readable">
+      Munculnya praktik korupsi, kolusi, dan nepotisme.
+    </li>
+    <li class="readable">
+      Lemahnya penegakan hukum dan keadilan.
+    </li>
+    <li class="readable">
+      Terganggunya stabilitas sosial dan pemerintahan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PERAN ASN & WARGA NEGARA
+  ================================= -->
+  <h3>Peran ASN dan Warga Negara</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-user-tie"></i>
+      ASN wajib menjadi teladan dalam menaati aturan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-people-group"></i>
+      Warga negara berhak mengawasi dan melaporkan pelanggaran.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-flag"></i>
+      Bersama-sama menjaga budaya hukum dan integritas nasional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal Tes CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang pejabat mengetahui adanya pelanggaran prosedur dalam pelayanan publik,
+    namun tidak menindaklanjutinya karena pelaku adalah rekan dekatnya.
+    Tindakan pejabat tersebut menunjukkan…
+  </p>
+
+  <ul>
+    <li class="readable">A. Penerapan asas keadilan</li>
+    <li class="readable">B. Konsistensi antara aturan dan tindakan</li>
+    <li class="readable">C. Pelanggaran prinsip akuntabilitas</li>
+    <li class="readable">D. Bentuk diskresi yang sah</li>
+    <li class="readable">E. Upaya menjaga stabilitas organisasi</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> <span style="font-weight:bold;">C</span><br>
+    <strong>Pembahasan:</strong> Pembiaran pelanggaran meskipun ada aturan
+    yang jelas menunjukkan ketidakkonsistenan antara aturan dan tindakan
+    serta melanggar prinsip akuntabilitas dan supremasi hukum.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi tindakan yang konsisten atau tidak konsisten dengan aturan.
+    </li>
+    <li class="readable">
+      Analisis kasus pelanggaran etika dan hukum oleh ASN.
+    </li>
+    <li class="readable">
+      Hubungan antara konsistensi, integritas, dan good governance.
+    </li>
+    <li class="readable">
+      Penentuan sikap yang tepat dalam dilema kepatuhan terhadap aturan.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🚫 MENOLAK GRATIFIKASI & PENYALAHGUNAAN WEWENANG
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-ban"></i> Menolak Gratifikasi dan Penyalahgunaan Wewenang</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Menolak gratifikasi dan penyalahgunaan wewenang merupakan bagian
+    dari implementasi nilai integritas, etika publik, dan tata kelola
+    pemerintahan yang bersih.
+  </p>
+
+  <p class="readable">
+    Dalam konteks Aparatur Sipil Negara (ASN), setiap bentuk pemberian,
+    janji, atau fasilitas yang berpotensi memengaruhi objektivitas
+    dan profesionalitas harus ditolak dan/atau dilaporkan sesuai ketentuan.
+  </p>
+
+  <p class="readable">
+    Prinsip utama yang harus dipegang ASN adalah:
+  </p>
+
+  <p class="readable" style="text-align:center;font-weight:bold;">
+    ⚖️ KEWENANGAN ≠ HAK PRIBADI<br>
+    🎯 JABATAN = AMANAH, BUKAN KEUNTUNGAN
+  </p>
+
+  <!-- ===============================
+       GRATIFIKASI
+  ================================= -->
+  <h3><i class="fa-solid fa-gift"></i> Gratifikasi</h3>
+  <p class="readable">
+    Gratifikasi adalah pemberian dalam arti luas, meliputi uang, barang,
+    diskon, komisi, pinjaman tanpa bunga, tiket, fasilitas perjalanan,
+    penginapan, hingga fasilitas lainnya yang diterima ASN
+    terkait jabatannya.
+  </p>
+
+  <p class="readable">
+    Tidak semua gratifikasi otomatis dianggap pelanggaran,
+    namun <strong>wajib dilaporkan</strong> untuk dinilai
+    apakah termasuk gratifikasi yang dilarang.
+  </p>
+
+  <!-- ===============================
+       JENIS GRATIFIKASI
+  ================================= -->
+  <h3>Jenis Gratifikasi</h3>
+  <ul>
+    <li class="readable">
+      <strong>Gratifikasi yang Dianggap Suap</strong><br>
+      → Pemberian yang berhubungan langsung dengan jabatan
+      dan bertentangan dengan kewajiban ASN.
+    </li>
+    <li class="readable">
+      <strong>Gratifikasi yang Wajib Dilaporkan</strong><br>
+      → Pemberian yang masih meragukan dan perlu penilaian
+      oleh lembaga berwenang.
+    </li>
+    <li class="readable">
+      <strong>Gratifikasi yang Tidak Wajib Dilaporkan</strong><br>
+      → Misalnya hadiah dari keluarga dekat yang tidak terkait jabatan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PENYALAHGUNAAN WEWENANG
+  ================================= -->
+  <h3><i class="fa-solid fa-scale-unbalanced"></i> Penyalahgunaan Wewenang</h3>
+  <p class="readable">
+    Penyalahgunaan wewenang adalah tindakan pejabat atau ASN
+    yang menggunakan kewenangannya tidak sesuai tujuan pemberian wewenang,
+    baik untuk kepentingan pribadi, kelompok, maupun pihak tertentu.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Menggunakan jabatan untuk memperoleh keuntungan pribadi.
+    </li>
+    <li class="readable">
+      Memberi perlakuan khusus (diskriminatif) kepada pihak tertentu.
+    </li>
+    <li class="readable">
+      Mengambil keputusan di luar atau melampaui kewenangan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA ETIKA ASN
+  ================================= -->
+  <h3><i class="fa-solid fa-calculator"></i> Formula Etika ASN</h3>
+  <p class="readable">
+    Untuk membantu pengambilan keputusan etis, ASN dapat menggunakan
+    rumus sederhana berikut:
+  </p>
+
+  <p class="readable" style="text-align:center;font-weight:bold;">
+    🧠 KEPUTUSAN ETIS =<br>
+    (Sesuai Aturan) + (Bebas Kepentingan Pribadi) + (Dapat Dipertanggungjawabkan)
+  </p>
+
+  <p class="readable">
+    Jika salah satu unsur di atas tidak terpenuhi,
+    maka tindakan tersebut berisiko melanggar etika
+    dan berpotensi menjadi pelanggaran hukum.
+  </p>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM KEHIDUPAN ASN
+  ================================= -->
+  <h3>Implementasi dalam Kehidupan ASN</h3>
+  <ul>
+    <li class="readable">
+      Menolak pemberian dalam bentuk apa pun yang berkaitan
+      dengan jabatan atau kewenangan.
+    </li>
+    <li class="readable">
+      Melaporkan gratifikasi sesuai mekanisme yang berlaku.
+    </li>
+    <li class="readable">
+      Mengambil keputusan berdasarkan aturan,
+      bukan tekanan atau imbalan.
+    </li>
+    <li class="readable">
+      Menjaga netralitas dan profesionalitas dalam pelayanan publik.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH KASUS
+  ================================= -->
+  <h3><i class="fa-solid fa-clipboard-question"></i> Contoh Kasus</h3>
+  <p class="readable">
+    Seorang ASN yang bertugas mengurus perizinan usaha
+    diberi bingkisan oleh pemohon izin setelah proses selesai.
+    Bingkisan tersebut diberikan sebagai “tanda terima kasih”.
+  </p>
+
+  <p class="readable">
+    <strong>Sikap yang benar:</strong><br>
+    ASN wajib menolak atau melaporkan bingkisan tersebut
+    karena berhubungan dengan jabatannya.
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-pen-to-square"></i> Contoh Soal CPNS</h3>
+
+  <p class="readable"><strong>Soal:</strong><br>
+    Seorang ASN menerima fasilitas penginapan gratis dari pihak swasta
+    yang sedang berurusan dengan instansinya. Tindakan paling tepat adalah…
+  </p>
+
+  <ul>
+    <li class="readable">A. Menerima karena tidak berbentuk uang</li>
+    <li class="readable">B. Menerima selama tidak memengaruhi keputusan</li>
+    <li class="readable">C. Menolak atau melaporkan fasilitas tersebut</li>
+    <li class="readable">D. Menerima karena diberikan secara sukarela</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban benar:</strong> ✅ C<br>
+    <strong>Pembahasan:</strong> Fasilitas yang diterima ASN
+    terkait jabatannya termasuk gratifikasi
+    dan wajib ditolak atau dilaporkan.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi bentuk gratifikasi dalam studi kasus.
+    </li>
+    <li class="readable">
+      Penentuan sikap ASN yang berintegritas.
+    </li>
+    <li class="readable">
+      Perbedaan antara hadiah pribadi dan gratifikasi jabatan.
+    </li>
+    <li class="readable">
+      Analisis penyalahgunaan wewenang dalam pelayanan publik.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     ⚖️ TANGGUNG JAWAB ATAS KEPUTUSAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-scale-balanced"></i> Tanggung Jawab atas Keputusan yang Diambil</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Tanggung jawab atas keputusan yang diambil adalah kesediaan dan
+    kemampuan individu, khususnya aparatur negara, untuk
+    mempertanggungjawabkan setiap keputusan, tindakan, dan kebijakan
+    yang dibuat sesuai dengan aturan, etika, dan kepentingan publik.
+  </p>
+
+  <p class="readable">
+    Dalam konteks ASN, tanggung jawab tidak hanya bersifat administratif,
+    tetapi juga mencakup tanggung jawab moral, hukum, dan sosial
+    atas dampak keputusan terhadap masyarakat.
+  </p>
+
+  <!-- ===============================
+       PRINSIP DASAR TANGGUNG JAWAB
+  ================================= -->
+  <h3>Prinsip Dasar Tanggung Jawab</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-gavel"></i>
+      <strong>Legalitas</strong> → Keputusan harus sesuai dengan hukum
+      dan peraturan perundang-undangan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-shield-heart"></i>
+      <strong>Etika dan Moral</strong> → Keputusan mencerminkan nilai
+      kejujuran, keadilan, dan integritas.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-users"></i>
+      <strong>Kepentingan Publik</strong> → Keputusan diambil untuk
+      kemaslahatan masyarakat, bukan kepentingan pribadi atau golongan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-eye"></i>
+      <strong>Akuntabilitas</strong> → Keputusan dapat dijelaskan,
+      diawasi, dan dievaluasi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       RUMUS KONSEPTUAL (SIMBOLIK)
+  ================================= -->
+  <h3>Rumus Konseptual Tanggung Jawab</h3>
+  <p class="readable">
+    Dalam konteks etika pemerintahan, tanggung jawab dapat dirumuskan secara simbolik sebagai:
+  </p>
+
+  <p class="readable" style="font-weight:bold; text-align:center;">
+    ⚖️ Keputusan = Kewenangan + Kepatuhan Hukum + Integritas + Dampak Publik
+  </p>
+
+  <p class="readable">
+    Semakin besar kewenangan seseorang, semakin besar pula
+    tanggung jawab yang melekat pada setiap keputusan yang diambil.
+  </p>
+
+  <!-- ===============================
+       TANGGUNG JAWAB DALAM PENGAMBILAN KEPUTUSAN
+  ================================= -->
+  <h3>Tanggung Jawab dalam Pengambilan Keputusan</h3>
+  <ul>
+    <li class="readable">
+      Bertanggung jawab atas proses pengambilan keputusan,
+      termasuk pertimbangan data dan aturan.
+    </li>
+    <li class="readable">
+      Bertanggung jawab atas hasil keputusan,
+      baik yang berdampak positif maupun negatif.
+    </li>
+    <li class="readable">
+      Tidak melempar kesalahan kepada pihak lain
+      atas keputusan yang menjadi kewenangannya.
+    </li>
+    <li class="readable">
+      Bersedia melakukan koreksi apabila keputusan terbukti keliru.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH DALAM KEHIDUPAN ASN
+  ================================= -->
+  <h3>Contoh Tanggung Jawab Keputusan dalam Kehidupan ASN</h3>
+  <ul>
+    <li class="readable">
+      Seorang pejabat menandatangani izin usaha dan bertanggung jawab
+      atas legalitas serta dampak lingkungan dari izin tersebut.
+    </li>
+    <li class="readable">
+      ASN yang menetapkan hasil seleksi harus siap mempertanggungjawabkan
+      proses dan hasilnya secara transparan.
+    </li>
+    <li class="readable">
+      Pejabat yang salah mengambil keputusan wajib
+      melakukan perbaikan sesuai prosedur, bukan menutupinya.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       BENTUK KETIDAKBERTANGGUNGJAWABAN
+  ================================= -->
+  <h3>Bentuk Ketidakbertanggungjawaban</h3>
+  <ul>
+    <li class="readable">
+      Menghindari konsekuensi dari keputusan yang diambil.
+    </li>
+    <li class="readable">
+      Menyalahkan bawahan atau pihak lain
+      atas keputusan sendiri.
+    </li>
+    <li class="readable">
+      Mengambil keputusan tanpa dasar hukum yang jelas.
+    </li>
+    <li class="readable">
+      Menyembunyikan kesalahan demi kepentingan pribadi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <div class="readable" style="border-left:4px solid #4CAF50; padding-left:12px;">
+    <p><strong>Soal:</strong></p>
+    <p>
+      Seorang ASN mengambil keputusan berdasarkan kewenangannya.
+      Di kemudian hari, keputusan tersebut menimbulkan dampak negatif
+      meskipun diambil sesuai prosedur. Sikap yang paling tepat adalah…
+    </p>
+    <ol type="A">
+      <li>Menghindari tanggung jawab karena dampak tidak disengaja</li>
+      <li>Menyalahkan pihak lain yang terlibat</li>
+      <li>Mempertanggungjawabkan keputusan dan melakukan evaluasi</li>
+      <li>Menutupi kesalahan agar citra instansi tetap baik</li>
+      <li>Menunggu perintah atasan tanpa bertindak</li>
+    </ol>
+
+    <p><strong>Jawaban benar:</strong> C</p>
+
+    <p>
+      <strong>Pembahasan:</strong><br>
+      Tanggung jawab keputusan melekat pada pengambil keputusan.
+      ASN wajib mempertanggungjawabkan dan memperbaiki dampak keputusan
+      meskipun telah sesuai prosedur.
+    </p>
+  </div>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Sikap ASN terhadap konsekuensi keputusan yang diambil.
+    </li>
+    <li class="readable">
+      Identifikasi perilaku bertanggung jawab dan tidak bertanggung jawab.
+    </li>
+    <li class="readable">
+      Studi kasus dilema pengambilan keputusan.
+    </li>
+    <li class="readable">
+      Hubungan kewenangan, keputusan, dan akuntabilitas.
+    </li>
+  </ul>
+
+</div>
+
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
