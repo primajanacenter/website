@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Pengantar TIU</h1>
+  <p>Tes Intelegensi Umum</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+
+<!-- ===============================
+     🧠 TES INTELEGENSI UMUM (TIU)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-brain"></i> Tes Intelegensi Umum (TIU)</h2>
+
+  <!-- ===============================
+       KONSEP UMUM
+  ================================= -->
+  <h3>Konsep Umum</h3>
+  <p class="readable">
+    Tes Intelegensi Umum (TIU) bertujuan untuk mengukur kemampuan kognitif
+    peserta dalam berpikir logis, analitis, kritis, dan sistematis.
+    TIU menilai potensi intelektual yang dibutuhkan dalam menyelesaikan
+    persoalan secara rasional dan objektif.
+  </p>
+
+  <p class="readable">
+    Berbeda dengan tes hafalan, soal TIU menekankan proses berpikir,
+    pemahaman pola, hubungan antar konsep, serta ketepatan penalaran
+    dalam waktu terbatas.
+  </p>
+
+  <p class="readable">
+    Dalam konteks CPNS, TIU digunakan untuk memprediksi kemampuan peserta
+    dalam menganalisis masalah, mengambil keputusan, dan bekerja secara
+    efektif di lingkungan birokrasi dan pelayanan publik.
+  </p>
+
+  <!-- ===============================
+       TUJUAN TES TIU
+  ================================= -->
+  <h3>Tujuan Tes Intelegensi Umum</h3>
+  <ul>
+    <li class="readable">
+      Mengukur kemampuan penalaran logis dan sistematis.
+    </li>
+    <li class="readable">
+      Menilai ketajaman analisis dan pemecahan masalah.
+    </li>
+    <li class="readable">
+      Menguji kemampuan numerik dasar yang aplikatif.
+    </li>
+    <li class="readable">
+      Menilai kemampuan verbal dan pemahaman bahasa.
+    </li>
+    <li class="readable">
+      Mengukur kecermatan, ketelitian, dan kecepatan berpikir.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KARAKTERISTIK SOAL TIU
+  ================================= -->
+  <h3>Karakteristik Soal TIU</h3>
+  <ul>
+    <li class="readable">
+      Tidak menguji pengetahuan faktual atau hafalan materi tertentu.
+    </li>
+    <li class="readable">
+      Mengandalkan kemampuan logika, pola, dan hubungan antar informasi.
+    </li>
+    <li class="readable">
+      Memiliki tingkat kesulitan bertahap dari mudah hingga kompleks.
+    </li>
+    <li class="readable">
+      Menguji ketepatan berpikir dalam tekanan waktu.
+    </li>
+    <li class="readable">
+      Sering menggunakan jebakan logika dan distraktor jawaban.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       RUANG LINGKUP MATERI TIU
+  ================================= -->
+  <h3>Ruang Lingkup Materi TIU</h3>
+  <ul>
+    <li class="readable">
+      <strong>Kemampuan Verbal</strong> → Analogi kata, sinonim, antonim,
+      dan pemahaman wacana.
+    </li>
+    <li class="readable">
+      <strong>Kemampuan Numerik</strong> → Operasi hitung, deret angka,
+      perbandingan, dan soal cerita logika matematika.
+    </li>
+    <li class="readable">
+      <strong>Kemampuan Logika</strong> → Penalaran logis, silogisme,
+      hubungan sebab-akibat, dan penarikan kesimpulan.
+    </li>
+    <li class="readable">
+      <strong>Kemampuan Figural</strong> → Pola gambar, analogi visual,
+      dan hubungan bentuk.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH POLA BERPIKIR TIU
+  ================================= -->
+  <h3>Pola Berpikir yang Diuji dalam TIU</h3>
+  <ul>
+    <li class="readable">
+      Kemampuan mengenali pola dan hubungan tersembunyi.
+    </li>
+    <li class="readable">
+      Kemampuan menyaring informasi relevan dari informasi pengganggu.
+    </li>
+    <li class="readable">
+      Kemampuan menarik kesimpulan logis berdasarkan premis yang diberikan.
+    </li>
+    <li class="readable">
+      Kemampuan berpikir cepat tanpa mengorbankan ketelitian.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI UMUM MENGERJAKAN TIU
+  ================================= -->
+  <h3>Strategi Umum Mengerjakan Soal TIU</h3>
+  <ul>
+    <li class="readable">
+      Pahami pola soal terlebih dahulu sebelum menghitung atau menganalisis.
+    </li>
+    <li class="readable">
+      Jangan terpaku pada satu soal terlalu lama; kelola waktu dengan baik.
+    </li>
+    <li class="readable">
+      Gunakan logika eliminasi untuk mengurangi pilihan jawaban.
+    </li>
+    <li class="readable">
+      Tetap tenang dan fokus pada proses berpikir, bukan hafalan rumus.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS (TIU)
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS (TIU)</h3>
+  <ul>
+    <li class="readable">
+      Menentukan hubungan logis antar kata, angka, atau gambar.
+    </li>
+    <li class="readable">
+      Menyelesaikan soal numerik berbasis logika, bukan hitungan kompleks.
+    </li>
+    <li class="readable">
+      Menarik kesimpulan yang paling tepat dari informasi terbatas.
+    </li>
+    <li class="readable">
+      Mengidentifikasi pola yang konsisten dalam deret atau pernyataan.
+    </li>
+  </ul>
+
+</div>
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
