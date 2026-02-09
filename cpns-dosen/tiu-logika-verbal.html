@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Logika Verbal</h1>
+  <p>Tes Intelegensi Umum</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+
+<!-- ===============================
+     🧠 LOGIKA VERBAL (TIU)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-brain"></i> Logika Verbal</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Logika verbal adalah kemampuan memahami, menganalisis,
+    dan menarik kesimpulan secara logis dari informasi
+    yang disajikan dalam bentuk kata, kalimat, atau wacana.
+  </p>
+
+  <p class="readable">
+    Dalam Tes Intelegensia Umum (TIU) CPNS, logika verbal
+    mengukur kecakapan peserta dalam memahami bahasa,
+    hubungan makna, struktur kalimat, serta penalaran logis
+    berbasis teks.
+  </p>
+
+  <p class="readable">
+    Logika verbal tidak menguji hafalan,
+    melainkan ketepatan berpikir, konsistensi makna,
+    dan kemampuan membaca informasi secara kritis.
+  </p>
+
+  <!-- ===============================
+       TUJUAN PENGUKURAN
+  ================================= -->
+  <h3>Tujuan Pengukuran Logika Verbal</h3>
+  <ul>
+    <li class="readable">
+      Mengukur kemampuan memahami informasi tertulis secara akurat.
+    </li>
+    <li class="readable">
+      Menguji ketepatan menarik kesimpulan logis dari pernyataan.
+    </li>
+    <li class="readable">
+      Menilai kecermatan dalam membedakan fakta, opini, dan asumsi.
+    </li>
+    <li class="readable">
+      Mengukur kemampuan berpikir sistematis dan konsisten.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS-JENIS SOAL LOGIKA VERBAL
+  ================================= -->
+  <h3>Jenis-Jenis Soal Logika Verbal</h3>
+  <ul>
+    <li class="readable">
+      <strong>Sinonim (Persamaan Kata)</strong><br>
+      Menguji kemampuan memahami makna kata dan padanan yang tepat.
+    </li>
+
+    <li class="readable">
+      <strong>Antonim (Lawan Kata)</strong><br>
+      Menguji pemahaman makna kebalikan suatu kata dalam konteks bahasa.
+    </li>
+
+    <li class="readable">
+      <strong>Analogi Kata</strong><br>
+      Menguji hubungan makna antar kata
+      (sebab-akibat, fungsi, sifat, bagian-keseluruhan).
+    </li>
+
+    <li class="readable">
+      <strong>Silogisme</strong><br>
+      Menguji kemampuan menarik kesimpulan
+      dari dua pernyataan atau lebih yang diberikan.
+    </li>
+
+    <li class="readable">
+      <strong>Kesimpulan Logis</strong><br>
+      Menguji apakah suatu kesimpulan
+      pasti benar, mungkin benar, atau salah
+      berdasarkan informasi yang tersedia.
+    </li>
+
+    <li class="readable">
+      <strong>Pernyataan Benar–Salah</strong><br>
+      Menilai konsistensi logis antar pernyataan
+      tanpa menambahkan asumsi baru.
+    </li>
+
+    <li class="readable">
+      <strong>Wacana Singkat</strong><br>
+      Menguji pemahaman ide pokok, simpulan,
+      dan implikasi dari paragraf pendek.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PRINSIP DASAR PENALARAN VERBAL
+  ================================= -->
+  <h3>Prinsip Dasar Penalaran Verbal</h3>
+  <ul>
+    <li class="readable">
+      Kesimpulan harus <strong>hanya</strong> berdasarkan informasi yang diberikan.
+    </li>
+    <li class="readable">
+      Tidak boleh menambahkan asumsi atau pengetahuan luar.
+    </li>
+    <li class="readable">
+      Bahasa soal harus dipahami secara literal dan logis.
+    </li>
+    <li class="readable">
+      Semua pernyataan dianggap benar kecuali dinyatakan sebaliknya.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH PENERAPAN DALAM CPNS
+  ================================= -->
+  <h3>Penerapan Logika Verbal dalam Soal CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan simpulan yang tepat dari dua premis silogisme.
+    </li>
+    <li class="readable">
+      Mengidentifikasi hubungan kata yang paling logis dalam analogi.
+    </li>
+    <li class="readable">
+      Menentukan makna kata sesuai konteks kalimat.
+    </li>
+    <li class="readable">
+      Menilai kebenaran pernyataan berdasarkan wacana singkat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KESALAHAN UMUM PESERTA
+  ================================= -->
+  <h3>Kesalahan Umum dalam Logika Verbal</h3>
+  <ul>
+    <li class="readable">
+      Menarik kesimpulan berdasarkan opini pribadi.
+    </li>
+    <li class="readable">
+      Terjebak makna kata yang mirip tetapi tidak identik.
+    </li>
+    <li class="readable">
+      Mengabaikan kata kunci seperti “semua”, “sebagian”, “tidak”.
+    </li>
+    <li class="readable">
+      Menambahkan informasi yang tidak tertulis dalam soal.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI MENGERJAKAN
+  ================================= -->
+  <h3>Strategi Mengerjakan Soal Logika Verbal</h3>
+  <ul>
+    <li class="readable">
+      Baca soal dengan perlahan dan cermat.
+    </li>
+    <li class="readable">
+      Tandai kata kunci dan hubungan antar konsep.
+    </li>
+    <li class="readable">
+      Gunakan logika formal, bukan perasaan atau pengalaman pribadi.
+    </li>
+    <li class="readable">
+      Eliminasi jawaban yang jelas tidak konsisten secara logis.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan simpulan logis dari pernyataan verbal.
+    </li>
+    <li class="readable">
+      Menilai hubungan makna antar kata dan kalimat.
+    </li>
+    <li class="readable">
+      Menguji konsistensi logika dalam wacana singkat.
+    </li>
+    <li class="readable">
+      Menghindari asumsi dan kesimpulan di luar teks.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔁 SINONIM (PERSAMAAN KATA)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-arrows-rotate"></i> Sinonim (Persamaan Kata)</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Sinonim adalah kata-kata yang memiliki makna sama atau hampir sama,
+    meskipun bentuk katanya berbeda. Dalam bahasa Indonesia,
+    sinonim tidak selalu dapat saling menggantikan secara mutlak
+    karena perbedaan konteks, nuansa makna, dan tingkat keformalan.
+  </p>
+
+  <p class="readable">
+    Dalam Tes CPNS, kemampuan memahami sinonim digunakan untuk
+    mengukur kecakapan berbahasa, ketepatan makna, serta kemampuan
+    memilih kata yang paling sesuai dalam suatu konteks kalimat.
+  </p>
+
+  <!-- ===============================
+       KARAKTERISTIK SINONIM
+  ================================= -->
+  <h3>Karakteristik Sinonim</h3>
+  <ul>
+    <li class="readable">
+      Memiliki makna dasar yang sama atau mirip.
+    </li>
+    <li class="readable">
+      Tidak selalu dapat dipertukarkan dalam semua konteks.
+    </li>
+    <li class="readable">
+      Dapat berbeda tingkat keformalan (baku vs tidak baku).
+    </li>
+    <li class="readable">
+      Dapat memiliki nuansa makna positif, netral, atau negatif.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS-JENIS SINONIM
+  ================================= -->
+  <h3>Jenis-Jenis Sinonim</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>Sinonim Mutlak</strong><br>
+      Kata-kata yang hampir selalu dapat saling menggantikan
+      tanpa mengubah makna kalimat.<br>
+      <em>Contoh:</em> wafat = meninggal (dalam konteks formal).
+    </li>
+
+    <li class="readable">
+      <strong>Sinonim Tidak Mutlak</strong><br>
+      Kata-kata yang maknanya mirip, tetapi penggunaannya
+      bergantung pada konteks.<br>
+      <em>Contoh:</em> melihat ≠ menonton ≠ menyaksikan.
+    </li>
+
+    <li class="readable">
+      <strong>Sinonim Kontekstual</strong><br>
+      Persamaan makna yang hanya berlaku pada konteks tertentu.<br>
+      <em>Contoh:</em> “tajam” bisa bermakna cerdas atau bermata pisau.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SINONIM UMUM CPNS
+  ================================= -->
+  <h3>Contoh Sinonim yang Sering Muncul di Tes CPNS</h3>
+  <ul>
+    <li class="readable">Abai = Lalai</li>
+    <li class="readable">Cermat = Teliti</li>
+    <li class="readable">Hakikat = Esensi</li>
+    <li class="readable">Implikasi = Dampak</li>
+    <li class="readable">Otoritas = Wewenang</li>
+    <li class="readable">Konsisten = Ajeg</li>
+    <li class="readable">Mandiri = Independen</li>
+  </ul>
+
+  <!-- ===============================
+       JEBakan UMUM DALAM SOAL SINONIM
+  ================================= -->
+  <h3>Jebakan Umum dalam Soal Sinonim CPNS</h3>
+  <ul>
+    <li class="readable">
+      Memilih kata yang mirip secara bunyi,
+      tetapi berbeda makna.
+    </li>
+    <li class="readable">
+      Mengabaikan konteks kalimat.
+    </li>
+    <li class="readable">
+      Terkecoh oleh kata yang bersifat umum,
+      bukan yang paling tepat.
+    </li>
+    <li class="readable">
+      Tidak memperhatikan tingkat keformalan bahasa.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI MENJAWAB SOAL SINONIM
+  ================================= -->
+  <h3>Strategi Menjawab Soal Sinonim</h3>
+  <ul>
+    <li class="readable">
+      Pahami makna kata dalam konteks, bukan secara lepas.
+    </li>
+    <li class="readable">
+      Eliminasi pilihan yang maknanya terlalu umum atau terlalu sempit.
+    </li>
+    <li class="readable">
+      Perhatikan nuansa makna (positif, netral, negatif).
+    </li>
+    <li class="readable">
+      Pilih kata yang paling lazim digunakan dalam bahasa baku.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL MINI
+  ================================= -->
+  <h3>Contoh Mini Soal</h3>
+  <p class="readable">
+    Sinonim kata <strong>“akurat”</strong> yang paling tepat adalah …
+  </p>
+  <ul>
+    <li class="readable">A. Cepat</li>
+    <li class="readable">B. Tepat</li>
+    <li class="readable">C. Benar</li>
+    <li class="readable">D. Rinci</li>
+  </ul>
+  <p class="readable">
+    <em>Jawaban tepat:</em> <strong>B. Tepat</strong>
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan sinonim paling tepat dari sebuah kata.
+    </li>
+    <li class="readable">
+      Memilih kata yang setara maknanya dalam konteks kalimat.
+    </li>
+    <li class="readable">
+      Membedakan kata yang mirip tetapi tidak bersinonim.
+    </li>
+    <li class="readable">
+      Analisis nuansa makna dan tingkat keformalan bahasa.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔄 ANTONIM (LAWAN KATA)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-right-left"></i> Antonim (Lawan Kata)</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Antonim adalah hubungan makna antara dua kata yang memiliki arti
+    berlawanan atau bertentangan. Antonim digunakan untuk menunjukkan
+    kontras makna dalam bahasa, baik secara mutlak maupun relatif.
+  </p>
+
+  <p class="readable">
+    Dalam Tes CPNS (khususnya TIU dan TWK Bahasa Indonesia),
+    antonim sering diuji untuk menilai kemampuan logika bahasa,
+    ketepatan makna kata, serta pemahaman konteks penggunaan kata.
+  </p>
+
+  <!-- ===============================
+       CIRI-CIRI ANTONIM
+  ================================= -->
+  <h3>Ciri-Ciri Antonim</h3>
+  <ul>
+    <li class="readable">
+      Menunjukkan makna yang saling berlawanan atau bertentangan.
+    </li>
+    <li class="readable">
+      Dapat berupa kata dasar, kata berimbuhan, maupun frasa.
+    </li>
+    <li class="readable">
+      Tidak selalu bersifat mutlak, tetapi bisa bersifat relatif
+      tergantung konteks.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS-JENIS ANTONIM
+  ================================= -->
+  <h3>Jenis-Jenis Antonim</h3>
+
+  <ul>
+    <li class="readable">
+      <strong><i class="fa-solid fa-scale-balanced"></i> Antonim Mutlak</strong><br>
+      Pasangan kata yang pertentangannya bersifat pasti dan tidak
+      memungkinkan adanya tingkatan.<br>
+      <em>Contoh:</em> hidup ↔ mati, benar ↔ salah
+    </li>
+
+    <li class="readable">
+      <strong><i class="fa-solid fa-chart-line"></i> Antonim Relatif</strong><br>
+      Pasangan kata yang pertentangannya bersifat relatif
+      dan masih memungkinkan adanya tingkatan.<br>
+      <em>Contoh:</em> besar ↔ kecil, kaya ↔ miskin
+    </li>
+
+    <li class="readable">
+      <strong><i class="fa-solid fa-repeat"></i> Antonim Relasional</strong><br>
+      Pasangan kata yang saling berlawanan karena hubungan timbal balik.<br>
+      <em>Contoh:</em> membeli ↔ menjual, guru ↔ murid
+    </li>
+
+    <li class="readable">
+      <strong><i class="fa-solid fa-shuffle"></i> Antonim Hierarkial</strong><br>
+      Pasangan kata yang berlawanan berdasarkan jenjang atau urutan.<br>
+      <em>Contoh:</em> pagi ↔ malam, atasan ↔ bawahan
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ANTONIM DALAM KONTEKS KALIMAT
+  ================================= -->
+  <h3>Antonim dalam Konteks Kalimat</h3>
+  <p class="readable">
+    Dalam soal CPNS, antonim sering tidak diuji secara langsung,
+    melainkan melalui konteks kalimat. Peserta diminta memahami
+    makna kata berdasarkan penggunaannya dalam kalimat.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Kata <strong>“abstrak”</strong> dalam konteks ilmiah
+      berantonim dengan <strong>“konkret”</strong>.
+    </li>
+    <li class="readable">
+      Kata <strong>“efisien”</strong> dalam konteks kerja
+      berantonim dengan <strong>“boros”</strong>.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KESALAHAN UMUM DALAM MENENTUKAN ANTONIM
+  ================================= -->
+  <h3>Kesalahan Umum dalam Menentukan Antonim</h3>
+  <ul>
+    <li class="readable">
+      Memilih kata yang hanya berbeda nuansa, bukan benar-benar berlawanan.
+    </li>
+    <li class="readable">
+      Mengabaikan konteks kalimat.
+    </li>
+    <li class="readable">
+      Terkecoh oleh kata yang terdengar “kebalikan” secara logika,
+      tetapi tidak tepat secara makna bahasa.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI MENGERJAKAN SOAL CPNS
+  ================================= -->
+  <h3>Strategi Mengerjakan Soal Antonim CPNS</h3>
+  <ul>
+    <li class="readable">
+      Pahami makna kata secara utuh, bukan hanya terjemahan kasarnya.
+    </li>
+    <li class="readable">
+      Perhatikan konteks kalimat jika disertakan.
+    </li>
+    <li class="readable">
+      Eliminasi pilihan jawaban yang masih satu kelompok makna.
+    </li>
+    <li class="readable">
+      Waspadai kata teknis, ilmiah, atau serapan asing.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan lawan kata yang paling tepat dari sebuah kata.
+    </li>
+    <li class="readable">
+      Menentukan antonim berdasarkan konteks kalimat.
+    </li>
+    <li class="readable">
+      Mengidentifikasi pasangan kata yang <em>bukan</em> antonim.
+    </li>
+    <li class="readable">
+      Soal jebakan sinonim vs antonim.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔗 ANALOGI KATA & HUBUNGAN MAKNA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-link"></i> Analogi Kata dan Hubungan Makna</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Analogi kata adalah hubungan logis antara dua kata atau lebih
+    yang memiliki pola makna tertentu, kemudian pola tersebut
+    diterapkan pada pasangan kata lain.
+  </p>
+
+  <p class="readable">
+    Dalam Tes Intelegensia Umum (TIU) CPNS, soal analogi bertujuan
+    mengukur kemampuan penalaran verbal, pemahaman makna,
+    serta kecermatan peserta dalam mengenali hubungan kata.
+  </p>
+
+  <p class="readable">
+    Kunci utama mengerjakan soal analogi adalah menemukan
+    <strong>pola hubungan makna</strong>, bukan sekadar kesamaan bunyi
+    atau kedekatan kata.
+  </p>
+
+  <!-- ===============================
+       STRUKTUR DASAR SOAL ANALOGI
+  ================================= -->
+  <h3>Struktur Dasar Soal Analogi</h3>
+  <p class="readable">
+    Soal analogi umumnya disajikan dalam format:
+  </p>
+
+  <p class="readable">
+    <strong>A : B = C : ?</strong>
+  </p>
+
+  <p class="readable">
+    Artinya, hubungan antara kata A dan B harus sama
+    dengan hubungan antara kata C dan jawaban yang dipilih.
+  </p>
+
+  <!-- ===============================
+       JENIS HUBUNGAN MAKNA
+  ================================= -->
+  <h3>Jenis-Jenis Hubungan Makna dalam Analogi</h3>
+
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-diagram-project"></i>
+      <strong>Hubungan Sebab–Akibat</strong><br>
+      Contoh: <em>Hujan : Banjir</em> → Api : Asap
+    </li>
+
+    <li class="readable">
+      <i class="fa-solid fa-sitemap"></i>
+      <strong>Hubungan Bagian–Keseluruhan</strong><br>
+      Contoh: <em>Roda : Mobil</em> → Daun : Pohon
+    </li>
+
+    <li class="readable">
+      <i class="fa-solid fa-layer-group"></i>
+      <strong>Hubungan Jenis–Kelompok</strong><br>
+      Contoh: <em>Anggrek : Bunga</em> → Harimau : Hewan
+    </li>
+
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Hubungan Lawan Kata (Antonim)</strong><br>
+      Contoh: <em>Besar : Kecil</em> → Panjang : Pendek
+    </li>
+
+    <li class="readable">
+      <i class="fa-solid fa-equals"></i>
+      <strong>Hubungan Persamaan Kata (Sinonim)</strong><br>
+      Contoh: <em>Cerdas : Pintar</em> → Marah : Murka
+    </li>
+
+    <li class="readable">
+      <i class="fa-solid fa-user-gear"></i>
+      <strong>Hubungan Fungsi atau Kegunaan</strong><br>
+      Contoh: <em>Pisau : Memotong</em> → Pulpen : Menulis
+    </li>
+
+    <li class="readable">
+      <i class="fa-solid fa-location-dot"></i>
+      <strong>Hubungan Tempat atau Lokasi</strong><br>
+      Contoh: <em>Guru : Sekolah</em> → Dokter : Rumah Sakit
+    </li>
+
+    <li class="readable">
+      <i class="fa-solid fa-people-arrows"></i>
+      <strong>Hubungan Pelaku dan Peran</strong><br>
+      Contoh: <em>Hakim : Mengadili</em> → Polisi : Menjaga
+    </li>
+  </ul>
+
+  <!-- ===============================
+       LANGKAH STRATEGIS MENGERJAKAN
+  ================================= -->
+  <h3>Strategi Mengerjakan Soal Analogi Kata</h3>
+  <ul>
+    <li class="readable">
+      Tentukan hubungan makna antara pasangan kata pertama.
+    </li>
+    <li class="readable">
+      Uji hubungan tersebut pada pasangan kata kedua.
+    </li>
+    <li class="readable">
+      Abaikan jawaban yang hanya mirip secara kata,
+      tetapi tidak sama secara hubungan.
+    </li>
+    <li class="readable">
+      Perhatikan konteks umum, bukan makna khusus yang dipaksakan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL ANALOGI
+  ================================= -->
+  <h3>Contoh Soal Analogi</h3>
+  <p class="readable">
+    <strong>PENA : MENULIS = PISAU : …</strong>
+  </p>
+
+  <ul>
+    <li class="readable">A. Memasak</li>
+    <li class="readable">B. Memotong ✅</li>
+    <li class="readable">C. Makan</li>
+    <li class="readable">D. Tajam</li>
+    <li class="readable">E. Logam</li>
+  </ul>
+
+  <p class="readable">
+    Hubungan kata adalah <strong>alat dan fungsinya</strong>,
+    sehingga jawaban yang tepat adalah <strong>memotong</strong>.
+  </p>
+
+  <!-- ===============================
+       KESALAHAN UMUM PESERTA
+  ================================= -->
+  <h3>Kesalahan Umum dalam Soal Analogi</h3>
+  <ul>
+    <li class="readable">
+      Terjebak pada kemiripan bunyi atau asosiasi bebas.
+    </li>
+    <li class="readable">
+      Menggunakan lebih dari satu pola hubungan sekaligus.
+    </li>
+    <li class="readable">
+      Tidak konsisten antara pasangan pertama dan kedua.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TIU CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan TIU CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi jenis hubungan makna dalam analogi.
+    </li>
+    <li class="readable">
+      Analogi berbasis fungsi, peran, dan sebab-akibat.
+    </li>
+    <li class="readable">
+      Analogi dengan sinonim dan antonim tingkat lanjut.
+    </li>
+    <li class="readable">
+      Soal jebakan dengan opsi yang mirip secara kata,
+      tetapi salah secara hubungan.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     📖 PEMAHAMAN BACAAN & PENARIKAN KESIMPULAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-book-open-reader"></i> Pemahaman Bacaan & Penarikan Kesimpulan</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3><i class="fa-solid fa-lightbulb"></i> Konsep Dasar</h3>
+  <p class="readable">
+    Pemahaman bacaan dan penarikan kesimpulan merupakan kemampuan kognitif
+    untuk memahami informasi tertulis, mengidentifikasi gagasan penting,
+    serta menarik kesimpulan logis berdasarkan data dan fakta yang tersedia.
+  </p>
+
+  <p class="readable">
+    Dalam Tes CPNS (terutama TIU), kemampuan ini menguji ketelitian,
+    penalaran logis, serta kemampuan berpikir kritis peserta
+    dalam memproses teks secara objektif tanpa menambah asumsi pribadi.
+  </p>
+
+  <!-- ===============================
+       TUJUAN PENGUJIAN DALAM CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-bullseye"></i> Tujuan Pengujian dalam CPNS</h3>
+  <ul>
+    <li class="readable">
+      Mengukur kemampuan memahami informasi tertulis secara akurat.
+    </li>
+    <li class="readable">
+      Menilai ketepatan peserta dalam menarik kesimpulan logis.
+    </li>
+    <li class="readable">
+      Menguji kemampuan membedakan fakta, opini, dan asumsi.
+    </li>
+    <li class="readable">
+      Menilai konsistensi logika berpikir dalam situasi terbatas waktu.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KOMPONEN PEMAHAMAN BACAAN
+  ================================= -->
+  <h3><i class="fa-solid fa-layer-group"></i> Komponen Pemahaman Bacaan</h3>
+  <ul>
+    <li class="readable">
+      <strong>Gagasan Utama</strong> → Ide pokok yang menjadi inti pembahasan teks.
+    </li>
+    <li class="readable">
+      <strong>Informasi Pendukung</strong> → Data, fakta, atau penjelasan
+      yang memperkuat gagasan utama.
+    </li>
+    <li class="readable">
+      <strong>Makna Tersurat</strong> → Informasi yang dinyatakan secara langsung.
+    </li>
+    <li class="readable">
+      <strong>Makna Tersirat</strong> → Informasi yang disimpulkan dari konteks bacaan.
+    </li>
+    <li class="readable">
+      <strong>Hubungan Antar Kalimat</strong> → Sebab–akibat, perbandingan,
+      penegasan, atau penarikan simpulan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PENARIKAN KESIMPULAN
+  ================================= -->
+  <h3><i class="fa-solid fa-diagram-project"></i> Penarikan Kesimpulan</h3>
+  <p class="readable">
+    Penarikan kesimpulan adalah proses berpikir logis untuk memperoleh
+    pernyataan baru yang paling tepat berdasarkan informasi dalam bacaan,
+    tanpa menambahkan informasi di luar teks.
+  </p>
+
+  <ul>
+    <li class="readable">
+      Kesimpulan harus <strong>konsisten</strong> dengan seluruh isi bacaan.
+    </li>
+    <li class="readable">
+      Tidak boleh bertentangan dengan fakta yang disampaikan.
+    </li>
+    <li class="readable">
+      Tidak bersifat terlalu luas atau terlalu sempit.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI MENGERJAKAN SOAL
+  ================================= -->
+  <h3><i class="fa-solid fa-chess"></i> Strategi Mengerjakan Soal</h3>
+  <ul>
+    <li class="readable">
+      Baca pertanyaan terlebih dahulu, lalu pahami bacaan secara menyeluruh.
+    </li>
+    <li class="readable">
+      Tandai kata kunci seperti <em>sebagian besar, selalu, cenderung, akibat, karena</em>.
+    </li>
+    <li class="readable">
+      Hindari jawaban yang mengandung kata absolut
+      (misalnya: <em>semua, pasti, tidak pernah</em>) jika tidak didukung teks.
+    </li>
+    <li class="readable">
+      Pilih kesimpulan yang <strong>paling logis</strong>,
+      bukan yang paling menarik.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-pen-to-square"></i> Contoh Soal CPNS</h3>
+
+  <div class="example-box">
+    <p class="readable"><strong>Bacaan:</strong></p>
+    <p class="readable">
+      Banyak instansi pemerintah mulai menerapkan sistem kerja fleksibel
+      untuk meningkatkan produktivitas pegawai. Beberapa penelitian menunjukkan
+      bahwa fleksibilitas kerja dapat meningkatkan kepuasan pegawai,
+      meskipun efektivitasnya bergantung pada jenis pekerjaan dan
+      pengawasan yang diterapkan.
+    </p>
+
+    <p class="readable"><strong>Pertanyaan:</strong><br>
+      Kesimpulan yang paling tepat berdasarkan bacaan tersebut adalah …
+    </p>
+
+    <ul>
+      <li class="readable">A. Sistem kerja fleksibel selalu meningkatkan produktivitas pegawai.</li>
+      <li class="readable">B. Fleksibilitas kerja tidak cocok diterapkan di instansi pemerintah.</li>
+      <li class="readable">C. Efektivitas sistem kerja fleksibel dipengaruhi oleh jenis pekerjaan dan pengawasan.</li>
+      <li class="readable">D. Kepuasan pegawai tidak berhubungan dengan produktivitas.</li>
+      <li class="readable">E. Semua pegawai lebih menyukai sistem kerja fleksibel.</li>
+    </ul>
+
+    <p class="readable">
+      <strong>Jawaban Benar:</strong> C
+    </p>
+
+    <p class="readable">
+      <strong>Pembahasan:</strong><br>
+      Teks menyebutkan bahwa fleksibilitas kerja <em>dapat</em> meningkatkan
+      kepuasan dan produktivitas, namun efektivitasnya bergantung pada
+      faktor tertentu. Pilihan C paling sesuai dan tidak menambah asumsi.
+    </p>
+  </div>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-compass"></i> Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan kesimpulan paling tepat dari suatu bacaan singkat.
+    </li>
+    <li class="readable">
+      Mengidentifikasi pernyataan yang <em>sesuai</em> atau <em>tidak sesuai</em>
+      dengan isi bacaan.
+    </li>
+    <li class="readable">
+      Menentukan gagasan utama atau maksud penulis.
+    </li>
+    <li class="readable">
+      Menghindari kesimpulan yang bersifat asumtif atau berlebihan.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🧠 PENALARAN LOGIS VERBAL
+================================ -->
+<div class="card">
+
+  <h2>🧠 Penalaran Logis Berbasis Pernyataan Verbal</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Penalaran logis berbasis pernyataan verbal adalah kemampuan untuk
+    memahami, menganalisis, dan menarik kesimpulan yang tepat
+    dari informasi yang disampaikan dalam bentuk kalimat atau pernyataan.
+  </p>
+
+  <p class="readable">
+    Dalam Tes CPNS (khususnya TIU), kemampuan ini menguji
+    ketepatan berpikir, konsistensi logika, serta kecermatan
+    peserta dalam membaca dan menafsirkan pernyataan.
+  </p>
+
+  <!-- ===============================
+       TUJUAN PENILAIAN
+  ================================= -->
+  <h3>🎯 Tujuan Penilaian</h3>
+  <ul>
+    <li class="readable">Mengukur kemampuan berpikir logis dan sistematis</li>
+    <li class="readable">Menilai kecermatan memahami hubungan antar pernyataan</li>
+    <li class="readable">Menguji konsistensi kesimpulan terhadap premis</li>
+    <li class="readable">Menilai kemampuan mengambil keputusan berbasis informasi terbatas</li>
+  </ul>
+
+  <!-- ===============================
+       BENTUK & POLA SOAL
+  ================================= -->
+  <h3>📐 Bentuk dan Pola Soal</h3>
+  <ul>
+    <li class="readable">
+      <strong>🔗 Silogisme</strong> → Penarikan kesimpulan dari dua atau lebih premis
+    </li>
+    <li class="readable">
+      <strong>➡️ Implikasi Pernyataan</strong> → Jika–maka, sebab–akibat
+    </li>
+    <li class="readable">
+      <strong>⚖️ Konsistensi Logika</strong> → Pernyataan benar/salah/tidak dapat disimpulkan
+    </li>
+    <li class="readable">
+      <strong>🚫 Penyangkalan (Negasi)</strong> → Membalik atau menolak pernyataan
+    </li>
+    <li class="readable">
+      <strong>📊 Hubungan Kategori</strong> → Semua, sebagian, tidak satupun
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PRINSIP DASAR PENALARAN
+  ================================= -->
+  <h3>🧩 Prinsip Dasar Penalaran Verbal</h3>
+  <ul>
+    <li class="readable">
+      Kesimpulan harus <strong>hanya</strong> berdasarkan informasi yang diberikan
+    </li>
+    <li class="readable">
+      Tidak boleh menambahkan asumsi pribadi
+    </li>
+    <li class="readable">
+      Fokus pada makna literal, bukan opini
+    </li>
+    <li class="readable">
+      Semua premis dianggap benar (kecuali dinyatakan sebaliknya)
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL 1
+  ================================= -->
+  <h3>📝 Contoh Soal 1 (Silogisme)</h3>
+
+  <div class="readable" style="background:#f7f9fb;padding:12px;border-radius:8px;">
+    <p>
+      Semua dosen adalah pendidik.<br>
+      Sebagian pendidik adalah peneliti.
+    </p>
+    <p><strong>Kesimpulan yang tepat adalah:</strong></p>
+    <ol type="A">
+      <li>Semua dosen adalah peneliti</li>
+      <li>Sebagian dosen adalah peneliti</li>
+      <li>Semua peneliti adalah dosen</li>
+      <li>Tidak ada dosen yang peneliti</li>
+      <li>Tidak dapat ditarik kesimpulan</li>
+    </ol>
+  </div>
+
+  <p class="readable">
+    ✅ <strong>Jawaban benar: E</strong><br>
+    Penjelasan: Tidak ada informasi langsung yang menyatakan hubungan
+    antara "dosen" dan "peneliti".
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 2
+  ================================= -->
+  <h3>📝 Contoh Soal 2 (Implikasi)</h3>
+
+  <div class="readable" style="background:#f7f9fb;padding:12px;border-radius:8px;">
+    <p>
+      Jika seorang ASN disiplin, maka kinerjanya baik.<br>
+      Budi adalah ASN yang kinerjanya tidak baik.
+    </p>
+    <p><strong>Pernyataan yang pasti benar adalah:</strong></p>
+    <ol type="A">
+      <li>Budi bukan ASN</li>
+      <li>Budi tidak disiplin</li>
+      <li>Budi melanggar aturan</li>
+      <li>Budi ASN teladan</li>
+      <li>Tidak dapat disimpulkan</li>
+    </ol>
+  </div>
+
+  <p class="readable">
+    ✅ <strong>Jawaban benar: B</strong><br>
+    Penjelasan: Dengan logika kontraposisi, jika kinerja tidak baik,
+    maka tidak disiplin.
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 3
+  ================================= -->
+  <h3>📝 Contoh Soal 3 (Konsistensi Pernyataan)</h3>
+
+  <div class="readable" style="background:#f7f9fb;padding:12px;border-radius:8px;">
+    <p>
+      Sebagian pegawai adalah honorer.<br>
+      Semua honorer tidak memiliki jabatan struktural.
+    </p>
+    <p><strong>Kesimpulan yang benar:</strong></p>
+    <ol type="A">
+      <li>Semua pegawai tidak memiliki jabatan struktural</li>
+      <li>Sebagian pegawai tidak memiliki jabatan struktural</li>
+      <li>Semua pegawai memiliki jabatan struktural</li>
+      <li>Sebagian honorer memiliki jabatan struktural</li>
+      <li>Tidak satupun pegawai honorer</li>
+    </ol>
+  </div>
+
+  <p class="readable">
+    ✅ <strong>Jawaban benar: B</strong><br>
+    Penjelasan: Karena sebagian pegawai adalah honorer,
+    dan semua honorer tidak memiliki jabatan struktural.
+  </p>
+
+  <!-- ===============================
+       STRATEGI CEPAT CPNS
+  ================================= -->
+  <h3>⚡ Strategi Cepat Mengerjakan Soal</h3>
+  <ul>
+    <li class="readable">Tandai kata kunci: <strong>semua, sebagian, tidak satupun</strong></li>
+    <li class="readable">Gunakan diagram logika sederhana di kepala</li>
+    <li class="readable">Hindari jawaban yang terlalu ekstrem</li>
+    <li class="readable">Jika ragu, pilih “tidak dapat disimpulkan” dengan alasan kuat</li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>📌 Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">Menentukan kesimpulan logis dari pernyataan</li>
+    <li class="readable">Mengidentifikasi kesalahan logika</li>
+    <li class="readable">Menilai validitas argumen verbal</li>
+    <li class="readable">Menentukan implikasi atau kontraposisi pernyataan</li>
+  </ul>
+
+</div>
+
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
