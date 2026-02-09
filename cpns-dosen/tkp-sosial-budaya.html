@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Sosial Budaya</h1>
+  <p>Tes Karakteristik Pribadi</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+
+<!-- ===============================
+     🌏 SOSIAL BUDAYA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-group"></i> Sosial Budaya</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Sosial budaya berkaitan dengan kemampuan individu untuk memahami,
+    menghargai, dan bersikap bijak terhadap keberagaman latar belakang
+    sosial, budaya, agama, suku, bahasa, dan adat istiadat masyarakat.
+  </p>
+
+  <p class="readable">
+    Dalam konteks kehidupan berbangsa dan bernegara, pemahaman sosial budaya
+    menjadi fondasi penting untuk menjaga harmoni sosial,
+    memperkuat persatuan, serta mencegah konflik horizontal.
+  </p>
+
+  <p class="readable">
+    Bagi aparatur negara, kompetensi sosial budaya merupakan prasyarat
+    utama dalam memberikan pelayanan publik yang adil,
+    inklusif, dan tidak diskriminatif.
+  </p>
+
+  <!-- ===============================
+       RUANG LINGKUP SOSIAL BUDAYA
+  ================================= -->
+  <h3>Ruang Lingkup Sosial Budaya</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-users"></i>
+      <strong>Keberagaman Sosial</strong> → Perbedaan status sosial,
+      pendidikan, pekerjaan, dan kondisi ekonomi masyarakat.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-earth-asia"></i>
+      <strong>Keberagaman Budaya</strong> → Perbedaan adat istiadat,
+      bahasa daerah, tradisi, dan nilai lokal.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-hands-praying"></i>
+      <strong>Keberagaman Agama dan Kepercayaan</strong> → Penghormatan
+      terhadap keyakinan dan praktik ibadah setiap individu.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Interaksi Sosial</strong> → Pola hubungan antarindividu
+      dan antarkelompok dalam masyarakat majemuk.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PRINSIP DASAR SOSIAL BUDAYA
+  ================================= -->
+  <h3>Prinsip Dasar dalam Kehidupan Sosial Budaya</h3>
+  <ul>
+    <li class="readable">
+      <strong>Toleransi</strong> → Menghormati perbedaan tanpa memaksakan
+      kehendak atau keyakinan.
+    </li>
+    <li class="readable">
+      <strong>Kesetaraan</strong> → Mengakui bahwa setiap warga negara
+      memiliki kedudukan dan hak yang sama.
+    </li>
+    <li class="readable">
+      <strong>Empati Sosial</strong> → Kemampuan memahami kondisi dan
+      perasaan orang lain.
+    </li>
+    <li class="readable">
+      <strong>Inklusivitas</strong> → Menerima dan melibatkan semua kelompok
+      tanpa diskriminasi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA / KERANGKA KONSEPTUAL
+  ================================= -->
+  <h3>Kerangka Konseptual Sosial Budaya</h3>
+  <p class="readable">
+    Pemahaman sosial budaya dapat dirumuskan secara konseptual sebagai:
+  </p>
+
+  <p class="readable" style="font-weight: bold; text-align: center;">
+    🧠 Pemahaman + 🤝 Toleransi + ⚖️ Keadilan = 🌈 Harmoni Sosial
+  </p>
+
+  <p class="readable">
+    Artinya, semakin tinggi pemahaman dan sikap toleran,
+    semakin besar peluang terciptanya kehidupan sosial
+    yang harmonis dan berkeadilan.
+  </p>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM KEHIDUPAN SEHARI-HARI
+  ================================= -->
+  <h3>Implementasi Sosial Budaya dalam Kehidupan Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      Menghormati adat dan kebiasaan lokal dalam kehidupan bermasyarakat.
+    </li>
+    <li class="readable">
+      Tidak melakukan stereotip atau prasangka terhadap kelompok tertentu.
+    </li>
+    <li class="readable">
+      Menjaga sikap dan tutur kata dalam interaksi lintas budaya dan agama.
+    </li>
+    <li class="readable">
+      Menyelesaikan perbedaan pendapat melalui dialog dan musyawarah.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM TUGAS ASN
+  ================================= -->
+  <h3>Implementasi Sosial Budaya dalam Tugas ASN</h3>
+  <ul>
+    <li class="readable">
+      Memberikan pelayanan publik tanpa membedakan suku, agama,
+      ras, golongan, atau latar belakang sosial.
+    </li>
+    <li class="readable">
+      Menyesuaikan pendekatan komunikasi dengan karakteristik masyarakat lokal.
+    </li>
+    <li class="readable">
+      Menghindari sikap arogan, diskriminatif, dan tidak sensitif budaya.
+    </li>
+    <li class="readable">
+      Menjadi teladan dalam menjaga kerukunan dan persatuan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       POTENSI MASALAH SOSIAL BUDAYA
+  ================================= -->
+  <h3>Potensi Masalah Sosial Budaya</h3>
+  <ul>
+    <li class="readable">
+      Konflik sosial akibat perbedaan budaya atau agama.
+    </li>
+    <li class="readable">
+      Diskriminasi dan marginalisasi kelompok tertentu.
+    </li>
+    <li class="readable">
+      Lunturnya nilai budaya lokal akibat globalisasi.
+    </li>
+    <li class="readable">
+      Penyebaran intoleransi melalui media sosial.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS (Sosial Budaya)</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN bertugas di daerah dengan adat istiadat yang berbeda
+    dari kebiasaannya. Dalam menjalankan tugas pelayanan publik,
+    sikap yang paling mencerminkan kompetensi sosial budaya adalah:
+  </p>
+
+  <ul>
+    <li class="readable">A. Mempertahankan kebiasaan pribadi tanpa menyesuaikan diri</li>
+    <li class="readable">B. Menghindari interaksi dengan masyarakat setempat</li>
+    <li class="readable">C. Menghormati adat setempat selama tidak bertentangan dengan hukum</li>
+    <li class="readable">D. Menganggap adat setempat sebagai penghambat pelayanan</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Menghormati adat dan budaya lokal merupakan wujud sikap toleran
+    dan empati sosial, selama tidak bertentangan dengan hukum
+    dan nilai konstitusi.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap yang mencerminkan toleransi dan empati sosial.
+    </li>
+    <li class="readable">
+      Analisis kasus konflik sosial dan solusi berbasis nilai kebhinekaan.
+    </li>
+    <li class="readable">
+      Penilaian perilaku ASN dalam menghadapi keberagaman masyarakat.
+    </li>
+    <li class="readable">
+      Penerapan nilai persatuan dalam masyarakat multikultural.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🌈 TOLERANSI TERHADAP PERBEDAAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-arrows"></i> Toleransi terhadap Perbedaan</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Toleransi terhadap perbedaan adalah sikap menghormati, menerima,
+    dan menghargai keberagaman yang ada dalam masyarakat, baik perbedaan
+    agama, suku, budaya, ras, pendapat, pilihan politik, maupun latar belakang sosial.
+  </p>
+
+  <p class="readable">
+    Dalam konteks kehidupan berbangsa dan bernegara, toleransi merupakan
+    prasyarat utama terciptanya persatuan, stabilitas sosial,
+    dan penyelenggaraan pemerintahan yang adil dan demokratis.
+  </p>
+
+  <p class="readable">
+    Nilai toleransi berakar kuat pada Pancasila, khususnya
+    <strong>Sila ke-1 (Ketuhanan Yang Maha Esa)</strong>,
+    <strong>Sila ke-2 (Kemanusiaan yang Adil dan Beradab)</strong>,
+    dan <strong>Sila ke-3 (Persatuan Indonesia)</strong>.
+  </p>
+
+  <!-- ===============================
+       LANDASAN NILAI & KONSTITUSI
+  ================================= -->
+  <h3>Landasan Nilai dan Konstitusional</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Pancasila</strong> → Menjamin penghormatan terhadap
+      martabat manusia dan persatuan dalam keberagaman.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-gavel"></i>
+      <strong>UUD 1945</strong> → Menjamin kebebasan beragama,
+      berpendapat, dan persamaan di hadapan hukum.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-handshake-angle"></i>
+      <strong>Bhinneka Tunggal Ika</strong> → Berbeda-beda tetapi tetap satu.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       BENTUK-BENTUK PERBEDAAN
+  ================================= -->
+  <h3>Bentuk-Bentuk Perbedaan dalam Masyarakat</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-place-of-worship"></i>
+      Perbedaan agama dan keyakinan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-earth-asia"></i>
+      Perbedaan suku, ras, dan budaya.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-comments"></i>
+      Perbedaan pendapat, pandangan politik, dan pemikiran.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-briefcase"></i>
+      Perbedaan status sosial, ekonomi, dan profesi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA KONSEPTUAL TOLERANSI
+  ================================= -->
+  <h3>Formula Konseptual Toleransi</h3>
+  <p class="readable">
+    Untuk memudahkan pemahaman dalam konteks soal CPNS,
+    toleransi dapat dirumuskan secara konseptual sebagai berikut:
+  </p>
+
+  <p class="readable" style="text-align:center; font-weight:bold;">
+    🤝 Toleransi = Pengakuan Perbedaan + Penghormatan + Tidak Memaksakan Kehendak
+  </p>
+
+  <p class="readable">
+    Jika salah satu unsur di atas tidak terpenuhi, maka sikap tersebut
+    tidak dapat disebut sebagai toleransi.
+  </p>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM KEHIDUPAN
+  ================================= -->
+  <h3>Implementasi Toleransi dalam Kehidupan Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      Menghormati pelaksanaan ibadah agama lain tanpa gangguan.
+    </li>
+    <li class="readable">
+      Tidak memaksakan pendapat pribadi dalam musyawarah.
+    </li>
+    <li class="readable">
+      Menghargai tradisi dan adat daerah lain.
+    </li>
+    <li class="readable">
+      Menjaga etika komunikasi di ruang publik dan media sosial.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       TOLERANSI DALAM KONTEKS ASN
+  ================================= -->
+  <h3>Toleransi dalam Konteks Aparatur Sipil Negara (ASN)</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-user-tie"></i>
+      Memberikan pelayanan publik tanpa diskriminasi.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-building-columns"></i>
+      Menjaga netralitas dan profesionalitas dalam lingkungan kerja.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-users-gear"></i>
+      Menghormati rekan kerja dengan latar belakang yang berbeda.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-ban"></i>
+      Menolak ujaran kebencian dan sikap intoleran.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       BENTUK PERILAKU TIDAK TOLERAN
+  ================================= -->
+  <h3>Bentuk Perilaku Tidak Toleran</h3>
+  <ul>
+    <li class="readable">
+      Diskriminasi berdasarkan agama, suku, atau pandangan.
+    </li>
+    <li class="readable">
+      Pemaksaan kehendak atau keyakinan kepada orang lain.
+    </li>
+    <li class="readable">
+      Ujaran kebencian, stereotip, dan prasangka negatif.
+    </li>
+    <li class="readable">
+      Penolakan hak orang lain untuk berekspresi secara sah.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN bekerja dalam tim yang anggotanya memiliki latar belakang
+    agama dan budaya berbeda. Dalam rapat, terjadi perbedaan pendapat
+    yang cukup tajam. Sikap paling sesuai dengan nilai toleransi adalah …
+  </p>
+
+  <ul>
+    <li class="readable">A. Memaksakan pendapat mayoritas agar keputusan cepat diambil</li>
+    <li class="readable">B. Menghindari diskusi agar tidak terjadi konflik</li>
+    <li class="readable">C. Menghargai setiap pendapat dan mencari titik temu melalui musyawarah</li>
+    <li class="readable">D. Menyerahkan keputusan kepada pimpinan tanpa diskusi</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> <span style="font-weight:bold;">C</span><br>
+    <strong>Pembahasan:</strong><br>
+    Toleransi tidak berarti menghindari perbedaan,
+    tetapi menghargai perbedaan dan menyelesaikannya
+    melalui musyawarah tanpa pemaksaan kehendak.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi perilaku toleran dan intoleran dalam studi kasus.
+    </li>
+    <li class="readable">
+      Sikap ASN dalam menghadapi perbedaan pendapat dan keyakinan.
+    </li>
+    <li class="readable">
+      Hubungan toleransi dengan Pancasila dan persatuan bangsa.
+    </li>
+    <li class="readable">
+      Penerapan toleransi dalam pelayanan publik dan birokrasi.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🧭 MENGHORMATI ADAT & NORMA LOKAL
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-group"></i> Menghormati Adat dan Norma Lokal</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Menghormati adat dan norma lokal merupakan sikap dan perilaku
+    yang mencerminkan penghargaan terhadap nilai, kebiasaan,
+    dan aturan sosial yang hidup dan berkembang dalam masyarakat setempat.
+  </p>
+
+  <p class="readable">
+    Dalam konteks Negara Kesatuan Republik Indonesia yang majemuk,
+    penghormatan terhadap adat dan norma lokal menjadi kunci
+    terciptanya harmoni sosial, persatuan bangsa, dan stabilitas pemerintahan.
+  </p>
+
+  <p class="readable">
+    Bagi aparatur negara, sikap ini merupakan bagian dari
+    pengamalan nilai Pancasila, UUD 1945, serta etika pelayanan publik.
+  </p>
+
+  <!-- ===============================
+       LANDASAN NILAI & KONSTITUSIONAL
+  ================================= -->
+  <h3>Landasan Nilai dan Konstitusional</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Pancasila</strong> → Terutama Sila ke-2 (kemanusiaan),
+      Sila ke-3 (persatuan), dan Sila ke-5 (keadilan sosial).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-book"></i>
+      <strong>UUD 1945</strong> → Negara mengakui dan menghormati
+      kesatuan masyarakat hukum adat beserta hak-hak tradisionalnya
+      sepanjang masih hidup dan sesuai perkembangan masyarakat.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-landmark"></i>
+      <strong>Prinsip Negara Hukum</strong> → Adat dan norma lokal
+      dihormati selama tidak bertentangan dengan hukum nasional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS ADAT & NORMA LOKAL
+  ================================= -->
+  <h3>Jenis Adat dan Norma Lokal</h3>
+  <ul>
+    <li class="readable">
+      <strong>Adat Istiadat</strong> → Kebiasaan turun-temurun
+      (upacara adat, tata cara pergaulan, musyawarah adat).
+    </li>
+    <li class="readable">
+      <strong>Norma Sosial</strong> → Aturan tidak tertulis
+      yang mengatur sopan santun dan kepantasan.
+    </li>
+    <li class="readable">
+      <strong>Norma Agama</strong> → Ketentuan perilaku
+      berdasarkan ajaran kepercayaan masyarakat setempat.
+    </li>
+    <li class="readable">
+      <strong>Hukum Adat</strong> → Aturan adat yang memiliki
+      sanksi sosial dan diakui dalam sistem hukum nasional.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA / PRINSIP KUNCI
+  ================================= -->
+  <h3>Prinsip Kunci dalam Menghormati Adat dan Norma Lokal</h3>
+  <p class="readable">
+    Prinsip ini sering muncul dalam bentuk penalaran pada soal CPNS:
+  </p>
+
+  <p class="readable">
+    <strong>Harmoni Sosial = (Kepatuhan Hukum Nasional) + (Penghormatan Adat Lokal)</strong>
+  </p>
+
+  <p class="readable">
+    Artinya, sikap ideal adalah menghormati adat dan norma lokal
+    tanpa melanggar hukum nasional dan nilai konstitusi.
+  </p>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM KEHIDUPAN SEHARI-HARI
+  ================================= -->
+  <h3>Implementasi dalam Kehidupan Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      Menghormati tata cara dan kebiasaan masyarakat setempat
+      saat bertugas di daerah tertentu.
+    </li>
+    <li class="readable">
+      Menjaga sikap, bahasa, dan perilaku agar tidak menyinggung
+      nilai budaya lokal.
+    </li>
+    <li class="readable">
+      Menghargai peran tokoh adat dan tokoh masyarakat
+      dalam pengambilan keputusan sosial.
+    </li>
+    <li class="readable">
+      Tidak memaksakan kebiasaan pribadi atau kelompok
+      kepada masyarakat lokal.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       IMPLEMENTASI OLEH ASN
+  ================================= -->
+  <h3>Implementasi oleh Aparatur Sipil Negara (ASN)</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-id-badge"></i>
+      Melaksanakan pelayanan publik dengan sensitif terhadap
+      nilai dan budaya lokal.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-comments"></i>
+      Mengedepankan pendekatan persuasif dan dialog
+      dalam menyelesaikan persoalan masyarakat.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-handshake"></i>
+      Bekerja sama dengan tokoh adat dan masyarakat setempat.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-ban"></i>
+      Tidak melakukan tindakan yang bersifat diskriminatif,
+      arogan, atau merendahkan budaya lokal.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DAMPAK JIKA TIDAK DIHORMATI
+  ================================= -->
+  <h3>Dampak Jika Adat dan Norma Lokal Tidak Dihormati</h3>
+  <ul>
+    <li class="readable">
+      Timbul konflik sosial dan penolakan masyarakat.
+    </li>
+    <li class="readable">
+      Menurunnya kepercayaan publik terhadap pemerintah.
+    </li>
+    <li class="readable">
+      Terganggunya stabilitas dan persatuan di tingkat lokal.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN ditugaskan di daerah yang memiliki adat istiadat kuat.
+    Dalam menjalankan tugas, ia menghadapi kebiasaan lokal yang berbeda
+    dengan kebiasaan pribadinya, namun tidak bertentangan dengan hukum nasional.
+    Sikap yang paling tepat adalah:
+  </p>
+
+  <ul>
+    <li class="readable">A. Mengabaikan adat setempat demi efisiensi kerja</li>
+    <li class="readable">B. Meminta masyarakat mengikuti kebiasaan dirinya</li>
+    <li class="readable">C. Menghormati dan menyesuaikan diri dengan adat setempat</li>
+    <li class="readable">D. Menolak adat tersebut karena tidak tertulis dalam hukum</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C
+  </p>
+
+  <p class="readable">
+    <strong>Pembahasan:</strong><br>
+    Sikap ASN harus menghormati adat dan norma lokal selama tidak
+    bertentangan dengan hukum nasional dan nilai konstitusi.
+    Hal ini mencerminkan pengamalan Pancasila dan etika pelayanan publik.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap ASN yang paling tepat dalam konteks budaya lokal.
+    </li>
+    <li class="readable">
+      Analisis konflik antara adat lokal dan hukum nasional.
+    </li>
+    <li class="readable">
+      Penilaian perilaku yang mencerminkan toleransi dan persatuan.
+    </li>
+    <li class="readable">
+      Studi kasus pelayanan publik di daerah dengan kearifan lokal kuat.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🤝 SIKAP INKLUSIF DALAM INTERAKSI SOSIAL
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-arrows"></i> Sikap Inklusif dalam Interaksi Sosial</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Sikap inklusif adalah sikap terbuka, menghargai, dan menerima
+    keberagaman individu maupun kelompok dalam kehidupan sosial,
+    tanpa diskriminasi atas dasar suku, agama, ras, gender,
+    latar belakang sosial, kondisi fisik, maupun perbedaan pandangan.
+  </p>
+
+  <p class="readable">
+    Dalam konteks berbangsa dan bernegara, sikap inklusif merupakan
+    perwujudan nilai Pancasila, prinsip HAM, serta prasyarat utama
+    terciptanya persatuan dan keadilan sosial.
+  </p>
+
+  <!-- ===============================
+       LANDASAN NILAI
+  ================================= -->
+  <h3>Landasan Nilai Sikap Inklusif</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Pancasila</strong> → terutama Sila ke-2 dan Sila ke-3
+      (kemanusiaan dan persatuan).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-gavel"></i>
+      <strong>UUD 1945</strong> → persamaan kedudukan warga negara
+      di hadapan hukum dan pemerintahan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-handshake"></i>
+      <strong>Nilai Sosial</strong> → toleransi, empati,
+      dan saling menghormati.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PRINSIP UTAMA SIKAP INKLUSIF
+  ================================= -->
+  <h3>Prinsip Utama Sikap Inklusif</h3>
+  <ul>
+    <li class="readable">
+      <strong>Toleransi</strong> → Menghargai perbedaan
+      tanpa harus menyetujui semuanya.
+    </li>
+    <li class="readable">
+      <strong>Kesetaraan</strong> → Memperlakukan setiap orang
+      secara adil dan setara.
+    </li>
+    <li class="readable">
+      <strong>Empati</strong> → Mampu memahami sudut pandang
+      dan perasaan orang lain.
+    </li>
+    <li class="readable">
+      <strong>Anti-diskriminasi</strong> → Menolak segala bentuk
+      perlakuan tidak adil.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA KONSEPTUAL (SIMBOLIK)
+  ================================= -->
+  <h3>Formula Konseptual Sikap Inklusif</h3>
+  <p class="readable">
+    Sikap inklusif dapat dipahami secara sederhana melalui
+    formula konseptual berikut:
+  </p>
+
+  <p class="readable" style="font-weight: bold; text-align: center;">
+    🧠 Kesadaran + ❤️ Empati + ⚖️ Keadilan = 🤝 Interaksi Inklusif
+  </p>
+
+  <p class="readable">
+    Artinya, interaksi sosial yang inklusif tercipta apabila
+    individu memiliki kesadaran akan keberagaman, empati terhadap sesama,
+    serta komitmen pada keadilan dan kesetaraan.
+  </p>
+
+  <!-- ===============================
+       CONTOH PERILAKU INKLUSIF
+  ================================= -->
+  <h3>Contoh Sikap Inklusif dalam Kehidupan Sehari-hari</h3>
+  <ul>
+    <li class="readable">
+      Menghormati perbedaan pendapat dalam diskusi
+      tanpa merendahkan pihak lain.
+    </li>
+    <li class="readable">
+      Memberikan kesempatan yang sama kepada semua orang
+      dalam lingkungan kerja atau masyarakat.
+    </li>
+    <li class="readable">
+      Menggunakan bahasa yang sopan dan tidak mengandung
+      ujaran kebencian.
+    </li>
+    <li class="readable">
+      Bersikap terbuka terhadap keberagaman budaya dan adat istiadat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       SIKAP INKLUSIF DALAM KONTEKS ASN
+  ================================= -->
+  <h3>Sikap Inklusif dalam Konteks ASN</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-building-columns"></i>
+      Memberikan pelayanan publik tanpa diskriminasi.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-users"></i>
+      Menghormati rekan kerja dari latar belakang yang beragam.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-shield-heart"></i>
+      Melindungi kelompok rentan dalam kebijakan dan pelayanan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-ban"></i>
+      Menolak ujaran kebencian dan intoleransi di lingkungan kerja.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DAMPAK SIKAP TIDAK INKLUSIF
+  ================================= -->
+  <h3>Dampak Sikap Tidak Inklusif</h3>
+  <ul>
+    <li class="readable">
+      Timbulnya konflik sosial dan perpecahan.
+    </li>
+    <li class="readable">
+      Menurunnya kepercayaan publik terhadap institusi negara.
+    </li>
+    <li class="readable">
+      Terhambatnya kerja sama dan kinerja organisasi.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN melayani masyarakat dengan latar belakang agama,
+    suku, dan pandangan politik yang berbeda. Dalam praktiknya,
+    ASN tersebut selalu memberikan pelayanan yang sama cepat
+    dan ramah tanpa membedakan siapa pun.
+    Sikap ASN tersebut mencerminkan nilai …
+  </p>
+
+  <ul>
+    <li class="readable">A. Fanatisme kelompok</li>
+    <li class="readable">B. Diskriminasi positif</li>
+    <li class="readable">C. Sikap inklusif dan keadilan sosial</li>
+    <li class="readable">D. Kepentingan mayoritas</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C<br>
+    <strong>Pembahasan:</strong> Memberikan pelayanan tanpa
+    membedakan latar belakang mencerminkan sikap inklusif
+    dan prinsip keadilan sosial sesuai Pancasila dan UUD 1945.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap inklusif atau diskriminatif dalam studi kasus.
+    </li>
+    <li class="readable">
+      Penilaian perilaku ASN dalam interaksi sosial yang beragam.
+    </li>
+    <li class="readable">
+      Hubungan sikap inklusif dengan Pancasila dan HAM.
+    </li>
+    <li class="readable">
+      Dampak sosial dari sikap intoleran atau eksklusif.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🤝 MENGHINDARI STEREOTIP & PRASANGKA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-people-group"></i> Menghindari Stereotip dan Prasangka</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Stereotip dan prasangka merupakan sikap atau penilaian yang muncul
+    berdasarkan generalisasi berlebihan terhadap individu atau kelompok,
+    tanpa mempertimbangkan fakta dan kondisi objektif.
+  </p>
+
+  <p class="readable">
+    Dalam konteks kehidupan berbangsa dan bernegara, terutama bagi ASN,
+    stereotip dan prasangka berpotensi melahirkan diskriminasi,
+    ketidakadilan pelayanan publik, serta konflik sosial.
+  </p>
+
+  <p class="readable">
+    Menghindari stereotip dan prasangka berarti menjunjung tinggi nilai
+    kemanusiaan, kesetaraan, profesionalitas, dan keadilan sosial
+    sebagaimana diamanatkan oleh Pancasila dan UUD 1945.
+  </p>
+
+  <!-- ===============================
+       DEFINISI KUNCI
+  ================================= -->
+  <h3>Definisi Kunci</h3>
+  <ul>
+    <li class="readable">
+      <strong><i class="fa-solid fa-tags"></i> Stereotip</strong> →
+      Pelabelan atau anggapan umum terhadap suatu kelompok
+      (misalnya suku, agama, profesi, gender) yang bersifat menyederhanakan.
+    </li>
+    <li class="readable">
+      <strong><i class="fa-solid fa-eye-slash"></i> Prasangka</strong> →
+      Sikap atau perasaan negatif (atau positif berlebihan) terhadap individu
+      atau kelompok sebelum mengenal fakta yang sebenarnya.
+    </li>
+    <li class="readable">
+      <strong><i class="fa-solid fa-ban"></i> Diskriminasi</strong> →
+      Perilaku nyata yang merugikan pihak tertentu
+      sebagai akibat dari stereotip dan prasangka.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       HUBUNGAN KONSEPTUAL
+  ================================= -->
+  <h3>Hubungan Konseptual</h3>
+  <p class="readable">
+    Dalam ilmu sosial dan psikologi, hubungan antara stereotip,
+    prasangka, dan diskriminasi dapat digambarkan sebagai berikut:
+  </p>
+
+  <p class="readable" style="text-align:center; font-weight:bold;">
+    Stereotip (pikiran) → Prasangka (sikap) → Diskriminasi (tindakan)
+  </p>
+
+  <p class="readable">
+    Jika tidak dikendalikan, ketiganya dapat merusak prinsip keadilan,
+    persatuan, dan profesionalitas aparatur negara.
+  </p>
+
+  <!-- ===============================
+       BENTUK STEREOTIP & PRASANGKA
+  ================================= -->
+  <h3>Bentuk Stereotip dan Prasangka</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-user-group"></i>
+      Stereotip berbasis suku, agama, ras, dan antargolongan (SARA).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-briefcase"></i>
+      Stereotip profesi (misalnya menganggap profesi tertentu tidak kompeten).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-venus-mars"></i>
+      Prasangka berbasis gender dan usia.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-wheelchair"></i>
+      Prasangka terhadap penyandang disabilitas atau kelompok rentan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       DAMPAK NEGATIF
+  ================================= -->
+  <h3>Dampak Negatif Stereotip dan Prasangka</h3>
+  <ul>
+    <li class="readable">
+      Menurunnya kualitas dan keadilan pelayanan publik.
+    </li>
+    <li class="readable">
+      Rusaknya kepercayaan masyarakat terhadap pemerintah.
+    </li>
+    <li class="readable">
+      Munculnya konflik sosial dan disintegrasi bangsa.
+    </li>
+    <li class="readable">
+      Pelanggaran hak asasi manusia dan nilai Pancasila.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       SIKAP YANG HARUS DIKEMBANGKAN
+  ================================= -->
+  <h3>Sikap yang Harus Dikembangkan</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      Objektivitas → Menilai berdasarkan data, kinerja, dan aturan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-brain"></i>
+      Kesadaran diri (self-awareness) terhadap bias pribadi.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-handshake-angle"></i>
+      Empati dan penghargaan terhadap keberagaman.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-user-shield"></i>
+      Profesionalitas dalam menjalankan tugas ASN.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM KEHIDUPAN ASN
+  ================================= -->
+  <h3>Implementasi dalam Kehidupan ASN</h3>
+  <ul>
+    <li class="readable">
+      Memberikan pelayanan publik yang setara tanpa membedakan latar belakang.
+    </li>
+    <li class="readable">
+      Menghindari asumsi pribadi dalam pengambilan keputusan administratif.
+    </li>
+    <li class="readable">
+      Menghormati rekan kerja dan masyarakat dengan sikap inklusif.
+    </li>
+    <li class="readable">
+      Mengutamakan aturan dan standar kerja daripada opini subjektif.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3>Contoh Soal CPNS</h3>
+
+  <p class="readable">
+    <strong>Soal:</strong><br>
+    Seorang ASN memberikan pelayanan yang lebih lambat kepada warga tertentu
+    karena beranggapan bahwa kelompok tersebut “biasanya tidak tertib”.
+    Tindakan ASN tersebut bertentangan dengan prinsip …
+  </p>
+
+  <ul class="readable">
+    <li>A. Efisiensi pelayanan publik</li>
+    <li>B. Netralitas aparatur negara</li>
+    <li>C. Persamaan kedudukan warga negara</li>
+    <li>D. Kepastian hukum</li>
+    <li>E. Hierarki kewenangan</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C<br>
+    <strong>Pembahasan:</strong><br>
+    Tindakan tersebut didasari stereotip dan prasangka,
+    sehingga melanggar prinsip persamaan kedudukan warga negara
+    di hadapan hukum dan pemerintahan.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi sikap stereotip atau prasangka dalam studi kasus pelayanan publik.
+    </li>
+    <li class="readable">
+      Penilaian perilaku ASN yang diskriminatif atau tidak profesional.
+    </li>
+    <li class="readable">
+      Hubungan antara stereotip, prasangka, dan pelanggaran nilai Pancasila.
+    </li>
+    <li class="readable">
+      Penentuan sikap paling tepat untuk menjaga keadilan dan persatuan.
+    </li>
+  </ul>
+
+</div>
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
