@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Analisis & Penalaran</h1>
+  <p>Tes Intelegensi Umum</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+
+<!-- ===============================
+     🧠 ANALISIS & PENALARAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-brain"></i> Analisis & Penalaran</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Analisis dan penalaran mengukur kemampuan berpikir kritis dalam
+    memecahkan masalah secara logis, sistematis, objektif,
+    dan berbasis data atau informasi yang tersedia.
+  </p>
+
+  <p class="readable">
+    Kemampuan ini menuntut peserta untuk memahami hubungan sebab–akibat,
+    menarik kesimpulan yang valid, mengidentifikasi pola,
+    serta mengevaluasi kebenaran suatu pernyataan.
+  </p>
+
+  <p class="readable">
+    Dalam Tes CPNS, analisis dan penalaran termasuk kemampuan inti
+    pada <strong>TIU (Tes Intelegensia Umum)</strong>
+    dan sering disajikan dalam bentuk soal cerita, tabel, grafik,
+    maupun pernyataan logika.
+  </p>
+
+  <!-- ===============================
+       TUJUAN PENGUKURAN
+  ================================= -->
+  <h3><i class="fa-solid fa-bullseye"></i> Tujuan Pengukuran</h3>
+  <ul>
+    <li class="readable">
+      Mengukur kemampuan berpikir logis dan konsisten.
+    </li>
+    <li class="readable">
+      Menguji kecakapan menarik kesimpulan dari informasi terbatas.
+    </li>
+    <li class="readable">
+      Menilai ketepatan pengambilan keputusan berdasarkan data.
+    </li>
+    <li class="readable">
+      Mengukur kemampuan menyaring informasi yang relevan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS-JENIS PENALARAN
+  ================================= -->
+  <h3><i class="fa-solid fa-diagram-project"></i> Jenis-Jenis Penalaran</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>Penalaran Deduktif</strong><br>
+      Menarik kesimpulan khusus dari pernyataan umum.<br>
+      <em>Contoh pola:</em>  
+      <span class="formula">Jika A → B, A benar, maka B benar</span>
+    </li>
+
+    <li class="readable">
+      <strong>Penalaran Induktif</strong><br>
+      Menarik kesimpulan umum dari beberapa fakta khusus.<br>
+      <em>Contoh:</em> Pola angka, pola gambar, atau kecenderungan data.
+    </li>
+
+    <li class="readable">
+      <strong>Penalaran Analitis</strong><br>
+      Menguraikan masalah kompleks menjadi bagian-bagian kecil
+      untuk menemukan hubungan antar unsur.
+    </li>
+
+    <li class="readable">
+      <strong>Penalaran Logika Simbolik</strong><br>
+      Menggunakan simbol logika formal:
+      <span class="formula">∧ (dan), ∨ (atau), ¬ (tidak), → (implikasi)</span>
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PRINSIP DASAR LOGIKA
+  ================================= -->
+  <h3><i class="fa-solid fa-calculator"></i> Prinsip Dasar Logika</h3>
+  <ul>
+    <li class="readable">
+      <strong>Konsistensi</strong> → Tidak boleh ada kontradiksi antar pernyataan.
+    </li>
+    <li class="readable">
+      <strong>Kecukupan Data</strong> → Kesimpulan harus didukung informasi yang cukup.
+    </li>
+    <li class="readable">
+      <strong>Relevansi</strong> → Hanya informasi yang berkaitan yang digunakan.
+    </li>
+    <li class="readable">
+      <strong>Validitas</strong> → Proses berpikir harus sesuai kaidah logika.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       BENTUK SOAL DALAM CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-list-check"></i> Bentuk Soal Analisis & Penalaran CPNS</h3>
+  <ul>
+    <li class="readable">Kesimpulan logis dari beberapa pernyataan</li>
+    <li class="readable">Analisis sebab–akibat</li>
+    <li class="readable">Pola angka dan pola hubungan</li>
+    <li class="readable">Evaluasi kebenaran pernyataan</li>
+    <li class="readable">Analisis data sederhana (tabel/grafik)</li>
+  </ul>
+
+
+  <!-- ===============================
+       TIPS STRATEGI MENGERJAKAN
+  ================================= -->
+  <h3><i class="fa-solid fa-lightbulb"></i> Strategi Mengerjakan Soal</h3>
+  <ul>
+    <li class="readable">
+      Fokus pada informasi yang relevan, abaikan distraktor.
+    </li>
+    <li class="readable">
+      Jangan menambah asumsi di luar soal.
+    </li>
+    <li class="readable">
+      Gunakan simbol atau coretan logika untuk memperjelas hubungan.
+    </li>
+    <li class="readable">
+      Cek kembali konsistensi kesimpulan dengan premis.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan kesimpulan paling logis dari pernyataan.
+    </li>
+    <li class="readable">
+      Mengidentifikasi pola dan hubungan data.
+    </li>
+    <li class="readable">
+      Menilai validitas argumen atau pernyataan.
+    </li>
+    <li class="readable">
+      Menghindari kesimpulan yang menyesatkan (fallacy).
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🧠 PENALARAN DEDUKTIF & INDUKTIF
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-brain"></i> Penalaran Deduktif dan Induktif</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Penalaran adalah proses berpikir logis untuk menarik kesimpulan
+    berdasarkan informasi atau premis yang tersedia.
+    Dalam Tes CPNS (terutama TIU), penalaran digunakan untuk mengukur
+    kemampuan analisis, konsistensi logika, dan ketepatan berpikir.
+  </p>
+
+  <p class="readable">
+    Dua bentuk utama penalaran yang sering diuji adalah
+    <strong>penalaran deduktif</strong> dan
+    <strong>penalaran induktif</strong>.
+    Keduanya memiliki arah berpikir, karakteristik, dan pola soal yang berbeda.
+  </p>
+
+  <!-- ===============================
+       PENALARAN DEDUKTIF
+  ================================= -->
+  <h3><i class="fa-solid fa-arrow-down"></i> Penalaran Deduktif</h3>
+  <p class="readable">
+    Penalaran deduktif adalah proses berpikir logis yang
+    <strong>menarik kesimpulan dari pernyataan umum ke pernyataan khusus</strong>.
+    Jika premis benar dan logika tepat, maka kesimpulan
+    <em>pasti benar</em>.
+  </p>
+
+  <p class="readable">
+    Pola umum penalaran deduktif:
+  </p>
+
+  <p class="readable" style="font-family: monospace;">
+    Premis Umum → Premis Khusus → Kesimpulan
+  </p>
+
+  <p class="readable" style="font-family: monospace;">
+    Contoh simbol logika:<br>
+    ∀ A → B<br>
+    A<br>
+    ∴ B
+  </p>
+
+  <ul>
+    <li class="readable">
+      Kesimpulan bersifat pasti (tidak probabilistik)
+    </li>
+    <li class="readable">
+      Digunakan dalam silogisme, analisis pernyataan, dan logika formal
+    </li>
+    <li class="readable">
+      Banyak muncul pada soal TIU bentuk pernyataan dan kesimpulan
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL DEDUKTIF
+  ================================= -->
+  <h3>Contoh Soal Penalaran Deduktif</h3>
+  <p class="readable">
+    Semua ASN wajib bersikap netral dalam politik.<br>
+    Budi adalah seorang ASN.<br>
+    <strong>Kesimpulan yang tepat adalah …</strong>
+  </p>
+
+  <ul>
+    <li class="readable">A. Budi boleh terlibat politik praktis</li>
+    <li class="readable">B. Budi tidak wajib bersikap netral</li>
+    <li class="readable">C. Budi wajib bersikap netral dalam politik</li>
+    <li class="readable">D. Sikap Budi tidak dapat ditentukan</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban: C</strong><br>
+    Kesimpulan ditarik langsung dari premis umum ke kasus khusus.
+  </p>
+
+  <!-- ===============================
+       PENALARAN INDUKTIF
+  ================================= -->
+  <h3><i class="fa-solid fa-arrow-up"></i> Penalaran Induktif</h3>
+  <p class="readable">
+    Penalaran induktif adalah proses berpikir logis yang
+    <strong>menarik kesimpulan umum dari sejumlah fakta atau kasus khusus</strong>.
+    Kesimpulan bersifat <em>kemungkinan besar benar</em>,
+    tetapi tidak mutlak.
+  </p>
+
+  <p class="readable">
+    Pola umum penalaran induktif:
+  </p>
+
+  <p class="readable" style="font-family: monospace;">
+    Fakta Khusus → Pola → Kesimpulan Umum
+  </p>
+
+  <p class="readable" style="font-family: monospace;">
+    Contoh simbol konseptual:<br>
+    A₁ → B<br>
+    A₂ → B<br>
+    A₃ → B<br>
+    ∴ ∀ A → B (kemungkinan)
+  </p>
+
+  <ul>
+    <li class="readable">
+      Kesimpulan bersifat probabilistik
+    </li>
+    <li class="readable">
+      Digunakan dalam generalisasi, analogi, dan pola deret
+    </li>
+    <li class="readable">
+      Banyak muncul pada soal pola, grafik, dan kecenderungan
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL INDUKTIF
+  ================================= -->
+  <h3>Contoh Soal Penalaran Induktif</h3>
+  <p class="readable">
+    Pada tahun 2021, pelayanan publik meningkat setelah digitalisasi.<br>
+    Pada tahun 2022, pelayanan publik semakin cepat dengan sistem online.<br>
+    Pada tahun 2023, kepuasan masyarakat meningkat setelah aplikasi terpadu diterapkan.<br>
+    <strong>Kesimpulan yang paling tepat adalah …</strong>
+  </p>
+
+  <ul>
+    <li class="readable">A. Digitalisasi selalu berhasil di semua sektor</li>
+    <li class="readable">B. Digitalisasi cenderung meningkatkan kualitas pelayanan publik</li>
+    <li class="readable">C. Pelayanan publik tidak membutuhkan teknologi</li>
+    <li class="readable">D. Kepuasan masyarakat tidak dipengaruhi sistem layanan</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban: B</strong><br>
+    Kesimpulan diambil dari pola beberapa kejadian khusus.
+  </p>
+
+  <!-- ===============================
+       PERBANDINGAN DEDUKTIF & INDUKTIF
+  ================================= -->
+  <h3>Perbandingan Penalaran Deduktif dan Induktif</h3>
+  <ul>
+    <li class="readable">
+      Deduktif: umum → khusus | Induktif: khusus → umum
+    </li>
+    <li class="readable">
+      Deduktif: kesimpulan pasti | Induktif: kesimpulan kemungkinan
+    </li>
+    <li class="readable">
+      Deduktif: silogisme | Induktif: pola & generalisasi
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan kesimpulan logis dari beberapa pernyataan
+    </li>
+    <li class="readable">
+      Mengidentifikasi jenis penalaran (deduktif atau induktif)
+    </li>
+    <li class="readable">
+      Menguji konsistensi logika dalam pernyataan kompleks
+    </li>
+    <li class="readable">
+      Menemukan pola berpikir dari data atau ilustrasi singkat
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🔗 HUBUNGAN SEBAB–AKIBAT
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-link"></i> Hubungan Sebab–Akibat</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Hubungan sebab–akibat adalah keterkaitan logis antara suatu peristiwa
+    (sebab) dengan peristiwa lain yang muncul sebagai dampaknya (akibat).
+    Dalam konteks tes CPNS/TIU–TWK, kemampuan ini digunakan untuk menilai
+    penalaran logis, analitis, dan pemahaman kebijakan publik.
+  </p>
+
+  <p class="readable">
+    Secara umum, sebab adalah faktor pemicu terjadinya suatu kondisi,
+    sedangkan akibat adalah konsekuensi yang muncul setelah sebab terjadi.
+  </p>
+
+  <!-- ===============================
+       SIMBOL & FORMULA LOGIKA
+  ================================= -->
+  <h3>Simbol & Formula Logika yang Umum Digunakan</h3>
+  <ul>
+    <li class="readable">
+      <strong>Sebab → Akibat</strong> &nbsp; (A → B)<br>
+      Jika A terjadi, maka B akan terjadi.
+    </li>
+    <li class="readable">
+      <strong>Akibat karena Sebab</strong> &nbsp; (B ∵ A)<br>
+      B terjadi karena adanya A.
+    </li>
+    <li class="readable">
+      <strong>Hubungan Timbal Balik</strong> &nbsp; (A ⟺ B)<br>
+      A dan B saling memengaruhi.
+    </li>
+    <li class="readable">
+      <strong>Kesimpulan Logis</strong> &nbsp; (∴)<br>
+      Digunakan untuk menarik simpulan dari hubungan sebab–akibat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS HUBUNGAN SEBAB–AKIBAT
+  ================================= -->
+  <h3>Jenis Hubungan Sebab–Akibat</h3>
+  <ul>
+    <li class="readable">
+      <strong>Sebab Tunggal → Akibat Tunggal</strong><br>
+      Satu faktor utama menyebabkan satu dampak utama.
+      <em>(Contoh: Keterlambatan hadir → Teguran atasan)</em>
+    </li>
+    <li class="readable">
+      <strong>Sebab Tunggal → Banyak Akibat</strong><br>
+      Satu sebab menimbulkan beberapa konsekuensi.
+      <em>(Contoh: Pelanggaran disiplin → Teguran, penilaian kinerja turun)</em>
+    </li>
+    <li class="readable">
+      <strong>Banyak Sebab → Satu Akibat</strong><br>
+      Beberapa faktor berkontribusi pada satu akibat.
+      <em>(Contoh: Kemacetan, cuaca buruk → Keterlambatan pelayanan)</em>
+    </li>
+    <li class="readable">
+      <strong>Rantai Sebab–Akibat</strong><br>
+      Akibat pertama menjadi sebab bagi akibat berikutnya.
+      <em>(A → B → C)</em>
+    </li>
+  </ul>
+
+  <!-- ===============================
+       HUBUNGAN SEBAB–AKIBAT DALAM KEBIJAKAN & ASN
+  ================================= -->
+  <h3>Hubungan Sebab–Akibat dalam Konteks ASN & Pemerintahan</h3>
+  <ul>
+    <li class="readable">
+      Kebijakan publik yang tidak tepat sasaran → ketidakpuasan masyarakat.
+    </li>
+    <li class="readable">
+      Pelayanan publik yang transparan → meningkatnya kepercayaan publik.
+    </li>
+    <li class="readable">
+      Pelanggaran etika ASN → sanksi administratif dan turunnya citra instansi.
+    </li>
+    <li class="readable">
+      Pengawasan yang lemah → meningkatnya potensi penyalahgunaan wewenang.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KESALAHAN UMUM DALAM MENILAI SEBAB–AKIBAT
+  ================================= -->
+  <h3>Kesalahan Umum (Jebakan Soal CPNS)</h3>
+  <ul>
+    <li class="readable">
+      Menganggap <strong>korelasi</strong> sebagai <strong>sebab–akibat</strong>.
+    </li>
+    <li class="readable">
+      Membalik posisi sebab dan akibat.
+    </li>
+    <li class="readable">
+      Mengabaikan faktor antara (intervening variable).
+    </li>
+    <li class="readable">
+      Menarik kesimpulan terlalu umum dari satu kasus khusus.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL 1
+  ================================= -->
+  <h3>Contoh Soal 1</h3>
+  <p class="readable">
+    Pemerintah daerah meningkatkan transparansi anggaran melalui sistem digital.
+    Beberapa bulan kemudian, tingkat kepercayaan masyarakat meningkat.
+  </p>
+  <p class="readable"><strong>Pernyataan yang paling tepat adalah:</strong></p>
+  <ul>
+    <li class="readable">A. Kepercayaan masyarakat adalah sebab transparansi anggaran</li>
+    <li class="readable">B. Transparansi anggaran → meningkatnya kepercayaan masyarakat</li>
+    <li class="readable">C. Transparansi anggaran tidak berhubungan dengan kepercayaan</li>
+    <li class="readable">D. Kepercayaan masyarakat menurunkan transparansi</li>
+  </ul>
+  <p class="readable"><strong>Jawaban: B</strong><br>
+  <em>Transparansi (sebab) → kepercayaan publik (akibat).</em></p>
+
+  <!-- ===============================
+       CONTOH SOAL 2
+  ================================= -->
+  <h3>Contoh Soal 2</h3>
+  <p class="readable">
+    Seorang ASN sering datang terlambat dan tidak menyelesaikan tugas tepat waktu.
+    Akibatnya, penilaian kinerjanya menurun.
+  </p>
+  <p class="readable"><strong>Hubungan yang tepat adalah:</strong></p>
+  <p class="readable">
+    Kedisiplinan rendah → penilaian kinerja menurun (A → B) ∴ perlu perbaikan perilaku.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan sebab atau akibat dari suatu peristiwa sosial atau kebijakan.
+    </li>
+    <li class="readable">
+      Mengidentifikasi hubungan logis dalam wacana pemerintahan.
+    </li>
+    <li class="readable">
+      Menyusun simpulan (∴) yang paling logis dari informasi yang diberikan.
+    </li>
+    <li class="readable">
+      Mendeteksi kesalahan logika sebab–akibat dalam pernyataan.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🧠 PEMECAHAN MASALAH BERBASIS LOGIKA
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-brain"></i> Pemecahan Masalah Berbasis Logika</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Pemecahan masalah berbasis logika adalah kemampuan untuk
+    menganalisis informasi secara sistematis, mengenali pola,
+    serta menarik kesimpulan yang tepat berdasarkan aturan
+    dan hubungan logis yang ada.
+  </p>
+
+  <p class="readable">
+    Dalam tes CPNS, kemampuan ini mengukur ketepatan berpikir,
+    konsistensi penalaran, serta kemampuan mengambil keputusan
+    rasional di bawah keterbatasan informasi.
+  </p>
+
+  <!-- ===============================
+       KOMPONEN LOGIKA DASAR
+  ================================= -->
+  <h3>Komponen Dasar Logika</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-diagram-project"></i>
+      <strong>Premis</strong> → Pernyataan awal yang dianggap benar.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-arrow-right"></i>
+      <strong>Inferensi</strong> → Proses penarikan kesimpulan dari premis.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-check"></i>
+      <strong>Kesimpulan</strong> → Pernyataan akhir yang logis dan konsisten.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       SIMBOL & FORMULA LOGIKA
+  ================================= -->
+  <h3>Simbol & Formula Logika yang Sering Digunakan</h3>
+  <ul>
+    <li class="readable">
+      <strong>Implikasi</strong> : <code>P → Q</code><br>
+      Jika P benar, maka Q benar.
+    </li>
+    <li class="readable">
+      <strong>Konjungsi</strong> : <code>P ∧ Q</code><br>
+      P dan Q sama-sama benar.
+    </li>
+    <li class="readable">
+      <strong>Disjungsi</strong> : <code>P ∨ Q</code><br>
+      Salah satu dari P atau Q benar.
+    </li>
+    <li class="readable">
+      <strong>Negasi</strong> : <code>¬P</code><br>
+      Kebalikan dari pernyataan P.
+    </li>
+    <li class="readable">
+      <strong>Silogisme</strong> :<br>
+      Premis 1: Semua A adalah B<br>
+      Premis 2: C adalah A<br>
+      Kesimpulan: C adalah B
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS SOAL LOGIKA CPNS
+  ================================= -->
+  <h3>Jenis Pemecahan Masalah Logika dalam Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-list-ol"></i>
+      Logika pernyataan (benar–salah, implikasi).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-shapes"></i>
+      Pola dan hubungan (angka, simbol, gambar).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-people-arrows"></i>
+      Logika penempatan dan urutan (posisi, jadwal, ranking).
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      Penalaran sebab–akibat dan pengambilan keputusan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI PEMECAHAN MASALAH
+  ================================= -->
+  <h3>Strategi Pemecahan Masalah Logika</h3>
+  <ul>
+    <li class="readable">
+      Identifikasi semua informasi penting dalam soal.
+    </li>
+    <li class="readable">
+      Ubah kalimat naratif menjadi simbol atau tabel logika.
+    </li>
+    <li class="readable">
+      Eliminasi pilihan jawaban yang bertentangan dengan premis.
+    </li>
+    <li class="readable">
+      Periksa konsistensi kesimpulan dengan seluruh premis.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL 1
+  ================================= -->
+  <h3>Contoh Soal 1 – Logika Pernyataan</h3>
+  <p class="readable">
+    Premis:<br>
+    1) Jika seorang ASN disiplin, maka kinerjanya baik.<br>
+    2) Andi adalah ASN yang disiplin.
+  </p>
+
+  <p class="readable"><strong>Kesimpulan yang tepat adalah:</strong></p>
+  <ul>
+    <li class="readable">A. Andi bukan ASN</li>
+    <li class="readable">B. Andi tidak disiplin</li>
+    <li class="readable">C. Kinerja Andi baik</li>
+    <li class="readable">D. Kinerja Andi buruk</li>
+    <li class="readable">E. Tidak dapat disimpulkan</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C<br>
+    <strong>Pembahasan:</strong><br>
+    Premis berbentuk <code>P → Q</code>. Karena P benar (Andi disiplin),
+    maka Q juga benar (kinerja Andi baik).
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 2
+  ================================= -->
+  <h3>Contoh Soal 2 – Logika Urutan</h3>
+  <p class="readable">
+    Lima pegawai: A, B, C, D, dan E duduk berjajar.
+    A tidak boleh di sebelah C.
+    B harus di kiri D.
+    E selalu di ujung.
+  </p>
+
+  <p class="readable"><strong>Manakah susunan yang mungkin?</strong></p>
+  <ul>
+    <li class="readable">A. E – A – C – B – D</li>
+    <li class="readable">B. B – D – A – C – E</li>
+    <li class="readable">C. E – B – D – A – C</li>
+    <li class="readable">D. C – A – B – D – E</li>
+    <li class="readable">E. E – D – B – A – C</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C<br>
+    <strong>Pembahasan singkat:</strong><br>
+    E di ujung ✔️, B di kiri D ✔️, A tidak di sebelah C ✔️.
+    Pilihan lain melanggar minimal satu syarat.
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menarik kesimpulan logis dari beberapa premis.
+    </li>
+    <li class="readable">
+      Mengidentifikasi pernyataan yang pasti benar atau salah.
+    </li>
+    <li class="readable">
+      Menyusun atau mengevaluasi urutan berdasarkan aturan.
+    </li>
+    <li class="readable">
+      Mengambil keputusan paling rasional dari data terbatas.
+    </li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🧠 EVALUASI PERNYATAAN & KESIMPULAN
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-brain"></i> Evaluasi Pernyataan dan Kesimpulan</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>Konsep Dasar</h3>
+  <p class="readable">
+    Evaluasi pernyataan dan kesimpulan adalah kemampuan menilai
+    apakah suatu kesimpulan <strong>logis, sahih, dan tepat</strong>
+    berdasarkan informasi atau pernyataan yang diberikan.
+  </p>
+
+  <p class="readable">
+    Materi ini menguji kemampuan <em>penalaran logis</em>,
+    konsistensi berpikir, serta kecermatan dalam memahami
+    hubungan sebab–akibat, generalisasi, dan implikasi.
+  </p>
+
+  <p class="readable">
+    Dalam Tes CPNS (terutama TIU), soal jenis ini menuntut peserta
+    <strong>tidak menambah atau mengurangi informasi</strong>
+    di luar yang tersedia.
+  </p>
+
+  <!-- ===============================
+       KOMPONEN UTAMA
+  ================================= -->
+  <h3>Komponen Utama</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-quote-left"></i>
+      <strong>Pernyataan</strong> → Fakta, data, atau asumsi
+      yang dijadikan dasar penalaran.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-arrow-right"></i>
+      <strong>Kesimpulan</strong> → Pernyataan akhir yang
+      ditarik dari satu atau beberapa pernyataan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <strong>Hubungan Logis</strong> → Keterkaitan rasional
+      antara pernyataan dan kesimpulan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       SIMBOL & FORMULA LOGIKA DASAR
+  ================================= -->
+  <h3>Simbol dan Formula Logika Dasar</h3>
+  <ul>
+    <li class="readable">
+      <strong>P → Q</strong> : Jika P benar, maka Q benar
+      (implikasi).
+    </li>
+    <li class="readable">
+      <strong>P ∧ Q</strong> : P dan Q keduanya benar (konjungsi).
+    </li>
+    <li class="readable">
+      <strong>P ∨ Q</strong> : P atau Q benar (disjungsi).
+    </li>
+    <li class="readable">
+      <strong>¬P</strong> : Negasi dari P (tidak P).
+    </li>
+    <li class="readable">
+      <strong>∴</strong> : Maka / oleh karena itu (kesimpulan).
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JENIS PENILAIAN KESIMPULAN
+  ================================= -->
+  <h3>Jenis Penilaian Kesimpulan</h3>
+  <ul>
+    <li class="readable">
+      <strong>Kesimpulan Benar</strong> →
+      Kesimpulan <u>pasti benar</u> berdasarkan pernyataan.
+    </li>
+    <li class="readable">
+      <strong>Kesimpulan Salah</strong> →
+      Bertentangan dengan pernyataan.
+    </li>
+    <li class="readable">
+      <strong>Kesimpulan Tidak Dapat Ditentukan</strong> →
+      Informasi tidak cukup untuk memastikan benar atau salah.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PRINSIP PENTING DALAM MENJAWAB
+  ================================= -->
+  <h3>Prinsip Penting dalam Menjawab Soal</h3>
+  <ul>
+    <li class="readable">
+      Gunakan <strong>hanya</strong> informasi yang tersedia.
+    </li>
+    <li class="readable">
+      Jangan memasukkan opini pribadi atau pengetahuan umum.
+    </li>
+    <li class="readable">
+      Perhatikan kata kunci:
+      <em>semua, sebagian, selalu, tidak pernah</em>.
+    </li>
+    <li class="readable">
+      Waspadai <strong>generalisasi berlebihan</strong>.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL 1
+  ================================= -->
+  <h3>Contoh Soal 1</h3>
+  <p class="readable">
+    Pernyataan:<br>
+    Semua ASN wajib bersikap netral dalam politik.<br>
+    Sebagian pegawai negeri adalah ASN.
+  </p>
+
+  <p class="readable">
+    Kesimpulan:<br>
+    Sebagian pegawai negeri wajib bersikap netral dalam politik.
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> Benar ✔️<br>
+    <strong>Pembahasan:</strong><br>
+    Jika semua ASN netral, dan sebagian pegawai negeri adalah ASN,
+    maka sebagian pegawai negeri tersebut juga wajib netral.
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 2
+  ================================= -->
+  <h3>Contoh Soal 2</h3>
+  <p class="readable">
+    Pernyataan:<br>
+    Semua kebijakan publik harus sesuai UUD 1945.<br>
+    Peraturan X adalah kebijakan publik.
+  </p>
+
+  <p class="readable">
+    Kesimpulan:<br>
+    Peraturan X pasti sesuai UUD 1945.
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> Tidak dapat ditentukan ⚠️<br>
+    <strong>Pembahasan:</strong><br>
+    Pernyataan hanya menyebut <em>keharusan</em>, bukan fakta
+    bahwa Peraturan X benar-benar sesuai UUD 1945.
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 3 (JEBakan CPNS)
+  ================================= -->
+  <h3>Contoh Soal 3 (Jebakan Umum CPNS)</h3>
+  <p class="readable">
+    Pernyataan:<br>
+    Semua pelanggaran hukum dikenai sanksi.<br>
+    Tindakan A dikenai sanksi.
+  </p>
+
+  <p class="readable">
+    Kesimpulan:<br>
+    Tindakan A adalah pelanggaran hukum.
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> Salah ❌<br>
+    <strong>Pembahasan:</strong><br>
+    Tidak semua tindakan yang dikenai sanksi adalah pelanggaran hukum.
+    Kesimpulan membalik logika (fallacy).
+  </p>
+
+  <!-- ===============================
+       ARAH PERTANYAAN TES CPNS
+  ================================= -->
+  <h3>Arah Pertanyaan Tes CPNS</h3>
+  <ul>
+    <li class="readable">
+      Menentukan apakah kesimpulan benar, salah,
+      atau tidak dapat ditentukan.
+    </li>
+    <li class="readable">
+      Menguji konsistensi logika pernyataan.
+    </li>
+    <li class="readable">
+      Menghindari kesalahan penalaran
+      (generalisasi, pembalikan logika).
+    </li>
+    <li class="readable">
+      Menguji ketelitian membaca informasi.
+    </li>
+  </ul>
+
+</div>
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
