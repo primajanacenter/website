@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal TWK CPNS – Pancasila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+
+/* ===============================
+   🎨 TKP SCORE HIGHLIGHT
+================================ */
+.option-score {
+  float: right;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.score-5 { background:#dcfce7; color:#166534; }
+.score-4 { background:#ecfeff; color:#155e75; }
+.score-3 { background:#fef3c7; color:#92400e; }
+.score-2 { background:#ffe4e6; color:#9f1239; }
+.score-1 { background:#fee2e2; color:#7f1d1d; }
+
+.option-selected {
+  outline: 3px solid #2563eb;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Latihan Soal TKP CPNS</h1>
+  <p>Adaptasi · Standar CPNS</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan TKP</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area TKP</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL (20 SOAL FIX)
+================================ */
+const questions = [
+  /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
+  
+/* =================================================
+   📘 BANK SOAL TKP ADVANCED
+   ADAPTASI & PENGENDALIAN DIRI ASN
+   (10 SOAL – OPSI MIRIP & MENGECOH)
+================================================= */
+
+{
+  q: "Dalam kondisi perubahan kebijakan yang belum sepenuhnya dipahami oleh masyarakat, ASN diharapkan tetap memberikan pelayanan. Sikap yang paling menunjukkan adaptasi dan pengendalian diri adalah …",
+  o: [
+    "Memberikan pelayanan sambil menunggu petunjuk teknis lengkap",
+    "Memberikan pelayanan sebatas yang dipahami tanpa komunikasi tambahan",
+    "Memberikan pelayanan sambil menjelaskan keterbatasan dan proses penyesuaian",
+    "Menunda pelayanan hingga aturan benar-benar jelas",
+    "Mengarahkan masyarakat untuk kembali di lain waktu"
+  ],
+  s: [3,2,5,1,1],
+  e: "Adaptasi terbaik ditunjukkan dengan tetap melayani disertai komunikasi yang jujur dan empatik.",
+  c: "Adaptasi Kebijakan"
+},
+{
+  q: "Seorang ASN menerima kritik dari rekan kerja yang disampaikan dengan cara kurang tepat, namun substansinya relevan. Respon paling mencerminkan pengendalian diri adalah …",
+  o: [
+    "Menegur cara penyampaian kritik tersebut",
+    "Mengabaikan kritik karena disampaikan tidak etis",
+    "Menyaring substansi kritik dan meresponsnya secara profesional",
+    "Menyampaikan keberatan kepada pimpinan",
+    "Menunggu situasi lebih kondusif sebelum merespons"
+  ],
+  s: [3,1,5,2,3],
+  e: "Pengendalian diri terlihat dari kemampuan memisahkan substansi dan emosi.",
+  c: "Pengelolaan Kritik"
+},
+{
+  q: "Dalam tekanan waktu tinggi, ASN menyadari potensi kesalahan meningkat. Tindakan paling adaptif adalah …",
+  o: [
+    "Mempercepat pekerjaan agar target tercapai",
+    "Meminta penyesuaian target tanpa solusi",
+    "Menata ulang prioritas dan menjaga kualitas keputusan",
+    "Menyerahkan sebagian tugas tanpa koordinasi",
+    "Mengurangi detail pekerjaan"
+  ],
+  s: [2,1,5,2,1],
+  e: "Adaptasi ditunjukkan dengan prioritas rasional dan kontrol kualitas.",
+  c: "Manajemen Tekanan"
+},
+{
+  q: "Seorang pimpinan menyampaikan instruksi mendadak yang berdampak pada perubahan rencana kerja tim. Sikap ASN paling tepat adalah …",
+  o: [
+    "Melaksanakan instruksi sambil mengeluhkan perubahan",
+    "Melaksanakan instruksi tanpa evaluasi",
+    "Melaksanakan instruksi sambil menyesuaikan rencana kerja secara terukur",
+    "Menunda pelaksanaan hingga ada kejelasan lanjutan",
+    "Menyampaikan penolakan secara informal"
+  ],
+  s: [2,3,5,1,1],
+  e: "Adaptasi profesional mencakup pelaksanaan dan penyesuaian terencana.",
+  c: "Respons terhadap Instruksi"
+},
+{
+  q: "Ketika menghadapi masyarakat yang kecewa akibat keterbatasan layanan, ASN sebaiknya …",
+  o: [
+    "Menjelaskan keterbatasan secara singkat",
+    "Meminta masyarakat memahami kondisi instansi",
+    "Menunjukkan empati dan menjelaskan solusi yang memungkinkan",
+    "Mengalihkan ke unit lain tanpa penjelasan",
+    "Mengakhiri interaksi untuk menghindari konflik"
+  ],
+  s: [3,2,5,2,1],
+  e: "Empati dan orientasi solusi adalah inti pengendalian diri.",
+  c: "Pelayanan Empatik"
+},
+{
+  q: "Perubahan sistem kerja membuat sebagian rekan kerja kesulitan beradaptasi. Sikap ASN yang paling konstruktif adalah …",
+  o: [
+    "Fokus pada tugas sendiri agar tidak terbebani",
+    "Menunggu pimpinan menangani masalah",
+    "Membantu seperlunya sambil tetap menjaga kinerja pribadi",
+    "Mengambil alih seluruh tugas rekan kerja",
+    "Mengkritik rekan yang lambat beradaptasi"
+  ],
+  s: [3,2,5,2,1],
+  e: "Adaptasi sosial tercermin dari kolaborasi proporsional.",
+  c: "Kerja Sama Adaptif"
+},
+{
+  q: "Dalam situasi konflik pendapat di tim, ASN yang memiliki pengendalian diri tinggi akan …",
+  o: [
+    "Mempertahankan pendapat dengan argumen kuat",
+    "Mengalah demi menjaga keharmonisan",
+    "Mendengarkan pandangan lain dan mencari titik temu",
+    "Menyerahkan keputusan sepenuhnya pada pimpinan",
+    "Menghindari diskusi lanjutan"
+  ],
+  s: [3,3,5,2,1],
+  e: "Pengendalian diri tercermin dari keterbukaan dan orientasi mufakat.",
+  c: "Manajemen Konflik"
+},
+{
+  q: "ASN menghadapi beban kerja tinggi dalam jangka panjang. Pendekatan paling adaptif adalah …",
+  o: [
+    "Menjaga ritme kerja seadanya",
+    "Mengandalkan motivasi pribadi semata",
+    "Mengelola energi, waktu, dan meminta dukungan bila perlu",
+    "Menurunkan standar kerja agar bertahan",
+    "Menunggu evaluasi kinerja tahunan"
+  ],
+  s: [2,2,5,1,1],
+  e: "Adaptasi berkelanjutan membutuhkan pengelolaan diri yang sadar.",
+  c: "Resiliensi ASN"
+},
+{
+  q: "Dalam menghadapi perubahan yang menimbulkan ketidaknyamanan pribadi, ASN seharusnya …",
+  o: [
+    "Menerima perubahan dengan terpaksa",
+    "Menyesuaikan diri secara bertahap tanpa refleksi",
+    "Menyesuaikan diri dengan kesadaran akan peran dan tanggung jawab",
+    "Menunggu perubahan tersebut berlalu",
+    "Mencari celah agar tidak terdampak"
+  ],
+  s: [3,2,5,1,1],
+  e: "Kesadaran peran publik menjadi dasar adaptasi ASN.",
+  c: "Kesadaran Peran"
+},
+{
+  q: "Kemampuan pengendalian diri ASN paling tercermin ketika ASN mampu …",
+  o: [
+    "Menekan emosi dalam setiap situasi",
+    "Menghindari situasi yang memicu stres",
+    "Mengelola emosi dan tetap mengambil keputusan rasional",
+    "Mengikuti prosedur tanpa mempertimbangkan konteks",
+    "Mengalihkan tanggung jawab saat tertekan"
+  ],
+  s: [2,2,5,2,1],
+  e: "Pengendalian diri bukan menekan emosi, tetapi mengelolanya secara rasional.",
+  c: "Pengendalian Diri"
+}
+
+  
+];
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI (TKP)
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI + SKOR (TKP SAFE)
+================================ */
+function shuffleQuestion(question) {
+  const paired = question.o.map((text, idx) => ({
+    text,
+    score: question.s[idx]
+  }));
+
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  question.o = paired.map(p => p.text);
+  question.s = paired.map(p => p.score);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL
+================================ */
+let currentQuestion = null;
+
+function loadQuestion() {
+  answered = false;
+
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById("question").innerText = currentQuestion.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.o.forEach((opt, i) => {
+  const btn = document.createElement("button");
+  btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+  btn.onclick = () => selectAnswer(i);
+  optionsDiv.appendChild(btn);
+});
+
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+/* ===============================
+   ✅ PILIH JAWABAN (TKP)
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  const gainedScore = q.s[i];
+  score += gainedScore;
+  kp += gainedScore * 2;
+  level = Math.floor(kp / 50) + 1;
+  updateGamification();
+
+  // analitik: skor rendah
+  if (gainedScore <= 2) {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  buttons.forEach((btn, idx) => {
+    const s = q.s[idx];
+    btn.disabled = true;
+    btn.classList.add(`score-${s}`);
+
+    // label skor
+    const badge = document.createElement("span");
+    badge.className = `option-score score-${s}`;
+    badge.innerText = `${s}`;
+    btn.appendChild(badge);
+
+    // tandai pilihan user
+    if (idx === i) {
+      btn.classList.add("option-selected");
+    }
+  });
+
+  const exp = document.getElementById("explanation");
+  exp.innerHTML = `
+    <strong>Skor pilihan Anda:</strong> ${gainedScore} / 5<br><br>
+    ${q.e}
+  `;
+  exp.style.display = "block";
+}
+
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+/* ===============================
+   🏁 SELESAI UJIAN (TKP)
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 AREA PERLU DITINGKATKAN
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Area Perlu Penguatan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f97316,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} respon lemah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 PROFIL TKP
+  ============================== */
+  let profile = "Stabil";
+  if (avgTime > 75 && score < questions.length * 3.5) {
+    profile = "Ragu-ragu";
+  } else if (avgTime < 45 && score < questions.length * 3.5) {
+    profile = "Cepat tapi kurang reflektif";
+  } else if (avgTime > 75) {
+    profile = "Reflektif namun lambat";
+  }
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal<br>
+      🧠 <strong>Profil TKP:</strong> ${profile}
+    </div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+
+</script>
+
+
+
+</body>
+</html>
