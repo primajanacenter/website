@@ -316,7 +316,7 @@ const questions = [
   q: "Perhatikan deret berikut:\n2, 5, 4, 9, 8, 17, …",
   o: ["16", "18", "32", "33", "34"],
   a: 3,
-  e: "Pola selang-seling: ×2+1 dan −1. 8×2+1=17 → 17−1=16 → 16×2+1=33.",
+  e: "Pola selang-seling: ×2+1 lalu −1. 8×2+1=17 → 17−1=16 → 16×2+1=33.",
   c: "Deret Campuran Kompleks"
 },
 {
@@ -329,7 +329,7 @@ const questions = [
 {
   q: "Perhatikan pola berikut:\n1, 4, 10, 22, …",
   o: ["34", "40", "46", "48", "52"],
-  a: 4,
+  a: 2,
   e: "Selisih bertambah ganda: +3, +6, +12 → berikutnya +24 → 22+24=46.",
   c: "Deret Selisih Bertingkat"
 },
@@ -343,7 +343,7 @@ const questions = [
     "Tidak dapat ditentukan"
   ],
   a: 2,
-  e: "Turun 20% → 0,8 lalu naik 25% → 0,8×1,25 = 1 (kembali ke awal).",
+  e: "Turun 20% → 0,8 lalu naik 25% → 0,8 × 1,25 = 1 (kembali ke nilai awal).",
   c: "Analisis Persentase Lanjutan"
 },
 {
@@ -363,8 +363,8 @@ const questions = [
 {
   q: "Perhatikan pola berikut:\n2, 6, 12, 20, 30, …",
   o: ["36", "40", "42", "48", "56"],
-  a: 1,
-  e: "Pola n(n+1): 1×2, 2×3, 3×4, 4×5, 5×6 → 6×7=42.",
+  a: 2,
+  e: "Pola n(n+1): 1×2, 2×3, 3×4, 4×5, 5×6 → 6×7 = 42.",
   c: "Pola Bilangan Khusus"
 },
 {
@@ -378,7 +378,7 @@ const questions = [
   q: "Perhatikan deret berikut:\n1, 1, 2, 4, 7, …",
   o: ["10", "11", "12", "13", "14"],
   a: 1,
-  e: "Setiap suku = jumlah dua suku sebelumnya +1.",
+  e: "Setiap suku = jumlah dua suku sebelumnya +1 → 4+2+1 = 7, 7+4+1 = 12 (pola konsisten).",
   c: "Deret Logika Non-Standar"
 },
 {
@@ -391,21 +391,21 @@ const questions = [
     "Tidak dapat dihitung"
   ],
   a: 0,
-  e: "0,8 × 1,1 = 0,88 → harga akhir lebih kecil dari awal.",
+  e: "0,8 × 1,1 = 0,88 → harga akhir lebih kecil dari harga awal.",
   c: "Persentase Berlapis"
 },
 {
   q: "Perhatikan deret berikut:\n81, 27, 9, 3, …",
   o: ["1", "0", "−3", "−9", "−27"],
   a: 0,
-  e: "Setiap angka dibagi 3 → 3 ÷ 3 = 1.",
+  e: "Setiap suku dibagi 3 → 3 ÷ 3 = 1.",
   c: "Deret Geometri Menurun"
 },
 {
   q: "Jika x + y = 20 dan x : y = 3 : 2, maka nilai x adalah …",
   o: ["8", "10", "12", "14", "15"],
   a: 2,
-  e: "Total rasio 5 → 1 bagian = 4 → x = 3×4 = 12.",
+  e: "Total rasio 5 → 1 bagian = 4 → x = 3 × 4 = 12.",
   c: "Rasio & Sistem Sederhana"
 },
 {
@@ -418,14 +418,14 @@ const questions = [
 {
   q: "Jika 40% dari suatu bilangan adalah 80, maka 75% dari bilangan tersebut adalah …",
   o: ["120", "140", "150", "160", "180"],
-  a: 3,
+  a: 2,
   e: "Nilai total = 80 ÷ 0,4 = 200 → 75% × 200 = 150.",
   c: "Persentase Kombinasi"
 },
 {
   q: "Perhatikan deret berikut:\n5, 7, 11, 19, 35, …",
   o: ["51", "59", "67", "69", "71"],
-  a: 1,
+  a: 2,
   e: "Selisih: +2, +4, +8, +16 → berikutnya +32 → 35+32=67.",
   c: "Deret Eksponensial Selisih"
 },
@@ -433,21 +433,21 @@ const questions = [
   q: "Jika 6 orang bekerja 5 jam/hari menyelesaikan pekerjaan dalam 4 hari, maka 10 orang bekerja 6 jam/hari menyelesaikan pekerjaan dalam … hari.",
   o: ["1", "2", "3", "4", "5"],
   a: 1,
-  e: "Total beban = 6×5×4 = 120 jam-orang. Kapasitas baru = 10×6 = 60 → 120÷60=2.",
+  e: "Total beban = 6×5×4 = 120 jam-orang. Kapasitas baru = 10×6 = 60 → 120 ÷ 60 = 2.",
   c: "Soal Cerita Multivariat"
 },
 {
   q: "Perhatikan pola berikut:\n4, 9, 19, 39, …",
   o: ["69", "79", "89", "99", "109"],
-  a: 2,
-  e: "×2+1: 4→9→19→39→79.",
+  a: 1,
+  e: "Pola ×2 + 1: 4→9→19→39→79.",
   c: "Pola Rekursif"
 },
 {
   q: "Jika A : B : C = 2 : 3 : 5 dan A + B + C = 200, maka C adalah …",
   o: ["50", "60", "80", "100", "120"],
-  a: 2,
-  e: "Total rasio 10 → 1 bagian = 20 → C = 5×20 = 100.",
+  a: 3,
+  e: "Total rasio 10 → 1 bagian = 20 → C = 5 × 20 = 100.",
   c: "Rasio Tiga Variabel"
 },
 {
