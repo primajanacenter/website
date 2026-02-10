@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal TWK CPNS – Pancasila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Latihan Soal TKP CPNS</h1>
+  <p>Adaptasi · Standar CPNS</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan TKP</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area TKP</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL (20 SOAL FIX)
+================================ */
+const questions = [
+  /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
+  
+/* =================================================
+   📘 BANK SOAL TWK EKSTREM
+   ADAPTASI & PENGENDALIAN DIRI ASN – HOTS EXTREME
+   (20 SOAL CERITA PANJANG)
+================================================= */
+
+/* ===== LEVEL EXTREME (41–60)
+   DILEMA KOMPLEKS, AMBIGUITAS, TEKANAN MULTI-ARAH
+================================ */
+
+{
+  q: "Unit kerja Anda mengalami perubahan kebijakan pelayanan digital secara mendadak akibat instruksi pusat. Sistem belum stabil, masyarakat mulai mengeluh, dan rekan kerja menunjukkan resistensi karena beban kerja meningkat. Sebagai ASN yang bertugas di lini depan, sikap paling mencerminkan adaptasi dan pengendalian diri adalah …",
+  o: [
+    "Menjelaskan bahwa kebijakan berasal dari pusat dan di luar kendali unit kerja",
+    "Menunggu sistem benar-benar stabil sebelum memberikan pelayanan",
+    "Tetap melayani sambil mempelajari sistem baru dan mengelola ekspektasi masyarakat",
+    "Menyampaikan keluhan masyarakat kepada pimpinan tanpa melakukan penyesuaian",
+    "Mengurangi interaksi langsung untuk menghindari konflik"
+  ],
+  a: 2,
+  e: "Adaptasi optimal ditunjukkan dengan tetap bekerja, belajar, dan mengelola emosi serta ekspektasi publik.",
+  c: "Adaptasi Kebijakan Kompleks"
+},
+{
+  q: "Dalam rapat evaluasi, kinerja tim Anda dikritik keras oleh pimpinan dengan bahasa yang cenderung menyudutkan, meskipun sebagian faktor berada di luar kendali tim. Reaksi paling tepat sebagai ASN adalah …",
+  o: [
+    "Menyanggah kritik secara rinci untuk meluruskan keadaan",
+    "Menerima kritik sepenuhnya tanpa klarifikasi",
+    "Menahan emosi, mencatat poin penting, dan menyampaikan klarifikasi secara profesional",
+    "Menyampaikan keberatan setelah rapat selesai",
+    "Menarik diri dari diskusi agar situasi tidak memanas"
+  ],
+  a: 2,
+  e: "Pengendalian diri tercermin dari kemampuan memilah emosi dan substansi secara profesional.",
+  c: "Pengendalian Emosi Struktural"
+},
+{
+  q: "Seorang warga menyampaikan kritik keras di ruang pelayanan dengan nada tinggi dan disaksikan publik, sementara substansi keluhannya sebagian benar. Sikap ASN paling adaptif adalah …",
+  o: [
+    "Meminta warga menurunkan nada bicara terlebih dahulu",
+    "Menjelaskan prosedur secara normatif",
+    "Mendengarkan dengan tenang, merespons substansi, dan menjaga suasana tetap kondusif",
+    "Menyerahkan langsung ke atasan",
+    "Mengakhiri pelayanan untuk mencegah keributan"
+  ],
+  a: 2,
+  e: "Fokus pada substansi sambil mengendalikan situasi adalah bentuk adaptasi dan kematangan emosi.",
+  c: "Pengelolaan Emosi Publik"
+},
+{
+  q: "Perubahan struktur organisasi menyebabkan tumpang tindih kewenangan sementara. Tidak ada kejelasan peran, namun pelayanan harus tetap berjalan. Tindakan ASN paling mencerminkan adaptasi adalah …",
+  o: [
+    "Menunggu kejelasan struktur secara formal",
+    "Melaksanakan tugas lama tanpa penyesuaian",
+    "Berinisiatif berkoordinasi lintas fungsi sambil tetap bekerja",
+    "Menolak tugas di luar deskripsi jabatan lama",
+    "Mengurangi intensitas kerja demi menghindari kesalahan"
+  ],
+  a: 2,
+  e: "Adaptasi ekstrem menuntut inisiatif dalam ketidakpastian.",
+  c: "Adaptasi Struktural"
+},
+{
+  q: "Anda merasa keputusan pimpinan kurang mempertimbangkan kondisi lapangan, namun harus segera dilaksanakan. Sikap paling tepat adalah …",
+  o: [
+    "Menolak secara terbuka demi kepentingan publik",
+    "Melaksanakan sambil menyampaikan masukan konstruktif melalui jalur resmi",
+    "Melaksanakan dengan setengah hati",
+    "Mengeluh kepada rekan kerja",
+    "Menunda pelaksanaan sampai ada revisi"
+  ],
+  a: 1,
+  e: "Loyalitas kritis adalah bentuk pengendalian diri dan profesionalitas.",
+  c: "Loyalitas Adaptif ASN"
+},
+{
+  q: "Tekanan target kinerja meningkat signifikan, sementara sumber daya terbatas. Jika tidak dikelola, emosi mudah terpancing. Strategi ASN paling adaptif adalah …",
+  o: [
+    "Mengorbankan kualitas demi target",
+    "Menurunkan standar pelayanan sementara",
+    "Mengatur ulang prioritas dan metode kerja secara realistis",
+    "Menolak target yang ditetapkan",
+    "Menghindari tanggung jawab tambahan"
+  ],
+  a: 2,
+  e: "Adaptasi ditunjukkan melalui pengelolaan kerja, bukan pelampiasan emosi.",
+  c: "Manajemen Tekanan Ekstrem"
+},
+{
+  q: "Kritik di media sosial terhadap unit kerja Anda bersifat emosional dan sebagian tidak berdasar, namun mendapat perhatian luas. Sikap ASN paling bijak adalah …",
+  o: [
+    "Mengabaikan karena tidak berdasar",
+    "Menanggapi secara defensif dengan data",
+    "Menjawab secara tenang, faktual, dan proporsional",
+    "Memblokir akun pengkritik",
+    "Menyerahkan sepenuhnya ke humas"
+  ],
+  a: 2,
+  e: "Pengendalian diri digital menuntut ketenangan dan proporsionalitas.",
+  c: "Etika Digital ASN"
+},
+{
+  q: "Rekan kerja menunjukkan sikap negatif terhadap perubahan, yang mulai memengaruhi suasana tim. Sebagai ASN yang adaptif, Anda sebaiknya …",
+  o: [
+    "Mengabaikan agar tidak terlibat konflik",
+    "Menegur secara keras",
+    "Mengajak berdiskusi secara empatik dan rasional",
+    "Melaporkan langsung ke pimpinan",
+    "Menjaga jarak profesional"
+  ],
+  a: 2,
+  e: "Pendekatan empatik dan rasional menunjukkan pengendalian diri tingkat tinggi.",
+  c: "Adaptasi Sosial Kompleks"
+},
+{
+  q: "Anda menerima tugas tambahan di luar rutinitas pada saat beban kerja tinggi. Reaksi paling mencerminkan pengendalian diri adalah …",
+  o: [
+    "Menolak karena bukan tugas utama",
+    "Menerima sambil mengeluh",
+    "Menerima dengan mengatur ulang prioritas secara realistis",
+    "Menunda penyelesaian tugas lama",
+    "Mengurangi kualitas pekerjaan"
+  ],
+  a: 2,
+  e: "Pengendalian diri ditunjukkan dengan manajemen prioritas.",
+  c: "Manajemen Diri ASN"
+},
+{
+  q: "Dalam situasi konflik antar unit, pimpinan meminta Anda menjadi penghubung. Sikap paling adaptif adalah …",
+  o: [
+    "Memihak unit sendiri",
+    "Menyampaikan keluhan satu pihak saja",
+    "Bersikap netral dan fokus pada solusi bersama",
+    "Menolak peran tersebut",
+    "Menunggu instruksi detail"
+  ],
+  a: 2,
+  e: "Netralitas aktif dan orientasi solusi adalah ciri adaptasi matang.",
+  c: "Peran Mediatif ASN"
+},
+
+/* ---- lanjutkan hingga 20 soal ---- */
+
+{
+  q: "Setelah perubahan kebijakan, muncul kesenjangan antara harapan publik dan kapasitas layanan. ASN yang adaptif seharusnya …",
+  o: [
+    "Menolak pelayanan yang tidak dapat dipenuhi",
+    "Menyalahkan regulasi",
+    "Mengkomunikasikan keterbatasan secara empatik dan realistis",
+    "Menghindari dialog",
+    "Menjanjikan layanan di luar kewenangan"
+  ],
+  a: 2,
+  e: "Empati dan kejujuran adalah bentuk pengendalian diri.",
+  c: "Komunikasi Empatik"
+},
+{
+  q: "Tekanan emosional berkepanjangan tanpa pengendalian diri berpotensi menyebabkan ASN …",
+  o: [
+    "Meningkatkan resiliensi otomatis",
+    "Menjadi lebih profesional",
+    "Mengalami burnout dan penurunan kinerja",
+    "Lebih adaptif",
+    "Lebih objektif"
+  ],
+  a: 2,
+  e: "Tanpa pengendalian diri, adaptasi gagal.",
+  c: "Risiko Ketidakmampuan Adaptasi"
+},
+{
+  q: "ASN yang mampu mengubah konflik menjadi pembelajaran organisasi menunjukkan …",
+  o: [
+    "Reaksi emosional",
+    "Penghindaran konflik",
+    "Adaptasi tingkat lanjut",
+    "Kepatuhan formal",
+    "Dominasi struktural"
+  ],
+  a: 2,
+  e: "Adaptasi tinggi menghasilkan perbaikan sistemik.",
+  c: "Pembelajaran Organisasi"
+},
+{
+  q: "Dalam kondisi tekanan tinggi, indikator paling kuat pengendalian diri ASN adalah …",
+  o: [
+    "Kecepatan bekerja",
+    "Kepatuhan prosedural",
+    "Stabilitas emosi dan kualitas keputusan",
+    "Dominasi komunikasi",
+    "Kemampuan menyalahkan sistem"
+  ],
+  a: 2,
+  e: "Kualitas keputusan mencerminkan pengendalian diri.",
+  c: "Indikator Pengendalian Diri"
+},
+{
+  q: "Ketika perubahan menuntut pengorbanan kenyamanan pribadi, ASN adaptif akan …",
+  o: [
+    "Menolak perubahan",
+    "Menunda penyesuaian",
+    "Menyesuaikan diri demi kepentingan publik",
+    "Mengeluh secara terbuka",
+    "Mencari pembenaran pribadi"
+  ],
+  a: 2,
+  e: "Adaptasi menuntut kedewasaan sikap.",
+  c: "Adaptasi Nilai"
+},
+{
+  q: "Kemampuan adaptasi dan pengendalian diri ASN paling berdampak pada …",
+  o: [
+    "Kepentingan pribadi",
+    "Stabilitas birokrasi dan kepercayaan publik",
+    "Dominasi jabatan",
+    "Kepatuhan administratif",
+    "Penguatan hierarki"
+  ],
+  a: 1,
+  e: "Adaptasi ASN berkontribusi pada legitimasi birokrasi.",
+  c: "Dampak Strategis ASN"
+},
+
+{
+  q: "Pasca implementasi kebijakan baru, terjadi kesalahan sistem yang berdampak pada keterlambatan pelayanan. Publik menyalahkan ASN di lapangan, pimpinan menuntut percepatan, sementara tim internal mulai saling menyalahkan. Dalam situasi ini, sikap ASN yang paling mencerminkan adaptasi dan pengendalian diri adalah …",
+  o: [
+    "Menjelaskan bahwa kesalahan bersumber dari sistem pusat",
+    "Fokus menenangkan pimpinan terlebih dahulu",
+    "Tetap bekerja menyelesaikan layanan sambil mengelola komunikasi ke publik dan internal",
+    "Menunda pelayanan sampai sistem benar-benar normal",
+    "Menghindari interaksi langsung untuk mencegah konflik"
+  ],
+  a: 2,
+  e: "Adaptasi ekstrem menuntut kerja simultan: menyelesaikan tugas, mengelola emosi, dan menjaga komunikasi.",
+  c: "Manajemen Krisis ASN"
+},
+{
+  q: "Dalam forum lintas instansi, unit kerja Anda mendapat kritik terbuka atas keterlambatan program, meskipun penyebabnya bersifat lintas sektor. Respon ASN yang paling menunjukkan kematangan adaptasi adalah …",
+  o: [
+    "Menyampaikan pembelaan detail agar unit tidak disalahkan",
+    "Menerima kritik tanpa klarifikasi",
+    "Menjelaskan kondisi secara proporsional sambil fokus pada solusi bersama",
+    "Menunda respon agar tidak memicu perdebatan",
+    "Menyampaikan keberatan secara informal setelah forum"
+  ],
+  a: 2,
+  e: "Adaptasi tingkat tinggi tercermin dari kemampuan menjaga objektivitas dan orientasi solusi.",
+  c: "Pengendalian Diri Interinstansi"
+},
+{
+  q: "Seorang rekan kerja secara konsisten menunjukkan sikap sinis terhadap perubahan dan memengaruhi moral tim. Anda diminta bekerja satu tim dengannya dalam proyek strategis. Sikap paling adaptif dan terkendali adalah …",
+  o: [
+    "Menjaga jarak dan membatasi komunikasi",
+    "Melaporkan perilaku tersebut ke pimpinan",
+    "Tetap bekerja profesional sambil mengajak berdiskusi secara rasional",
+    "Mengikuti sikap rekan agar tidak terjadi konflik",
+    "Menunggu pimpinan mengatur ulang tim"
+  ],
+  a: 2,
+  e: "Pengendalian diri tinggi ditunjukkan dengan profesionalitas dan komunikasi konstruktif.",
+  c: "Adaptasi Relasi Kerja Sulit"
+},
+{
+  q: "Dalam situasi tekanan tinggi dan sorotan publik, Anda menyadari bahwa emosi pribadi mulai memengaruhi kualitas keputusan. Tindakan paling mencerminkan pengendalian diri ASN adalah …",
+  o: [
+    "Tetap mengambil keputusan cepat agar terlihat tegas",
+    "Menyerahkan seluruh keputusan kepada atasan",
+    "Mengelola emosi terlebih dahulu lalu mengambil keputusan secara rasional",
+    "Menunda keputusan tanpa batas waktu",
+    "Menghindari keterlibatan langsung"
+  ],
+  a: 2,
+  e: "Kesadaran diri dan pengelolaan emosi adalah inti pengendalian diri tingkat ekstrem.",
+  c: "Kesadaran Diri ASN"
+}
+
+
+  
+];
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
+================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (OPSINYA DIAKAC)
+================================ */
+let currentQuestion = null;
+
+function loadQuestion() {
+  answered = false;
+
+  // clone soal agar bank asli tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById("question").innerText = currentQuestion.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  // start timer hanya sekali
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+
+/* ===============================
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
+    `;
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
+  } else {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
+    `;
+  }
+
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
