@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal TWK CPNS – Pancasila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Latihan Soal TIU CPNS</h1>
+  <p>Analisis Penalaran · Standar CPNS</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan TIU</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area TIU</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL (20 SOAL FIX)
+================================ */
+const questions = [
+  /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
+  
+/* =================================================
+   📘 BANK SOAL TIU
+   ANALISIS & PENALARAN EXTREME HOTS (SOAL CERITA)
+================================================= */
+
+{
+  q: "Sebuah instansi menerapkan sistem kerja hybrid. Setelah kebijakan diterapkan, produktivitas meningkat pada unit A dan B, tetapi menurun pada unit C. Pimpinan menyimpulkan bahwa sistem hybrid selalu meningkatkan produktivitas. Kesimpulan pimpinan tersebut …",
+  o: [
+    "Benar karena didukung data",
+    "Salah karena tidak semua unit meningkat",
+    "Benar karena mayoritas unit meningkat",
+    "Tidak dapat ditentukan karena data kurang",
+    "Benar jika unit C dikecualikan"
+  ],
+  a: 1,
+  e: "Satu pengecualian cukup membantah klaim 'selalu'.",
+  c: "Generalisasi Berlebihan"
+},
+{
+  q: "Dalam sebuah daerah, setelah tarif layanan diturunkan, jumlah pengguna meningkat. Namun pada periode yang sama, promosi layanan juga diperluas. Kesimpulan paling logis terkait peningkatan pengguna adalah …",
+  o: [
+    "Penurunan tarif adalah satu-satunya penyebab",
+    "Promosi tidak berpengaruh",
+    "Peningkatan pengguna pasti akibat tarif",
+    "Peningkatan pengguna bisa dipengaruhi lebih dari satu faktor",
+    "Tarif tidak berhubungan dengan pengguna"
+  ],
+  a: 3,
+  e: "Terdapat variabel perantara yang tidak boleh diabaikan.",
+  c: "Analisis Sebab–Akibat"
+},
+{
+  q: "Sebuah tim menyatakan: setiap proyek yang menggunakan data historis berhasil. Proyek X berhasil. Kesimpulan bahwa Proyek X menggunakan data historis adalah …",
+  o: [
+    "Pasti benar",
+    "Kemungkinan besar benar",
+    "Salah secara logika",
+    "Benar jika tidak ada faktor lain",
+    "Tidak relevan"
+  ],
+  a: 2,
+  e: "Kesalahan implikasi terbalik (affirming the consequent).",
+  c: "Fallacy Logika"
+},
+{
+  q: "Dalam laporan kinerja disebutkan bahwa seluruh pegawai berprestasi mengikuti pelatihan lanjutan. Tahun ini, 30 pegawai mengikuti pelatihan lanjutan. Kesimpulan yang paling tepat adalah …",
+  o: [
+    "Semua peserta pelatihan berprestasi",
+    "Sebagian peserta pelatihan berprestasi",
+    "Peserta pelatihan pasti pegawai unggulan",
+    "Tidak dapat disimpulkan",
+    "Pelatihan menjamin prestasi"
+  ],
+  a: 3,
+  e: "Premis tidak menyatakan hubungan sebaliknya.",
+  c: "Evaluasi Kesimpulan"
+},
+{
+  q: "Sebuah kebijakan baru diterapkan untuk meningkatkan efisiensi. Efisiensi meningkat, tetapi kualitas layanan menurun. Pernyataan yang paling tepat adalah …",
+  o: [
+    "Kebijakan sepenuhnya berhasil",
+    "Kebijakan sepenuhnya gagal",
+    "Efisiensi selalu menurunkan kualitas",
+    "Keberhasilan kebijakan bersifat parsial",
+    "Kualitas tidak penting"
+  ],
+  a: 3,
+  e: "Evaluasi kebijakan harus multidimensi.",
+  c: "Analisis Kebijakan"
+},
+{
+  q: "Dalam suatu organisasi, jika koordinasi lemah maka target tidak tercapai. Tahun ini target tidak tercapai. Kesimpulan bahwa koordinasi lemah adalah …",
+  o: [
+    "Pasti benar",
+    "Kemungkinan benar",
+    "Pasti salah",
+    "Tidak dapat ditentukan",
+    "Tidak relevan"
+  ],
+  a: 1,
+  e: "Akibat bisa disebabkan faktor lain.",
+  c: "Implikasi Logis"
+},
+{
+  q: "Data menunjukkan bahwa setiap kali jam layanan diperpanjang, kepuasan meningkat. Tahun ini jam layanan tidak diperpanjang, tetapi kepuasan meningkat. Pernyataan yang tepat adalah …",
+  o: [
+    "Data sebelumnya salah",
+    "Jam layanan tidak berpengaruh",
+    "Ada faktor lain yang memengaruhi kepuasan",
+    "Kepuasan tidak dapat diukur",
+    "Kebijakan gagal"
+  ],
+  a: 2,
+  e: "Hubungan sebab tidak tunggal.",
+  c: "Analisis Variabel"
+},
+{
+  q: "Sebuah tim menyimpulkan bahwa karena sebagian besar keluhan datang dari wilayah urban, maka wilayah rural tidak bermasalah. Kesimpulan tersebut …",
+  o: [
+    "Logis dan tepat",
+    "Tidak logis karena data tidak lengkap",
+    "Benar karena mayoritas",
+    "Benar secara statistik",
+    "Tidak dapat dinilai"
+  ],
+  a: 1,
+  e: "Tidak adanya keluhan bukan berarti tidak ada masalah.",
+  c: "Logical Fallacy"
+},
+{
+  q: "Jika suatu program efektif, maka biaya operasional menurun. Biaya operasional menurun setelah Program Y diterapkan. Kesimpulan yang tepat adalah …",
+  o: [
+    "Program Y efektif",
+    "Program Y tidak efektif",
+    "Program Y mungkin efektif",
+    "Efektivitas tidak relevan",
+    "Tidak dapat ditentukan"
+  ],
+  a: 2,
+  e: "Efek bisa disebabkan faktor lain.",
+  c: "Evaluasi Efektivitas"
+},
+{
+  q: "Sebuah instansi menyatakan bahwa seluruh pegawai yang kinerjanya tinggi mendapat insentif. Fakta menunjukkan beberapa pegawai tidak mendapat insentif. Kesimpulan yang tepat adalah …",
+  o: [
+    "Pegawai tersebut berkinerja rendah",
+    "Sistem insentif tidak adil",
+    "Sebagian pegawai berkinerja rendah",
+    "Tidak dapat ditentukan",
+    "Insentif tidak penting"
+  ],
+  a: 3,
+  e: "Tidak mendapat insentif tidak selalu berarti kinerja rendah.",
+  c: "Logika Kontraposisi Parsial"
+},
+{
+  q: "Dalam laporan disebutkan bahwa setiap keputusan berbasis data akurat. Beberapa keputusan tidak akurat. Kesimpulan yang tepat adalah …",
+  o: [
+    "Keputusan tersebut tidak berbasis data",
+    "Data tidak penting",
+    "Keputusan pasti salah",
+    "Tidak dapat disimpulkan",
+    "Semua keputusan salah"
+  ],
+  a: 0,
+  e: "Modus tollens berlaku jika premis bersifat mutlak.",
+  c: "Logika Deduktif"
+},
+{
+  q: "Suatu daerah meningkatkan anggaran pendidikan dan kesehatan secara bersamaan. Indeks pembangunan manusia meningkat. Kesimpulan paling tepat adalah …",
+  o: [
+    "Pendidikan adalah satu-satunya penyebab",
+    "Kesehatan tidak berpengaruh",
+    "Peningkatan IPM dipengaruhi kombinasi faktor",
+    "Anggaran tidak relevan",
+    "IPM selalu naik setiap tahun"
+  ],
+  a: 2,
+  e: "Banyak sebab menuju satu akibat.",
+  c: "Analisis Multi-Sebab"
+},
+{
+  q: "Jika suatu prosedur dipatuhi, maka kesalahan administrasi menurun. Kesalahan menurun setelah pelatihan diberikan. Kesimpulan bahwa prosedur dipatuhi adalah …",
+  o: [
+    "Pasti benar",
+    "Kemungkinan benar",
+    "Salah secara logika",
+    "Tidak relevan",
+    "Tidak dapat ditentukan"
+  ],
+  a: 1,
+  e: "Pelatihan bisa menjadi faktor lain.",
+  c: "Evaluasi Inferensi"
+},
+{
+  q: "Sebuah evaluasi menyatakan bahwa program yang partisipatif cenderung berkelanjutan. Program Z bersifat partisipatif, tetapi dihentikan. Pernyataan yang paling tepat adalah …",
+  o: [
+    "Evaluasi salah",
+    "Partisipasi tidak penting",
+    "Program Z adalah pengecualian",
+    "Program Z tidak partisipatif",
+    "Kesimpulan evaluasi mutlak salah"
+  ],
+  a: 2,
+  e: "Kesimpulan induktif selalu memungkinkan pengecualian.",
+  c: "Induksi & Pengecualian"
+},
+{
+  q: "Jika kepemimpinan kuat, maka konflik menurun. Dalam suatu unit konflik menurun setelah restrukturisasi. Kesimpulan bahwa kepemimpinan kuat adalah …",
+  o: [
+    "Benar",
+    "Salah",
+    "Tidak dapat ditentukan",
+    "Pasti benar",
+    "Tidak relevan"
+  ],
+  a: 2,
+  e: "Restrukturisasi bisa menjadi variabel lain.",
+  c: "Kesalahan Kausal"
+},
+{
+  q: "Dalam laporan disebutkan bahwa seluruh proyek tepat waktu memiliki perencanaan matang. Proyek A terlambat. Kesimpulan yang tepat adalah …",
+  o: [
+    "Proyek A tidak direncanakan matang",
+    "Proyek A gagal",
+    "Perencanaan tidak penting",
+    "Tidak dapat ditentukan",
+    "Proyek A melanggar aturan"
+  ],
+  a: 3,
+  e: "Premis tidak menyebut semua yang tidak tepat waktu pasti tanpa perencanaan.",
+  c: "Evaluasi Logika"
+},
+{
+  q: "Jika suatu kebijakan adil, maka resistensi rendah. Resistensi terhadap kebijakan X rendah. Kesimpulan yang tepat adalah …",
+  o: [
+    "Kebijakan X adil",
+    "Kebijakan X tidak adil",
+    "Kebijakan X mungkin adil",
+    "Resistensi tidak penting",
+    "Tidak dapat ditentukan"
+  ],
+  a: 2,
+  e: "Akibat tidak menjamin sebab.",
+  c: "Implikasi Terbalik"
+},
+{
+  q: "Sebuah survei menunjukkan 80% responden puas. Pimpinan menyimpulkan layanan sudah optimal dan tidak perlu perbaikan. Kesalahan logika terletak pada …",
+  o: [
+    "Sampel kecil",
+    "Mengabaikan minoritas",
+    "Korelasi palsu",
+    "Data tidak valid",
+    "Tidak ada kesalahan"
+  ],
+  a: 1,
+  e: "Kepuasan mayoritas tidak meniadakan masalah.",
+  c: "Evaluasi Argumen"
+},
+{
+  q: "Jika sistem stabil, maka gangguan minimal. Gangguan minimal terjadi, tetapi sistem sering diperbaiki. Pernyataan yang paling tepat adalah …",
+  o: [
+    "Sistem stabil",
+    "Sistem tidak stabil",
+    "Tidak dapat disimpulkan",
+    "Gangguan tidak relevan",
+    "Perbaikan tidak perlu"
+  ],
+  a: 2,
+  e: "Informasi tidak cukup untuk kepastian.",
+  c: "Insufisiensi Data"
+},
+{
+  q: "Suatu tim menyimpulkan bahwa karena tidak ada laporan pelanggaran, maka prosedur telah berjalan sempurna. Kesimpulan tersebut …",
+  o: [
+    "Logis",
+    "Tidak logis",
+    "Benar secara administratif",
+    "Tidak dapat dinilai",
+    "Valid secara statistik"
+  ],
+  a: 1,
+  e: "Tidak ada laporan ≠ tidak ada pelanggaran.",
+  c: "Argument from Ignorance"
+}
+
+
+  
+];
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
+================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (OPSINYA DIAKAC)
+================================ */
+let currentQuestion = null;
+
+function loadQuestion() {
+  answered = false;
+
+  // clone soal agar bank asli tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById("question").innerText = currentQuestion.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  // start timer hanya sekali
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+
+/* ===============================
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
+    `;
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
+  } else {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
+    `;
+  }
+
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
