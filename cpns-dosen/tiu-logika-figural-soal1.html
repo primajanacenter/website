@@ -352,6 +352,52 @@ header p {
 .rotate-180 { transform: rotate(180deg); }
 .rotate-270 { transform: rotate(270deg); }
 
+/* === EXTRA SHAPES === */
+
+/* ⭐ STAR */
+.star {
+  width: 0;
+  height: 0;
+  position: relative;
+}
+.star::before,
+.star::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.star::before {
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 32px solid #1e3a8a;
+}
+.star::after {
+  top: 10px;
+  left: -16px;
+  border-left: 32px solid transparent;
+  border-right: 32px solid transparent;
+  border-top: 16px solid #1e3a8a;
+}
+
+/* ◆ DIAMOND */
+.diamond {
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 3px solid #1e3a8a;
+  transform: rotate(45deg);
+}
+
+/* ☾ CRESCENT (MOON) */
+.crescent {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  box-shadow: -6px 0 0 0 #1e3a8a;
+  background: transparent;
+}
+
 
 </style>
 
@@ -481,356 +527,361 @@ function renderPattern(pattern) {
 ================================================= */
 const questions = [
 
-/* ========= HOTS 1–5 | Rotasi + Isian ========= */
+/* ===== HYPER 1–5 | Asynchronous Cycles ===== */
 
 {
   pattern: [
     { shape: "triangle", rotate: 0, filled: true },
-    { shape: "triangle", rotate: 90, filled: false },
-    { shape: "triangle", rotate: 180, filled: true },
+    { shape: "square", rotate: 90, filled: true },
+    { shape: "circle", rotate: 180, filled: false },
     { shape: "triangle", rotate: 270, filled: false }
   ],
   options: [
-    { shape: "triangle", rotate: 0, filled: true },
-    { shape: "triangle", rotate: 0, filled: false },
-    { shape: "triangle", rotate: 90, filled: true },
-    { shape: "triangle", rotate: 180, filled: false }
-  ],
-  answer: 0,
-  explanation: "Rotasi 90° + isian selang-seling.",
-  category: "Pola Kombinasi"
-},
-{
-  pattern: [
-    { shape: "square", rotate: 0, filled: false },
-    { shape: "square", rotate: 180, filled: true },
-    { shape: "square", rotate: 0, filled: false }
-  ],
-  options: [
-    { shape: "square", rotate: 180, filled: true },
-    { shape: "square", rotate: 90, filled: false },
-    { shape: "square", rotate: 270, filled: true },
-    { shape: "square", rotate: 0, filled: true }
-  ],
-  answer: 0,
-  explanation: "Rotasi bolak-balik + isian konsisten.",
-  category: "Pola Kombinasi"
-},
-{
-  pattern: [
-    { shape: "triangle", rotate: 0 },
-    { shape: "triangle", rotate: 180 },
-    { shape: "triangle", rotate: 90 },
-    { shape: "triangle", rotate: 270 }
-  ],
-  options: [
-    { shape: "triangle", rotate: 0 },
-    { shape: "triangle", rotate: 180 },
-    { shape: "triangle", rotate: 90 },
-    { shape: "triangle", rotate: 270 }
-  ],
-  answer: 0,
-  explanation: "Dua urutan rotasi saling bersilangan.",
-  category: "Pola Rotasi"
-},
-{
-  pattern: [
-    { shape: "circle", filled: true },
-    { shape: "circle", filled: false },
-    { shape: "circle", filled: true },
-    { shape: "circle", filled: false }
-  ],
-  options: [
-    { shape: "circle", filled: true },
-    { shape: "square", filled: false },
-    { shape: "triangle", filled: true },
-    { shape: "circle", filled: false }
-  ],
-  answer: 0,
-  explanation: "Isian ganjil–genap.",
-  category: "Strategi Umum"
-},
-{
-  pattern: [
-    { shape: "triangle", rotate: 0, filled: false },
-    { shape: "triangle", rotate: 90, filled: true },
-    { shape: "triangle", rotate: 180, filled: false }
-  ],
-  options: [
-    { shape: "triangle", rotate: 270, filled: true },
-    { shape: "triangle", rotate: 90, filled: false },
+    { shape: "square", rotate: 0, filled: true },
+    { shape: "circle", rotate: 90, filled: false },
     { shape: "triangle", rotate: 180, filled: true },
-    { shape: "triangle", rotate: 0, filled: true }
+    { shape: "diamond", rotate: 270, filled: false }
   ],
   answer: 0,
-  explanation: "Rotasi konsisten + isian berganti.",
-  category: "Pola Kombinasi"
-},
-
-/* ========= HOTS 6–10 | Bentuk + Ganjil–Genap ========= */
-
-{
-  pattern: [
-    { shape: "circle" },
-    { shape: "square" },
-    { shape: "triangle" },
-    { shape: "circle" }
-  ],
-  options: [
-    { shape: "square" },
-    { shape: "triangle" },
-    { shape: "circle" },
-    { shape: "square", filled: true }
-  ],
-  answer: 0,
-  explanation: "Urutan bentuk siklik.",
+  explanation: "Bentuk siklus 3, rotasi siklus 4, isian siklus 2.",
   category: "Pola Kombinasi"
 },
 {
   pattern: [
-    { shape: "square", filled: true },
-    { shape: "triangle", filled: false },
-    { shape: "square", filled: true },
-    { shape: "triangle", filled: false }
+    { shape: "star", rotate: 0 },
+    { shape: "diamond", rotate: 180 },
+    { shape: "crescent", rotate: 90 },
+    { shape: "star", rotate: 270 }
   ],
   options: [
-    { shape: "square", filled: true },
+    { shape: "diamond", rotate: 0 },
+    { shape: "crescent", rotate: 180 },
+    { shape: "star", rotate: 90 },
+    { shape: "triangle", rotate: 270 }
+  ],
+  answer: 0,
+  explanation: "Bentuk siklik, rotasi lompat 180–90.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "circle", filled: true },
     { shape: "triangle", filled: false },
     { shape: "square", filled: false },
     { shape: "circle", filled: true }
   ],
-  answer: 0,
-  explanation: "Pola bentuk + isian ganjil–genap.",
-  category: "Pola Kombinasi"
-},
-{
-  pattern: [
-    { shape: "triangle", rotate: 0 },
-    { shape: "triangle", rotate: 90 },
-    { shape: "triangle", rotate: 0 },
-    { shape: "triangle", rotate: 90 }
-  ],
   options: [
-    { shape: "triangle", rotate: 0 },
-    { shape: "triangle", rotate: 180 },
-    { shape: "triangle", rotate: 270 },
-    { shape: "triangle", rotate: 90 }
-  ],
-  answer: 0,
-  explanation: "Pola ganjil–genap arah.",
-  category: "Pola Kombinasi"
-},
-{
-  pattern: [
-    { shape: "circle", filled: false },
-    { shape: "circle", filled: true },
-    { shape: "square", filled: false },
-    { shape: "square", filled: true }
-  ],
-  options: [
-    { shape: "circle", filled: false },
-    { shape: "circle", filled: true },
-    { shape: "square", filled: false },
-    { shape: "square", filled: true }
-  ],
-  answer: 0,
-  explanation: "Isian tetap, bentuk siklik.",
-  category: "Pola Kombinasi"
-},
-{
-  pattern: [
-    { shape: "triangle", rotate: 0 },
-    { shape: "triangle", rotate: 180 },
-    { shape: "triangle", rotate: 0 },
-    { shape: "triangle", rotate: 180 }
-  ],
-  options: [
-    { shape: "triangle", rotate: 0 },
-    { shape: "triangle", rotate: 90 },
-    { shape: "triangle", rotate: 270 },
-    { shape: "triangle", rotate: 180 }
-  ],
-  answer: 0,
-  explanation: "Bolak-balik simetris.",
-  category: "Pola Rotasi"
-},
-
-/* ========= HOTS 11–15 | Pola Bersilangan ========= */
-
-{
-  pattern: [
-    { shape: "square", filled: false },
-    { shape: "square", filled: true },
     { shape: "triangle", filled: false },
-    { shape: "triangle", filled: true }
-  ],
-  options: [
-    { shape: "square", filled: false },
-    { shape: "triangle", filled: true },
-    { shape: "circle", filled: false },
-    { shape: "square", filled: true }
-  ],
-  answer: 0,
-  explanation: "Bentuk berubah tiap dua langkah.",
-  category: "Pola Kombinasi"
-},
-{
-  pattern: [
-    { shape: "triangle", rotate: 0, filled: true },
-    { shape: "triangle", rotate: 90, filled: true },
-    { shape: "triangle", rotate: 180, filled: false },
-    { shape: "triangle", rotate: 270, filled: false }
-  ],
-  options: [
-    { shape: "triangle", rotate: 0, filled: true },
-    { shape: "triangle", rotate: 90, filled: false },
-    { shape: "triangle", rotate: 180, filled: true },
-    { shape: "triangle", rotate: 270, filled: false }
-  ],
-  answer: 0,
-  explanation: "Isian dibagi per dua rotasi.",
-  category: "Pola Kombinasi"
-},
-{
-  pattern: [
-    { shape: "circle" },
-    { shape: "triangle" },
-    { shape: "square" },
-    { shape: "triangle" }
-  ],
-  options: [
-    { shape: "circle" },
-    { shape: "triangle" },
-    { shape: "square" },
-    { shape: "circle", filled: true }
-  ],
-  answer: 0,
-  explanation: "Pola simetri tengah.",
-  category: "Pola Kombinasi"
-},
-{
-  pattern: [
-    { shape: "triangle", rotate: 0 },
-    { shape: "triangle", rotate: 90 },
-    { shape: "triangle", rotate: 180 },
-    { shape: "triangle", rotate: 90 }
-  ],
-  options: [
-    { shape: "triangle", rotate: 0 },
-    { shape: "triangle", rotate: 270 },
-    { shape: "triangle", rotate: 180 },
-    { shape: "triangle", rotate: 90 }
-  ],
-  answer: 0,
-  explanation: "Rotasi simetris (naik–turun).",
-  category: "Pola Rotasi"
-},
-{
-  pattern: [
-    { shape: "square", filled: true },
-    { shape: "square", filled: false },
-    { shape: "circle", filled: true },
-    { shape: "circle", filled: false }
-  ],
-  options: [
     { shape: "square", filled: true },
     { shape: "circle", filled: false },
-    { shape: "triangle", filled: true },
+    { shape: "diamond", filled: true }
+  ],
+  answer: 0,
+  explanation: "Bentuk siklus, isian berdasarkan posisi ganjil.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "diamond", rotate: 0, filled: false },
+    { shape: "diamond", rotate: 90, filled: true },
+    { shape: "star", rotate: 180, filled: false },
+    { shape: "star", rotate: 270, filled: true }
+  ],
+  options: [
+    { shape: "diamond", rotate: 0, filled: false },
+    { shape: "star", rotate: 0, filled: true },
+    { shape: "crescent", rotate: 180, filled: false },
+    { shape: "triangle", rotate: 270, filled: true }
+  ],
+  answer: 0,
+  explanation: "Bentuk berpasangan, rotasi progresif, isian ganjil.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "crescent", filled: true },
+    { shape: "square", filled: true },
+    { shape: "crescent", filled: false },
     { shape: "square", filled: false }
   ],
+  options: [
+    { shape: "crescent", filled: true },
+    { shape: "square", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "circle", filled: false }
+  ],
   answer: 0,
-  explanation: "Isian tetap, bentuk berganti tiap dua langkah.",
+  explanation: "Isian berubah tiap dua langkah, bentuk selang.",
   category: "Pola Kombinasi"
 },
 
-/* ========= HOTS 16–20 | Multi-Jebakan ========= */
+/* ===== HYPER 6–10 | Local vs Global Pattern ===== */
 
-{
-  pattern: [
-    { shape: "triangle", rotate: 0, filled: true },
-    { shape: "square", rotate: 90, filled: false },
-    { shape: "triangle", rotate: 180, filled: true }
-  ],
-  options: [
-    { shape: "square", rotate: 270, filled: false },
-    { shape: "triangle", rotate: 270, filled: true },
-    { shape: "square", rotate: 180, filled: true },
-    { shape: "triangle", rotate: 90, filled: false }
-  ],
-  answer: 0,
-  explanation: "Bentuk berganti, rotasi konsisten, isian tetap per bentuk.",
-  category: "Pola Kombinasi"
-},
-{
-  pattern: [
-    { shape: "circle", filled: false },
-    { shape: "square", filled: true },
-    { shape: "circle", filled: false },
-    { shape: "square", filled: true }
-  ],
-  options: [
-    { shape: "circle", filled: false },
-    { shape: "square", filled: true },
-    { shape: "triangle", filled: false },
-    { shape: "circle", filled: true }
-  ],
-  answer: 0,
-  explanation: "Dua pola paralel berjalan.",
-  category: "Pola Kombinasi"
-},
 {
   pattern: [
     { shape: "triangle", rotate: 0 },
-    { shape: "square", rotate: 90 },
-    { shape: "triangle", rotate: 180 },
+    { shape: "triangle", rotate: 90 },
+    { shape: "square", rotate: 180 },
     { shape: "square", rotate: 270 }
   ],
   options: [
     { shape: "triangle", rotate: 0 },
     { shape: "square", rotate: 0 },
-    { shape: "triangle", rotate: 90 },
-    { shape: "square", rotate: 180 }
+    { shape: "diamond", rotate: 90 },
+    { shape: "circle", rotate: 180 }
   ],
   answer: 0,
-  explanation: "Bentuk selang-seling + rotasi berurutan.",
+  explanation: "Rotasi lokal per bentuk.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "star", filled: true },
+    { shape: "star", filled: false },
+    { shape: "diamond", filled: true },
+    { shape: "diamond", filled: false }
+  ],
+  options: [
+    { shape: "star", filled: true },
+    { shape: "diamond", filled: false },
+    { shape: "circle", filled: true },
+    { shape: "crescent", filled: false }
+  ],
+  answer: 0,
+  explanation: "Isian lokal per bentuk.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "circle", rotate: 0 },
+    { shape: "square", rotate: 90 },
+    { shape: "triangle", rotate: 180 },
+    { shape: "diamond", rotate: 270 }
+  ],
+  options: [
+    { shape: "circle", rotate: 0 },
+    { shape: "square", rotate: 0 },
+    { shape: "triangle", rotate: 90 },
+    { shape: "diamond", rotate: 180 }
+  ],
+  answer: 0,
+  explanation: "Rotasi global konsisten, bentuk naik.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "crescent", rotate: 0, filled: false },
+    { shape: "crescent", rotate: 180, filled: true },
+    { shape: "star", rotate: 90, filled: false },
+    { shape: "star", rotate: 270, filled: true }
+  ],
+  options: [
+    { shape: "crescent", rotate: 0, filled: false },
+    { shape: "star", rotate: 0, filled: true },
+    { shape: "diamond", rotate: 180, filled: false },
+    { shape: "triangle", rotate: 270, filled: true }
+  ],
+  answer: 0,
+  explanation: "Rotasi per bentuk + isian paralel.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "square", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "circle", filled: false },
+    { shape: "triangle", filled: true }
+  ],
+  options: [
+    { shape: "square", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "diamond", filled: false },
+    { shape: "circle", filled: true }
+  ],
+  answer: 0,
+  explanation: "Bentuk pusat simetri, isian tetap.",
+  category: "Pola Kombinasi"
+},
+
+/* ===== HYPER 11–15 | Rule Switching ===== */
+
+{
+  pattern: [
+    { shape: "triangle", rotate: 0, filled: true },
+    { shape: "square", rotate: 90, filled: true },
+    { shape: "square", rotate: 180, filled: false },
+    { shape: "triangle", rotate: 270, filled: false }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0, filled: true },
+    { shape: "square", rotate: 0, filled: false },
+    { shape: "diamond", rotate: 90, filled: true },
+    { shape: "circle", rotate: 180, filled: false }
+  ],
+  answer: 0,
+  explanation: "Pola berubah setelah titik tengah.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "star", rotate: 0 },
+    { shape: "star", rotate: 180 },
+    { shape: "crescent", rotate: 90 },
+    { shape: "crescent", rotate: 270 }
+  ],
+  options: [
+    { shape: "star", rotate: 0 },
+    { shape: "crescent", rotate: 0 },
+    { shape: "diamond", rotate: 180 },
+    { shape: "triangle", rotate: 90 }
+  ],
+  answer: 0,
+  explanation: "Dua aturan rotasi berbeda per bentuk.",
   category: "Pola Kombinasi"
 },
 {
   pattern: [
     { shape: "circle", filled: true },
+    { shape: "circle", filled: false },
     { shape: "triangle", filled: false },
-    { shape: "square", filled: true },
-    { shape: "triangle", filled: false }
+    { shape: "triangle", filled: true }
   ],
   options: [
     { shape: "circle", filled: true },
-    { shape: "triangle", filled: false },
+    { shape: "triangle", filled: true },
     { shape: "square", filled: false },
-    { shape: "circle", filled: false }
+    { shape: "diamond", filled: true }
   ],
   answer: 0,
-  explanation: "Bentuk pusat simetri.",
+  explanation: "Isian dibalik saat bentuk berubah.",
   category: "Pola Kombinasi"
 },
 {
   pattern: [
+    { shape: "diamond", rotate: 0 },
+    { shape: "star", rotate: 90 },
+    { shape: "diamond", rotate: 180 },
+    { shape: "star", rotate: 270 }
+  ],
+  options: [
+    { shape: "diamond", rotate: 0 },
+    { shape: "star", rotate: 0 },
+    { shape: "circle", rotate: 90 },
+    { shape: "triangle", rotate: 180 }
+  ],
+  answer: 0,
+  explanation: "Interleaving bentuk, rotasi konsisten.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "crescent", filled: true },
+    { shape: "crescent", filled: false },
+    { shape: "square", filled: true },
+    { shape: "square", filled: false }
+  ],
+  options: [
+    { shape: "crescent", filled: true },
+    { shape: "square", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "circle", filled: false }
+  ],
+  answer: 0,
+  explanation: "Isian paralel per bentuk.",
+  category: "Pola Kombinasi"
+},
+
+/* ===== HYPER 16–20 | Deception & Override ===== */
+
+{
+  pattern: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "square", rotate: 180 },
+    { shape: "circle", rotate: 90 },
+    { shape: "diamond", rotate: 270 }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "square", rotate: 0 },
+    { shape: "circle", rotate: 180 },
+    { shape: "diamond", rotate: 90 }
+  ],
+  answer: 0,
+  explanation: "Rotasi tidak linear tapi konsisten per bentuk.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "star", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "star", filled: true },
+    { shape: "triangle", filled: false }
+  ],
+  options: [
+    { shape: "star", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "square", filled: false },
+    { shape: "circle", filled: true }
+  ],
+  answer: 0,
+  explanation: "Isian silang setelah midpoint.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "diamond", rotate: 0, filled: true },
+    { shape: "diamond", rotate: 90, filled: false },
+    { shape: "crescent", rotate: 180, filled: true },
+    { shape: "crescent", rotate: 270, filled: false }
+  ],
+  options: [
+    { shape: "diamond", rotate: 0, filled: true },
+    { shape: "crescent", rotate: 0, filled: false },
+    { shape: "triangle", rotate: 180, filled: true },
+    { shape: "star", rotate: 270, filled: false }
+  ],
+  answer: 0,
+  explanation: "Bentuk berpasangan, aturan identik.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "square", filled: true },
+    { shape: "circle", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "circle", filled: false }
+  ],
+  options: [
+    { shape: "square", filled: true },
+    { shape: "circle", filled: false },
+    { shape: "diamond", filled: true },
+    { shape: "triangle", filled: false }
+  ],
+  answer: 0,
+  explanation: "Simetri pusat dengan noise visual.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "triangle", rotate: 0, filled: false },
+    { shape: "triangle", rotate: 90, filled: true },
+    { shape: "triangle", rotate: 180, filled: true },
+    { shape: "triangle", rotate: 270, filled: false }
+  ],
+  options: [
     { shape: "triangle", rotate: 0, filled: false },
     { shape: "triangle", rotate: 90, filled: false },
     { shape: "triangle", rotate: 180, filled: true },
     { shape: "triangle", rotate: 270, filled: true }
   ],
-  options: [
-    { shape: "triangle", rotate: 0, filled: false },
-    { shape: "triangle", rotate: 90, filled: true },
-    { shape: "triangle", rotate: 180, filled: false },
-    { shape: "triangle", rotate: 270, filled: false }
-  ],
   answer: 0,
-  explanation: "Isian dibagi dua berdasarkan arah.",
+  explanation: "Isian simetris terhadap arah.",
   category: "Pola Kombinasi"
 }
 
 ];
+
+
 
 
 /* =================================================
