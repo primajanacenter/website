@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal TWK CPNS – Pancasila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Latihan Soal TKP CPNS</h1>
+  <p>Pelayanan Publik · Standar CPNS</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan TKP</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area TKP</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL (20 SOAL FIX)
+================================ */
+const questions = [
+  /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
+  
+/* =================================================
+   📘 BANK SOAL TWK
+   PELAYANAN PUBLIK – EXTREME HOTS (20 SOAL)
+   BERBENTUK CERITA / STUDI KASUS
+================================================= */
+
+/* ===== LEVEL EXTREME HOTS (41–60)
+   DILEMA ETIS & KEBIJAKAN PELAYANAN PUBLIK
+================================ */
+
+{
+  q: "Seorang ASN di kantor pelayanan perizinan menerima permohonan dari warga miskin yang membutuhkan izin segera untuk pengobatan darurat. SOP mengatur proses 5 hari kerja. Jika ASN ingin tetap profesional dan berkeadilan, tindakan paling tepat adalah …",
+  o: [
+    "Mempercepat layanan tanpa dokumentasi",
+    "Menolak karena harus patuh SOP",
+    "Mengambil diskresi yang dapat dipertanggungjawabkan",
+    "Mendahulukan karena rasa iba",
+    "Meminta atasan menyelesaikan langsung"
+  ],
+  a: 2,
+  e: "Diskresi diperbolehkan untuk kepentingan publik dan kondisi darurat secara bertanggung jawab.",
+  c: "Diskresi Pelayanan Publik"
+},
+{
+  q: "Dalam satu hari, sistem antrean online mengalami gangguan. Beberapa warga meminta dilayani manual. Agar tetap adil dan profesional, ASN seharusnya …",
+  o: [
+    "Melayani siapa yang paling mendesak",
+    "Menunda semua layanan",
+    "Menyusun mekanisme alternatif yang transparan",
+    "Melayani warga yang dikenal",
+    "Menunggu sistem pulih tanpa solusi"
+  ],
+  a: 2,
+  e: "Solusi alternatif transparan menjaga keadilan dan kepastian layanan.",
+  c: "Keadilan dan Transparansi"
+},
+{
+  q: "Seorang ASN melayani warga yang marah dan memaki karena merasa dirugikan sistem. Sikap paling mencerminkan empati profesional adalah …",
+  o: [
+    "Menegur karena melanggar etika",
+    "Mengabaikan emosi warga",
+    "Tetap tenang dan menjelaskan prosedur secara jelas",
+    "Meminta warga keluar ruangan",
+    "Mengalihkan ke petugas lain"
+  ],
+  a: 2,
+  e: "Empati profesional mengutamakan ketenangan, komunikasi, dan solusi.",
+  c: "Empati ASN"
+},
+{
+  q: "ASN mengetahui bahwa mempercepat layanan bagi pejabat tertentu dapat menghindari konflik internal, tetapi melanggar standar pelayanan. Pilihan paling tepat adalah …",
+  o: [
+    "Mengikuti arahan demi stabilitas",
+    "Menunda keputusan",
+    "Tetap menjalankan standar pelayanan",
+    "Mencari kompromi tidak tertulis",
+    "Mengalihkan tanggung jawab"
+  ],
+  a: 2,
+  e: "Standar pelayanan tidak boleh dikorbankan demi kepentingan internal.",
+  c: "Integritas ASN"
+},
+{
+  q: "Pelayanan publik di sebuah daerah cepat dan murah, tetapi sulit diakses penyandang disabilitas. Kondisi ini menunjukkan masalah utama pada …",
+  o: [
+    "Efisiensi",
+    "Profesionalisme",
+    "Aksesibilitas dan keadilan",
+    "Transparansi",
+    "Akuntabilitas"
+  ],
+  a: 2,
+  e: "Pelayanan berkualitas harus inklusif dan adil.",
+  c: "Keadilan Sosial"
+},
+{
+  q: "Seorang ASN memberikan informasi lengkap namun dengan istilah teknis yang membingungkan masyarakat awam. Secara prinsip, tindakan ini …",
+  o: [
+    "Sudah transparan",
+    "Cukup profesional",
+    "Belum memenuhi transparansi substantif",
+    "Efisien",
+    "Sesuai aturan formal"
+  ],
+  a: 2,
+  e: "Transparansi menuntut informasi yang mudah dipahami.",
+  c: "Transparansi Pelayanan"
+},
+{
+  q: "Dalam kondisi antrean panjang, ASN melayani dengan ramah tetapi mendahulukan kenalan pribadi. Hal ini mencerminkan …",
+  o: [
+    "Empati tinggi",
+    "Diskresi wajar",
+    "Diskriminasi terselubung",
+    "Responsivitas",
+    "Fleksibilitas"
+  ],
+  a: 2,
+  e: "Ramah tanpa keadilan tetap melanggar prinsip pelayanan.",
+  c: "Non-Diskriminasi"
+},
+{
+  q: "Seorang ASN menolak gratifikasi kecil meskipun tidak ada pengawasan dan masyarakat menganggapnya wajar. Sikap ini menunjukkan …",
+  o: [
+    "Takut sanksi",
+    "Kepatuhan formal",
+    "Integritas internal",
+    "Kaku birokrasi",
+    "Kurang empati"
+  ],
+  a: 2,
+  e: "Integritas sejati tidak bergantung pada pengawasan.",
+  c: "Integritas ASN"
+},
+{
+  q: "Pelayanan publik yang berorientasi kepuasan semata tanpa aturan berpotensi menimbulkan …",
+  o: [
+    "Inovasi",
+    "Ketidakpastian hukum",
+    "Profesionalisme tinggi",
+    "Efisiensi",
+    "Partisipasi"
+  ],
+  a: 1,
+  e: "Pelayanan harus seimbang antara kepuasan dan kepastian hukum.",
+  c: "Kepastian Hukum"
+},
+{
+  q: "ASN menunda pelayanan karena menunggu instruksi atasan, padahal SOP sudah jelas. Tindakan ini melanggar prinsip …",
+  o: [
+    "Transparansi",
+    "Kecepatan",
+    "Akuntabilitas",
+    "Netralitas",
+    "Empati"
+  ],
+  a: 1,
+  e: "Pelayanan tidak boleh ditunda tanpa alasan sah.",
+  c: "Pelayanan Cepat"
+},
+{
+  q: "Pengaduan masyarakat ditindaklanjuti secara terbuka dan hasilnya diumumkan. Hal ini mencerminkan …",
+  o: [
+    "Efisiensi",
+    "Transparansi dan akuntabilitas",
+    "Netralitas",
+    "Kepatuhan struktural",
+    "Kepastian hukum"
+  ],
+  a: 1,
+  e: "Pengaduan publik adalah instrumen transparansi dan akuntabilitas.",
+  c: "Pengelolaan Pengaduan"
+},
+{
+  q: "ASN menghadapi dilema antara mempercepat layanan karena tekanan media atau tetap mengikuti prosedur. Pilihan paling tepat adalah …",
+  o: [
+    "Mengikuti tekanan publik",
+    "Menunda semua layanan",
+    "Tetap profesional sesuai aturan",
+    "Menghindari sorotan",
+    "Mencari pembenaran"
+  ],
+  a: 2,
+  e: "Profesionalisme menuntut konsistensi terhadap aturan.",
+  c: "Profesionalisme ASN"
+},
+{
+  q: "Pelayanan yang konsisten namun tidak mempertimbangkan kondisi khusus masyarakat menunjukkan …",
+  o: [
+    "Efisiensi tinggi",
+    "Profesionalisme sempurna",
+    "Kurangnya pendekatan humanis",
+    "Transparansi",
+    "Akuntabilitas"
+  ],
+  a: 2,
+  e: "Pelayanan publik harus berkeadilan dan manusiawi.",
+  c: "Pelayanan Humanis"
+},
+{
+  q: "ASN yang memilih diam saat melihat praktik pelayanan diskriminatif menunjukkan sikap …",
+  o: [
+    "Bijaksana",
+    "Netral",
+    "Tidak profesional",
+    "Empatik",
+    "Fleksibel"
+  ],
+  a: 2,
+  e: "Diam terhadap pelanggaran berarti mengabaikan etika pelayanan.",
+  c: "Etika ASN"
+},
+{
+  q: "Pelayanan publik dinilai berhasil apabila …",
+  o: [
+    "Cepat dan murah",
+    "Minim pengaduan",
+    "Meningkatkan kepercayaan masyarakat",
+    "Efisien anggaran",
+    "Mengikuti SOP"
+  ],
+  a: 2,
+  e: "Kepercayaan publik adalah indikator utama pelayanan.",
+  c: "Tujuan Pelayanan Publik"
+},
+{
+  q: "ASN yang bersikap empatik tetapi tetap menegakkan aturan menunjukkan …",
+  o: [
+    "Kaku birokrasi",
+    "Profesionalisme humanis",
+    "Diskresi berlebihan",
+    "Ketidaktegasan",
+    "Netralitas pasif"
+  ],
+  a: 1,
+  e: "Empati dan profesionalisme harus berjalan seimbang.",
+  c: "Empati Profesional"
+},
+{
+  q: "Pelayanan yang cepat namun tidak adil akan berdampak pada …",
+  o: [
+    "Kepuasan jangka panjang",
+    "Kepercayaan publik",
+    "Ketidakpuasan dan konflik",
+    "Efisiensi sistem",
+    "Inovasi pelayanan"
+  ],
+  a: 2,
+  e: "Keadilan adalah fondasi kepercayaan publik.",
+  c: "Dampak Pelayanan"
+},
+{
+  q: "ASN mengambil diskresi untuk kepentingan pribadi dengan alasan darurat. Tindakan ini termasuk …",
+  o: [
+    "Diskresi sah",
+    "Profesionalisme",
+    "Penyalahgunaan kewenangan",
+    "Empati",
+    "Fleksibilitas"
+  ],
+  a: 2,
+  e: "Diskresi hanya sah jika untuk kepentingan publik.",
+  c: "Penyalahgunaan Diskresi"
+},
+{
+  q: "Pelayanan publik yang ideal menurut good governance harus …",
+  o: [
+    "Cepat dan fleksibel",
+    "Responsif tanpa aturan",
+    "Profesional, adil, dan transparan",
+    "Efisien dan tertutup",
+    "Hierarkis dan tegas"
+  ],
+  a: 2,
+  e: "Good governance menekankan keadilan, profesionalisme, dan transparansi.",
+  c: "Good Governance"
+},
+{
+  q: "Dalam jangka panjang, pelayanan publik yang diskriminatif akan menyebabkan …",
+  o: [
+    "Efisiensi meningkat",
+    "Stabilitas birokrasi",
+    "Menurunnya legitimasi pemerintah",
+    "Kepuasan mayoritas",
+    "Penghematan anggaran"
+  ],
+  a: 2,
+  e: "Diskriminasi merusak legitimasi dan kepercayaan publik.",
+  c: "Legitimasi Pemerintah"
+}
+
+
+  
+];
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
+================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (OPSINYA DIAKAC)
+================================ */
+let currentQuestion = null;
+
+function loadQuestion() {
+  answered = false;
+
+  // clone soal agar bank asli tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById("question").innerText = currentQuestion.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  // start timer hanya sekali
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+
+/* ===============================
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
+    `;
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
+  } else {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
+    `;
+  }
+
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
