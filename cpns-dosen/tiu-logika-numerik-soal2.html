@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal TWK CPNS – Pancasila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Latihan Soal TIU CPNS</h1>
+  <p>Logika Numerik · Standar CPNS</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan TIU</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area TIU</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL (20 SOAL FIX)
+================================ */
+const questions = [
+  /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
+  
+/* =================================================
+   📘 BANK SOAL TIU
+   LOGIKA NUMERIK – HOTS ADVANCE (20 SOAL)
+================================================= */
+
+/* ===== LEVEL HOTS ADVANCE (21–40)
+   ANALISIS POLA KOMPLEKS & SOAL CERITA BERLAPIS
+================================ */
+
+{
+  q: "Perhatikan deret berikut:\n2, 5, 4, 9, 8, 17, …",
+  o: ["16", "18", "32", "33", "34"],
+  a: 3,
+  e: "Pola selang-seling: ×2+1 dan −1. 8×2+1=17 → 17−1=16 → 16×2+1=33.",
+  c: "Deret Campuran Kompleks"
+},
+{
+  q: "Jika x = 2ⁿ + 2ⁿ⁺¹, maka nilai x saat n = 3 adalah …",
+  o: ["16", "20", "24", "28", "32"],
+  a: 2,
+  e: "2³ + 2⁴ = 8 + 16 = 24.",
+  c: "Eksponen & Logika Numerik"
+},
+{
+  q: "Perhatikan pola berikut:\n1, 4, 10, 22, …",
+  o: ["34", "40", "46", "48", "52"],
+  a: 4,
+  e: "Selisih bertambah ganda: +3, +6, +12 → berikutnya +24 → 22+24=46.",
+  c: "Deret Selisih Bertingkat"
+},
+{
+  q: "Sebuah nilai turun 20%, lalu naik 25%. Dibandingkan nilai awal, nilai akhir adalah …",
+  o: [
+    "Lebih kecil",
+    "Lebih besar",
+    "Sama",
+    "Dua kali lipat",
+    "Tidak dapat ditentukan"
+  ],
+  a: 2,
+  e: "Turun 20% → 0,8 lalu naik 25% → 0,8×1,25 = 1 (kembali ke awal).",
+  c: "Analisis Persentase Lanjutan"
+},
+{
+  q: "Perhatikan deret berikut:\n3, 6, 11, 18, 27, …",
+  o: ["36", "37", "38", "39", "40"],
+  a: 2,
+  e: "Selisih: +3, +5, +7, +9 → berikutnya +11 → 27+11=38.",
+  c: "Deret Aritmetika Bertingkat"
+},
+{
+  q: "Jika A : B = 5 : 6 dan B : C = 9 : 10, maka A : C adalah …",
+  o: ["5 : 10", "15 : 20", "25 : 30", "45 : 60", "75 : 100"],
+  a: 3,
+  e: "Samakan B: A:B = 15:18 dan B:C = 18:20 → A:C = 15:20 = 45:60.",
+  c: "Rasio Bertingkat HOTS"
+},
+{
+  q: "Perhatikan pola berikut:\n2, 6, 12, 20, 30, …",
+  o: ["36", "40", "42", "48", "56"],
+  a: 1,
+  e: "Pola n(n+1): 1×2, 2×3, 3×4, 4×5, 5×6 → 6×7=42.",
+  c: "Pola Bilangan Khusus"
+},
+{
+  q: "Jika 4 pekerja menyelesaikan pekerjaan dalam 15 hari, dan produktivitas naik 25%, maka waktu baru yang dibutuhkan adalah …",
+  o: ["9", "10", "11", "12", "13"],
+  a: 3,
+  e: "Produktivitas naik → waktu turun: 15 ÷ 1,25 = 12 hari.",
+  c: "Produktivitas & Waktu"
+},
+{
+  q: "Perhatikan deret berikut:\n1, 1, 2, 4, 7, …",
+  o: ["10", "11", "12", "13", "14"],
+  a: 1,
+  e: "Setiap suku = jumlah dua suku sebelumnya +1.",
+  c: "Deret Logika Non-Standar"
+},
+{
+  q: "Jika suatu barang didiskon 20% lalu dikenai pajak 10%, harga akhir dibanding harga awal adalah …",
+  o: [
+    "Lebih kecil",
+    "Lebih besar",
+    "Sama",
+    "Tergantung harga awal",
+    "Tidak dapat dihitung"
+  ],
+  a: 0,
+  e: "0,8 × 1,1 = 0,88 → harga akhir lebih kecil dari awal.",
+  c: "Persentase Berlapis"
+},
+{
+  q: "Perhatikan deret berikut:\n81, 27, 9, 3, …",
+  o: ["1", "0", "−3", "−9", "−27"],
+  a: 0,
+  e: "Setiap angka dibagi 3 → 3 ÷ 3 = 1.",
+  c: "Deret Geometri Menurun"
+},
+{
+  q: "Jika x + y = 20 dan x : y = 3 : 2, maka nilai x adalah …",
+  o: ["8", "10", "12", "14", "15"],
+  a: 2,
+  e: "Total rasio 5 → 1 bagian = 4 → x = 3×4 = 12.",
+  c: "Rasio & Sistem Sederhana"
+},
+{
+  q: "Perhatikan pola berikut:\n2, 4, 16, 256, …",
+  o: ["512", "1024", "4096", "65536", "131072"],
+  a: 3,
+  e: "Pangkat berlipat: 2¹, 2², 2⁴, 2⁸ → berikutnya 2¹⁶ = 65536.",
+  c: "Eksponen Lanjutan"
+},
+{
+  q: "Jika 40% dari suatu bilangan adalah 80, maka 75% dari bilangan tersebut adalah …",
+  o: ["120", "140", "150", "160", "180"],
+  a: 3,
+  e: "Nilai total = 80 ÷ 0,4 = 200 → 75% × 200 = 150.",
+  c: "Persentase Kombinasi"
+},
+{
+  q: "Perhatikan deret berikut:\n5, 7, 11, 19, 35, …",
+  o: ["51", "59", "67", "69", "71"],
+  a: 1,
+  e: "Selisih: +2, +4, +8, +16 → berikutnya +32 → 35+32=67.",
+  c: "Deret Eksponensial Selisih"
+},
+{
+  q: "Jika 6 orang bekerja 5 jam/hari menyelesaikan pekerjaan dalam 4 hari, maka 10 orang bekerja 6 jam/hari menyelesaikan pekerjaan dalam … hari.",
+  o: ["1", "2", "3", "4", "5"],
+  a: 1,
+  e: "Total beban = 6×5×4 = 120 jam-orang. Kapasitas baru = 10×6 = 60 → 120÷60=2.",
+  c: "Soal Cerita Multivariat"
+},
+{
+  q: "Perhatikan pola berikut:\n4, 9, 19, 39, …",
+  o: ["69", "79", "89", "99", "109"],
+  a: 2,
+  e: "×2+1: 4→9→19→39→79.",
+  c: "Pola Rekursif"
+},
+{
+  q: "Jika A : B : C = 2 : 3 : 5 dan A + B + C = 200, maka C adalah …",
+  o: ["50", "60", "80", "100", "120"],
+  a: 2,
+  e: "Total rasio 10 → 1 bagian = 20 → C = 5×20 = 100.",
+  c: "Rasio Tiga Variabel"
+},
+{
+  q: "Perhatikan deret berikut:\n1, 3, 6, 10, 15, …",
+  o: ["18", "20", "21", "24", "28"],
+  a: 2,
+  e: "Bilangan segitiga: n(n+1)/2 → suku berikutnya = 21.",
+  c: "Deret Bilangan Khusus"
+},
+{
+  q: "Jika suatu nilai x dinaikkan 50% lalu diturunkan 33⅓%, maka nilai akhir dibanding nilai awal adalah …",
+  o: [
+    "Lebih kecil",
+    "Lebih besar",
+    "Sama",
+    "Dua kali lipat",
+    "Tidak tentu"
+  ],
+  a: 2,
+  e: "×1,5 lalu ×2/3 → kembali ke nilai awal.",
+  c: "Persentase Simetris"
+}
+
+
+  
+];
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
+================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (OPSINYA DIAKAC)
+================================ */
+let currentQuestion = null;
+
+function loadQuestion() {
+  answered = false;
+
+  // clone soal agar bank asli tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById("question").innerText = currentQuestion.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  // start timer hanya sekali
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+
+/* ===============================
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
+    `;
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
+  } else {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
+    `;
+  }
+
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
