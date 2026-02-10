@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal TWK CPNS – Pancasila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =================================================
+   🎨 GLOBAL STYLE – TIU LOGIKA FIGURAL
+================================================= */
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: radial-gradient(circle at top, #eef2ff, #f4f6f9);
+  color: #1f2937;
+}
+
+/* ===============================
+   HEADER
+================================ */
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 36px 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+header p {
+  margin-top: 10px;
+  opacity: 0.9;
+  font-size: 15px;
+}
+
+/* ===============================
+   CONTAINER & CARD
+================================ */
+.container {
+  max-width: 920px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "🧠 TIU • LOGIKA FIGURAL";
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #2563eb;
+  opacity: 0.15;
+}
+
+/* ===============================
+   PROGRESS & LEVEL BADGE
+================================ */
+.progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+.level-badge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: #eef2ff;
+  color: #1e40af;
+  box-shadow: inset 0 0 0 1px #c7d2fe;
+}
+
+/* ===============================
+   TIMER
+================================ */
+.timer {
+  font-weight: 800;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+/* ===============================
+   QUESTION
+================================ */
+.question {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+/* ===============================
+   OPTIONS
+================================ */
+.options button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: linear-gradient(180deg, #f9fafb, #ffffff);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-size: 15px;
+}
+
+.options button:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  transform: translateY(-1px);
+}
+
+.options button.correct {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  border-color: #22c55e;
+  font-weight: 700;
+}
+
+.options button.wrong {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  border-color: #ef4444;
+}
+
+/* ===============================
+   EXPLANATION
+================================ */
+.explanation {
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: #fefce8;
+  border-left: 6px solid #f59e0b;
+  border-radius: 10px;
+  display: none;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+/* ===============================
+   GAMIFICATION
+================================ */
+#gamification {
+  margin-top: 14px;
+  font-weight: 800;
+  font-size: 15px;
+  color: #16a34a;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.streak {
+  color: #2563eb;
+  font-weight: 800;
+}
+
+/* ===============================
+   CONTROLS
+================================ */
+.controls {
+  margin-top: 28px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  box-shadow: 0 6px 14px rgba(37,99,235,0.3);
+}
+
+.controls button:hover {
+  opacity: 0.92;
+}
+
+/* =================================================
+   📊 RESULT DASHBOARD – TIU ANALYTICS
+================================================= */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 28px;
+  color: #1e40af;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.summary-box {
+  background: linear-gradient(180deg, #f8fafc, #ffffff);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* ===============================
+   RESULT DETAIL
+================================ */
+.result-section {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 14px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 20px;
+}
+
+.result-section li {
+  margin-bottom: 10px;
+  line-height: 1.65;
+}
+
+/* ===============================
+   RESULT ACTIONS
+================================ */
+.result-actions {
+  margin-top: 34px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 14px 26px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+/* ===============================
+   🧩 FIGURAL CANVAS
+================================ */
+.figural-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.figural-box {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #334155;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+}
+
+/* === SHAPES === */
+.shape {
+  width: 32px;
+  height: 32px;
+}
+
+.circle {
+  border-radius: 50%;
+  border: 3px solid #1e3a8a;
+}
+
+.square {
+  border: 3px solid #1e3a8a;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 28px solid #1e3a8a;
+}
+
+/* === FILL === */
+.filled {
+  background: #1e3a8a;
+}
+
+.empty {
+  background: transparent;
+}
+
+/* === ROTATION === */
+.rotate-0 { transform: rotate(0deg); }
+.rotate-90 { transform: rotate(90deg); }
+.rotate-180 { transform: rotate(180deg); }
+.rotate-270 { transform: rotate(270deg); }
+
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+  <h1>Latihan Soal TIU CPNS</h1>
+  <p>Logika Figural · Standar CPNS</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan TIU</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area TIU</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* =================================================
+   ⏱️ TIMER CAT CPNS (TIU)
+================================================= */
+let totalTime = 20 * 60;
+let timerInterval = null;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* =================================================
+   🧩 FIGURAL RENDER ENGINE
+================================================= */
+function renderShape(cfg) {
+  const box = document.createElement("div");
+  box.className = "figural-box";
+
+  const shape = document.createElement("div");
+  shape.classList.add("shape", cfg.shape);
+
+  if (cfg.rotate !== undefined) {
+    shape.classList.add(`rotate-${cfg.rotate}`);
+  }
+
+  if (cfg.filled) {
+    shape.classList.add("filled");
+  } else {
+    shape.classList.add("empty");
+  }
+
+  box.appendChild(shape);
+  return box;
+}
+
+function renderPattern(pattern) {
+  const row = document.createElement("div");
+  row.className = "figural-row";
+  pattern.forEach(p => row.appendChild(renderShape(p)));
+  return row;
+}
+
+/* =================================================
+   📘 BANK SOAL TIU – LOGIKA FIGURAL (VISUAL)
+================================================= */
+const questions = [
+
+/* ===== EXTREME 1–5 | Triple Pattern ===== */
+
+{
+  pattern: [
+    { shape: "triangle", rotate: 0, filled: true },
+    { shape: "triangle", rotate: 90, filled: false },
+    { shape: "square", rotate: 180, filled: true },
+    { shape: "square", rotate: 270, filled: false }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0, filled: true },
+    { shape: "square", rotate: 0, filled: false },
+    { shape: "triangle", rotate: 180, filled: false },
+    { shape: "square", rotate: 90, filled: true }
+  ],
+  answer: 0,
+  explanation: "Bentuk berganti tiap dua langkah, rotasi +90°, isian selang-seling.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "circle", filled: false },
+    { shape: "triangle", rotate: 90, filled: true },
+    { shape: "circle", filled: false },
+    { shape: "triangle", rotate: 270, filled: true }
+  ],
+  options: [
+    { shape: "circle", filled: false },
+    { shape: "triangle", rotate: 90, filled: true },
+    { shape: "triangle", rotate: 180, filled: false },
+    { shape: "circle", filled: true }
+  ],
+  answer: 0,
+  explanation: "Ganjil–genap beda bentuk, arah simetris, isian konsisten.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "square", rotate: 0, filled: true },
+    { shape: "triangle", rotate: 90, filled: false },
+    { shape: "square", rotate: 180, filled: true },
+    { shape: "triangle", rotate: 270, filled: false }
+  ],
+  options: [
+    { shape: "square", rotate: 0, filled: true },
+    { shape: "triangle", rotate: 0, filled: false },
+    { shape: "square", rotate: 90, filled: false },
+    { shape: "triangle", rotate: 180, filled: true }
+  ],
+  answer: 0,
+  explanation: "Bentuk selang-seling, rotasi konsisten, isian tetap per bentuk.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "triangle", rotate: 180 },
+    { shape: "triangle", rotate: 90 },
+    { shape: "triangle", rotate: 270 }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "triangle", rotate: 180 },
+    { shape: "triangle", rotate: 90 },
+    { shape: "triangle", rotate: 270 }
+  ],
+  answer: 0,
+  explanation: "Dua urutan rotasi silang (0–180 dan 90–270).",
+  category: "Pola Rotasi"
+},
+{
+  pattern: [
+    { shape: "circle", filled: true },
+    { shape: "circle", filled: true },
+    { shape: "circle", filled: false },
+    { shape: "circle", filled: false }
+  ],
+  options: [
+    { shape: "circle", filled: true },
+    { shape: "circle", filled: false },
+    { shape: "square", filled: true },
+    { shape: "triangle", filled: false }
+  ],
+  answer: 0,
+  explanation: "Isian berubah tiap dua langkah.",
+  category: "Strategi Umum"
+},
+
+/* ===== EXTREME 6–10 | Interleaving ===== */
+
+{
+  pattern: [
+    { shape: "triangle", rotate: 0, filled: false },
+    { shape: "square", rotate: 90, filled: true },
+    { shape: "triangle", rotate: 180, filled: false },
+    { shape: "square", rotate: 270, filled: true }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0, filled: false },
+    { shape: "square", rotate: 0, filled: true },
+    { shape: "triangle", rotate: 90, filled: true },
+    { shape: "square", rotate: 180, filled: false }
+  ],
+  answer: 0,
+  explanation: "Dua pola paralel: bentuk & rotasi.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "square", filled: false },
+    { shape: "circle", filled: true },
+    { shape: "triangle", filled: false },
+    { shape: "circle", filled: true }
+  ],
+  options: [
+    { shape: "square", filled: false },
+    { shape: "circle", filled: true },
+    { shape: "triangle", filled: true },
+    { shape: "circle", filled: false }
+  ],
+  answer: 0,
+  explanation: "Ganjil tetap, genap tetap.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "triangle", rotate: 90 },
+    { shape: "triangle", rotate: 180 },
+    { shape: "triangle", rotate: 90 }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "triangle", rotate: 270 },
+    { shape: "triangle", rotate: 180 },
+    { shape: "triangle", rotate: 90 }
+  ],
+  answer: 0,
+  explanation: "Naik lalu turun simetris.",
+  category: "Pola Rotasi"
+},
+{
+  pattern: [
+    { shape: "circle", filled: false },
+    { shape: "square", filled: false },
+    { shape: "circle", filled: true },
+    { shape: "square", filled: true }
+  ],
+  options: [
+    { shape: "circle", filled: false },
+    { shape: "square", filled: true },
+    { shape: "triangle", filled: false },
+    { shape: "circle", filled: true }
+  ],
+  answer: 0,
+  explanation: "Isian naik per dua langkah.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "square", rotate: 90 },
+    { shape: "triangle", rotate: 180 },
+    { shape: "square", rotate: 270 }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "square", rotate: 0 },
+    { shape: "triangle", rotate: 90 },
+    { shape: "square", rotate: 180 }
+  ],
+  answer: 0,
+  explanation: "Bentuk selang-seling + rotasi progresif.",
+  category: "Pola Kombinasi"
+},
+
+/* ===== EXTREME 11–15 | Multi-layer ===== */
+
+{
+  pattern: [
+    { shape: "triangle", rotate: 0, filled: true },
+    { shape: "triangle", rotate: 90, filled: true },
+    { shape: "triangle", rotate: 180, filled: false },
+    { shape: "triangle", rotate: 270, filled: false }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0, filled: true },
+    { shape: "triangle", rotate: 90, filled: false },
+    { shape: "triangle", rotate: 180, filled: true },
+    { shape: "triangle", rotate: 270, filled: false }
+  ],
+  answer: 0,
+  explanation: "Isian dibagi dua berdasar arah.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "square", filled: true },
+    { shape: "circle", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "circle", filled: false }
+  ],
+  options: [
+    { shape: "square", filled: true },
+    { shape: "circle", filled: false },
+    { shape: "triangle", filled: false },
+    { shape: "circle", filled: true }
+  ],
+  answer: 0,
+  explanation: "Bentuk siklik, isian konsisten per posisi.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "triangle", rotate: 180 },
+    { shape: "triangle", rotate: 90 },
+    { shape: "triangle", rotate: 270 }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "triangle", rotate: 180 },
+    { shape: "triangle", rotate: 90 },
+    { shape: "triangle", rotate: 270 }
+  ],
+  answer: 0,
+  explanation: "Dua urutan rotasi berjalan bersamaan.",
+  category: "Pola Rotasi"
+},
+{
+  pattern: [
+    { shape: "circle", filled: true },
+    { shape: "circle", filled: false },
+    { shape: "square", filled: true },
+    { shape: "square", filled: false }
+  ],
+  options: [
+    { shape: "circle", filled: true },
+    { shape: "square", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "circle", filled: false }
+  ],
+  answer: 0,
+  explanation: "Isian tetap, bentuk naik tiap dua.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "triangle", rotate: 0, filled: false },
+    { shape: "triangle", rotate: 90, filled: false },
+    { shape: "triangle", rotate: 180, filled: true },
+    { shape: "triangle", rotate: 270, filled: true }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0, filled: false },
+    { shape: "triangle", rotate: 90, filled: true },
+    { shape: "triangle", rotate: 180, filled: false },
+    { shape: "triangle", rotate: 270, filled: false }
+  ],
+  answer: 0,
+  explanation: "Isian dibagi berdasar arah.",
+  category: "Pola Kombinasi"
+},
+
+/* ===== EXTREME 16–20 | Trap & Deception ===== */
+
+{
+  pattern: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "square", rotate: 180 },
+    { shape: "triangle", rotate: 90 },
+    { shape: "square", rotate: 270 }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0 },
+    { shape: "square", rotate: 0 },
+    { shape: "triangle", rotate: 180 },
+    { shape: "square", rotate: 90 }
+  ],
+  answer: 0,
+  explanation: "Dua pola silang berbeda.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "circle", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "circle", filled: false },
+    { shape: "triangle", filled: true }
+  ],
+  options: [
+    { shape: "circle", filled: false },
+    { shape: "triangle", filled: true },
+    { shape: "square", filled: false },
+    { shape: "circle", filled: true }
+  ],
+  answer: 0,
+  explanation: "Pola paralel ganjil–genap.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "triangle", rotate: 0, filled: true },
+    { shape: "triangle", rotate: 180, filled: false },
+    { shape: "triangle", rotate: 90, filled: true },
+    { shape: "triangle", rotate: 270, filled: false }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0, filled: true },
+    { shape: "triangle", rotate: 90, filled: false },
+    { shape: "triangle", rotate: 180, filled: true },
+    { shape: "triangle", rotate: 270, filled: true }
+  ],
+  answer: 0,
+  explanation: "Rotasi silang + isian tetap.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "square", filled: true },
+    { shape: "triangle", filled: false },
+    { shape: "circle", filled: true },
+    { shape: "triangle", filled: false }
+  ],
+  options: [
+    { shape: "square", filled: true },
+    { shape: "triangle", filled: false },
+    { shape: "circle", filled: false },
+    { shape: "square", filled: false }
+  ],
+  answer: 0,
+  explanation: "Simetri pusat.",
+  category: "Pola Kombinasi"
+},
+{
+  pattern: [
+    { shape: "triangle", rotate: 0, filled: false },
+    { shape: "triangle", rotate: 90, filled: true },
+    { shape: "triangle", rotate: 180, filled: true },
+    { shape: "triangle", rotate: 270, filled: false }
+  ],
+  options: [
+    { shape: "triangle", rotate: 0, filled: false },
+    { shape: "triangle", rotate: 90, filled: false },
+    { shape: "triangle", rotate: 180, filled: true },
+    { shape: "triangle", rotate: 270, filled: true }
+  ],
+  answer: 0,
+  explanation: "Isian simetris terhadap arah.",
+  category: "Pola Kombinasi"
+}
+
+];
+
+
+
+/* =================================================
+   🔢 STATE & ANALYTICS
+================================================= */
+let index = 0;
+let score = 0;
+let answered = false;
+
+let kp = 0;
+let level = 1;
+let streak = 0;
+
+let analytics = {
+  "Pola Rotasi": 0,
+  "Refleksi": 0,
+  "Translasi": 0,
+  "Pola Kombinasi": 0
+};
+
+/* =================================================
+   🔀 SHUFFLE OPSI (WAJIB AGAR JAWABAN ACAK)
+================================================= */
+function shuffleOptions(question) {
+  const paired = question.options.map((opt, idx) => ({
+    opt,
+    isCorrect: idx === question.answer
+  }));
+
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  question.options = paired.map(p => p.opt);
+  question.answer = paired.findIndex(p => p.isCorrect);
+  return question;
+}
+
+/* =================================================
+   🎮 GAMIFICATION
+================================================= */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+
+  const g = document.getElementById("gamification");
+  if (streak >= 3) {
+    g.innerHTML = `🔥 <span class="streak">${streak} benar berturut-turut!</span>`;
+    g.style.display = "block";
+  } else {
+    g.style.display = "none";
+  }
+}
+
+/* =================================================
+   📄 LOAD QUESTION (VISUAL + SHUFFLE)
+================================================= */
+let currentQuestion = null;
+
+function loadQuestion() {
+  answered = false;
+
+  // CLONE + SHUFFLE OPSI
+  currentQuestion = shuffleOptions(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+
+  const qDiv = document.getElementById("question");
+  qDiv.innerHTML = "";
+  qDiv.appendChild(renderPattern(currentQuestion.pattern));
+
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.options.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.onclick = () => selectAnswer(i);
+    btn.appendChild(renderPattern([opt]));
+    optionsDiv.appendChild(btn);
+  });
+
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+/* =================================================
+   ✅ PILIH JAWABAN + TAMPILKAN KUNCI
+================================================= */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.answer) b.classList.add("correct");
+    if (idx === i && i !== q.answer) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.answer) {
+    score += 5;
+    kp += 10;
+    streak++;
+    if (streak % 5 === 0) kp += 10;
+    level = Math.floor(kp / 50) + 1;
+  } else {
+    streak = 0;
+    analytics[q.category] = (analytics[q.category] || 0) + 1;
+  }
+
+  updateGamification();
+
+  // TAMPILKAN KUNCI JAWABAN
+  const correctLabel = String.fromCharCode(65 + q.answer);
+  const exp = document.getElementById("explanation");
+  exp.innerHTML = `
+    <strong>✔ Jawaban benar: Opsi ${correctLabel}</strong><br>
+    ${q.explanation}
+  `;
+  exp.style.display = "block";
+}
+
+/* =================================================
+   ▶️ NEXT QUESTION
+================================================= */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+/* =================================================
+   🏁 FINISH EXAM
+   (TETAP, SUDAH BENAR)
+================================================= */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  let graphHTML = `<h4>📊 Area Pola yang Perlu Diperkuat</h4>`;
+  const max = Math.max(...Object.values(analytics), 1);
+
+  Object.entries(analytics).forEach(([area, count]) => {
+    if (count === 0) return;
+    graphHTML += `
+      <div style="margin-bottom:10px">
+        <div style="font-size:13px">${area}</div>
+        <div style="background:#e5e7eb;border-radius:6px">
+          <div style="
+            width:${(count / max) * 100}%;
+            background:linear-gradient(135deg,#f59e0b,#ef4444);
+            color:white;
+            padding:4px 8px;
+            font-size:12px;
+            border-radius:6px
+          ">
+            ${count} salah
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px;font-size:14px">
+      ⏱️ <strong>Durasi:</strong> ${Math.floor(durationSec / 60)} menit ${durationSec % 60} detik<br>
+      ⌛ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal<br>
+      ❌ <strong>Error rate:</strong> ${(errorRate * 100).toFixed(1)}%
+    </div>
+  `;
+}
+
+/* =================================================
+   🚀 INIT
+================================================= */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
