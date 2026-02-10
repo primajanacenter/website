@@ -1,134 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Adaptasi</h1>
+  <p>Tes Karakteristik Pribadi</p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+
 <!-- ===============================
-     🧠 RESPON KONSTRUKTIF TERHADAP KRITIK
+     🧠 ADAPTASI & PENGENDALIAN DIRI ASN
 ================================ -->
 <div class="card">
 
-  <h2><i class="fa-solid fa-comments"></i> Respon Konstruktif terhadap Kritik</h2>
+  <h2><i class="fa-solid fa-brain"></i> Adaptasi dan Pengendalian Diri</h2>
 
   <!-- ===============================
        KONSEP DASAR
   ================================= -->
   <h3>Konsep Dasar</h3>
   <p class="readable">
-    Respon konstruktif terhadap kritik adalah kemampuan individu,
-    khususnya aparatur negara, untuk menerima, memahami,
-    dan menindaklanjuti kritik secara rasional, objektif,
-    dan berorientasi pada perbaikan.
+    Adaptasi dan pengendalian diri adalah kemampuan individu,
+    khususnya Aparatur Sipil Negara (ASN),
+    untuk menyesuaikan diri terhadap perubahan lingkungan kerja
+    serta mengelola emosi, sikap, dan perilaku secara positif,
+    rasional, dan profesional.
   </p>
 
   <p class="readable">
-    Dalam konteks ASN, kritik dipandang bukan sebagai serangan pribadi,
-    melainkan sebagai <strong>umpan balik (feedback)</strong>
-    untuk meningkatkan kualitas pelayanan publik,
-    kinerja organisasi, dan kepercayaan masyarakat.
+    Kemampuan ini menjadi fondasi penting bagi ASN
+    dalam menghadapi dinamika kebijakan publik,
+    tekanan kerja, tuntutan masyarakat,
+    serta interaksi sosial yang kompleks.
   </p>
 
   <!-- ===============================
-       MAKNA STRATEGIS DALAM ASN
+       DIMENSI UTAMA
   ================================= -->
-  <h3>Makna Strategis Respon terhadap Kritik</h3>
+  <h3>Dimensi Utama Adaptasi dan Pengendalian Diri</h3>
   <ul>
     <li class="readable">
-      <i class="fa-solid fa-shield-halved"></i>
-      Menunjukkan integritas dan kedewasaan profesional ASN.
+      <i class="fa-solid fa-arrows-rotate"></i>
+      <strong>Adaptasi terhadap Perubahan</strong> →
+      Kesanggupan menyesuaikan diri dengan perubahan kebijakan,
+      prosedur kerja, teknologi, dan lingkungan organisasi.
     </li>
     <li class="readable">
-      <i class="fa-solid fa-people-arrows"></i>
-      Memperkuat hubungan antara pemerintah dan masyarakat.
+      <i class="fa-solid fa-heart-pulse"></i>
+      <strong>Pengelolaan Emosi</strong> →
+      Kemampuan mengenali, mengendalikan,
+      dan menyalurkan emosi secara tepat.
     </li>
     <li class="readable">
-      <i class="fa-solid fa-chart-line"></i>
-      Mendorong perbaikan berkelanjutan (continuous improvement).
+      <i class="fa-solid fa-gauge-high"></i>
+      <strong>Ketahanan terhadap Tekanan</strong> →
+      Mampu bekerja efektif meskipun berada
+      di bawah tekanan waktu, beban kerja,
+      dan ekspektasi publik.
     </li>
     <li class="readable">
-      <i class="fa-solid fa-scale-balanced"></i>
-      Mencerminkan sikap adil, terbuka, dan demokratis.
+      <i class="fa-solid fa-comments"></i>
+      <strong>Respon Konstruktif terhadap Kritik</strong> →
+      Menjadikan kritik sebagai masukan
+      untuk evaluasi dan perbaikan kinerja.
     </li>
   </ul>
 
   <!-- ===============================
-       PRINSIP RESPON KONSTRUKTIF
+       PRINSIP DASAR
   ================================= -->
-  <h3>Prinsip Respon Konstruktif terhadap Kritik</h3>
+  <h3>Prinsip Adaptasi dan Pengendalian Diri</h3>
   <ul>
     <li class="readable">
-      <strong>Objektivitas</strong> → Memisahkan kritik terhadap pekerjaan
-      dari aspek personal.
+      <strong>Kesadaran Diri</strong> →
+      Memahami kekuatan, kelemahan,
+      dan kondisi emosional pribadi.
     </li>
     <li class="readable">
-      <strong>Keterbukaan</strong> → Bersedia mendengar dan memahami
-      sudut pandang pemberi kritik.
+      <strong>Fleksibilitas</strong> →
+      Tidak kaku terhadap perubahan,
+      terbuka terhadap cara kerja baru.
     </li>
     <li class="readable">
-      <strong>Pengendalian Emosi</strong> → Tidak reaktif, defensif,
-      atau emosional.
+      <strong>Pengendalian Emosi</strong> →
+      Tidak reaktif, impulsif, atau defensif.
     </li>
     <li class="readable">
-      <strong>Orientasi Solusi</strong> → Menjadikan kritik
-      sebagai dasar perbaikan.
+      <strong>Orientasi Solusi</strong> →
+      Fokus pada penyelesaian masalah,
+      bukan menyalahkan keadaan.
     </li>
     <li class="readable">
-      <strong>Etika dan Kesantunan</strong> → Menjaga bahasa,
-      sikap, dan profesionalitas.
+      <strong>Profesionalitas</strong> →
+      Menjaga sikap, bahasa,
+      dan etika dalam segala situasi.
     </li>
   </ul>
 
   <!-- ===============================
        FORMULA KONSEPTUAL
   ================================= -->
-  <h3>Formula Konseptual Respon Konstruktif</h3>
+  <h3>Formula Konseptual</h3>
   <p class="readable">
-    Respon konstruktif dapat dipahami melalui formula sederhana berikut:
+    Adaptasi dan pengendalian diri dapat dipahami
+    melalui formula berikut:
   </p>
 
   <p class="readable" style="font-weight:bold; text-align:center;">
-    🧩 Kritik + Sikap Terbuka + Refleksi → Perbaikan Kinerja
+    🧩 Perubahan + Pengendalian Emosi + Sikap Terbuka → Kinerja Stabil & Profesional
   </p>
 
   <p class="readable">
-    Jika salah satu unsur tidak terpenuhi (misalnya sikap defensif),
-    maka kritik berpotensi menimbulkan konflik,
-    bukan perbaikan.
+    Tanpa pengendalian diri,
+    perubahan justru berpotensi menimbulkan konflik,
+    stres kerja, dan penurunan kualitas pelayanan.
   </p>
 
   <!-- ===============================
-       CONTOH PERILAKU KONSTRUKTIF
+       CONTOH PERILAKU ADAPTIF
   ================================= -->
-  <h3>Contoh Respon Konstruktif dalam Praktik ASN</h3>
+  <h3>Contoh Perilaku Adaptif dan Terkendali</h3>
   <ul>
     <li class="readable">
-      Menerima keluhan masyarakat dengan mendengarkan secara aktif
-      tanpa menyela.
+      Tetap bekerja optimal
+      meskipun terjadi perubahan kebijakan secara mendadak.
     </li>
     <li class="readable">
-      Mengucapkan terima kasih atas masukan yang disampaikan,
-      meskipun bernada keras.
+      Menghadapi kritik dari masyarakat
+      dengan tenang dan terbuka.
     </li>
     <li class="readable">
-      Mengklarifikasi masalah dengan data dan fakta,
-      bukan asumsi.
+      Mengatur emosi saat menghadapi beban kerja tinggi.
     </li>
     <li class="readable">
-      Menyampaikan rencana tindak lanjut atau solusi secara jelas.
+      Menyelesaikan konflik kerja
+      melalui komunikasi yang objektif dan santun.
     </li>
   </ul>
 
   <!-- ===============================
-       CONTOH RESPON TIDAK KONSTRUKTIF
+       CONTOH PERILAKU TIDAK ADAPTIF
   ================================= -->
-  <h3>Contoh Respon yang Tidak Konstruktif</h3>
+  <h3>Contoh Perilaku Tidak Adaptif</h3>
   <ul>
     <li class="readable">
-      Bersikap defensif dan menyalahkan pihak lain.
+      Menolak perubahan dengan alasan kenyamanan pribadi.
     </li>
     <li class="readable">
-      Mengabaikan kritik tanpa klarifikasi.
+      Mudah marah atau tersinggung
+      saat menerima tekanan atau kritik.
     </li>
     <li class="readable">
-      Menanggapi kritik dengan emosi atau kata-kata kasar.
+      Meluapkan emosi di tempat kerja.
     </li>
     <li class="readable">
-      Menganggap kritik sebagai ancaman terhadap jabatan.
+      Menyalahkan pihak lain
+      atas setiap permasalahan yang muncul.
     </li>
   </ul>
 
@@ -138,15 +303,20 @@
   <h3>Kaitan dengan Nilai ASN dan Pancasila</h3>
   <ul>
     <li class="readable">
-      Selaras dengan nilai <strong>Akuntabilitas</strong>
-      dan <strong>Pelayanan Publik</strong>.
+      Selaras dengan nilai <strong>Profesionalitas</strong>
+      dan <strong>Akuntabilitas</strong> ASN.
     </li>
     <li class="readable">
-      Mencerminkan sila <strong>Kemanusiaan yang Adil dan Beradab</strong>.
+      Mendukung pelayanan publik yang berkualitas
+      dan berkeadilan.
     </li>
     <li class="readable">
-      Mendukung demokrasi dan kebebasan berpendapat
-      secara bertanggung jawab.
+      Mencerminkan sila
+      <strong>Kemanusiaan yang Adil dan Beradab</strong>.
+    </li>
+    <li class="readable">
+      Menopang demokrasi melalui sikap dewasa
+      dan bertanggung jawab.
     </li>
   </ul>
 
@@ -156,16 +326,25 @@
   <h3>Contoh Soal CPNS</h3>
 
   <p class="readable">
-    Seorang ASN menerima kritik dari masyarakat terkait lambannya
-    pelayanan di unit kerjanya. Sikap yang paling mencerminkan
-    respon konstruktif adalah:
+    Terjadi perubahan kebijakan pelayanan publik
+    yang harus diterapkan dalam waktu singkat.
+    Sikap ASN yang paling mencerminkan adaptasi
+    dan pengendalian diri adalah:
   </p>
 
   <ul>
-    <li class="readable">A. Menjelaskan bahwa keterlambatan terjadi karena kurangnya pegawai</li>
-    <li class="readable">B. Menyangkal kritik karena merasa sudah bekerja maksimal</li>
-    <li class="readable">C. Mendengarkan kritik, mengklarifikasi masalah, dan menyampaikan rencana perbaikan</li>
-    <li class="readable">D. Mengarahkan masyarakat untuk menyampaikan keluhan ke instansi lain</li>
+    <li class="readable">
+      A. Menolak kebijakan karena dinilai merepotkan
+    </li>
+    <li class="readable">
+      B. Mengeluh dan menyalahkan pimpinan
+    </li>
+    <li class="readable">
+      C. Mempelajari kebijakan baru dan menyesuaikan cara kerja
+    </li>
+    <li class="readable">
+      D. Menunda pelaksanaan hingga situasi lebih nyaman
+    </li>
   </ul>
 
   <p class="readable">
@@ -174,9 +353,9 @@
 
   <p class="readable">
     <strong>Pembahasan:</strong>
-    Pilihan C mencerminkan sikap terbuka, objektif,
-    dan berorientasi solusi, sesuai dengan prinsip
-    respon konstruktif terhadap kritik.
+    Pilihan C menunjukkan kemampuan beradaptasi,
+    mengendalikan emosi,
+    serta tetap profesional dalam menghadapi perubahan.
   </p>
 
   <!-- ===============================
@@ -185,18 +364,97 @@
   <h3>Arah Pertanyaan Tes CPNS</h3>
   <ul>
     <li class="readable">
-      Identifikasi respon ASN yang paling tepat
-      dalam menghadapi kritik.
+      Sikap ASN dalam menghadapi perubahan kebijakan mendadak.
     </li>
     <li class="readable">
-      Analisis perilaku defensif vs konstruktif.
+      Respon terhadap tekanan kerja dan beban tugas tinggi.
     </li>
     <li class="readable">
-      Studi kasus pelayanan publik dan etika ASN.
+      Pengendalian emosi dalam konflik kerja.
     </li>
     <li class="readable">
-      Hubungan kritik, demokrasi, dan profesionalitas aparatur.
+      Perilaku paling profesional saat menerima kritik.
+    </li>
+    <li class="readable">
+      Perbandingan sikap adaptif vs tidak adaptif.
     </li>
   </ul>
 
 </div>
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
