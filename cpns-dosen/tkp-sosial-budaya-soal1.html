@@ -206,6 +206,28 @@ header {
 }
 
 
+/* ===============================
+   🎨 TKP SCORE HIGHLIGHT
+================================ */
+.option-score {
+  float: right;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.score-5 { background:#dcfce7; color:#166534; }
+.score-4 { background:#ecfeff; color:#155e75; }
+.score-3 { background:#fef3c7; color:#92400e; }
+.score-2 { background:#ffe4e6; color:#9f1239; }
+.score-1 { background:#fee2e2; color:#7f1d1d; }
+
+.option-selected {
+  outline: 3px solid #2563eb;
+}
+
+
 </style>
 </head>
 
@@ -304,8 +326,9 @@ const questions = [
   /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
   
 /* =================================================
-   📘 BANK SOAL TWK
+   📘 BANK SOAL TKP
    SOSIAL BUDAYA DALAM KEHIDUPAN BERBANGSA & ASN (20 SOAL)
+   FORMAT TKP CPNS (BOBOT 1–5)
 ================================================= */
 
 /* ===== LEVEL RINGAN (1–6)
@@ -321,7 +344,7 @@ const questions = [
     "Mengutamakan budaya sendiri",
     "Membatasi interaksi sosial"
   ],
-  a: 2,
+  s: [1,1,5,2,1],
   e: "Sosial budaya menekankan pemahaman dan penghargaan terhadap keberagaman.",
   c: "Konsep Dasar Sosial Budaya"
 },
@@ -334,7 +357,7 @@ const questions = [
     "Akses terhadap pelayanan publik",
     "Hak dan kewajiban konstitusional"
   ],
-  a: 1,
+  s: [2,5,2,3,3],
   e: "Bahasa, adat, dan tradisi merupakan bentuk keberagaman budaya.",
   c: "Keberagaman Budaya"
 },
@@ -347,7 +370,7 @@ const questions = [
     "Relativisme",
     "Dominasi mayoritas"
   ],
-  a: 2,
+  s: [1,2,5,3,1],
   e: "Toleransi adalah sikap menghormati perbedaan tanpa pemaksaan kehendak.",
   c: "Toleransi Sosial"
 },
@@ -360,7 +383,7 @@ const questions = [
     "Kepatuhan struktural",
     "Efisiensi birokrasi"
   ],
-  a: 1,
+  s: [1,5,2,2,2],
   e: "Kesetaraan merupakan prinsip dasar dalam kehidupan sosial budaya.",
   c: "Kesetaraan Sosial"
 },
@@ -373,7 +396,7 @@ const questions = [
     "Netralitas emosional",
     "Objektivitas mutlak"
   ],
-  a: 1,
+  s: [3,5,3,2,2],
   e: "Empati sosial penting untuk menjaga harmoni dalam masyarakat majemuk.",
   c: "Empati Sosial"
 },
@@ -386,7 +409,7 @@ const questions = [
     "Relativisme budaya",
     "Dominasi kelompok"
   ],
-  a: 2,
+  s: [1,2,5,3,1],
   e: "Inklusivitas menekankan penerimaan dan keterlibatan semua pihak.",
   c: "Sikap Inklusif"
 },
@@ -404,7 +427,7 @@ const questions = [
     "Menyeragamkan pola pelayanan",
     "Menolak kebiasaan yang tidak tertulis"
   ],
-  a: 2,
+  s: [2,1,5,3,2],
   e: "ASN wajib menghormati adat lokal selama tidak melanggar hukum nasional.",
   c: "Penghormatan Adat Lokal"
 },
@@ -417,7 +440,7 @@ const questions = [
     "Menyerahkan sepenuhnya kepada pimpinan",
     "Membentuk kelompok sendiri"
   ],
-  a: 2,
+  s: [1,1,5,3,1],
   e: "Musyawarah dan saling menghargai mencerminkan toleransi sosial.",
   c: "Interaksi Sosial"
 },
@@ -430,7 +453,7 @@ const questions = [
     "Kepentingan mayoritas",
     "Dominasi birokrasi"
   ],
-  a: 2,
+  s: [3,2,5,1,1],
   e: "Pelayanan publik harus bersifat inklusif dan setara.",
   c: "Pelayanan Publik Inklusif"
 },
@@ -443,7 +466,7 @@ const questions = [
     "Efisiensi komunikasi",
     "Pengendalian konflik"
   ],
-  a: 1,
+  s: [3,5,2,3,4],
   e: "Sensitivitas budaya penting dalam interaksi sosial ASN.",
   c: "Sensitivitas Budaya"
 },
@@ -456,7 +479,7 @@ const questions = [
     "Harmoni sosial",
     "Kepercayaan publik"
   ],
-  a: 2,
+  s: [2,2,5,1,1],
   e: "Prasangka dapat berujung pada diskriminasi.",
   c: "Prasangka & Diskriminasi"
 },
@@ -469,7 +492,7 @@ const questions = [
     "Relativisme",
     "Dominasi struktural"
   ],
-  a: 1,
+  s: [1,5,2,2,1],
   e: "Objektivitas penting untuk mencegah diskriminasi.",
   c: "Profesionalitas ASN"
 },
@@ -482,7 +505,7 @@ const questions = [
     "Hierarki kewenangan",
     "Ketertiban administratif"
   ],
-  a: 1,
+  s: [3,5,2,2,2],
   e: "Stereotip melanggar prinsip persamaan kedudukan warga negara.",
   c: "Anti Stereotip ASN"
 },
@@ -500,7 +523,7 @@ const questions = [
     "Penegakan sanksi semata",
     "Pengabaian perbedaan"
   ],
-  a: 2,
+  s: [1,1,5,2,1],
   e: "Dialog dan pengertian mencegah konflik horizontal.",
   c: "Manajemen Konflik Sosial"
 },
@@ -513,7 +536,7 @@ const questions = [
     "Menanggapi secara emosional",
     "Menyerahkan kepada pihak lain"
   ],
-  a: 2,
+  s: [2,1,5,1,2],
   e: "Etika komunikasi digital penting dalam menjaga harmoni sosial.",
   c: "Etika Sosial Budaya Digital"
 },
@@ -526,7 +549,7 @@ const questions = [
     "Mengabaikan kedua-duanya",
     "Menyerahkan kepada masyarakat"
   ],
-  a: 2,
+  s: [1,1,5,1,2],
   e: "Hukum nasional tetap diutamakan dengan pendekatan dialog.",
   c: "Adat & Hukum Nasional"
 },
@@ -539,7 +562,7 @@ const questions = [
     "Dominasi kelompok tertentu",
     "Fragmentasi sosial"
   ],
-  a: 2,
+  s: [1,1,5,1,1],
   e: "Inklusivitas memperkuat kepercayaan dan persatuan.",
   c: "Inklusivitas ASN"
 },
@@ -552,7 +575,7 @@ const questions = [
     "Netralitas pasif",
     "Hierarki organisasi"
   ],
-  a: 1,
+  s: [3,5,2,1,1],
   e: "Anti-diskriminasi mencerminkan keadilan sosial.",
   c: "Keadilan Sosial"
 },
@@ -565,7 +588,7 @@ const questions = [
     "Inklusivitas",
     "Toleransi"
   ],
-  a: 1,
+  s: [2,5,2,3,3],
   e: "Stereotip merupakan generalisasi berlebihan yang berpotensi diskriminatif.",
   c: "Stereotip Sosial"
 },
@@ -578,17 +601,16 @@ const questions = [
     "Efisiensi birokrasi",
     "Kepatuhan struktural"
   ],
-  a: 2,
+  s: [1,1,5,2,2],
   e: "Persatuan dan toleransi adalah kunci harmoni sosial.",
   c: "Peran Strategis ASN"
 }
-
 
   
 ];
 
 /* ===============================
-   🔢 STATE & GAMIFIKASI
+   🔢 STATE & GAMIFIKASI (TKP)
 ================================ */
 let index = 0;
 let score = 0;
@@ -606,38 +628,33 @@ function updateGamification() {
 }
 
 /* ===============================
-   🔀 SHUFFLE OPSI JAWABAN
-   (AMAN & TANPA RUSAK BANK SOAL)
+   🔀 SHUFFLE OPSI + SKOR (TKP SAFE)
 ================================ */
 function shuffleQuestion(question) {
-  // pasangkan opsi + status benar
   const paired = question.o.map((text, idx) => ({
     text,
-    isCorrect: idx === question.a
+    score: question.s[idx]
   }));
 
-  // Fisher–Yates shuffle
   for (let i = paired.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [paired[i], paired[j]] = [paired[j], paired[i]];
   }
 
-  // update opsi & index jawaban benar
   question.o = paired.map(p => p.text);
-  question.a = paired.findIndex(p => p.isCorrect);
+  question.s = paired.map(p => p.score);
 
   return question;
 }
 
 /* ===============================
-   📄 LOAD SOAL (OPSINYA DIAKAC)
+   📄 LOAD SOAL
 ================================ */
 let currentQuestion = null;
 
 function loadQuestion() {
   answered = false;
 
-  // clone soal agar bank asli tidak berubah
   currentQuestion = shuffleQuestion(
     JSON.parse(JSON.stringify(questions[index]))
   );
@@ -651,13 +668,12 @@ function loadQuestion() {
   optionsDiv.innerHTML = "";
 
   currentQuestion.o.forEach((opt, i) => {
-    const btn = document.createElement("button");
-    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
-    btn.onclick = () => selectAnswer(i);
-    optionsDiv.appendChild(btn);
-  });
+  const btn = document.createElement("button");
+  btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+  btn.onclick = () => selectAnswer(i);
+  optionsDiv.appendChild(btn);
+});
 
-  // start timer hanya sekali
   if (index === 0 && !startTime) {
     startTime = new Date();
     startTimer();
@@ -665,7 +681,7 @@ function loadQuestion() {
 }
 
 /* ===============================
-   ✅ PILIH JAWABAN
+   ✅ PILIH JAWABAN (TKP)
 ================================ */
 function selectAnswer(i) {
   if (answered) return;
@@ -674,25 +690,42 @@ function selectAnswer(i) {
   const q = currentQuestion;
   const buttons = document.querySelectorAll(".options button");
 
-  buttons.forEach((b, idx) => {
-    if (idx === q.a) b.classList.add("correct");
-    if (idx === i && i !== q.a) b.classList.add("wrong");
-    b.disabled = true;
-  });
+  const gainedScore = q.s[i];
+  score += gainedScore;
+  kp += gainedScore * 2;
+  level = Math.floor(kp / 50) + 1;
+  updateGamification();
 
-  if (i === q.a) {
-    score += 5;
-    kp += 10;
-    level = Math.floor(kp / 50) + 1;
-    updateGamification();
-  } else {
+  // analitik: skor rendah
+  if (gainedScore <= 2) {
     analytics[q.c] = (analytics[q.c] || 0) + 1;
   }
 
+  buttons.forEach((btn, idx) => {
+    const s = q.s[idx];
+    btn.disabled = true;
+    btn.classList.add(`score-${s}`);
+
+    // label skor
+    const badge = document.createElement("span");
+    badge.className = `option-score score-${s}`;
+    badge.innerText = `${s}`;
+    btn.appendChild(badge);
+
+    // tandai pilihan user
+    if (idx === i) {
+      btn.classList.add("option-selected");
+    }
+  });
+
   const exp = document.getElementById("explanation");
-  exp.innerText = q.e;
+  exp.innerHTML = `
+    <strong>Skor pilihan Anda:</strong> ${gainedScore} / 5<br><br>
+    ${q.e}
+  `;
   exp.style.display = "block";
 }
+
 
 /* ===============================
    ▶️ SOAL BERIKUTNYA
@@ -706,10 +739,8 @@ function nextQuestion() {
   }
 }
 
-
 /* ===============================
-   🏁 SELESAI UJIAN
-   ANALITIK + GRAFIK + ADAPTIVE TEST
+   🏁 SELESAI UJIAN (TKP)
 ================================ */
 function finishExam() {
   clearInterval(timerInterval);
@@ -717,10 +748,6 @@ function finishExam() {
   const endTime = new Date();
   const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
   const avgTime = durationSec / questions.length;
-
-  const correct = score / 5;
-  const wrong = questions.length - correct;
-  const errorRate = wrong / questions.length;
 
   document.getElementById("quiz").style.display = "none";
   document.getElementById("result").style.display = "block";
@@ -731,12 +758,12 @@ function finishExam() {
   document.getElementById("finalLevel").innerText = level;
 
   /* ===============================
-     📊 GRAFIK AREA LEMAH
+     📊 AREA PERLU DITINGKATKAN
   ============================== */
   let graphHTML = "";
   if (Object.keys(analytics).length > 0) {
     const max = Math.max(...Object.values(analytics));
-    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    graphHTML += `<h4>📊 Area Perlu Penguatan</h4>`;
     Object.entries(analytics).forEach(([area, count]) => {
       graphHTML += `
         <div style="margin-bottom:8px">
@@ -744,12 +771,12 @@ function finishExam() {
           <div style="background:#e5e7eb;border-radius:6px">
             <div style="
               width:${(count/max)*100}%;
-              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              background:linear-gradient(135deg,#f97316,#ef4444);
               color:white;
               padding:4px 8px;
               font-size:12px
             ">
-              ${count} salah
+              ${count} respon lemah
             </div>
           </div>
         </div>
@@ -758,53 +785,24 @@ function finishExam() {
   }
 
   /* ===============================
-     🧠 ADAPTIVE RECOMMENDATION
+     🧠 PROFIL TKP
   ============================== */
-  let focusArea = Object.keys(analytics).length
-    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
-    : "Penguatan umum";
-
-  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
-
-  if (avgTime > 75 && errorRate > 0.3) {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Ragu-ragu</li>
-      <li><strong>Fokus:</strong> ${focusArea}</li>
-      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
-      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
-    `;
-  } else if (avgTime < 45 && errorRate > 0.4) {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
-      <li><strong>Fokus:</strong> Analisis konteks</li>
-      <li><strong>Mode:</strong> HOTS Naratif</li>
-      <li><strong>Target:</strong> 80–90 detik/soal</li>
-    `;
-  } else if (avgTime > 75 && errorRate <= 0.2) {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Akurat tapi lambat</li>
-      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
-      <li><strong>Mode:</strong> Time-bound Practice</li>
-      <li><strong>Target:</strong> 55–60 detik/soal</li>
-    `;
-  } else {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Stabil</li>
-      <li><strong>Fokus:</strong> Konsistensi</li>
-      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
-      <li><strong>Target:</strong> 60–70 detik/soal</li>
-    `;
+  let profile = "Stabil";
+  if (avgTime > 75 && score < questions.length * 3.5) {
+    profile = "Ragu-ragu";
+  } else if (avgTime < 45 && score < questions.length * 3.5) {
+    profile = "Cepat tapi kurang reflektif";
+  } else if (avgTime > 75) {
+    profile = "Reflektif namun lambat";
   }
-
-  adaptiveHTML += `</ul>`;
 
   document.getElementById("scoreText").innerHTML = `
     ${graphHTML}
     <div style="margin-top:16px">
       ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
-      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal<br>
+      🧠 <strong>Profil TKP:</strong> ${profile}
     </div>
-    <div style="margin-top:16px">${adaptiveHTML}</div>
   `;
 
   /* ===============================
@@ -827,6 +825,7 @@ function finishExam() {
    🚀 START
 ================================ */
 loadQuestion();
+
 </script>
 
 
