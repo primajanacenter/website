@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal TWK CPNS – Pancasila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Latihan Soal TWK CPNS</h1>
+  <p>Sejarah & Sistem Ketatanegaraan · Standar CPNS</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan TWK</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area TWK</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL (20 SOAL FIX)
+================================ */
+const questions = [
+  /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
+  
+/* =================================================
+   📘 BANK SOAL TWK (ADVANCE / HOTS)
+   SISTEM KETATANEGARAAN INDONESIA (20 SOAL)
+================================================= */
+
+/* ===== LEVEL RINGAN–MENENGAH (1–6)
+   PEMAHAMAN KONSEP + IMPLIKASI
+================================ */
+
+{
+  q: "Sistem ketatanegaraan Indonesia disebut tidak hanya normatif tetapi juga faktual karena …",
+  o: [
+    "Hanya diatur dalam undang-undang",
+    "Bersifat fleksibel tanpa konstitusi",
+    "Tercermin dalam praktik penyelenggaraan pemerintahan sehari-hari",
+    "Ditentukan oleh kekuasaan politik",
+    "Berubah setiap pergantian Presiden"
+  ],
+  a: 2,
+  e: "Ketatanegaraan tidak hanya tertulis, tetapi juga terlihat dalam praktik pemerintahan.",
+  c: "Konsep Sistem Ketatanegaraan"
+},
+{
+  q: "Perubahan sistem ketatanegaraan Indonesia pasca Reformasi menunjukkan bahwa konstitusi bersifat …",
+  o: [
+    "Kaku dan tidak dapat diubah",
+    "Bersifat statis",
+    "Dapat disesuaikan dengan dinamika masyarakat",
+    "Tergantung kekuasaan Presiden",
+    "Tidak mengikat lembaga negara"
+  ],
+  a: 2,
+  e: "Konstitusi bersifat dinamis namun tetap berlandaskan nilai dasar negara.",
+  c: "Sifat Dinamis Konstitusi"
+},
+{
+  q: "Tujuan utama penerapan prinsip negara hukum dalam ketatanegaraan adalah …",
+  o: [
+    "Mempercepat pengambilan kebijakan",
+    "Memberi kekuasaan luas pada penguasa",
+    "Menjamin seluruh tindakan negara berdasarkan hukum",
+    "Membatasi peran rakyat",
+    "Menyeragamkan kekuasaan lembaga"
+  ],
+  a: 2,
+  e: "Negara hukum menempatkan hukum sebagai panglima.",
+  c: "Negara Hukum"
+},
+{
+  q: "Jika suatu lembaga negara bertindak di luar kewenangan konstitusionalnya, maka tindakan tersebut …",
+  o: [
+    "Tetap sah selama demi kepentingan negara",
+    "Menjadi preseden ketatanegaraan",
+    "Berpotensi melanggar prinsip negara hukum",
+    "Tidak dapat dikoreksi",
+    "Menjadi kewenangan politik semata"
+  ],
+  a: 2,
+  e: "Tindakan di luar kewenangan konstitusional melanggar prinsip negara hukum.",
+  c: "Kewenangan Konstitusional"
+},
+{
+  q: "Hubungan antar lembaga negara setelah amandemen UUD 1945 didasarkan pada prinsip …",
+  o: [
+    "Hierarki kelembagaan",
+    "Supremasi MPR",
+    "Kesetaraan dan saling mengawasi",
+    "Dominasi eksekutif",
+    "Sentralisasi kekuasaan"
+  ],
+  a: 2,
+  e: "Tidak ada lembaga tertinggi negara setelah amandemen.",
+  c: "Struktur Ketatanegaraan"
+},
+{
+  q: "Periode Reformasi ditandai oleh penguatan lembaga negara terutama dalam aspek …",
+  o: [
+    "Sentralisasi kekuasaan",
+    "Pembatasan partisipasi publik",
+    "Pengawasan dan akuntabilitas",
+    "Kekuasaan eksekutif",
+    "Kontrol militer"
+  ],
+  a: 2,
+  e: "Reformasi memperkuat mekanisme kontrol dan akuntabilitas.",
+  c: "Era Reformasi"
+},
+
+/* ===== LEVEL MENENGAH–TINGGI (7–13)
+   PERIODISASI & SISTEM PEMERINTAHAN
+================================ */
+
+{
+  q: "Ciri ketatanegaraan Orde Lama yang paling menunjukkan lemahnya sistem checks and balances adalah …",
+  o: [
+    "Pemilu rutin",
+    "Peran DPR kuat",
+    "Dominasi Presiden dalam Demokrasi Terpimpin",
+    "Otonomi daerah luas",
+    "Pemilihan Presiden langsung"
+  ],
+  a: 2,
+  e: "Demokrasi Terpimpin memperkuat dominasi eksekutif.",
+  c: "Orde Lama"
+},
+{
+  q: "Sentralisasi kekuasaan pada masa Orde Baru berdampak langsung pada …",
+  o: [
+    "Penguatan kontrol yudikatif",
+    "Efektivitas checks and balances",
+    "Lemahnya fungsi pengawasan DPR",
+    "Kemandirian daerah",
+    "Netralitas birokrasi"
+  ],
+  a: 2,
+  e: "Pengawasan DPR tidak berjalan optimal pada Orde Baru.",
+  c: "Orde Baru"
+},
+{
+  q: "Salah satu indikator utama keberhasilan Reformasi ketatanegaraan adalah …",
+  o: [
+    "Presiden menjadi mandataris MPR",
+    "Pemilu tidak langsung",
+    "Pembatasan kekuasaan Presiden secara konstitusional",
+    "Sentralisasi kebijakan nasional",
+    "Penghapusan lembaga peradilan"
+  ],
+  a: 2,
+  e: "Pembatasan masa jabatan Presiden adalah hasil penting Reformasi.",
+  c: "Reformasi Ketatanegaraan"
+},
+{
+  q: "Perbedaan paling mendasar sistem presidensial Indonesia pasca Reformasi dibanding Orde Baru adalah …",
+  o: [
+    "Presiden sebagai kepala negara",
+    "Presiden dipilih MPR",
+    "Presiden dipilih langsung oleh rakyat",
+    "Presiden memiliki kekuasaan eksekutif",
+    "Presiden membentuk kabinet"
+  ],
+  a: 2,
+  e: "Pemilihan langsung memperkuat legitimasi rakyat.",
+  c: "Sistem Presidensial"
+},
+{
+  q: "Jika DPR menggunakan hak angket terhadap kebijakan pemerintah, hal tersebut merupakan wujud …",
+  o: [
+    "Dominasi legislatif",
+    "Intervensi politik",
+    "Fungsi pengawasan dalam checks and balances",
+    "Pelanggaran konstitusi",
+    "Konflik kelembagaan"
+  ],
+  a: 2,
+  e: "Hak angket adalah instrumen pengawasan DPR.",
+  c: "Fungsi DPR"
+},
+{
+  q: "Kabinet sering berganti pada masa berlakunya UUDS 1950 karena …",
+  o: [
+    "Presiden terlalu kuat",
+    "Sistem presidensial",
+    "Pertanggungjawaban kabinet kepada parlemen",
+    "Masa jabatan tetap",
+    "Pengawasan yudikatif kuat"
+  ],
+  a: 2,
+  e: "Sistem parlementer menyebabkan kabinet tidak stabil.",
+  c: "Sistem Parlementer"
+},
+{
+  q: "Instabilitas politik pada awal kemerdekaan terutama disebabkan oleh …",
+  o: [
+    "Pemilihan Presiden langsung",
+    "Sentralisasi kekuasaan",
+    "Ketidakkonsistenan sistem pemerintahan",
+    "Dominasi yudikatif",
+    "Pengawasan ketat DPR"
+  ],
+  a: 2,
+  e: "Peralihan sistem menyebabkan instabilitas.",
+  c: "Awal Kemerdekaan"
+},
+
+/* ===== LEVEL HOTS EKSTREM (14–20)
+   KASUS & ANALISIS KONSTITUSIONAL
+================================ */
+
+{
+  q: "Sebelum amandemen UUD 1945, lemahnya pengawasan terhadap Presiden terutama disebabkan oleh …",
+  o: [
+    "Tidak adanya DPR",
+    "Supremasi kekuasaan yudikatif",
+    "Kedudukan MPR sebagai lembaga tertinggi negara",
+    "Pemilihan Presiden langsung",
+    "Otonomi daerah luas"
+  ],
+  a: 2,
+  e: "Supremasi MPR melemahkan checks and balances horizontal.",
+  c: "Pra-Amandemen"
+},
+{
+  q: "Jika DPR dan Presiden menyepakati undang-undang yang bertentangan dengan UUD 1945, maka mekanisme koreksinya adalah …",
+  o: [
+    "Pembatalan oleh Presiden",
+    "Pengawasan DPR",
+    "Pengujian oleh Mahkamah Konstitusi",
+    "Revisi oleh MPR",
+    "Keputusan politik"
+  ],
+  a: 2,
+  e: "MK adalah guardian of the constitution.",
+  c: "Mahkamah Konstitusi"
+},
+{
+  q: "Prinsip checks and balances dianggap gagal apabila …",
+  o: [
+    "Lembaga bekerja sama",
+    "Kebijakan diuji secara hukum",
+    "Satu lembaga memonopoli kekuasaan",
+    "Ada perbedaan pendapat",
+    "Terdapat mekanisme pengawasan"
+  ],
+  a: 2,
+  e: "Monopoli kekuasaan menandakan kegagalan checks and balances.",
+  c: "Checks and Balances"
+},
+{
+  q: "Keberadaan Mahkamah Konstitusi setelah Reformasi berimplikasi langsung pada …",
+  o: [
+    "Penguatan kekuasaan Presiden",
+    "Penghapusan DPR",
+    "Penguatan supremasi konstitusi",
+    "Sentralisasi peradilan",
+    "Pembatasan hak rakyat"
+  ],
+  a: 2,
+  e: "MK memastikan semua UU sesuai UUD.",
+  c: "Reformasi Yudisial"
+},
+{
+  q: "Dalam sistem ketatanegaraan pasca amandemen, legitimasi utama kekuasaan Presiden berasal dari …",
+  o: [
+    "MPR",
+    "DPR",
+    "Rakyat melalui pemilu",
+    "Partai politik",
+    "Lembaga peradilan"
+  ],
+  a: 2,
+  e: "Presiden dipilih langsung oleh rakyat.",
+  c: "Kedaulatan Rakyat"
+},
+{
+  q: "Jika lembaga negara menjalankan kewenangannya tanpa dasar konstitusi, maka hal tersebut berpotensi …",
+  o: [
+    "Menjadi kebiasaan ketatanegaraan",
+    "Menguatkan demokrasi",
+    "Melanggar prinsip negara hukum",
+    "Mempercepat reformasi",
+    "Menjadi yurisprudensi"
+  ],
+  a: 2,
+  e: "Segala kewenangan harus berbasis konstitusi.",
+  c: "Prinsip Konstitusional"
+},
+{
+  q: "Peran ASN dalam sistem ketatanegaraan demokratis paling tepat diwujudkan melalui …",
+  o: [
+    "Keberpihakan politik",
+    "Ketaatan pada pimpinan",
+    "Netralitas dan kepatuhan pada konstitusi",
+    "Dukungan ideologi tertentu",
+    "Dominasi birokrasi"
+  ],
+  a: 2,
+  e: "ASN harus netral dan menjunjung konstitusi.",
+  c: "ASN & Ketatanegaraan"
+}
+
+
+  
+];
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
+================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (OPSINYA DIAKAC)
+================================ */
+let currentQuestion = null;
+
+function loadQuestion() {
+  answered = false;
+
+  // clone soal agar bank asli tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById("question").innerText = currentQuestion.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  // start timer hanya sekali
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+
+/* ===============================
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
+    `;
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
+  } else {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
+    `;
+  }
+
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
