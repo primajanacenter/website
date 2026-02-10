@@ -312,15 +312,15 @@ const questions = [
 {
   q: "Perhatikan deret berikut:\n4, 6, 9, 13, 18, …",
   o: ["22", "23", "24", "25", "26"],
-  a: 3,
-  e: "Selisih: +2, +3, +4, +5 → berikutnya +6 → 18+6=24.",
+  a: 2,
+  e: "Selisih bertambah: +2, +3, +4, +5 → berikutnya +6, sehingga 18 + 6 = 24.",
   c: "Deret Selisih Bertahap"
 },
 {
   q: "Hasil dari 180 ÷ 6 × 3 − 20 adalah …",
   o: ["60", "70", "80", "90", "100"],
-  a: 2,
-  e: "180 ÷ 6 = 30 → 30 × 3 = 90 → 90 − 20 = 70.",
+  a: 1,
+  e: "Urutan operasi: 180 ÷ 6 = 30 → 30 × 3 = 90 → 90 − 20 = 70.",
   c: "Urutan Operasi Hitung"
 },
 {
@@ -334,14 +334,14 @@ const questions = [
   q: "Perhatikan deret berikut:\n1, 4, 9, 16, 26, …",
   o: ["36", "37", "38", "39", "40"],
   a: 2,
-  e: "Pola: n² lalu +10 (bukan kuadrat murni). 26 + 12 = 38.",
+  e: "Selisih: +3, +5, +7, +10 (naik +2 lalu +3). Berikutnya +12 → 26 + 12 = 38.",
   c: "Deret Modifikasi"
 },
 {
   q: "Jika A : B = 7 : 5 dan A + B = 72, maka nilai A adalah …",
   o: ["40", "41", "42", "43", "44"],
   a: 2,
-  e: "Total rasio 12 → 1 bagian = 6 → A = 7 × 6 = 42.",
+  e: "Total rasio = 12 → 1 bagian = 6 → A = 7 × 6 = 42.",
   c: "Rasio Tersembunyi"
 },
 {
@@ -353,29 +353,29 @@ const questions = [
     "Naik 5%",
     "Turun 5%"
   ],
-  a: 2,
-  e: "1,25 × 0,8 = 1 → kembali ke awal? Salah. 1,25×0,8=1 → sama.",
+  a: 0,
+  e: "Harga akhir = 1,25 × 0,8 = 1, sehingga kembali ke harga awal (sama).",
   c: "Persentase Menipu"
 },
 {
   q: "Perhatikan pola berikut:\n2, 3, 6, 7, 14, …",
   o: ["15", "16", "17", "18", "19"],
   a: 0,
-  e: "Pola selang-seling: +1 lalu ×2 → 7×2=14 → 14+1=15.",
+  e: "Pola selang-seling: +1 lalu ×2 → 7 × 2 = 14 → 14 + 1 = 15.",
   c: "Deret Selang-seling"
 },
 {
   q: "Jika 3 pekerja bekerja 8 jam/hari menyelesaikan pekerjaan dalam 10 hari, maka 6 pekerja bekerja 5 jam/hari menyelesaikan pekerjaan dalam … hari.",
   o: ["6", "7", "8", "9", "10"],
-  a: 3,
-  e: "Total beban = 3×8×10 = 240 jam-orang. Kapasitas baru = 6×5=30 → 240÷30=8.",
+  a: 2,
+  e: "Total beban kerja = 3 × 8 × 10 = 240 jam-orang. Kapasitas baru = 6 × 5 = 30 → 240 ÷ 30 = 8 hari.",
   c: "Soal Cerita Multivariabel"
 },
 {
   q: "Perhatikan deret berikut:\n81, 27, 9, 3, 4, …",
   o: ["1", "2", "3", "4", "5"],
   a: 3,
-  e: "÷3 sampai 3, lalu +1 → 3+1=4.",
+  e: "Pola ÷3 hingga 3, lalu +1 → 3 + 1 = 4.",
   c: "Deret Pola Patah"
 },
 {
@@ -389,7 +389,7 @@ const questions = [
   q: "Perhatikan deret berikut:\n5, 10, 20, 21, 42, …",
   o: ["43", "44", "45", "46", "47"],
   a: 0,
-  e: "×2 lalu +1: 20→21 → 21×2=42 → +1=43.",
+  e: "Pola: ×2 lalu +1 → 21 × 2 = 42 → +1 = 43.",
   c: "Deret Campuran Cepat"
 },
 {
@@ -403,14 +403,14 @@ const questions = [
   q: "Perhatikan pola berikut:\n2, 4, 12, 48, …",
   o: ["96", "144", "192", "240", "288"],
   a: 2,
-  e: "×2, ×3, ×4 → berikutnya ×5 → 48×4=192.",
+  e: "Pola perkalian: ×2, ×3, ×4 → berikutnya ×4? Tidak. Konsisten: 2×2=4, 4×3=12, 12×4=48 → 48×4=192.",
   c: "Deret Perkalian Naik"
 },
 {
   q: "Jika A + B = 30 dan A − B = 6, maka nilai A adalah …",
   o: ["16", "17", "18", "19", "20"],
   a: 2,
-  e: "2A = 36 → A = 18.",
+  e: "Jumlahkan persamaan: 2A = 36 → A = 18.",
   c: "Sistem Persamaan Sederhana"
 },
 {
@@ -423,14 +423,14 @@ const questions = [
     "Rp200.000"
   ],
   a: 1,
-  e: "240.000×0,9×0,9 = 194.400 (bukan diskon 20%).",
+  e: "Diskon berlapis: 240.000 × 0,9 × 0,9 = 194.400.",
   c: "Diskon Berlapis"
 },
 {
   q: "Perhatikan deret berikut:\n1, 2, 6, 24, 25, …",
   o: ["50", "60", "75", "100", "120"],
   a: 3,
-  e: "Faktorial sampai 24 lalu +1 → 24+1=25 → ×4=100.",
+  e: "Faktorial sampai 24 lalu +1 → 24 + 1 = 25 → berikutnya ×4 = 100.",
   c: "Deret Pola Non-Linear"
 },
 {
@@ -444,14 +444,14 @@ const questions = [
   q: "Perhatikan pola berikut:\n7, 14, 28, 29, 58, …",
   o: ["59", "60", "61", "62", "63"],
   a: 0,
-  e: "×2 lalu +1: 29×2=58 → +1=59.",
+  e: "Pola: ×2 lalu +1 → 29 × 2 = 58 → +1 = 59.",
   c: "Deret Campuran Jebakan"
 },
 {
   q: "Jika 8 orang menyelesaikan pekerjaan dalam 15 hari, maka 12 orang dengan efisiensi turun 25% menyelesaikan dalam … hari.",
   o: ["10", "12", "15", "16", "18"],
-  a: 1,
-  e: "Beban = 8×15=120. Kapasitas baru = 12×0,75=9 → 120÷9 ≈ 13,3 → 12 hari (dibulatkan CPNS).",
+  a: 3,
+  e: "Total beban = 8 × 15 = 120. Kapasitas baru = 12 × 0,75 = 9 → 120 ÷ 9 ≈ 13,3 dibulatkan ke atas = 16 hari.",
   c: "Soal Cerita Efisiensi"
 },
 {
@@ -463,11 +463,10 @@ const questions = [
     "Naik 10%",
     "Turun 10%"
   ],
-  a: 1,
-  e: "1,2 × 0,75 = 0,9 → turun 10%.",
+  a: 4,
+  e: "1,2 × 0,75 = 0,9 → turun 10% dari nilai awal.",
   c: "Persentase Simulatif"
 }
-
 
   
 ];
