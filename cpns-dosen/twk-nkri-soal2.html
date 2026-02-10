@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal TWK CPNS – Pancasila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Latihan Soal TWK CPNS</h1>
+  <p>NKRI · Standar CPNS</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan TWK</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area TWK</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL (20 SOAL FIX)
+================================ */
+const questions = [
+  /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
+  
+/*********************************************************
+ 📘 BANK SOAL TWK – HOTS
+ NKRI, NEGARA KESATUAN, WAWASAN NUSANTARA, BELA NEGARA
+*********************************************************/
+
+/* ===== LEVEL RINGAN (1–6)
+   PEMAHAMAN KONSEP (DENGAN JEBakan HALUS)
+======================================================= */
+
+{
+  q: "Pernyataan yang PALING tepat menggambarkan sifat final NKRI adalah …",
+  o: [
+    "NKRI tidak dapat diubah karena sudah disepakati secara politik",
+    "NKRI tidak dapat diubah karena ditetapkan oleh pemerintah pusat",
+    "NKRI tidak dapat diubah karena dijamin oleh konstitusi dan konsensus kebangsaan",
+    "NKRI tidak dapat diubah selama tidak ada tuntutan daerah",
+    "NKRI tidak dapat diubah selama otonomi daerah berjalan"
+  ],
+  a: 2,
+  e: "Sifat final NKRI bersumber dari UUD 1945 dan konsensus nasional, bukan sekadar keputusan politik.",
+  c: "Konsep Final NKRI"
+},
+{
+  q: "Makna Pasal 1 ayat (1) UUD 1945 dalam konteks negara kesatuan adalah …",
+  o: [
+    "Pusat dan daerah memiliki kedaulatan masing-masing",
+    "Kedaulatan dibagi berdasarkan urusan pemerintahan",
+    "Kedaulatan negara tidak terbagi dan berada pada satu pemerintahan nasional",
+    "Daerah memiliki hak menentukan bentuk pemerintahan",
+    "Negara dapat berubah bentuk melalui kebijakan daerah"
+  ],
+  a: 2,
+  e: "Negara kesatuan menegaskan kedaulatan tidak terbagi.",
+  c: "Dasar Konstitusional NKRI"
+},
+{
+  q: "Otonomi daerah dalam NKRI bersifat terbatas karena …",
+  o: [
+    "Daerah tidak memiliki aparat sendiri",
+    "Daerah hanya melaksanakan perintah pusat",
+    "Kewenangan daerah berasal dari pelimpahan pemerintah pusat",
+    "Daerah tidak memiliki anggaran",
+    "Daerah tidak memiliki peraturan"
+  ],
+  a: 2,
+  e: "Otonomi bukan kedaulatan, melainkan pelimpahan kewenangan.",
+  c: "Otonomi Daerah"
+},
+{
+  q: "Konsep Wawasan Nusantara menempatkan perbedaan suku dan budaya sebagai …",
+  o: [
+    "Hambatan integrasi nasional",
+    "Faktor konflik laten",
+    "Potensi bangsa yang harus dikelola dalam satu kesatuan",
+    "Alasan pemberian kedaulatan daerah",
+    "Dasar pembentukan negara bagian"
+  ],
+  a: 2,
+  e: "Wawasan Nusantara memandang keberagaman sebagai kekuatan.",
+  c: "Wawasan Nusantara"
+},
+{
+  q: "Sikap warga negara yang PALING bertentangan dengan prinsip NKRI adalah …",
+  o: [
+    "Mengkritik kebijakan pusat secara konstitusional",
+    "Menuntut pemekaran daerah",
+    "Menyebarkan narasi bahwa daerah lebih berdaulat dari negara",
+    "Menolak kebijakan daerah yang diskriminatif",
+    "Mendukung otonomi daerah sesuai hukum"
+  ],
+  a: 2,
+  e: "Narasi kedaulatan daerah bertentangan dengan prinsip negara kesatuan.",
+  c: "Ancaman NKRI"
+},
+{
+  q: "Bela negara dalam konteks nonmiliter PALING tepat diwujudkan melalui …",
+  o: [
+    "Kepatuhan tanpa kritik",
+    "Kesadaran hukum dan tanggung jawab sosial",
+    "Pembatasan kebebasan berekspresi",
+    "Penolakan globalisasi",
+    "Dominasi budaya nasional"
+  ],
+  a: 1,
+  e: "Bela negara nonmiliter diwujudkan melalui sikap sadar hukum dan bernegara.",
+  c: "Bela Negara"
+},
+
+/* ===== LEVEL MENENGAH (7–13)
+   APLIKASI + ANALISIS KEBIJAKAN
+======================================================= */
+
+{
+  q: "Kebijakan daerah yang mewajibkan penggunaan simbol lokal secara eksklusif berpotensi melanggar prinsip …",
+  o: [
+    "Otonomi daerah",
+    "Efisiensi pemerintahan",
+    "Negara kesatuan dan Wawasan Nusantara",
+    "Demokrasi lokal",
+    "Partisipasi publik"
+  ],
+  a: 2,
+  e: "Kebijakan eksklusif dapat melemahkan persatuan nasional.",
+  c: "Negara Kesatuan"
+},
+{
+  q: "Perbedaan mendasar negara kesatuan dan federasi paling tampak pada …",
+  o: [
+    "Sistem pemerintahan daerah",
+    "Jumlah peraturan daerah",
+    "Sumber kewenangan pemerintahan daerah",
+    "Mekanisme pemilu",
+    "Struktur birokrasi"
+  ],
+  a: 2,
+  e: "Dalam negara kesatuan, kewenangan daerah berasal dari pusat.",
+  c: "Kesatuan vs Federasi"
+},
+{
+  q: "Penyebaran ideologi transnasional yang menolak Pancasila termasuk ancaman …",
+  o: [
+    "Politik administratif",
+    "Sosial budaya biasa",
+    "Ideologi yang berpotensi memecah persatuan",
+    "Kebebasan berekspresi",
+    "Demokrasi substansial"
+  ],
+  a: 2,
+  e: "Ancaman ideologi sangat berbahaya karena menggerus kesadaran berbangsa.",
+  c: "Ancaman Ideologi"
+},
+{
+  q: "Ketimpangan pembangunan antarwilayah berbahaya bagi NKRI karena …",
+  o: [
+    "Menghambat investasi nasional",
+    "Menurunkan kinerja daerah",
+    "Dapat memicu kecemburuan sosial dan disintegrasi",
+    "Mengurangi pendapatan negara",
+    "Menyulitkan koordinasi pusat"
+  ],
+  a: 2,
+  e: "Ketidakadilan ekonomi dapat memicu konflik sosial.",
+  c: "Ancaman Ekonomi"
+},
+{
+  q: "Dalam perspektif Wawasan Nusantara, konflik lokal seharusnya dipandang sebagai …",
+  o: [
+    "Masalah internal daerah",
+    "Konsekuensi otonomi",
+    "Isu nasional yang berdampak pada keutuhan bangsa",
+    "Kegagalan pemerintah daerah",
+    "Fenomena sosial biasa"
+  ],
+  a: 2,
+  e: "Konflik lokal berdampak pada persatuan nasional.",
+  c: "Wawasan Nusantara"
+},
+{
+  q: "ASN yang secara pasif membiarkan ujaran kebencian berkembang telah mengabaikan perannya dalam …",
+  o: [
+    "Efisiensi birokrasi",
+    "Netralitas politik",
+    "Menjaga keutuhan NKRI",
+    "Kebebasan berekspresi",
+    "Stabilitas organisasi"
+  ],
+  a: 2,
+  e: "ASN memiliki peran aktif menjaga persatuan.",
+  c: "Peran ASN"
+},
+{
+  q: "Bela negara bagi ASN paling tepat dimaknai sebagai …",
+  o: [
+    "Kepatuhan mutlak pada atasan",
+    "Kesiapan angkat senjata",
+    "Kesetiaan pada konstitusi dan kepentingan nasional",
+    "Pengabdian pada kelompok mayoritas",
+    "Penolakan kritik publik"
+  ],
+  a: 2,
+  e: "Bela negara ASN bersifat konstitusional dan profesional.",
+  c: "Bela Negara ASN"
+},
+
+/* ===== LEVEL TINGGI / HOTS (14–20)
+   ANALISIS KASUS KOMPLEKS
+======================================================= */
+
+{
+  q: "Jika kebijakan daerah populer secara lokal tetapi melemahkan persatuan nasional, sikap ASN yang paling tepat adalah …",
+  o: [
+    "Mendukung karena aspirasi masyarakat",
+    "Menolak secara terbuka di media",
+    "Melakukan kajian dan menyampaikan koreksi melalui mekanisme resmi",
+    "Menunda pelaksanaan tanpa alasan",
+    "Mengabaikan dampak nasional"
+  ],
+  a: 2,
+  e: "ASN harus menjaga kebijakan tetap konstitusional.",
+  c: "Peran ASN dalam NKRI"
+},
+{
+  q: "Separatisme dianggap ancaman serius karena …",
+  o: [
+    "Menghambat pembangunan daerah",
+    "Mengganggu stabilitas politik jangka pendek",
+    "Menyerang kedaulatan dan eksistensi negara",
+    "Mengurangi kepercayaan publik",
+    "Menimbulkan konflik elite"
+  ],
+  a: 2,
+  e: "Separatisme mengancam eksistensi negara kesatuan.",
+  c: "Ancaman Politik"
+},
+{
+  q: "Netralitas ASN bukan berarti pasif, melainkan …",
+  o: [
+    "Tidak memiliki sikap",
+    "Menjaga jarak dari masyarakat",
+    "Aktif menjaga persatuan tanpa berpihak pada kepentingan politik",
+    "Menghindari isu kebangsaan",
+    "Menyerahkan semua pada pimpinan"
+  ],
+  a: 2,
+  e: "Netralitas ASN bersifat aktif dan berorientasi persatuan.",
+  c: "Netralitas ASN"
+},
+{
+  q: "Penyebaran hoaks bernuansa SARA paling berbahaya bagi NKRI karena …",
+  o: [
+    "Melanggar etika komunikasi",
+    "Menurunkan kualitas demokrasi",
+    "Menggerus kepercayaan dan memicu konflik horizontal",
+    "Menghambat pembangunan",
+    "Menurunkan citra pemerintah"
+  ],
+  a: 2,
+  e: "Hoaks SARA langsung mengancam persatuan bangsa.",
+  c: "Ancaman Sosial Budaya"
+},
+{
+  q: "Upaya paling strategis memperkuat NKRI di tengah globalisasi adalah …",
+  o: [
+    "Penyeragaman budaya",
+    "Penutupan diri dari pengaruh luar",
+    "Penguatan nilai kebangsaan dan keadilan sosial",
+    "Pembatasan kebebasan sipil",
+    "Sentralisasi ekstrem"
+  ],
+  a: 2,
+  e: "Nilai kebangsaan dan keadilan memperkuat daya tahan bangsa.",
+  c: "Ketahanan Nasional"
+},
+{
+  q: "ASN yang lebih mengutamakan loyalitas kelompok dibanding konstitusi berpotensi melemahkan …",
+  o: [
+    "Efisiensi organisasi",
+    "Netralitas birokrasi",
+    "Keutuhan NKRI",
+    "Stabilitas daerah",
+    "Kinerja pelayanan"
+  ],
+  a: 2,
+  e: "Loyalitas ASN harus kepada negara dan konstitusi.",
+  c: "Etika ASN"
+},
+{
+  q: "Pelayanan publik yang diskriminatif berbahaya bagi NKRI karena …",
+  o: [
+    "Menurunkan kepuasan masyarakat",
+    "Melanggar prosedur administratif",
+    "Dapat memicu konflik sosial dan melemahkan persatuan",
+    "Menghambat efisiensi birokrasi",
+    "Mengganggu stabilitas organisasi"
+  ],
+  a: 2,
+  e: "Diskriminasi berpotensi memecah persatuan bangsa.",
+  c: "Peran ASN Strategis"
+}
+
+
+  
+];
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
+================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (OPSINYA DIAKAC)
+================================ */
+let currentQuestion = null;
+
+function loadQuestion() {
+  answered = false;
+
+  // clone soal agar bank asli tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById("question").innerText = currentQuestion.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  // start timer hanya sekali
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+
+/* ===============================
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
+    `;
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
+  } else {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
+    `;
+  }
+
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
