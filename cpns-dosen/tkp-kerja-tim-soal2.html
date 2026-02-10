@@ -206,6 +206,28 @@ header {
 }
 
 
+/* ===============================
+   🎨 TKP SCORE HIGHLIGHT
+================================ */
+.option-score {
+  float: right;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.score-5 { background:#dcfce7; color:#166534; }
+.score-4 { background:#ecfeff; color:#155e75; }
+.score-3 { background:#fef3c7; color:#92400e; }
+.score-2 { background:#ffe4e6; color:#9f1239; }
+.score-1 { background:#fee2e2; color:#7f1d1d; }
+
+.option-selected {
+  outline: 3px solid #2563eb;
+}
+
+
 </style>
 </head>
 
@@ -304,281 +326,291 @@ const questions = [
   /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
   
 /* =================================================
-   📘 BANK SOAL TKP – ADVANCED & HOTS
-   KERJA TIM & KOMUNIKASI STRATEGIS ASN (20 SOAL)
+   📘 BANK SOAL TKP
+   KERJA TIM & KOMUNIKASI DALAM LINGKUNGAN ASN (20 SOAL)
+   FORMAT TKP CPNS (BOBOT 1–5)
 ================================================= */
 
-/* ===== LEVEL HOTS LANJUTAN (21–40)
-   ANALISIS, EVALUASI, & KEPUTUSAN STRATEGIS
+/* ===== LEVEL RINGAN (1–6)
+   PEMAHAMAN DASAR KERJA TIM
 ================================ */
 
 {
-  q: "Dalam tim lintas instansi, terjadi perbedaan kepentingan yang menghambat pengambilan keputusan. Sebagai ASN, langkah paling strategis adalah …",
+  q: "Dalam sebuah tim kerja ASN dengan latar belakang yang beragam, sikap yang paling mencerminkan kerja tim adalah …",
   o: [
-    "Memaksakan kepentingan unit sendiri",
-    "Menunda keputusan tanpa batas waktu",
-    "Memfasilitasi dialog untuk mencari titik temu",
-    "Menyerahkan sepenuhnya pada pimpinan tertinggi",
-    "Menghindari keterlibatan lebih lanjut"
+    "Bekerja sendiri agar hasil lebih cepat",
+    "Mengutamakan pendapat pribadi",
+    "Menghargai perbedaan dan fokus pada tujuan bersama",
+    "Menyerahkan semua tugas kepada anggota lain",
+    "Menghindari diskusi agar tidak terjadi konflik"
   ],
-  a: 2,
-  e: "ASN berperan sebagai fasilitator solusi demi kepentingan bersama.",
-  c: "Kolaborasi Lintas Instansi"
+  s: [2,1,5,1,2],
+  e: "Kerja tim menekankan kolaborasi, penghargaan terhadap perbedaan, dan tujuan bersama.",
+  c: "Konsep Dasar Kerja Tim"
 },
 {
-  q: "Seorang anggota tim berkinerja rendah, namun memiliki peran krusial. Sikap paling tepat adalah …",
+  q: "Salah satu prinsip dasar kerja tim yang efektif dalam lingkungan ASN adalah …",
   o: [
-    "Menggantinya tanpa evaluasi",
-    "Menyalahkannya di forum terbuka",
-    "Memberikan pendampingan dan umpan balik konstruktif",
-    "Mengambil alih seluruh perannya",
-    "Membiarkan karena bukan tanggung jawab Anda"
+    "Komunikasi satu arah dari pimpinan",
+    "Kepercayaan dan saling menghargai",
+    "Persaingan antar anggota tim",
+    "Dominasi anggota yang paling senior",
+    "Pembagian tugas yang tidak jelas"
   ],
-  a: 2,
-  e: "Pendampingan menunjukkan kepemimpinan kolaboratif.",
-  c: "Penguatan Kapasitas Tim"
+  s: [2,5,1,1,1],
+  e: "Kepercayaan dan saling menghargai merupakan fondasi utama kerja tim.",
+  c: "Prinsip Kerja Tim"
 },
 {
-  q: "Dalam rapat strategis, mayoritas setuju pada opsi yang berisiko tinggi bagi pelayanan publik. Sikap Anda sebaiknya …",
+  q: "Dalam tim kerja, setiap anggota memahami tugas dan kewenangannya masing-masing. Hal ini mencerminkan prinsip …",
   o: [
-    "Mengikuti keputusan tanpa catatan",
-    "Menolak hasil rapat secara terbuka",
-    "Menyampaikan keberatan berbasis data sebelum keputusan final",
-    "Diam demi menjaga keharmonisan",
-    "Melaksanakan dengan setengah hati"
+    "Ego individu",
+    "Pembagian peran yang jelas",
+    "Pengambilan keputusan sepihak",
+    "Ketergantungan pada pimpinan",
+    "Komunikasi tertutup"
   ],
-  a: 2,
-  e: "Keberanian menyampaikan analisis risiko adalah bentuk loyalitas profesional.",
-  c: "Loyalitas Kritis ASN"
+  s: [1,5,1,2,1],
+  e: "Pembagian peran yang jelas mencegah konflik dan meningkatkan efektivitas tim.",
+  c: "Pembagian Peran"
 },
 {
-  q: "Jika terjadi miskomunikasi serius antar anggota tim yang berdampak pada kesalahan layanan, langkah prioritas adalah …",
+  q: "Kerja tim dalam organisasi publik penting karena …",
   o: [
-    "Mencari pihak yang paling bersalah",
-    "Menutupi kesalahan",
-    "Mengklarifikasi fakta dan memperbaiki sistem komunikasi",
-    "Memberikan sanksi langsung",
-    "Mengabaikan karena sudah terjadi"
+    "Semua pekerjaan dapat diselesaikan sendiri",
+    "Pelayanan publik bersifat individual",
+    "Sebagian besar tugas membutuhkan kolaborasi",
+    "Mengurangi tanggung jawab ASN",
+    "Mempercepat persaingan antar unit"
   ],
-  a: 2,
-  e: "Fokus pada perbaikan sistem lebih penting daripada menyalahkan individu.",
-  c: "Manajemen Kesalahan Tim"
+  s: [1,1,5,1,2],
+  e: "Pelayanan publik umumnya membutuhkan kerja sama lintas unit dan individu.",
+  c: "Kerja Tim ASN"
 },
 {
-  q: "Seorang pimpinan tim cenderung mendominasi diskusi dan mengabaikan masukan anggota. Sikap profesional ASN adalah …",
+  q: "Sikap yang TIDAK mencerminkan kerja tim adalah …",
   o: [
-    "Mengikuti saja tanpa berpikir kritis",
-    "Melawan secara emosional",
-    "Menyampaikan masukan secara santun dan berbasis tujuan",
-    "Menghasut anggota lain",
-    "Menarik diri dari diskusi"
+    "Aktif mendengarkan pendapat rekan",
+    "Menyalahkan rekan kerja saat terjadi kesalahan",
+    "Mendukung keputusan tim",
+    "Membantu rekan yang kesulitan",
+    "Berinisiatif tanpa menunggu perintah"
   ],
-  a: 2,
-  e: "Komunikasi asertif menjaga profesionalisme dan etika.",
-  c: "Komunikasi Asertif"
+  s: [5,1,5,5,4],
+  e: "Menyalahkan rekan kerja menunjukkan ego pribadi dan merusak kerja tim.",
+  c: "Perilaku Tidak Sesuai Kerja Tim"
 },
 {
-  q: "Dalam kerja tim berbasis target, terjadi dilema antara kecepatan dan kualitas layanan. Keputusan paling tepat adalah …",
+  q: "Dalam kerja tim, tujuan utama yang harus didahulukan adalah …",
   o: [
-    "Mengutamakan kecepatan sepenuhnya",
-    "Mengorbankan kualitas",
-    "Menyeimbangkan target dengan standar pelayanan",
-    "Menunda seluruh pekerjaan",
-    "Mengabaikan evaluasi"
+    "Kepentingan pribadi",
+    "Pengakuan individu",
+    "Kepentingan tim dan organisasi",
+    "Popularitas di lingkungan kerja",
+    "Kenyamanan pribadi"
   ],
-  a: 2,
-  e: "ASN wajib menjaga kualitas layanan publik.",
-  c: "Dilema Kinerja Tim"
+  s: [1,1,5,2,2],
+  e: "Kerja tim menempatkan kepentingan bersama di atas kepentingan pribadi.",
+  c: "Tujuan Bersama"
 },
-{
-  q: "Anggota tim berasal dari generasi dan gaya kerja yang berbeda. Pendekatan paling efektif adalah …",
-  o: [
-    "Menyamakan semua gaya kerja",
-    "Mengutamakan gaya senior",
-    "Mengelola perbedaan sebagai kekuatan tim",
-    "Membatasi interaksi",
-    "Menyerahkan ke HR sepenuhnya"
-  ],
-  a: 2,
-  e: "Keberagaman meningkatkan inovasi dan kinerja.",
-  c: "Manajemen Keberagaman"
-},
-{
-  q: "Dalam situasi krisis pelayanan publik, koordinasi tim melemah akibat tekanan eksternal. Peran ASN adalah …",
-  o: [
-    "Menyalahkan kondisi eksternal",
-    "Menunggu instruksi detail",
-    "Menguatkan koordinasi dan komunikasi internal",
-    "Membatasi informasi",
-    "Menghindari pengambilan keputusan"
-  ],
-  a: 2,
-  e: "Krisis menuntut kepemimpinan kolaboratif.",
-  c: "Kerja Tim dalam Krisis"
-},
-{
-  q: "Keputusan tim telah diambil secara sah, namun muncul tekanan dari pihak luar untuk mengubahnya. Sikap ASN seharusnya …",
-  o: [
-    "Langsung mengubah keputusan",
-    "Mengabaikan tekanan tanpa klarifikasi",
-    "Menjaga keputusan sambil melaporkan tekanan sesuai mekanisme",
-    "Mengikuti tekanan demi keamanan",
-    "Menyerahkan ke individu tertentu"
-  ],
-  a: 2,
-  e: "ASN harus menjaga integritas keputusan organisasi.",
-  c: "Integritas Keputusan Tim"
-},
-{
-  q: "Jika pembagian peran dalam tim tidak sesuai kompetensi anggota, langkah paling tepat adalah …",
-  o: [
-    "Tetap menjalankan tanpa evaluasi",
-    "Mengeluh secara informal",
-    "Mengusulkan penyesuaian peran berbasis kompetensi",
-    "Mengambil alih tugas lain",
-    "Menolak tugas sepihak"
-  ],
-  a: 2,
-  e: "Penyesuaian peran meningkatkan efektivitas tim.",
-  c: "Optimalisasi Peran"
-},
-{
-  q: "Dalam kerja tim, sikap yang paling mencerminkan kepemimpinan informal ASN adalah …",
-  o: [
-    "Mengandalkan jabatan",
-    "Mengontrol semua keputusan",
-    "Memberi teladan dan mendorong kolaborasi",
-    "Menghindari tanggung jawab",
-    "Menunggu arahan terus-menerus"
-  ],
-  a: 2,
-  e: "Kepemimpinan informal memperkuat kinerja tim.",
-  c: "Kepemimpinan Kolaboratif"
-},
-{
-  q: "Ketika evaluasi tim menunjukkan kegagalan program, sikap paling konstruktif adalah …",
-  o: [
-    "Menyalahkan anggota tertentu",
-    "Menyembunyikan hasil evaluasi",
-    "Menggunakan evaluasi sebagai dasar perbaikan",
-    "Menghentikan kerja tim",
-    "Mengabaikan rekomendasi"
-  ],
-  a: 2,
-  e: "Evaluasi adalah alat pembelajaran organisasi.",
-  c: "Evaluasi Kinerja Tim"
-},
-{
-  q: "Dalam tim kerja ASN, konflik kepentingan individu paling tepat diatasi dengan …",
-  o: [
-    "Pembiaran",
-    "Pendekatan emosional",
-    "Transparansi dan mekanisme organisasi",
-    "Dominasi pimpinan",
-    "Pengucilan individu"
-  ],
-  a: 2,
-  e: "Transparansi menjaga kepercayaan tim.",
-  c: "Manajemen Konflik Kepentingan"
-},
-{
-  q: "Komitmen tim terhadap keputusan bersama paling terlihat dari …",
-  o: [
-    "Kepatuhan saat diawasi",
-    "Pelaksanaan konsisten tanpa sabotase",
-    "Kritik di luar forum resmi",
-    "Penolakan diam-diam",
-    "Pelaksanaan selektif"
-  ],
-  a: 1,
-  e: "Komitmen ditunjukkan melalui konsistensi tindakan.",
-  c: "Komitmen Tim"
-},
-{
-  q: "Jika terjadi kesalahan kolektif tim, sikap ASN paling profesional adalah …",
-  o: [
-    "Mencari kambing hitam",
-    "Lepas tanggung jawab",
-    "Bertanggung jawab bersama dan memperbaiki",
-    "Menyerahkan sepenuhnya ke pimpinan",
-    "Menutupi kesalahan"
-  ],
-  a: 2,
-  e: "Tanggung jawab kolektif adalah inti kerja tim.",
-  c: "Akuntabilitas Tim"
-},
-{
-  q: "Dalam tim strategis, perbedaan pendapat yang tajam sebaiknya dipandang sebagai …",
-  o: [
-    "Ancaman stabilitas",
-    "Hambatan kerja",
-    "Sumber pengayaan analisis",
-    "Alasan pembubaran tim",
-    "Kegagalan kepemimpinan"
-  ],
-  a: 2,
-  e: "Perbedaan memperkuat kualitas keputusan.",
-  c: "Nilai Perbedaan Pendapat"
-},
-{
-  q: "Keputusan bersama yang tidak populer di masyarakat tetap harus dijalankan dengan syarat …",
-  o: [
-    "Mengabaikan aspirasi publik",
-    "Dilaksanakan secara tertutup",
-    "Disertai komunikasi publik yang jelas dan etis",
-    "Diserahkan ke pihak lain",
-    "Ditunda tanpa alasan"
-  ],
-  a: 2,
-  e: "Komunikasi publik menjaga legitimasi kebijakan.",
-  c: "Keputusan Publik & Komunikasi"
-},
-{
-  q: "Dalam kerja tim ASN, indikator keberhasilan paling utama adalah …",
-  o: [
-    "Popularitas individu",
-    "Minimnya konflik",
-    "Tercapainya tujuan pelayanan publik",
-    "Dominasi pimpinan",
-    "Kecepatan semata"
-  ],
-  a: 2,
-  e: "Tujuan pelayanan publik adalah orientasi utama.",
-  c: "Orientasi Kinerja Publik"
-},
-{
-  q: "Sikap profesional setelah keputusan bersama ditetapkan adalah …",
-  o: [
-    "Mengkritik terus-menerus",
-    "Menyabotase secara halus",
-    "Melaksanakan dan mengevaluasi secara objektif",
-    "Menghindari keterlibatan",
-    "Menunggu kegagalan"
-  ],
-  a: 2,
-  e: "Profesionalisme mencakup pelaksanaan dan evaluasi.",
-  c: "Profesionalisme ASN"
-},
-{
-  q: "Kerja tim yang matang dalam birokrasi ditandai dengan …",
-  o: [
-    "Ketergantungan pada satu figur",
-    "Minim diskusi",
-    "Kepercayaan, komunikasi, dan akuntabilitas",
-    "Kepatuhan tanpa berpikir",
-    "Penghindaran konflik total"
-  ],
-  a: 2,
-  e: "Tiga pilar utama kerja tim efektif adalah kepercayaan, komunikasi, dan tanggung jawab.",
-  c: "Kematangan Tim"
-}
 
+/* ===== LEVEL MENENGAH (7–13)
+   APLIKASI KERJA TIM & KOMUNIKASI
+================================ */
+
+{
+  q: "Dalam sebuah tim pelayanan publik, salah satu anggota mengalami kesulitan menyelesaikan tugasnya. Sikap Anda sebaiknya …",
+  o: [
+    "Membiarkannya karena bukan tugas Anda",
+    "Mengambil alih seluruh tugasnya",
+    "Membantu dan mengajak diskusi anggota tim lain",
+    "Melaporkannya tanpa komunikasi",
+    "Menyalahkannya di depan tim"
+  ],
+  s: [1,3,5,2,1],
+  e: "Membantu dan berdiskusi mencerminkan kolaborasi dan kepedulian tim.",
+  c: "Kerja Tim dalam Tekanan"
+},
+{
+  q: "Komunikasi terbuka dalam tim ASN ditunjukkan melalui …",
+  o: [
+    "Menyampaikan kritik secara emosional",
+    "Menyembunyikan informasi penting",
+    "Memberikan masukan secara sopan dan objektif",
+    "Menghindari diskusi",
+    "Menggunakan jabatan untuk memaksakan pendapat"
+  ],
+  s: [1,1,5,2,1],
+  e: "Komunikasi terbuka harus jujur, sopan, dan berfokus pada solusi.",
+  c: "Komunikasi Terbuka"
+},
+{
+  q: "Jika terjadi perbedaan pendapat dalam rapat tim, sikap paling tepat sebagai ASN adalah …",
+  o: [
+    "Memaksakan pendapat pribadi",
+    "Menyerang pendapat orang lain",
+    "Menyampaikan pendapat secara santun",
+    "Diam tanpa berpartisipasi",
+    "Keluar dari rapat"
+  ],
+  s: [1,1,5,2,1],
+  e: "Perbedaan pendapat disikapi secara dialogis dan saling menghargai.",
+  c: "Menerima Perbedaan Pendapat"
+},
+{
+  q: "Seorang ASN menerima kritik dari rekan kerja terkait kinerjanya. Sikap paling tepat adalah …",
+  o: [
+    "Membalas kritik dengan emosi",
+    "Mengabaikan kritik tersebut",
+    "Menerima kritik sebagai bahan perbaikan",
+    "Melaporkan rekan tersebut",
+    "Menjauhi rekan kerja"
+  ],
+  s: [1,2,5,2,1],
+  e: "Menerima kritik menunjukkan kedewasaan dan profesionalisme.",
+  c: "Sikap Profesional"
+},
+{
+  q: "Dalam tim lintas unit, perbedaan latar belakang anggota sebaiknya dipandang sebagai …",
+  o: [
+    "Hambatan kerja",
+    "Ancaman kinerja",
+    "Sumber kekayaan ide",
+    "Alasan konflik",
+    "Pembatas kerja sama"
+  ],
+  s: [1,1,5,1,1],
+  e: "Keberagaman memperkaya sudut pandang dan solusi.",
+  c: "Keberagaman dalam Tim"
+},
+{
+  q: "Agar kerja tim berjalan efektif, setiap anggota sebaiknya …",
+  o: [
+    "Menunggu perintah pimpinan",
+    "Berinisiatif sesuai perannya",
+    "Menghindari tanggung jawab",
+    "Fokus pada kepentingan pribadi",
+    "Menyerahkan semua tugas ke tim lain"
+  ],
+  s: [2,5,1,1,1],
+  e: "Inisiatif sesuai peran meningkatkan efektivitas tim.",
+  c: "Tanggung Jawab Tim"
+},
+{
+  q: "Komunikasi yang buruk dalam tim dapat berdampak pada …",
+  o: [
+    "Meningkatnya kepercayaan",
+    "Menurunnya konflik",
+    "Meningkatnya kesalahpahaman",
+    "Meningkatnya kinerja",
+    "Hubungan kerja yang harmonis"
+  ],
+  s: [1,1,5,1,2],
+  e: "Komunikasi buruk memicu konflik dan menurunkan kinerja.",
+  c: "Dampak Komunikasi"
+},
+
+/* ===== LEVEL TINGGI / HOTS (14–20)
+   ANALISIS SIKAP & KEPUTUSAN TIM
+================================ */
+
+{
+  q: "Dalam rapat tim, usulan Anda tidak dipilih dan keputusan bersama telah ditetapkan. Sikap paling tepat adalah …",
+  o: [
+    "Menolak melaksanakan keputusan",
+    "Melaksanakan keputusan dengan tanggung jawab",
+    "Mengkritik pimpinan secara terbuka",
+    "Menunda pelaksanaan",
+    "Melaksanakan setengah hati"
+  ],
+  s: [1,5,2,2,1],
+  e: "Mendukung keputusan bersama adalah bentuk profesionalisme ASN.",
+  c: "Mendukung Keputusan Bersama"
+},
+{
+  q: "Ketika terjadi konflik internal tim yang berpotensi mengganggu pelayanan publik, ASN seharusnya …",
+  o: [
+    "Membiarkan konflik berkembang",
+    "Menghindari komunikasi",
+    "Menyelesaikan konflik secara dialogis",
+    "Memihak salah satu pihak",
+    "Melaporkan ke publik"
+  ],
+  s: [1,1,5,1,2],
+  e: "Konflik diselesaikan secara profesional dan konstruktif.",
+  c: "Manajemen Konflik"
+},
+{
+  q: "Dalam kerja tim, loyalitas yang paling tepat bagi ASN adalah …",
+  o: [
+    "Loyal pada individu tertentu",
+    "Loyal pada kepentingan pribadi",
+    "Loyal pada keputusan dan tujuan organisasi",
+    "Loyal pada kelompok mayoritas",
+    "Loyal pada tekanan eksternal"
+  ],
+  s: [1,1,5,2,1],
+  e: "ASN dituntut loyal pada tujuan organisasi dan kepentingan publik.",
+  c: "Loyalitas Profesional"
+},
+{
+  q: "Jika pembagian tugas dalam tim tidak seimbang, sikap paling tepat adalah …",
+  o: [
+    "Mengeluh tanpa solusi",
+    "Menolak tugas tambahan",
+    "Menyampaikan masukan secara terbuka",
+    "Membiarkan keadaan",
+    "Mengambil semua tugas sendiri"
+  ],
+  s: [1,2,5,2,3],
+  e: "Masukan konstruktif membantu perbaikan sistem kerja tim.",
+  c: "Evaluasi Kerja Tim"
+},
+{
+  q: "Mendukung keputusan bersama meskipun berbeda pendapat menunjukkan sikap …",
+  o: [
+    "Pasif",
+    "Egois",
+    "Profesional dan demokratis",
+    "Otoriter",
+    "Tidak peduli"
+  ],
+  s: [1,1,5,1,2],
+  e: "Sikap ini mencerminkan etika kerja ASN.",
+  c: "Etika Demokratis"
+},
+{
+  q: "Dalam tim kerja ASN, keberhasilan kolektif seharusnya …",
+  o: [
+    "Diklaim oleh pimpinan saja",
+    "Diklaim oleh individu tertentu",
+    "Diakui sebagai hasil kerja bersama",
+    "Diabaikan",
+    "Dijadikan alat persaingan"
+  ],
+  s: [1,1,5,1,1],
+  e: "Keberhasilan tim adalah hasil kontribusi seluruh anggota.",
+  c: "Tanggung Jawab Kolektif"
+},
+{
+  q: "Kerja tim yang efektif pada akhirnya akan berdampak pada …",
+  o: [
+    "Menurunnya kualitas pelayanan",
+    "Meningkatnya konflik internal",
+    "Meningkatnya kinerja dan kepercayaan publik",
+    "Menurunnya tanggung jawab ASN",
+    "Bertambahnya beban individu"
+  ],
+  s: [1,1,5,1,2],
+  e: "Kerja tim yang baik meningkatkan kinerja organisasi dan pelayanan publik.",
+  c: "Dampak Kerja Tim"
+}
 
   
 ];
 
 /* ===============================
-   🔢 STATE & GAMIFIKASI
+   🔢 STATE & GAMIFIKASI (TKP)
 ================================ */
 let index = 0;
 let score = 0;
@@ -596,38 +628,33 @@ function updateGamification() {
 }
 
 /* ===============================
-   🔀 SHUFFLE OPSI JAWABAN
-   (AMAN & TANPA RUSAK BANK SOAL)
+   🔀 SHUFFLE OPSI + SKOR (TKP SAFE)
 ================================ */
 function shuffleQuestion(question) {
-  // pasangkan opsi + status benar
   const paired = question.o.map((text, idx) => ({
     text,
-    isCorrect: idx === question.a
+    score: question.s[idx]
   }));
 
-  // Fisher–Yates shuffle
   for (let i = paired.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [paired[i], paired[j]] = [paired[j], paired[i]];
   }
 
-  // update opsi & index jawaban benar
   question.o = paired.map(p => p.text);
-  question.a = paired.findIndex(p => p.isCorrect);
+  question.s = paired.map(p => p.score);
 
   return question;
 }
 
 /* ===============================
-   📄 LOAD SOAL (OPSINYA DIAKAC)
+   📄 LOAD SOAL
 ================================ */
 let currentQuestion = null;
 
 function loadQuestion() {
   answered = false;
 
-  // clone soal agar bank asli tidak berubah
   currentQuestion = shuffleQuestion(
     JSON.parse(JSON.stringify(questions[index]))
   );
@@ -641,13 +668,12 @@ function loadQuestion() {
   optionsDiv.innerHTML = "";
 
   currentQuestion.o.forEach((opt, i) => {
-    const btn = document.createElement("button");
-    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
-    btn.onclick = () => selectAnswer(i);
-    optionsDiv.appendChild(btn);
-  });
+  const btn = document.createElement("button");
+  btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+  btn.onclick = () => selectAnswer(i);
+  optionsDiv.appendChild(btn);
+});
 
-  // start timer hanya sekali
   if (index === 0 && !startTime) {
     startTime = new Date();
     startTimer();
@@ -655,7 +681,7 @@ function loadQuestion() {
 }
 
 /* ===============================
-   ✅ PILIH JAWABAN
+   ✅ PILIH JAWABAN (TKP)
 ================================ */
 function selectAnswer(i) {
   if (answered) return;
@@ -664,25 +690,42 @@ function selectAnswer(i) {
   const q = currentQuestion;
   const buttons = document.querySelectorAll(".options button");
 
-  buttons.forEach((b, idx) => {
-    if (idx === q.a) b.classList.add("correct");
-    if (idx === i && i !== q.a) b.classList.add("wrong");
-    b.disabled = true;
-  });
+  const gainedScore = q.s[i];
+  score += gainedScore;
+  kp += gainedScore * 2;
+  level = Math.floor(kp / 50) + 1;
+  updateGamification();
 
-  if (i === q.a) {
-    score += 5;
-    kp += 10;
-    level = Math.floor(kp / 50) + 1;
-    updateGamification();
-  } else {
+  // analitik: skor rendah
+  if (gainedScore <= 2) {
     analytics[q.c] = (analytics[q.c] || 0) + 1;
   }
 
+  buttons.forEach((btn, idx) => {
+    const s = q.s[idx];
+    btn.disabled = true;
+    btn.classList.add(`score-${s}`);
+
+    // label skor
+    const badge = document.createElement("span");
+    badge.className = `option-score score-${s}`;
+    badge.innerText = `${s}`;
+    btn.appendChild(badge);
+
+    // tandai pilihan user
+    if (idx === i) {
+      btn.classList.add("option-selected");
+    }
+  });
+
   const exp = document.getElementById("explanation");
-  exp.innerText = q.e;
+  exp.innerHTML = `
+    <strong>Skor pilihan Anda:</strong> ${gainedScore} / 5<br><br>
+    ${q.e}
+  `;
   exp.style.display = "block";
 }
+
 
 /* ===============================
    ▶️ SOAL BERIKUTNYA
@@ -696,10 +739,8 @@ function nextQuestion() {
   }
 }
 
-
 /* ===============================
-   🏁 SELESAI UJIAN
-   ANALITIK + GRAFIK + ADAPTIVE TEST
+   🏁 SELESAI UJIAN (TKP)
 ================================ */
 function finishExam() {
   clearInterval(timerInterval);
@@ -707,10 +748,6 @@ function finishExam() {
   const endTime = new Date();
   const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
   const avgTime = durationSec / questions.length;
-
-  const correct = score / 5;
-  const wrong = questions.length - correct;
-  const errorRate = wrong / questions.length;
 
   document.getElementById("quiz").style.display = "none";
   document.getElementById("result").style.display = "block";
@@ -721,12 +758,12 @@ function finishExam() {
   document.getElementById("finalLevel").innerText = level;
 
   /* ===============================
-     📊 GRAFIK AREA LEMAH
+     📊 AREA PERLU DITINGKATKAN
   ============================== */
   let graphHTML = "";
   if (Object.keys(analytics).length > 0) {
     const max = Math.max(...Object.values(analytics));
-    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    graphHTML += `<h4>📊 Area Perlu Penguatan</h4>`;
     Object.entries(analytics).forEach(([area, count]) => {
       graphHTML += `
         <div style="margin-bottom:8px">
@@ -734,12 +771,12 @@ function finishExam() {
           <div style="background:#e5e7eb;border-radius:6px">
             <div style="
               width:${(count/max)*100}%;
-              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              background:linear-gradient(135deg,#f97316,#ef4444);
               color:white;
               padding:4px 8px;
               font-size:12px
             ">
-              ${count} salah
+              ${count} respon lemah
             </div>
           </div>
         </div>
@@ -748,53 +785,24 @@ function finishExam() {
   }
 
   /* ===============================
-     🧠 ADAPTIVE RECOMMENDATION
+     🧠 PROFIL TKP
   ============================== */
-  let focusArea = Object.keys(analytics).length
-    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
-    : "Penguatan umum";
-
-  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
-
-  if (avgTime > 75 && errorRate > 0.3) {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Ragu-ragu</li>
-      <li><strong>Fokus:</strong> ${focusArea}</li>
-      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
-      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
-    `;
-  } else if (avgTime < 45 && errorRate > 0.4) {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
-      <li><strong>Fokus:</strong> Analisis konteks</li>
-      <li><strong>Mode:</strong> HOTS Naratif</li>
-      <li><strong>Target:</strong> 80–90 detik/soal</li>
-    `;
-  } else if (avgTime > 75 && errorRate <= 0.2) {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Akurat tapi lambat</li>
-      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
-      <li><strong>Mode:</strong> Time-bound Practice</li>
-      <li><strong>Target:</strong> 55–60 detik/soal</li>
-    `;
-  } else {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Stabil</li>
-      <li><strong>Fokus:</strong> Konsistensi</li>
-      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
-      <li><strong>Target:</strong> 60–70 detik/soal</li>
-    `;
+  let profile = "Stabil";
+  if (avgTime > 75 && score < questions.length * 3.5) {
+    profile = "Ragu-ragu";
+  } else if (avgTime < 45 && score < questions.length * 3.5) {
+    profile = "Cepat tapi kurang reflektif";
+  } else if (avgTime > 75) {
+    profile = "Reflektif namun lambat";
   }
-
-  adaptiveHTML += `</ul>`;
 
   document.getElementById("scoreText").innerHTML = `
     ${graphHTML}
     <div style="margin-top:16px">
       ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
-      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal<br>
+      🧠 <strong>Profil TKP:</strong> ${profile}
     </div>
-    <div style="margin-top:16px">${adaptiveHTML}</div>
   `;
 
   /* ===============================
@@ -817,6 +825,7 @@ function finishExam() {
    🚀 START
 ================================ */
 loadQuestion();
+
 </script>
 
 
