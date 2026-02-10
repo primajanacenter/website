@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Soal TWK CPNS – Pancasila</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Latihan Soal TWK CPNS</h1>
+  <p>Bhinneka Tunggal Ika · Standar CPNS</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan TWK</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area TWK</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL (20 SOAL FIX)
+================================ */
+const questions = [
+  /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
+  
+/* =================================================
+   📘 BANK SOAL TWK
+   BHINNEKA TUNGGAL IKA – EXTREME LEVEL (20 SOAL)
+   ⚠️ JEBakan GANDA & OPSI ABU-ABU
+================================================= */
+
+/* ===== LEVEL EKSTREM
+   LOGIKA NILAI, DILEMA ETIS, & KONSTITUSIONAL
+================================ */
+
+{
+  q: "Dalam masyarakat majemuk, kebijakan publik yang tampak netral tetapi berdampak merugikan kelompok tertentu menurut Bhinneka Tunggal Ika harus dipahami sebagai …",
+  o: [
+    "Netralitas administratif yang sah",
+    "Konsekuensi sosial yang tidak terhindarkan",
+    "Keadilan prosedural yang cukup",
+    "Masalah keadilan substantif yang perlu dikoreksi",
+    "Risiko minor yang dapat diabaikan"
+  ],
+  a: 3,
+  e: "Bhinneka Tunggal Ika menuntut keadilan substantif, bukan sekadar netralitas prosedural.",
+  c: "Keadilan Substantif"
+},
+{
+  q: "ASN memilih tidak bertindak atas praktik diskriminatif dengan alasan menjaga stabilitas. Sikap ini paling tepat dikategorikan sebagai …",
+  o: [
+    "Profesionalisme birokrasi",
+    "Netralitas aktif",
+    "Kehati-hatian administratif",
+    "Netralitas semu yang bertentangan dengan nilai persatuan",
+    "Kepatuhan struktural"
+  ],
+  a: 3,
+  e: "Pembiaran diskriminasi atas nama stabilitas bertentangan dengan Bhinneka Tunggal Ika.",
+  c: "Netralitas Semu"
+},
+{
+  q: "Persatuan nasional yang dibangun dengan membatasi ekspresi identitas kelompok tertentu mencerminkan …",
+  o: [
+    "Integrasi nasional yang kuat",
+    "Kompromi sosial",
+    "Stabilitas jangka panjang",
+    "Persatuan semu yang berpotensi rapuh",
+    "Penegakan nilai kebangsaan"
+  ],
+  a: 3,
+  e: "Persatuan sejati tidak dibangun dengan penekanan identitas.",
+  c: "Persatuan Semu"
+},
+{
+  q: "Jika mayoritas menuntut kebijakan eksklusif dan ASN menolaknya atas dasar konstitusi, maka ASN tersebut telah …",
+  o: [
+    "Melanggar prinsip demokrasi",
+    "Mengabaikan aspirasi publik",
+    "Bersikap elitis",
+    "Menjalankan Bhinneka Tunggal Ika secara konstitusional",
+    "Menciptakan konflik baru"
+  ],
+  a: 3,
+  e: "Demokrasi konstitusional membatasi kehendak mayoritas demi keadilan.",
+  c: "Demokrasi Konstitusional"
+},
+{
+  q: "Toleransi yang membiarkan pelanggaran hak kelompok lain menurut Bhinneka Tunggal Ika adalah …",
+  o: [
+    "Bentuk kedewasaan sosial",
+    "Pilihan etis",
+    "Konsekuensi pluralisme",
+    "Distorsi nilai toleransi",
+    "Bentuk kebebasan berekspresi"
+  ],
+  a: 3,
+  e: "Toleransi tidak boleh melanggar hukum dan HAM.",
+  c: "Distorsi Toleransi"
+},
+{
+  q: "Dalam konflik identitas, keberpihakan ASN yang paling sesuai prinsip persatuan adalah keberpihakan pada …",
+  o: [
+    "Kelompok yang paling terdampak",
+    "Kelompok minoritas",
+    "Kelompok mayoritas",
+    "Keadilan dan hak semua pihak",
+    "Stabilitas keamanan"
+  ],
+  a: 3,
+  e: "ASN berpihak pada keadilan, bukan identitas.",
+  c: "Keberpihakan Nilai"
+},
+{
+  q: "Kebijakan yang secara hukum sah tetapi secara sosial memicu eksklusi menurut Bhinneka Tunggal Ika menuntut ASN untuk …",
+  o: [
+    "Menjalankan tanpa evaluasi",
+    "Menolak secara terbuka",
+    "Menunggu perubahan politik",
+    "Mendorong evaluasi dan perbaikan berbasis inklusivitas",
+    "Mengalihkan tanggung jawab"
+  ],
+  a: 3,
+  e: "ASN wajib memastikan kebijakan sejalan dengan keadilan sosial.",
+  c: "Evaluasi Kebijakan"
+},
+{
+  q: "Hoaks identitas menjadi sangat berbahaya karena mengubah keberagaman menjadi …",
+  o: [
+    "Kompetisi ide",
+    "Perbedaan pendapat",
+    "Konflik kepentingan",
+    "Polarisasi dan delegitimasi kelompok lain",
+    "Kritik sosial"
+  ],
+  a: 3,
+  e: "Hoaks identitas memecah persatuan melalui polarisasi.",
+  c: "Polarisasi Sosial"
+},
+{
+  q: "Persatuan yang selaras Bhinneka Tunggal Ika hanya dapat bertahan jika …",
+  o: [
+    "Semua pihak patuh pada aturan",
+    "Tidak ada konflik terbuka",
+    "Mayoritas merasa aman",
+    "Keberagaman diakui dan diperlakukan adil",
+    "Identitas dibatasi ruangnya"
+  ],
+  a: 3,
+  e: "Pengakuan dan keadilan menjaga persatuan jangka panjang.",
+  c: "Keberlanjutan Persatuan"
+},
+{
+  q: "Dalam konteks ASN, profesionalitas tanpa sensitivitas keberagaman berisiko menghasilkan …",
+  o: [
+    "Efisiensi birokrasi",
+    "Kepastian hukum",
+    "Netralitas kebijakan",
+    "Diskriminasi tidak langsung",
+    "Stabilitas sosial"
+  ],
+  a: 3,
+  e: "Keputusan yang tampak profesional bisa tetap diskriminatif.",
+  c: "Diskriminasi Struktural"
+},
+{
+  q: "Ketika identitas digunakan sebagai alat mobilisasi politik, Bhinneka Tunggal Ika menuntut negara untuk …",
+  o: [
+    "Mengakomodasi tuntutan mayoritas",
+    "Membatasi ekspresi identitas",
+    "Menjaga popularitas pemerintah",
+    "Menegakkan hukum dan menjaga persatuan",
+    "Menghindari keterlibatan"
+  ],
+  a: 3,
+  e: "Negara harus melindungi persatuan dan keadilan.",
+  c: "Peran Negara"
+},
+{
+  q: "Netralitas ASN yang ideal dalam masyarakat majemuk bersifat …",
+  o: [
+    "Pasif dan tidak mencampuri",
+    "Administratif semata",
+    "Berorientasi stabilitas",
+    "Aktif dalam menegakkan keadilan dan inklusivitas",
+    "Bergantung arahan politik"
+  ],
+  a: 3,
+  e: "Netralitas ideal bersifat aktif dan bernilai.",
+  c: "Netralitas Aktif"
+},
+{
+  q: "Persatuan nasional akan rapuh apabila …",
+  o: [
+    "Perbedaan diakui",
+    "Konflik dikelola secara dialogis",
+    "Kebijakan bersifat inklusif",
+    "Stabilitas dibangun dengan penekanan perbedaan",
+    "Hak minoritas dilindungi"
+  ],
+  a: 3,
+  e: "Penekanan perbedaan menciptakan konflik laten.",
+  c: "Kerentanan Persatuan"
+},
+{
+  q: "Bhinneka Tunggal Ika paling tepat diposisikan sebagai …",
+  o: [
+    "Slogan persatuan",
+    "Instrumen politik",
+    "Nilai budaya simbolik",
+    "Prinsip etis-konstitusional pengelolaan keberagaman",
+    "Kompromi sosial sementara"
+  ],
+  a: 3,
+  e: "Bhinneka Tunggal Ika adalah prinsip etis dan konstitusional.",
+  c: "Posisi Normatif"
+},
+{
+  q: "Jika kebijakan populer bertentangan dengan perlindungan kelompok rentan, maka menurut Bhinneka Tunggal Ika …",
+  o: [
+    "Popularitas harus diutamakan",
+    "Kepentingan mayoritas diikuti",
+    "Kebijakan dijalankan sementara",
+    "Perlindungan kelompok rentan harus diprioritaskan",
+    "Keputusan ditunda"
+  ],
+  a: 3,
+  e: "Keadilan tidak tunduk pada popularitas.",
+  c: "Perlindungan Kelompok Rentan"
+},
+{
+  q: "Dalam konflik horizontal, tujuan utama negara menurut Bhinneka Tunggal Ika adalah …",
+  o: [
+    "Menang cepat",
+    "Menekan salah satu pihak",
+    "Menghindari kritik",
+    "Memulihkan keadilan dan harmoni sosial",
+    "Menjaga citra politik"
+  ],
+  a: 3,
+  e: "Tujuan utama adalah harmoni dan keadilan.",
+  c: "Tujuan Penanganan Konflik"
+},
+{
+  q: "Perbedaan akan menjadi sumber kekuatan nasional apabila …",
+  o: [
+    "Dibiarkan berkembang sendiri",
+    "Dikontrol secara ketat",
+    "Dibatasi ruangnya",
+    "Dikelola melalui keadilan dan dialog",
+    "Disatukan secara paksa"
+  ],
+  a: 3,
+  e: "Dialog dan keadilan mengubah perbedaan menjadi kekuatan.",
+  c: "Transformasi Keberagaman"
+},
+{
+  q: "Sikap ASN yang paling berbahaya bagi persatuan justru adalah …",
+  o: [
+    "Keputusan yang tegas",
+    "Keberpihakan nilai",
+    "Keterbukaan dialog",
+    "Pembiaran diskriminasi atas nama netralitas",
+    "Penegakan hukum"
+  ],
+  a: 3,
+  e: "Pembiaran adalah ancaman laten bagi persatuan.",
+  c: "Ancaman Laten"
+},
+{
+  q: "Bhinneka Tunggal Ika pada akhirnya menempatkan persatuan sebagai …",
+  o: [
+    "Tujuan administratif",
+    "Target politik",
+    "Hasil kompromi sosial",
+    "Hasil keadilan yang terus dijaga",
+    "Keadaan tanpa konflik"
+  ],
+  a: 3,
+  e: "Persatuan lahir dari keadilan berkelanjutan.",
+  c: "Hakikat Persatuan"
+},
+{
+  q: "Ujian tertinggi penerapan Bhinneka Tunggal Ika terjadi ketika …",
+  o: [
+    "Tidak ada perbedaan",
+    "Semua sepakat",
+    "Kondisi stabil",
+    "Keputusan adil harus diambil meski tidak populer",
+    "Mayoritas mendukung pemerintah"
+  ],
+  a: 3,
+  e: "Keputusan tidak populer tetapi adil adalah ujian sejati.",
+  c: "Ujian Nilai"
+}
+
+
+  
+];
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
+================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (OPSINYA DIAKAC)
+================================ */
+let currentQuestion = null;
+
+function loadQuestion() {
+  answered = false;
+
+  // clone soal agar bank asli tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById("question").innerText = currentQuestion.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  // start timer hanya sekali
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+
+/* ===============================
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
+    `;
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
+  } else {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
+    `;
+  }
+
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
