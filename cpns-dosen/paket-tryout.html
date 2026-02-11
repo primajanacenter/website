@@ -263,10 +263,19 @@ header h1 {
       <hr>
 
       <!-- ===== ANALISIS TOPIK ===== -->
-      <h3>📌 Analisis Topik yang Perlu Diperkuat</h3>
-      <div id="analisisTopik">
-        <!-- diisi otomatis oleh JavaScript -->
-      </div>
+<h3>📌 Analisis Topik yang Perlu Diperkuat</h3>
+<div id="analisisTopik">
+  <!-- diisi otomatis oleh JavaScript -->
+</div>
+
+<hr>
+
+<!-- ===== REVIEW SOAL SALAH ===== -->
+<h3>❌ Review Soal yang Perlu Diperbaiki</h3>
+<div id="reviewSoalSalah">
+  <!-- diisi otomatis oleh JavaScript -->
+</div>
+
 
       <hr>
 
@@ -276,9 +285,6 @@ header h1 {
     </div>
   </div>
 
-  <!-- ===== ACTION BUTTON ===== -->
-  <button class="btn-download" onclick="downloadPNG()">Download PNG</button>
-  <button class="btn-pembahasan" onclick="lihatPembahasan()">Pembahasan</button>
 
 </div>
 
@@ -548,7 +554,8 @@ function konfirmasiSelesai() {
 
 
 /* ======================================================
-   TAMPIL HASIL (FAIL-SAFE: ANALISIS & RADAR TIDAK MEMBLOKIR UI)
+   TAMPIL HASIL 
+   (FAIL-SAFE: ANALISIS, RADAR, & REVIEW TIDAK MEMBLOKIR UI)
 ====================================================== */
 function tampilkanHasilAkhir(h) {
   try {
@@ -570,7 +577,7 @@ function tampilkanHasilAkhir(h) {
     console.error("Gagal render nilai dasar:", e);
   }
 
-  // ===== ANALISIS TOPIK (FAIL SAFE) =====
+  // ===== ANALISIS TOPIK =====
   try {
     const analisisEl = document.getElementById("analisisTopik");
     if (
@@ -583,7 +590,7 @@ function tampilkanHasilAkhir(h) {
     console.warn("Analisis topik gagal, dilewati:", e);
   }
 
-  // ===== RADAR CHART (FAIL SAFE) =====
+  // ===== RADAR CHART =====
   try {
     if (
       typeof Chart !== "undefined" &&
@@ -599,6 +606,15 @@ function tampilkanHasilAkhir(h) {
     console.warn("Radar chart gagal, dilewati:", e);
   }
 
+  // ===== REVIEW SOAL SALAH =====
+  try {
+    if (typeof renderReviewSoalSalah === "function") {
+      renderReviewSoalSalah();
+    }
+  } catch (e) {
+    console.warn("Review soal salah gagal, dilewati:", e);
+  }
+
   // ===== SWITCH HALAMAN (WAJIB JALAN) =====
   try {
     const halamanUjian = document.getElementById("halaman-ujian");
@@ -610,6 +626,7 @@ function tampilkanHasilAkhir(h) {
     console.error("Gagal switch halaman:", e);
   }
 }
+
 
 
 
@@ -783,6 +800,59 @@ function tampilkanRadarChart(twk, tiu, tkp) {
   });
 }
 
+
+/* ======================================================
+   REVIEW SOAL SALAH (TWK & TIU SAJA)
+====================================================== */
+function renderReviewSoalSalah() {
+  const container = document.getElementById("reviewSoalSalah");
+  if (!container) return;
+
+  let html = "";
+  let nomor = 1;
+
+  soal.forEach((s, i) => {
+    const jwb = jawaban[i];
+
+    // abaikan jika kosong atau TKP
+    if (jwb === null) return;
+    if (s.jenis === "TKP") return;
+
+    // hanya soal yang salah
+    if (jwb !== s.jawaban) {
+      const jawabanUser = s.opsi[jwb];
+      const jawabanBenar = s.opsi[s.jawaban];
+
+      html += `
+        <div style="
+          border:1px solid #fca5a5;
+          background:#fff1f2;
+          padding:12px;
+          border-radius:6px;
+          margin-bottom:15px
+        ">
+          <strong>${nomor}. [${s.jenis}] ${s.topik}</strong>
+          <p style="margin:8px 0">${s.tanya}</p>
+
+          <p style="color:#b91c1c">
+            ❌ Jawaban Anda: <strong>${jawabanUser}</strong>
+          </p>
+
+          <p style="color:#15803d">
+            ✅ Jawaban Benar: <strong>${jawabanBenar}</strong>
+          </p>
+        </div>
+      `;
+      nomor++;
+    }
+  });
+
+  if (html === "") {
+    html = "<p>🎉 Tidak ada soal yang salah. Performa sempurna!</p>";
+  }
+
+  container.innerHTML = html;
+}
 
 
 
