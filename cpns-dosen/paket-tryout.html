@@ -712,6 +712,79 @@ function mulaiUjian() {
 }
 
 
+/* ======================================================
+   ANALISIS TOPIK YANG PERLU DIPERKUAT
+====================================================== */
+function analisisTopikLemah() {
+  const salah = {};
+
+  soal.forEach((s, i) => {
+    const jwb = jawaban[i];
+    if (jwb === null) return;
+    if (s.jenis === "TKP") return; // TKP tidak benar/salah
+
+    if (jwb !== s.jawaban) {
+      const key = `${s.jenis} – ${s.topik}`;
+      salah[key] = (salah[key] || 0) + 1;
+    }
+  });
+
+  if (Object.keys(salah).length === 0) {
+    return "<p>✅ Tidak ada topik lemah. Performa sangat baik.</p>";
+  }
+
+  let html = "<ul>";
+  for (const k in salah) {
+    html += `<li><strong>${k}</strong>: ${salah[k]} soal salah</li>`;
+  }
+  html += "</ul>";
+
+  return html;
+}
+
+
+/* ======================================================
+   RADAR / SPIDER CHART
+====================================================== */
+let radarChartInstance = null;
+
+function tampilkanRadarChart(twk, tiu, tkp) {
+  const canvas = document.getElementById("grafikRadar");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+
+  if (radarChartInstance) {
+    radarChartInstance.destroy();
+  }
+
+  radarChartInstance = new Chart(ctx, {
+    type: "radar",
+    data: {
+      labels: ["TWK", "TIU", "TKP"],
+      datasets: [{
+        label: "Capaian Skor",
+        data: [twk, tiu, tkp],
+        backgroundColor: "rgba(54,162,235,0.2)",
+        borderColor: "rgba(54,162,235,1)",
+        borderWidth: 2,
+        pointBackgroundColor: "#2563eb"
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        r: {
+          beginAtZero: true,
+          suggestedMax: 200
+        }
+      }
+    }
+  });
+}
+
+
+
 
 
   </script>
