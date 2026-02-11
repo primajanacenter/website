@@ -1112,6 +1112,87 @@
     }
 }
 
+/* ==============================
+   CARD PRODUK SKD CPNS
+============================== */
+.product-card {
+  border-radius: 26px;
+  background: #ffffff;
+  box-shadow: 0 14px 38px rgba(0,0,0,0.08);
+  transition: all .35s ease;
+  overflow: hidden;
+  height: 100%;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 24px 60px rgba(79,70,229,.25);
+}
+
+/* Area konten card */
+.product-card .card-body {
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Harga */
+.product-price del {
+  color: #9ca3af;
+  font-size: .9rem;
+}
+
+.product-price span {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+/* ==============================
+   EMBED PREVIEW SERAGAM
+============================== */
+.product-preview {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  margin: 14px 0 18px;
+}
+
+.product-preview iframe {
+  width: 100%;
+  height: 240px;   /* INI KUNCI: semua sama */
+  border: none;
+  background: #f9fafb;
+}
+
+@media(max-width:768px){
+  .product-preview iframe {
+    height: 200px;
+  }
+}
+
+/* ==============================
+   CTA BUTTON – SERAGAM & KUAT
+============================== */
+.btn-cta-produk {
+  margin-top: auto;
+  background: linear-gradient(135deg,#22c55e,#16a34a);
+  color: #fff;
+  border-radius: 999px;
+  padding: 12px 26px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  box-shadow: 0 0 22px rgba(34,197,94,.7);
+  transition: all .35s ease;
+  text-align: center;
+}
+
+.btn-cta-produk:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 36px rgba(34,197,94,.95);
+  color: #fff;
+}
+
   </style>
 </head>
 <body>
@@ -1171,163 +1252,232 @@
     <div class="row g-4">
 
       <!-- PAKET LENGKAP -->
-      <div class="col-lg-6">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <span class="badge bg-danger mb-2">PALING DIREKOMENDASIKAN</span>
-            <h4 class="fw-bold">Paket Lengkap SKD CPNS 2026</h4>
-            <p class="text-muted mb-2">
-              Belajar + Latihan + Tryout dalam satu paket paling hemat untuk persiapan serius SKD CPNS.
-            </p>
+<div class="col-lg-6">
+  <div class="product-card">
+    <div class="card-body">
 
-            <p>
-              <del class="text-muted">Rp 349.000</del>
-              <span class="fw-bold text-danger fs-5 ms-2">Rp 199.000</span>
-            </p>
+      <span class="badge bg-danger mb-2">PALING DIREKOMENDASIKAN</span>
 
-            <ul class="small">
-              <li>67 materi interaktif TWK, TIU, TKP (prinsip 80/20)</li>
-              <li>1.100+ soal HOTS + pembahasan</li>
-              <li>Grafik analisis kesiapan SKD</li>
-              <li>3 Tryout SKD sistem CAT/CBT</li>
-              <li>Fitur audiobook</li>
-            </ul>
+      <h4 class="fw-bold">Paket Lengkap SKD CPNS 2026</h4>
 
-            <div class="ratio ratio-16x9 mb-3">
-              <iframe src="https://primajana.myr.id/course/skd-cpns/" loading="lazy"></iframe>
-            </div>
+      <p class="text-muted small mb-2">
+        Belajar + Latihan + Tryout dalam satu paket paling hemat untuk persiapan serius SKD CPNS.
+      </p>
 
-            <a href="https://primajana.myr.id/course/skd-cpns/" class="btn btn-danger w-100">
-              Lihat Detail
-            </a>
-          </div>
-        </div>
+      <!-- HARGA -->
+      <div class="product-price mb-3">
+        <del>Rp 349.000</del>
+        <span class="text-success ms-2">Rp 199.000</span>
       </div>
+
+      <!-- FITUR -->
+      <ul class="small mb-3">
+        <li>67 materi interaktif TWK, TIU, TKP (prinsip 80/20)</li>
+        <li>1.100+ soal HOTS + pembahasan</li>
+        <li>Grafik analisis kesiapan SKD</li>
+        <li>3 Tryout SKD sistem CAT/CBT</li>
+        <li>Fitur audiobook</li>
+      </ul>
+
+      <!-- PREVIEW SERAGAM -->
+      <div class="product-preview">
+        <iframe 
+          src="https://primajana.myr.id/course/skd-cpns/" 
+          loading="lazy"
+          title="Preview Paket Lengkap SKD CPNS 2026">
+        </iframe>
+      </div>
+
+      <!-- CTA -->
+      <a href="https://primajana.myr.id/course/skd-cpns/"
+         class="btn btn-cta-produk w-100">
+        LIHAT DETAIL PRODUK
+      </a>
+
+    </div>
+  </div>
+</div>
+
 
       <!-- TRYOUT 1 -->
-      <div class="col-lg-6">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h4 class="fw-bold">1 Paket Tryout SKD (CAT/CBT)</h4>
-            <p class="text-muted mb-2">
-              Simulasi ujian SKD untuk mengukur kesiapan dan manajemen waktu sebelum tes sesungguhnya.
-            </p>
+<div class="col-lg-6">
+  <div class="product-card">
+    <div class="card-body">
 
-            <p>
-              <del class="text-muted">Rp 35.000</del>
-              <span class="fw-bold text-primary fs-5 ms-2">Rp 20.000</span>
-            </p>
+      <h4 class="fw-bold">1 Paket Tryout SKD (CAT/CBT)</h4>
 
-            <ul class="small">
-              <li>Sistem CAT/CBT seperti ujian BKN</li>
-              <li>Skor otomatis & evaluasi hasil</li>
-              <li>Cocok untuk pemantapan cepat</li>
-            </ul>
+      <p class="text-muted small mb-2">
+        Simulasi ujian SKD untuk mengukur kesiapan dan manajemen waktu sebelum tes sesungguhnya.
+      </p>
 
-            <div class="ratio ratio-16x9 mb-3">
-              <iframe src="https://primajana.myr.id/course/skd-cpns-tryout-1" loading="lazy"></iframe>
-            </div>
-
-            <a href="https://primajana.myr.id/course/skd-cpns-tryout-1" class="btn btn-outline-primary w-100">
-              Lihat Detail
-            </a>
-          </div>
-        </div>
+      <!-- HARGA -->
+      <div class="product-price mb-3">
+        <del>Rp 35.000</del>
+        <span class="text-success ms-2">Rp 20.000</span>
       </div>
+
+      <!-- FITUR -->
+      <ul class="small mb-3">
+        <li>Sistem CAT/CBT seperti ujian BKN</li>
+        <li>Skor otomatis & evaluasi hasil</li>
+        <li>Cocok untuk pemantapan cepat</li>
+      </ul>
+
+      <!-- PREVIEW SERAGAM -->
+      <div class="product-preview">
+        <iframe 
+          src="https://primajana.myr.id/course/skd-cpns-tryout-1"
+          loading="lazy"
+          title="Preview 1 Paket Tryout SKD">
+        </iframe>
+      </div>
+
+      <!-- CTA -->
+      <a href="https://primajana.myr.id/course/skd-cpns-tryout-1"
+         class="btn btn-cta-produk w-100">
+        LIHAT DETAIL PRODUK
+      </a>
+
+    </div>
+  </div>
+</div>
+
 
       <!-- TRYOUT 3 -->
-      <div class="col-lg-6">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <span class="badge bg-success mb-2">PAKET HEMAT</span>
-            <h4 class="fw-bold">3 Paket Tryout SKD (CAT/CBT)</h4>
-            <p class="text-muted mb-2">
-              Paket tryout hemat untuk latihan simulasi berulang dan evaluasi progres kesiapan SKD.
-            </p>
+<div class="col-lg-6">
+  <div class="product-card">
+    <div class="card-body">
 
-            <p>
-              <del class="text-muted">Rp 75.000</del>
-              <span class="fw-bold text-success fs-5 ms-2">Rp 50.000</span>
-            </p>
+      <span class="badge bg-success mb-2">PAKET HEMAT</span>
 
-            <ul class="small">
-              <li>3x simulasi CAT/CBT</li>
-              <li>Evaluasi skor tiap tryout</li>
-              <li>Lebih hemat dibanding beli satuan</li>
-            </ul>
+      <h4 class="fw-bold">3 Paket Tryout SKD (CAT/CBT)</h4>
 
-            <div class="ratio ratio-16x9 mb-3">
-              <iframe src="https://primajana.myr.id/course/skd-cpns-tryout-3" loading="lazy"></iframe>
-            </div>
+      <p class="text-muted small mb-2">
+        Paket tryout hemat untuk latihan simulasi berulang dan evaluasi progres kesiapan SKD.
+      </p>
 
-            <a href="https://primajana.myr.id/course/skd-cpns-tryout-3" class="btn btn-outline-success w-100">
-              Lihat Detail
-            </a>
-          </div>
-        </div>
+      <!-- HARGA -->
+      <div class="product-price mb-3">
+        <del>Rp 75.000</del>
+        <span class="text-success ms-2">Rp 50.000</span>
       </div>
 
-      <!-- LATIHAN SOAL -->
-      <div class="col-lg-6">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h4 class="fw-bold">Paket Latihan Soal Intensif SKD</h4>
-            <p class="text-muted mb-2">
-              Fokus drilling soal HOTS untuk meningkatkan kecepatan dan ketepatan menjawab.
-            </p>
+      <!-- FITUR -->
+      <ul class="small mb-3">
+        <li>3× simulasi CAT/CBT</li>
+        <li>Evaluasi skor setiap tryout</li>
+        <li>Lebih hemat dibanding beli satuan</li>
+      </ul>
 
-            <p>
-              <del class="text-muted">Rp 199.000</del>
-              <span class="fw-bold text-primary fs-5 ms-2">Rp 99.000</span>
-            </p>
-
-            <ul class="small">
-              <li>18 paket latihan soal HOTS</li>
-              <li>3 level kesulitan</li>
-              <li>Pembahasan + analisis kesiapan</li>
-            </ul>
-
-            <div class="ratio ratio-16x9 mb-3">
-              <iframe src="https://primajana.myr.id/course/skd-cpns-latihan-soal" loading="lazy"></iframe>
-            </div>
-
-            <a href="https://primajana.myr.id/course/skd-cpns-latihan-soal" class="btn btn-outline-primary w-100">
-              Lihat Detail
-            </a>
-          </div>
-        </div>
+      <!-- PREVIEW SERAGAM -->
+      <div class="product-preview">
+        <iframe 
+          src="https://primajana.myr.id/course/skd-cpns-tryout-3" 
+          loading="lazy"
+          title="Preview 3 Paket Tryout SKD CAT CBT">
+        </iframe>
       </div>
 
-      <!-- MATERI INTI -->
-      <div class="col-lg-6">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h4 class="fw-bold">Paket Materi Inti (Pemula)</h4>
-            <p class="text-muted mb-2">
-              Paket belajar dasar SKD dengan materi ringkas dan terarah berbasis prinsip 80/20.
-            </p>
+      <!-- CTA -->
+      <a href="https://primajana.myr.id/course/skd-cpns-tryout-3"
+         class="btn btn-cta-produk w-100">
+        LIHAT DETAIL PRODUK
+      </a>
 
-            <p>
-              <del class="text-muted">Rp 149.000</del>
-              <span class="fw-bold text-primary fs-5 ms-2">Rp 79.000</span>
-            </p>
+    </div>
+  </div>
+</div>
 
-            <ul class="small">
-              <li>18 materi inti TWK, TIU, TKP</li>
-              <li>Ringkas & mudah dipahami</li>
-              <li>Fitur audiobook</li>
-            </ul>
 
-            <div class="ratio ratio-16x9 mb-3">
-              <iframe src="https://primajana.myr.id/course/skd-cpns-paket-materi" loading="lazy"></iframe>
-            </div>
+<!-- LATIHAN SOAL -->
+<div class="col-lg-6">
+  <div class="product-card">
+    <div class="card-body">
 
-            <a href="https://primajana.myr.id/course/skd-cpns-paket-materi" class="btn btn-outline-primary w-100">
-              Lihat Detail
-            </a>
-          </div>
-        </div>
+      <h4 class="fw-bold">Paket Latihan Soal Intensif SKD</h4>
+
+      <p class="text-muted small mb-2">
+        Fokus drilling soal HOTS untuk meningkatkan kecepatan dan ketepatan menjawab.
+      </p>
+
+      <!-- HARGA -->
+      <div class="product-price mb-3">
+        <del>Rp 199.000</del>
+        <span class="text-success ms-2">Rp 99.000</span>
       </div>
+
+      <!-- FITUR -->
+      <ul class="small mb-3">
+        <li>18 paket latihan soal HOTS</li>
+        <li>3 level kesulitan</li>
+        <li>Pembahasan + analisis kesiapan</li>
+      </ul>
+
+      <!-- PREVIEW SERAGAM -->
+      <div class="product-preview">
+        <iframe 
+          src="https://primajana.myr.id/course/skd-cpns-latihan-soal"
+          loading="lazy"
+          title="Preview Paket Latihan Soal Intensif SKD">
+        </iframe>
+      </div>
+
+      <!-- CTA -->
+      <a href="https://primajana.myr.id/course/skd-cpns-latihan-soal"
+         class="btn btn-cta-produk w-100">
+        LIHAT DETAIL PRODUK
+      </a>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- MATERI INTI -->
+<div class="col-lg-6">
+  <div class="product-card">
+    <div class="card-body">
+
+      <span class="badge bg-secondary mb-2">PEMULA</span>
+
+      <h4 class="fw-bold">Paket Materi Inti (Pemula)</h4>
+
+      <p class="text-muted small mb-2">
+        Paket belajar dasar SKD dengan materi ringkas dan terarah berbasis prinsip 80/20.
+      </p>
+
+      <!-- HARGA -->
+      <div class="product-price mb-3">
+        <del>Rp 149.000</del>
+        <span class="text-success ms-2">Rp 79.000</span>
+      </div>
+
+      <!-- FITUR -->
+      <ul class="small mb-3">
+        <li>18 materi inti TWK, TIU, TKP</li>
+        <li>Ringkas & mudah dipahami</li>
+        <li>Fitur audiobook</li>
+      </ul>
+
+      <!-- PREVIEW SERAGAM -->
+      <div class="product-preview">
+        <iframe 
+          src="https://primajana.myr.id/course/skd-cpns-paket-materi"
+          loading="lazy"
+          title="Preview Paket Materi Inti SKD CPNS">
+        </iframe>
+      </div>
+
+      <!-- CTA -->
+      <a href="https://primajana.myr.id/course/skd-cpns-paket-materi"
+         class="btn btn-cta-produk w-100">
+        LIHAT DETAIL PRODUK
+      </a>
+
+    </div>
+  </div>
+</div>
+
 
     </div>
 
