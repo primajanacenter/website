@@ -297,14 +297,12 @@ let interval;
    DATA PESERTA (contoh, biasanya dari localStorage)
 ====================================================== */
 function loadPeserta() {
-  const data = JSON.parse(localStorage.getItem("dataPeserta")) || {
+  return JSON.parse(localStorage.getItem("dataPeserta")) || {
     nama: "Peserta Tryout",
     email: "peserta@email.com"
   };
-  document.getElementById("namaPeserta").textContent = data.nama;
-  document.getElementById("emailPeserta").textContent = data.email;
-  return data;
 }
+
 
 /* ======================================================
    DATA SOAL
@@ -501,72 +499,118 @@ function mulaiTimer() {
 }
 
 /* ======================================================
-   SUBMIT & HITUNG SKOR
+   SUBMIT & HITUNG SKOR (FIXED)
 ====================================================== */
 function konfirmasiSelesai() {
   if (!confirm("Akhiri ujian dan lihat hasil?")) return;
+
+  // hentikan timer
   clearInterval(interval);
 
-  const data = loadPeserta();
-  let skorTWK = 0, skorTIU = 0, skorTKP = 0;
+  // ⚠️ AMBIL DATA PESERTA LANGSUNG (TANPA SENTUH DOM)
+  const data = JSON.parse(localStorage.getItem("dataPeserta")) || {
+    nama: "-",
+    email: "-"
+  };
 
+  let skorTWK = 0;
+  let skorTIU = 0;
+  let skorTKP = 0;
+
+  // hitung skor
   soal.forEach((s, i) => {
     const jwb = jawaban[i];
     if (jwb === null) return;
 
-    if (s.jenis === "TWK" && jwb === s.jawaban) skorTWK += 5;
-    if (s.jenis === "TIU" && jwb === s.jawaban) skorTIU += 5;
-    if (s.jenis === "TKP") skorTKP += s.opsi[jwb].skor;
+    if (s.jenis === "TWK" && jwb === s.jawaban) {
+      skorTWK += 5;
+    }
+
+    if (s.jenis === "TIU" && jwb === s.jawaban) {
+      skorTIU += 5;
+    }
+
+    if (s.jenis === "TKP") {
+      skorTKP += s.opsi[jwb].skor;
+    }
   });
 
+  // kirim ke halaman hasil
   tampilkanHasilAkhir({
     nama: data.nama,
     email: data.email,
-    skorTWK,
-    skorTIU,
-    skorTKP,
+    skorTWK: skorTWK,
+    skorTIU: skorTIU,
+    skorTKP: skorTKP,
     total: skorTWK + skorTIU + skorTKP
   });
 }
 
+
 /* ======================================================
-   TAMPIL HASIL (DENGAN ANALISIS & RADAR)
+   TAMPIL HASIL (FAIL-SAFE: ANALISIS & RADAR TIDAK MEMBLOKIR UI)
 ====================================================== */
 function tampilkanHasilAkhir(h) {
-  // ===== tampilkan nilai dasar =====
-  document.getElementById("hasilNama").textContent = h.nama;
-  document.getElementById("hasilEmail").textContent = h.email;
-  document.getElementById("twk").textContent = h.skorTWK;
-  document.getElementById("tiu").textContent = h.skorTIU;
-  document.getElementById("tkp").textContent = h.skorTKP;
-  document.getElementById("total").textContent = h.total;
+  try {
+    // ===== tampilkan nilai dasar =====
+    document.getElementById("hasilNama").textContent = h.nama;
+    document.getElementById("hasilEmail").textContent = h.email;
+    document.getElementById("twk").textContent = h.skorTWK;
+    document.getElementById("tiu").textContent = h.skorTIU;
+    document.getElementById("tkp").textContent = h.skorTKP;
+    document.getElementById("total").textContent = h.total;
 
-  // ===== status kelulusan =====
-  tampilkanStatusKelulusan(
-    h.skorTWK,
-    h.skorTIU,
-    h.skorTKP
-  );
-
-  // ===== ANALISIS TOPIK (WAJIB ADA ELEMENT) =====
-  const analisisEl = document.getElementById("analisisTopik");
-  if (analisisEl) {
-    analisisEl.innerHTML = analisisTopikLemah();
-  }
-
-  // ===== RADAR CHART (WAJIB ADA CANVAS + Chart.js) =====
-  if (typeof tampilkanRadarChart === "function") {
-    tampilkanRadarChart(
+    // ===== status kelulusan =====
+    tampilkanStatusKelulusan(
       h.skorTWK,
       h.skorTIU,
       h.skorTKP
     );
+  } catch (e) {
+    console.error("Gagal render nilai dasar:", e);
   }
 
-  // ===== pindah halaman =====
-  document.getElementById("halaman-ujian").style.display = "none";
-  document.getElementById("halaman-hasil").style.display = "block";
+  // ===== ANALISIS TOPIK (FAIL SAFE) =====
+  try {
+    const analisisEl = document.getElementById("analisisTopik");
+    if (
+      analisisEl &&
+      typeof analisisTopikLemah === "function"
+    ) {
+      analisisEl.innerHTML = analisisTopikLemah();
+    }
+  } catch (e) {
+    console.warn("Analisis topik gagal, dilewati:", e);
+  }
+
+  // ===== RADAR CHART (FAIL SAFE) =====
+  try {
+    if (
+      typeof Chart !== "undefined" &&
+      typeof tampilkanRadarChart === "function"
+    ) {
+      tampilkanRadarChart(
+        h.skorTWK,
+        h.skorTIU,
+        h.skorTKP
+      );
+    }
+  } catch (e) {
+    console.warn("Radar chart gagal, dilewati:", e);
+  }
+
+  // ===== SWITCH HALAMAN (WAJIB JALAN) =====
+  try {
+    const halamanUjian = document.getElementById("halaman-ujian");
+    const halamanHasil = document.getElementById("halaman-hasil");
+
+    if (halamanUjian) halamanUjian.style.display = "none";
+    if (halamanHasil) halamanHasil.style.display = "block";
+  } catch (e) {
+    console.error("Gagal switch halaman:", e);
+  }
 }
+
 
 
 /* ======================================================
