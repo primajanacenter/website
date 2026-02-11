@@ -144,6 +144,8 @@ header h1 {
 
   <!-- html2canvas untuk download PNG hasil -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body onload="initApp()">
@@ -238,31 +240,48 @@ header h1 {
 </div>
 
 
-  <!-- ================= HALAMAN HASIL ================= -->
-  <div id="halaman-hasil" style="display:none">
-    <!-- BODY HASIL di BAGIAN 4 -->
-    <div id="captureArea">
-  <header>
-    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
-    <h1>HASIL TRYOUT CPNS</h1>
-  </header>
+<!-- ================= HALAMAN HASIL ================= -->
+<div id="halaman-hasil" style="display:none">
 
-  <div class="container">
-    <p>Nama: <span id="hasilNama"></span></p>
-    <p>Email: <span id="hasilEmail"></span></p>
-    <p>TWK: <span id="twk"></span></p>
-    <p>TIU: <span id="tiu"></span></p>
-    <p>TKP: <span id="tkp"></span></p>
-    <p><strong>Total: <span id="total"></span></strong></p>
+  <div id="captureArea">
+    <header>
+      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+      <h1>HASIL TRYOUT CPNS</h1>
+    </header>
 
-    <div id="statusKelulusan" class="kelulusan"></div>
+    <div class="container">
+      <!-- ===== IDENTITAS & NILAI ===== -->
+      <p>Nama: <span id="hasilNama"></span></p>
+      <p>Email: <span id="hasilEmail"></span></p>
+      <p>TWK: <span id="twk"></span></p>
+      <p>TIU: <span id="tiu"></span></p>
+      <p>TKP: <span id="tkp"></span></p>
+      <p><strong>Total: <span id="total"></span></strong></p>
+
+      <div id="statusKelulusan" class="kelulusan"></div>
+
+      <hr>
+
+      <!-- ===== ANALISIS TOPIK ===== -->
+      <h3>📌 Analisis Topik yang Perlu Diperkuat</h3>
+      <div id="analisisTopik">
+        <!-- diisi otomatis oleh JavaScript -->
+      </div>
+
+      <hr>
+
+      <!-- ===== RADAR CHART ===== -->
+      <h3>📊 Visualisasi Capaian Skor</h3>
+      <canvas id="grafikRadar" width="300" height="300"></canvas>
+    </div>
   </div>
+
+  <!-- ===== ACTION BUTTON ===== -->
+  <button class="btn-download" onclick="downloadPNG()">Download PNG</button>
+  <button class="btn-pembahasan" onclick="lihatPembahasan()">Pembahasan</button>
+
 </div>
 
-<button class="btn-download" onclick="downloadPNG()">Download PNG</button>
-<button class="btn-pembahasan" onclick="lihatPembahasan()">Pembahasan</button>
-
-  </div>
 
   <!-- ========== SCRIPT ========== -->
   <script>
@@ -511,9 +530,10 @@ function konfirmasiSelesai() {
 }
 
 /* ======================================================
-   TAMPIL HASIL
+   TAMPIL HASIL (DENGAN ANALISIS & RADAR)
 ====================================================== */
 function tampilkanHasilAkhir(h) {
+  // ===== tampilkan nilai dasar =====
   document.getElementById("hasilNama").textContent = h.nama;
   document.getElementById("hasilEmail").textContent = h.email;
   document.getElementById("twk").textContent = h.skorTWK;
@@ -521,11 +541,33 @@ function tampilkanHasilAkhir(h) {
   document.getElementById("tkp").textContent = h.skorTKP;
   document.getElementById("total").textContent = h.total;
 
-  tampilkanStatusKelulusan(h.skorTWK, h.skorTIU, h.skorTKP);
+  // ===== status kelulusan =====
+  tampilkanStatusKelulusan(
+    h.skorTWK,
+    h.skorTIU,
+    h.skorTKP
+  );
 
+  // ===== ANALISIS TOPIK (WAJIB ADA ELEMENT) =====
+  const analisisEl = document.getElementById("analisisTopik");
+  if (analisisEl) {
+    analisisEl.innerHTML = analisisTopikLemah();
+  }
+
+  // ===== RADAR CHART (WAJIB ADA CANVAS + Chart.js) =====
+  if (typeof tampilkanRadarChart === "function") {
+    tampilkanRadarChart(
+      h.skorTWK,
+      h.skorTIU,
+      h.skorTKP
+    );
+  }
+
+  // ===== pindah halaman =====
   document.getElementById("halaman-ujian").style.display = "none";
   document.getElementById("halaman-hasil").style.display = "block";
 }
+
 
 /* ======================================================
    STATUS KELULUSAN
