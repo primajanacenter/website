@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-Learning TWK CPNS – Audio Reader</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Preview Materi dan Soal SKD CPNS</h1>
+  <p>Cukup kuasai 20% konsep utama yang pasti muncul dalam 80% soal-soal Tes SKD CPNS </p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     ⭐ PANCASILA (TWK)
+================================ -->
+<div class="card pancasila">
+
+  <h2><i class="fa-solid fa-star"></i> Pancasila (TWK)</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3><i class="fa-solid fa-book-open"></i> Konsep Dasar</h3>
+  <p class="readable">
+    Pancasila adalah dasar negara Republik Indonesia, ideologi nasional,
+    serta pandangan hidup bangsa yang menjadi sumber nilai, norma,
+    dan arah penyelenggaraan kehidupan berbangsa dan bernegara.
+  </p>
+
+  <p class="readable">
+    Dalam konteks TWK CPNS, Pancasila tidak diuji sebagai hafalan,
+    tetapi sebagai <strong>alat analisis sikap, perilaku, dan kebijakan</strong>
+    dalam menghadapi persoalan kebangsaan dan pelayanan publik.
+  </p>
+
+  <!-- ===============================
+       KEDUDUKAN PANCASILA
+  ================================= -->
+  <h3><i class="fa-solid fa-scale-balanced"></i> Kedudukan Pancasila</h3>
+  <ul>
+    <li class="readable">
+      <strong>Dasar Negara</strong> → Menjadi landasan pembentukan UUD 1945
+      dan seluruh peraturan perundang-undangan.
+    </li>
+    <li class="readable">
+      <strong>Sumber dari Segala Sumber Hukum</strong> → Semua hukum dan
+      kebijakan negara wajib selaras dengan nilai Pancasila.
+    </li>
+    <li class="readable">
+      <strong>Ideologi Nasional</strong> → Sistem nilai pemersatu bangsa
+      yang majemuk.
+    </li>
+    <li class="readable">
+      <strong>Pandangan Hidup Bangsa</strong> → Pedoman sikap dan perilaku
+      warga negara dan ASN.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       PANCASILA SEBAGAI IDEOLOGI TERBUKA
+  ================================= -->
+  <h3><i class="fa-solid fa-arrows-spin"></i> Pancasila sebagai Ideologi Terbuka</h3>
+  <p class="readable">
+    Pancasila disebut ideologi terbuka karena dapat menyesuaikan diri
+    dengan perkembangan zaman tanpa kehilangan nilai dasarnya.
+  </p>
+
+  <ul>
+    <li class="readable">
+      <strong>Dimensi Realitas</strong> → Bersumber dari nilai hidup masyarakat Indonesia.
+    </li>
+    <li class="readable">
+      <strong>Dimensi Idealitas</strong> → Memuat cita-cita dan tujuan bangsa.
+    </li>
+    <li class="readable">
+      <strong>Dimensi Fleksibilitas</strong> → Dapat diaktualisasikan
+      dalam konteks modern (digitalisasi, demokrasi, globalisasi).
+    </li>
+  </ul>
+
+  <!-- ===============================
+       MAKNA FILOSOFIS TIAP SILA
+  ================================= -->
+  <h3><i class="fa-solid fa-layer-group"></i> Makna Filosofis Tiap Sila</h3>
+
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-hands-praying"></i>
+      <strong>Sila 1</strong> → Toleransi beragama, anti-pemaksaan keyakinan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-user-shield"></i>
+      <strong>Sila 2</strong> → Keadilan, kemanusiaan, anti-diskriminasi.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-flag"></i>
+      <strong>Sila 3</strong> → Persatuan, nasionalisme, anti-separatisme.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-comments"></i>
+      <strong>Sila 4</strong> → Musyawarah, demokrasi, kebijaksanaan.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-scale-unbalanced-flip"></i>
+      <strong>Sila 5</strong> → Keadilan sosial, pemerataan, keberpihakan pada rakyat.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       IMPLEMENTASI DALAM ASN
+  ================================= -->
+  <h3><i class="fa-solid fa-user-tie"></i> Nilai Pancasila dalam Kehidupan ASN</h3>
+  <ul>
+    <li class="readable">Pelayanan publik adil dan tidak diskriminatif</li>
+    <li class="readable">Menjunjung etika, integritas, dan profesionalitas</li>
+    <li class="readable">Mengutamakan kepentingan bangsa dan negara</li>
+    <li class="readable">Menghormati keberagaman di lingkungan kerja</li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH IMPLEMENTASI KONKRIT
+  ================================= -->
+  <h3><i class="fa-solid fa-lightbulb"></i> Contoh Implementasi Nyata</h3>
+  <ul>
+    <li class="readable">
+      Pelayanan publik tanpa diskriminasi → <strong>Sila 2 & 5</strong>
+    </li>
+    <li class="readable">
+      Menjaga persatuan di tengah perbedaan → <strong>Sila 3</strong>
+    </li>
+    <li class="readable">
+      Musyawarah dalam pengambilan keputusan → <strong>Sila 4</strong>
+    </li>
+    <li class="readable">
+      Menjamin kebebasan beribadah → <strong>Sila 1</strong>
+    </li>
+  </ul>
+
+  <!-- ===============================
+       GAMIFIKASI: SILA CHALLENGE
+  ================================= -->
+  <h3><i class="fa-solid fa-gamepad"></i> Sila Challenge</h3>
+  <p class="readable">
+    🎮 <strong>Tantangan:</strong> Cocokkan kasus berikut dengan sila Pancasila yang tepat.
+  </p>
+
+  <ul>
+    <li class="readable">
+      ASN menolak melayani warga karena perbedaan suku → ❌
+    </li>
+    <li class="readable">
+      Solusi benar: Melayani secara adil → ✅ <strong>Sila 2</strong>
+    </li>
+  </ul>
+
+  <p class="readable">
+    ⭐ Skor: +10 poin jika tepat | 🎖️ Badge: <strong>“Penjaga Nilai Pancasila”</strong>
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-circle-question"></i> Contoh Soal CPNS</h3>
+  <p class="readable">
+    Seorang ASN tetap melayani masyarakat meskipun berbeda pandangan politik.
+    Nilai Pancasila yang tercermin adalah …
+  </p>
+
+  <ul>
+    <li class="readable">A. Persatuan Indonesia</li>
+    <li class="readable">B. Kerakyatan yang dipimpin oleh hikmat kebijaksanaan</li>
+    <li class="readable">C. Kemanusiaan yang adil dan beradab</li>
+    <li class="readable">D. Keadilan sosial bagi seluruh rakyat Indonesia</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C
+  </p>
+
+  <!-- ===============================
+       ARAH SOAL & JEBakan TWK
+  ================================= -->
+  <h3><i class="fa-solid fa-compass"></i> Arah Soal & Jebakan TWK</h3>
+  <ul>
+    <li class="readable">Identifikasi sila paling dominan dalam kasus</li>
+    <li class="readable">Pilih sikap ASN yang paling berimbang</li>
+    <li class="readable">Hindari jawaban ekstrem atau diskriminatif</li>
+    <li class="readable">Utamakan persatuan, keadilan, dan kemanusiaan</li>
+  </ul>
+
+  <!-- ===============================
+       PROGRES BELAJAR
+  ================================= -->
+  <h3><i class="fa-solid fa-chart-line"></i> Progres Belajar</h3>
+  <p class="readable">
+    📈 Level: <strong>Pemula → Nasionalis → Penjaga Ideologi</strong><br>
+    🎯 Target TWK Pancasila: <strong>≥ 85%</strong>
+  </p>
+
+</div>
+
+
+<!-- ===============================
+     💬 LOGIKA VERBAL (TIU)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-comment-dots"></i> Logika Verbal (TIU)</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3><i class="fa-solid fa-lightbulb"></i> Konsep Dasar</h3>
+  <p class="readable">
+    Logika verbal menguji kemampuan peserta dalam memahami bahasa tertulis,
+    mengenali hubungan antar kata dan pernyataan, serta menarik kesimpulan
+    secara logis dan konsisten berdasarkan informasi yang diberikan.
+  </p>
+
+  <p class="readable">
+    Pada Tes Intelegensia Umum (TIU), logika verbal menekankan
+    <strong>ketepatan penalaran</strong>, bukan opini pribadi atau pengalaman.
+  </p>
+
+  <!-- ===============================
+       TUJUAN PENGUJIAN
+  ================================= -->
+  <h3><i class="fa-solid fa-bullseye"></i> Tujuan Pengujian</h3>
+  <ul>
+    <li class="readable">Mengukur kemampuan berpikir logis berbasis bahasa</li>
+    <li class="readable">Menilai ketelitian membaca dan memahami pernyataan</li>
+    <li class="readable">Menguji konsistensi berpikir tanpa asumsi tambahan</li>
+  </ul>
+
+  <!-- ===============================
+       JENIS-JENIS SOAL
+  ================================= -->
+  <h3><i class="fa-solid fa-layer-group"></i> Jenis Soal Logika Verbal</h3>
+  <ul>
+    <li class="readable">
+      <strong><i class="fa-solid fa-arrows-left-right"></i> Sinonim & Antonim</strong><br>
+      Menguji pemahaman makna kata dan lawan katanya secara tepat.
+    </li>
+    <li class="readable">
+      <strong><i class="fa-solid fa-link"></i> Analogi Kata</strong><br>
+      Menilai kemampuan mengenali hubungan makna antar pasangan kata.
+    </li>
+    <li class="readable">
+      <strong><i class="fa-solid fa-diagram-project"></i> Silogisme</strong><br>
+      Menarik kesimpulan logis dari dua atau lebih pernyataan.
+    </li>
+    <li class="readable">
+      <strong><i class="fa-solid fa-check-double"></i> Kesimpulan Pernyataan</strong><br>
+      Menentukan pernyataan yang pasti benar, salah, atau tidak dapat disimpulkan.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       POLA LOGIKA UTAMA
+  ================================= -->
+  <h3><i class="fa-solid fa-brain"></i> Pola Logika Utama</h3>
+  <p class="readable">
+    <strong>Silogisme Dasar:</strong><br>
+    Premis Mayor + Premis Minor → Kesimpulan
+  </p>
+
+  <p class="readable">
+    ⚠️ Kesimpulan <strong>harus</strong> berasal langsung dari premis,
+    tanpa menambahkan informasi baru.
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL BERTAHAP
+  ================================= -->
+  <h3><i class="fa-solid fa-pen-to-square"></i> Contoh Soal</h3>
+
+  <p class="readable">
+    <strong>Soal 1 (Dasar):</strong><br>
+    Semua ASN wajib netral. Andi adalah ASN.
+  </p>
+  <p class="readable">
+    Kesimpulan yang tepat adalah …
+  </p>
+  <p class="readable">
+    <strong><i class="fa-solid fa-circle-check"></i> Jawaban:</strong>
+    Andi wajib netral.
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 2 (Menengah):</strong><br>
+    Sebagian dosen adalah peneliti. Semua peneliti menulis karya ilmiah.
+  </p>
+  <p class="readable">
+    Kesimpulan yang <strong>pasti benar</strong> adalah …
+  </p>
+  <p class="readable">
+    <strong>Jawaban:</strong> Sebagian dosen menulis karya ilmiah.
+  </p>
+
+  <!-- ===============================
+       JEBakan UMUM CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-triangle-exclamation"></i> Jebakan Umum</h3>
+  <ul>
+    <li class="readable">
+      Kesimpulan terlalu luas (overgeneralization)
+    </li>
+    <li class="readable">
+      Menyimpulkan kebalikan dari premis
+    </li>
+    <li class="readable">
+      Menambahkan asumsi yang tidak disebutkan
+    </li>
+    <li class="readable">
+      Tertipu kata “semua”, “sebagian”, “tidak semua”
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI CEPAT
+  ================================= -->
+  <h3><i class="fa-solid fa-bolt"></i> Strategi Cepat Mengerjakan</h3>
+  <ul>
+    <li class="readable">Baca premis satu per satu, jangan sekaligus</li>
+    <li class="readable">Tandai kata kunci: semua, sebagian, tidak</li>
+    <li class="readable">Tolak semua kesimpulan berbasis asumsi</li>
+    <li class="readable">Pilih jawaban yang “paling aman” secara logika</li>
+  </ul>
+
+  <!-- ===============================
+       GAMIFIKASI
+  ================================= -->
+  <h3><i class="fa-solid fa-gamepad"></i> Mode Latihan Interaktif</h3>
+  <ul>
+    <li class="readable">
+      🎯 <strong>Quick Quiz</strong>: 5 soal / level (waktu terbatas)
+    </li>
+    <li class="readable">
+      🧠 <strong>Logic Streak</strong>: bonus poin jika benar berturut-turut
+    </li>
+    <li class="readable">
+      🏅 <strong>Badge</strong>: “Silogisme Master” jika akurasi ≥ 80%
+    </li>
+    <li class="readable">
+      📈 <strong>Progress Bar</strong>: pemahaman logika verbal
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH SOAL TIU
+  ================================= -->
+  <h3><i class="fa-solid fa-compass"></i> Arah Soal TIU</h3>
+  <ul>
+    <li class="readable">Menentukan kesimpulan paling logis</li>
+    <li class="readable">Membedakan benar, salah, dan tidak dapat disimpulkan</li>
+    <li class="readable">Menghindari kesimpulan berbasis opini</li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🧮 LOGIKA NUMERIK (TIU)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-calculator"></i> Logika Numerik (TIU)</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3><i class="fa-solid fa-lightbulb"></i> Konsep Dasar</h3>
+  <p class="readable">
+    Logika numerik mengukur kemampuan berpikir kuantitatif,
+    berhitung cepat dan tepat, mengenali pola angka,
+    serta menyelesaikan masalah matematika sederhana
+    dalam waktu terbatas.
+  </p>
+
+  <p class="readable">
+    Pada TIU CPNS, logika numerik <strong>bukan menguji matematika rumit</strong>,
+    tetapi menguji <strong>kecepatan logika, ketelitian, dan strategi hitung</strong>.
+  </p>
+
+  <!-- ===============================
+       TUJUAN TES
+  ================================= -->
+  <h3><i class="fa-solid fa-bullseye"></i> Tujuan Pengujian</h3>
+  <ul>
+    <li class="readable">Mengukur kemampuan analisis kuantitatif</li>
+    <li class="readable">Menilai ketepatan dan kecepatan berhitung</li>
+    <li class="readable">Menguji kemampuan memecahkan masalah numerik</li>
+  </ul>
+
+  <!-- ===============================
+       JENIS SOAL NUMERIK
+  ================================= -->
+  <h3><i class="fa-solid fa-layer-group"></i> Jenis Soal Logika Numerik</h3>
+  <ul>
+    <li class="readable">
+      <strong>Deret Angka</strong>  
+      <span class="badge">Pola +, −, ×, ÷</span>
+    </li>
+    <li class="readable">
+      <strong>Aritmatika Dasar</strong>  
+      <span class="badge">+, −, ×, ÷</span>
+    </li>
+    <li class="readable">
+      <strong>Perbandingan & Persentase</strong>  
+      <span class="badge">%</span>
+    </li>
+    <li class="readable">
+      <strong>Soal Cerita</strong>  
+      <span class="badge">Logika Kontekstual</span>
+    </li>
+    <li class="readable">
+      <strong>Kecepatan – Jarak – Waktu</strong>  
+      <span class="badge">V = S / T</span>
+    </li>
+  </ul>
+
+  <!-- ===============================
+       FORMULA PENTING
+  ================================= -->
+  <h3><i class="fa-solid fa-square-root-variable"></i> Formula Dasar Wajib Hafal</h3>
+
+  <p class="readable"><strong>Persentase</strong></p>
+  <p class="readable">
+    % = (Bagian / Total) × 100%
+  </p>
+
+  <p class="readable"><strong>Kecepatan</strong></p>
+  <p class="readable">
+    V = S / T
+  </p>
+
+  <p class="readable"><strong>Rata-rata</strong></p>
+  <p class="readable">
+    Rata-rata = Jumlah data / Banyak data
+  </p>
+
+  <p class="readable"><strong>Perbandingan</strong></p>
+  <p class="readable">
+    a : b = (a ÷ b)
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL BERTINGKAT
+  ================================= -->
+  <h3><i class="fa-solid fa-pen-to-square"></i> Contoh Soal Bertingkat</h3>
+
+  <!-- Level 1 -->
+  <div class="level">
+    <h4><i class="fa-solid fa-star"></i> Level 1 – Mudah</h4>
+    <p class="readable">
+      20% dari 150 adalah …
+    </p>
+    <p class="readable"><strong>Jawaban:</strong> 30</p>
+  </div>
+
+  <!-- Level 2 -->
+  <div class="level">
+    <h4><i class="fa-solid fa-star-half-stroke"></i> Level 2 – Sedang</h4>
+    <p class="readable">
+      Tentukan angka selanjutnya:  
+      2, 4, 8, 16, …
+    </p>
+    <p class="readable"><strong>Jawaban:</strong> 32 (×2)</p>
+  </div>
+
+  <!-- Level 3 -->
+  <div class="level">
+    <h4><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> Level 3 – CPNS Style</h4>
+    <p class="readable">
+      Sebuah proyek selesai dalam 12 hari oleh 6 orang.
+      Jika dikerjakan oleh 9 orang, proyek selesai dalam …
+    </p>
+    <p class="readable">
+      <strong>Jawaban:</strong> 8 hari
+    </p>
+  </div>
+
+  <!-- ===============================
+       STRATEGI CEPAT (TIME ATTACK)
+  ================================= -->
+  <h3><i class="fa-solid fa-stopwatch"></i> Strategi Cepat (Time Attack)</h3>
+  <ul>
+    <li class="readable">Cari pola paling sederhana dulu</li>
+    <li class="readable">Gunakan pembulatan jika memungkinkan</li>
+    <li class="readable">Hindari hitung panjang jika bisa disederhanakan</li>
+    <li class="readable">Lewati soal sulit, kembali jika masih ada waktu</li>
+  </ul>
+
+  <!-- ===============================
+       GAMIFIKASI
+  ================================= -->
+  <h3><i class="fa-solid fa-gamepad"></i> Mode Gamifikasi</h3>
+  <ul>
+    <li class="readable">
+      <strong>⏱ Time Challenge</strong>  
+      → 1 soal = 60 detik
+    </li>
+    <li class="readable">
+      <strong>🔥 Combo Streak</strong>  
+      → 3 jawaban benar berturut-turut = bonus poin
+    </li>
+    <li class="readable">
+      <strong>🏅 Badge</strong>  
+      → “Numerik Master” jika akurasi ≥ 80%
+    </li>
+    <li class="readable">
+      <strong>📊 Progress Bar</strong>  
+      → Persentase penguasaan materi numerik
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JEBakan UMUM CPNS
+  ================================= -->
+  <h3><i class="fa-solid fa-triangle-exclamation"></i> Jebakan Umum Soal CPNS</h3>
+  <ul>
+    <li class="readable">Terlalu fokus hitung, lupa logika</li>
+    <li class="readable">Tidak membaca soal cerita dengan teliti</li>
+    <li class="readable">Terjebak pola palsu pada deret angka</li>
+    <li class="readable">Menghabiskan waktu terlalu lama pada satu soal</li>
+  </ul>
+
+  <!-- ===============================
+       TARGET SKOR
+  ================================= -->
+  <h3><i class="fa-solid fa-chart-line"></i> Target Aman TIU</h3>
+  <p class="readable">
+    Rekomendasi:  
+    <strong>≥ 70% soal numerik benar</strong> untuk menjaga skor TIU aman.
+  </p>
+
+</div>
+
+
+<!-- ===============================
+     🟪 LOGIKA FIGURAL (TIU)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-shapes"></i> Logika Figural (TIU)</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3><i class="fa-solid fa-eye"></i> Konsep Dasar</h3>
+  <p class="readable">
+    Logika figural adalah kemampuan berpikir visual dan spasial
+    untuk mengenali pola, hubungan, dan perubahan bentuk
+    tanpa menggunakan bahasa atau angka.
+  </p>
+
+  <p class="readable">
+    Tes ini mengukur kecermatan, konsistensi logika,
+    serta kecepatan analisis visual — keterampilan penting
+    dalam pengambilan keputusan berbasis pola.
+  </p>
+
+  <!-- ===============================
+       TUJUAN TES
+  ================================= -->
+  <h3><i class="fa-solid fa-bullseye"></i> Tujuan Tes Figural</h3>
+  <ul>
+    <li class="readable">Mengukur kemampuan berpikir non-verbal</li>
+    <li class="readable">Menilai ketelitian terhadap detail visual</li>
+    <li class="readable">Menguji konsistensi logika pola</li>
+    <li class="readable">Menilai kecepatan pemrosesan visual</li>
+  </ul>
+
+  <!-- ===============================
+       JENIS POLA FIGURAL
+  ================================= -->
+  <h3><i class="fa-solid fa-puzzle-piece"></i> Jenis Pola Figural</h3>
+  <ul>
+    <li class="readable">
+      <strong>Rotasi</strong> <i class="fa-solid fa-rotate-right"></i><br>
+      Bentuk diputar dengan sudut tertentu (90°, 180°, 270°)
+    </li>
+    <li class="readable">
+      <strong>Refleksi / Pencerminan</strong> <i class="fa-solid fa-arrows-left-right"></i><br>
+      Bentuk dicerminkan secara horizontal atau vertikal
+    </li>
+    <li class="readable">
+      <strong>Translasi / Pergeseran</strong> <i class="fa-solid fa-arrow-right"></i><br>
+      Bentuk bergeser tanpa berubah arah atau ukuran
+    </li>
+    <li class="readable">
+      <strong>Penambahan / Pengurangan Elemen</strong> <i class="fa-solid fa-plus-minus"></i><br>
+      Jumlah titik, garis, atau sisi bertambah / berkurang
+    </li>
+    <li class="readable">
+      <strong>Pola Berulang</strong> <i class="fa-solid fa-repeat"></i><br>
+      Urutan bentuk berulang secara konsisten
+    </li>
+    <li class="readable">
+      <strong>Perubahan Arah</strong> <i class="fa-solid fa-compass"></i><br>
+      Arah panah atau orientasi berubah mengikuti pola tertentu
+    </li>
+    <li class="readable">
+      <strong>Kombinasi Pola</strong> <i class="fa-solid fa-layer-group"></i><br>
+      Gabungan rotasi + refleksi + jumlah elemen
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI BERTAHAP
+  ================================= -->
+  <h3><i class="fa-solid fa-brain"></i> Strategi Mengerjakan (Step-by-Step)</h3>
+
+  <ol class="readable">
+    <li>
+      <strong>Scan cepat</strong> → cari perubahan paling mencolok
+      (arah, jumlah, posisi)
+    </li>
+    <li>
+      <strong>Fokus satu variabel</strong> → jangan analisis semua sekaligus
+    </li>
+    <li>
+      <strong>Hitung elemen</strong> → titik, sudut, garis, sisi
+    </li>
+    <li>
+      <strong>Cek arah rotasi</strong> → searah / berlawanan jarum jam
+    </li>
+    <li>
+      <strong>Eliminasi opsi</strong> → buang jawaban yang melanggar pola
+    </li>
+  </ol>
+
+  <!-- ===============================
+       FORMULA LOGIKA VISUAL
+  ================================= -->
+  <h3><i class="fa-solid fa-superscript"></i> Formula Logika Visual</h3>
+  <p class="readable">
+    🔁 <strong>Pola Konsisten:</strong><br>
+    <code>Bentuk n → Transformasi → Bentuk n+1</code>
+  </p>
+
+  <p class="readable">
+    🔄 <strong>Rotasi:</strong><br>
+    <code>0° → 90° → 180° → 270° → 360°</code>
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL
+  ================================= -->
+  <h3><i class="fa-solid fa-pen-to-square"></i> Contoh Soal TIU Figural</h3>
+  <p class="readable">
+    Sebuah segitiga dengan titik di sudut kanan atas
+    diputar <strong>90° searah jarum jam</strong>.
+    Posisi titik selanjutnya berada di …
+  </p>
+
+  <ul>
+    <li class="readable">A. Sudut kiri atas</li>
+    <li class="readable">B. Sudut kanan bawah</li>
+    <li class="readable">C. Sudut kiri bawah</li>
+    <li class="readable">D. Tetap di tempat</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B<br>
+    <strong>Logika:</strong> Rotasi 90° searah jarum jam
+    memindahkan posisi kanan atas → kanan bawah
+  </p>
+
+  <!-- ===============================
+       JEBakan UMUM
+  ================================= -->
+  <h3><i class="fa-solid fa-triangle-exclamation"></i> Jebakan Umum CPNS</h3>
+  <ul>
+    <li class="readable">Terkecoh oleh ukuran, padahal hanya arah yang berubah</li>
+    <li class="readable">Salah membaca arah rotasi</li>
+    <li class="readable">Mengabaikan elemen kecil (titik / garis)</li>
+    <li class="readable">Terlalu lama di satu soal</li>
+  </ul>
+
+  <!-- ===============================
+       GAMIFIKASI
+  ================================= -->
+  <h3><i class="fa-solid fa-gamepad"></i> Mode Gamifikasi</h3>
+  <ul>
+    <li class="readable">
+      🕒 <strong>Time Attack:</strong> 10 soal / 5 menit
+    </li>
+    <li class="readable">
+      🧠 <strong>Pattern Hunter:</strong> tebak pola tersembunyi
+    </li>
+    <li class="readable">
+      🏅 <strong>Badge:</strong>
+      <ul>
+        <li class="readable">Bronze – 5 benar berturut-turut</li>
+        <li class="readable">Silver – 10 benar berturut-turut</li>
+        <li class="readable">Gold – tanpa salah</li>
+      </ul>
+    </li>
+    <li class="readable">
+      📊 <strong>Progress Bar:</strong> Visual mastery figural
+    </li>
+  </ul>
+
+  <!-- ===============================
+       ARAH SOAL TIU
+  ================================= -->
+  <h3><i class="fa-solid fa-compass-drafting"></i> Arah Soal TIU Figural</h3>
+  <ul>
+    <li class="readable">Dominan kombinasi rotasi + elemen</li>
+    <li class="readable">Minim narasi, fokus visual murni</li>
+    <li class="readable">Menuntut kecepatan, bukan perhitungan</li>
+  </ul>
+
+</div>
+
+
+<!-- ===============================
+     🤝 PELAYANAN PUBLIK (TKP)
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-handshake-angle"></i> Pelayanan Publik (TKP)</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3><i class="fa-solid fa-lightbulb"></i> Konsep Dasar</h3>
+  <p class="readable">
+    Pelayanan publik dalam Tes Karakteristik Pribadi (TKP) mengukur
+    sikap, perilaku, dan profesionalitas ASN dalam menghadapi
+    situasi nyata pelayanan kepada masyarakat.
+  </p>
+
+  <p class="readable">
+    TKP <strong>tidak menilai benar atau salah</strong>,
+    melainkan <strong>seberapa ideal</strong> sikap Anda
+    sebagai aparatur negara berdasarkan nilai ASN,
+    etika publik, dan kepentingan masyarakat.
+  </p>
+
+  <div class="badge">
+    🎯 <strong>Tujuan TKP:</strong> Memilih ASN yang berorientasi melayani,
+    berintegritas, dan mampu mengelola emosi serta konflik.
+  </div>
+
+  <!-- ===============================
+       NILAI INTI PELAYANAN PUBLIK
+  ================================= -->
+  <h3><i class="fa-solid fa-heart"></i> Nilai Inti Pelayanan Publik</h3>
+  <ul>
+    <li class="readable">
+      <i class="fa-solid fa-hand-holding-heart"></i>
+      <strong>Empati & Kepedulian</strong>  
+      <br>→ Mampu memahami emosi, kebutuhan, dan sudut pandang masyarakat.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-shield-halved"></i>
+      <strong>Integritas & Tanggung Jawab</strong>  
+      <br>→ Konsisten pada aturan, jujur, dan berani bertanggung jawab.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-comments"></i>
+      <strong>Komunikasi Efektif</strong>  
+      <br>→ Menyampaikan informasi dengan jelas, sopan, dan solutif.
+    </li>
+    <li class="readable">
+      <i class="fa-solid fa-face-smile"></i>
+      <strong>Orientasi Kepuasan Masyarakat</strong>  
+      <br>→ Mengutamakan solusi terbaik, bukan sekadar menggugurkan kewajiban.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KERANGKA BERPIKIR ASN IDEAL
+  ================================= -->
+  <h3><i class="fa-solid fa-brain"></i> Kerangka Berpikir ASN Ideal</h3>
+  <p class="readable">
+    Dalam TKP, jawaban terbaik hampir selalu mengikuti pola:
+  </p>
+
+  <div class="formula">
+    <strong>Tenang + Empati + Aturan + Solusi</strong>
+  </div>
+
+  <ul>
+    <li class="readable">Tenang → tidak reaktif, tidak emosional</li>
+    <li class="readable">Empati → mendengarkan & memahami</li>
+    <li class="readable">Aturan → sesuai SOP & etika ASN</li>
+    <li class="readable">Solusi → mencari jalan keluar terbaik</li>
+  </ul>
+
+  <!-- ===============================
+       POLA PENILAIAN TKP
+  ================================= -->
+  <h3><i class="fa-solid fa-ranking-star"></i> Pola Penilaian TKP</h3>
+  <p class="readable">
+    Setiap pilihan memiliki bobot skor:
+  </p>
+
+  <ul>
+    <li class="readable">⭐ 1 → Reaktif / egois / melanggar etika</li>
+    <li class="readable">⭐⭐ 2 → Pasif / menghindar</li>
+    <li class="readable">⭐⭐⭐ 3 → Netral tapi kurang solutif</li>
+    <li class="readable">⭐⭐⭐⭐ 4 → Baik & sesuai aturan</li>
+    <li class="readable">⭐⭐⭐⭐⭐ 5 → Ideal ASN (empatik, solutif, profesional)</li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL TKP – LEVEL 1
+  ================================= -->
+  <h3><i class="fa-solid fa-gamepad"></i> Contoh Soal TKP – Level 1</h3>
+  <p class="readable">
+    Seorang warga datang dengan nada marah karena antrean pelayanan lama.
+    Sikap Anda sebagai petugas adalah:
+  </p>
+
+  <ul>
+    <li class="readable">A. Membalas dengan nada tinggi agar warga tertib</li>
+    <li class="readable">B. Mengabaikan karena bukan kesalahan Anda</li>
+    <li class="readable">C. Mendengarkan keluhan, menjelaskan kondisi, dan mencari solusi</li>
+    <li class="readable">D. Menyuruh warga kembali di lain hari</li>
+  </ul>
+
+  <div class="answer correct">
+    ✅ <strong>Jawaban Skor Tertinggi (5):</strong> C  
+    <br>Alasan: Empati + komunikasi + solusi + profesional
+  </div>
+
+  <!-- ===============================
+       CONTOH SOAL TKP – LEVEL 2
+  ================================= -->
+  <h3><i class="fa-solid fa-dice-d20"></i> Contoh Soal TKP – Level 2</h3>
+  <p class="readable">
+    Anda melihat rekan kerja memperlakukan warga secara kurang sopan.
+    Apa tindakan Anda?
+  </p>
+
+  <ul>
+    <li class="readable">A. Membiarkan karena bukan urusan Anda</li>
+    <li class="readable">B. Menegur rekan tersebut di depan warga</li>
+    <li class="readable">C. Mengingatkan secara pribadi dan melaporkan bila perlu</li>
+    <li class="readable">D. Ikut bersikap tidak ramah</li>
+  </ul>
+
+  <div class="answer correct">
+    ⭐⭐⭐⭐⭐ <strong>Jawaban Ideal:</strong> C  
+    <br>Menjaga profesionalitas, etika, dan keharmonisan kerja
+  </div>
+
+  <!-- ===============================
+       JEBakan UMUM TKP
+  ================================= -->
+  <h3><i class="fa-solid fa-triangle-exclamation"></i> Jebakan Umum TKP</h3>
+  <ul>
+    <li class="readable">❌ Terlalu kaku pada aturan tanpa empati</li>
+    <li class="readable">❌ Menghindari masalah atau lepas tanggung jawab</li>
+    <li class="readable">❌ Bersikap emosional atau defensif</li>
+    <li class="readable">❌ Mengorbankan kepentingan publik demi kenyamanan pribadi</li>
+  </ul>
+
+  <!-- ===============================
+       GAMIFIKASI
+  ================================= -->
+  <h3><i class="fa-solid fa-trophy"></i> Gamifikasi Latihan TKP</h3>
+
+  <ul>
+    <li class="readable">🏅 <strong>Badge Empati</strong> → Konsisten memilih solusi manusiawi</li>
+    <li class="readable">🏅 <strong>Badge Integritas</strong> → Teguh pada aturan & etika</li>
+    <li class="readable">🏅 <strong>Badge Pelayan Publik</strong> → Orientasi kepuasan masyarakat</li>
+  </ul>
+
+  <div class="level">
+    🔓 <strong>Level ASN:</strong>  
+    <br>Level 1: Reaktif → Level 3: Profesional → Level 5: ASN Ideal
+  </div>
+
+  <!-- ===============================
+       TIPS SKOR MAKSIMAL
+  ================================= -->
+  <h3><i class="fa-solid fa-bolt"></i> Tips Skor Maksimal TKP</h3>
+  <ul>
+    <li class="readable">Pilih jawaban paling dewasa & solutif</li>
+    <li class="readable">Utamakan kepentingan masyarakat</li>
+    <li class="readable">Jangan memilih jawaban ekstrem</li>
+    <li class="readable">Bayangkan Anda ASN teladan, bukan sekadar pegawai</li>
+  </ul>
+
+</div>
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
