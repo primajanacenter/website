@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulasi CAT CPNS – Paket 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ========== CSS UTAMA ========== -->
+  <style>
+    /* CSS akan kita isi di BAGIAN 2 */
+    * { box-sizing: border-box; }
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e0f2f7;
+  margin: 0;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: #fff;
+  padding: 20px;
+  border-bottom: 4px solid #99ccff;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+header img {
+  height: 60px;
+  margin-right: 15px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+/* ===== INFO BAR ===== */
+.info-bar {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.info-item {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 12px;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.user-info, .soal-box {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #b3e0ff;
+  margin-bottom: 20px;
+}
+
+/* ===== OPSI ===== */
+.option {
+  margin: 8px 0;
+}
+
+.button-group button {
+  padding: 10px 15px;
+  background: #007bff;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ===== NAVIGASI ===== */
+.grid-navigasi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.grid-navigasi button {
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+}
+
+.green { background: #16a34a; color: #fff; }
+.red { background: #5a82b0; color: #fff; }
+
+/* ===== TIMER ===== */
+#timer-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0056b3;
+  color: white;
+  font-size: 22px;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+/* ===== HASIL ===== */
+#halaman-hasil .container {
+  background: #fff;
+  border-radius: 10px;
+}
+
+.kelulusan.lulus { color: green; font-weight: bold; }
+.kelulusan.tidak-lulus { color: red; font-weight: bold; }
+
+.btn-download, .btn-pembahasan {
+  display: block;
+  margin: 20px auto;
+  padding: 12px;
+  width: 90%;
+  max-width: 300px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-download { background: #f97316; color: white; }
+.btn-pembahasan { background: #00cd4e; color: #111; }
+
+#halaman-ujian {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+  </style>
+
+  <!-- html2canvas untuk download PNG hasil -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+
+<body onload="initApp()">
+
+  <!-- ================= HALAMAN UJIAN ================= -->
+  <div id="halaman-ujian">
+    <!-- BODY UJIAN di BAGIAN 3 -->
+    <header>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+  <h1>COMPUTER ASSISTED TEST<br>Simulasi CPNS</h1>
+
+  <div class="info-bar">
+    <div class="info-item"><strong>Waktu</strong><br>90 Menit</div>
+    <div class="info-item"><strong>Dijawab</strong><br><span id="dijawab">0</span></div>
+    <div class="info-item"><strong>Belum</strong><br><span id="belum">110</span></div>
+    <button onclick="konfirmasiSelesai()">Selesai</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="user-info">
+    Nama: <span id="namaPeserta">-</span><br>
+    Email: <span id="emailPeserta">-</span>
+  </div>
+
+  <div class="soal-box">
+    <div id="soalTeks"></div>
+    <div id="opsi"></div>
+
+    <div class="button-group">
+      <button onclick="simpanDanLanjut()">Simpan & Lanjut</button>
+      <button onclick="lewati()">Lewati</button>
+    </div>
+  </div>
+
+  <div class="grid-navigasi" id="navigasi"></div>
+</div>
+
+<div id="timer-box"><span id="timer">01:30:00</span></div>
+
+  </div>
+
+<!-- ================= POPUP AWAL ================= -->
+<div id="popupMulai" style="
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+">
+
+  <div style="
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    padding: 25px;
+    border-radius: 10px;
+  ">
+
+    <h2 style="margin-top:0">Simulasi CAT CPNS</h2>
+
+    <p style="font-size:14px; line-height:1.6">
+      <strong>Instruksi:</strong><br>
+      • Total soal: 110 (TWK, TIU, TKP)<br>
+      • Waktu: 90 menit<br>
+      • Jawaban dapat diubah sebelum selesai<br>
+      • Dilarang refresh / keluar halaman
+    </p>
+
+    <label>Nama Lengkap</label>
+    <input id="inputNama" type="text" style="width:100%; padding:8px; margin-bottom:10px">
+
+    <label>Email</label>
+    <input id="inputEmail" type="email" style="width:100%; padding:8px; margin-bottom:15px">
+
+    <button onclick="mulaiUjian()" style="
+      width:100%;
+      padding:12px;
+      background:#007bff;
+      color:white;
+      border:none;
+      border-radius:6px;
+      font-size:16px;
+      cursor:pointer;
+    ">
+      Mulai Ujian
+    </button>
+
+  </div>
+</div>
+
+
+  <!-- ================= HALAMAN HASIL ================= -->
+  <div id="halaman-hasil" style="display:none">
+    <!-- BODY HASIL di BAGIAN 4 -->
+    <div id="captureArea">
+  <header>
+    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+    <h1>HASIL TRYOUT CPNS</h1>
+  </header>
+
+  <div class="container">
+    <p>Nama: <span id="hasilNama"></span></p>
+    <p>Email: <span id="hasilEmail"></span></p>
+    <p>TWK: <span id="twk"></span></p>
+    <p>TIU: <span id="tiu"></span></p>
+    <p>TKP: <span id="tkp"></span></p>
+    <p><strong>Total: <span id="total"></span></strong></p>
+
+    <div id="statusKelulusan" class="kelulusan"></div>
+  </div>
+</div>
+
+<button class="btn-download" onclick="downloadPNG()">Download PNG</button>
+<button class="btn-pembahasan" onclick="lihatPembahasan()">Pembahasan</button>
+
+  </div>
+
+  <!-- ========== SCRIPT ========== -->
+  <script>
+    /* JavaScript di BAGIAN 5 */
+/* ======================================================
+   KONFIGURASI GLOBAL
+====================================================== */
+const TOTAL_WAKTU = 90 * 60; // 90 menit (detik)
+let waktuTersisa = TOTAL_WAKTU;
+let interval;
+
+/* ======================================================
+   DATA PESERTA (contoh, biasanya dari localStorage)
+====================================================== */
+function loadPeserta() {
+  const data = JSON.parse(localStorage.getItem("dataPeserta")) || {
+    nama: "Peserta Tryout",
+    email: "peserta@email.com"
+  };
+  document.getElementById("namaPeserta").textContent = data.nama;
+  document.getElementById("emailPeserta").textContent = data.email;
+  return data;
+}
+
+/* ======================================================
+   DATA SOAL
+====================================================== */
+const soal = [];
+
+/* ---------- UTIL ACAK OPSI (DIPAKAI SEKALI) ---------- */
+function acakPilihan(jawabanBenar, opsi) {
+  const arr = [...opsi];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return {
+    opsiAcak: arr,
+    jawabanBaru: arr.indexOf(opsi[jawabanBenar])
+  };
+}
+
+/* ======================================================
+   TWK (30 soal contoh – dengan TOPIK)
+====================================================== */
+const topikTWK = [
+  "Pancasila",
+  "UUD 1945",
+  "NKRI",
+  "Bhinneka Tunggal Ika"
+];
+
+for (let i = 1; i <= 30; i++) {
+  soal.push({
+    jenis: "TWK",
+    topik: topikTWK[(i - 1) % topikTWK.length],
+    tanya: `Contoh soal TWK nomor ${i}. Pancasila sebagai dasar negara berarti?`,
+    opsi: [
+      "Pedoman hidup berbangsa dan bernegara",
+      "Sekadar simbol negara",
+      "Hanya berlaku bagi ASN",
+      "Bersifat opsional",
+      "Tidak mengikat"
+    ],
+    jawaban: 0
+  });
+}
+
+
+/* ======================================================
+   TIU (35 soal contoh – dengan TOPIK)
+====================================================== */
+const topikTIU = [
+  "Aritmatika",
+  "Logika Angka",
+  "Aljabar Dasar"
+];
+
+for (let i = 1; i <= 35; i++) {
+  soal.push({
+    jenis: "TIU",
+    topik: topikTIU[(i - 1) % topikTIU.length],
+    tanya: `Jika ${i} + ${i} = ?`,
+    opsi: [
+      `${i * 2}`,
+      `${i * 3}`,
+      `${i + 5}`,
+      `${i - 1}`,
+      `${i * i}`
+    ],
+    jawaban: 0
+  });
+}
+
+
+/* ======================================================
+   TKP (45 soal – dengan TOPIK)
+====================================================== */
+const topikTKP = [
+  "Manajemen Stres",
+  "Kerja Sama Tim",
+  "Integritas",
+  "Tanggung Jawab",
+  "Pelayanan Publik"
+];
+
+for (let i = 1; i <= 45; i++) {
+  soal.push({
+    jenis: "TKP",
+    topik: topikTKP[(i - 1) % topikTKP.length],
+    tanya: `Bagaimana sikap Anda ketika menghadapi tekanan kerja nomor ${i}?`,
+    opsi: [
+      { teks: "Tetap tenang dan menyusun prioritas", skor: 5 },
+      { teks: "Bekerja lebih keras", skor: 4 },
+      { teks: "Meminta bantuan rekan", skor: 3 },
+      { teks: "Menunda pekerjaan", skor: 2 },
+      { teks: "Menghindari tanggung jawab", skor: 1 }
+    ]
+  });
+}
+
+
+/* ======================================================
+   INIT SOAL (KUNCI ACAK OPSI)
+====================================================== */
+function initSoal() {
+  soal.forEach(s => {
+    if (s.jenis !== "TKP") {
+      const hasil = acakPilihan(s.jawaban, s.opsi);
+      s.opsi = hasil.opsiAcak;
+      s.jawaban = hasil.jawabanBaru;
+    }
+  });
+}
+
+/* ======================================================
+   STATE UJIAN
+====================================================== */
+let indeks = 0;
+const jawaban = new Array(soal.length).fill(null);
+
+/* ======================================================
+   RENDER SOAL
+====================================================== */
+function tampilkanSoal() {
+  const s = soal[indeks];
+  document.getElementById("soalTeks").innerHTML =
+    `<strong>Soal No. ${indeks + 1} (${s.jenis})</strong><br>${s.tanya}`;
+
+  document.getElementById("opsi").innerHTML = s.opsi.map((o, i) => {
+    const teks = s.jenis === "TKP" ? o.teks : o;
+    return `
+      <div class="option">
+        <label>
+          <input type="radio" name="opsi" value="${i}"
+          ${jawaban[indeks] === i ? "checked" : ""}>
+          ${teks}
+        </label>
+      </div>
+    `;
+  }).join("");
+
+  updateNavigasi();
+  updateCounter();
+}
+
+/* ======================================================
+   NAVIGASI
+====================================================== */
+function simpanDanLanjut() {
+  const pilih = document.querySelector("input[name='opsi']:checked");
+  if (pilih) jawaban[indeks] = parseInt(pilih.value);
+  if (indeks < soal.length - 1) indeks++;
+  tampilkanSoal();
+}
+
+function lewati() {
+  if (indeks < soal.length - 1) indeks++;
+  tampilkanSoal();
+}
+
+function navigasiKe(i) {
+  indeks = i;
+  tampilkanSoal();
+}
+
+function updateNavigasi() {
+  document.getElementById("navigasi").innerHTML = soal.map((_, i) => `
+    <button class="${jawaban[i] !== null ? 'green' : 'red'}"
+    onclick="navigasiKe(${i})">${i + 1}</button>
+  `).join("");
+}
+
+function updateCounter() {
+  const dijawab = jawaban.filter(j => j !== null).length;
+  document.getElementById("dijawab").textContent = dijawab;
+  document.getElementById("belum").textContent = soal.length - dijawab;
+}
+
+/* ======================================================
+   TIMER FORMAT HH:MM:SS
+====================================================== */
+function mulaiTimer() {
+  interval = setInterval(() => {
+    if (waktuTersisa <= 0) {
+      clearInterval(interval);
+      konfirmasiSelesai();
+      return;
+    }
+    waktuTersisa--;
+    const h = Math.floor(waktuTersisa / 3600);
+    const m = Math.floor((waktuTersisa % 3600) / 60);
+    const s = waktuTersisa % 60;
+    document.getElementById("timer").textContent =
+      `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }, 1000);
+}
+
+/* ======================================================
+   SUBMIT & HITUNG SKOR
+====================================================== */
+function konfirmasiSelesai() {
+  if (!confirm("Akhiri ujian dan lihat hasil?")) return;
+  clearInterval(interval);
+
+  const data = loadPeserta();
+  let skorTWK = 0, skorTIU = 0, skorTKP = 0;
+
+  soal.forEach((s, i) => {
+    const jwb = jawaban[i];
+    if (jwb === null) return;
+
+    if (s.jenis === "TWK" && jwb === s.jawaban) skorTWK += 5;
+    if (s.jenis === "TIU" && jwb === s.jawaban) skorTIU += 5;
+    if (s.jenis === "TKP") skorTKP += s.opsi[jwb].skor;
+  });
+
+  tampilkanHasilAkhir({
+    nama: data.nama,
+    email: data.email,
+    skorTWK,
+    skorTIU,
+    skorTKP,
+    total: skorTWK + skorTIU + skorTKP
+  });
+}
+
+/* ======================================================
+   TAMPIL HASIL
+====================================================== */
+function tampilkanHasilAkhir(h) {
+  document.getElementById("hasilNama").textContent = h.nama;
+  document.getElementById("hasilEmail").textContent = h.email;
+  document.getElementById("twk").textContent = h.skorTWK;
+  document.getElementById("tiu").textContent = h.skorTIU;
+  document.getElementById("tkp").textContent = h.skorTKP;
+  document.getElementById("total").textContent = h.total;
+
+  tampilkanStatusKelulusan(h.skorTWK, h.skorTIU, h.skorTKP);
+
+  document.getElementById("halaman-ujian").style.display = "none";
+  document.getElementById("halaman-hasil").style.display = "block";
+}
+
+/* ======================================================
+   STATUS KELULUSAN
+====================================================== */
+function tampilkanStatusKelulusan(twk, tiu, tkp) {
+  const el = document.getElementById("statusKelulusan");
+  if (twk >= 65 && tiu >= 80 && tkp >= 166) {
+    el.textContent = "LULUS";
+    el.className = "kelulusan lulus";
+  } else {
+    el.textContent = "TIDAK LULUS";
+    el.className = "kelulusan tidak-lulus";
+  }
+}
+
+/* ======================================================
+   DOWNLOAD PNG HASIL
+====================================================== */
+function downloadPNG() {
+  html2canvas(document.getElementById("captureArea"), {
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "hasil-tryout.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+}
+
+function lihatPembahasan() {
+  alert("Fitur pembahasan (premium)");
+}
+
+/* ======================================================
+   INIT APP (SESUAI POPUP MULAI)
+====================================================== */
+function initApp() {
+  // siapkan soal (acak sekali)
+  initSoal();
+
+  // JANGAN load peserta dari storage ke UI
+  // JANGAN tampilkan soal
+  // JANGAN mulai timer
+
+  // amankan refresh
+  window.onbeforeunload = () => "Ujian sedang berlangsung.";
+}
+
+
+/* ======================================================
+   MULAI UJIAN (FINAL)
+====================================================== */
+function mulaiUjian() {
+  const namaInput = document.getElementById("inputNama");
+  const emailInput = document.getElementById("inputEmail");
+
+  const nama = namaInput.value.trim();
+  const email = emailInput.value.trim();
+
+  // validasi wajib isi
+  if (!nama || !email) {
+    alert("Nama dan Email wajib diisi.");
+    return;
+  }
+
+  // validasi format email sederhana
+  if (!email.includes("@")) {
+    alert("Format email tidak valid.");
+    return;
+  }
+
+  // simpan data peserta
+  const dataPeserta = { nama, email };
+  localStorage.setItem("dataPeserta", JSON.stringify(dataPeserta));
+
+  // tampilkan data di halaman ujian
+  document.getElementById("namaPeserta").textContent = nama;
+  document.getElementById("emailPeserta").textContent = email;
+
+  // tutup popup mulai
+  document.getElementById("popupMulai").style.display = "none";
+
+  // aktifkan halaman ujian (jika sebelumnya dikunci)
+  const halamanUjian = document.getElementById("halaman-ujian");
+  halamanUjian.style.pointerEvents = "auto";
+  halamanUjian.style.opacity = "1";
+
+  // reset state ujian (aman kalau reload)
+  indeks = 0;
+  jawaban.fill(null);
+
+  // mulai ujian
+  tampilkanSoal();
+  updateNavigasi();
+  updateCounter();
+  mulaiTimer();
+}
+
+
+
+
+  </script>
+
+</body>
+</html>
