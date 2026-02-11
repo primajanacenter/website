@@ -1,0 +1,2404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulasi CAT CPNS – Paket 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ========== CSS UTAMA ========== -->
+  <style>
+    /* CSS akan kita isi di BAGIAN 2 */
+    * { box-sizing: border-box; }
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e0f2f7;
+  margin: 0;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: #fff;
+  padding: 20px;
+  border-bottom: 4px solid #99ccff;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+header img {
+  height: 60px;
+  margin-right: 15px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+/* ===== INFO BAR ===== */
+.info-bar {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.info-item {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 12px;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.user-info, .soal-box {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #b3e0ff;
+  margin-bottom: 20px;
+}
+
+/* ===== OPSI ===== */
+.option {
+  margin: 8px 0;
+}
+
+.button-group button {
+  padding: 10px 15px;
+  background: #007bff;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ===== NAVIGASI ===== */
+.grid-navigasi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.grid-navigasi button {
+  width: 35px;
+  height: 35px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+}
+
+.green { background: #16a34a; color: #fff; }
+.red { background: #5a82b0; color: #fff; }
+
+/* ===== TIMER ===== */
+#timer-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #0056b3;
+  color: white;
+  font-size: 22px;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+/* ===== HASIL ===== */
+#halaman-hasil .container {
+  background: #fff;
+  border-radius: 10px;
+}
+
+.kelulusan.lulus { color: green; font-weight: bold; }
+.kelulusan.tidak-lulus { color: red; font-weight: bold; }
+
+.btn-download, .btn-pembahasan {
+  display: block;
+  margin: 20px auto;
+  padding: 12px;
+  width: 90%;
+  max-width: 300px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-download { background: #f97316; color: white; }
+.btn-pembahasan { background: #00cd4e; color: #111; }
+
+#halaman-ujian {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+  </style>
+
+  <!-- html2canvas untuk download PNG hasil -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body onload="initApp()">
+
+  <!-- ================= HALAMAN UJIAN ================= -->
+  <div id="halaman-ujian">
+    <!-- BODY UJIAN di BAGIAN 3 -->
+    <header>
+  <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+  <h1>COMPUTER ASSISTED TEST<br>Simulasi CPNS</h1>
+
+  <div class="info-bar">
+    <div class="info-item"><strong>Waktu</strong><br>90 Menit</div>
+    <div class="info-item"><strong>Dijawab</strong><br><span id="dijawab">0</span></div>
+    <div class="info-item"><strong>Belum</strong><br><span id="belum">110</span></div>
+    <button onclick="konfirmasiSelesai()">Selesai</button>
+  </div>
+</header>
+
+<div class="container">
+  <div class="user-info">
+    Nama: <span id="namaPeserta">-</span><br>
+    Email: <span id="emailPeserta">-</span>
+  </div>
+
+  <div class="soal-box">
+    <div id="soalTeks"></div>
+    <div id="opsi"></div>
+
+    <div class="button-group">
+      <button onclick="simpanDanLanjut()">Simpan & Lanjut</button>
+      <button onclick="lewati()">Lewati</button>
+    </div>
+  </div>
+
+  <div class="grid-navigasi" id="navigasi"></div>
+</div>
+
+<div id="timer-box"><span id="timer">01:30:00</span></div>
+
+  </div>
+
+<!-- ================= POPUP AWAL ================= -->
+<div id="popupMulai" style="
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+">
+
+  <div style="
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    padding: 25px;
+    border-radius: 10px;
+  ">
+
+    <h2 style="margin-top:0">Simulasi CAT CPNS</h2>
+
+    <p style="font-size:14px; line-height:1.6">
+      <strong>Instruksi:</strong><br>
+      • Total soal: 110 (TWK, TIU, TKP)<br>
+      • Waktu: 90 menit<br>
+      • Jawaban dapat diubah sebelum selesai<br>
+      • Dilarang refresh / keluar halaman
+    </p>
+
+    <label>Nama Lengkap</label>
+    <input id="inputNama" type="text" style="width:100%; padding:8px; margin-bottom:10px">
+
+    <label>Email</label>
+    <input id="inputEmail" type="email" style="width:100%; padding:8px; margin-bottom:15px">
+
+    <button onclick="mulaiUjian()" style="
+      width:100%;
+      padding:12px;
+      background:#007bff;
+      color:white;
+      border:none;
+      border-radius:6px;
+      font-size:16px;
+      cursor:pointer;
+    ">
+      Mulai Ujian
+    </button>
+
+  </div>
+</div>
+
+
+<!-- ================= HALAMAN HASIL ================= -->
+<div id="halaman-hasil" style="display:none">
+
+  <div id="captureArea">
+    <header>
+      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+      <h1>HASIL TRYOUT CPNS</h1>
+    </header>
+
+    <div class="container">
+      <!-- ===== IDENTITAS & NILAI ===== -->
+      <p>Nama: <span id="hasilNama"></span></p>
+      <p>Email: <span id="hasilEmail"></span></p>
+      <p>TWK: <span id="twk"></span></p>
+      <p>TIU: <span id="tiu"></span></p>
+      <p>TKP: <span id="tkp"></span></p>
+      <p><strong>Total: <span id="total"></span></strong></p>
+
+      <div id="statusKelulusan" class="kelulusan"></div>
+
+      <hr>
+
+      <!-- ===== ANALISIS TOPIK ===== -->
+<h3>📌 Analisis Topik yang Perlu Diperkuat</h3>
+<div id="analisisTopik">
+  <!-- diisi otomatis oleh JavaScript -->
+</div>
+
+<hr>
+
+<!-- ===== REVIEW SOAL SALAH ===== -->
+<h3>❌ Review Soal yang Perlu Diperbaiki</h3>
+<div id="reviewSoalSalah">
+  <!-- diisi otomatis oleh JavaScript -->
+</div>
+
+
+      <hr>
+
+      <!-- ===== RADAR CHART ===== -->
+      <h3>📊 Visualisasi Capaian Skor</h3>
+      <canvas id="grafikRadar" width="300" height="300"></canvas>
+    </div>
+  </div>
+
+
+</div>
+
+
+  <!-- ========== SCRIPT ========== -->
+  <script>
+    /* JavaScript di BAGIAN 5 */
+/* ======================================================
+   KONFIGURASI GLOBAL
+====================================================== */
+const TOTAL_WAKTU = 90 * 60; // 90 menit (detik)
+let waktuTersisa = TOTAL_WAKTU;
+let interval;
+
+/* ======================================================
+   DATA PESERTA (contoh, biasanya dari localStorage)
+====================================================== */
+function loadPeserta() {
+  return JSON.parse(localStorage.getItem("dataPeserta")) || {
+    nama: "Peserta Tryout",
+    email: "peserta@email.com"
+  };
+}
+
+
+/* ======================================================
+   DATA SOAL
+====================================================== */
+const soal = [];
+
+/* ---------- UTIL ACAK OPSI (DIPAKAI SEKALI) ---------- */
+function acakPilihan(jawabanBenar, opsi) {
+  const arr = [...opsi];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return {
+    opsiAcak: arr,
+    jawabanBaru: arr.indexOf(opsi[jawabanBenar])
+  };
+}
+
+/* ======================================================
+   PAKET SOAL – 30 SOAL UNIK (HOTS CPNS)
+====================================================== */
+
+/* ======================================================
+   TWK EXTREME – 30 SOAL HOTS CPNS (LEVEL SANGAT TINGGI)
+====================================================== */
+const topikTWK = ["Pancasila", "UUD 1945", "NKRI", "Bhinneka Tunggal Ika"];
+
+const soalTWK = [
+
+  /* ================= PANCASILA (8 SOAL) ================= */
+  {
+    topik: "Pancasila",
+    tanya: "Seorang ASN menemukan bahwa kebijakan yang sah secara hukum berpotensi memperlebar ketimpangan sosial. Dalam perspektif Pancasila, prioritas sikap ASN adalah…",
+    opsi: [
+      "Menjalankan kebijakan karena legal",
+      "Menunggu evaluasi pasca-implementasi",
+      "Mengusulkan koreksi berbasis keadilan sosial",
+      "Menolak kebijakan demi kepentingan publik",
+      "Menyerahkan sepenuhnya pada keputusan politik"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Pancasila",
+    tanya: "Ketika nilai efisiensi bertabrakan dengan nilai kemanusiaan, Pancasila menempatkan ASN pada kewajiban untuk…",
+    opsi: [
+      "Mengutamakan target kinerja",
+      "Mengikuti arus kebijakan dominan",
+      "Menimbang dampak kebijakan secara etis",
+      "Menghindari pengambilan keputusan",
+      "Menyerahkan pada mekanisme pasar"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Pancasila",
+    tanya: "Implementasi sila keempat dalam birokrasi modern paling tepat tercermin melalui…",
+    opsi: [
+      "Kepatuhan hierarkis tanpa diskusi",
+      "Keputusan berbasis suara terbanyak",
+      "Proses deliberatif yang mempertimbangkan kepentingan semua pihak",
+      "Delegasi penuh pada pimpinan",
+      "Efisiensi pengambilan keputusan"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Pancasila",
+    tanya: "Pancasila sebagai ideologi terbuka membatasi negara agar tidak…",
+    opsi: [
+      "Mengadopsi nilai global",
+      "Menyesuaikan kebijakan",
+      "Mengorbankan nilai dasar demi pragmatisme",
+      "Mengubah regulasi",
+      "Melakukan inovasi kebijakan"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Pancasila",
+    tanya: "Sikap ASN yang tetap berpihak pada kepentingan publik meski berisiko pada karier pribadi mencerminkan sila…",
+    opsi: [
+      "Ketuhanan",
+      "Kemanusiaan dan keadilan",
+      "Persatuan",
+      "Kerakyatan prosedural",
+      "Keadilan administratif"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "Pancasila",
+    tanya: "Kebijakan publik yang responsif namun diskriminatif bertentangan dengan Pancasila karena…",
+    opsi: [
+      "Tidak efisien",
+      "Tidak berkelanjutan",
+      "Mengabaikan prinsip kemanusiaan dan keadilan",
+      "Sulit diterapkan",
+      "Tidak populer secara politik"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Pancasila",
+    tanya: "Gotong royong dalam konteks tata kelola pemerintahan modern paling tepat dimaknai sebagai…",
+    opsi: [
+      "Kerja sukarela tanpa struktur",
+      "Kolaborasi lintas sektor berbasis kepentingan publik",
+      "Pembagian tugas administratif",
+      "Koordinasi vertikal",
+      "Delegasi kewenangan penuh"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "Pancasila",
+    tanya: "Ketika kebijakan legal bertentangan dengan rasa keadilan masyarakat, sikap Pancasila menuntut ASN untuk…",
+    opsi: [
+      "Tetap menjalankan kebijakan",
+      "Menunda pelaksanaan",
+      "Mendorong evaluasi kebijakan secara konstitusional",
+      "Menolak secara terbuka",
+      "Menunggu tekanan publik"
+    ],
+    jawaban: 2
+  },
+
+  /* ================= UUD 1945 (8 SOAL) ================= */
+  {
+    topik: "UUD 1945",
+    tanya: "Amandemen UUD 1945 secara substantif bertujuan untuk…",
+    opsi: [
+      "Memusatkan kekuasaan",
+      "Menyesuaikan sistem ketatanegaraan dengan prinsip demokrasi",
+      "Mengurangi peran lembaga perwakilan",
+      "Menyederhanakan struktur pemerintahan",
+      "Menghilangkan konflik antar lembaga"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "UUD 1945",
+    tanya: "Prinsip checks and balances menjadi krusial karena…",
+    opsi: [
+      "Memperlambat pengambilan kebijakan",
+      "Mencegah konsentrasi kekuasaan",
+      "Menjamin stabilitas politik",
+      "Memperkuat eksekutif",
+      "Mengurangi peran yudikatif"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "UUD 1945",
+    tanya: "Kedaulatan rakyat menurut UUD 1945 dibatasi oleh…",
+    opsi: [
+      "Kekuasaan pemerintah",
+      "Konstitusi sebagai hukum tertinggi",
+      "Kepentingan nasional",
+      "Keputusan lembaga negara",
+      "Mayoritas politik"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "UUD 1945",
+    tanya: "Negara dinyatakan melanggar supremasi konstitusi apabila…",
+    opsi: [
+      "Mengeluarkan kebijakan darurat",
+      "Mengabaikan prosedur administratif",
+      "Menjalankan kebijakan bertentangan dengan UUD",
+      "Mengubah peraturan teknis",
+      "Menggunakan diskresi pejabat"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "UUD 1945",
+    tanya: "Pengaturan HAM dalam UUD 1945 menegaskan bahwa negara berkewajiban untuk…",
+    opsi: [
+      "Memberi izin kebebasan",
+      "Membatasi hak warga",
+      "Melindungi dan memenuhi hak",
+      "Menyerahkan pada mekanisme pasar",
+      "Mengatur perilaku warga"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "UUD 1945",
+    tanya: "Jika terjadi konflik antara kebijakan pemerintah dan UUD 1945, maka yang harus diprioritaskan adalah…",
+    opsi: [
+      "Stabilitas politik",
+      "Efisiensi pemerintahan",
+      "Supremasi konstitusi",
+      "Keputusan eksekutif",
+      "Tekanan publik"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "UUD 1945",
+    tanya: "Pembagian kekuasaan negara dimaksudkan untuk…",
+    opsi: [
+      "Efisiensi tata kelola",
+      "Dominasi lembaga tertentu",
+      "Pengawasan dan keseimbangan kekuasaan",
+      "Sentralisasi kebijakan",
+      "Penyederhanaan regulasi"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "UUD 1945",
+    tanya: "Kepatuhan ASN terhadap UUD 1945 paling tepat diwujudkan melalui…",
+    opsi: [
+      "Loyalitas pada pimpinan",
+      "Pelaksanaan tugas sesuai hukum dan konstitusi",
+      "Netralitas administratif",
+      "Efisiensi kerja",
+      "Kedisiplinan organisasi"
+    ],
+    jawaban: 1
+  },
+
+  /* ================= NKRI (7 SOAL) ================= */
+  {
+    topik: "NKRI",
+    tanya: "Ancaman terhadap NKRI di era digital sulit dideteksi karena…",
+    opsi: [
+      "Bersifat militer",
+      "Berbentuk non-fisik dan asimetris",
+      "Terbatas wilayah",
+      "Mudah dikendalikan",
+      "Terpusat pada negara asing"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "NKRI",
+    tanya: "Peran strategis ASN dalam menjaga NKRI tercermin melalui…",
+    opsi: [
+      "Afiliasi politik",
+      "Profesionalisme dan netralitas",
+      "Pengawasan masyarakat",
+      "Kontrol informasi",
+      "Dominasi kebijakan pusat"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "NKRI",
+    tanya: "Bela negara non-militer oleh ASN diwujudkan dengan…",
+    opsi: [
+      "Penegakan keamanan",
+      "Pelayanan publik yang berintegritas",
+      "Pembatasan kebebasan sipil",
+      "Sentralisasi kekuasaan",
+      "Pengawasan ideologi"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "NKRI",
+    tanya: "Konsep negara kesatuan menegaskan bahwa…",
+    opsi: [
+      "Daerah berdaulat penuh",
+      "Kedaulatan berada pada negara secara utuh",
+      "Otonomi tanpa batas",
+      "Daerah menentukan hukum sendiri",
+      "Pusat hanya koordinator"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "NKRI",
+    tanya: "Otonomi daerah dalam NKRI bertujuan utama untuk…",
+    opsi: [
+      "Melemahkan pusat",
+      "Meningkatkan pelayanan dan kesejahteraan",
+      "Membentuk negara bagian",
+      "Mengurangi tanggung jawab pusat",
+      "Menyeragamkan kebijakan"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "NKRI",
+    tanya: "Sikap yang berpotensi menggerus NKRI adalah…",
+    opsi: [
+      "Menjunjung hukum nasional",
+      "Mengutamakan kepentingan kelompok sempit",
+      "Menguatkan toleransi",
+      "Menghargai keberagaman",
+      "Menjaga persatuan"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "NKRI",
+    tanya: "Integrasi nasional paling efektif diperkuat melalui…",
+    opsi: [
+      "Penyeragaman budaya",
+      "Pengelolaan keberagaman dalam persatuan",
+      "Dominasi mayoritas",
+      "Pembatasan identitas lokal",
+      "Pengawasan ketat"
+    ],
+    jawaban: 1
+  },
+
+  /* ================= BHINNEKA TUNGGAL IKA (7 SOAL) ================= */
+  {
+    topik: "Bhinneka Tunggal Ika",
+    tanya: "Makna substantif Bhinneka Tunggal Ika terletak pada…",
+    opsi: [
+      "Keseragaman identitas",
+      "Pengelolaan keberagaman secara adil",
+      "Dominasi budaya mayoritas",
+      "Penghapusan perbedaan",
+      "Pembatasan ekspresi"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "Bhinneka Tunggal Ika",
+    tanya: "Pelayanan publik yang mencerminkan Bhinneka Tunggal Ika menuntut ASN untuk…",
+    opsi: [
+      "Memberi perlakuan berbeda",
+      "Bersikap adil dan inklusif",
+      "Mengutamakan mayoritas",
+      "Menyeragamkan kebutuhan",
+      "Menghindari keberagaman"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "Bhinneka Tunggal Ika",
+    tanya: "Perbedaan pendapat dalam masyarakat majemuk seharusnya dimaknai sebagai…",
+    opsi: [
+      "Ancaman stabilitas",
+      "Hambatan pembangunan",
+      "Potensi dialog dan pembelajaran",
+      "Sumber konflik",
+      "Alasan pembatasan kebebasan"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Bhinneka Tunggal Ika",
+    tanya: "Sikap ASN yang paling bertentangan dengan Bhinneka Tunggal Ika adalah…",
+    opsi: [
+      "Inklusif",
+      "Diskriminatif",
+      "Toleran",
+      "Netral",
+      "Profesional"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "Bhinneka Tunggal Ika",
+    tanya: "Pengelolaan keberagaman yang baik akan berdampak pada…",
+    opsi: [
+      "Pelemahan identitas nasional",
+      "Penguatan persatuan",
+      "Dominasi kelompok tertentu",
+      "Penurunan partisipasi publik",
+      "Konflik laten"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "Bhinneka Tunggal Ika",
+    tanya: "Bhinneka Tunggal Ika relevan dalam kebijakan publik karena…",
+    opsi: [
+      "Menjaga kepentingan mayoritas",
+      "Menjamin keadilan bagi seluruh kelompok",
+      "Menyederhanakan regulasi",
+      "Membatasi aspirasi",
+      "Menghindari konflik"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "Bhinneka Tunggal Ika",
+    tanya: "Konflik horizontal paling efektif dicegah melalui…",
+    opsi: [
+      "Pembatasan interaksi",
+      "Penguatan dialog dan toleransi",
+      "Penyeragaman budaya",
+      "Pengawasan ketat",
+      "Dominasi mayoritas"
+    ],
+    jawaban: 1
+  }
+];
+
+// push ke bank soal
+soalTWK.forEach((s, i) => {
+  soal.push({
+    jenis: "TWK",
+    topik: s.topik,
+    tanya: `[TWK ${i + 1}] ${s.tanya}`,
+    opsi: s.opsi,
+    jawaban: s.jawaban
+  });
+});
+
+
+
+/* ======================================================
+   TWK EXTREME – TAMBAHAN 14 SOAL (HOTS SANGAT TINGGI)
+====================================================== */
+const soalTWKTambahan = [
+  // ===== PANCASILA =====
+  {
+    topik: "Pancasila",
+    tanya: "Dalam rangka percepatan pembangunan, pemerintah berencana menggusur permukiman warga dengan kompensasi minimal sesuai aturan. Kebijakan yang PALING mencerminkan keadilan sosial menurut Pancasila adalah…",
+    opsi: [
+      "Melaksanakan penggusuran sesuai aturan demi kepastian hukum",
+      "Menunda proyek hingga tidak ada penolakan warga",
+      "Menyeimbangkan kepastian hukum dengan perlindungan sosial dan dialog partisipatif",
+      "Menyerahkan kompensasi sepenuhnya pada mekanisme pasar",
+      "Mengutamakan percepatan pembangunan nasional"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Pancasila",
+    tanya: "ASN menghadapi tekanan pimpinan untuk memprioritaskan kelompok tertentu dalam distribusi bantuan sosial. Sikap yang paling sesuai dengan nilai Pancasila adalah…",
+    opsi: [
+      "Melaksanakan perintah demi loyalitas struktural",
+      "Mencari jalan tengah agar semua pihak puas",
+      "Menegakkan asas keadilan dan kesetaraan penerima manfaat",
+      "Menunda pelaksanaan program",
+      "Mengalihkan tanggung jawab kepada instansi lain"
+    ],
+    jawaban: 2
+  },
+
+  // ===== UUD 1945 =====
+  {
+    topik: "UUD 1945",
+    tanya: "Pembatasan kebebasan berekspresi di ruang digital dapat dibenarkan secara konstitusional apabila…",
+    opsi: [
+      "Dianggap meresahkan pemerintah",
+      "Bertentangan dengan nilai mayoritas",
+      "Ditetapkan dengan undang-undang dan proporsional untuk melindungi kepentingan umum",
+      "Mengganggu stabilitas politik",
+      "Menimbulkan perbedaan pendapat"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "UUD 1945",
+    tanya: "Keputusan Mahkamah Konstitusi bersifat final dan mengikat, yang berarti…",
+    opsi: [
+      "Tidak dapat dikritik publik",
+      "Tidak dapat diuji oleh lembaga mana pun",
+      "Harus dilaksanakan oleh seluruh lembaga negara tanpa pengecualian",
+      "Berlaku sementara sampai ada undang-undang baru",
+      "Hanya mengikat lembaga legislatif"
+    ],
+    jawaban: 2
+  },
+
+  // ===== NKRI =====
+  {
+    topik: "NKRI",
+    tanya: "Fenomena meningkatnya tuntutan otonomi berbasis identitas lokal menjadi ancaman NKRI apabila…",
+    opsi: [
+      "Disertai kritik terhadap pemerintah pusat",
+      "Mengarah pada eksklusivisme dan penolakan identitas nasional",
+      "Diperjuangkan melalui jalur demokratis",
+      "Didukung oleh partisipasi masyarakat",
+      "Berlandaskan aspirasi kesejahteraan"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "NKRI",
+    tanya: "Dalam konteks bela negara non-militer, peran strategis ASN di era digital adalah…",
+    opsi: [
+      "Menjaga netralitas dengan tidak terlibat diskursus publik",
+      "Menyensor informasi yang berpotensi memecah belah",
+      "Menguatkan literasi kebangsaan dan melawan disinformasi secara konstitusional",
+      "Menyerahkan sepenuhnya pada aparat keamanan",
+      "Menghindari media sosial"
+    ],
+    jawaban: 2
+  },
+
+  // ===== BHINNEKA TUNGGAL IKA =====
+  {
+    topik: "Bhinneka Tunggal Ika",
+    tanya: "Dalam pengambilan kebijakan publik di masyarakat majemuk, pengabaian prinsip Bhinneka Tunggal Ika paling berisiko menimbulkan…",
+    opsi: [
+      "Efisiensi kebijakan",
+      "Ketidakpuasan administratif",
+      "Ketegangan sosial dan delegitimasi negara",
+      "Perbedaan pendapat biasa",
+      "Percepatan pengambilan keputusan"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Bhinneka Tunggal Ika",
+    tanya: "Sikap ASN yang paling mencerminkan Bhinneka Tunggal Ika dalam pelayanan publik adalah…",
+    opsi: [
+      "Memberikan perlakuan khusus pada kelompok mayoritas",
+      "Menyamakan seluruh kebutuhan masyarakat",
+      "Menjamin akses layanan setara dengan menghormati keberagaman",
+      "Menghindari isu sensitif budaya",
+      "Membatasi partisipasi kelompok minoritas"
+    ],
+    jawaban: 2
+  },
+
+  // ===== INTEGRATIF EKSTREM (ANALISIS KONSTITUSIONAL) =====
+  {
+    topik: "Pancasila",
+    tanya: "Musyawarah mufakat dalam praktik pemerintahan modern menuntut ASN untuk…",
+    opsi: [
+      "Mengikuti suara terbanyak secara mutlak",
+      "Menghindari konflik pendapat",
+      "Mengintegrasikan berbagai pandangan dengan tetap berorientasi pada kepentingan umum",
+      "Menyerahkan keputusan kepada pimpinan",
+      "Mengutamakan efisiensi waktu"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "UUD 1945",
+    tanya: "Konsep negara hukum menurut UUD 1945 mengharuskan setiap kebijakan publik…",
+    opsi: [
+      "Mengikuti kehendak penguasa terpilih",
+      "Fleksibel tanpa batasan hukum",
+      "Memiliki dasar hukum, akuntabilitas, dan mekanisme pengujian",
+      "Berorientasi pada stabilitas politik",
+      "Mengutamakan kepentingan nasional versi pemerintah"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "NKRI",
+    tanya: "Desentralisasi dalam NKRI tidak dimaksudkan untuk…",
+    opsi: [
+      "Meningkatkan efektivitas pelayanan",
+      "Mendekatkan pemerintah kepada rakyat",
+      "Menciptakan kedaulatan daerah yang terpisah",
+      "Mengakomodasi keragaman lokal",
+      "Memperkuat persatuan nasional"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Bhinneka Tunggal Ika",
+    tanya: "Toleransi dalam konteks Bhinneka Tunggal Ika tidak dapat dimaknai sebagai…",
+    opsi: [
+      "Penghormatan terhadap perbedaan",
+      "Dialog antar kelompok",
+      "Relativisme yang menghilangkan nilai dasar bangsa",
+      "Upaya menjaga harmoni sosial",
+      "Pengakuan terhadap keberagaman"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Pancasila",
+    tanya: "Dalam konflik kepentingan kebijakan publik, nilai fundamental Pancasila menuntut ASN untuk…",
+    opsi: [
+      "Mengamankan posisi pribadi",
+      "Menghindari risiko politik",
+      "Menempatkan kepentingan umum di atas kepentingan kelompok atau individu",
+      "Mengikuti tekanan mayoritas",
+      "Menunda pengambilan keputusan"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "UUD 1945",
+    tanya: "Hak kebebasan berpendapat dijamin konstitusi, namun dapat dibatasi karena…",
+    opsi: [
+      "Bertentangan dengan kebijakan pemerintah",
+      "Berpotensi menimbulkan kritik",
+      "Harus menjamin keseimbangan antara hak individu dan ketertiban umum",
+      "Tidak sesuai opini mayoritas",
+      "Menimbulkan polemik publik"
+    ],
+    jawaban: 2
+  }
+];
+
+// push ke bank soal utama
+soalTWKTambahan.forEach(s => {
+  soal.push({
+    jenis: "TWK",
+    topik: s.topik,
+    tanya: `[TWK ${soal.length + 1}] ${s.tanya}`,
+    opsi: s.opsi,
+    jawaban: s.jawaban
+  });
+});
+
+
+
+/* ======================================================
+   PAKET SOAL TIU (35 soal contoh – dengan TOPIK)
+====================================================== */
+
+/* ======================================================
+   TIU ADVANCED – BAGIAN 1 (15 SOAL) | EXTREME HOTS
+====================================================== */
+const soalTIUAdvanced_1 = [
+  // ===== ARITMATIKA EXTREME HOTS =====
+  {
+    topik: "Aritmatika",
+    tanya: "Harga suatu barang dinaikkan 20%, kemudian diturunkan 20%. Jika selisih harga awal dan akhir adalah Rp40.000, maka harga awal barang tersebut adalah…",
+    opsi: [
+      "Rp800.000",
+      "Rp900.000",
+      "Rp1.000.000",
+      "Rp1.100.000",
+      "Rp1.200.000"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Aritmatika",
+    tanya: "Sebanyak 30% dari suatu bilangan sama dengan 45% dari bilangan lain. Jika selisih kedua bilangan tersebut adalah 60, maka bilangan yang lebih besar adalah…",
+    opsi: [
+      "120",
+      "150",
+      "180",
+      "200",
+      "240"
+    ],
+    jawaban: 3
+  },
+  {
+    topik: "Aritmatika",
+    tanya: "Perbandingan jumlah pegawai tetap dan kontrak adalah 5 : 7. Setelah 20 pegawai kontrak diangkat menjadi pegawai tetap, perbandingan berubah menjadi 3 : 2. Jumlah pegawai tetap semula adalah…",
+    opsi: [
+      "100",
+      "120",
+      "140",
+      "160",
+      "180"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Aritmatika",
+    tanya: "Suatu proyek dapat diselesaikan oleh A dalam 15 hari dan oleh B dalam 20 hari. Jika A bekerja sendiri selama 5 hari lalu digantikan B sampai selesai, maka total waktu penyelesaian proyek adalah… hari.",
+    opsi: [
+      "15",
+      "16",
+      "17",
+      "18",
+      "19"
+    ],
+    jawaban: 3
+  },
+  {
+    topik: "Aritmatika",
+    tanya: "Rata-rata nilai suatu kelas adalah 78. Setelah 5 siswa dengan rata-rata 70 keluar, rata-rata kelas menjadi 80. Jumlah siswa semula adalah…",
+    opsi: [
+      "20",
+      "25",
+      "30",
+      "35",
+      "40"
+    ],
+    jawaban: 2
+  },
+
+  // ===== LOGIKA ANGKA EXTREME HOTS =====
+  {
+    topik: "Logika Angka",
+    tanya: "1, 2, 6, 24, 120, …",
+    opsi: [
+      "360",
+      "480",
+      "600",
+      "720",
+      "840"
+    ],
+    jawaban: 3
+  },
+  {
+    topik: "Logika Angka",
+    tanya: "2, 5, 12, 27, 58, …",
+    opsi: [
+      "95",
+      "115",
+      "118",
+      "120",
+      "123"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Logika Angka",
+    tanya: "256, 64, 16, 4, …",
+    opsi: [
+      "0",
+      "1",
+      "2",
+      "4",
+      "8"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "Logika Angka",
+    tanya: "3, 7, 15, 31, 63, …",
+    opsi: [
+      "95",
+      "123",
+      "127",
+      "129",
+      "131"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Logika Angka",
+    tanya: "5, 9, 17, 33, 65, …",
+    opsi: [
+      "97",
+      "113",
+      "129",
+      "131",
+      "133"
+    ],
+    jawaban: 2
+  },
+
+  // ===== ALJABAR EXTREME HOTS =====
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Jika 2x + 3y = 19 dan x + y = 7, maka nilai x − y adalah…",
+    opsi: [
+      "-3",
+      "-2",
+      "-1",
+      "1",
+      "2"
+    ],
+    jawaban: 3
+  },
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Nilai maksimum dari fungsi f(x) = −x² + 6x − 5 adalah…",
+    opsi: [
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Jika x² + y² = 25 dan x + y = 7, maka nilai xy adalah…",
+    opsi: [
+      "10",
+      "11",
+      "12",
+      "13",
+      "14"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Jika (x − 2)/(x + 1) = 2/3, maka nilai x adalah…",
+    opsi: [
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    jawaban: 1
+  },
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Nilai dari |2x − 7| + |x − 3| jika x = 5 adalah…",
+    opsi: [
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    jawaban: 3
+  }
+];
+
+// push ke bank soal utama
+soalTIUAdvanced_1.forEach((s, i) => {
+  soal.push({
+    jenis: "TIU",
+    topik: s.topik,
+    tanya: `[TIU ${soal.length + 1}] ${s.tanya}`,
+    opsi: s.opsi,
+    jawaban: s.jawaban
+  });
+});
+
+
+
+
+
+/* ======================================================
+   TIU ADVANCED – BAGIAN 2 (20 SOAL | EXTREME HOTS)
+====================================================== */
+const soalTIUAdvanced_2 = [
+  // ===== ARITMATIKA EXTREME =====
+  {
+    topik: "Aritmatika",
+    tanya: "Sebuah harga dinaikkan 25% lalu diturunkan 20%. Jika harga akhir Rp300.000, maka harga awal barang tersebut adalah…",
+    opsi: [
+      "Rp300.000",
+      "Rp312.500",
+      "Rp320.000",
+      "Rp330.000",
+      "Rp375.000"
+    ],
+    jawaban: 4
+  },
+  {
+    topik: "Aritmatika",
+    tanya: "Jika 60% dari suatu bilangan dikurangi 18 menghasilkan 102, maka 25% dari bilangan tersebut adalah…",
+    opsi: [
+      "45",
+      "50",
+      "52,5",
+      "55",
+      "60"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Aritmatika",
+    tanya: "Perbandingan usia A, B, dan C adalah 2 : 3 : 5. Jika selisih usia C dan A adalah 24 tahun, maka jumlah usia A dan B adalah…",
+    opsi: [
+      "36",
+      "42",
+      "48",
+      "54",
+      "60"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Aritmatika",
+    tanya: "Rata-rata nilai 10 peserta adalah 72. Setelah 4 peserta dengan rata-rata 80 digabungkan, rata-rata keseluruhan menjadi…",
+    opsi: [
+      "74",
+      "75",
+      "76",
+      "77",
+      "78"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Aritmatika",
+    tanya: "Suatu pekerjaan dapat diselesaikan 18 orang dalam 20 hari. Setelah 8 hari bekerja, 6 orang keluar. Sisa pekerjaan diselesaikan dalam … hari.",
+    opsi: [
+      "14",
+      "15",
+      "16",
+      "18",
+      "20"
+    ],
+    jawaban: 2
+  },
+
+  // ===== LOGIKA ANGKA POLA MULTI-LAYER =====
+  {
+    topik: "Logika Angka",
+    tanya: "2, 5, 14, 41, …",
+    opsi: [
+      "122",
+      "124",
+      "125",
+      "128",
+      "131"
+    ],
+    jawaban: 4
+  },
+  {
+    topik: "Logika Angka",
+    tanya: "1, 3, 6, 10, 15, …",
+    opsi: [
+      "18",
+      "20",
+      "21",
+      "22",
+      "24"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Logika Angka",
+    tanya: "4, 12, 36, 108, …",
+    opsi: [
+      "216",
+      "288",
+      "324",
+      "432",
+      "648"
+    ],
+    jawaban: 3
+  },
+  {
+    topik: "Logika Angka",
+    tanya: "256, 128, 64, 32, …",
+    opsi: [
+      "8",
+      "12",
+      "14",
+      "16",
+      "18"
+    ],
+    jawaban: 3
+  },
+  {
+    topik: "Logika Angka",
+    tanya: "1, 4, 13, 40, …",
+    opsi: [
+      "81",
+      "115",
+      "121",
+      "124",
+      "130"
+    ],
+    jawaban: 1
+  },
+
+  // ===== ALJABAR LOGIKA TINGGI =====
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Jika 3x − 2y = 4 dan x + y = 10, maka nilai x − y adalah…",
+    opsi: [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    jawaban: 3
+  },
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Jumlah dua bilangan adalah 18 dan selisih kuadratnya adalah 108. Bilangan yang lebih besar adalah…",
+    opsi: [
+      "11",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    jawaban: 3
+  },
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Jika x² − 9 = 4x, maka hasil kali semua nilai x adalah…",
+    opsi: [
+      "-9",
+      "-5",
+      "-4",
+      "4",
+      "9"
+    ],
+    jawaban: 0
+  },
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Jika |x − 4| + |x − 6| = 6, maka nilai x yang memenuhi adalah…",
+    opsi: [
+      "4",
+      "5",
+      "6",
+      "4 dan 6",
+      "Semua x antara 4 dan 6"
+    ],
+    jawaban: 4
+  },
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Nilai minimum dari (x − 3)² + 4 adalah…",
+    opsi: [
+      "3",
+      "4",
+      "5",
+      "6",
+      "7"
+    ],
+    jawaban: 1
+  },
+
+  // ===== KOMBINASI LOGIKA TIU EKSTREM =====
+  {
+    topik: "Logika Angka",
+    tanya: "Jika A = 1, B = 4, C = 9, D = 16, maka nilai (B + C) − A adalah…",
+    opsi: [
+      "10",
+      "11",
+      "12",
+      "13",
+      "14"
+    ],
+    jawaban: 4
+  },
+  {
+    topik: "Aritmatika",
+    tanya: "Sebuah perjalanan ditempuh dalam 6 jam dengan kecepatan 60 km/jam. Jika 1 jam pertama ditempuh dengan kecepatan 40 km/jam, maka kecepatan rata-rata sisa perjalanan adalah…",
+    opsi: [
+      "64",
+      "66",
+      "68",
+      "70",
+      "72"
+    ],
+    jawaban: 3
+  },
+  {
+    topik: "Logika Angka",
+    tanya: "3, 9, 27, 81, …",
+    opsi: [
+      "162",
+      "216",
+      "243",
+      "324",
+      "729"
+    ],
+    jawaban: 2
+  },
+  {
+    topik: "Aritmatika",
+    tanya: "Jika 45% dari suatu bilangan adalah 180, maka 60% dari bilangan tersebut adalah…",
+    opsi: [
+      "210",
+      "220",
+      "230",
+      "240",
+      "250"
+    ],
+    jawaban: 3
+  },
+  {
+    topik: "Aljabar Dasar",
+    tanya: "Jika x² − 6x + 9 = 0, maka nilai x³ adalah…",
+    opsi: [
+      "9",
+      "18",
+      "27",
+      "36",
+      "54"
+    ],
+    jawaban: 2
+  }
+];
+
+// push ke bank soal utama
+soalTIUAdvanced_2.forEach(s => {
+  soal.push({
+    jenis: "TIU",
+    topik: s.topik,
+    tanya: `[TIU ${soal.length + 1}] ${s.tanya}`,
+    opsi: s.opsi,
+    jawaban: s.jawaban
+  });
+});
+
+
+
+
+/* ======================================================
+   PAKET SOAL TKP (45 soal – dengan TOPIK)
+====================================================== */
+
+/* ======================================================
+   TKP EXTREME – BAGIAN 1 (15 SOAL | HOTS SANGAT TINGGI)
+====================================================== */
+const soalTKPAdvanced_1 = [
+  {
+    topik: "Manajemen Stres",
+    tanya: "Dalam periode bersamaan, unit Anda menghadapi audit mendadak, revisi target kinerja nasional, dan kekosongan personel strategis. Langkah paling tepat adalah…",
+    opsi: [
+      { teks: "Memetakan risiko kritis, menyusun prioritas adaptif, serta mengomunikasikan batas kapasitas secara profesional kepada pimpinan", skor: 5 },
+      { teks: "Memfokuskan energi pada target utama sambil menunggu situasi internal stabil", skor: 4 },
+      { teks: "Mendistribusikan beban kerja secara merata tanpa mengubah target", skor: 3 },
+      { teks: "Menunda pekerjaan non-utama hingga audit selesai", skor: 2 },
+      { teks: "Menyerahkan sepenuhnya pengambilan keputusan kepada pimpinan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Kerja Sama Tim",
+    tanya: "Data yang Anda miliki menunjukkan potensi kegagalan kebijakan, namun forum lintas unit menolaknya demi konsensus cepat. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menyampaikan ulang analisis berbasis data secara ringkas dan menerima keputusan kolektif dengan catatan risiko terdokumentasi", skor: 5 },
+      { teks: "Menghormati keputusan forum sambil menyiapkan evaluasi pasca implementasi", skor: 4 },
+      { teks: "Mengikuti keputusan forum tanpa menyampaikan keberatan lanjutan", skor: 3 },
+      { teks: "Menunjukkan ketidaksetujuan secara terbuka", skor: 2 },
+      { teks: "Menarik diri dari proses pengambilan keputusan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Integritas",
+    tanya: "Anda diminta memperhalus laporan kinerja agar lebih selaras dengan ekspektasi penilai, tanpa mengubah angka utama. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menyajikan laporan faktual dengan penjelasan kontekstual dan rencana perbaikan yang terukur", skor: 5 },
+      { teks: "Menyesuaikan redaksi selama tidak mengubah data inti", skor: 4 },
+      { teks: "Mengikuti arahan dengan asumsi risiko dapat dikendalikan", skor: 3 },
+      { teks: "Menyusun laporan sesuai permintaan demi kelancaran proses", skor: 2 },
+      { teks: "Menolak permintaan tanpa memberikan solusi alternatif", skor: 1 }
+    ]
+  },
+  {
+    topik: "Tanggung Jawab",
+    tanya: "Anda menemukan potensi kebijakan yang secara prosedural benar namun berisiko merugikan publik dalam jangka panjang. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menyusun kajian dampak dan menyampaikannya secara berjenjang dengan rekomendasi mitigasi", skor: 5 },
+      { teks: "Mendokumentasikan temuan sebagai bahan evaluasi internal", skor: 4 },
+      { teks: "Menunggu arahan pimpinan sebelum bertindak", skor: 3 },
+      { teks: "Tidak menindaklanjuti karena belum berdampak langsung", skor: 2 },
+      { teks: "Menghindari keterlibatan dalam pembahasan kebijakan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Pelayanan Publik",
+    tanya: "Warga meminta perlakuan khusus berdasarkan kondisi sosial yang belum diatur, sementara tekanan publik meningkat. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menjelaskan batas regulasi dengan empati dan menawarkan opsi solusi yang sah", skor: 5 },
+      { teks: "Menyampaikan penolakan secara formal sesuai aturan", skor: 4 },
+      { teks: "Memberikan pengecualian terbatas demi meredam konflik", skor: 3 },
+      { teks: "Menunda keputusan hingga ada arahan", skor: 2 },
+      { teks: "Menghindari interaksi lanjutan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Manajemen Stres",
+    tanya: "Tekanan target menyebabkan performa tim menurun dan muncul konflik internal. Langkah Anda adalah…",
+    opsi: [
+      { teks: "Melakukan refleksi tim, redistribusi peran, dan penyesuaian target realistis", skor: 5 },
+      { teks: "Meningkatkan kontrol dan pengawasan kinerja", skor: 4 },
+      { teks: "Memberikan peringatan agar disiplin meningkat", skor: 3 },
+      { teks: "Mengambil alih sebagian besar tugas tim", skor: 2 },
+      { teks: "Membiarkan dinamika berjalan alami", skor: 1 }
+    ]
+  },
+  {
+    topik: "Kerja Sama Tim",
+    tanya: "Koordinasi lintas sektor sering gagal akibat perbedaan persepsi kewenangan. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menginisiasi kesepakatan mekanisme koordinasi berbasis peran dan tanggung jawab", skor: 5 },
+      { teks: "Menyesuaikan diri dengan pola kerja pihak lain", skor: 4 },
+      { teks: "Membatasi koordinasi hanya pada hal teknis", skor: 3 },
+      { teks: "Mengurangi interaksi untuk menghindari konflik", skor: 2 },
+      { teks: "Menyalahkan pihak lain secara terbuka", skor: 1 }
+    ]
+  },
+  {
+    topik: "Integritas",
+    tanya: "Anda mengetahui rekan memanfaatkan celah aturan tanpa melanggar teks regulasi. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Mengumpulkan bukti dan melaporkan melalui mekanisme resmi sesuai etika", skor: 5 },
+      { teks: "Memberikan peringatan personal secara tertutup", skor: 4 },
+      { teks: "Menjaga jarak agar tidak terlibat", skor: 3 },
+      { teks: "Menganggapnya bukan ranah tanggung jawab Anda", skor: 2 },
+      { teks: "Menyesuaikan diri demi keamanan posisi", skor: 1 }
+    ]
+  },
+  {
+    topik: "Tanggung Jawab",
+    tanya: "Kinerja unit Anda menuai kritik publik meski prosedur telah diikuti. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menelaah substansi kritik dan menyampaikan klarifikasi berbasis data", skor: 5 },
+      { teks: "Menjelaskan bahwa semua telah sesuai prosedur", skor: 4 },
+      { teks: "Membela unit secara normatif", skor: 3 },
+      { teks: "Menghindari tanggapan publik", skor: 2 },
+      { teks: "Menyalahkan faktor eksternal", skor: 1 }
+    ]
+  },
+  {
+    topik: "Pelayanan Publik",
+    tanya: "Warga menunjukkan emosi tinggi akibat pengalaman layanan sebelumnya. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Mendengarkan aktif, meredam emosi, dan menjelaskan solusi secara terstruktur", skor: 5 },
+      { teks: "Menjelaskan prosedur layanan secara singkat", skor: 4 },
+      { teks: "Meminta warga menenangkan diri terlebih dahulu", skor: 3 },
+      { teks: "Mengalihkan ke petugas lain", skor: 2 },
+      { teks: "Mengakhiri interaksi", skor: 1 }
+    ]
+  },
+  {
+    topik: "Manajemen Stres",
+    tanya: "Kebijakan unit Anda menjadi sorotan negatif di media sosial. Langkah paling tepat adalah…",
+    opsi: [
+      { teks: "Mengumpulkan fakta, berkoordinasi internal, dan merespons proporsional", skor: 5 },
+      { teks: "Menunggu arahan pimpinan sebelum merespons", skor: 4 },
+      { teks: "Mengabaikan karena bersifat opini", skor: 3 },
+      { teks: "Menyalahkan unit komunikasi", skor: 2 },
+      { teks: "Menarik diri dari pengambilan keputusan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Kerja Sama Tim",
+    tanya: "Anda harus bekerja dengan rekan yang gaya kerjanya bertolak belakang dan memengaruhi ritme tim. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menyelaraskan ekspektasi kerja bersama tanpa mengorbankan target", skor: 5 },
+      { teks: "Menyesuaikan diri sepenuhnya dengan gaya rekan", skor: 4 },
+      { teks: "Bertahan pada gaya kerja sendiri", skor: 3 },
+      { teks: "Mengurangi intensitas kolaborasi", skor: 2 },
+      { teks: "Menolak bekerja sama", skor: 1 }
+    ]
+  },
+  {
+    topik: "Integritas",
+    tanya: "Anda menjadi saksi internal pelanggaran disiplin yang melibatkan rekan dekat. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Memberikan keterangan objektif sesuai fakta meski berisiko relasi personal", skor: 5 },
+      { teks: "Memberikan keterangan umum tanpa detail sensitif", skor: 4 },
+      { teks: "Melindungi rekan demi solidaritas", skor: 3 },
+      { teks: "Menghindari keterlibatan", skor: 2 },
+      { teks: "Menolak menjadi saksi", skor: 1 }
+    ]
+  },
+  {
+    topik: "Tanggung Jawab",
+    tanya: "Anda ditugaskan memimpin kembali proyek yang pernah gagal. Langkah awal Anda adalah…",
+    opsi: [
+      { teks: "Mengidentifikasi akar masalah dan menyusun strategi korektif berbasis evaluasi", skor: 5 },
+      { teks: "Melanjutkan rencana lama dengan penyesuaian kecil", skor: 4 },
+      { teks: "Menjalankan proyek sesuai arahan pimpinan", skor: 3 },
+      { teks: "Menunda hingga kondisi dianggap ideal", skor: 2 },
+      { teks: "Menolak penugasan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Pelayanan Publik",
+    tanya: "Tuntutan kepuasan publik bertentangan dengan keterbatasan regulasi yang ada. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menjaga kepatuhan aturan sambil mengusulkan perbaikan kebijakan jangka panjang", skor: 5 },
+      { teks: "Mengutamakan kepuasan publik meski melanggar aturan", skor: 4 },
+      { teks: "Menolak permintaan tanpa alternatif", skor: 3 },
+      { teks: "Menunda keputusan", skor: 2 },
+      { teks: "Menghindari tanggung jawab keputusan", skor: 1 }
+    ]
+  }
+];
+
+// push ke bank soal utama
+soalTKPAdvanced_1.forEach(s => {
+  soal.push({
+    jenis: "TKP",
+    topik: s.topik,
+    tanya: `[TKP ${soal.length + 1}] ${s.tanya}`,
+    opsi: s.opsi
+  });
+});
+
+
+
+
+/* ======================================================
+   TKP EXTREME – BAGIAN 2 (15 SOAL HOTS EKSTREM)
+====================================================== */
+const soalTKPExtreme_2 = [
+  {
+    topik: "Manajemen Stres",
+    tanya: "Dalam proyek strategis lintas unit, perubahan kebijakan terjadi berulang kali dengan tenggat yang tidak disesuaikan. Sebagai anggota tim kunci, sikap paling tepat adalah…",
+    opsi: [
+      { teks: "Mengelola stres dengan tetap menjaga kualitas keputusan serta menyusun mitigasi risiko berbasis data", skor: 5 },
+      { teks: "Menyesuaikan diri dengan perubahan selama target utama tetap tercapai", skor: 4 },
+      { teks: "Fokus menyelesaikan tugas pribadi agar tidak terdampak tekanan kolektif", skor: 3 },
+      { teks: "Menunggu stabilitas kebijakan sebelum melanjutkan pekerjaan", skor: 2 },
+      { teks: "Menurunkan ekspektasi hasil agar tekanan lebih terkendali", skor: 1 }
+    ]
+  },
+  {
+    topik: "Kerja Sama Tim",
+    tanya: "Dalam diskusi pengambilan keputusan, beberapa anggota tim menyampaikan argumen yang tampak rasional namun berpotensi bias kepentingan pribadi. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Mengembalikan diskusi pada indikator objektif dan tujuan organisasi secara eksplisit", skor: 5 },
+      { teks: "Menanggapi argumen berdasarkan logika yang disampaikan tanpa menyinggung motif", skor: 4 },
+      { teks: "Membiarkan dinamika berjalan agar keputusan tetap diambil", skor: 3 },
+      { teks: "Mengikuti pendapat mayoritas untuk menjaga harmoni", skor: 2 },
+      { teks: "Menarik diri dari diskusi karena situasi tidak ideal", skor: 1 }
+    ]
+  },
+  {
+    topik: "Integritas",
+    tanya: "Anda mengetahui adanya celah prosedural yang memungkinkan percepatan proses tanpa terdeteksi, dan hal tersebut dianggap ‘lumrah’. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menolak memanfaatkan celah dan mendorong perbaikan prosedur secara institusional", skor: 5 },
+      { teks: "Menghindari penggunaan celah meski tidak melaporkannya", skor: 4 },
+      { teks: "Menggunakan celah secara terbatas untuk efisiensi kerja", skor: 3 },
+      { teks: "Mengikuti praktik umum selama tidak ada teguran", skor: 2 },
+      { teks: "Memanfaatkan celah demi target kinerja pribadi", skor: 1 }
+    ]
+  },
+  {
+    topik: "Tanggung Jawab",
+    tanya: "Keputusan tim menghasilkan dampak yang kurang optimal meskipun diambil secara kolektif. Sebagai anggota tim, sikap Anda adalah…",
+    opsi: [
+      { teks: "Bertanggung jawab secara profesional sambil mengevaluasi proses pengambilan keputusan", skor: 5 },
+      { teks: "Menjalankan keputusan dan menerima evaluasi bersama", skor: 4 },
+      { teks: "Menjelaskan bahwa keputusan merupakan hasil kesepakatan tim", skor: 3 },
+      { teks: "Membatasi tanggung jawab pada peran masing-masing", skor: 2 },
+      { teks: "Menghindari keterlibatan dalam evaluasi lanjutan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Pelayanan Publik",
+    tanya: "Anda dihadapkan pada kasus layanan yang tidak diatur secara eksplisit, namun penundaan berpotensi merugikan masyarakat. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menggunakan diskresi secara akuntabel dan terdokumentasi dengan pertimbangan kepentingan publik", skor: 5 },
+      { teks: "Mengacu pada praktik sebelumnya yang dianggap aman", skor: 4 },
+      { teks: "Menunggu arahan tertulis dari atasan", skor: 3 },
+      { teks: "Menolak layanan karena tidak ada dasar hukum jelas", skor: 2 },
+      { teks: "Mengarahkan masyarakat mencari solusi alternatif informal", skor: 1 }
+    ]
+  },
+  {
+    topik: "Manajemen Stres",
+    tanya: "Tekanan target dan ekspektasi publik mulai memengaruhi kejernihan berpikir Anda. Langkah paling profesional adalah…",
+    opsi: [
+      { teks: "Melakukan refleksi, menyesuaikan strategi kerja, dan menjaga kualitas keputusan", skor: 5 },
+      { teks: "Mengurangi intensitas kerja sementara", skor: 4 },
+      { teks: "Tetap bekerja seperti biasa agar target tercapai", skor: 3 },
+      { teks: "Menunda pengambilan keputusan penting", skor: 2 },
+      { teks: "Menghindari tanggung jawab tambahan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Kerja Sama Tim",
+    tanya: "Seorang anggota tim memiliki kinerja tinggi namun sering melemahkan kepercayaan tim melalui komunikasi yang tidak etis. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Memberikan umpan balik konstruktif berbasis nilai profesional dan etika", skor: 5 },
+      { teks: "Melaporkan kepada atasan agar ditangani struktural", skor: 4 },
+      { teks: "Membiarkan selama kinerja tetap tinggi", skor: 3 },
+      { teks: "Menjaga jarak dalam kolaborasi", skor: 2 },
+      { teks: "Meniru gaya komunikasinya agar seimbang", skor: 1 }
+    ]
+  },
+  {
+    topik: "Integritas",
+    tanya: "Anda mendeteksi potensi konflik kepentingan yang belum berdampak langsung. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Mencegah sejak dini melalui penguatan prinsip etika dan transparansi", skor: 5 },
+      { teks: "Menyampaikan secara informal kepada pihak terkait", skor: 4 },
+      { teks: "Menunggu hingga muncul pelanggaran nyata", skor: 3 },
+      { teks: "Menganggapnya sebagai urusan pribadi", skor: 2 },
+      { teks: "Memanfaatkan kondisi tersebut", skor: 1 }
+    ]
+  },
+  {
+    topik: "Tanggung Jawab",
+    tanya: "Anda diminta mempertanggungjawabkan keputusan yang secara pribadi Anda anggap kurang tepat. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menjelaskan secara objektif beserta catatan profesional dan evaluasi risiko", skor: 5 },
+      { teks: "Menjelaskan sesuai keputusan tanpa komentar tambahan", skor: 4 },
+      { teks: "Menyampaikan bahwa keputusan bukan inisiatif Anda", skor: 3 },
+      { teks: "Menghindari diskusi lanjutan", skor: 2 },
+      { teks: "Menyalahkan pihak lain", skor: 1 }
+    ]
+  },
+  {
+    topik: "Pelayanan Publik",
+    tanya: "Kritik publik terhadap layanan Anda viral dan sebagian tidak akurat. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Memberikan klarifikasi resmi berbasis data dan etika komunikasi publik", skor: 5 },
+      { teks: "Menunggu arahan pimpinan sebelum merespons", skor: 4 },
+      { teks: "Membiarkan karena bukan kanal resmi", skor: 3 },
+      { teks: "Menanggapi secara defensif", skor: 2 },
+      { teks: "Mengabaikan sepenuhnya", skor: 1 }
+    ]
+  },
+  {
+    topik: "Manajemen Stres",
+    tanya: "Anda menyadari tekanan kerja mulai menurunkan ketelitian pengambilan keputusan. Sikap terbaik adalah…",
+    opsi: [
+      { teks: "Menyesuaikan ritme kerja dan melakukan evaluasi kualitas keputusan", skor: 5 },
+      { teks: "Mengurangi beban komunikasi", skor: 4 },
+      { teks: "Tetap bekerja seperti biasa", skor: 3 },
+      { teks: "Menunda keputusan strategis", skor: 2 },
+      { teks: "Menghindari tanggung jawab baru", skor: 1 }
+    ]
+  },
+  {
+    topik: "Kerja Sama Tim",
+    tanya: "Tim Anda memiliki perbedaan gaya kerja ekstrem yang berpotensi menurunkan efektivitas. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menjembatani perbedaan dengan fokus pada tujuan dan indikator kinerja bersama", skor: 5 },
+      { teks: "Menyesuaikan diri dengan mayoritas", skor: 4 },
+      { teks: "Bekerja mandiri agar efisien", skor: 3 },
+      { teks: "Menyerahkan sepenuhnya kepada pimpinan", skor: 2 },
+      { teks: "Menghindari kolaborasi intensif", skor: 1 }
+    ]
+  },
+  {
+    topik: "Integritas",
+    tanya: "Anda mendapat tekanan untuk menyajikan laporan dengan framing yang lebih positif dari kondisi aktual. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menyajikan data apa adanya dengan penjelasan kontekstual dan profesional", skor: 5 },
+      { teks: "Menyederhanakan data agar mudah diterima", skor: 4 },
+      { teks: "Mengikuti arahan tanpa klarifikasi", skor: 3 },
+      { teks: "Menunda penyampaian laporan", skor: 2 },
+      { teks: "Mengubah data agar terlihat baik", skor: 1 }
+    ]
+  },
+  {
+    topik: "Tanggung Jawab",
+    tanya: "Anda melihat potensi kegagalan program jangka panjang jika tidak ada intervensi sekarang. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menyampaikan analisis risiko dan rekomendasi berbasis data kepada pimpinan", skor: 5 },
+      { teks: "Menyampaikan secara informal", skor: 4 },
+      { teks: "Menunggu evaluasi resmi", skor: 3 },
+      { teks: "Fokus pada tugas pribadi", skor: 2 },
+      { teks: "Mengabaikan karena belum terjadi", skor: 1 }
+    ]
+  },
+  {
+    topik: "Pelayanan Publik",
+    tanya: "Tekanan opini publik mendorong percepatan layanan tertentu yang berpotensi mengganggu prinsip keadilan. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menjaga standar layanan dan mengelola komunikasi publik secara proporsional", skor: 5 },
+      { teks: "Memprioritaskan layanan yang mendapat sorotan", skor: 4 },
+      { teks: "Menunda layanan lain agar fokus", skor: 3 },
+      { teks: "Mengikuti tekanan publik sepenuhnya", skor: 2 },
+      { teks: "Menghindari keterlibatan langsung", skor: 1 }
+    ]
+  }
+];
+
+// push ke bank soal utama
+soalTKPExtreme_2.forEach(s => {
+  soal.push({
+    jenis: "TKP",
+    topik: s.topik,
+    tanya: `[TKP ${soal.length + 1}] ${s.tanya}`,
+    opsi: s.opsi
+  });
+});
+
+
+
+/* ======================================================
+   TKP ADVANCED – BAGIAN 3 (15 SOAL | HOTS EXTREME – FINAL)
+====================================================== */
+const soalTKPAdvanced_3 = [
+  {
+    topik: "Integritas",
+    tanya: "Dalam penyusunan laporan kinerja, Anda menyadari bahwa indikator yang digunakan secara formal benar, namun secara substansi tidak sepenuhnya mencerminkan dampak program. Sebagian besar tim sepakat tetap menggunakan indikator tersebut. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Mengusulkan perbaikan indikator berbasis dampak meski berpotensi menunda laporan", skor: 5 },
+      { teks: "Menggunakan indikator yang ada sambil menyiapkan rekomendasi perbaikan terpisah", skor: 4 },
+      { teks: "Mengikuti kesepakatan tim demi kelancaran pelaporan", skor: 3 },
+      { teks: "Menyerahkan sepenuhnya pada keputusan pimpinan", skor: 2 },
+      { teks: "Menyetujui indikator karena sudah lazim digunakan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Tanggung Jawab",
+    tanya: "Anda diberi tenggat penyelesaian program yang secara teknis hampir mustahil dipenuhi tanpa mengorbankan kualitas. Pimpinan menekankan pentingnya target. Tindakan Anda adalah…",
+    opsi: [
+      { teks: "Menyampaikan analisis risiko dan menawarkan skenario target bertahap", skor: 5 },
+      { teks: "Menyusun rencana kerja optimal dengan asumsi kondisi ideal", skor: 4 },
+      { teks: "Melaksanakan instruksi sambil menyesuaikan di lapangan", skor: 3 },
+      { teks: "Mengurangi ruang lingkup program agar target tercapai", skor: 2 },
+      { teks: "Memprioritaskan pencapaian target tanpa mempertimbangkan kualitas", skor: 1 }
+    ]
+  },
+  {
+    topik: "Pelayanan Publik",
+    tanya: "Anda menghadapi permintaan layanan yang secara aturan memenuhi syarat, namun berpotensi menimbulkan persepsi ketidakadilan di masyarakat. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menjalankan aturan sambil menjelaskan dasar keputusan secara transparan", skor: 5 },
+      { teks: "Menjalankan layanan tanpa penjelasan tambahan", skor: 4 },
+      { teks: "Menunda keputusan untuk menghindari polemik", skor: 3 },
+      { teks: "Membatasi layanan agar tidak menimbulkan kecemburuan", skor: 2 },
+      { teks: "Menolak permintaan demi menjaga persepsi publik", skor: 1 }
+    ]
+  },
+  {
+    topik: "Kerja Sama Tim",
+    tanya: "Dalam tim lintas instansi, Anda melihat kecenderungan saling lempar tanggung jawab ketika muncul masalah. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menginisiasi klarifikasi peran dan mekanisme akuntabilitas bersama", skor: 5 },
+      { teks: "Mengambil alih sebagian tanggung jawab agar pekerjaan selesai", skor: 4 },
+      { teks: "Fokus menyelesaikan bagian tugas Anda sendiri", skor: 3 },
+      { teks: "Menghindari isu tersebut agar tidak memicu konflik", skor: 2 },
+      { teks: "Menunggu arahan resmi dari pimpinan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Manajemen Stres",
+    tanya: "Tekanan kerja tinggi berlangsung lama dan mulai memengaruhi pengambilan keputusan Anda. Langkah paling profesional adalah…",
+    opsi: [
+      { teks: "Mengevaluasi ulang prioritas, beban kerja, dan mencari dukungan yang tepat", skor: 5 },
+      { teks: "Mengurangi keterlibatan emosional dalam pekerjaan", skor: 4 },
+      { teks: "Menjaga rutinitas kerja seperti biasa", skor: 3 },
+      { teks: "Mengambil jarak dari tanggung jawab strategis", skor: 2 },
+      { teks: "Mengabaikan kondisi hingga tekanan mereda sendiri", skor: 1 }
+    ]
+  },
+  {
+    topik: "Integritas",
+    tanya: "Anda menemukan praktik tidak tertulis yang dianggap wajar oleh unit kerja namun bertentangan dengan semangat regulasi. Tindakan Anda adalah…",
+    opsi: [
+      { teks: "Menolak praktik tersebut dan mendorong penyesuaian sesuai regulasi", skor: 5 },
+      { teks: "Tidak terlibat dalam praktik tersebut tanpa menentangnya secara terbuka", skor: 4 },
+      { teks: "Mengikuti praktik demi menjaga harmoni kerja", skor: 3 },
+      { teks: "Membiarkan praktik berjalan selama tidak merugikan langsung", skor: 2 },
+      { teks: "Menggunakan praktik tersebut untuk efisiensi kerja", skor: 1 }
+    ]
+  },
+  {
+    topik: "Tanggung Jawab",
+    tanya: "Kesalahan minor yang Anda buat belum berdampak, namun berpotensi menjadi masalah sistemik. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Mengakui dan memperbaiki sebelum berkembang menjadi masalah", skor: 5 },
+      { teks: "Menyimpan catatan untuk perbaikan jika diperlukan", skor: 4 },
+      { teks: "Menganggapnya sebagai risiko kecil", skor: 3 },
+      { teks: "Menunggu hingga ada arahan perbaikan", skor: 2 },
+      { teks: "Mengabaikan karena belum berdampak", skor: 1 }
+    ]
+  },
+  {
+    topik: "Pelayanan Publik",
+    tanya: "Anda harus menjelaskan kebijakan yang sah secara hukum namun tidak populer di masyarakat. Pendekatan terbaik adalah…",
+    opsi: [
+      { teks: "Memberikan penjelasan terbuka dengan bahasa yang mudah dipahami", skor: 5 },
+      { teks: "Menjelaskan seperlunya sesuai aturan", skor: 4 },
+      { teks: "Mengacu sepenuhnya pada dokumen resmi", skor: 3 },
+      { teks: "Menghindari diskusi publik", skor: 2 },
+      { teks: "Menyerahkan penjelasan ke pihak lain", skor: 1 }
+    ]
+  },
+  {
+    topik: "Kerja Sama Tim",
+    tanya: "Keputusan tim bertentangan dengan analisis risiko Anda, namun waktu pengambilan keputusan sangat terbatas. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menyampaikan risiko utama secara ringkas dan faktual sebelum keputusan final", skor: 5 },
+      { teks: "Menyampaikan keberatan singkat lalu mengikuti keputusan", skor: 4 },
+      { teks: "Menyimpan keberatan untuk evaluasi nanti", skor: 3 },
+      { teks: "Mengikuti keputusan tanpa masukan", skor: 2 },
+      { teks: "Menarik diri dari proses pengambilan keputusan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Manajemen Stres",
+    tanya: "Perubahan kebijakan mendadak memaksa Anda membatalkan rencana kerja yang sudah matang. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menyesuaikan rencana secara adaptif dan mengomunikasikan perubahan dengan jelas", skor: 5 },
+      { teks: "Mengikuti perubahan sambil menunggu stabilitas kebijakan", skor: 4 },
+      { teks: "Menunda eksekusi hingga arahan lebih jelas", skor: 3 },
+      { teks: "Mengeluhkan perubahan kebijakan", skor: 2 },
+      { teks: "Menolak perubahan demi konsistensi rencana", skor: 1 }
+    ]
+  },
+  {
+    topik: "Integritas",
+    tanya: "Anda diminta menandatangani dokumen yang secara prosedural lengkap, namun Anda belum sepenuhnya memahami implikasinya. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Meminta waktu untuk klarifikasi dan verifikasi substansi", skor: 5 },
+      { teks: "Menandatangani dengan asumsi prosedur sudah benar", skor: 4 },
+      { teks: "Menandatangani karena tekanan waktu", skor: 3 },
+      { teks: "Menunda tanpa penjelasan", skor: 2 },
+      { teks: "Menandatangani tanpa membaca detail", skor: 1 }
+    ]
+  },
+  {
+    topik: "Tanggung Jawab",
+    tanya: "Anda memperoleh kewenangan baru tanpa pedoman teknis rinci. Langkah paling tepat adalah…",
+    opsi: [
+      { teks: "Menyusun pedoman sementara yang akuntabel sambil berkoordinasi", skor: 5 },
+      { teks: "Menjalankan kewenangan berdasarkan praktik sebelumnya", skor: 4 },
+      { teks: "Menunggu petunjuk resmi", skor: 3 },
+      { teks: "Menghindari penggunaan kewenangan", skor: 2 },
+      { teks: "Menggunakan kewenangan secara fleksibel tanpa pedoman", skor: 1 }
+    ]
+  },
+  {
+    topik: "Pelayanan Publik",
+    tanya: "Masyarakat mempertanyakan transparansi proses yang sebenarnya sesuai aturan namun kompleks. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menjelaskan proses secara sederhana dan terbuka", skor: 5 },
+      { teks: "Memberikan penjelasan sesuai dokumen regulasi", skor: 4 },
+      { teks: "Menyarankan masyarakat mempelajari aturan", skor: 3 },
+      { teks: "Menghindari detail teknis", skor: 2 },
+      { teks: "Menganggap pertanyaan tidak relevan", skor: 1 }
+    ]
+  },
+  {
+    topik: "Kerja Sama Tim",
+    tanya: "Dalam evaluasi, kontribusi individu kurang terlihat karena fokus pada hasil tim. Sikap Anda adalah…",
+    opsi: [
+      { teks: "Menghargai hasil tim sambil mencatat kontribusi untuk evaluasi internal", skor: 5 },
+      { teks: "Menerima kondisi tersebut", skor: 4 },
+      { teks: "Merasa kurang dihargai namun tetap bekerja", skor: 3 },
+      { teks: "Mengurangi partisipasi", skor: 2 },
+      { teks: "Menuntut pengakuan pribadi", skor: 1 }
+    ]
+  },
+  {
+    topik: "Manajemen Stres",
+    tanya: "Anda menyadari kinerja menurun akibat tekanan berkepanjangan. Langkah paling tepat adalah…",
+    opsi: [
+      { teks: "Melakukan refleksi, penyesuaian beban kerja, dan mencari dukungan profesional", skor: 5 },
+      { teks: "Mengambil cuti singkat tanpa rencana tindak lanjut", skor: 4 },
+      { teks: "Memaksakan diri tetap bekerja", skor: 3 },
+      { teks: "Menurunkan standar kerja", skor: 2 },
+      { teks: "Mengabaikan kondisi diri", skor: 1 }
+    ]
+  }
+];
+
+// push ke bank soal utama
+soalTKPAdvanced_3.forEach(s => {
+  soal.push({
+    jenis: "TKP",
+    topik: s.topik,
+    tanya: `[TKP ${soal.length + 1}] ${s.tanya}`,
+    opsi: s.opsi
+  });
+});
+
+
+
+
+/* ======================================================
+   INIT SOAL (KUNCI ACAK OPSI)
+====================================================== */
+function initSoal() {
+  soal.forEach(s => {
+    if (s.jenis !== "TKP") {
+      const hasil = acakPilihan(s.jawaban, s.opsi);
+      s.opsi = hasil.opsiAcak;
+      s.jawaban = hasil.jawabanBaru;
+    }
+  });
+}
+
+/* ======================================================
+   STATE UJIAN
+====================================================== */
+let indeks = 0;
+const jawaban = new Array(soal.length).fill(null);
+
+/* ======================================================
+   RENDER SOAL
+====================================================== */
+function tampilkanSoal() {
+  const s = soal[indeks];
+  document.getElementById("soalTeks").innerHTML =
+    `<strong>Soal No. ${indeks + 1} (${s.jenis})</strong><br>${s.tanya}`;
+
+  document.getElementById("opsi").innerHTML = s.opsi.map((o, i) => {
+    const teks = s.jenis === "TKP" ? o.teks : o;
+    return `
+      <div class="option">
+        <label>
+          <input type="radio" name="opsi" value="${i}"
+          ${jawaban[indeks] === i ? "checked" : ""}>
+          ${teks}
+        </label>
+      </div>
+    `;
+  }).join("");
+
+  updateNavigasi();
+  updateCounter();
+}
+
+/* ======================================================
+   NAVIGASI
+====================================================== */
+function simpanDanLanjut() {
+  const pilih = document.querySelector("input[name='opsi']:checked");
+  if (pilih) jawaban[indeks] = parseInt(pilih.value);
+  if (indeks < soal.length - 1) indeks++;
+  tampilkanSoal();
+}
+
+function lewati() {
+  if (indeks < soal.length - 1) indeks++;
+  tampilkanSoal();
+}
+
+function navigasiKe(i) {
+  indeks = i;
+  tampilkanSoal();
+}
+
+function updateNavigasi() {
+  document.getElementById("navigasi").innerHTML = soal.map((_, i) => `
+    <button class="${jawaban[i] !== null ? 'green' : 'red'}"
+    onclick="navigasiKe(${i})">${i + 1}</button>
+  `).join("");
+}
+
+function updateCounter() {
+  const dijawab = jawaban.filter(j => j !== null).length;
+  document.getElementById("dijawab").textContent = dijawab;
+  document.getElementById("belum").textContent = soal.length - dijawab;
+}
+
+/* ======================================================
+   TIMER FORMAT HH:MM:SS
+====================================================== */
+function mulaiTimer() {
+  interval = setInterval(() => {
+    if (waktuTersisa <= 0) {
+      clearInterval(interval);
+      konfirmasiSelesai();
+      return;
+    }
+    waktuTersisa--;
+    const h = Math.floor(waktuTersisa / 3600);
+    const m = Math.floor((waktuTersisa % 3600) / 60);
+    const s = waktuTersisa % 60;
+    document.getElementById("timer").textContent =
+      `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }, 1000);
+}
+
+/* ======================================================
+   SUBMIT & HITUNG SKOR (FIXED)
+====================================================== */
+function konfirmasiSelesai() {
+  if (!confirm("Akhiri ujian dan lihat hasil?")) return;
+
+  // hentikan timer
+  clearInterval(interval);
+
+  // ⚠️ AMBIL DATA PESERTA LANGSUNG (TANPA SENTUH DOM)
+  const data = JSON.parse(localStorage.getItem("dataPeserta")) || {
+    nama: "-",
+    email: "-"
+  };
+
+  let skorTWK = 0;
+  let skorTIU = 0;
+  let skorTKP = 0;
+
+  // hitung skor
+  soal.forEach((s, i) => {
+    const jwb = jawaban[i];
+    if (jwb === null) return;
+
+    if (s.jenis === "TWK" && jwb === s.jawaban) {
+      skorTWK += 5;
+    }
+
+    if (s.jenis === "TIU" && jwb === s.jawaban) {
+      skorTIU += 5;
+    }
+
+    if (s.jenis === "TKP") {
+      skorTKP += s.opsi[jwb].skor;
+    }
+  });
+
+  // kirim ke halaman hasil
+  tampilkanHasilAkhir({
+    nama: data.nama,
+    email: data.email,
+    skorTWK: skorTWK,
+    skorTIU: skorTIU,
+    skorTKP: skorTKP,
+    total: skorTWK + skorTIU + skorTKP
+  });
+}
+
+
+/* ======================================================
+   TAMPIL HASIL 
+   (FAIL-SAFE: ANALISIS, RADAR, & REVIEW TIDAK MEMBLOKIR UI)
+====================================================== */
+function tampilkanHasilAkhir(h) {
+  try {
+    // ===== tampilkan nilai dasar =====
+    document.getElementById("hasilNama").textContent = h.nama;
+    document.getElementById("hasilEmail").textContent = h.email;
+    document.getElementById("twk").textContent = h.skorTWK;
+    document.getElementById("tiu").textContent = h.skorTIU;
+    document.getElementById("tkp").textContent = h.skorTKP;
+    document.getElementById("total").textContent = h.total;
+
+    // ===== status kelulusan =====
+    tampilkanStatusKelulusan(
+      h.skorTWK,
+      h.skorTIU,
+      h.skorTKP
+    );
+  } catch (e) {
+    console.error("Gagal render nilai dasar:", e);
+  }
+
+  // ===== ANALISIS TOPIK =====
+  try {
+    const analisisEl = document.getElementById("analisisTopik");
+    if (
+      analisisEl &&
+      typeof analisisTopikLemah === "function"
+    ) {
+      analisisEl.innerHTML = analisisTopikLemah();
+    }
+  } catch (e) {
+    console.warn("Analisis topik gagal, dilewati:", e);
+  }
+
+  // ===== RADAR CHART =====
+  try {
+    if (
+      typeof Chart !== "undefined" &&
+      typeof tampilkanRadarChart === "function"
+    ) {
+      tampilkanRadarChart(
+        h.skorTWK,
+        h.skorTIU,
+        h.skorTKP
+      );
+    }
+  } catch (e) {
+    console.warn("Radar chart gagal, dilewati:", e);
+  }
+
+  // ===== REVIEW SOAL SALAH =====
+  try {
+    if (typeof renderReviewSoalSalah === "function") {
+      renderReviewSoalSalah();
+    }
+  } catch (e) {
+    console.warn("Review soal salah gagal, dilewati:", e);
+  }
+
+  // ===== SWITCH HALAMAN (WAJIB JALAN) =====
+  try {
+    const halamanUjian = document.getElementById("halaman-ujian");
+    const halamanHasil = document.getElementById("halaman-hasil");
+
+    if (halamanUjian) halamanUjian.style.display = "none";
+    if (halamanHasil) halamanHasil.style.display = "block";
+  } catch (e) {
+    console.error("Gagal switch halaman:", e);
+  }
+}
+
+
+
+
+/* ======================================================
+   STATUS KELULUSAN
+====================================================== */
+function tampilkanStatusKelulusan(twk, tiu, tkp) {
+  const el = document.getElementById("statusKelulusan");
+  if (twk >= 65 && tiu >= 80 && tkp >= 166) {
+    el.textContent = "LULUS";
+    el.className = "kelulusan lulus";
+  } else {
+    el.textContent = "TIDAK LULUS";
+    el.className = "kelulusan tidak-lulus";
+  }
+}
+
+/* ======================================================
+   DOWNLOAD PNG HASIL
+====================================================== */
+function downloadPNG() {
+  html2canvas(document.getElementById("captureArea"), {
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+    const link = document.createElement("a");
+    link.download = "hasil-tryout.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
+}
+
+function lihatPembahasan() {
+  alert("Fitur pembahasan (premium)");
+}
+
+/* ======================================================
+   INIT APP (SESUAI POPUP MULAI)
+====================================================== */
+function initApp() {
+  // siapkan soal (acak sekali)
+  initSoal();
+
+  // JANGAN load peserta dari storage ke UI
+  // JANGAN tampilkan soal
+  // JANGAN mulai timer
+
+  // amankan refresh
+  window.onbeforeunload = () => "Ujian sedang berlangsung.";
+}
+
+
+/* ======================================================
+   MULAI UJIAN (FINAL)
+====================================================== */
+function mulaiUjian() {
+  const namaInput = document.getElementById("inputNama");
+  const emailInput = document.getElementById("inputEmail");
+
+  const nama = namaInput.value.trim();
+  const email = emailInput.value.trim();
+
+  // validasi wajib isi
+  if (!nama || !email) {
+    alert("Nama dan Email wajib diisi.");
+    return;
+  }
+
+  // validasi format email sederhana
+  if (!email.includes("@")) {
+    alert("Format email tidak valid.");
+    return;
+  }
+
+  // simpan data peserta
+  const dataPeserta = { nama, email };
+  localStorage.setItem("dataPeserta", JSON.stringify(dataPeserta));
+
+  // tampilkan data di halaman ujian
+  document.getElementById("namaPeserta").textContent = nama;
+  document.getElementById("emailPeserta").textContent = email;
+
+  // tutup popup mulai
+  document.getElementById("popupMulai").style.display = "none";
+
+  // aktifkan halaman ujian (jika sebelumnya dikunci)
+  const halamanUjian = document.getElementById("halaman-ujian");
+  halamanUjian.style.pointerEvents = "auto";
+  halamanUjian.style.opacity = "1";
+
+  // reset state ujian (aman kalau reload)
+  indeks = 0;
+  jawaban.fill(null);
+
+  // mulai ujian
+  tampilkanSoal();
+  updateNavigasi();
+  updateCounter();
+  mulaiTimer();
+}
+
+
+/* ======================================================
+   ANALISIS TOPIK YANG PERLU DIPERKUAT
+====================================================== */
+function analisisTopikLemah() {
+  const salah = {};
+
+  soal.forEach((s, i) => {
+    const jwb = jawaban[i];
+    if (jwb === null) return;
+    if (s.jenis === "TKP") return; // TKP tidak benar/salah
+
+    if (jwb !== s.jawaban) {
+      const key = `${s.jenis} – ${s.topik}`;
+      salah[key] = (salah[key] || 0) + 1;
+    }
+  });
+
+  if (Object.keys(salah).length === 0) {
+    return "<p>✅ Tidak ada topik lemah. Performa sangat baik.</p>";
+  }
+
+  let html = "<ul>";
+  for (const k in salah) {
+    html += `<li><strong>${k}</strong>: ${salah[k]} soal salah</li>`;
+  }
+  html += "</ul>";
+
+  return html;
+}
+
+
+/* ======================================================
+   RADAR / SPIDER CHART
+====================================================== */
+let radarChartInstance = null;
+
+function tampilkanRadarChart(twk, tiu, tkp) {
+  const canvas = document.getElementById("grafikRadar");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+
+  if (radarChartInstance) {
+    radarChartInstance.destroy();
+  }
+
+  radarChartInstance = new Chart(ctx, {
+    type: "radar",
+    data: {
+      labels: ["TWK", "TIU", "TKP"],
+      datasets: [{
+        label: "Capaian Skor",
+        data: [twk, tiu, tkp],
+        backgroundColor: "rgba(54,162,235,0.2)",
+        borderColor: "rgba(54,162,235,1)",
+        borderWidth: 2,
+        pointBackgroundColor: "#2563eb"
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        r: {
+          beginAtZero: true,
+          suggestedMax: 200
+        }
+      }
+    }
+  });
+}
+
+
+/* ======================================================
+   REVIEW SOAL SALAH (TWK & TIU SAJA)
+====================================================== */
+function renderReviewSoalSalah() {
+  const container = document.getElementById("reviewSoalSalah");
+  if (!container) return;
+
+  let html = "";
+  let nomor = 1;
+
+  soal.forEach((s, i) => {
+    const jwb = jawaban[i];
+
+    // abaikan jika kosong atau TKP
+    if (jwb === null) return;
+    if (s.jenis === "TKP") return;
+
+    // hanya soal yang salah
+    if (jwb !== s.jawaban) {
+      const jawabanUser = s.opsi[jwb];
+      const jawabanBenar = s.opsi[s.jawaban];
+
+      html += `
+        <div style="
+          border:1px solid #fca5a5;
+          background:#fff1f2;
+          padding:12px;
+          border-radius:6px;
+          margin-bottom:15px
+        ">
+          <strong>${nomor}. [${s.jenis}] ${s.topik}</strong>
+          <p style="margin:8px 0">${s.tanya}</p>
+
+          <p style="color:#b91c1c">
+            ❌ Jawaban Anda: <strong>${jawabanUser}</strong>
+          </p>
+
+          <p style="color:#15803d">
+            ✅ Jawaban Benar: <strong>${jawabanBenar}</strong>
+          </p>
+        </div>
+      `;
+      nomor++;
+    }
+  });
+
+  if (html === "") {
+    html = "<p>🎉 Tidak ada soal yang salah. Performa sempurna!</p>";
+  }
+
+  container.innerHTML = html;
+}
+
+
+
+
+  </script>
+
+</body>
+</html>
