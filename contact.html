@@ -1345,6 +1345,23 @@
   filter: grayscale(.3);
 }
 
+
+.badge-corporate{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 16px;
+  font-size:.7rem;
+  font-weight:700;
+  letter-spacing:.6px;
+  border-radius:999px;
+  color:#374151;
+  background:linear-gradient(135deg,#e5e7eb,#f9fafb);
+  border:1px solid #d1d5db;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+  text-transform:uppercase;
+}
+
   </style>
 </head>
 <body>
@@ -1394,107 +1411,120 @@
 
 <!-- HEADER -->
 <div class="text-center mb-5">
-  <h1 class="hero-title">Kontak Kami</h1>
+  <h1 class="hero-title">Tentang Kami</h1>
   <p class="subtitle-text">
-    Hubungi <b>Primajana Center</b> untuk pertanyaan, kerja sama, maupun informasi
-    terkait layanan penerbitan, pendampingan akademik, dan persiapan karier.
-    Tim kami siap membantu secara <b>responsif dan profesional</b>.
+    <b>PT Primajana Bagia Mesari</b> adalah badan hukum resmi yang berperan sebagai
+    lembaga pendukung pengembangan <b>literasi akademik, riset, dan peningkatan kapasitas
+    sumber daya manusia</b> di Indonesia. Kami mengedepankan tata kelola layanan yang
+    <b>akuntabel, berstandar, dan berorientasi pada mutu</b> dalam setiap program dan kerja sama.
   </p>
 </div>
 
 <div class="row g-4 justify-content-center">
 
+  <!-- PROFIL PERUSAHAAN -->
   <div class="col-lg-8">
     <div class="product-card">
-      <div class="card-body text-center">
+      <div class="card-body">
 
-        <h4 class="fw-bold mb-4">Primajana Center</h4>
+        <!-- BADGE CORPORATE -->
+        <span class="product-badge badge-corporate">
+          <i class="fa-solid fa-building me-2"></i>
+          COMPANY PROFILE
+        </span>
 
-        <div class="row g-4">
+        <h4 class="fw-bold mt-3">PT Primajana Bagia Mesari</h4>
 
-          <!-- WHATSAPP -->
-          <div class="col-md-6">
-            <div class="publication-card h-100">
-              <div class="mb-3">
-                <i class="fa-brands fa-whatsapp fa-3x text-success"></i>
-              </div>
-              <h6 class="fw-bold">WhatsApp</h6>
-              <p class="text-muted small mb-3">
-                +62 859-3520-1571
-              </p>
-              <a href="https://wa.me/6285935201571"
-                 target="_blank"
-                 class="btn btn-publikasi">
-                Chat via WhatsApp
-              </a>
-            </div>
+        <p class="text-muted small mb-3">
+          <b>PT Primajana Bagia Mesari</b> menjalankan kegiatan usaha di bidang
+          <b>penerbitan ilmiah, pendampingan akademik, serta pengembangan kompetensi individu
+          dan institusi</b>. Layanan kami mencakup fasilitasi penulisan dan publikasi karya ilmiah,
+          pendampingan riset, serta program persiapan karier dan pendidikan lanjut yang
+          dirancang secara sistematis.
+        </p>
+
+        <p class="text-muted small mb-3">
+          Dalam pelaksanaannya, Primajana berfungsi sebagai <b>mitra profesional</b>
+          bagi mahasiswa, peneliti, dosen, tenaga profesional, dan lembaga pendidikan
+          dalam memastikan setiap proses pengembangan dilakukan sesuai
+          <b>standar akademik, etika keilmuan, dan kebutuhan dunia profesional</b>.
+        </p>
+
+        <hr>
+
+        <h6 class="fw-bold mb-2">Legalitas Perusahaan</h6>
+
+        <ul class="small mb-3">
+          <li><b>Nama Badan Hukum:</b> PT Primajana Bagia Mesari</li>
+          <li><b>Nomor Induk Berusaha (NIB):</b> 0908250015244</li>
+          <li>
+            <b>Akta Pendirian Perseroan Terbatas:</b><br>
+            Nomor: AHU-041906.AH.01.30.Tahun 2025
+          </li>
+        </ul>
+
+        <hr>
+
+        <!-- KONTAK & MEDIA SOSIAL -->
+        <h6 class="fw-bold mb-2">Kontak & Media Sosial</h6>
+
+        <div class="d-flex flex-column gap-2 small text-muted">
+
+          <div>
+            <i class="fa-solid fa-globe me-2 text-primary"></i>
+            <b>Website:</b>
+            <a href="https://primajana.com"
+               target="_blank"
+               class="text-decoration-none ms-1">
+              https://primajana.com
+            </a>
           </div>
 
-          <!-- EMAIL -->
-          <div class="col-md-6">
-            <div class="publication-card h-100">
-              <div class="mb-3">
-                <i class="fa-solid fa-envelope fa-3x text-primary"></i>
-              </div>
-              <h6 class="fw-bold">Email</h6>
-              <p class="text-muted small mb-1">
-                haloprimajana@gmail.com
-              </p>
-              <p class="text-muted small mb-3">
-                primajanacenter@gmail.com
-              </p>
-              <a href="mailto:haloprimajana@gmail.com"
-                 class="btn btn-publikasi">
-                Kirim Email
-              </a>
-            </div>
+          <div>
+            <i class="fa-brands fa-instagram me-2 text-danger"></i>
+            <b>Instagram:</b>
+            <a href="https://www.instagram.com/primajanacenter/"
+               target="_blank"
+               class="text-decoration-none ms-1">
+              @primajanacenter
+            </a>
           </div>
 
-          <!-- INSTAGRAM -->
-          <div class="col-md-6">
-            <div class="publication-card h-100">
-              <div class="mb-3">
-                <i class="fa-brands fa-instagram fa-3x text-danger"></i>
-              </div>
-              <h6 class="fw-bold">Instagram</h6>
-              <p class="text-muted small mb-3">
-                @primajanacenter
-              </p>
-              <a href="https://www.instagram.com/primajanacenter/"
-                 target="_blank"
-                 class="btn btn-publikasi">
-                Kunjungi Instagram
-              </a>
-            </div>
+          <div>
+            <i class="fa-brands fa-tiktok me-2"></i>
+            <b>TikTok:</b>
+            <a href="https://www.tiktok.com/@primajanacenter_"
+               target="_blank"
+               class="text-decoration-none ms-1">
+              @primajanacenter_
+            </a>
           </div>
 
-          <!-- TIKTOK -->
-          <div class="col-md-6">
-            <div class="publication-card h-100">
-              <div class="mb-3">
-                <i class="fa-brands fa-tiktok fa-3x text-dark"></i>
-              </div>
-              <h6 class="fw-bold">TikTok</h6>
-              <p class="text-muted small mb-3">
-                @primajanacenter_
-              </p>
-              <a href="https://www.tiktok.com/@primajanacenter_"
-                 target="_blank"
-                 class="btn btn-publikasi">
-                Kunjungi TikTok
-              </a>
-            </div>
+          <div>
+            <i class="fa-brands fa-whatsapp me-2 text-success"></i>
+            <b>WhatsApp:</b>
+            <a href="https://wa.me/6285935201571"
+               target="_blank"
+               class="text-decoration-none ms-1">
+              +62 859-3520-1571
+            </a>
+          </div>
+
+          <div>
+            <i class="fa-solid fa-envelope me-2 text-secondary"></i>
+            <b>Email:</b>
+            <a href="mailto:haloprimajana@gmail.com"
+               class="text-decoration-none ms-1">
+              haloprimajana@gmail.com
+            </a>
+            /
+            <a href="mailto:primajanacenter@gmail.com"
+               class="text-decoration-none ms-1">
+              primajanacenter@gmail.com
+            </a>
           </div>
 
         </div>
-
-        <hr class="my-4">
-
-        <p class="text-muted small mb-0">
-          ⏱️ Jam respons tercepat: <b>09.00 – 21.00 WIB</b><br>
-          📌 Untuk kerja sama institusi atau kebutuhan resmi,
-          silakan hubungi kami melalui email.
-        </p>
 
       </div>
     </div>
