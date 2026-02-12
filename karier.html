@@ -1307,6 +1307,41 @@
   transform: translateY(-50%);
 }
 
+/* MINI PREVIEW CARD */
+.preview-mini-card{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:14px 12px;
+  border-radius:14px;
+  background:#ffffff;
+  border:1px solid #e5e7eb;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  text-decoration:none;
+  color:#1f2937;
+  font-weight:600;
+  font-size:.85rem;
+  transition:.3s ease;
+  text-align:center;
+}
+
+.preview-mini-card i{
+  font-size:1.1rem;
+  color:#4f46e5;
+}
+
+.preview-mini-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 32px rgba(79,70,229,.25);
+  color:#1f2937;
+}
+
+/* CTA TRYOUT */
+.btn-tryout{
+  padding:14px 36px;
+  font-size:.95rem;
+}
 
   </style>
 </head>
@@ -1367,6 +1402,67 @@
   </p>
 </div>
 
+    <div class="row g-4">
+    
+    <!-- PREVIEW PROGRAM -->
+<div class="text-center mb-3">
+  <h5 class="fw-bold mb-2">Preview Gratis</h5>
+  <p class="text-muted small mb-4">
+    Coba materi dan soal sebelum mengikuti program lengkap.
+  </p>
+</div>
+
+<!-- GRID 2x2 PREVIEW -->
+<div class="row g-3 justify-content-center mb-4">
+
+  <div class="col-6 col-md-3">
+    <a href="https://primajana.com/tkd-preview-materi"
+       target="_blank"
+       class="preview-mini-card">
+      <i class="fa-solid fa-book-open"></i>
+      <span>Preview Materi</span>
+    </a>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <a href="https://primajana.com/tkd-preview-soal-twk-tiu"
+       target="_blank"
+       class="preview-mini-card">
+      <i class="fa-solid fa-pen-ruler"></i>
+      <span>Soal TWK & TIU</span>
+    </a>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <a href="https://primajana.com/tkd-preview-soal-logika-figural"
+       target="_blank"
+       class="preview-mini-card">
+      <i class="fa-solid fa-shapes"></i>
+      <span>Logika Figural</span>
+    </a>
+  </div>
+
+  <div class="col-6 col-md-3">
+    <a href="https://primajana.com/tkd-preview-soal-tkp"
+       target="_blank"
+       class="preview-mini-card">
+      <i class="fa-solid fa-user-check"></i>
+      <span>Soal TKP</span>
+    </a>
+  </div>
+
+</div>
+
+<!-- CTA TRYOUT (AKSI UTAMA) -->
+<div class="text-center mb-5">
+  <a href="https://primajana.com/trial-tkd-free"
+     target="_blank"
+     class="btn btn-cta-produk btn-tryout">
+    <i class="fa-solid fa-desktop me-2"></i>
+    Mulai Tryout CAT SKD Gratis
+  </a>
+</div>
+      
     <div class="row g-4">
 
 <!-- ===============================
