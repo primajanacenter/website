@@ -398,6 +398,58 @@ header p {
   background: transparent;
 }
 
+/* ===============================
+   🛈 TOOLTIP HASIL EVALUASI
+================================ */
+.tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: help;
+}
+
+.tooltip-icon {
+  font-size: 13px;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  z-index: 20;
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+
+.tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #0f172a transparent transparent transparent;
+}
+
+.tooltip-wrap:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+}
+
 
 </style>
 
@@ -437,19 +489,52 @@ header p {
 
   <!-- RINGKASAN NILAI -->
   <div class="result-summary">
-    <div class="summary-box">
-      <span class="label">Skor</span>
-      <span class="value" id="finalScore">–</span>
-    </div>
-    <div class="summary-box">
-      <span class="label">Knowledge Point</span>
-      <span class="value" id="finalKP">–</span>
-    </div>
-    <div class="summary-box">
-      <span class="label">Level</span>
-      <span class="value" id="finalLevel">–</span>
-    </div>
+
+  <!-- SKOR -->
+  <div class="summary-box">
+    <span class="label tooltip-wrap">
+      Skor
+      <span class="tooltip-icon">ⓘ</span>
+      <span class="tooltip-content">
+        Total nilai yang diperoleh dari jawaban benar.
+        Digunakan untuk mengukur tingkat penguasaan materi secara kuantitatif.
+      </span>
+    </span>
+    <span class="value" id="finalScore">–</span>
   </div>
+
+  <!-- KNOWLEDGE POINT -->
+  <div class="summary-box">
+    <span class="label tooltip-wrap">
+      Knowledge Point
+      <span class="tooltip-icon">ⓘ</span>
+      <span class="tooltip-content">
+        Poin pembelajaran yang mencerminkan akumulasi pemahaman
+        dan konsistensi menjawab soal dengan benar.
+      </span>
+    </span>
+    <span class="value" id="finalKP">–</span>
+  </div>
+
+  <!-- LEVEL -->
+  <div class="summary-box">
+    <span class="label tooltip-wrap">
+      Level
+      <span class="tooltip-icon">ⓘ</span>
+      <span class="tooltip-content">
+        Indikator kesiapan peserta berdasarkan Knowledge Point:<br>
+        • Level 1: Kesiapan rendah<br>
+        • Level 2: Dasar<br>
+        • Level 3: Cukup<br>
+        • Level 4: Baik<br>
+        • Level 5: Tinggi
+      </span>
+    </span>
+    <span class="value" id="finalLevel">–</span>
+  </div>
+
+</div>
+
 
   <!-- ANALITIK -->
   <div class="result-section">
