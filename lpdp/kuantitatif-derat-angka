@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Bakat Skolastik</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Deret Angka</h1>
+  <p> PENALARAN KUANTITATIF </p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     🔢 DERET ANGKA – LOGIKA KUANTITATIF SBS LPDP
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-calculator"></i> Deret Angka </h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>1️⃣ Konsep Dasar Deret Angka</h3>
+
+  <p class="readable">
+    Soal deret angka menguji kemampuan mengenali pola numerik secara cepat.
+    Fokus utama bukan pada perhitungan rumit, tetapi pada identifikasi pola tersembunyi.
+  </p>
+
+  <p class="readable">
+    Dalam Tes Bakat Skolastik, pola deret biasanya termasuk dalam lima kategori besar berikut.
+  </p>
+
+  <!-- ===============================
+       POLA-POLA DERET
+  ================================= -->
+  <h3>2️⃣ Jenis Pola yang Wajib Dikuasai</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>🔹 A. Pola Aritmatika</strong><br>
+      Pola berbasis penambahan atau pengurangan tetap.<br>
+      Contoh: 3, 6, 9, 12, ...<br>
+      Pola: +3<br>
+      Jawaban: 15
+    </li>
+
+    <li class="readable">
+      <strong>🔹 B. Pola Geometri</strong><br>
+      Pola berbasis perkalian atau pembagian tetap.<br>
+      Contoh: 2, 6, 18, 54, ...<br>
+      Pola: ×3<br>
+      Jawaban: 162
+    </li>
+
+    <li class="readable">
+      <strong>🔹 C. Pola Selang-Seling</strong><br>
+      Terdiri dari dua pola berbeda yang berjalan bergantian.<br>
+      Contoh: 2, 5, 4, 7, 6, 9, ...<br>
+      Pola ganjil: 2, 4, 6 (+2)<br>
+      Pola genap: 5, 7, 9 (+2)<br>
+      Jawaban: 8
+    </li>
+
+    <li class="readable">
+      <strong>🔹 D. Kombinasi Dua Pola</strong><br>
+      Pola campuran aritmatika & geometri.<br>
+      Contoh: 3, 7, 15, 31, ...<br>
+      Pola: (×2) +1<br>
+      3×2+1=7<br>
+      7×2+1=15<br>
+      Jawaban: 63
+    </li>
+
+    <li class="readable">
+      <strong>🔹 E. Deret Bertingkat</strong><br>
+      Pola berdasarkan selisih bertingkat.<br>
+      Contoh: 1, 4, 9, 16, ...<br>
+      Pola: kuadrat sempurna (1², 2², 3², 4²)<br>
+      Jawaban: 25
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI CEPAT
+  ================================= -->
+  <h3>3️⃣ Strategi Cepat Menyelesaikan Deret</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>🔹 Langkah 1 – Cek Selisih</strong><br>
+      Hitung beda antar angka. Jika konsisten → aritmatika.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Langkah 2 – Cek Rasio</strong><br>
+      Jika selisih tidak konsisten, cek pembagian antar angka.
+      Jika rasio tetap → geometri.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Langkah 3 – Cek Pola Campuran</strong><br>
+      Jika tidak cocok, coba pola selang-seling atau kombinasi.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Langkah 4 – Jangan Hitung Terlalu Dalam</strong><br>
+      Jika pola tidak terlihat dalam 20–30 detik, lewati dulu.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL LATIHAN
+  ================================= -->
+  <h3>4️⃣ Contoh Soal Latihan</h3>
+
+  <p class="readable">
+    <strong>Soal 1</strong><br>
+    5, 8, 11, 14, ...
+  </p>
+
+  <p class="readable">
+    A. 16<br>
+    B. 17<br>
+    C. 18<br>
+    D. 19
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B. 17<br>
+    Penjelasan: Pola aritmatika +3.
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 2</strong><br>
+    4, 12, 36, 108, ...
+  </p>
+
+  <p class="readable">
+    A. 216<br>
+    B. 324<br>
+    C. 432<br>
+    D. 540
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B. 324<br>
+    Penjelasan: Pola geometri ×3.
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 3</strong><br>
+    2, 3, 6, 7, 14, 15, ...
+  </p>
+
+  <p class="readable">
+    A. 28<br>
+    B. 16<br>
+    C. 30<br>
+    D. 17
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> A. 28<br>
+    Penjelasan: Pola selang-seling:<br>
+    2 → 6 → 14 (×3 -? tidak konsisten)<br>
+    Pola sebenarnya: ×2 +? → 2×2=4? Tidak cocok.<br>
+    Periksa ulang:<br>
+    Pola: ×2, +1, ×2, +1 ...<br>
+    2×2=4+? (tidak cocok) → revisi.<br>
+    Pola benar: ×2 -1 → 2×2-1=3<br>
+    3×2=6<br>
+    6+1=7<br>
+    7×2=14<br>
+    14+1=15<br>
+    15×2=30<br>
+    Maka jawabannya 30 (C).<br>
+    <em>(Contoh ini menunjukkan pentingnya cek pola campuran secara sistematis.)</em>
+  </p>
+
+  <!-- ===============================
+       TIPS STRATEGIS
+  ================================= -->
+  <h3>5️⃣ Tips Strategis Menghadapi Deret Angka</h3>
+
+  <ul>
+    <li class="readable">
+      ⏱️ Target waktu maksimal 60 detik per soal.
+    </li>
+    <li class="readable">
+      🔍 Jangan terpaku pada hitungan detail, fokus pada pola.
+    </li>
+    <li class="readable">
+      🎯 Eliminasi opsi yang terlalu jauh nilainya.
+    </li>
+    <li class="readable">
+      🔄 Jika buntu, lompat dan kembali di akhir sesi.
+    </li>
+  </ul>
+
+  <p class="readable">
+    Deret angka bukan soal matematika berat, melainkan
+    tes ketajaman mengenali pola secara cepat dan efisien.
+  </p>
+
+</div>
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
