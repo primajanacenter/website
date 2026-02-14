@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Bakat Skolastik</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Akademik Profesional | Hierarki Pengambilan Keputusan </h1>
+  <p> SITUATIONAL JUDGEMENT TEST (SJT) </p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     🧠 SITUATIONAL JUDGEMENT TEST (SJT) – SBS LPDP
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-users"></i> Situational Judgement Test (SJT)</h2>
+
+  <p class="readable">
+    <strong>Durasi:</strong> ±45 menit<br>
+    <strong>Jumlah soal:</strong> ±40 soal<br>
+    <strong>Status:</strong> Tidak masuk skor utama TBS, tetapi sangat menentukan kelulusan tahap.
+  </p>
+
+  <p class="readable">
+    SJT mengukur kematangan profesional, integritas moral, dan kualitas pengambilan keputusan 
+    dalam konteks akademik maupun pelayanan publik.
+  </p>
+
+  <hr>
+
+  <!-- ===============================
+       FOKUS PENILAIAN
+  ================================= -->
+  <h3>1️⃣ Fokus Kompetensi yang Dinilai</h3>
+
+  <ul>
+    <li class="readable"><strong>Integritas</strong> – Kejujuran, konsistensi nilai, anti penyalahgunaan.</li>
+    <li class="readable"><strong>Kepemimpinan</strong> – Inisiatif, tanggung jawab, pengaruh positif.</li>
+    <li class="readable"><strong>Kerja Tim</strong> – Kolaborasi, empati, komunikasi efektif.</li>
+    <li class="readable"><strong>Manajemen Konflik</strong> – Penyelesaian rasional & profesional.</li>
+    <li class="readable"><strong>Tanggung Jawab</strong> – Ownership terhadap tugas & konsekuensi.</li>
+    <li class="readable"><strong>Profesionalisme Akademik</strong> – Etika ilmiah & kepatuhan prosedur.</li>
+  </ul>
+
+  <hr>
+
+  <!-- ===============================
+       PRINSIP DASAR
+  ================================= -->
+  <h3>2️⃣ Prinsip ASN / Akademik Profesional</h3>
+
+  <ul>
+    <li class="readable"><strong>Transparansi</strong> – Keputusan dapat dijelaskan & dipertanggungjawabkan.</li>
+    <li class="readable"><strong>Akuntabilitas</strong> – Bertanggung jawab atas hasil & proses.</li>
+    <li class="readable"><strong>Anti Korupsi</strong> – Tidak menyalahgunakan wewenang.</li>
+    <li class="readable"><strong>Netralitas</strong> – Tidak bias kepentingan pribadi/politik.</li>
+    <li class="readable"><strong>Kepentingan Publik</strong> – Mengutamakan dampak sosial lebih luas.</li>
+  </ul>
+
+  <hr>
+
+  <!-- ===============================
+       HIERARKI RESPON IDEAL
+  ================================= -->
+  <h3>3️⃣ Hierarki Pengambilan Keputusan Ideal</h3>
+
+  <ol>
+    <li class="readable">Komunikasi langsung & klarifikasi baik-baik.</li>
+    <li class="readable">Koordinasi dengan tim untuk solusi kolektif.</li>
+    <li class="readable">Eskalasi ke atasan jika menyangkut pelanggaran serius.</li>
+    <li class="readable">Dokumentasi formal untuk akuntabilitas.</li>
+  </ol>
+
+  <p class="readable">
+    Urutan ini mencerminkan kedewasaan profesional: tidak reaktif, tidak pasif, tidak gegabah.
+  </p>
+
+  <hr>
+
+  <!-- ===============================
+       CONTOH SOAL
+  ================================= -->
+  <h3>4️⃣ Contoh Soal & Pembahasan</h3>
+
+  <p class="readable">
+    <strong>Soal 1 – Integritas</strong><br>
+    Anda mengetahui rekan tim memanipulasi data agar hasil penelitian terlihat signifikan.
+    Apa tindakan terbaik?
+  </p>
+
+  <p class="readable">
+    A. Membiarkan karena itu tanggung jawab dia.<br>
+    B. Menegur secara emosional di depan tim.<br>
+    C. Mengklarifikasi secara pribadi dan meminta perbaikan.<br>
+    D. Langsung melaporkan tanpa konfirmasi.
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C.<br>
+    Penjelasan: Profesional → klarifikasi dulu, beri kesempatan koreksi.
+    Eskalasi dilakukan jika tidak ada itikad baik.
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 2 – Konflik Tim</strong><br>
+    Dua anggota tim berdebat keras dan menghambat proyek.
+  </p>
+
+  <p class="readable">
+    A. Membiarkan agar mereka menyelesaikan sendiri.<br>
+    B. Memihak salah satu yang lebih senior.<br>
+    C. Memfasilitasi diskusi objektif berbasis data.<br>
+    D. Menghentikan proyek sementara waktu.
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C.<br>
+    Penjelasan: Pemimpin efektif fokus solusi berbasis fakta & kolaborasi.
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 3 – Tanggung Jawab</strong><br>
+    Anda terlambat menyerahkan laporan karena kesalahan pribadi.
+  </p>
+
+  <p class="readable">
+    A. Menyalahkan sistem.<br>
+    B. Mengabaikan & berharap tidak ditegur.<br>
+    C. Mengakui kesalahan & memperbaiki segera.<br>
+    D. Mengalihkan tugas ke orang lain.
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C.<br>
+    Penjelasan: Akuntabilitas pribadi menunjukkan integritas profesional.
+  </p>
+
+  <hr>
+
+  <!-- ===============================
+       JEBAKAN UMUM
+  ================================= -->
+  <h3>5️⃣ Jawaban yang Harus Dihindari</h3>
+
+  <ul>
+    <li class="readable">❌ Emosional & konfrontatif.</li>
+    <li class="readable">❌ Menghindari tanggung jawab.</li>
+    <li class="readable">❌ Melanggar prosedur formal.</li>
+    <li class="readable">❌ Membiarkan pelanggaran etika.</li>
+  </ul>
+
+  <hr>
+
+  <!-- ===============================
+       STRATEGI MENJAWAB
+  ================================= -->
+  <h3>6️⃣ Tips Strategis Menjawab SJT</h3>
+
+  <ul>
+    <li class="readable">
+      🔹 Pilih respon yang rasional & proporsional.
+    </li>
+    <li class="readable">
+      🔹 Hindari opsi ekstrem (terlalu keras atau terlalu pasif).
+    </li>
+    <li class="readable">
+      🔹 Prioritaskan komunikasi & kolaborasi.
+    </li>
+    <li class="readable">
+      🔹 Pikirkan dampak jangka panjang & reputasi institusi.
+    </li>
+    <li class="readable">
+      🔹 Tanyakan: “Apakah ini profesional? Apakah ini etis?”
+    </li>
+  </ul>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Kesimpulan:</strong><br>
+    SJT bukan tes benar-salah absolut, tetapi tes kedewasaan berpikir.
+    Jawaban terbaik adalah yang menunjukkan integritas, empati, dan kepemimpinan rasional.
+  </p>
+
+</div>
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
