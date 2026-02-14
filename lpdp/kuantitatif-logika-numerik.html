@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Bakat Skolastik</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Logika Numerik</h1>
+  <p> PENALARAN KUANTITATIF </p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     🔢 LOGIKA NUMERIK – SBS LPDP
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-calculator"></i> Logika Numerik (Kecepatan & Strategi)</h2>
+
+  <!-- ===============================
+       PENJELASAN UMUM
+  ================================= -->
+  <p class="readable">
+    Logika numerik dalam Tes Bakat Skolastik menilai kemampuan Anda
+    menganalisis hubungan angka secara cepat dan rasional, bukan
+    menghitung panjang. Fokus utama adalah logika kuantitatif,
+    perbandingan, estimasi, dan eliminasi cerdas.
+  </p>
+
+  <!-- ===============================
+       PERNYATAAN KUANTITATIF
+  ================================= -->
+  <h3>1️⃣ Pernyataan Kuantitatif</h3>
+
+  <p class="readable">
+    Soal tipe ini meminta Anda menentukan apakah suatu pernyataan
+    bernilai benar berdasarkan informasi numerik yang diberikan.
+  </p>
+
+  <ul>
+    <li class="readable">Persentase dan rasio</li>
+    <li class="readable">Rata-rata</li>
+    <li class="readable">Hubungan lebih besar / lebih kecil</li>
+    <li class="readable">Cukup informasi atau tidak</li>
+  </ul>
+
+  <p class="readable"><strong>Contoh Soal:</strong></p>
+
+  <p class="readable">
+    Rata-rata 5 bilangan adalah 20. Jika satu bilangan dihapus,
+    rata-rata menjadi 18. Nilai bilangan yang dihapus adalah?
+  </p>
+
+  <p class="readable">
+    A. 26<br>
+    B. 28<br>
+    C. 30<br>
+    D. 32
+  </p>
+
+  <p class="readable">
+    <strong>Penyelesaian Cepat:</strong><br>
+    Total awal = 5 × 20 = 100<br>
+    Total baru = 4 × 18 = 72<br>
+    Bilangan yang dihapus = 100 – 72 = 28<br><br>
+    <strong>Jawaban: B</strong>
+  </p>
+
+  <p class="readable">
+    💡 Tips: Gunakan konsep total, bukan menghitung ulang satu per satu.
+  </p>
+
+  <!-- ===============================
+       PERBANDINGAN DUA KUANTITAS
+  ================================= -->
+  <h3>2️⃣ Perbandingan Dua Kuantitas</h3>
+
+  <p class="readable">
+    Anda diminta membandingkan Kuantitas A dan Kuantitas B.
+    Jawaban biasanya berupa:
+  </p>
+
+  <ul>
+    <li class="readable">A lebih besar</li>
+    <li class="readable">B lebih besar</li>
+    <li class="readable">Sama</li>
+    <li class="readable">Tidak dapat ditentukan</li>
+  </ul>
+
+  <p class="readable"><strong>Contoh Soal:</strong></p>
+
+  <p class="readable">
+    Kuantitas A: 2<sup>5</sup><br>
+    Kuantitas B: 5<sup>2</sup>
+  </p>
+
+  <p class="readable">
+    A. A lebih besar<br>
+    B. B lebih besar<br>
+    C. Sama<br>
+    D. Tidak dapat ditentukan
+  </p>
+
+  <p class="readable">
+    2⁵ = 32<br>
+    5² = 25<br>
+    <strong>Jawaban: A</strong>
+  </p>
+
+  <p class="readable">
+    💡 Tips: Jika angka terlihat besar, cek pola cepat.
+    Jangan panik melihat pangkat.
+  </p>
+
+  <!-- ===============================
+       ESTIMASI CEPAT
+  ================================= -->
+  <h3>3️⃣ Estimasi Cepat</h3>
+
+  <p class="readable">
+    Dalam banyak kasus, Anda tidak perlu hasil persis.
+    Perkiraan kasar sering cukup untuk eliminasi opsi.
+  </p>
+
+  <p class="readable"><strong>Contoh Soal:</strong></p>
+
+  <p class="readable">
+    49 × 19 ≈ ?
+  </p>
+
+  <p class="readable">
+    A. 851<br>
+    B. 931<br>
+    C. 1001<br>
+    D. 1200
+  </p>
+
+  <p class="readable">
+    Estimasi:<br>
+    49 ≈ 50<br>
+    19 ≈ 20<br>
+    50 × 20 = 1000<br><br>
+    Nilai sebenarnya sedikit lebih kecil → sekitar 931.<br>
+    <strong>Jawaban: B</strong>
+  </p>
+
+  <p class="readable">
+    💡 Tips:
+    <br>• Bulatkan naik & turun
+    <br>• Bandingkan dengan angka ekstrem
+    <br>• Eliminasi opsi jauh terlebih dahulu
+  </p>
+
+  <!-- ===============================
+       ELIMINASI TANPA HITUNG DETAIL
+  ================================= -->
+  <h3>4️⃣ Eliminasi Tanpa Hitung Detail</h3>
+
+  <p class="readable">
+    Strategi ini sangat penting dalam SBS karena waktu terbatas.
+    Anda tidak selalu perlu menghitung sampai akhir.
+  </p>
+
+  <p class="readable"><strong>Contoh Soal:</strong></p>
+
+  <p class="readable">
+    Jika x &gt; 5, manakah yang pasti benar?
+  </p>
+
+  <p class="readable">
+    A. x² &gt; 25<br>
+    B. x² &lt; 25<br>
+    C. x² = 25<br>
+    D. Tidak dapat ditentukan
+  </p>
+
+  <p class="readable">
+    Jika x &gt; 5, maka kuadratnya pasti lebih besar dari 25.<br>
+    <strong>Jawaban: A</strong>
+  </p>
+
+  <p class="readable">
+    💡 Tips:
+    <br>• Uji dengan angka paling kecil yang memenuhi syarat (misal 6)
+    <br>• Gunakan logika tanda (+/−)
+    <br>• Hindari hitung panjang jika pola sudah jelas
+  </p>
+
+  <!-- ===============================
+       STRATEGI EMAS LOGIKA NUMERIK
+  ================================= -->
+  <h3>5️⃣ Strategi Emas Logika Numerik</h3>
+
+  <ul>
+    <li class="readable">
+      🔹 Prioritaskan eliminasi cepat daripada akurasi sempurna.
+    </li>
+    <li class="readable">
+      🔹 Gunakan pembulatan cerdas.
+    </li>
+    <li class="readable">
+      🔹 Jika bingung, uji dengan angka contoh.
+    </li>
+    <li class="readable">
+      🔹 Jangan habiskan &gt;90 detik pada satu soal.
+    </li>
+  </ul>
+
+  <hr>
+
+  <p class="readable">
+    🎯 Kesimpulan:
+    Logika numerik bukan tentang siapa paling jago matematika,
+    tetapi siapa paling cepat melihat pola dan hubungan angka.
+  </p>
+
+</div>
+
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
