@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Bakat Skolastik</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Strategi Penyelesaian </h1>
+  <p> PEMECAHAN MASALAH </p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     🧠 STRATEGI PENYELESAIAN – LOGIKA & PEMECAHAN MASALAH SBS
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-lightbulb"></i> Strategi Penyelesaian (Teknik Wajib SBS)</h2>
+
+  <p class="readable">
+    Dalam Tes Bakat Skolastik, banyak soal tidak sulit secara konsep,
+    tetapi menjatuhkan karena peserta tidak memiliki strategi sistematis.
+    Empat teknik berikut adalah teknik paling efektif untuk meningkatkan
+    akurasi dan kecepatan.
+  </p>
+
+  <!-- ===============================
+       1. MEMBUAT TABEL BANTU
+  ================================= -->
+  <h3>1️⃣ Membuat Tabel Bantu</h3>
+
+  <p class="readable">
+    Digunakan untuk soal yang melibatkan beberapa kategori atau
+    kombinasi informasi (misalnya: jadwal, ranking, logika orang-benda).
+  </p>
+
+  <p class="readable"><strong>Kapan digunakan?</strong></p>
+  <ul>
+    <li class="readable">Soal dengan banyak variabel (A, B, C, D)</li>
+    <li class="readable">Soal ranking atau urutan</li>
+    <li class="readable">Soal kombinasi pasangan</li>
+  </ul>
+
+  <p class="readable"><strong>Contoh Soal:</strong></p>
+  <p class="readable">
+    Tiga orang (Andi, Budi, Citra) memiliki profesi berbeda
+    (Dokter, Guru, Peneliti).<br>
+    - Andi bukan dokter.<br>
+    - Budi bukan peneliti.<br>
+    - Citra bukan guru.<br><br>
+    Siapa yang menjadi dokter?
+  </p>
+
+  <p class="readable"><strong>Strategi:</strong></p>
+  <p class="readable">
+    Buat tabel eliminasi sederhana:<br><br>
+    Andi → ❌ Dokter<br>
+    Budi → ❌ Peneliti<br>
+    Citra → ❌ Guru<br><br>
+    Dengan eliminasi sistematis, akan ditemukan:
+    Dokter = Citra.
+  </p>
+
+  <p class="readable"><strong>Tips:</strong></p>
+  <ul>
+    <li class="readable">Jangan mengandalkan ingatan mental saja</li>
+    <li class="readable">Tabel kecil 10 detik lebih cepat daripada salah 1 menit</li>
+  </ul>
+
+  <hr>
+
+  <!-- ===============================
+       2. MEMBUAT DIAGRAM KECIL
+  ================================= -->
+  <h3>2️⃣ Membuat Diagram Kecil</h3>
+
+  <p class="readable">
+    Digunakan untuk soal hubungan himpunan, alur sebab-akibat,
+    atau relasi subset.
+  </p>
+
+  <p class="readable"><strong>Kapan digunakan?</strong></p>
+  <ul>
+    <li class="readable">Soal silogisme</li>
+    <li class="readable">Hubungan kelompok</li>
+    <li class="readable">Diagram Venn</li>
+  </ul>
+
+  <p class="readable"><strong>Contoh Soal:</strong></p>
+  <p class="readable">
+    Semua ilmuwan adalah pembelajar.<br>
+    Sebagian pembelajar adalah penulis.<br><br>
+    Kesimpulan: Sebagian ilmuwan adalah penulis.
+  </p>
+
+  <p class="readable">
+    Buat diagram mental:<br>
+    Ilmuwan ⊂ Pembelajar<br>
+    Penulis ⊂ sebagian Pembelajar<br><br>
+    → Tidak pasti ilmuwan termasuk bagian itu.
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> Tidak dapat dipastikan.
+  </p>
+
+  <p class="readable"><strong>Tips:</strong></p>
+  <ul>
+    <li class="readable">Bayangkan lingkaran, tidak perlu gambar besar</li>
+    <li class="readable">Fokus pada kata “semua”, “sebagian”, “tidak satu pun”</li>
+  </ul>
+
+  <hr>
+
+  <!-- ===============================
+       3. SUBSTITUSI CEPAT
+  ================================= -->
+  <h3>3️⃣ Substitusi Cepat</h3>
+
+  <p class="readable">
+    Teknik memasukkan angka sederhana untuk menguji kebenaran
+    pernyataan atau persamaan.
+  </p>
+
+  <p class="readable"><strong>Contoh Soal:</strong></p>
+  <p class="readable">
+    Jika x + y = 10, manakah yang pasti benar?<br>
+    A. x = 5 dan y = 5<br>
+    B. x > 0 dan y > 0<br>
+    C. Salah satu bisa negatif
+  </p>
+
+  <p class="readable">
+    Uji cepat:<br>
+    Misal x = 12 → y = -2 → tetap memenuhi.<br><br>
+    Maka jawaban: C.
+  </p>
+
+  <p class="readable"><strong>Kapan digunakan?</strong></p>
+  <ul>
+    <li class="readable">Soal aljabar sederhana</li>
+    <li class="readable">Soal perbandingan kuantitatif</li>
+    <li class="readable">Soal kemungkinan</li>
+  </ul>
+
+  <p class="readable"><strong>Tips:</strong></p>
+  <ul>
+    <li class="readable">Gunakan angka ekstrem (0, 1, negatif, besar)</li>
+    <li class="readable">Hindari hitungan panjang</li>
+  </ul>
+
+  <hr>
+
+  <!-- ===============================
+       4. UJI PILIHAN JAWABAN (BACK SOLVING)
+  ================================= -->
+  <h3>4️⃣ Uji Pilihan Jawaban (Back Solving)</h3>
+
+  <p class="readable">
+    Daripada mencari jawaban dari nol, masukkan opsi jawaban
+    ke dalam soal untuk melihat mana yang cocok.
+  </p>
+
+  <p class="readable"><strong>Contoh Soal:</strong></p>
+  <p class="readable">
+    Jika 3x + 2 = 17, berapa x?<br>
+    A. 3<br>
+    B. 4<br>
+    C. 5<br>
+    D. 6
+  </p>
+
+  <p class="readable">
+    Coba opsi B:<br>
+    3(4) + 2 = 14 → salah<br>
+    Coba opsi C:<br>
+    3(5) + 2 = 17 → benar<br><br>
+    Jawaban: C.
+  </p>
+
+  <p class="readable"><strong>Kapan efektif?</strong></p>
+  <ul>
+    <li class="readable">Soal persamaan sederhana</li>
+    <li class="readable">Soal rasio</li>
+    <li class="readable">Soal nilai variabel tunggal</li>
+  </ul>
+
+  <p class="readable"><strong>Tips:</strong></p>
+  <ul>
+    <li class="readable">Mulai dari opsi tengah</li>
+    <li class="readable">Gunakan eliminasi cepat</li>
+    <li class="readable">Jangan uji semua jika sudah ketemu</li>
+  </ul>
+
+  <hr>
+
+  <!-- ===============================
+       RANGKUMAN STRATEGI
+  ================================= -->
+  <h3>🎯 Ringkasan Strategi Cepat SBS</h3>
+
+  <ul>
+    <li class="readable">Soal kompleks → buat tabel bantu</li>
+    <li class="readable">Soal himpunan/logika → buat diagram kecil</li>
+    <li class="readable">Soal aljabar kemungkinan → substitusi cepat</li>
+    <li class="readable">Soal pilihan numerik → back solving</li>
+  </ul>
+
+  <p class="readable">
+    <strong>Prinsip Utama:</strong><br>
+    Jangan mencari cara paling elegan.
+    Cari cara paling cepat dan paling aman.
+  </p>
+
+</div>
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
