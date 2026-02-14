@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Bakat Skolastik</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Sinonim & Antonim Kontekstual</h1>
+  <p> PENALARAN VERBAL </p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     📖 SINONIM & ANTONIM KONTEKSTUAL – VERBAL SBS LPDP
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-book-open"></i> Sinonim & Antonim Kontekstual</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>1️⃣ Konsep Inti yang Harus Dipahami</h3>
+
+  <p class="readable">
+    Dalam Tes Bakat Skolastik, sinonim dan antonim tidak diuji sebagai
+    hafalan kosakata, tetapi sebagai kemampuan memahami makna kata
+    <strong>dalam konteks kalimat</strong>.
+  </p>
+
+  <p class="readable">
+    Artinya, satu kata bisa memiliki arti berbeda tergantung situasi.
+    Fokus utama adalah <strong>logika konteks</strong>, bukan arti kamus semata.
+  </p>
+
+  <ul>
+    <li class="readable">
+      <strong>Sinonim Kontekstual</strong><br>
+      Kata yang memiliki makna paling mendekati sesuai konteks kalimat.
+    </li>
+    <li class="readable">
+      <strong>Antonim Kontekstual</strong><br>
+      Kata yang paling berlawanan maknanya dalam konteks tersebut.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       NUANSA MAKNA
+  ================================= -->
+  <h3>2️⃣ Nuansa Makna (Sangat Penting)</h3>
+
+  <p class="readable">
+    Banyak jebakan muncul karena perbedaan nuansa makna.
+  </p>
+
+  <ul>
+    <li class="readable">
+      <strong>Positif</strong> → konstruktif, progresif, adaptif
+    </li>
+    <li class="readable">
+      <strong>Negatif</strong> → destruktif, manipulatif, stagnan
+    </li>
+    <li class="readable">
+      <strong>Netral</strong> → deskriptif tanpa muatan nilai
+    </li>
+  </ul>
+
+  <p class="readable">
+    Contoh:<br>
+    Kata <strong>"kritis"</strong> bisa bermakna:
+  </p>
+
+  <ul>
+    <li class="readable">Positif → analitis, evaluatif</li>
+    <li class="readable">Negatif → mencela, menyerang</li>
+  </ul>
+
+  <p class="readable">
+    Jawaban benar tergantung konteks kalimat.
+  </p>
+
+  <!-- ===============================
+       KATA SERAPAN AKADEMIK UMUM
+  ================================= -->
+  <h3>3️⃣ Kata Serapan Akademik yang Sering Muncul</h3>
+
+  <ul>
+    <li class="readable">Paradigma → kerangka berpikir</li>
+    <li class="readable">Implikasi → dampak / konsekuensi</li>
+    <li class="readable">Signifikan → bermakna / penting</li>
+    <li class="readable">Komprehensif → menyeluruh</li>
+    <li class="readable">Relevan → sesuai / berkaitan</li>
+    <li class="readable">Progresif → maju / berkembang</li>
+    <li class="readable">Inheren → melekat</li>
+    <li class="readable">Esensial → mendasar / sangat penting</li>
+    <li class="readable">Ambigu → bermakna ganda</li>
+    <li class="readable">Kredibel → dapat dipercaya</li>
+  </ul>
+
+  <p class="readable">
+    Fokus pada pemahaman makna praktis, bukan definisi akademik panjang.
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL LATIHAN
+  ================================= -->
+  <h3>4️⃣ Contoh Soal Latihan</h3>
+
+  <p class="readable">
+    <strong>Soal 1 – Sinonim Kontekstual</strong><br>
+    Penelitian tersebut memberikan kontribusi yang <strong>signifikan</strong>
+    terhadap pengembangan kebijakan publik.
+  </p>
+
+  <p class="readable">
+    A. Besar<br>
+    B. Penting<br>
+    C. Luas<br>
+    D. Kompleks
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B. Penting.<br>
+    Penjelasan: Dalam konteks akademik, "signifikan"
+    berarti bermakna atau penting, bukan sekadar besar.
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 2 – Antonim Kontekstual</strong><br>
+    Kebijakan tersebut bersifat <strong>progresif</strong>
+    dan mendorong perubahan sistemik.
+  </p>
+
+  <p class="readable">
+    A. Revolusioner<br>
+    B. Inovatif<br>
+    C. Stagnan<br>
+    D. Adaptif
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C. Stagnan.<br>
+    Penjelasan: Progresif berarti maju/berkembang,
+    antonimnya adalah stagnan (tidak berkembang).
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 3 – Jebakan Nuansa</strong><br>
+    Ia memberikan kritik yang <strong>konstruktif</strong>
+    terhadap rancangan kebijakan tersebut.
+  </p>
+
+  <p class="readable">
+    A. Tajam<br>
+    B. Membangun<br>
+    C. Keras<br>
+    D. Negatif
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B. Membangun.<br>
+    Penjelasan: Konstruktif dalam konteks ini bermakna
+    membangun, bukan sekadar tajam atau keras.
+  </p>
+
+  <!-- ===============================
+       STRATEGI MENJAWAB CEPAT
+  ================================= -->
+  <h3>5️⃣ Strategi Menjawab Cepat & Akurat</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>🔹 Baca satu kalimat penuh terlebih dahulu</strong><br>
+      Jangan langsung fokus pada kata yang digarisbawahi.
+    </li>
+    <li class="readable">
+      <strong>🔹 Tentukan nada kalimat (positif/negatif/netral)</strong><br>
+      Eliminasi opsi dengan nuansa berbeda.
+    </li>
+    <li class="readable">
+      <strong>🔹 Gunakan teknik substitusi</strong><br>
+      Ganti kata tersebut dengan pilihan jawaban.
+      Pilih yang paling natural dalam kalimat.
+    </li>
+    <li class="readable">
+      <strong>🔹 Hindari opsi terlalu ekstrem</strong><br>
+      Kata seperti "selalu", "mutlak", "paling"
+      sering menjadi jebakan.
+    </li>
+    <li class="readable">
+      <strong>🔹 Jangan terpaku pada arti populer</strong><br>
+      Makna dalam konteks bisa berbeda dari penggunaan sehari-hari.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       KESALAHAN UMUM
+  ================================= -->
+  <h3>6️⃣ Kesalahan Umum Peserta</h3>
+
+  <ul>
+    <li class="readable">❌ Menghafal daftar sinonim tanpa memahami konteks.</li>
+    <li class="readable">❌ Tidak membaca kalimat secara utuh.</li>
+    <li class="readable">❌ Memilih kata yang “mirip bunyinya”.</li>
+    <li class="readable">❌ Mengabaikan nada emosional kalimat.</li>
+  </ul>
+
+  <hr>
+
+  <p class="readable">
+    💡 <strong>Inti Materi:</strong><br>
+    Sinonim & antonim dalam SBS bukan soal hafalan,
+    tetapi soal kecermatan membaca konteks dan memahami
+    nuansa makna secara logis.
+  </p>
+
+</div>
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
