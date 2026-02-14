@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Wawasan Kebangsaan</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Pemahaman Bacaan (Reading Comprehension)</h1>
+  <p> PENALARAN VERBAL </p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     📖 PEMAHAMAN BACAAN – VERBAL SBS LPDP
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-book-open"></i> Pemahaman Bacaan (Reading Comprehension)</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>1️⃣ Konsep Dasar yang Harus Dikuasai</h3>
+
+  <p class="readable">
+    Pemahaman bacaan dalam Tes Bakat Skolastik menguji kemampuan Anda
+    memahami teks secara cepat, akurat, dan logis. Bukan sekadar membaca,
+    tetapi menarik kesimpulan yang pasti benar berdasarkan informasi yang tersedia.
+  </p>
+
+  <ul>
+    <li class="readable">
+      <strong>🔹 Ide Pokok & Gagasan Utama</strong><br>
+      Biasanya terletak di awal atau akhir paragraf. 
+      Fokus pada kalimat yang merangkum seluruh isi.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Kesimpulan Implisit</strong><br>
+      Tidak tertulis langsung, tetapi dapat ditarik secara logis dari teks.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Inferensi Logis</strong><br>
+      Jawaban harus 100% didukung teks, bukan asumsi pribadi.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Memperkuat / Memperlemah Argumen</strong><br>
+      Identifikasi klaim utama, lalu lihat apakah opsi mendukung atau meruntuhkan klaim tersebut.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Fakta vs Opini</strong><br>
+      Fakta dapat diverifikasi; opini bersifat penilaian.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Hubungan Sebab–Akibat</strong><br>
+      Identifikasi penyebab dan konsekuensinya dalam teks.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       STRATEGI CEPAT
+  ================================= -->
+  <h3>2️⃣ Strategi Membaca Cepat (Skimming & Scanning)</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>Skimming:</strong> Baca cepat untuk menangkap ide utama.
+    </li>
+    <li class="readable">
+      <strong>Scanning:</strong> Cari kata kunci sesuai pertanyaan.
+    </li>
+    <li class="readable">
+      Hindari membaca terlalu detail sebelum tahu apa yang ditanya.
+    </li>
+  </ul>
+
+  <p class="readable">
+    ⚠ <strong>Tips penting:</strong> Eliminasi opsi yang terlalu ekstrem 
+    seperti "selalu", "tidak pernah", "semua", kecuali teks menyatakan demikian.
+  </p>
+
+  <!-- ===============================
+       CONTOH SOAL 1
+  ================================= -->
+  <h3>3️⃣ Contoh Soal – Ide Pokok</h3>
+
+  <p class="readable">
+    <strong>Teks:</strong><br>
+    Penggunaan energi terbarukan meningkat secara signifikan dalam dekade terakhir.
+    Hal ini didorong oleh kesadaran lingkungan dan kebijakan pemerintah yang
+    mendukung transisi energi bersih.
+  </p>
+
+  <p class="readable">
+    <strong>Pertanyaan:</strong><br>
+    Ide pokok paragraf tersebut adalah:
+  </p>
+
+  <p class="readable">
+    A. Energi fosil semakin berkurang.<br>
+    B. Energi terbarukan meningkat karena dukungan kebijakan dan kesadaran lingkungan.<br>
+    C. Pemerintah selalu mendukung energi terbarukan.<br>
+    D. Masyarakat tidak lagi menggunakan energi fosil.
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B<br>
+    <strong>Penjelasan:</strong> Kalimat pertama dan kedua merangkum peningkatan energi
+    terbarukan serta penyebabnya.
+  </p>
+
+  <hr>
+
+  <!-- ===============================
+       CONTOH SOAL 2
+  ================================= -->
+  <h3>4️⃣ Contoh Soal – Inferensi Logis</h3>
+
+  <p class="readable">
+    <strong>Teks:</strong><br>
+    Penelitian menunjukkan bahwa mahasiswa yang tidur kurang dari lima jam
+    cenderung mengalami penurunan konsentrasi.
+  </p>
+
+  <p class="readable">
+    <strong>Pertanyaan:</strong><br>
+    Manakah pernyataan yang pasti benar?
+  </p>
+
+  <p class="readable">
+    A. Semua mahasiswa kurang tidur tidak bisa belajar.<br>
+    B. Kurang tidur dapat memengaruhi konsentrasi mahasiswa.<br>
+    C. Mahasiswa yang tidur cukup tidak pernah kehilangan konsentrasi.<br>
+    D. Penurunan konsentrasi hanya disebabkan kurang tidur.
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B<br>
+    <strong>Penjelasan:</strong> Teks menyatakan kecenderungan penurunan konsentrasi,
+    bukan kepastian ekstrem seperti opsi lain.
+  </p>
+
+  <hr>
+
+  <!-- ===============================
+       CONTOH SOAL 3
+  ================================= -->
+  <h3>5️⃣ Contoh Soal – Memperlemah Argumen</h3>
+
+  <p class="readable">
+    <strong>Pernyataan:</strong><br>
+    Kota X perlu memperluas jalan utama untuk mengurangi kemacetan.
+  </p>
+
+  <p class="readable">
+    <strong>Pertanyaan:</strong><br>
+    Pernyataan mana yang paling memperlemah argumen tersebut?
+  </p>
+
+  <p class="readable">
+    A. Volume kendaraan meningkat setiap tahun.<br>
+    B. Studi menunjukkan perluasan jalan justru meningkatkan jumlah kendaraan.<br>
+    C. Kota X memiliki anggaran besar.<br>
+    D. Banyak warga menggunakan transportasi umum.
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B<br>
+    <strong>Penjelasan:</strong> Jika perluasan jalan justru meningkatkan kendaraan,
+    maka tujuan mengurangi kemacetan menjadi lemah.
+  </p>
+
+  <!-- ===============================
+       TIPS MENJAWAB
+  ================================= -->
+  <h3>6️⃣ Tips Menjawab Soal Reading Comprehension</h3>
+
+  <ul>
+    <li class="readable">
+      🔹 Fokus pada apa yang <strong>pasti benar</strong>, bukan yang mungkin benar.
+    </li>
+    <li class="readable">
+      🔹 Hindari membawa opini pribadi.
+    </li>
+    <li class="readable">
+      🔹 Tandai kata ekstrem (selalu, tidak pernah, semua).
+    </li>
+    <li class="readable">
+      🔹 Bedakan asumsi dan fakta eksplisit.
+    </li>
+    <li class="readable">
+      🔹 Jika ragu antara dua opsi, pilih yang paling netral dan paling dekat dengan teks.
+    </li>
+  </ul>
+
+</div>
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
