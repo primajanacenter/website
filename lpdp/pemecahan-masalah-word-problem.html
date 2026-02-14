@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Bakat Skolastik</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Word Problem Logis </h1>
+  <p> PEMECAHAN MASALAH </p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     🧠 WORD PROBLEM LOGIS – PEMECAHAN MASALAH SBS
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-puzzle-piece"></i> Word Problem Logis (Pemecahan Masalah Prioritas)</h2>
+
+  <!-- ===============================
+       PENGERTIAN
+  ================================= -->
+  <h3>1️⃣ Apa Itu Word Problem Logis?</h3>
+
+  <p class="readable">
+    Word Problem Logis adalah soal cerita kuantitatif yang menguji kemampuan
+    menganalisis informasi numerik, menyusun strategi, dan menarik kesimpulan
+    logis dari data yang tersedia. Fokusnya bukan pada hitungan rumit,
+    tetapi pada ketepatan memahami hubungan antar informasi.
+  </p>
+
+  <p class="readable">
+    Dalam Tes Bakat Skolastik, tipe ini sering menggabungkan:
+    <strong>aritmatika dasar + logika + eliminasi cepat.</strong>
+  </p>
+
+  <!-- ===============================
+       STRUKTUR UMUM
+  ================================= -->
+  <h3>2️⃣ Struktur Umum Soal</h3>
+
+  <ul>
+    <li class="readable">✔ Soal cerita kuantitatif dengan beberapa variabel</li>
+    <li class="readable">✔ Kombinasi data (angka + kondisi)</li>
+    <li class="readable">✔ Informasi tidak lengkap</li>
+    <li class="readable">✔ Dibutuhkan eliminasi berbasis logika</li>
+  </ul>
+
+  <!-- ===============================
+       TIPE 1 – SOAL CERITA KUANTITATIF
+  ================================= -->
+  <h3>3️⃣ Tipe 1 – Soal Cerita Kuantitatif</h3>
+
+  <p class="readable">
+    Biasanya melibatkan rasio, persentase, perbandingan, atau total kelompok.
+  </p>
+
+  <p class="readable"><strong>Contoh:</strong></p>
+
+  <p class="readable">
+    Sebuah kelas terdiri dari 40 mahasiswa.
+    60% adalah perempuan. 25% dari mahasiswa perempuan adalah penerima beasiswa.
+    Berapa jumlah mahasiswa perempuan penerima beasiswa?
+  </p>
+
+  <p class="readable">
+    A. 5<br>
+    B. 6<br>
+    C. 8<br>
+    D. 10
+  </p>
+
+  <p class="readable">
+    <strong>Penyelesaian cepat:</strong><br>
+    60% × 40 = 24 perempuan<br>
+    25% × 24 = 6<br><br>
+    <strong>Jawaban: B. 6</strong>
+  </p>
+
+  <p class="readable">
+    <strong>Tips:</strong> Hitung bertahap. Jangan langsung gabungkan persentase tanpa memahami basisnya.
+  </p>
+
+  <!-- ===============================
+       TIPE 2 – KOMBINASI DATA
+  ================================= -->
+  <h3>4️⃣ Tipe 2 – Kombinasi Data</h3>
+
+  <p class="readable">
+    Soal menyajikan beberapa kondisi yang harus digabungkan secara logis.
+  </p>
+
+  <p class="readable"><strong>Contoh:</strong></p>
+
+  <p class="readable">
+    Dalam sebuah tim, jumlah anggota laki-laki dua kali jumlah perempuan.
+    Jika ditambah 4 perempuan, jumlah laki-laki menjadi sama dengan perempuan.
+    Berapa jumlah awal anggota tim?
+  </p>
+
+  <p class="readable">
+    A. 8<br>
+    B. 9<br>
+    C. 12<br>
+    D. 16
+  </p>
+
+  <p class="readable">
+    Misal perempuan = x<br>
+    Laki-laki = 2x<br>
+    Setelah tambah 4 perempuan:<br>
+    2x = x + 4 → x = 4<br>
+    Total awal = 4 + 8 = 12<br><br>
+    <strong>Jawaban: C. 12</strong>
+  </p>
+
+  <p class="readable">
+    <strong>Tips:</strong> Gunakan variabel sederhana. Jangan panik dengan kalimat panjang.
+  </p>
+
+  <!-- ===============================
+       TIPE 3 – INFORMASI TIDAK LENGKAP
+  ================================= -->
+  <h3>5️⃣ Tipe 3 – Informasi Tidak Lengkap</h3>
+
+  <p class="readable">
+    Tidak semua informasi diberikan secara eksplisit.
+    Anda harus menentukan apakah data cukup untuk menyimpulkan.
+  </p>
+
+  <p class="readable"><strong>Contoh:</strong></p>
+
+  <p class="readable">
+    Harga sebuah buku lebih mahal daripada pena.
+    Harga pena lebih mahal daripada penghapus.
+    Apakah harga buku pasti lebih mahal daripada penghapus?
+  </p>
+
+  <p class="readable">
+    A. Pasti benar<br>
+    B. Mungkin benar<br>
+    C. Tidak dapat disimpulkan
+  </p>
+
+  <p class="readable">
+    Karena hubungan bersifat transitif:
+    Buku > Pena > Penghapus<br><br>
+    <strong>Jawaban: A. Pasti benar</strong>
+  </p>
+
+  <p class="readable">
+    <strong>Tips:</strong> Gunakan logika rantai (transitif).
+  </p>
+
+  <!-- ===============================
+       TIPE 4 – ELIMINASI BERBASIS LOGIKA
+  ================================= -->
+  <h3>6️⃣ Tipe 4 – Eliminasi Berbasis Logika</h3>
+
+  <p class="readable">
+    Sering kali soal dapat diselesaikan tanpa menghitung detail.
+    Gunakan estimasi dan eliminasi opsi tidak masuk akal.
+  </p>
+
+  <p class="readable"><strong>Contoh:</strong></p>
+
+  <p class="readable">
+    Sebuah mobil menempuh jarak 150 km dalam 3 jam.
+    Jika kecepatan konstan, berapa jarak dalam 5 jam?
+  </p>
+
+  <p class="readable">
+    A. 200 km<br>
+    B. 225 km<br>
+    C. 250 km<br>
+    D. 300 km
+  </p>
+
+  <p class="readable">
+    Kecepatan = 150 ÷ 3 = 50 km/jam<br>
+    5 jam → 250 km<br><br>
+    <strong>Jawaban: C. 250 km</strong>
+  </p>
+
+  <p class="readable">
+    <strong>Tips cepat:</strong>
+    Jika 3 jam = 150, maka 1 jam = 50 → langsung kali 5.
+  </p>
+
+  <!-- ===============================
+       STRATEGI EMAS
+  ================================= -->
+  <h3>7️⃣ Strategi Emas Mengerjakan Word Problem</h3>
+
+  <ul>
+    <li class="readable">
+      🔹 Ubah cerita menjadi model matematis sederhana.
+    </li>
+    <li class="readable">
+      🔹 Fokus pada hubungan antar variabel, bukan panjang soal.
+    </li>
+    <li class="readable">
+      🔹 Gunakan eliminasi jika waktu terbatas.
+    </li>
+    <li class="readable">
+      🔹 Hindari overthinking – SBS menguji kecepatan logis.
+    </li>
+    <li class="readable">
+      🔹 Jika ragu, perkirakan nilai dan cocokkan dengan opsi terdekat.
+    </li>
+  </ul>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Kesimpulan:</strong><br>
+    Word Problem Logis bukan tentang matematika sulit,
+    melainkan tentang kemampuan membaca cepat,
+    menyusun model sederhana, dan membuat keputusan rasional
+    dalam waktu terbatas.
+  </p>
+
+</div>
+
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
