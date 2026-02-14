@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Bakat Skolastik</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Analogi Kata</h1>
+  <p> PENALARAN VERBAL </p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     🧠 ANALOGI KATA – LOGIKA VERBAL SBS LPDP
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-lightbulb"></i> Analogi Kata</h2>
+
+  <!-- ===============================
+       KONSEP DASAR
+  ================================= -->
+  <h3>1️⃣ Konsep Dasar Analogi</h3>
+
+  <p class="readable">
+    Analogi kata menguji kemampuan Anda memahami hubungan logis 
+    antara dua kata, lalu mencari pasangan lain dengan hubungan 
+    yang sama persis. Fokus utama bukan pada arti kata secara 
+    terpisah, tetapi pada <strong>pola relasinya</strong>.
+  </p>
+
+  <p class="readable">
+    Format umum:
+  </p>
+
+  <p class="readable">
+    A : B = C : ?
+  </p>
+
+  <p class="readable">
+    Langkah berpikir:
+    <br>1️⃣ Tentukan hubungan A dan B.
+    <br>2️⃣ Terapkan hubungan yang sama pada C.
+    <br>3️⃣ Pilih jawaban yang paling identik secara logis.
+  </p>
+
+  <!-- ===============================
+       POLA HUBUNGAN YANG WAJIB DIKUASAI
+  ================================= -->
+  <h3>2️⃣ Pola Hubungan yang Wajib Dipelajari</h3>
+
+  <ul>
+
+    <li class="readable">
+      <strong>🔹 Sinonim (Makna Sejenis)</strong><br>
+      Contoh:<br>
+      Gigih : Tekun = Marah : ?<br>
+      → Jawaban: Geram
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Antonim (Makna Berlawanan)</strong><br>
+      Contoh:<br>
+      Tinggi : Rendah = Panas : ?<br>
+      → Jawaban: Dingin
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Bagian – Keseluruhan</strong><br>
+      Roda : Mobil = Halaman : ?<br>
+      → Buku
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Sebab – Akibat</strong><br>
+      Hujan : Banjir = Api : ?<br>
+      → Kebakaran
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Fungsi</strong><br>
+      Pisau : Memotong = Pena : ?<br>
+      → Menulis
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Kategori / Klasifikasi</strong><br>
+      Mawar : Bunga = Harimau : ?<br>
+      → Hewan
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Intensitas / Derajat</strong><br>
+      Hangat : Panas = Cemas : ?<br>
+      → Panik
+    </li>
+
+  </ul>
+
+  <!-- ===============================
+       STRATEGI EMAS
+  ================================= -->
+  <h3>3️⃣ Strategi Emas Menjawab Analogi</h3>
+
+  <ul>
+    <li class="readable">
+      <strong>🔹 Identifikasi hubungan pasangan pertama dulu.</strong><br>
+      Jangan melihat opsi sebelum memahami relasi A dan B.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Gunakan kalimat bantu.</strong><br>
+      Contoh: “Pisau digunakan untuk memotong” → cari pola serupa.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Hindari terjebak kemiripan bentuk kata.</strong><br>
+      Kata yang terlihat mirip belum tentu punya hubungan logis.
+    </li>
+
+    <li class="readable">
+      <strong>🔹 Uji semua opsi dengan pola yang sama.</strong>
+    </li>
+  </ul>
+
+  <!-- ===============================
+       JEBAKAN UMUM
+  ================================= -->
+  <h3>4️⃣ Jebakan Umum Analogi</h3>
+
+  <ul>
+    <li class="readable">
+      ❌ Memilih jawaban yang hanya mirip arti, tetapi tidak memiliki pola hubungan yang sama.
+    </li>
+
+    <li class="readable">
+      ❌ Salah menentukan jenis hubungan (mengira sinonim padahal fungsi).
+    </li>
+
+    <li class="readable">
+      ❌ Terlalu cepat melihat opsi tanpa menganalisis pasangan pertama.
+    </li>
+  </ul>
+
+  <!-- ===============================
+       CONTOH SOAL LATIHAN
+  ================================= -->
+  <h3>5️⃣ Contoh Soal Latihan</h3>
+
+  <p class="readable">
+    <strong>Soal 1</strong><br>
+    Dokter : Rumah Sakit = Guru : ?
+  </p>
+
+  <p class="readable">
+    A. Buku<br>
+    B. Sekolah<br>
+    C. Murid<br>
+    D. Mengajar
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B. Sekolah<br>
+    Penjelasan: Hubungan tempat bekerja (profesi – institusi).
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 2</strong><br>
+    Benih : Pohon = Telur : ?
+  </p>
+
+  <p class="readable">
+    A. Sarang<br>
+    B. Ayam<br>
+    C. Unggas<br>
+    D. Cangkang
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B. Ayam<br>
+    Penjelasan: Hubungan sebab–hasil perkembangan biologis.
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 3</strong><br>
+    Sunyi : Sepi = Besar : ?
+  </p>
+
+  <p class="readable">
+    A. Luas<br>
+    B. Tinggi<br>
+    C. Akbar<br>
+    D. Kecil
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> C. Akbar<br>
+    Penjelasan: Sinonim dengan tingkat formalitas serupa.
+  </p>
+
+  <hr>
+
+  <p class="readable">
+    <strong>Soal 4</strong><br>
+    Cahaya : Gelap = Optimis : ?
+  </p>
+
+  <p class="readable">
+    A. Harapan<br>
+    B. Pesimis<br>
+    C. Semangat<br>
+    D. Ragu
+  </p>
+
+  <p class="readable">
+    <strong>Jawaban:</strong> B. Pesimis<br>
+    Penjelasan: Hubungan antonim langsung.
+  </p>
+
+  <!-- ===============================
+       TIPS FINAL
+  ================================= -->
+  <h3>6️⃣ Tips Cepat Saat Tes</h3>
+
+  <ul>
+    <li class="readable">
+      ⏱️ Target waktu: maksimal 45–60 detik per soal.
+    </li>
+    <li class="readable">
+      🔎 Eliminasi minimal dua opsi sebelum memilih.
+    </li>
+    <li class="readable">
+      🧠 Jika ragu antara dua pilihan, cek ulang pola relasi awal.
+    </li>
+    <li class="readable">
+      🚫 Jangan terjebak kata yang terdengar “lebih ilmiah” jika polanya tidak tepat.
+    </li>
+  </ul>
+
+</div>
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
