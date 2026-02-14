@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Bakat Skolastik</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f4f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin-bottom: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e40af;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #0f172a;
+    }
+
+    p, li {
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* ===== AUDIO CONTROLS ===== */
+    .audio-controls {
+      display: flex;
+      gap: 12px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .audio-controls button {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    .audio-controls button.pause {
+      background: #eab308;
+      color: #1f2937;
+    }
+
+    .audio-controls button.stop {
+      background: #dc2626;
+    }
+
+    /* ===== HIGHLIGHT ===== */
+    .readable.reading {
+      background: #fef3c7;
+      border-left: 5px solid #f59e0b;
+      padding-left: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><i class=""></i> Aritmatika Dasar</h1>
+  <p> PENALARAN KUANTITATIF </p>
+</header>
+
+<div class="container">
+
+  <!-- KONTROL AUDIO -->
+  <div class="card">
+    <h2><i class="fa-solid fa-play"></i> Kontrol Bacakan Materi</h2>
+
+    <div class="audio-controls">
+      <button onclick="startReading()">
+        <i class="fa-solid fa-play"></i> Bacakan
+      </button>
+
+      <button class="pause" onclick="togglePause()">
+        <i class="fa-solid fa-pause"></i> Pause / Lanjutkan
+      </button>
+
+      <button class="stop" onclick="stopReading()">
+        <i class="fa-solid fa-stop"></i> Stop
+      </button>
+    </div>
+
+    <!-- PETUNJUK (TIDAK DIBACAKAN) -->
+    <p class="readable" data-skip="true">
+      Gunakan tombol Bacakan untuk mendengarkan materi.
+      Tombol Pause/Lanjutkan digunakan untuk menghentikan sementara audio,
+      dan Stop untuk menghentikan seluruh bacaan.
+      Bagian materi yang sedang dibaca akan disorot.
+    </p>
+  </div>
+
+<!-- ===============================
+     🔢 ARITMATIKA DASAR – KUANTITATIF SBS LPDP
+================================ -->
+<div class="card">
+
+  <h2><i class="fa-solid fa-calculator"></i> Aritmatika Dasar </h2>
+
+  <p class="readable">
+    Bagian ini menguji kemampuan numerik dasar dalam konteks logika cepat.
+    Fokus utama bukan menghitung rumit, melainkan memahami hubungan angka,
+    pola, dan estimasi strategis.
+  </p>
+
+  <!-- ===============================
+       PERSENTASE
+  ================================= -->
+  <h3>1️⃣ Persentase</h3>
+
+  <ul>
+    <li class="readable">Konversi persen ↔ pecahan ↔ desimal</li>
+    <li class="readable">Kenaikan dan penurunan persen</li>
+    <li class="readable">Persentase bertingkat (compound change)</li>
+  </ul>
+
+  <p class="readable"><strong>Rumus Penting:</strong></p>
+  <ul>
+    <li class="readable">x% dari N = (x/100) × N</li>
+    <li class="readable">Kenaikan a% lalu turun a% ≠ kembali ke awal</li>
+  </ul>
+
+  <p class="readable"><strong>Contoh Soal:</strong><br>
+    Harga buku Rp200.000 naik 20% lalu turun 20%.
+    Berapa harga akhir?
+  </p>
+
+  <p class="readable">
+    Naik 20% → 240.000<br>
+    Turun 20% dari 240.000 → 192.000<br>
+    <strong>Jawaban: Rp192.000</strong>
+  </p>
+
+  <p class="readable"><strong>Tips Cepat:</strong><br>
+    Jangan langsung mengira kembali ke harga awal.
+  </p>
+
+  <hr>
+
+  <!-- ===============================
+       RASIO & PROPORSI
+  ================================= -->
+  <h3>2️⃣ Rasio & Proporsi</h3>
+
+  <ul>
+    <li class="readable">Perbandingan dua kuantitas</li>
+    <li class="readable">Skala perbandingan</li>
+    <li class="readable">Senilai & berbalik nilai</li>
+  </ul>
+
+  <p class="readable"><strong>Contoh:</strong><br>
+    Rasio A:B = 3:5. Jika total 40, berapa A?
+  </p>
+
+  <p class="readable">
+    Total bagian = 3+5 = 8<br>
+    40 ÷ 8 = 5<br>
+    A = 3 × 5 = 15
+  </p>
+
+  <p class="readable"><strong>Tips:</strong><br>
+    Selalu ubah rasio menjadi “jumlah bagian” dulu.
+  </p>
+
+  <hr>
+
+  <!-- ===============================
+       PECAHAN & DESIMAL
+  ================================= -->
+  <h3>3️⃣ Pecahan & Desimal</h3>
+
+  <ul>
+    <li class="readable">Operasi tambah, kurang, kali, bagi</li>
+    <li class="readable">Penyederhanaan cepat</li>
+    <li class="readable">Konversi pecahan–desimal</li>
+  </ul>
+
+  <p class="readable"><strong>Contoh:</strong><br>
+    3/4 + 2/3 = ?
+  </p>
+
+  <p class="readable">
+    KPK 12 → (9/12 + 8/12) = 17/12 = 1 5/12
+  </p>
+
+  <p class="readable"><strong>Tips:</strong><br>
+    Sederhanakan sebelum mengalikan untuk menghemat waktu.
+  </p>
+
+  <hr>
+
+  <!-- ===============================
+       UNTUNG–RUGI
+  ================================= -->
+  <h3>4️⃣ Untung–Rugi</h3>
+
+  <ul>
+    <li class="readable">Untung = Harga Jual – Harga Beli</li>
+    <li class="readable">%Untung = (Untung / Harga Beli) × 100%</li>
+  </ul>
+
+  <p class="readable"><strong>Contoh:</strong><br>
+    Modal Rp500.000 dijual Rp575.000.
+    Berapa persen untung?
+  </p>
+
+  <p class="readable">
+    Untung = 75.000<br>
+    75.000 / 500.000 = 0,15 → 15%<br>
+    <strong>Jawaban: 15%</strong>
+  </p>
+
+  <p class="readable"><strong>Jebakan Umum:</strong><br>
+    Salah membagi dengan harga jual.
+  </p>
+
+  <hr>
+
+  <!-- ===============================
+       RATA-RATA
+  ================================= -->
+  <h3>5️⃣ Rata-Rata</h3>
+
+  <ul>
+    <li class="readable">Mean sederhana</li>
+    <li class="readable">Rata-rata gabungan</li>
+  </ul>
+
+  <p class="readable"><strong>Rumus:</strong><br>
+    Rata-rata = Total nilai / Jumlah data
+  </p>
+
+  <p class="readable"><strong>Contoh:</strong><br>
+    Nilai 4 siswa: 70, 80, 85, 65. Berapa rata-rata?
+  </p>
+
+  <p class="readable">
+    Total = 300<br>
+    300 ÷ 4 = 75
+  </p>
+
+  <p class="readable"><strong>Tips:</strong><br>
+    Untuk perubahan satu data, gunakan konsep “selisih dari rata-rata lama”.
+  </p>
+
+  <hr>
+
+  <!-- ===============================
+       PERBANDINGAN
+  ================================= -->
+  <h3>6️⃣ Perbandingan</h3>
+
+  <ul>
+    <li class="readable">Selisih dua kuantitas</li>
+    <li class="readable">Perbandingan dalam persen</li>
+    <li class="readable">Perbandingan bertingkat</li>
+  </ul>
+
+  <p class="readable"><strong>Contoh:</strong><br>
+    Gaji A Rp4 juta, B Rp5 juta.
+    Berapa persen lebih tinggi gaji B dari A?
+  </p>
+
+  <p class="readable">
+    Selisih = 1 juta<br>
+    1 ÷ 4 = 0,25 → 25%<br>
+    <strong>Jawaban: 25%</strong>
+  </p>
+
+  <p class="readable"><strong>Tips:</strong><br>
+    Persentase selalu dibandingkan terhadap angka dasar (pembanding).
+  </p>
+
+  <hr>
+
+  <h3>🎯 Strategi Umum Aritmatika SBS</h3>
+
+  <ul>
+    <li class="readable">Gunakan estimasi jika pilihan jawaban berjauhan</li>
+    <li class="readable">Hindari hitung panjang jika bisa eliminasi</li>
+    <li class="readable">Kerjakan yang cepat dulu (≤40 detik)</li>
+    <li class="readable">Jangan kosongkan jawaban</li>
+  </ul>
+
+</div>
+
+
+
+</div>
+
+<footer>
+  © PT Primajana Bagia Mesari
+</footer>
+
+<script>
+  const synth = window.speechSynthesis;
+  let elements = [];
+  let index = 0;
+  let utterance = null;
+  let isPaused = false;
+
+  function clearHighlight() {
+    elements.forEach(el => el.classList.remove("reading"));
+  }
+
+  function readNext() {
+    if (index >= elements.length) {
+      stopReading();
+      return;
+    }
+
+    clearHighlight();
+    const el = elements[index];
+    el.classList.add("reading");
+
+    utterance = new SpeechSynthesisUtterance(el.innerText);
+    utterance.lang = "id-ID";
+
+    utterance.onend = () => {
+      index++;
+      readNext();
+    };
+
+    synth.speak(utterance);
+  }
+
+  function startReading() {
+    stopReading();
+
+    // 🔕 Skip elemen petunjuk
+    elements = Array.from(
+      document.querySelectorAll(".readable:not([data-skip='true'])")
+    );
+
+    index = 0;
+    readNext();
+  }
+
+  function togglePause() {
+    if (!synth.speaking) return;
+
+    if (isPaused) {
+      synth.resume();
+      isPaused = false;
+    } else {
+      synth.pause();
+      isPaused = true;
+    }
+  }
+
+  function stopReading() {
+    synth.cancel();
+    clearHighlight();
+    index = 0;
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
