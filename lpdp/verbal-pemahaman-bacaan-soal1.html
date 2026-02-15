@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Bakat Skolastik (TBS) LPDP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Tes Bakat Skolastik (TBS)</h1>
+  <p>Contoh Paket Soal · Standar LPDP</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+
+<!-- ===============================
+     📖 READING PASSAGE
+================================ -->
+<div id="passageBox" style="
+  background:#f1f5f9;
+  padding:18px;
+  border-radius:12px;
+  margin-bottom:20px;
+  line-height:1.7;
+  display:none;
+">
+  <strong>📖 Bacaan:</strong>
+  <div id="passageText" style="margin-top:8px;"></div>
+</div>
+
+<div class="question" id="question"></div>
+
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan Soal</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+    <div class="summary-box">
+      <span class="label">Skor</span>
+      <span class="value" id="finalScore">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Knowledge Point</span>
+      <span class="value" id="finalKP">–</span>
+    </div>
+    <div class="summary-box">
+      <span class="label">Level</span>
+      <span class="value" id="finalLevel">–</span>
+    </div>
+  </div>
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area Tes</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL (10 SOAL FIX)
+================================ */
+
+/* ===============================
+   📖 BANK BACAAN (SHARED PASSAGE)
+================================ */
+const passages = {
+  teks1: `Banyak universitas mulai menerapkan sistem pembelajaran hibrida 
+  yang menggabungkan tatap muka dan daring. Pendukung kebijakan ini 
+  berpendapat bahwa fleksibilitas meningkatkan akses dan efisiensi. 
+  Namun, beberapa dosen menilai bahwa interaksi langsung tetap lebih 
+  efektif dalam membangun kedisiplinan dan diskusi mendalam. 
+  Studi terbaru menunjukkan bahwa efektivitas metode sangat bergantung 
+  pada desain kurikulum dan kesiapan pengajar.`,
+
+  teks2: `Sejumlah penelitian menyebutkan bahwa produktivitas kerja 
+  tidak selalu meningkat dengan penambahan jam kerja. 
+  Dalam beberapa kasus, kelelahan justru menurunkan kualitas output. 
+  Oleh karena itu, beberapa perusahaan mulai menerapkan sistem kerja 
+  berbasis hasil, bukan durasi.`
+};
+
+const questions = [
+
+/* =================================================
+   📘 READING COMPREHENSION
+================================================= */
+
+/* ===== TEKS 1 (5 SOAL) ===== */
+
+{
+  passageId: "teks1",
+  q: "Apa ide pokok bacaan tersebut?",
+  o: [
+    "Pembelajaran daring selalu lebih efektif daripada tatap muka",
+    "Efektivitas pembelajaran hibrida tergantung pada implementasinya",
+    "Semua dosen menolak sistem hibrida",
+    "Pembelajaran tatap muka sudah tidak relevan",
+    "Universitas wajib meninggalkan sistem lama"
+  ],
+  a: 1,
+  e: "Efektivitas bergantung pada desain kurikulum dan kesiapan pengajar.",
+  c: "Ide Pokok & Gagasan Utama"
+},
+
+{
+  passageId: "teks1",
+  q: "Kesimpulan implisit yang paling tepat adalah …",
+  o: [
+    "Metode pembelajaran tidak berpengaruh terhadap hasil belajar",
+    "Perdebatan terjadi karena perbedaan perspektif efektivitas",
+    "Semua mahasiswa lebih menyukai sistem daring",
+    "Pembelajaran hibrida pasti gagal",
+    "Dosen tidak siap beradaptasi"
+  ],
+  a: 1,
+  e: "Ada dua sudut pandang berbeda terkait efektivitas.",
+  c: "Kesimpulan Implisit"
+},
+
+{
+  passageId: "teks1",
+  q: "Pernyataan yang paling memperkuat argumen pendukung sistem hibrida adalah …",
+  o: [
+    "Sebagian mahasiswa merasa lelah dengan kelas daring",
+    "Biaya operasional kampus meningkat",
+    "Data menunjukkan peningkatan partisipasi mahasiswa sebesar 20%",
+    "Beberapa dosen kesulitan teknologi",
+    "Tidak semua mata kuliah cocok daring"
+  ],
+  a: 2,
+  e: "Data partisipasi memperkuat klaim efektivitas.",
+  c: "Memperkuat Argumen"
+},
+
+{
+  passageId: "teks1",
+  q: "Pernyataan yang memperlemah sistem hibrida adalah …",
+  o: [
+    "Mahasiswa dapat mengakses materi dari mana saja",
+    "Diskusi tatap muka meningkatkan retensi konsep kompleks",
+    "Teknologi terus berkembang",
+    "Kampus menyediakan platform digital",
+    "Sebagian mahasiswa bekerja sambil kuliah"
+  ],
+  a: 1,
+  e: "Jika retensi lebih baik tatap muka, maka klaim efektivitas melemah.",
+  c: "Memperlemah Argumen"
+},
+
+{
+  passageId: "teks1",
+  q: "Manakah pernyataan yang merupakan opini dalam bacaan?",
+  o: [
+    "Universitas mulai menerapkan sistem hibrida",
+    "Efektivitas metode bergantung pada desain kurikulum",
+    "Interaksi langsung lebih efektif dalam membangun kedisiplinan",
+    "Sistem hibrida menggabungkan tatap muka dan daring",
+    "Beberapa dosen menilai efektivitas berbeda"
+  ],
+  a: 2,
+  e: "Pernyataan 'lebih efektif' merupakan penilaian (opini).",
+  c: "Fakta vs Opini"
+},
+
+/* ===== TEKS 2 (5 SOAL) ===== */
+
+{
+  passageId: "teks2",
+  q: "Pernyataan yang merupakan fakta dalam bacaan adalah …",
+  o: [
+    "Jam kerja panjang selalu meningkatkan kinerja",
+    "Produktivitas hanya ditentukan jam kerja",
+    "Kelelahan dapat menurunkan kualitas output",
+    "Semua perusahaan mengurangi jam kerja",
+    "Durasi kerja tidak penting sama sekali"
+  ],
+  a: 2,
+  e: "Disebutkan langsung dalam teks.",
+  c: "Fakta vs Opini"
+},
+
+{
+  passageId: "teks2",
+  q: "Hubungan sebab-akibat yang tepat adalah …",
+  o: [
+    "Jam kerja panjang → kualitas meningkat",
+    "Kelelahan → penurunan kualitas output",
+    "Produktivitas → kelelahan",
+    "Hasil kerja → jam kerja bertambah",
+    "Perusahaan → tidak peduli produktivitas"
+  ],
+  a: 1,
+  e: "Kelelahan menyebabkan penurunan kualitas.",
+  c: "Hubungan Sebab-Akibat"
+},
+
+{
+  passageId: "teks2",
+  q: "Inferensi logis yang pasti benar adalah …",
+  o: [
+    "Semua perusahaan akan menghapus jam kerja tetap",
+    "Sistem berbasis hasil dipertimbangkan karena efektivitas",
+    "Jam kerja panjang tidak pernah diperlukan",
+    "Karyawan tidak mampu bekerja lama",
+    "Produktivitas tidak dapat diukur"
+  ],
+  a: 1,
+  e: "Sistem berbasis hasil muncul sebagai respons terhadap temuan.",
+  c: "Inferensi Logis"
+},
+
+{
+  passageId: "teks2",
+  q: "Opsi yang terlalu ekstrem dan harus dieliminasi adalah …",
+  o: [
+    "Dalam beberapa kasus jam kerja panjang menurunkan kualitas",
+    "Sebagian perusahaan mulai mengubah sistem",
+    "Jam kerja tidak selalu berkorelasi dengan produktivitas",
+    "Jam kerja panjang selalu merugikan perusahaan",
+    "Kelelahan dapat memengaruhi output"
+  ],
+  a: 3,
+  e: "Kata 'selalu' membuatnya absolut.",
+  c: "Eliminasi Ekstrem"
+},
+
+{
+  passageId: "teks2",
+  q: "Asumsi implisit dalam bacaan adalah …",
+  o: [
+    "Produktivitas dapat diukur secara objektif",
+    "Semua karyawan menyukai jam kerja pendek",
+    "Perusahaan tidak peduli kesejahteraan",
+    "Jam kerja satu-satunya faktor produktivitas",
+    "Karyawan menolak perubahan"
+  ],
+  a: 0,
+  e: "Produktivitas diasumsikan dapat diukur dan dibandingkan.",
+  c: "Asumsi vs Fakta"
+}
+
+];
+
+
+
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
+================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (DENGAN PASSAGE SUPPORT)
+================================ */
+let currentQuestion = null;
+let currentPassageShown = null; // untuk mencegah render ulang tidak perlu
+
+function loadQuestion() {
+  answered = false;
+
+  // clone soal agar bank asli tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+
+  /* ===============================
+     📖 HANDLE PASSAGE
+  ============================== */
+  const passageBox = document.getElementById("passageBox");
+  const passageText = document.getElementById("passageText");
+
+  if (currentQuestion.passageId && passages[currentQuestion.passageId]) {
+
+    // hanya update jika berbeda passage
+    if (currentPassageShown !== currentQuestion.passageId) {
+      passageText.innerText = passages[currentQuestion.passageId];
+      currentPassageShown = currentQuestion.passageId;
+    }
+
+    passageBox.style.display = "block";
+
+  } else {
+    passageBox.style.display = "none";
+    currentPassageShown = null;
+  }
+
+  /* ===============================
+     ❓ TAMPILKAN PERTANYAAN
+  ============================== */
+  document.getElementById("question").innerText = currentQuestion.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  /* ===============================
+     ⏱️ START TIMER (ONCE)
+  ============================== */
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+
+/* ===============================
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
+    `;
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
+  } else {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
+    `;
+  }
+
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
