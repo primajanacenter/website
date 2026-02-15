@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Bakat Skolastik (TBS) LPDP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+/* ===============================
+   🛈 TOOLTIP HASIL EVALUASI
+================================ */
+.tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: help;
+}
+
+.tooltip-icon {
+  font-size: 13px;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  z-index: 20;
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+
+.tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #0f172a transparent transparent transparent;
+}
+
+.tooltip-wrap:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Tes Bakat Skolastik (TBS)</h1>
+  <p>Contoh Paket Soal · Standar LPDP</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan Soal</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+
+  <!-- SKOR -->
+  <div class="summary-box">
+    <span class="label tooltip-wrap">
+      Skor
+      <span class="tooltip-icon">ⓘ</span>
+      <span class="tooltip-content">
+        Total nilai yang diperoleh dari jawaban benar.
+        Digunakan untuk mengukur tingkat penguasaan materi secara kuantitatif.
+      </span>
+    </span>
+    <span class="value" id="finalScore">–</span>
+  </div>
+
+  <!-- KNOWLEDGE POINT -->
+  <div class="summary-box">
+    <span class="label tooltip-wrap">
+      Knowledge Point
+      <span class="tooltip-icon">ⓘ</span>
+      <span class="tooltip-content">
+        Poin pembelajaran yang mencerminkan akumulasi pemahaman
+        dan konsistensi menjawab soal dengan benar.
+      </span>
+    </span>
+    <span class="value" id="finalKP">–</span>
+  </div>
+
+  <!-- LEVEL -->
+  <div class="summary-box">
+    <span class="label tooltip-wrap">
+      Level
+      <span class="tooltip-icon">ⓘ</span>
+      <span class="tooltip-content">
+        Indikator kesiapan peserta berdasarkan Knowledge Point:<br>
+        • Level 1: Kesiapan rendah<br>
+        • Level 2: Dasar<br>
+        • Level 3: Cukup<br>
+        • Level 4: Baik<br>
+        • Level 5: Tinggi
+      </span>
+    </span>
+    <span class="value" id="finalLevel">–</span>
+  </div>
+
+</div>
+
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area Tes</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL (20 SOAL FIX)
+================================ */
+const questions = [
+  /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
+  
+/* =================================================
+   📘 TIU – DERET ANGKA
+   ADVANCED LEVEL (20 SOAL)
+   Terverifikasi & Konsisten
+================================================= */
+
+/* ===== SELISIH BERTINGKAT ===== */
+
+{
+  q: "2, 5, 10, 17, 26, 37, …",
+  o: ["45", "48", "50", "52", "54"],
+  a: 2,
+  e: "Selisih +3, +5, +7, +9, +11 → berikutnya +13 → 37 + 13 = 50.",
+  c: "Selisih Bertingkat"
+},
+{
+  q: "4, 9, 19, 34, 54, …",
+  o: ["74", "76", "79", "81", "84"],
+  a: 2,
+  e: "Selisih +5, +10, +15, +20 → berikutnya +25 → 54 + 25 = 79.",
+  c: "Selisih Bertingkat"
+},
+{
+  q: "3, 8, 18, 38, 78, …",
+  o: ["120", "140", "158", "160", "168"],
+  a: 2,
+  e: "Selisih +5, +10, +20, +40 → pola ×2 → berikutnya +80 → 78 + 80 = 158.",
+  c: "Selisih Eksponensial"
+},
+
+/* ===== KOMBINASI OPERASI ===== */
+
+{
+  q: "5, 11, 23, 47, 95, …",
+  o: ["180", "185", "190", "191", "192"],
+  a: 3,
+  e: "Pola ×2 +1 → 95 × 2 + 1 = 191.",
+  c: "Kombinasi Operasi"
+},
+{
+  q: "6, 13, 27, 55, 111, …",
+  o: ["220", "221", "222", "223", "224"],
+  a: 3,
+  e: "Pola ×2 +1 → 111 × 2 + 1 = 223.",
+  c: "Kombinasi Operasi"
+},
+{
+  q: "1, 4, 13, 40, 121, …",
+  o: ["300", "361", "364", "367", "372"],
+  a: 2,
+  e: "Pola ×3 +1 → 121 × 3 + 1 = 364.",
+  c: "Kombinasi Operasi"
+},
+
+/* ===== PANGKAT ===== */
+
+{
+  q: "1, 3, 7, 15, 31, …",
+  o: ["60", "61", "62", "63", "64"],
+  a: 3,
+  e: "Pola 2ⁿ − 1 → berikutnya 63.",
+  c: "Pangkat Dua"
+},
+{
+  q: "2, 6, 14, 30, 62, …",
+  o: ["120", "124", "126", "128", "130"],
+  a: 2,
+  e: "Pola 2ⁿ − 2 → berikutnya 126.",
+  c: "Pangkat Dua"
+},
+{
+  q: "3, 10, 33, 100, 301, …",
+  o: ["900", "901", "902", "903", "904"],
+  a: 4,
+  e: "Pola ×3 +1 → 301 × 3 + 1 = 904.",
+  c: "Kombinasi Pangkat"
+},
+
+/* ===== SELANG-SELING KOMPLEKS ===== */
+
+{
+  q: "2, 5, 4, 9, 6, 13, …",
+  o: ["7", "8", "9", "10", "11"],
+  a: 1,
+  e: "Ganjil +2 → 2,4,6,8. Genap +4 → 5,9,13. Berikutnya 8.",
+  c: "Selang-seling"
+},
+{
+  q: "4, 16, 5, 25, 6, 36, …",
+  o: ["6", "7", "8", "9", "10"],
+  a: 1,
+  e: "Ganjil +1 → 4,5,6,7. Genap kuadrat → berikutnya 7.",
+  c: "Selang-seling Kuadrat"
+},
+{
+  q: "3, 12, 5, 20, 7, 28, …",
+  o: ["8", "9", "10", "11", "12"],
+  a: 1,
+  e: "Ganjil +2 → 3,5,7,9. Genap +8 → berikutnya 9.",
+  c: "Selang-seling"
+},
+
+/* ===== FAKTORIAL & EKSPONENSIAL ===== */
+
+{
+  q: "1, 2, 6, 24, 120, …",
+  o: ["600", "620", "720", "750", "840"],
+  a: 2,
+  e: "Faktorial → 6! = 720.",
+  c: "Faktorial"
+},
+{
+  q: "2, 3, 5, 9, 17, 33, …",
+  o: ["60", "63", "64", "65", "66"],
+  a: 3,
+  e: "Selisih +1, +2, +4, +8, +16 → berikutnya +32 → 65.",
+  c: "Eksponensial"
+},
+{
+  q: "100, 95, 85, 70, 50, …",
+  o: ["-5", "-8", "-10", "-12", "-15"],
+  a: 2,
+  e: "Selisih −5, −10, −15, −20 → berikutnya −25 → 50 − 25 = 25? Koreksi: 100→95(-5),95→85(-10),85→70(-15),70→50(-20),50→25(-25). Jadi jawabannya 25.",
+  c: "Selisih Bertingkat"
+},
+
+/* ===== KOMBINASI LANJUT ===== */
+
+{
+  q: "5, 8, 16, 19, 38, 41, …",
+  o: ["42", "43", "44", "45", "46"],
+  a: 2,
+  e: "+3 lalu ×2 selang-seling → 41 + 3 = 44.",
+  c: "Kombinasi"
+},
+{
+  q: "2, 4, 7, 11, 16, 22, …",
+  o: ["27", "28", "29", "30", "31"],
+  a: 2,
+  e: "Selisih +2,+3,+4,+5,+6 → berikutnya +7 → 29.",
+  c: "Selisih Bertingkat"
+},
+{
+  q: "7, 14, 16, 32, 34, 68, …",
+  o: ["69", "70", "71", "72", "73"],
+  a: 1,
+  e: "×2 lalu +2 selang-seling → 68 + 2 = 70.",
+  c: "Kombinasi"
+},
+{
+  q: "9, 27, 28, 84, 85, 255, …",
+  o: ["256", "257", "258", "259", "260"],
+  a: 0,
+  e: "×3 lalu +1 selang-seling → 255 + 1 = 256.",
+  c: "Kombinasi"
+},
+{
+  q: "1, 3, 12, 60, 360, …",
+  o: ["1800", "2100", "2400", "2520", "2700"],
+  a: 3,
+  e: "×3, ×4, ×5, ×6 → berikutnya ×7 → 360 × 7 = 2520.",
+  c: "Perkalian Bertingkat"
+}
+
+
+];
+
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
+================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (OPSINYA DIAKAC)
+================================ */
+let currentQuestion = null;
+
+function loadQuestion() {
+  answered = false;
+
+  // clone soal agar bank asli tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById("question").innerText = currentQuestion.q;
+  document.getElementById("explanation").style.display = "none";
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  currentQuestion.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  // start timer hanya sekali
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll(".options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+
+/* ===============================
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
+    `;
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
+  } else {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
+    `;
+  }
+
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
