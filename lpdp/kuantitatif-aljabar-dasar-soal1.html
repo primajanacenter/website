@@ -389,169 +389,160 @@ const questions = [
   /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
   
 /* =================================================
-   🔢 TIU – ALJABAR DASAR (20 SOAL)
-   Persamaan Linear, SPL Sederhana,
-   Operasi Aljabar, Substitusi Cepat
+   🟢 TIU – ALJABAR DASAR BASIC (20 SOAL)
+   Batch 1–4 – Verified & Integer Only
 ================================================= */
 
-/* ===== LEVEL RINGAN (1–5)
-   PERSAMAAN LINEAR 1 VARIABEL
-================================ */
+/* ===== BATCH 1 ===== */
 
 {
-  q: "Jika 3x + 5 = 20, maka nilai x adalah …",
-  o: ["3", "4", "5", "6", "7"],
-  a: 2,
-  e: "3x = 15 → x = 5.",
-  c: "Persamaan Linear 1 Variabel"
-},
-{
-  q: "Jika 7x − 9 = 26, maka x = …",
-  o: ["4", "5", "6", "7", "8"],
-  a: 1,
-  e: "7x = 35 → x = 5.",
-  c: "Persamaan Linear 1 Variabel"
-},
-{
-  q: "Jika 5(x − 2) = 3x + 4, maka x = …",
+  q: "Jika 2x + 3 = 11, maka nilai x adalah …",
   o: ["3", "4", "5", "6", "7"],
   a: 1,
-  e: "5x − 10 = 3x + 4 → 2x = 14 → x = 7.",
-  c: "Persamaan Linear 1 Variabel"
-},
-{
-  q: "Jika 4x + 3 = 2x + 11, maka x = …",
-  o: ["2", "3", "4", "5", "6"],
-  a: 2,
   e: "2x = 8 → x = 4.",
-  c: "Persamaan Linear 1 Variabel"
+  c: "Persamaan Linear Sederhana"
 },
 {
-  q: "Jika (x/3) + 4 = 10, maka x = …",
-  o: ["12", "15", "18", "21", "24"],
-  a: 2,
-  e: "x/3 = 6 → x = 18.",
-  c: "Persamaan Linear 1 Variabel"
+  q: "Jika 3x − 4 = 11, maka nilai x adalah …",
+  o: ["4", "5", "6", "7", "8"],
+  a: 1,
+  e: "3x = 15 → x = 5.",
+  c: "Persamaan Linear Sederhana"
 },
-
-/* ===== LEVEL MENENGAH (6–10)
-   SISTEM PERSAMAAN SEDERHANA
-================================ */
-
 {
-  q: "Jika x + y = 10 dan x − y = 2, maka nilai x adalah …",
+  q: "Jika x/2 + 1 = 4, maka nilai x adalah …",
   o: ["4", "5", "6", "7", "8"],
   a: 2,
-  e: "2x = 12 → x = 6.",
-  c: "Sistem Persamaan Linear"
+  e: "x/2 = 3 → x = 6.",
+  c: "Persamaan Pecahan Sederhana"
 },
 {
-  q: "Jika 2x + y = 11 dan x + y = 8, maka x = …",
+  q: "Jika 4x − 5 = 7, maka nilai x adalah …",
   o: ["2", "3", "4", "5", "6"],
   a: 1,
-  e: "Kurangi persamaan kedua dari pertama → x = 3.",
-  c: "SPL Substitusi"
+  e: "4x = 12 → x = 3.",
+  c: "Persamaan Linear Sederhana"
 },
 {
-  q: "Jika 3x + 2y = 16 dan x + 2y = 10, maka x = …",
-  o: ["2", "3", "4", "5", "6"],
-  a: 1,
-  e: "Kurangi persamaan kedua → 2x = 6 → x = 3.",
-  c: "SPL Eliminasi"
-},
-{
-  q: "Jika x + y = 7 dan y = 2x − 1, maka x = …",
-  o: ["2", "3", "4", "5", "6"],
-  a: 0,
-  e: "x + (2x −1) = 7 → 3x = 8 → x = 8/3 (≈2,67) → paling dekat 2 (opsi terbaik dalam pilihan bulat).",
-  c: "SPL Substitusi"
-},
-{
-  q: "Jika 4x − y = 5 dan y = x − 1, maka x = …",
-  o: ["1", "2", "3", "4", "5"],
-  a: 1,
-  e: "4x − (x −1) = 5 → 3x +1 =5 → 3x=4 → x≈1,33 → paling dekat 1 (opsi terbaik).",
-  c: "SPL Substitusi"
-},
-
-/* ===== LEVEL MENENGAH-TINGGI (11–15)
-   OPERASI BENTUK ALJABAR
-================================ */
-
-{
-  q: "Hasil dari 3a + 5a − 2a adalah …",
-  o: ["5a", "6a", "7a", "8a", "10a"],
-  a: 1,
-  e: "3a + 5a − 2a = 6a.",
-  c: "Operasi Aljabar"
-},
-{
-  q: "Hasil dari 4x(2x + 3) adalah …",
-  o: ["8x² + 3", "8x² + 12x", "6x² + 12x", "8x² + 7x", "12x² + 3x"],
-  a: 1,
-  e: "Distribusi: 8x² + 12x.",
-  c: "Distributif"
-},
-{
-  q: "Sederhanakan: (2x + 3) − (x − 4)",
-  o: ["x + 7", "x − 7", "3x −1", "x + 1", "2x + 7"],
-  a: 0,
-  e: "2x + 3 − x + 4 = x + 7.",
-  c: "Operasi Aljabar"
-},
-{
-  q: "Hasil dari (x + 5)(x − 5) adalah …",
-  o: ["x² − 25", "x² + 25", "x² −10x +25", "x² +10x −25", "x² −5"],
-  a: 0,
-  e: "Rumus selisih kuadrat: x² − 25.",
-  c: "Identitas Aljabar"
-},
-{
-  q: "Jika a = 2 dan b = 3, maka nilai 2a² + b adalah …",
-  o: ["7", "8", "9", "10", "11"],
-  a: 0,
-  e: "2(4) + 3 = 8 + 3 = 11 (opsi salah ketik jika 7; koreksi seharusnya 11).",
-  c: "Substitusi Nilai"
-},
-
-/* ===== LEVEL TINGGI (16–20)
-   SUBSTITUSI CEPAT & ANALISIS
-================================ */
-
-{
-  q: "Jika x = 4, maka nilai 3x² − 2x adalah …",
-  o: ["32", "36", "40", "44", "48"],
-  a: 2,
-  e: "3(16) − 8 = 48 − 8 = 40.",
-  c: "Substitusi Cepat"
-},
-{
-  q: "Jika 2x + y = 12 dan x = 3, maka y = …",
-  o: ["4", "5", "6", "7", "8"],
-  a: 2,
-  e: "2(3) + y = 12 → y = 6.",
-  c: "Substitusi"
-},
-{
-  q: "Jika x − 2y = 4 dan y = 1, maka x = …",
-  o: ["4", "5", "6", "7", "8"],
-  a: 2,
-  e: "x − 2 = 4 → x = 6.",
-  c: "Substitusi Cepat"
-},
-{
-  q: "Jika 5x − 3 = 2x + 9, maka x = …",
-  o: ["3", "4", "5", "6", "7"],
-  a: 1,
-  e: "3x = 12 → x = 4.",
-  c: "Persamaan Linear"
-},
-{
-  q: "Jika (x + 2)/2 = 5, maka x = …",
+  q: "Jika 5x = 40, maka nilai x adalah …",
   o: ["6", "7", "8", "9", "10"],
   a: 2,
-  e: "x + 2 = 10 → x = 8.",
-  c: "Persamaan Pecahan"
+  e: "x = 8.",
+  c: "Persamaan Linear Sederhana"
+},
+
+/* ===== BATCH 2 ===== */
+
+{
+  q: "Jika x + y = 5 dan x − y = 1, maka nilai x adalah …",
+  o: ["1", "2", "3", "4", "5"],
+  a: 2,
+  e: "Jumlahkan → 2x = 6 → x = 3.",
+  c: "SPL Dasar"
+},
+{
+  q: "Jika x + y = 5 dan 2x − y = 7, maka nilai y adalah …",
+  o: ["0", "1", "2", "3", "4"],
+  a: 1,
+  e: "Substitusi → 3x = 12 → x = 4 → y = 1.",
+  c: "SPL Substitusi"
+},
+{
+  q: "Jika x + 3 = 8, maka nilai x adalah …",
+  o: ["3", "4", "5", "6", "7"],
+  a: 2,
+  e: "x = 5.",
+  c: "Persamaan Linear Sederhana"
+},
+{
+  q: "Jika 3x + 4 = 10, maka nilai x adalah …",
+  o: ["1", "2", "3", "4", "5"],
+  a: 1,
+  e: "3x = 6 → x = 2.",
+  c: "Persamaan Linear Sederhana"
+},
+{
+  q: "Jika 2x + 5 = 13, maka nilai x adalah …",
+  o: ["3", "4", "5", "6", "7"],
+  a: 1,
+  e: "2x = 8 → x = 4.",
+  c: "Persamaan Linear Sederhana"
+},
+
+/* ===== BATCH 3 ===== */
+
+{
+  q: "Jika x² = 9, maka nilai x adalah …",
+  o: ["1 atau −1", "2 atau −2", "3 atau −3", "4 atau −4", "5 atau −5"],
+  a: 2,
+  e: "x = ±3.",
+  c: "Persamaan Kuadrat Dasar"
+},
+{
+  q: "Jika x² − 16 = 0, maka nilai x adalah …",
+  o: ["2 atau −2", "3 atau −3", "4 atau −4", "5 atau −5", "6 atau −6"],
+  a: 2,
+  e: "x² = 16 → x = ±4.",
+  c: "Persamaan Kuadrat Dasar"
+},
+{
+  q: "Jika x² − 4x + 4 = 0, maka nilai x adalah …",
+  o: ["1", "2", "3", "4", "5"],
+  a: 1,
+  e: "(x − 2)² = 0 → x = 2.",
+  c: "Kuadrat Sempurna"
+},
+{
+  q: "Jika x + y = 4 dan xy = 3, maka nilai x² + y² adalah …",
+  o: ["8", "9", "10", "11", "12"],
+  a: 2,
+  e: "(x + y)² − 2xy = 16 − 6 = 10.",
+  c: "Identitas Kuadrat"
+},
+{
+  q: "Jika x − y = 2 dan x + y = 6, maka nilai x adalah …",
+  o: ["2", "3", "4", "5", "6"],
+  a: 2,
+  e: "Jumlahkan → 2x = 8 → x = 4.",
+  c: "SPL Dasar"
+},
+
+/* ===== BATCH 4 ===== */
+
+{
+  q: "Jika x + y = 8 dan x − y = 2, maka nilai y adalah …",
+  o: ["1", "2", "3", "4", "5"],
+  a: 2,
+  e: "Kurangi → 2y = 6 → y = 3.",
+  c: "SPL Dasar"
+},
+{
+  q: "Jika x² − 8x + 16 = 0, maka nilai x adalah …",
+  o: ["2", "3", "4", "5", "6"],
+  a: 2,
+  e: "(x − 4)² = 0 → x = 4.",
+  c: "Kuadrat Sempurna"
+},
+{
+  q: "Jika x + y = 8 dan xy = 12, maka nilai x² + y² adalah …",
+  o: ["36", "38", "40", "42", "44"],
+  a: 2,
+  e: "64 − 24 = 40.",
+  c: "Identitas Kuadrat"
+},
+{
+  q: "Jika 2x − 3 = 11, maka nilai x adalah …",
+  o: ["5", "6", "7", "8", "9"],
+  a: 2,
+  e: "2x = 14 → x = 7.",
+  c: "Persamaan Linear Sederhana"
+},
+{
+  q: "Jika x + y = 5 dan xy = 6, maka nilai x² − y² adalah …",
+  o: ["3", "4", "5", "6", "7"],
+  a: 2,
+  e: "(x − y)(x + y) = 1 × 5 = 5.",
+  c: "Identitas Selisih Kuadrat"
 }
 
   
