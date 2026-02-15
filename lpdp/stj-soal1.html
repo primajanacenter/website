@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Bakat Skolastik (TBS) LPDP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  padding: 35px 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.progress {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.question {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.options button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.options button:hover {
+  background: #eef2ff;
+}
+
+.options button.correct {
+  background: #dcfce7;
+  border-color: #22c55e;
+  font-weight: 600;
+}
+
+.options button.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.explanation {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fef3c7;
+  border-left: 5px solid #f59e0b;
+  border-radius: 8px;
+  display: none;
+}
+
+.controls {
+  margin-top: 25px;
+  text-align: right;
+}
+
+.controls button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.result {
+  text-align: center;
+  display: none;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 16px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+#gamification {
+  margin-top: 10px;
+  font-weight: 600;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* ===============================
+   📊 RESULT DASHBOARD
+================================ */
+.result {
+  display: none;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e40af;
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.summary-box {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
+}
+
+.summary-box .label {
+  display: block;
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.summary-box .value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.result-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-section h3 {
+  margin-bottom: 12px;
+  color: #334155;
+}
+
+.result-section ul {
+  padding-left: 18px;
+}
+
+.result-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.result-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.result-actions button {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.result-actions button:hover {
+  opacity: 0.9;
+}
+
+/* ===============================
+   🛈 TOOLTIP HASIL EVALUASI
+================================ */
+.tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: help;
+}
+
+.tooltip-icon {
+  font-size: 13px;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.tooltip-content {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  z-index: 20;
+  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+}
+
+.tooltip-content::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #0f172a transparent transparent transparent;
+}
+
+.tooltip-wrap:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<header>
+  <h1>Tes Bakat Skolastik (TBS)</h1>
+  <p>Contoh Paket Soal · Standar LPDP</p>
+<div id="gamification">
+  ⭐ KP: <span id="kp">0</span> |
+  🎖️ Level: <span id="level">1</span>
+</div>
+
+</header>
+
+<div class="container">
+  <div class="card" id="quiz">
+    <div class="timer" id="timer">
+  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+</div>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question"></div>
+    <div id="visual"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+
+    <div class="controls">
+      <button onclick="nextQuestion()">Soal Berikutnya</button>
+    </div>
+  </div>
+
+<div class="card result" id="result">
+
+  <h2 class="result-title">📊 Hasil Evaluasi Latihan Soal</h2>
+
+  <!-- RINGKASAN NILAI -->
+  <div class="result-summary">
+
+  <!-- SKOR -->
+  <div class="summary-box">
+    <span class="label tooltip-wrap">
+      Skor
+      <span class="tooltip-icon">ⓘ</span>
+      <span class="tooltip-content">
+        Total nilai yang diperoleh dari jawaban benar.
+        Digunakan untuk mengukur tingkat penguasaan materi secara kuantitatif.
+      </span>
+    </span>
+    <span class="value" id="finalScore">–</span>
+  </div>
+
+  <!-- KNOWLEDGE POINT -->
+  <div class="summary-box">
+    <span class="label tooltip-wrap">
+      Knowledge Point
+      <span class="tooltip-icon">ⓘ</span>
+      <span class="tooltip-content">
+        Poin pembelajaran yang mencerminkan akumulasi pemahaman
+        dan konsistensi menjawab soal dengan benar.
+      </span>
+    </span>
+    <span class="value" id="finalKP">–</span>
+  </div>
+
+  <!-- LEVEL -->
+  <div class="summary-box">
+    <span class="label tooltip-wrap">
+      Level
+      <span class="tooltip-icon">ⓘ</span>
+      <span class="tooltip-content">
+        Indikator kesiapan peserta berdasarkan Knowledge Point:<br>
+        • Level 1: Kesiapan rendah<br>
+        • Level 2: Dasar<br>
+        • Level 3: Cukup<br>
+        • Level 4: Baik<br>
+        • Level 5: Tinggi
+      </span>
+    </span>
+    <span class="value" id="finalLevel">–</span>
+  </div>
+
+</div>
+
+
+  <!-- ANALITIK -->
+  <div class="result-section">
+    <h3>📌 Analisis Area Tes</h3>
+    <div id="scoreText"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="result-actions">
+    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+  </div>
+
+</div>
+
+
+<script>
+/* ===============================
+   ⏱️ TIMER BKN
+================================ */
+let totalTime = 20 * 60;
+let timerInterval;
+let startTime = null;
+
+function startTimer() {
+  if (timerInterval) return;
+
+  timerInterval = setInterval(() => {
+    totalTime--;
+
+    const min = Math.floor(totalTime / 60);
+    const sec = totalTime % 60;
+    document.getElementById("time").innerText =
+      `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (totalTime <= 0) {
+      clearInterval(timerInterval);
+      finishExam();
+    }
+  }, 1000);
+}
+
+/* ===============================
+   📘 BANK SOAL – SUPPORT VISUAL
+================================ */
+const questions = [
+
+/* =================================================
+   📘 SITUATIONAL JUDGEMENT TEST (SJT)
+   STANDAR LPDP (20 SOAL)
+================================================= */
+
+/* 1 – Integritas */
+{
+  type: "text",
+  q: "Anda mengetahui rekan tim memanipulasi data agar laporan terlihat lebih baik. Apa tindakan PALING tepat?",
+  o: [
+    "Diam karena bukan tanggung jawab Anda",
+    "Menegur secara pribadi dan meminta klarifikasi",
+    "Langsung melaporkan tanpa komunikasi",
+    "Mengubah kembali datanya tanpa sepengetahuan rekan"
+  ],
+  a: 1,
+  e: "Langkah awal adalah klarifikasi profesional sebelum eskalasi.",
+  c: "Integritas"
+},
+
+/* 2 – Profesionalisme Akademik */
+{
+  type: "text",
+  q: "Anda melihat teman melakukan plagiarisme ringan dalam tugas kelompok. Apa tindakan paling tepat?",
+  o: [
+    "Membiarkan karena hanya sedikit",
+    "Mengganti bagian tersebut tanpa memberi tahu",
+    "Mendiskusikan dan meminta revisi sesuai etika akademik",
+    "Langsung melapor ke dosen"
+  ],
+  a: 2,
+  e: "Pendekatan edukatif dan korektif lebih profesional.",
+  c: "Profesionalisme Akademik"
+},
+
+/* 3 – Kerja Tim */
+{
+  type: "text",
+  q: "Dalam tim, satu anggota tidak aktif berkontribusi. Apa langkah awal Anda?",
+  o: [
+    "Mengabaikannya",
+    "Mengambil alih semua tugas",
+    "Mengajak diskusi untuk mengetahui kendala",
+    "Mengeluarkannya dari tim"
+  ],
+  a: 2,
+  e: "Komunikasi langsung adalah langkah pertama.",
+  c: "Kerja Tim"
+},
+
+/* 4 – Kepemimpinan */
+{
+  type: "text",
+  q: "Sebagai ketua tim, terjadi perbedaan pendapat tajam. Apa tindakan paling tepat?",
+  o: [
+    "Memilih pendapat Anda sendiri",
+    "Menghentikan diskusi",
+    "Memfasilitasi diskusi objektif berbasis data",
+    "Menyerahkan keputusan pada satu anggota"
+  ],
+  a: 2,
+  e: "Pemimpin harus netral dan berbasis data.",
+  c: "Kepemimpinan"
+},
+
+/* 5 – Manajemen Konflik */
+{
+  type: "text",
+  q: "Dua rekan berselisih dan memengaruhi produktivitas. Anda sebaiknya…",
+  o: [
+    "Membiarkan agar selesai sendiri",
+    "Memihak salah satu",
+    "Memediasi dan mencari solusi bersama",
+    "Melaporkan tanpa mediasi"
+  ],
+  a: 2,
+  e: "Mediasi profesional adalah langkah ideal.",
+  c: "Manajemen Konflik"
+},
+
+/* 6 – Tanggung Jawab */
+{
+  type: "text",
+  q: "Anda menyadari ada kesalahan dalam laporan yang sudah dikirim. Apa tindakan terbaik?",
+  o: [
+    "Membiarkan saja",
+    "Menunggu jika ada yang menegur",
+    "Segera menginformasikan dan memperbaiki",
+    "Menyalahkan anggota lain"
+  ],
+  a: 2,
+  e: "Akuntabilitas berarti proaktif memperbaiki kesalahan.",
+  c: "Tanggung Jawab"
+},
+
+/* 7 – Integritas */
+{
+  type: "text",
+  q: "Atasan meminta Anda mempercepat laporan dengan mengurangi verifikasi data. Anda…",
+  o: [
+    "Mengikuti tanpa pertanyaan",
+    "Menolak secara emosional",
+    "Menyampaikan risiko dan mencari solusi alternatif",
+    "Mengabaikan permintaan"
+  ],
+  a: 2,
+  e: "Komunikasi profesional dan berbasis risiko.",
+  c: "Integritas"
+},
+
+/* 8 – Profesionalisme */
+{
+  type: "text",
+  q: "Anda mendapat kritik keras di forum publik. Anda…",
+  o: [
+    "Membalas secara defensif",
+    "Diam sepenuhnya",
+    "Menanggapi secara profesional dan berbasis data",
+    "Menghapus komentar"
+  ],
+  a: 2,
+  e: "Respon profesional menunjukkan kedewasaan akademik.",
+  c: "Profesionalisme"
+},
+
+/* 9 – Kepemimpinan */
+{
+  type: "text",
+  q: "Tim gagal mencapai target karena miskomunikasi. Sebagai pemimpin, Anda…",
+  o: [
+    "Menyalahkan anggota",
+    "Menghindari evaluasi",
+    "Melakukan evaluasi sistem komunikasi tim",
+    "Mengganti anggota tim"
+  ],
+  a: 2,
+  e: "Fokus pada sistem, bukan individu.",
+  c: "Kepemimpinan"
+},
+
+/* 10 – Kerja Tim */
+{
+  type: "text",
+  q: "Anda memiliki ide terbaik namun tim memilih ide lain. Anda…",
+  o: [
+    "Memaksakan pendapat",
+    "Menolak berkontribusi",
+    "Mendukung keputusan bersama secara profesional",
+    "Menarik diri dari proyek"
+  ],
+  a: 2,
+  e: "Komitmen terhadap keputusan kolektif.",
+  c: "Kerja Tim"
+},
+
+/* 11 – Integritas */
+{
+  type: "text",
+  q: "Anda menemukan potensi konflik kepentingan dalam proyek. Apa yang Anda lakukan?",
+  o: [
+    "Mengabaikan",
+    "Menyembunyikan",
+    "Mengungkapkan secara transparan",
+    "Membahas secara informal saja"
+  ],
+  a: 2,
+  e: "Transparansi adalah prinsip utama.",
+  c: "Integritas"
+},
+
+/* 12 – Tanggung Jawab */
+{
+  type: "text",
+  q: "Anda tidak dapat menyelesaikan tugas tepat waktu. Anda…",
+  o: [
+    "Diam",
+    "Menyalahkan faktor eksternal",
+    "Memberi tahu lebih awal dan mencari solusi",
+    "Menunggu ditegur"
+  ],
+  a: 2,
+  e: "Proaktif adalah bentuk tanggung jawab.",
+  c: "Tanggung Jawab"
+},
+
+/* 13 – Konflik */
+{
+  type: "text",
+  q: "Anda tidak setuju dengan kebijakan baru. Apa sikap terbaik?",
+  o: [
+    "Menolak secara terbuka",
+    "Menghasut rekan",
+    "Menyampaikan kritik konstruktif melalui jalur resmi",
+    "Mengabaikan kebijakan"
+  ],
+  a: 2,
+  e: "Gunakan jalur resmi dan argumentasi objektif.",
+  c: "Manajemen Konflik"
+},
+
+/* 14 – Profesionalisme */
+{
+  type: "text",
+  q: "Anda ditawari akses data internal untuk keuntungan pribadi. Anda…",
+  o: [
+    "Menerima diam-diam",
+    "Mempertimbangkan jika aman",
+    "Menolak dan menjaga kerahasiaan",
+    "Membagikan ke rekan dekat"
+  ],
+  a: 2,
+  e: "Menjaga etika dan kerahasiaan.",
+  c: "Integritas"
+},
+
+/* 15 – Kepemimpinan */
+{
+  type: "text",
+  q: "Tim Anda kehilangan motivasi. Anda…",
+  o: [
+    "Memberi tekanan",
+    "Mengabaikan",
+    "Mendengarkan aspirasi dan menyusun ulang strategi",
+    "Mengganti anggota"
+  ],
+  a: 2,
+  e: "Pemimpin adaptif dan suportif.",
+  c: "Kepemimpinan"
+},
+
+/* 16 – Kerja Tim */
+{
+  type: "text",
+  q: "Rekan Anda sering mendominasi diskusi. Anda…",
+  o: [
+    "Membiarkan",
+    "Memotong secara kasar",
+    "Mengatur giliran bicara secara adil",
+    "Keluar dari diskusi"
+  ],
+  a: 2,
+  e: "Fasilitasi partisipasi seimbang.",
+  c: "Kerja Tim"
+},
+
+/* 17 – Integritas */
+{
+  type: "text",
+  q: "Anda diminta memprioritaskan kerabat dalam seleksi. Anda…",
+  o: [
+    "Mengikuti demi hubungan baik",
+    "Menolak dengan tegas dan menjaga objektivitas",
+    "Mengulur waktu",
+    "Menyarankan jalur informal"
+  ],
+  a: 1,
+  e: "Menolak dan menjaga prinsip netralitas.",
+  c: "Integritas"
+},
+
+/* 18 – Profesionalisme */
+{
+  type: "text",
+  q: "Anda melakukan kesalahan kecil di forum publik. Anda…",
+  o: [
+    "Menghapus dan diam",
+    "Mengoreksi dan meminta maaf secara profesional",
+    "Menyalahkan sistem",
+    "Mengabaikan"
+  ],
+  a: 1,
+  e: "Akuntabel dan profesional.",
+  c: "Profesionalisme"
+},
+
+/* 19 – Konflik */
+{
+  type: "text",
+  q: "Rekan menuduh Anda tidak adil. Anda…",
+  o: [
+    "Membalas tuduhan",
+    "Menghindar",
+    "Meminta klarifikasi dan berdialog terbuka",
+    "Melaporkan langsung"
+  ],
+  a: 2,
+  e: "Dialog terbuka adalah langkah awal.",
+  c: "Manajemen Konflik"
+},
+
+/* 20 – Tanggung Jawab */
+{
+  type: "text",
+  q: "Anda melihat prosedur yang kurang efisien. Anda…",
+  o: [
+    "Mengabaikan",
+    "Mengkritik tanpa solusi",
+    "Mengusulkan perbaikan berbasis data",
+    "Mengeluh pada rekan"
+  ],
+  a: 2,
+  e: "Profesional menawarkan solusi, bukan sekadar kritik.",
+  c: "Tanggung Jawab"
+}
+
+
+];
+
+
+
+/* ===============================
+   🔢 STATE & GAMIFIKASI
+================================ */
+let index = 0;
+let score = 0;
+let answered = false;
+let kp = 0;
+let level = 1;
+let analytics = {};
+
+/* ===============================
+   🎮 GAMIFICATION UI
+================================ */
+function updateGamification() {
+  document.getElementById("kp").innerText = kp;
+  document.getElementById("level").innerText = level;
+}
+
+/* ===============================
+   🔀 SHUFFLE OPSI JAWABAN
+   (AMAN & TANPA RUSAK BANK SOAL)
+================================ */
+function shuffleQuestion(question) {
+  // pasangkan opsi + status benar
+  const paired = question.o.map((text, idx) => ({
+    text,
+    isCorrect: idx === question.a
+  }));
+
+  // Fisher–Yates shuffle
+  for (let i = paired.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [paired[i], paired[j]] = [paired[j], paired[i]];
+  }
+
+  // update opsi & index jawaban benar
+  question.o = paired.map(p => p.text);
+  question.a = paired.findIndex(p => p.isCorrect);
+
+  return question;
+}
+
+/* ===============================
+   📄 LOAD SOAL (SUPPORT VISUAL)
+================================ */
+
+let currentQuestion = null;
+let chartInstance = null; // penting agar tidak double render
+
+function loadQuestion() {
+  answered = false;
+
+  // clone agar bank soal tidak berubah
+  currentQuestion = shuffleQuestion(
+    JSON.parse(JSON.stringify(questions[index]))
+  );
+
+  document.getElementById("progress").innerText =
+    `Soal ${index + 1} dari ${questions.length}`;
+
+  const questionDiv = document.getElementById("question");
+  const visualDiv = document.getElementById("visual");
+  const optionsDiv = document.getElementById("options");
+
+  // reset area
+  questionDiv.innerText = currentQuestion.q;
+  visualDiv.innerHTML = "";
+  optionsDiv.innerHTML = "";
+  document.getElementById("explanation").style.display = "none";
+
+  /* ===============================
+     🧹 HAPUS CHART LAMA (WAJIB)
+  ============================== */
+  if (chartInstance) {
+    chartInstance.destroy();
+    chartInstance = null;
+  }
+
+  /* ===============================
+     📊 RENDER TABLE
+  ============================== */
+  if (currentQuestion.type === "table" && currentQuestion.table) {
+
+    const table = document.createElement("table");
+    table.style.width = "100%";
+    table.style.borderCollapse = "collapse";
+    table.style.marginBottom = "15px";
+    table.style.fontSize = "14px";
+
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
+
+    currentQuestion.table.headers.forEach(h => {
+      const th = document.createElement("th");
+      th.innerText = h;
+      th.style.border = "1px solid #e5e7eb";
+      th.style.padding = "8px";
+      th.style.background = "#f1f5f9";
+      th.style.textAlign = "center";
+      headRow.appendChild(th);
+    });
+
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    currentQuestion.table.rows.forEach(r => {
+      const tr = document.createElement("tr");
+      r.forEach(cell => {
+        const td = document.createElement("td");
+        td.innerText = cell;
+        td.style.border = "1px solid #e5e7eb";
+        td.style.padding = "8px";
+        td.style.textAlign = "center";
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    visualDiv.appendChild(table);
+  }
+
+  /* ===============================
+     📈 RENDER CHART
+  ============================== */
+  if (currentQuestion.type === "chart" && currentQuestion.chartData) {
+
+    const canvas = document.createElement("canvas");
+    canvas.style.maxHeight = "300px";
+    visualDiv.appendChild(canvas);
+
+    chartInstance = new Chart(canvas, {
+      type: currentQuestion.chartType || "bar",
+      data: currentQuestion.chartData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: false, // lebih mirip CBT resmi
+        plugins: {
+          legend: { display: true },
+          tooltip: { enabled: true }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  }
+
+  /* ===============================
+     🎯 RENDER OPSI
+  ============================== */
+  currentQuestion.o.forEach((opt, i) => {
+    const btn = document.createElement("button");
+    btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
+    btn.onclick = () => selectAnswer(i);
+    optionsDiv.appendChild(btn);
+  });
+
+  /* ===============================
+     ⏱️ START TIMER SEKALI
+  ============================== */
+  if (index === 0 && !startTime) {
+    startTime = new Date();
+    startTimer();
+  }
+}
+
+
+/* ===============================
+   ✅ PILIH JAWABAN
+================================ */
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestion;
+  const buttons = document.querySelectorAll("#options button");
+
+  buttons.forEach((b, idx) => {
+    if (idx === q.a) b.classList.add("correct");
+    if (idx === i && i !== q.a) b.classList.add("wrong");
+    b.disabled = true;
+  });
+
+  if (i === q.a) {
+    score += 5;
+    kp += 10;
+    level = Math.floor(kp / 50) + 1;
+    updateGamification();
+  } else {
+    analytics[q.c] = (analytics[q.c] || 0) + 1;
+  }
+
+  const exp = document.getElementById("explanation");
+  exp.innerText = q.e;
+  exp.style.display = "block";
+}
+
+
+/* ===============================
+   ▶️ SOAL BERIKUTNYA
+================================ */
+function nextQuestion() {
+
+  if (!answered) return; // cegah skip sebelum jawab
+
+  if (index < questions.length - 1) {
+    index++;
+    loadQuestion();
+  } else {
+    finishExam();
+  }
+}
+
+
+/* ===============================
+   🏁 SELESAI UJIAN
+   ANALITIK + GRAFIK + ADAPTIVE TEST
+================================ */
+function finishExam() {
+  clearInterval(timerInterval);
+
+  const endTime = new Date();
+  const durationSec = Math.max(1, Math.floor((endTime - startTime) / 1000));
+  const avgTime = durationSec / questions.length;
+
+  const correct = score / 5;
+  const wrong = questions.length - correct;
+  const errorRate = wrong / questions.length;
+
+  document.getElementById("quiz").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("finalScore").innerText =
+    `${score} / ${questions.length * 5}`;
+  document.getElementById("finalKP").innerText = kp;
+  document.getElementById("finalLevel").innerText = level;
+
+  /* ===============================
+     📊 GRAFIK AREA LEMAH
+  ============================== */
+  let graphHTML = "";
+  if (Object.keys(analytics).length > 0) {
+    const max = Math.max(...Object.values(analytics));
+    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    Object.entries(analytics).forEach(([area, count]) => {
+      graphHTML += `
+        <div style="margin-bottom:8px">
+          <div style="font-size:13px">${area}</div>
+          <div style="background:#e5e7eb;border-radius:6px">
+            <div style="
+              width:${(count/max)*100}%;
+              background:linear-gradient(135deg,#f59e0b,#ef4444);
+              color:white;
+              padding:4px 8px;
+              font-size:12px
+            ">
+              ${count} salah
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  /* ===============================
+     🧠 ADAPTIVE RECOMMENDATION
+  ============================== */
+  let focusArea = Object.keys(analytics).length
+    ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
+    : "Penguatan umum";
+
+  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+
+  if (avgTime > 75 && errorRate > 0.3) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Ragu-ragu</li>
+      <li><strong>Fokus:</strong> ${focusArea}</li>
+      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
+      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
+    `;
+  } else if (avgTime < 45 && errorRate > 0.4) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
+      <li><strong>Fokus:</strong> Analisis konteks</li>
+      <li><strong>Mode:</strong> HOTS Naratif</li>
+      <li><strong>Target:</strong> 80–90 detik/soal</li>
+    `;
+  } else if (avgTime > 75 && errorRate <= 0.2) {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Akurat tapi lambat</li>
+      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
+      <li><strong>Mode:</strong> Time-bound Practice</li>
+      <li><strong>Target:</strong> 55–60 detik/soal</li>
+    `;
+  } else {
+    adaptiveHTML += `
+      <li><strong>Profil:</strong> Stabil</li>
+      <li><strong>Fokus:</strong> Konsistensi</li>
+      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
+      <li><strong>Target:</strong> 60–70 detik/soal</li>
+    `;
+  }
+
+  adaptiveHTML += `</ul>`;
+
+  document.getElementById("scoreText").innerHTML = `
+    ${graphHTML}
+    <div style="margin-top:16px">
+      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+    </div>
+    <div style="margin-top:16px">${adaptiveHTML}</div>
+  `;
+
+  /* ===============================
+     💾 SIMPAN RIWAYAT
+  ============================== */
+  const history = JSON.parse(localStorage.getItem("twkHistory")) || [];
+  history.push({
+    date: new Date().toLocaleString(),
+    score,
+    kp,
+    level,
+    durationSec,
+    avgTime,
+    analytics
+  });
+  localStorage.setItem("twkHistory", JSON.stringify(history));
+}
+
+/* ===============================
+   🚀 START
+================================ */
+loadQuestion();
+</script>
+
+
+
+</body>
+</html>
