@@ -257,6 +257,48 @@ header {
   visibility: visible;
 }
 
+/* ===============================
+   🎯 REKOMENDASI LATIHAN CARD
+================================ */
+
+.recommendation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.rec-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  border: 1px solid #e5e7eb;
+  transition: all .2s ease;
+}
+
+.rec-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+}
+
+.rec-title {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.rec-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.rec-icon {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
 
 </style>
 
@@ -295,7 +337,7 @@ header {
 
 <div class="card result" id="result">
 
-  <h2 class="result-title">📊 Hasil Evaluasi Latihan Soal</h2>
+  <h2 class="result-title"> Hasil Evaluasi Latihan Soal</h2>
 
   <!-- RINGKASAN NILAI -->
   <div class="result-summary">
@@ -348,13 +390,13 @@ header {
 
   <!-- ANALITIK -->
   <div class="result-section">
-    <h3>📌 Analisis Area Tes</h3>
+    <h3> Analisis Area Tes</h3>
     <div id="scoreText"></div>
   </div>
 
   <!-- CTA -->
   <div class="result-actions">
-    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+    <button onclick="location.reload()"> Ulangi Latihan</button>
   </div>
 
 </div>
@@ -660,117 +702,26 @@ function shuffleQuestion(question) {
 }
 
 /* ===============================
-   📄 LOAD SOAL (SUPPORT VISUAL)
+   📄 LOAD SOAL (OPSINYA DIAKAC)
 ================================ */
-
 let currentQuestion = null;
-let chartInstance = null; // penting agar tidak double render
 
 function loadQuestion() {
   answered = false;
 
-  // clone agar bank soal tidak berubah
+  // clone soal agar bank asli tidak berubah
   currentQuestion = shuffleQuestion(
     JSON.parse(JSON.stringify(questions[index]))
   );
 
   document.getElementById("progress").innerText =
     `Soal ${index + 1} dari ${questions.length}`;
-
-  const questionDiv = document.getElementById("question");
-  const visualDiv = document.getElementById("visual");
-  const optionsDiv = document.getElementById("options");
-
-  // reset area
-  questionDiv.innerText = currentQuestion.q;
-  visualDiv.innerHTML = "";
-  optionsDiv.innerHTML = "";
+  document.getElementById("question").innerText = currentQuestion.q;
   document.getElementById("explanation").style.display = "none";
 
-  /* ===============================
-     🧹 HAPUS CHART LAMA (WAJIB)
-  ============================== */
-  if (chartInstance) {
-    chartInstance.destroy();
-    chartInstance = null;
-  }
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
 
-  /* ===============================
-     📊 RENDER TABLE
-  ============================== */
-  if (currentQuestion.type === "table" && currentQuestion.table) {
-
-    const table = document.createElement("table");
-    table.style.width = "100%";
-    table.style.borderCollapse = "collapse";
-    table.style.marginBottom = "15px";
-    table.style.fontSize = "14px";
-
-    const thead = document.createElement("thead");
-    const headRow = document.createElement("tr");
-
-    currentQuestion.table.headers.forEach(h => {
-      const th = document.createElement("th");
-      th.innerText = h;
-      th.style.border = "1px solid #e5e7eb";
-      th.style.padding = "8px";
-      th.style.background = "#f1f5f9";
-      th.style.textAlign = "center";
-      headRow.appendChild(th);
-    });
-
-    thead.appendChild(headRow);
-    table.appendChild(thead);
-
-    const tbody = document.createElement("tbody");
-
-    currentQuestion.table.rows.forEach(r => {
-      const tr = document.createElement("tr");
-      r.forEach(cell => {
-        const td = document.createElement("td");
-        td.innerText = cell;
-        td.style.border = "1px solid #e5e7eb";
-        td.style.padding = "8px";
-        td.style.textAlign = "center";
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
-    });
-
-    table.appendChild(tbody);
-    visualDiv.appendChild(table);
-  }
-
-  /* ===============================
-     📈 RENDER CHART
-  ============================== */
-  if (currentQuestion.type === "chart" && currentQuestion.chartData) {
-
-    const canvas = document.createElement("canvas");
-    canvas.style.maxHeight = "300px";
-    visualDiv.appendChild(canvas);
-
-    chartInstance = new Chart(canvas, {
-      type: currentQuestion.chartType || "bar",
-      data: currentQuestion.chartData,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: false, // lebih mirip CBT resmi
-        plugins: {
-          legend: { display: true },
-          tooltip: { enabled: true }
-        },
-        scales: {
-          y: { beginAtZero: true }
-        }
-      }
-    });
-  }
-
-  /* ===============================
-     🎯 RENDER OPSI
-  ============================== */
   currentQuestion.o.forEach((opt, i) => {
     const btn = document.createElement("button");
     btn.innerText = String.fromCharCode(65 + i) + ". " + opt;
@@ -778,15 +729,12 @@ function loadQuestion() {
     optionsDiv.appendChild(btn);
   });
 
-  /* ===============================
-     ⏱️ START TIMER SEKALI
-  ============================== */
+  // start timer hanya sekali
   if (index === 0 && !startTime) {
     startTime = new Date();
     startTimer();
   }
 }
-
 
 /* ===============================
    ✅ PILIH JAWABAN
@@ -796,7 +744,7 @@ function selectAnswer(i) {
   answered = true;
 
   const q = currentQuestion;
-  const buttons = document.querySelectorAll("#options button");
+  const buttons = document.querySelectorAll(".options button");
 
   buttons.forEach((b, idx) => {
     if (idx === q.a) b.classList.add("correct");
@@ -818,14 +766,10 @@ function selectAnswer(i) {
   exp.style.display = "block";
 }
 
-
 /* ===============================
    ▶️ SOAL BERIKUTNYA
 ================================ */
 function nextQuestion() {
-
-  if (!answered) return; // cegah skip sebelum jawab
-
   if (index < questions.length - 1) {
     index++;
     loadQuestion();
@@ -864,7 +808,7 @@ function finishExam() {
   let graphHTML = "";
   if (Object.keys(analytics).length > 0) {
     const max = Math.max(...Object.values(analytics));
-    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    graphHTML += `<h4> Distribusi Kesalahan</h4>`;
     Object.entries(analytics).forEach(([area, count]) => {
       graphHTML += `
         <div style="margin-bottom:8px">
@@ -892,45 +836,64 @@ function finishExam() {
     ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
     : "Penguatan umum";
 
-  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+let profile, focus, mode, target;
 
-  if (avgTime > 75 && errorRate > 0.3) {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Ragu-ragu</li>
-      <li><strong>Fokus:</strong> ${focusArea}</li>
-      <li><strong>Mode:</strong> Speed Drill (10 soal)</li>
-      <li><strong>Target:</strong> ≤ 60 detik/soal</li>
-    `;
-  } else if (avgTime < 45 && errorRate > 0.4) {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Cepat tapi ceroboh</li>
-      <li><strong>Fokus:</strong> Analisis konteks</li>
-      <li><strong>Mode:</strong> HOTS Naratif</li>
-      <li><strong>Target:</strong> 80–90 detik/soal</li>
-    `;
-  } else if (avgTime > 75 && errorRate <= 0.2) {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Akurat tapi lambat</li>
-      <li><strong>Fokus:</strong> Efisiensi keputusan</li>
-      <li><strong>Mode:</strong> Time-bound Practice</li>
-      <li><strong>Target:</strong> 55–60 detik/soal</li>
-    `;
-  } else {
-    adaptiveHTML += `
-      <li><strong>Profil:</strong> Stabil</li>
-      <li><strong>Fokus:</strong> Konsistensi</li>
-      <li><strong>Mode:</strong> Mini Tryout Adaptif</li>
-      <li><strong>Target:</strong> 60–70 detik/soal</li>
-    `;
-  }
+if (avgTime > 75 && errorRate > 0.3) {
+  profile = "Ragu-ragu";
+  focus = focusArea;
+  mode = "Speed Drill (10 soal)";
+  target = "≤ 60 detik/soal";
+}
+else if (avgTime < 45 && errorRate > 0.4) {
+  profile = "Cepat tapi ceroboh";
+  focus = "Analisis konteks";
+  mode = "HOTS Naratif";
+  target = "80–90 detik/soal";
+}
+else if (avgTime > 75 && errorRate <= 0.2) {
+  profile = "Akurat tapi lambat";
+  focus = "Efisiensi keputusan";
+  mode = "Time-bound Practice";
+  target = "55–60 detik/soal";
+}
+else {
+  profile = "Stabil";
+  focus = "Konsistensi";
+  mode = "Mini Tryout Adaptif";
+  target = "60–70 detik/soal";
+}
 
-  adaptiveHTML += `</ul>`;
+let adaptiveHTML = `
+<h4> Rekomendasi Latihan Berikutnya</h4>
+
+<div class="recommendation-grid">
+
+  <div class="rec-card">
+    <div class="rec-icon"> </div>
+    <div class="rec-title">Profil Belajar</div>
+    <div class="rec-value">${profile}</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-icon"> </div>
+    <div class="rec-title">Fokus Materi</div>
+    <div class="rec-value">${focus}</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-icon"> </div>
+    <div class="rec-title">Mode Latihan</div>
+    <div class="rec-value">${mode}</div>
+  </div>
+
+</div>
+`;
 
   document.getElementById("scoreText").innerHTML = `
     ${graphHTML}
     <div style="margin-top:16px">
-      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
-      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+      ️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+       <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
     </div>
     <div style="margin-top:16px">${adaptiveHTML}</div>
   `;
