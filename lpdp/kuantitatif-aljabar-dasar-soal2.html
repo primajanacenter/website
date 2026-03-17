@@ -126,7 +126,7 @@ header {
 }
 
 /* ===============================
-   📊 RESULT DASHBOARD
+    RESULT DASHBOARD
 ================================ */
 .result {
   display: none;
@@ -259,7 +259,7 @@ header {
 
 
 /* ===============================
-   🎯 REKOMENDASI LATIHAN CARD
+    REKOMENDASI LATIHAN CARD
 ================================ */
 
 .recommendation-grid {
@@ -303,7 +303,7 @@ header {
 
 
 /* ===============================
-   🎯 REKOMENDASI LATIHAN CARD
+    REKOMENDASI LATIHAN CARD
 ================================ */
 
 .recommendation-grid {
@@ -445,7 +445,7 @@ header {
 
 <script>
 /* ===============================
-   ⏱️ TIMER BKN
+    TIMER BKN
 ================================ */
 let totalTime = 20 * 60;
 let timerInterval;
@@ -779,7 +779,7 @@ function finishExam() {
   document.getElementById("finalLevel").innerText = level;
 
   /* ===============================
-     📊 GRAFIK AREA LEMAH
+      GRAFIK AREA LEMAH
   ============================== */
   let graphHTML = "";
   if (Object.keys(analytics).length > 0) {
@@ -806,7 +806,7 @@ function finishExam() {
   }
 
   /* ===============================
-     🧠 ADAPTIVE RECOMMENDATION
+      ADAPTIVE RECOMMENDATION
   ============================== */
   let focusArea = Object.keys(analytics).length
     ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
