@@ -295,7 +295,7 @@ header {
 
 <div class="card result" id="result">
 
-  <h2 class="result-title">📊 Hasil Evaluasi Latihan Soal</h2>
+  <h2 class="result-title"> Hasil Evaluasi Latihan Soal</h2>
 
   <!-- RINGKASAN NILAI -->
   <div class="result-summary">
@@ -348,13 +348,13 @@ header {
 
   <!-- ANALITIK -->
   <div class="result-section">
-    <h3>📌 Analisis Area Tes</h3>
+    <h3> Analisis Area Tes</h3>
     <div id="scoreText"></div>
   </div>
 
   <!-- CTA -->
   <div class="result-actions">
-    <button onclick="location.reload()">🔁 Ulangi Latihan</button>
+    <button onclick="location.reload()"> Ulangi Latihan</button>
   </div>
 
 </div>
@@ -889,7 +889,7 @@ function finishExam() {
   let graphHTML = "";
   if (Object.keys(analytics).length > 0) {
     const max = Math.max(...Object.values(analytics));
-    graphHTML += `<h4>📊 Distribusi Kesalahan</h4>`;
+    graphHTML += `<h4> Distribusi Kesalahan</h4>`;
     Object.entries(analytics).forEach(([area, count]) => {
       graphHTML += `
         <div style="margin-bottom:8px">
@@ -917,7 +917,7 @@ function finishExam() {
     ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
     : "Penguatan umum";
 
-  let adaptiveHTML = `<h4>🧠 Rekomendasi Latihan Berikutnya</h4><ul>`;
+  let adaptiveHTML = `<h4> Rekomendasi Latihan Berikutnya</h4><ul>`;
 
   if (avgTime > 75 && errorRate > 0.3) {
     adaptiveHTML += `
@@ -954,8 +954,8 @@ function finishExam() {
   document.getElementById("scoreText").innerHTML = `
     ${graphHTML}
     <div style="margin-top:16px">
-      ⏱️ <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
-      ⏳ <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
+       <strong>Waktu:</strong> ${Math.floor(durationSec/60)} menit ${durationSec%60} detik<br>
+       <strong>Rata-rata:</strong> ${Math.round(avgTime)} detik/soal
     </div>
     <div style="margin-top:16px">${adaptiveHTML}</div>
   `;
