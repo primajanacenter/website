@@ -439,143 +439,142 @@ const questions = [
   q: "Harga suatu barang dinaikkan 20% lalu dinaikkan lagi 25%. Jika harga awal Rp400.000, harga akhirnya adalah …",
   o: ["Rp560.000", "Rp580.000", "Rp600.000", "Rp620.000", "Rp640.000"],
   a: 2,
-  e: "400.000 × 1,2 × 1,25 = 400.000 × 1,5 = 600.000.",
+  e: "Kenaikan harga bertingkat dihitung secara berurutan dengan mengalikan faktor persentasenya. Kenaikan 20% berarti harga menjadi 120% dari harga awal atau dikalikan 1,2. Maka harga setelah kenaikan pertama adalah 400.000 × 1,2 = 480.000. Selanjutnya harga tersebut naik lagi 25%, artinya dikalikan 1,25. Maka harga akhir = 480.000 × 1,25 = 600.000. Cara cepatnya dapat langsung mengalikan faktor: 400.000 × 1,2 × 1,25 = 400.000 × 1,5 = 600.000. Jadi harga akhirnya adalah Rp600.000.",
   c: "Persentase Bertingkat"
 },
 {
   q: "Suatu nilai naik 50% lalu turun 40%. Perubahan total terhadap nilai awal adalah …",
   o: ["Naik 10%", "Turun 10%", "Naik 20%", "Turun 20%", "Tetap"],
   a: 1,
-  e: "1,5 × 0,6 = 0,9 → turun 10%.",
+  e: "Perubahan bertingkat tidak dapat dijumlahkan langsung. Kita harus menggunakan faktor persentase. Kenaikan 50% berarti nilai dikalikan 1,5. Penurunan 40% berarti nilai dikalikan 0,6. Maka perubahan total = 1,5 × 0,6 = 0,9 dari nilai awal. Artinya nilai akhir adalah 90% dari nilai awal, sehingga terjadi penurunan sebesar 10%. Jadi perubahan total terhadap nilai awal adalah turun 10%. ",
   c: "Persentase Bertingkat"
 },
 {
   q: "Perbandingan A:B = 5:8. Jika A ditambah 15 dan B dikurangi 9, perbandingan menjadi 1:1. Nilai awal A adalah …",
   o: ["30", "35", "40", "45", "50"],
   a: 2,
-  e: "5x+15 = 8x-9 → 24 = 3x → x=8 → A=5x=40.",
+  e: "Misalkan A = 5x dan B = 8x sesuai rasio awal. Setelah perubahan, A menjadi 5x + 15 dan B menjadi 8x − 9. Diketahui perbandingan baru adalah 1:1, artinya kedua nilai sama. Maka diperoleh persamaan: 5x + 15 = 8x − 9. Pindahkan suku sejenis sehingga 24 = 3x dan x = 8. Nilai awal A adalah 5x sehingga A = 5 × 8 = 40.",
   c: "Rasio Aljabar"
 },
 {
   q: "Rata-rata 8 bilangan adalah 22. Jika dua bilangan masing-masing 30 dan 34 dihapus, rata-rata baru adalah …",
   o: ["18", "18,5", "18,67", "19", "20"],
   a: 2,
-  e: "Total awal 176. Dikurangi 64 → 112. 112 ÷ 6 = 18,67.",
+  e: "Rata-rata = total ÷ jumlah data. Jika rata-rata 8 bilangan adalah 22, maka total seluruh bilangan = 8 × 22 = 176. Dua bilangan yang dihapus adalah 30 dan 34 sehingga total yang dihapus = 64. Maka total baru = 176 − 64 = 112. Jumlah data yang tersisa adalah 6. Rata-rata baru = 112 ÷ 6 = 18,67. Jadi rata-rata yang baru adalah sekitar 18,67.",
   c: "Rata-rata Dinamis"
 },
 {
   q: "Jika 60% dari A sama dengan 40% dari B dan B = 300, maka nilai A adalah …",
   o: ["180", "200", "220", "240", "260"],
   a: 1,
-  e: "0,6A = 0,4×300=120 → A=200.",
+  e: "Diketahui 60% dari A sama dengan 40% dari B. Secara matematis ditulis 0,6A = 0,4B. Karena B = 300, maka 0,4B = 0,4 × 300 = 120. Persamaan menjadi 0,6A = 120. Untuk mencari A, bagi kedua ruas dengan 0,6 sehingga diperoleh A = 120 ÷ 0,6 = 200. Jadi nilai A adalah 200.",
   c: "Persentase Proporsional"
 },
 {
   q: "Seorang pedagang membeli barang Rp500.000. Ia memberi diskon 20% dari harga jual yang telah dinaikkan 25%. Harga akhir yang dibayar pembeli adalah …",
   o: ["Rp500.000", "Rp520.000", "Rp540.000", "Rp550.000", "Rp560.000"],
   a: 0,
-  e: "500.000×1,25=625.000 → ×0,8=500.000.",
+  e: "Harga beli barang adalah Rp500.000. Pedagang menaikkan harga 25%, sehingga harga jual awal menjadi 500.000 × 1,25 = 625.000. Setelah itu diberikan diskon 20% kepada pembeli. Diskon 20% berarti pembeli membayar 80% dari harga tersebut atau dikalikan 0,8. Maka harga akhir = 625.000 × 0,8 = 500.000. Jadi pembeli akhirnya membayar Rp500.000.",
   c: "Untung-Rugi Bertingkat"
 },
 {
   q: "Jika 5 orang dapat menyelesaikan pekerjaan dalam 30 hari, berapa hari diperlukan 3 orang?",
   o: ["45", "48", "50", "54", "60"],
   a: 2,
-  e: "5×30=150 → 150÷3=50 hari.",
+  e: "Jumlah pekerja dan waktu merupakan hubungan berbanding terbalik. Semakin sedikit pekerja, waktu yang dibutuhkan semakin lama. Total beban kerja dapat dihitung sebagai pekerja × hari. Maka total pekerjaan = 5 × 30 = 150 satuan kerja. Jika dikerjakan oleh 3 orang, waktu yang dibutuhkan = 150 ÷ 3 = 50 hari. Jadi pekerjaan selesai dalam 50 hari.",
   c: "Proporsi Terbalik"
 },
 {
   q: "Jika suatu harga setelah diskon 15% menjadi Rp680.000, harga sebelum diskon adalah …",
   o: ["Rp760.000", "Rp780.000", "Rp800.000", "Rp820.000", "Rp840.000"],
   a: 2,
-  e: "680.000 ÷ 0,85 = 800.000.",
+  e: "Jika diskon 15%, maka harga akhir adalah 85% dari harga awal. Secara matematis ditulis: harga akhir = 0,85 × harga awal. Diketahui harga akhir Rp680.000 sehingga harga awal = 680.000 ÷ 0,85 = 800.000. Jadi harga sebelum diskon adalah Rp800.000.",
   c: "Persentase Invers"
 },
 {
   q: "Rata-rata 5 angka adalah 50. Jika satu angka diganti dari 40 menjadi 70, rata-rata baru adalah …",
   o: ["52", "54", "56", "58", "60"],
   a: 2,
-  e: "Selisih 30 dibagi 5 → naik 6 → 56.",
+  e: "Rata-rata 5 angka adalah 50 sehingga total seluruh angka = 5 × 50 = 250. Salah satu angka berubah dari 40 menjadi 70 sehingga total bertambah sebesar 30. Total baru = 250 + 30 = 280. Rata-rata baru = 280 ÷ 5 = 56. Jadi rata-rata baru adalah 56.",
   c: "Rata-rata Perubahan"
 },
 {
   q: "Jika 12 pekerja menyelesaikan pekerjaan dalam 18 hari, tambahan berapa pekerja agar selesai dalam 12 hari?",
   o: ["4", "5", "6", "7", "8"],
   a: 2,
-  e: "12×18=216 → 216÷12=18 pekerja → tambahan 6.",
+  e: "Total pekerjaan dapat dihitung sebagai pekerja × hari. Dengan 12 pekerja selama 18 hari, total pekerjaan = 12 × 18 = 216 satuan kerja. Agar selesai dalam 12 hari, jumlah pekerja yang dibutuhkan = 216 ÷ 12 = 18 pekerja. Karena sudah ada 12 pekerja, tambahan pekerja yang diperlukan = 18 − 12 = 6 orang.",
   c: "Proporsi Terbalik"
 },
 {
   q: "Sebuah nilai turun 25% kemudian naik 25%. Jika nilai awal 800, nilai akhir adalah …",
   o: ["750", "775", "800", "825", "850"],
   a: 0,
-  e: "800×0,75=600 → ×1,25=750.",
+  e: "Penurunan 25% berarti nilai menjadi 75% dari semula atau dikalikan 0,75. Maka nilai setelah penurunan = 800 × 0,75 = 600. Selanjutnya naik 25%, artinya dikalikan 1,25. Maka nilai akhir = 600 × 1,25 = 750. Ini menunjukkan bahwa kenaikan dan penurunan dengan persentase sama tidak selalu saling meniadakan karena basis perhitungannya berbeda.",
   c: "Persentase Bertingkat"
 },
 {
   q: "Perbandingan A:B:C = 3:4:5. Jika A+B = 84, maka nilai C adalah …",
   o: ["60", "70", "75", "80", "90"],
   a: 0,
-  e: "3x+4x=7x=84 → x=12 → C=5x=60.",
+  e: "Misalkan A = 3x, B = 4x, dan C = 5x sesuai rasio. Diketahui A + B = 84 sehingga 3x + 4x = 7x = 84. Maka x = 12. Nilai C = 5x = 5 × 12 = 60. Jadi nilai C adalah 60.",
   c: "Rasio Tiga Variabel"
 },
 {
   q: "Jika 2/3 dari suatu angka ditambah 10 menjadi 50, angka tersebut adalah …",
   o: ["45", "50", "60", "70", "75"],
   a: 2,
-  e: "2/3 X = 40 → X=60.",
+  e: "Misalkan angka tersebut adalah X. Persamaan yang terbentuk adalah (2/3)X + 10 = 50. Kurangi kedua ruas dengan 10 sehingga diperoleh (2/3)X = 40. Untuk mencari X, kalikan kedua ruas dengan 3/2. Maka X = 40 × 3/2 = 60. Jadi angka tersebut adalah 60.",
   c: "Pecahan Kompleks"
 },
 {
   q: "Sebuah barang dijual untung 20%. Jika harga jual Rp1.200.000, harga beli adalah …",
   o: ["900.000", "950.000", "1.000.000", "1.050.000", "1.100.000"],
   a: 2,
-  e: "1.200.000 ÷ 1,2 = 1.000.000.",
+  e: "Untung 20% berarti harga jual = 120% dari harga beli. Secara matematis: harga jual = 1,2 × harga beli. Diketahui harga jual Rp1.200.000 sehingga harga beli = 1.200.000 ÷ 1,2 = 1.000.000. Jadi harga beli barang tersebut adalah Rp1.000.000.",
   c: "Untung Invers"
 },
 {
   q: "Rata-rata 4 bilangan adalah 25. Jika ditambah satu bilangan baru, rata-rata menjadi 30. Bilangan baru tersebut adalah …",
   o: ["40", "45", "50", "55", "60"],
   a: 2,
-  e: "Total awal 100. Total baru 150. Selisih 50.",
+  e: "Total empat bilangan awal = 4 × 25 = 100. Setelah ditambah satu bilangan baru, jumlah data menjadi 5 dengan rata-rata 30 sehingga total baru = 5 × 30 = 150. Bilangan baru = 150 − 100 = 50. Jadi bilangan tersebut adalah 50.",
   c: "Rata-rata Ekspansi"
 },
 {
   q: "Jika 30% dari suatu angka adalah 45, maka 150% dari angka tersebut adalah …",
   o: ["150", "200", "225", "250", "300"],
   a: 2,
-  e: "45 ÷ 0,3 = 150 → 1,5×150=225.",
+  e: "Jika 30% dari suatu angka = 45 maka 0,3X = 45. Maka X = 45 ÷ 0,3 = 150. Selanjutnya cari 150% dari angka tersebut. 150% = 1,5 × 150 = 225. Jadi hasilnya adalah 225.",
   c: "Persentase Proporsional"
 },
 {
   q: "Rasio A:B = 4:5. Jika A naik 25% dan B turun 20%, rasio baru adalah …",
   o: ["1:1", "5:4", "4:3", "3:4", "2:3"],
   a: 0,
-  e: "4x→5x dan 5x→4x → jadi 1:1.",
+  e: "Misalkan A = 4x dan B = 5x. Jika A naik 25%, maka A baru = 4x × 1,25 = 5x. Jika B turun 20%, maka B baru = 5x × 0,8 = 4x. Rasio baru menjadi 5x : 4x yang dapat disederhanakan menjadi 1 : 1 karena nilai keduanya sama besar. Jadi rasio baru adalah 1:1.",
   c: "Rasio Dinamis"
 },
 {
   q: "Harga suatu barang naik 10% tiap tahun. Jika harga awal Rp1.000.000, harga setelah 2 tahun adalah …",
   o: ["1.100.000", "1.200.000", "1.210.000", "1.220.000", "1.250.000"],
   a: 2,
-  e: "1.000.000×1,1²=1.210.000.",
+  e: "Kenaikan harga setiap tahun bersifat majemuk. Artinya kenaikan tahun kedua dihitung dari harga yang sudah naik di tahun pertama. Faktor kenaikan 10% adalah 1,1. Maka harga setelah 2 tahun = 1.000.000 × 1,1² = 1.000.000 × 1,21 = 1.210.000. Jadi harga setelah dua tahun adalah Rp1.210.000.",
   c: "Persentase Majemuk"
 },
 {
   q: "Jika 5 orang dapat menyelesaikan pekerjaan dalam 30 hari, berapa hari diperlukan 3 orang?",
   o: ["45", "48", "50", "54", "60"],
   a: 2,
-  e: "5×30=150 → 150÷3=50 hari.",
+  e: "Total pekerjaan dianggap konstan sehingga pekerja × hari = tetap. Dengan 5 pekerja selama 30 hari, total pekerjaan = 150 satuan kerja. Jika hanya 3 pekerja yang bekerja, maka waktu yang dibutuhkan = 150 ÷ 3 = 50 hari.",
   c: "Proporsi Terbalik"
 },
 {
   q: "Suatu barang didiskon 10% lalu 20%. Diskon efektif total adalah …",
   o: ["28%", "29%", "30%", "31%", "32%"],
   a: 0,
-  e: "0,9×0,8=0,72 → diskon 28%.",
+  e: "Diskon bertingkat dihitung menggunakan faktor persentase. Diskon 10% berarti harga menjadi 90% atau dikalikan 0,9. Diskon berikutnya 20% berarti dikalikan 0,8. Faktor akhir = 0,9 × 0,8 = 0,72. Artinya harga akhir adalah 72% dari harga awal sehingga total diskon = 100% − 72% = 28%. Jadi diskon efektif total adalah 28%. ",
   c: "Persentase Bertingkat"
 }
-
   
 ];
 
