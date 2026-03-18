@@ -440,143 +440,142 @@ const questions = [
   q: "Sebuah harga barang dinaikkan 25% lalu didiskon 20%. Jika harga awal Rp800.000, harga akhirnya adalah …",
   o: ["Rp760.000", "Rp780.000", "Rp800.000", "Rp820.000", "Rp840.000"],
   a: 2,
-  e: "800.000 × 1,25 = 1.000.000 lalu × 0,8 = 800.000.",
+  e: "Perubahan harga bertingkat harus dihitung secara berurutan, bukan dijumlahkan langsung. Kenaikan 25% berarti harga menjadi 125% dari harga awal. Maka harga setelah kenaikan adalah 800.000 × 1,25 = 1.000.000. Setelah itu diberikan diskon 20%, artinya harga menjadi 80% dari harga tersebut. Maka harga akhir = 1.000.000 × 0,8 = 800.000. Menariknya, kenaikan 25% lalu diskon 20% menghasilkan harga yang sama dengan harga awal. Jadi harga akhirnya adalah Rp800.000.",
   c: "Persentase Bertingkat"
 },
 {
   q: "Perbandingan A:B = 4:7. Jika selisihnya 45, maka nilai A adalah …",
   o: ["60", "72", "84", "96", "108"],
   a: 0,
-  e: "Selisih rasio 3 bagian = 45 → 1 bagian = 15 → A = 4 × 15 = 60.",
+  e: "Perbandingan A:B = 4:7 berarti selisih rasio adalah 7 − 4 = 3 bagian. Diketahui selisih nilai sebenarnya adalah 45. Artinya 3 bagian rasio mewakili nilai 45. Maka 1 bagian rasio = 45 ÷ 3 = 15. Nilai A adalah 4 bagian sehingga A = 4 × 15 = 60. Jadi nilai A adalah 60.",
   c: "Rasio Selisih"
 },
 {
   q: "Jika 5/8 dari suatu angka ditambah 20 sama dengan 70, maka angka tersebut adalah …",
   o: ["64", "72", "80", "88", "96"],
   a: 2,
-  e: "5/8 X = 50 → X = 50 × 8 / 5 = 80.",
+  e: "Misalkan angka tersebut adalah x. Dari soal diketahui (5/8)x + 20 = 70. Kurangi kedua ruas dengan 20 sehingga diperoleh (5/8)x = 50. Untuk mendapatkan x, kalikan kedua ruas dengan kebalikan dari 5/8 yaitu 8/5. Maka x = 50 × 8 ÷ 5 = 80. Jadi angka yang dimaksud adalah 80.",
   c: "Pecahan Lanjutan"
 },
 {
   q: "Sebuah barang dijual rugi 10% seharga Rp450.000. Harga beli barang tersebut adalah …",
   o: ["Rp480.000", "Rp490.000", "Rp500.000", "Rp520.000", "Rp540.000"],
   a: 2,
-  e: "450.000 adalah 90% → 450.000 ÷ 0,9 = 500.000.",
+  e: "Jika rugi 10%, berarti harga jual adalah 90% dari harga beli. Misalkan harga beli = x. Maka 0,9x = 450.000. Untuk mencari x, bagi kedua ruas dengan 0,9 sehingga diperoleh x = 450.000 ÷ 0,9 = 500.000. Jadi harga beli barang tersebut adalah Rp500.000.",
   c: "Untung–Rugi Balik"
 },
 {
   q: "Rata-rata 6 bilangan adalah 18. Jika satu bilangan 30 dihapus, rata-rata menjadi …",
   o: ["15", "15,6", "16", "17", "18"],
   a: 1,
-  e: "Total awal = 108. Dikurangi 30 → 78. 78 ÷ 5 = 15,6.",
+  e: "Rata-rata = jumlah total ÷ banyak data. Jika rata-rata 6 bilangan adalah 18, maka jumlah totalnya adalah 6 × 18 = 108. Salah satu bilangan yaitu 30 dihapus sehingga total baru = 108 − 30 = 78. Sekarang jumlah data tinggal 5. Maka rata-rata baru = 78 ÷ 5 = 15,6. Jadi rata-rata setelah satu bilangan dihapus adalah 15,6.",
   c: "Rata-rata Analitis"
 },
 {
   q: "Jika 15 pekerja menyelesaikan proyek dalam 24 hari, berapa hari diperlukan 20 pekerja?",
   o: ["16", "18", "20", "22", "24"],
   a: 1,
-  e: "15×24 = 360. 360 ÷ 20 = 18 hari.",
+  e: "Hubungan jumlah pekerja dan waktu adalah perbandingan terbalik: semakin banyak pekerja, semakin sedikit waktu yang diperlukan. Total pekerjaan dapat dianggap tetap. Hitung total beban kerja: 15 pekerja × 24 hari = 360 satuan kerja. Jika pekerja menjadi 20 orang, waktu yang diperlukan adalah 360 ÷ 20 = 18 hari. Jadi proyek dapat selesai dalam 18 hari.",
   c: "Perbandingan Terbalik"
 },
 {
   q: "Harga suatu barang setelah diskon 30% adalah Rp350.000. Harga awal adalah …",
   o: ["Rp450.000", "Rp480.000", "Rp500.000", "Rp520.000", "Rp550.000"],
   a: 2,
-  e: "350.000 adalah 70%. Maka 350.000 ÷ 0,7 = 500.000.",
+  e: "Diskon 30% berarti harga setelah diskon adalah 70% dari harga awal. Misalkan harga awal = x. Maka 0,7x = 350.000. Untuk mencari x, bagi kedua ruas dengan 0,7 sehingga diperoleh x = 350.000 ÷ 0,7 = 500.000. Jadi harga awal barang tersebut adalah Rp500.000.",
   c: "Persentase Invers"
 },
 {
   q: "Perbandingan uang Andi dan Budi 3:5. Jika total uang mereka Rp1.600.000, selisih uang mereka adalah …",
   o: ["Rp200.000", "Rp300.000", "Rp350.000", "Rp400.000", "Rp450.000"],
   a: 3,
-  e: "Total rasio 8. 1 bagian = 200.000. Selisih 2 bagian = 400.000.",
+  e: "Jumlah rasio adalah 3 + 5 = 8 bagian. Total uang Rp1.600.000 mewakili 8 bagian rasio. Maka nilai 1 bagian = 1.600.000 ÷ 8 = 200.000. Selisih rasio antara Andi dan Budi adalah 5 − 3 = 2 bagian. Maka selisih uang mereka = 2 × 200.000 = 400.000. Jadi selisih uang mereka adalah Rp400.000.",
   c: "Rasio Total"
 },
 {
   q: "0,125 × 0,8 sama dengan …",
   o: ["0,01", "0,05", "0,1", "0,15", "0,2"],
   a: 2,
-  e: "0,125 × 0,8 = 0,1.",
+  e: "Ubah desimal menjadi pecahan agar lebih mudah dihitung. Nilai 0,125 = 1/8 dan 0,8 = 4/5. Maka perkalian menjadi (1/8) × (4/5) = 4/40 = 1/10. Nilai 1/10 dalam desimal adalah 0,1. Jadi hasil perkalian tersebut adalah 0,1.",
   c: "Desimal"
 },
 {
   q: "Seorang pedagang memperoleh untung 20% dari harga beli. Jika harga jual Rp600.000, harga beli adalah …",
   o: ["Rp480.000", "Rp490.000", "Rp500.000", "Rp520.000", "Rp550.000"],
   a: 2,
-  e: "600.000 adalah 120% → 600.000 ÷ 1,2 = 500.000.",
+  e: "Jika keuntungan 20%, maka harga jual adalah 120% dari harga beli. Misalkan harga beli = x. Maka 1,2x = 600.000. Untuk mencari x, bagi kedua ruas dengan 1,2 sehingga diperoleh x = 600.000 ÷ 1,2 = 500.000. Jadi harga beli barang tersebut adalah Rp500.000.",
   c: "Untung–Rugi Invers"
 },
 {
   q: "Rata-rata 10 bilangan adalah 25. Jika ditambah 5 bilangan masing-masing 40, rata-rata baru adalah …",
   o: ["28", "30", "32", "34", "35"],
   a: 1,
-  e: "Total awal 250. Tambah 200 = 450. 450 ÷ 15 = 30.",
+  e: "Jumlah total 10 bilangan pertama adalah 10 × 25 = 250. Kemudian ditambahkan 5 bilangan yang masing-masing bernilai 40 sehingga tambahan total = 5 × 40 = 200. Total keseluruhan sekarang = 250 + 200 = 450. Banyak bilangan sekarang menjadi 15. Maka rata-rata baru = 450 ÷ 15 = 30.",
   c: "Rata-rata Gabungan"
 },
 {
   q: "Jika harga naik 10% lalu naik lagi 20%, kenaikan total efektif adalah …",
   o: ["28%", "30%", "32%", "34%", "36%"],
   a: 2,
-  e: "1,1 × 1,2 = 1,32 → naik 32%.",
+  e: "Kenaikan bertingkat tidak dijumlahkan secara langsung. Misalkan harga awal = 100. Setelah naik 10% menjadi 110. Kemudian naik lagi 20% dari 110 sehingga menjadi 110 × 1,2 = 132. Dibandingkan dengan harga awal 100, kenaikan total adalah 32. Jadi kenaikan efektifnya adalah 32%.",
   c: "Persentase Bertingkat"
 },
 {
   q: "Perbandingan A:B:C = 2:4:9. Jika jumlahnya 150, nilai terbesar adalah …",
   o: ["50", "60", "70", "75", "90"],
   a: 4,
-  e: "Total rasio 15. 1 bagian = 10. Terbesar 9×10 = 90.",
+  e: "Jumlah rasio adalah 2 + 4 + 9 = 15 bagian. Total nilai adalah 150 sehingga 1 bagian rasio = 150 ÷ 15 = 10. Nilai terbesar berasal dari rasio 9 bagian sehingga nilainya = 9 × 10 = 90. Jadi nilai terbesar adalah 90.",
   c: "Rasio Tiga Variabel"
 },
 {
   q: "Jika 3/4 dari suatu bilangan dikurangi 12 sama dengan 33, bilangan tersebut adalah …",
   o: ["52", "56", "60", "64", "68"],
   a: 2,
-  e: "3/4 X = 45 → X = 60.",
+  e: "Misalkan bilangan tersebut adalah x. Dari soal diketahui (3/4)x − 12 = 33. Tambahkan 12 pada kedua ruas sehingga diperoleh (3/4)x = 45. Untuk mencari x, kalikan kedua ruas dengan 4/3 sehingga x = 45 × 4 ÷ 3 = 60. Jadi bilangan tersebut adalah 60.",
   c: "Pecahan Kompleks"
 },
 {
   q: "Harga beli Rp800.000 dijual dengan untung 25%. Jika kemudian pembeli menjual lagi rugi 20%, harga akhir adalah …",
   o: ["Rp800.000", "Rp820.000", "Rp840.000", "Rp860.000", "Rp880.000"],
   a: 0,
-  e: "800.000 × 1,25 = 1.000.000 lalu × 0,8 = 800.000.",
+  e: "Harga awal Rp800.000 dijual dengan keuntungan 25%. Maka harga setelah penjualan pertama = 800.000 × 1,25 = 1.000.000. Pembeli kemudian menjual kembali dengan rugi 20%, artinya harga menjadi 80% dari 1.000.000. Maka harga akhir = 1.000.000 × 0,8 = 800.000. Jadi harga akhirnya kembali menjadi Rp800.000.",
   c: "Untung–Rugi Bertingkat"
 },
 {
   q: "Jika 18 liter bensin cukup untuk 270 km, maka 45 liter cukup untuk …",
   o: ["600 km", "650 km", "675 km", "700 km", "720 km"],
   a: 2,
-  e: "270/18 = 15 km/liter. 45×15 = 675 km.",
+  e: "Pertama cari jarak yang dapat ditempuh per liter bensin. Jika 18 liter cukup untuk 270 km, maka 1 liter cukup untuk 270 ÷ 18 = 15 km. Jika tersedia 45 liter, maka jarak yang dapat ditempuh = 45 × 15 = 675 km. Jadi jaraknya adalah 675 km.",
   c: "Proporsi"
 },
 {
   q: "Rata-rata 5 angka adalah 40. Jika salah satu angka adalah 70 dan dihapus, rata-rata menjadi …",
   o: ["30", "31", "32", "32,5", "33"],
   a: 3,
-  e: "Total awal 200. Dikurangi 70 → 130. 130 ÷ 4 = 32,5.",
+  e: "Jumlah total 5 angka = 5 × 40 = 200. Salah satu angka yaitu 70 dihapus sehingga total baru = 200 − 70 = 130. Sekarang jumlah data menjadi 4. Maka rata-rata baru = 130 ÷ 4 = 32,5. Jadi rata-rata yang baru adalah 32,5.",
   c: "Rata-rata Lanjut"
 },
 {
   q: "Jika sebuah barang didiskon 15% lalu 10% lagi, total diskon efektif adalah …",
   o: ["23%", "23,5%", "24%", "25%", "26%"],
   a: 1,
-  e: "0,85 × 0,9 = 0,765 → diskon 23,5%.",
+  e: "Diskon bertingkat tidak dijumlahkan langsung. Misalkan harga awal = 100. Setelah diskon 15% menjadi 85. Kemudian diskon lagi 10% sehingga menjadi 85 × 0,9 = 76,5. Dibandingkan harga awal 100, penurunan total adalah 23,5. Jadi diskon efektifnya adalah 23,5%.",
   c: "Persentase Bertingkat"
 },
 {
   q: "Perbandingan jumlah pria dan wanita di suatu ruangan 7:5. Jika total 144 orang, jumlah wanita adalah …",
   o: ["50", "55", "60", "65", "70"],
   a: 2,
-  e: "Total rasio 12. 144 ÷ 12 = 12. Wanita 5×12 = 60.",
+  e: "Jumlah rasio adalah 7 + 5 = 12 bagian. Total orang adalah 144 sehingga 1 bagian rasio = 144 ÷ 12 = 12. Jumlah wanita adalah 5 bagian sehingga = 5 × 12 = 60. Jadi jumlah wanita adalah 60 orang.",
   c: "Rasio"
 },
 {
   q: "Jika 40% dari suatu angka adalah 96, maka 75% dari angka tersebut adalah …",
   o: ["150", "160", "170", "180", "190"],
   a: 3,
-  e: "96 ÷ 0,4 = 240. 75% × 240 = 180.",
+  e: "Misalkan angka tersebut adalah x. Diketahui 40% dari x = 96 sehingga 0,4x = 96. Maka x = 96 ÷ 0,4 = 240. Setelah mengetahui nilai x, cari 75% dari angka tersebut yaitu 0,75 × 240 = 180. Jadi hasilnya adalah 180.",
   c: "Persentase Proporsional"
 }
-
   
 ];
 
