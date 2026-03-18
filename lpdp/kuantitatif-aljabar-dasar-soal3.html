@@ -126,7 +126,7 @@ header {
 }
 
 /* ===============================
-   📊 RESULT DASHBOARD
+    RESULT DASHBOARD
 ================================ */
 .result {
   display: none;
@@ -259,7 +259,51 @@ header {
 
 
 /* ===============================
-   🎯 REKOMENDASI LATIHAN CARD
+    REKOMENDASI LATIHAN CARD
+================================ */
+
+.recommendation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.rec-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  border: 1px solid #e5e7eb;
+  transition: all .2s ease;
+}
+
+.rec-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+}
+
+.rec-title {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.rec-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.rec-icon {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+
+/* ===============================
+    REKOMENDASI LATIHAN CARD
 ================================ */
 
 .recommendation-grid {
@@ -319,7 +363,7 @@ header {
 <div class="container">
   <div class="card" id="quiz">
     <div class="timer" id="timer">
-  ⏱️ Sisa Waktu: <span id="time">20:00</span>
+   Sisa Waktu: <span id="time">20:00</span>
 </div>
 
     <div class="progress" id="progress"></div>
@@ -401,7 +445,7 @@ header {
 
 <script>
 /* ===============================
-   ⏱️ TIMER BKN
+    TIMER BKN
 ================================ */
 let totalTime = 20 * 60;
 let timerInterval;
@@ -432,160 +476,84 @@ const questions = [
   /* === ISI BANK SOAL 1–20 (TETAP SEPERTI SEBELUMNYA) === */
   
 /* =================================================
-   🔥 TIU – ALJABAR DASAR ADVANCED (BATCH 1–4)
-   LEVEL LEBIH SULIT – VERIFIED INTEGER
+   🟢 TIU – ALJABAR DASAR BASIC (20 SOAL)
+   Batch 1–4 – Verified & Integer Only
 ================================================= */
 
-/* ===== BATCH 1 ===== */
+/* ===== BATCH 5 ===== */
 
 {
-  q: "Jika 7(2x − 3) − 4(x + 5) = 6x − 9, maka nilai x adalah …",
-  o: ["5", "6", "7", "8", "9"],
+  q: "Jika 3x + 2 = 14, maka nilai x adalah …",
+  o: ["2", "3", "4", "5", "6"],
+  a: 2,
+  e: "Persamaan ini merupakan persamaan linear satu variabel. Tujuan penyelesaian adalah membuat variabel x berdiri sendiri. Langkah pertama adalah memindahkan konstanta 2 ke ruas kanan dengan cara mengurangkan 2 pada kedua ruas persamaan. Persamaan berubah menjadi 3x = 12. Selanjutnya bagi kedua ruas dengan 3 untuk menghilangkan koefisien x. Maka diperoleh x = 12 ÷ 3 = 4. Jadi nilai x yang memenuhi persamaan tersebut adalah 4.",
+  c: "Persamaan Linear Sederhana"
+},
+{
+  q: "Jika 7x − 5 = 16, maka nilai x adalah …",
+  o: ["2", "3", "4", "5", "6"],
+  a: 1,
+  e: "Langkah pertama dalam menyelesaikan persamaan ini adalah memindahkan konstanta −5 ke ruas kanan. Hal ini dilakukan dengan menambahkan 5 pada kedua ruas sehingga diperoleh 7x = 21. Selanjutnya untuk mengisolasi x, bagi kedua ruas dengan 7. Maka diperoleh x = 3. Jadi nilai x yang memenuhi persamaan tersebut adalah 3.",
+  c: "Persamaan Linear Sederhana"
+},
+{
+  q: "Jika 4x + 6 = 2x + 14, maka nilai x adalah …",
+  o: ["2", "3", "4", "5", "6"],
+  a: 2,
+  e: "Persamaan ini memiliki variabel di kedua ruas. Untuk menyelesaikannya, kita kumpulkan semua suku yang mengandung x pada satu sisi. Kurangi kedua ruas dengan 2x sehingga diperoleh 2x + 6 = 14. Selanjutnya kurangi kedua ruas dengan 6 sehingga menjadi 2x = 8. Terakhir bagi kedua ruas dengan 2 sehingga diperoleh x = 4. Jadi nilai x yang memenuhi persamaan tersebut adalah 4.",
+  c: "Persamaan Linear Dua Ruas"
+},
+{
+  q: "Jika 2(x + 3) = 14, maka nilai x adalah …",
+  o: ["3", "4", "5", "6", "7"],
+  a: 1,
+  e: "Persamaan ini mengandung tanda kurung sehingga langkah pertama adalah menggunakan sifat distributif. Kalikan 2 dengan setiap suku di dalam kurung sehingga diperoleh 2x + 6 = 14. Selanjutnya kurangi kedua ruas dengan 6 sehingga diperoleh 2x = 8. Bagi kedua ruas dengan 2 sehingga diperoleh x = 4. Jadi nilai x adalah 4.",
+  c: "Distribusi Persamaan Linear"
+},
+{
+  q: "Jika (x/3) + 2 = 6, maka nilai x adalah …",
+  o: ["9", "10", "11", "12", "13"],
   a: 3,
-  e: "14x −21 −4x −20 = 6x −9 → 10x −41 = 6x −9 → 4x = 32 → x = 8.",
-  c: "Persamaan Linear Kompleks"
-},
-{
-  q: "Jika 3(4x − 5) − 2(3x − 1) = 4x + 7, maka nilai x adalah …",
-  o: ["8", "9", "10", "11", "12"],
-  a: 2,
-  e: "12x −15 −6x +2 = 4x +7 → 6x −13 = 4x +7 → 2x = 20 → x = 10.",
-  c: "Persamaan Linear Kompleks"
-},
-{
-  q: "Jika (3x − 3)/2 = (2x + 3)/3, maka nilai x adalah …",
-  o: ["1", "2", "3", "4", "5"],
-  a: 2,
-  e: "3(3x −3) = 2(2x +3) → 9x −9 = 4x +6 → 5x = 15 → x = 3.",
+  e: "Persamaan ini mengandung pecahan sehingga langkah pertama adalah memindahkan konstanta 2 ke ruas kanan dengan mengurangkan 2 pada kedua ruas. Persamaan menjadi x/3 = 4. Selanjutnya kalikan kedua ruas dengan 3 untuk menghilangkan penyebut. Maka diperoleh x = 12. Jadi nilai x yang memenuhi persamaan tersebut adalah 12.",
   c: "Persamaan Pecahan"
 },
+
+/* ===== BATCH 6 ===== */
+
 {
-  q: "Jika 5x − 2(2x − 3) = 3(x + 2), maka nilai x adalah …",
-  o: ["-2", "-1", "0", "1", "2"],
+  q: "Jika x + y = 10 dan x − y = 4, maka nilai x adalah …",
+  o: ["5", "6", "7", "8", "9"],
   a: 2,
-  e: "5x −4x +6 = 3x +6 → x +6 = 3x +6 → -2x = 0 → x = 0.",
-  c: "Persamaan Linear Kompleks"
+  e: "Gunakan metode eliminasi dengan menjumlahkan kedua persamaan. (x + y) + (x − y) = 10 + 4. Variabel y akan saling menghilangkan sehingga diperoleh 2x = 14. Selanjutnya bagi kedua ruas dengan 2 sehingga diperoleh x = 7. Jadi nilai x adalah 7.",
+  c: "SPL Eliminasi"
 },
 {
-  q: "Jika (x + 5)(x − 3) = 48, maka nilai x adalah …",
-  o: ["7 atau −9", "6 atau −8", "5 atau −7", "4 atau −6", "3 atau −5"],
+  q: "Jika x + y = 7 dan xy = 10, maka nilai x² + y² adalah …",
+  o: ["25", "27", "29", "31", "33"],
+  a: 2,
+  e: "Gunakan identitas aljabar penting: x² + y² = (x + y)² − 2xy. Dari soal diketahui x + y = 7 dan xy = 10. Hitung (x + y)² = 49. Kemudian kurangi dengan 2xy = 20 sehingga diperoleh x² + y² = 49 − 20 = 29. Jadi hasilnya adalah 29.",
+  c: "Identitas Kuadrat"
+},
+{
+  q: "Jika x − y = 3 dan xy = 4, maka nilai x² + y² adalah …",
+  o: ["13", "17", "21", "25", "29"],
   a: 0,
-  e: "x² +2x −15 = 48 → x² +2x −63 = 0 → (x+9)(x−7)=0 → x=7 atau -9.",
-  c: "Persamaan Kuadrat"
-},
-
-/* ===== BATCH 2 ===== */
-
-{
-  q: "Jika x + y = 7 dan 2x − 3y = −1, maka nilai x adalah …",
-  o: ["2", "3", "4", "5", "6"],
-  a: 2,
-  e: "y=7−x → 2x−3(7−x)=−1 → 5x−21=−1 → 5x=20 → x=4.",
-  c: "SPL Substitusi"
+  e: "Gunakan identitas aljabar lain yaitu x² + y² = (x − y)² + 2xy. Dari soal diketahui x − y = 3 sehingga (x − y)² = 9. Diketahui juga xy = 4 sehingga 2xy = 8. Maka x² + y² = 9 + 8 = 17. Jadi hasilnya adalah 17.",
+  c: "Identitas Aljabar"
 },
 {
-  q: "Jika x − y = 3 dan 3x + y = 17, maka nilai y adalah …",
-  o: ["1", "2", "3", "4", "5"],
+  q: "Jika x² − 5x + 6 = 0, maka nilai x adalah …",
+  o: ["1 dan 6", "2 dan 3", "3 dan 4", "2 dan 4", "1 dan 5"],
   a: 1,
-  e: "x=y+3 → 3(y+3)+y=17 → 4y+9=17 → 4y=8 → y=2.",
-  c: "SPL Substitusi"
+  e: "Persamaan kuadrat ini dapat difaktorkan. Cari dua bilangan yang jika dikalikan menghasilkan 6 dan jika dijumlahkan menghasilkan −5. Bilangan tersebut adalah −2 dan −3. Maka persamaan dapat ditulis sebagai (x − 2)(x − 3) = 0. Berdasarkan sifat perkalian nol, maka x − 2 = 0 atau x − 3 = 0. Jadi solusi persamaan adalah x = 2 atau x = 3.",
+  c: "Faktorisasi Persamaan Kuadrat"
 },
 {
-  q: "Jika x + y = 7 dan x² + y² = 37, maka nilai xy adalah …",
-  o: ["4", "5", "6", "7", "8"],
+  q: "Jika x² − 9 = 0, maka nilai x adalah …",
+  o: ["±1", "±2", "±3", "±4", "±5"],
   a: 2,
-  e: "37=49−2xy → 2xy=12 → xy=6.",
-  c: "Identitas Kuadrat"
-},
-{
-  q: "Jika x + y = 5 dan xy = 4, maka nilai x² + y² adalah …",
-  o: ["15", "16", "17", "18", "19"],
-  a: 2,
-  e: "25−8=17.",
-  c: "Identitas Kuadrat"
-},
-{
-  q: "Jika x + y = 5 dan x² − y² = 5, maka nilai x − y adalah …",
-  o: ["-1", "0", "1", "2", "3"],
-  a: 2,
-  e: "5=(x−y)·5 → x−y=1.",
-  c: "Identitas Selisih Kuadrat"
-},
-
-/* ===== BATCH 3 ===== */
-
-{
-  q: "Jika x + y = 8 dan x² + y² = 34, maka nilai xy adalah …",
-  o: ["12", "14", "15", "16", "18"],
-  a: 2,
-  e: "34=64−2xy → 2xy=30 → xy=15.",
-  c: "Identitas Kuadrat"
-},
-{
-  q: "Jika x − y = 2 dan x² + y² = 20, maka nilai x + y adalah …",
-  o: ["4", "5", "6", "7", "8"],
-  a: 2,
-  e: "4=20−2xy → 2xy=16 → xy=8 → (x+y)²=20+16=36 → x+y=6.",
-  c: "Manipulasi Identitas"
-},
-{
-  q: "Jika x + y = 8 dan 3x − 2y = 14, maka nilai x adalah …",
-  o: ["4", "5", "6", "7", "8"],
-  a: 2,
-  e: "y=8−x → 3x−2(8−x)=14 → 5x=30 → x=6.",
-  c: "SPL Substitusi"
-},
-{
-  q: "Jika x² + y² = 10 dan xy = 3, maka nilai x + y adalah …",
-  o: ["2", "3", "4", "5", "6"],
-  a: 2,
-  e: "(x+y)²=10+6=16 → x+y=4.",
-  c: "Identitas Kuadrat"
-},
-{
-  q: "Jika x − y = 3 dan x² − y² = 33, maka nilai x + y adalah …",
-  o: ["8", "9", "10", "11", "12"],
-  a: 3,
-  e: "33=3(x+y) → x+y=11.",
-  c: "Identitas Selisih Kuadrat"
-},
-
-/* ===== BATCH 4 ===== */
-
-{
-  q: "Jika x + y = 10 dan xy = 16, maka nilai x² + y² adalah …",
-  o: ["64", "66", "68", "70", "72"],
-  a: 2,
-  e: "100−32=68.",
-  c: "Identitas Kuadrat"
-},
-{
-  q: "Jika x − y = 6 dan xy = 27, maka nilai x² + y² adalah …",
-  o: ["84", "87", "90", "93", "96"],
-  a: 2,
-  e: "36=x²+y²−54 → x²+y²=90.",
-  c: "Manipulasi Identitas"
-},
-{
-  q: "Jika x + y = 9 dan 2x − y = 6, maka nilai y adalah …",
-  o: ["2", "3", "4", "5", "6"],
-  a: 2,
-  e: "y=9−x → 2x−(9−x)=6 → 3x=15 → x=5 → y=4.",
-  c: "SPL Substitusi"
-},
-{
-  q: "Jika x² + y² = 52 dan x − y = 2, maka nilai xy adalah …",
-  o: ["20", "22", "24", "26", "28"],
-  a: 2,
-  e: "4=52−2xy → 2xy=48 → xy=24.",
-  c: "Manipulasi Identitas"
-},
-{
-  q: "Jika x + y = 8 dan x² − y² = 48, maka nilai x − y adalah …",
-  o: ["4", "5", "6", "7", "8"],
-  a: 2,
-  e: "48=(x−y)·8 → x−y=6.",
-  c: "Identitas Selisih Kuadrat"
+  e: "Persamaan ini merupakan bentuk selisih kuadrat. Kita dapat menuliskannya sebagai x² = 9. Selanjutnya ambil akar kuadrat dari kedua ruas. Akar kuadrat dari 9 adalah 3. Namun karena bilangan negatif juga menghasilkan 9 jika dikuadratkan, maka terdapat dua solusi yaitu x = 3 dan x = −3. Oleh karena itu nilai x adalah ±3.",
+  c: "Persamaan Kuadrat Dasar"
 }
 
   
@@ -735,7 +703,7 @@ function finishExam() {
   document.getElementById("finalLevel").innerText = level;
 
   /* ===============================
-     📊 GRAFIK AREA LEMAH
+      GRAFIK AREA LEMAH
   ============================== */
   let graphHTML = "";
   if (Object.keys(analytics).length > 0) {
@@ -762,7 +730,7 @@ function finishExam() {
   }
 
   /* ===============================
-     🧠 ADAPTIVE RECOMMENDATION
+      ADAPTIVE RECOMMENDATION
   ============================== */
   let focusArea = Object.keys(analytics).length
     ? Object.entries(analytics).sort((a,b)=>b[1]-a[1])[0][0]
