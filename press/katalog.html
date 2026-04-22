@@ -4,20 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Katalog Buku – Primajana Press</title>
-<meta name="description" content="Katalog resmi buku Primajana Press. Cari buku, lihat detail, kategori, dan koleksi terbaru.">
+<meta name="description" content="Katalog resmi buku Primajana Press">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 :root{
   --primary:#0d3b66;
-  --secondary:#16a34a;
-  --bg:#f8fafc;
-  --card:#ffffff;
+  --green:#16a34a;
+  --bg:#f5f7fb;
+  --card:#fff;
   --text:#1f2937;
   --muted:#6b7280;
-  --border:#e5e7eb;
-  --shadow:0 12px 30px rgba(0,0,0,.08);
 }
 
 *{
@@ -27,19 +25,18 @@
 }
 
 body{
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-family:Arial,sans-serif;
   background:linear-gradient(135deg,#f8fafc,#eef2ff);
   color:var(--text);
 }
 
-/* HEADER */
 header{
+  background:#ffffffcc;
+  backdrop-filter:blur(12px);
   position:sticky;
   top:0;
-  z-index:999;
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(14px);
-  box-shadow:0 6px 18px rgba(0,0,0,.06);
+  z-index:99;
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
 }
 
 .header-wrap{
@@ -47,14 +44,14 @@ header{
   margin:auto;
   padding:14px 20px;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 }
 
 .brand{
   display:flex;
-  align-items:center;
   gap:12px;
+  align-items:center;
 }
 
 .brand img{
@@ -62,7 +59,6 @@ header{
 }
 
 .brand strong{
-  font-size:18px;
   color:var(--primary);
 }
 
@@ -71,19 +67,13 @@ header{
   color:var(--muted);
 }
 
-/* MAIN */
 .container{
   max-width:1200px;
   margin:auto;
-  padding:34px 20px 60px;
-}
-
-.hero{
-  margin-bottom:26px;
+  padding:35px 20px;
 }
 
 .hero h1{
-  font-size:30px;
   color:var(--primary);
   margin-bottom:8px;
 }
@@ -92,55 +82,39 @@ header{
   color:var(--muted);
 }
 
-/* FILTER */
 .toolbar{
+  margin:25px 0;
   display:grid;
   grid-template-columns:1fr 180px 180px;
   gap:12px;
-  margin:28px 0;
 }
 
-.toolbar input,
-.toolbar select{
-  padding:12px 14px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  font-size:14px;
-  outline:none;
-  background:#fff;
+.toolbar input,.toolbar select{
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #ddd;
 }
 
-.toolbar input:focus,
-.toolbar select:focus{
-  border-color:#93c5fd;
-}
-
-/* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
   gap:24px;
 }
 
 .card{
-  background:var(--card);
-  border-radius:22px;
+  background:#fff;
+  border-radius:18px;
   padding:18px;
-  box-shadow:var(--shadow);
-  transition:.35s;
-  display:flex;
-  flex-direction:column;
-  min-height:420px;
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+  transition:.3s;
 }
 
 .card:hover{
   transform:translateY(-8px);
-  box-shadow:0 20px 40px rgba(0,0,0,.12);
 }
 
 .cover-wrap{
   text-align:center;
-  margin-bottom:14px;
 }
 
 .card img{
@@ -148,46 +122,44 @@ header{
   height:220px;
   object-fit:cover;
   border-radius:8px;
-  box-shadow:-12px 14px 24px rgba(0,0,0,.22);
+  box-shadow:-10px 12px 20px rgba(0,0,0,.18);
 }
 
 .badge{
   display:inline-block;
   margin-top:10px;
-  font-size:11px;
+  background:#dcfce7;
+  color:#166534;
   padding:4px 10px;
   border-radius:999px;
-  background:#ecfccb;
-  color:#3f6212;
-  font-weight:700;
+  font-size:11px;
+  font-weight:bold;
 }
 
 .card h3{
   font-size:16px;
-  line-height:1.4;
   color:var(--primary);
-  margin:10px 0 6px;
-  min-height:46px;
+  margin:12px 0 8px;
+  min-height:48px;
 }
 
 .author{
   font-size:13px;
   color:var(--muted);
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
 .desc{
   font-size:13px;
-  color:#4b5563;
   line-height:1.5;
-  margin-bottom:14px;
-  flex-grow:1;
+  color:#444;
+  min-height:62px;
 }
 
 .meta{
   font-size:12px;
-  color:var(--muted);
-  margin-bottom:12px;
+  color:#666;
+  margin:10px 0;
 }
 
 .actions{
@@ -198,42 +170,27 @@ header{
 .btn{
   flex:1;
   text-align:center;
-  text-decoration:none;
-  padding:10px 12px;
+  padding:10px;
   border-radius:12px;
+  text-decoration:none;
   font-size:13px;
-  font-weight:700;
+  font-weight:bold;
+}
+
+.btn-outline{
+  border:1px solid #ddd;
+  color:var(--primary);
 }
 
 .btn-primary{
   background:linear-gradient(135deg,#16a34a,#22c55e);
-  color:#fff;
+  color:white;
 }
 
-.btn-outline{
-  border:1px solid var(--border);
-  color:var(--primary);
-  background:#fff;
-}
-
-/* LOADER */
-.loader{
-  text-align:center;
-  padding:40px;
-  color:var(--muted);
-}
-
-.empty{
+.loader,.empty{
   text-align:center;
   padding:50px;
-  color:var(--muted);
-}
-
-footer{
-  text-align:center;
-  padding:30px;
-  color:var(--muted);
-  font-size:13px;
+  color:#666;
 }
 
 @media(max-width:900px){
@@ -241,232 +198,179 @@ footer{
     grid-template-columns:1fr;
   }
 }
-
-@media(max-width:600px){
-  .hero h1{font-size:24px}
-  .grid{grid-template-columns:1fr 1fr}
-}
-
-@media(max-width:430px){
-  .grid{grid-template-columns:1fr}
-}
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="header-wrap">
-    <div class="brand">
-      <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
-      <strong>Primajana Press</strong>
-    </div>
-    <div class="stats" id="stats">Memuat katalog...</div>
+<div class="header-wrap">
+  <div class="brand">
+    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png">
+    <strong>Primajana Press</strong>
   </div>
+  <div class="stats" id="stats">Memuat...</div>
+</div>
 </header>
 
 <div class="container">
 
-  <section class="hero">
-    <h1>Katalog Buku Primajana Press</h1>
-    <p>Temukan referensi terbaik, buku ilmiah, monograf, dan karya unggulan.</p>
-  </section>
+<div class="hero">
+<h1>Katalog Buku Primajana Press</h1>
+<p>Temukan buku terbaik kami.</p>
+</div>
 
-  <section class="toolbar">
-    <input id="search" placeholder="Cari judul, penulis, kata kunci...">
-    
-    <select id="sort">
-      <option value="az">Urutkan: A-Z</option>
-      <option value="za">Urutkan: Z-A</option>
-      <option value="new">Terbaru</option>
-    </select>
+<div class="toolbar">
+<input id="search" placeholder="Cari judul / penulis">
+<select id="sort">
+<option value="az">A-Z</option>
+<option value="za">Z-A</option>
+</select>
 
-    <select id="filter">
-      <option value="all">Semua Buku</option>
-      <option value="author">Ada Penulis</option>
-      <option value="desc">Ada Deskripsi</option>
-    </select>
-  </section>
+<select id="filter">
+<option value="all">Semua</option>
+<option value="author">Ada Penulis</option>
+</select>
+</div>
 
-  <div class="grid" id="bookList">
-    <div class="loader"><i class="fa fa-spinner fa-spin"></i> Memuat katalog...</div>
-  </div>
+<div class="grid" id="bookList">
+<div class="loader">Loading...</div>
+</div>
 
 </div>
 
-<footer>
-© 2026 Primajana Press
-</footer>
-
 <script>
-/* ======================================
-   DAFTAR FILE BUKU
-====================================== */
 const BOOK_FILES = [
-  "/press/buku000001.html",
-  "/press/buku000002.html",
-  "/press/buku000003.html"
+"/press/buku000001.html",
+"/press/buku000002.html",
+"/press/buku000003.html"
 ];
 
-/* ======================================
-   APP STATE
-====================================== */
 let books = [];
+
 const list = document.getElementById("bookList");
 const stats = document.getElementById("stats");
 
-/* ======================================
-   INIT
-====================================== */
-loadBooks();
-
-/* ======================================
-   LOAD BOOKS (ALLSETTLED)
-====================================== */
-async function loadBooks(){
-
-  const jobs = BOOK_FILES.map(file => loadSingleBook(file));
-  const results = await Promise.allSettled(jobs);
-
-  books = results
-    .filter(r => r.status === "fulfilled")
-    .map(r => r.value);
-
-  render();
-}
-
-/* ======================================
-   LOAD SINGLE BOOK
-====================================== */
-async function loadSingleBook(file){
-
-  const res = await fetch(file);
-  if(!res.ok) throw new Error("File tidak ditemukan");
-
-  const html = await res.text();
-
-  const match = html.match(/BOOK_ID.*?["'](.*?)["']/i);
-  if(!match) throw new Error("BOOK_ID tidak ditemukan");
-
-  const id = match[1];
-
-  const api = await fetch(`https://www.googleapis.com/books/v1/volumes/${id}`);
-  const data = await api.json();
-
-  if(!data.volumeInfo) throw new Error("Google ID salah");
-
-  return {
-    file,
-    id,
-    info:data.volumeInfo
-  };
-}
-
-/* ======================================
-   RENDER
-====================================== */
-function render(){
-
-  let data = [...books];
-
-  const q = search.value.toLowerCase().trim();
-  const sort = sortEl.value;
-  const filter = filterEl.value;
-
-  /* SEARCH */
-  if(q){
-    data = data.filter(b =>
-      (b.info.title || "").toLowerCase().includes(q) ||
-      (b.info.authors || []).join(" ").toLowerCase().includes(q) ||
-      (b.info.description || "").toLowerCase().includes(q)
-    );
-  }
-
-  /* FILTER */
-  if(filter === "author"){
-    data = data.filter(b => b.info.authors);
-  }
-
-  if(filter === "desc"){
-    data = data.filter(b => b.info.description);
-  }
-
-  /* SORT */
-  if(sort === "az"){
-    data.sort((a,b)=>a.info.title.localeCompare(b.info.title));
-  }
-
-  if(sort === "za"){
-    data.sort((a,b)=>b.info.title.localeCompare(a.info.title));
-  }
-
-  if(sort === "new"){
-    data.reverse();
-  }
-
-  stats.innerHTML = data.length + " buku tersedia";
-
-  if(!data.length){
-    list.innerHTML = `<div class="empty">Tidak ada buku ditemukan.</div>`;
-    return;
-  }
-
-  list.innerHTML = data.map(bookCard).join("");
-}
-
-/* ======================================
-   CARD TEMPLATE
-====================================== */
-function bookCard(b){
-
-  const title = b.info.title || "Tanpa Judul";
-  const author = (b.info.authors || ["Tanpa Penulis"]).join(", ");
-  const desc = (b.info.description || "Tidak ada deskripsi.")
-    .replace(/<[^>]+>/g,'')
-    .slice(0,120) + "...";
-
-  const year = b.info.publishedDate || "-";
-
-  return `
-  <article class="card">
-    
-    <div class="cover-wrap">
-      <img loading="lazy"
-        src="https://books.google.co.id/books/publisher/content/images/frontcover/${b.id}?fife=w300-h450"
-        onerror="this.src='https://via.placeholder.com/150x220?text=No+Cover'">
-      <div class="badge">Primajana</div>
-    </div>
-
-    <h3>${title}</h3>
-    <div class="author">${author}</div>
-    <div class="desc">${desc}</div>
-    <div class="meta"><i class="fa fa-calendar"></i> ${year}</div>
-
-    <div class="actions">
-      <a class="btn btn-outline" target="_blank"
-      href="https://books.google.com/books?id=${b.id}">
-      Preview
-      </a>
-
-      <a class="btn btn-primary" href="${b.file}">
-      Detail
-      </a>
-    </div>
-
-  </article>
-  `;
-}
-
-/* ======================================
-   EVENTS
-====================================== */
 const search = document.getElementById("search");
 const sortEl = document.getElementById("sort");
 const filterEl = document.getElementById("filter");
 
-search.addEventListener("input", render);
-sortEl.addEventListener("change", render);
-filterEl.addEventListener("change", render);
+loadBooks();
+
+async function loadBooks(){
+
+const jobs = BOOK_FILES.map(file => loadSingleBook(file));
+
+const results = await Promise.allSettled(jobs);
+
+books = results
+.filter(r => r.status === "fulfilled")
+.map(r => r.value);
+
+console.log(results);
+
+render();
+}
+
+/* FIX PALING PENTING ADA DI SINI */
+async function loadSingleBook(file){
+
+const res = await fetch(file);
+
+if(!res.ok) throw new Error("File tidak ditemukan: " + file);
+
+const html = await res.text();
+
+/* regex sesuai file anda */
+const match = html.match(/const\s+BOOK_ID\s*=\s*["']([^"']+)["']/i);
+
+if(!match) throw new Error("BOOK_ID tidak ditemukan di " + file);
+
+const id = match[1];
+
+const api = await fetch("https://www.googleapis.com/books/v1/volumes/" + id);
+const data = await api.json();
+
+if(!data.volumeInfo) throw new Error("Google ID salah");
+
+return {
+file,
+id,
+info:data.volumeInfo
+};
+}
+
+function render(){
+
+let data = [...books];
+
+const q = search.value.toLowerCase();
+
+if(q){
+data = data.filter(b =>
+(b.info.title || "").toLowerCase().includes(q) ||
+(b.info.authors || []).join(" ").toLowerCase().includes(q)
+);
+}
+
+if(sortEl.value === "az"){
+data.sort((a,b)=>a.info.title.localeCompare(b.info.title));
+}
+
+if(sortEl.value === "za"){
+data.sort((a,b)=>b.info.title.localeCompare(a.info.title));
+}
+
+stats.innerHTML = data.length + " buku tersedia";
+
+if(!data.length){
+list.innerHTML = `<div class="empty">Tidak ada buku.</div>`;
+return;
+}
+
+list.innerHTML = data.map(bookCard).join("");
+}
+
+function bookCard(b){
+
+const title = b.info.title || "-";
+const author = (b.info.authors || ["Tanpa Penulis"]).join(", ");
+const desc = (b.info.description || "Tidak ada deskripsi")
+.replace(/<[^>]+>/g,'')
+.substring(0,100) + "...";
+
+return `
+<div class="card">
+
+<div class="cover-wrap">
+<img src="https://books.google.co.id/books/publisher/content/images/frontcover/${b.id}?fife=w300-h450"
+onerror="this.src='https://via.placeholder.com/150x220?text=No+Cover'">
+
+<div class="badge">Primajana</div>
+</div>
+
+<h3>${title}</h3>
+<div class="author">${author}</div>
+<div class="desc">${desc}</div>
+
+<div class="actions">
+<a class="btn btn-outline" target="_blank"
+href="https://books.google.com/books?id=${b.id}">
+Preview
+</a>
+
+<a class="btn btn-primary" href="${b.file}">
+Detail
+</a>
+</div>
+
+</div>
+`;
+}
+
+search.addEventListener("input",render);
+sortEl.addEventListener("change",render);
+filterEl.addEventListener("change",render);
 </script>
 
 </body>
