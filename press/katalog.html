@@ -85,7 +85,7 @@ header{
 .toolbar{
   margin:25px 0;
   display:grid;
-  grid-template-columns:1fr 180px 180px;
+  grid-template-columns:1fr 180px;
   gap:12px;
 }
 
@@ -156,12 +156,6 @@ header{
   min-height:62px;
 }
 
-.meta{
-  font-size:12px;
-  color:#666;
-  margin:10px 0;
-}
-
 .actions{
   display:flex;
   gap:10px;
@@ -226,11 +220,6 @@ header{
 <option value="az">A-Z</option>
 <option value="za">Z-A</option>
 </select>
-
-<select id="filter">
-<option value="all">Semua</option>
-<option value="author">Ada Penulis</option>
-</select>
 </div>
 
 <div class="grid" id="bookList">
@@ -240,104 +229,58 @@ header{
 </div>
 
 <script>
-const BOOK_FILES = [
-"press/buku000001.html",
-"press/buku000002.html",
-"press/buku000003.html"
+const BOOKS = [
+{
+id:"-JDEEQAAQBAJ",
+title:"Buku Pertama",
+author:"Primajana Press"
+},
+{
+id:"Vw-HEQAAQBAJ",
+title:"Buku Kedua",
+author:"Primajana Press"
+},
+{
+id:"yHVVEQAAQBAJ",
+title:"Buku Ketiga",
+author:"Primajana Press"
+}
 ];
-
-let books = [];
 
 const list = document.getElementById("bookList");
 const stats = document.getElementById("stats");
-
 const search = document.getElementById("search");
 const sortEl = document.getElementById("sort");
-const filterEl = document.getElementById("filter");
-
-loadBooks();
-
-async function loadBooks(){
-
-const jobs = BOOK_FILES.map(file => loadSingleBook(file));
-
-const results = await Promise.allSettled(jobs);
-
-books = results
-.filter(r => r.status === "fulfilled")
-.map(r => r.value);
-
-console.log(results);
 
 render();
-}
-
-/* FIX PALING PENTING ADA DI SINI */
-async function loadSingleBook(file){
-
-const res = await fetch(file);
-
-if(!res.ok) throw new Error("File tidak ditemukan: " + file);
-
-const html = await res.text();
-
-/* regex sesuai file anda */
-const match = html.match(/const\s+BOOK_ID\s*=\s*["']([^"']+)["']/i);
-
-if(!match) throw new Error("BOOK_ID tidak ditemukan di " + file);
-
-const id = match[1];
-
-const api = await fetch("https://www.googleapis.com/books/v1/volumes/" + id);
-const data = await api.json();
-
-if(!data.volumeInfo) throw new Error("Google ID salah");
-
-return {
-file,
-id,
-info:data.volumeInfo
-};
-}
 
 function render(){
 
-let data = [...books];
+let data = [...BOOKS];
 
 const q = search.value.toLowerCase();
 
 if(q){
 data = data.filter(b =>
-(b.info.title || "").toLowerCase().includes(q) ||
-(b.info.authors || []).join(" ").toLowerCase().includes(q)
+b.title.toLowerCase().includes(q) ||
+b.author.toLowerCase().includes(q)
 );
 }
 
-if(sortEl.value === "az"){
-data.sort((a,b)=>a.info.title.localeCompare(b.info.title));
+if(sortEl.value=="az"){
+data.sort((a,b)=>a.title.localeCompare(b.title));
 }
 
-if(sortEl.value === "za"){
-data.sort((a,b)=>b.info.title.localeCompare(a.info.title));
+if(sortEl.value=="za"){
+data.sort((a,b)=>b.title.localeCompare(a.title));
 }
 
 stats.innerHTML = data.length + " buku tersedia";
 
-if(!data.length){
-list.innerHTML = `<div class="empty">Tidak ada buku.</div>`;
-return;
+list.innerHTML = data.map(card).join("");
 }
 
-list.innerHTML = data.map(bookCard).join("");
-}
-
-function bookCard(b){
-
-const title = b.info.title || "-";
-const author = (b.info.authors || ["Tanpa Penulis"]).join(", ");
-const desc = (b.info.description || "Tidak ada deskripsi")
-.replace(/<[^>]+>/g,'')
-.substring(0,100) + "...";
+function card(b){
 
 return `
 <div class="card">
@@ -349,9 +292,9 @@ onerror="this.src='https://via.placeholder.com/150x220?text=No+Cover'">
 <div class="badge">Primajana</div>
 </div>
 
-<h3>${title}</h3>
-<div class="author">${author}</div>
-<div class="desc">${desc}</div>
+<h3>${b.title}</h3>
+<div class="author">${b.author}</div>
+<div class="desc">Buku tersedia di Google Play Books.</div>
 
 <div class="actions">
 <a class="btn btn-outline" target="_blank"
@@ -359,8 +302,9 @@ href="https://books.google.com/books?id=${b.id}">
 Preview
 </a>
 
-<a class="btn btn-primary" href="${b.file}">
-Detail
+<a class="btn btn-primary" target="_blank"
+href="https://play.google.com/store/books/details?id=${b.id}">
+Pesan
 </a>
 </div>
 
@@ -370,7 +314,6 @@ Detail
 
 search.addEventListener("input",render);
 sortEl.addEventListener("change",render);
-filterEl.addEventListener("change",render);
 </script>
 
 </body>
