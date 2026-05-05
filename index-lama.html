@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <title>Beranda Primajana</title>
+    <link rel="icon" href="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png" type="image/x-icon">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+
+    <style>
+        /* Palet Warna & Font */
+        :root {
+            --primary-blue: #0056b3;
+            --accent-green: #28a745;
+            --highlight-purple: #6f42c1;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+            --secondary-text: #6c757d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-text);
+            background-color: #fff;
+        }
+
+        /* --- MODIFIKASI DIMULAI DARI SINI --- */
+
+        /* Modifikasi Navigasi */
+        .navbar {
+            /* Warna awal header (putih transparan) */
+            background-color: rgba(255, 255, 255, 0.9) !important; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Tambahkan shadow agar lebih jelas */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        /* Hapus class .navbar.scrolled karena header sudah transparan sejak awal */
+
+        .navbar-brand {
+            font-weight: bold;
+            color: var(--primary-blue) !important;
+            display: flex;
+            align-items: center;
+            height: auto;
+            transition: transform 0.3s ease-in-out;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .navbar-brand img {
+            max-height: 70px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.03);
+        }
+
+        .nav-link {
+            color: var(--secondary-text) !important;
+            transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue) !important;
+            transform: translateY(-2px);
+        }
+        
+        /* Modifikasi Hero Section */
+        .hero-section {
+            background-color: #fff;
+            padding: 150px 0 100px;
+            text-align: left;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .hero-title {
+            color: var(--dark-text);
+            font-weight: bold;
+            font-size: 2.5rem;
+        }
+
+        .hero-image-container {
+            opacity: 0;
+            animation: fadeInHeroImage 1s ease-in-out 0.5s forwards;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .btn-primary, .btn-accent, .btn-secondary-cta {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s;
+            color: white; /* Tambahkan warna tulisan default */
+        }
+
+        .btn-primary:hover, .btn-accent:hover, .btn-secondary-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Modifikasi tombol saat di-hover */
+        .btn-primary {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+        .btn-primary:hover {
+            background-color: #004085;
+            border-color: #004085;
+            color: #fff; /* Warna tulisan tetap terang */
+        }
+
+        .btn-accent {
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+        .btn-accent:hover {
+            background-color: #218838;
+            border-color: #218838;
+            color: #fff; /* Warna tulisan tetap terang */
+        }
+
+        .btn-secondary-cta {
+            background-color: var(--highlight-purple);
+            border-color: var(--highlight-purple);
+        }
+        .btn-secondary-cta:hover {
+            background-color: #5c35a3;
+            border-color: #5c35a3;
+            color: #fff; /* Warna tulisan tetap terang */
+        }
+
+        /* --- MODIFIKASI BERAKHIR DI SINI --- */
+
+        /* Modifikasi Feature Cards */
+        .feature-card {
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            min-height: 300px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            animation: slideIn 1s ease-in-out;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 86, 179, 0.05);
+            transform: scale(0);
+            border-radius: 15px;
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .feature-card:hover::before {
+            transform: scale(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .feature-card .card-body {
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-card .card-title {
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .feature-card .btn-outline-primary {
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .feature-card .btn-outline-primary:hover {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+        
+        /* Gaya Icon Animatis */
+        .card-icon {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+            display: inline-block;
+        }
+
+        .feature-card:hover .card-icon {
+            transform: scale(1.1);
+            color: var(--accent-green);
+        }
+        
+        /* Styling untuk Section Galeri */
+        .gallery-section {
+            background-color: #3b5b92; 
+            padding: 80px 0;
+        }
+
+        .gallery-section img {
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            object-fit: cover;
+            height: 250px; /* Menyamakan tinggi gambar */
+        }
+
+        .gallery-section img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-text);
+            color: white;
+            padding: 10px 0;
+        }
+
+        .footer h5 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        .footer .btn-primary {
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .footer .btn-primary:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInHeroImage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* Media Queries untuk Responsif */
+        @media (max-width: 768px) {
+            .navbar-brand img {
+                max-height: 60px;
+            }
+            .hero-section {
+                padding: 120px 0 60px;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .feature-card {
+                min-height: auto;
+            }
+        }
+        
+        .publication-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Kode Perbaikan Untuk Icon WA */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50%; /* Memastikan bentuknya selalu lingkaran sempurna */
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+            z-index: 1000;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            /* Menggunakan Flexbox untuk memposisikan ikon di tengah */
+            display: flex;
+            justify-content: center; /* Tengah secara horizontal */
+            align-items: center;    /* Tengah secara vertikal */
+        }
+
+        .whatsapp-float i {
+            font-size: 32px; /* Menyesuaikan ukuran ikon agar proporsional */
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+        
+          /* Card Program Unggulan */
+        .feature-card-service {
+            background-color: #f0f8ff; /* Biru muda */
+            border: 1px solid rgba(0, 86, 179, 0.2);
+        }
+        .feature-card-service .card-title {
+            color: var(--primary-blue);
+        }
+        .feature-card-service:hover {
+            background-color: #e6f0ff;
+        }
+
+        /* Card Mengapa Memilih Primajana */
+        .feature-card-why {
+            background-color: #fffaf0; /* Cream */
+            border: 1px solid rgba(111, 66, 193, 0.2);
+        }
+        .feature-card-why .card-title {
+            color: var(--highlight-purple);
+        }
+        .feature-card-why:hover {
+            background-color: #fff3e6;
+        }
+        
+.hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #1f2937;
+    text-decoration: none;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.45);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    transition: all 0.35s ease;
+    animation: floatSoft 6s ease-in-out infinite;
+}
+
+.hero-chip i {
+    font-size: 1.25rem;
+}
+
+/* floating motion */
+@keyframes floatSoft {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+}
+
+/* hover effect */
+.hero-chip:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.14);
+}
+
+/* warna aksen per chip */
+.chip-primary { border-left: 5px solid #4f46e5; }
+.chip-accent  { border-left: 5px solid #ec4899; }
+.chip-secondary { border-left: 5px solid #10b981; }
+
+.hero-cta-bottom {
+    margin-top: 70px;
+}
+
+
+.hero-cta-bottom {
+    margin-top: 70px;
+}
+
+/* tombol utama */
+.hero-check-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 44px;
+    border-radius: 999px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    box-shadow: 0 18px 45px rgba(79,70,229,0.35);
+    transition: all 0.35s ease;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.hero-check-btn i {
+    font-size: 1.25rem;
+}
+
+/* hover desktop */
+@media (hover:hover) {
+    .hero-check-btn:hover {
+        transform: translateY(-6px) scale(1.05);
+        box-shadow: 0 26px 55px rgba(79,70,229,0.45);
+    }
+}
+
+/* animasi pulse */
+.pulse-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.35);
+    animation: pulseGlow 2.6s infinite;
+    z-index: 0;
+}
+
+@keyframes pulseGlow {
+    0%   { transform: scale(1);   opacity: 0.6; }
+    100% { transform: scale(1.6); opacity: 0;   }
+}
+
+/* responsive mobile */
+@media (max-width: 576px) {
+    .hero-cta-bottom {
+        margin-top: 50px;
+    }
+
+    .hero-check-btn {
+        width: 100%;
+        max-width: 320px;
+        padding: 16px 32px;
+        font-size: 1.05rem;
+    }
+}
+
+.layanan-section {
+    background: linear-gradient(180deg, #f9fafb, #ffffff);
+}
+
+.service-card {
+    height: 100%;
+    padding: 34px 22px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+    transition: all 0.35s ease;
+}
+
+.service-card i {
+    font-size: 2rem;
+    margin-bottom: 14px;
+    color: #4f46e5;
+}
+
+.service-card h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.service-card a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    color: #4f46e5;
+}
+
+.service-card:hover {
+    transform: translateY(-10px) scale(1.04);
+    box-shadow: 0 20px 55px rgba(79,70,229,0.18);
+}
+
+.kolaborasi-section {
+    padding: 90px 0;
+    background: linear-gradient(180deg, #ffffff, #f5f7ff);
+}
+
+.kolaborasi-main-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 48px;
+    border-radius: 999px;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    box-shadow: 0 18px 45px rgba(79,70,229,0.35);
+    transition: all 0.35s ease;
+}
+
+/* hover desktop */
+@media (hover:hover) {
+    .kolaborasi-main-btn:hover {
+        transform: translateY(-6px) scale(1.05);
+        box-shadow: 0 28px 60px rgba(79,70,229,0.45);
+    }
+}
+
+/* mobile responsive */
+@media (max-width: 576px) {
+    .kolaborasi-main-btn {
+        width: 100%;
+        max-width: 320px;
+        justify-content: center;
+    }
+}
+
+.why-section {
+    padding: 100px 0;
+    background: linear-gradient(180deg, #f9fafb, #ffffff);
+}
+
+.why-card {
+    height: 100%;
+    padding: 36px 26px;
+    text-align: center;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+    transition: all 0.35s ease;
+}
+
+.why-card i {
+    font-size: 2.2rem;
+    color: #4f46e5;
+    margin-bottom: 14px;
+}
+
+.why-card h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.why-card p {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+/* hover */
+.why-card:hover {
+    transform: translateY(-10px) scale(1.04);
+    box-shadow: 0 24px 60px rgba(79,70,229,0.18);
+}
+
+.why-card {
+    position: relative;
+    height: 100%;
+    padding: 40px 26px;
+    border-radius: 26px;
+    text-align: center;
+    color: #1f2937;
+    background: #ffffff;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+    transition: all 0.35s ease;
+    overflow: hidden;
+}
+
+.why-card i {
+    font-size: 2.4rem;
+    margin-bottom: 16px;
+}
+
+.why-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 26px 70px rgba(0,0,0,0.18);
+}
+
+/* === VARIASI TIAP CARD === */
+
+.card-1 {
+    background: linear-gradient(135deg, #eef2ff, #ffffff);
+}
+.card-1 i { color: #4f46e5; }
+
+.card-2 {
+    background: linear-gradient(135deg, #fff7ed, #ffffff);
+}
+.card-2 i { color: #f97316; }
+
+.card-3 {
+    background: linear-gradient(135deg, #ecfeff, #ffffff);
+}
+.card-3 i { color: #06b6d4; }
+
+.card-4 {
+    background: linear-gradient(135deg, #f0fdf4, #ffffff);
+}
+.card-4 i { color: #10b981; }
+
+/* glow effect on hover */
+.card-1:hover { box-shadow: 0 30px 70px rgba(79,70,229,0.35); }
+.card-2:hover { box-shadow: 0 30px 70px rgba(249,115,22,0.35); }
+.card-3:hover { box-shadow: 0 30px 70px rgba(6,182,212,0.35); }
+.card-4:hover { box-shadow: 0 30px 70px rgba(16,185,129,0.35); }
+
+.hero-rekomendasi {
+    margin-top: 32px;
+    border-radius: 28px;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.10);
+    overflow: hidden;
+}
+
+.rekomendasi-header {
+    padding: 16px 26px 0;
+}
+
+.recommended-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f59e0b;
+    background: rgba(245,158,11,0.15);
+}
+
+.recommended-badge i {
+    animation: pulseStar 1.8s infinite;
+}
+
+@keyframes pulseStar {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.25); }
+    100% { transform: scale(1); }
+}
+
+.rekomendasi-body {
+    padding: 26px;
+}
+
+.freelancer-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.freelancer-desc {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 18px;
+}
+
+.freelancer-check-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 34px;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    box-shadow: 0 14px 35px rgba(79,70,229,0.35);
+    transition: all 0.35s ease;
+}
+
+@media (hover:hover) {
+    .freelancer-check-btn:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 24px 55px rgba(79,70,229,0.45);
+    }
+}
+
+@media (max-width: 576px) {
+    .freelancer-check-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.kolaborasi-section {
+    padding: 100px 0;
+    background: radial-gradient(circle at center, #eef2ff, #ffffff);
+    position: relative;
+    overflow: hidden;
+}
+
+.kolaborasi-icons {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.icon-float {
+    position: absolute;
+    font-size: 1.8rem;
+    color: rgba(79,70,229,0.25);
+    animation: floatIcons 7s ease-in-out infinite;
+}
+
+.icon-1 { top: 18%; left: 15%; animation-delay: 0s; }
+.icon-2 { top: 30%; right: 18%; animation-delay: 1s; }
+.icon-3 { bottom: 28%; left: 22%; animation-delay: 2s; }
+.icon-4 { bottom: 18%; right: 20%; animation-delay: 3s; }
+
+@keyframes floatIcons {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-16px); }
+    100% { transform: translateY(0); }
+}
+
+
+/* === PORTAL PELANGGAN – ORANGE PREMIUM === */
+.btn-portal {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 28px;
+    border-radius: 999px;
+    font-weight: 600;
+    color: #ffffff !important;
+    text-decoration: none;
+
+    background: linear-gradient(135deg, #f97316, #fb923c);
+    box-shadow: 0 12px 30px rgba(249,115,22,0.45);
+
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* efek kilau */
+.btn-portal::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent
+    );
+    transform: skewX(-20deg);
+}
+
+/* hover desktop */
+@media (hover:hover) {
+    .btn-portal:hover {
+        transform: translateY(-3px) scale(1.06);
+        box-shadow: 0 20px 50px rgba(249,115,22,0.6);
+    }
+
+    .btn-portal:hover::after {
+        left: 120%;
+        transition: left 0.6s ease;
+    }
+}
+
+/* mobile */
+@media (max-width: 576px) {
+    .btn-portal {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+        
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="https://res.cloudinary.com/djexglfns/image/upload/v1754976459/WhatsApp_Image_2025-08-12_at_1.15.37_PM-removebg-preview_ipix4s.png"
+                 alt="Logo Primajana Center">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+    <li class="nav-item">
+        <a class="nav-link" href="about.html">Tentang Kami</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="contact.html">Kontak</a>
+    </li>
+
+    <!-- PORTAL PELANGGAN -->
+    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+        <a href="https://primajana.myr.id/portal"
+           target="_blank" rel="noopener noreferrer"
+           class="btn-portal">
+            <i class="fa-solid fa-user-lock"></i>
+            Portal Pelanggan
+        </a>
+    </li>
+
+</ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+
+                <h1 class="hero-title display-4 animate__animated animate__fadeInDown">
+                    PRIMAJANA
+                </h1>
+
+                <p class="lead my-4 animate__animated animate__fadeInUp">
+                    Satu Wadah untuk Banyak Pencapaian
+                </p>
+
+                <!-- BLOK PRIMAJANA FREELANCER (RECOMMENDED) -->
+                <div class="hero-rekomendasi animate__animated animate__fadeInUp animate__delay-1s">
+
+                    <div class="rekomendasi-header">
+                        <span class="recommended-badge">
+                            <i class="fa-solid fa-star"></i>
+                            Recommended
+                        </span>
+                    </div>
+
+                    <div class="rekomendasi-body">
+
+                        <h4 class="freelancer-title">
+                            <i class="fa-solid fa-user-astronaut"></i>
+                            Primajana Konsultan
+                        </h4>
+
+                        <p class="freelancer-desc">
+                            Bekerja berdasarkan proyek, kontrak waktu tertentu, atau kebutuhan khusus klien
+                            dengan dukungan talenta terbaik di berbagai bidang.
+                        </p>
+
+                        <a href="layanan/index.html" class="freelancer-check-btn">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            Cek Layanan Primajana Konsultan
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6 mt-4 mt-lg-0 text-center hero-image-container animate__animated animate__zoomIn animate__delay-1s">
+                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755409841/Background_Web_Priomajana_jj0sza.png"
+                     class="img-fluid rounded-4 hero-image"
+                     alt="Ilustrasi Akademik">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<section id="layanan" class="py-5 layanan-section">
+    <div class="container">
+        <h2 class="text-center mb-5 fw-bold">Program Unggulan Kami</h2>
+
+        <div class="row g-4 text-center">
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-trophy"></i>
+                    <h5>Primajana Lomba & Pendanaan</h5>
+                    <p>Informasi lomba, hibah, dan pendanaan nasional hingga internasional.</p>
+                    <a href="layanan/lomba.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h5>Primajana Publikasi</h5>
+                    <p>Pendampingan publikasi buku, jurnal, dan prosiding bereputasi.</p>
+                    <a href="press/index.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <h5>Primajana Beasiswa</h5>
+                    <p>Update dan bimbingan beasiswa dalam dan luar negeri.</p>
+                    <a href="layanan/beasiswa.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <h5>Primajana Pendampingan Riset</h5>
+                    <p>Pendampingan kegiatan riset secara profesional.</p>
+                    <a href="layanan/tugas-akhir.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-landmark"></i>
+                    <h5>Primajana Karier</h5>
+                    <p>Persiapan karier, termasuk seleksi ASN/CPNS, BUMN, PPPK, Swasta & LPDP berbasis CAT & simulasi.</p>
+                    <a href="karier.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-child-reaching"></i>
+                    <h5>Primajana Kids</h5>
+                    <p>Program literasi, logika, dan kreativitas untuk anak.</p>
+                    <a href="layanan/kids.html">Lihat Detail →</a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="service-card">
+                    <i class="fa-solid fa-microchip"></i>
+                    <h5>Primajana Tools (AI)</h5>
+                    <p>Tools yang membantu dalam mencapai tujuan.</p>
+                    <a href="trial/index.html">Lihat Detail →</a>
+                </div>
+            </div>
+            
+<div class="col-6 col-md-4 col-lg-3">
+  <div class="service-card">
+    <i class="fa-solid fa-box-open"></i>
+    <h5>Primajana Produk</h5>
+    <p>Jelajahi berbagai produk dan layanan unggulan dari Primajana.</p>
+    <a href="https://primajana.myr.id/" target="_blank">Lihat Detail →</a>
+  </div>
+</div>
+
+        </div>
+    </div>
+</section>
+
+<section id="kolaborasi" class="kolaborasi-section text-center">
+    <div class="container">
+
+        <div class="kolaborasi-icons">
+            <span class="icon-float icon-1"><i class="fa-solid fa-user-graduate"></i></span>
+            <span class="icon-float icon-2"><i class="fa-solid fa-chalkboard-user"></i></span>
+            <span class="icon-float icon-3"><i class="fa-solid fa-briefcase"></i></span>
+            <span class="icon-float icon-4"><i class="fa-solid fa-lightbulb"></i></span>
+        </div>
+
+        <h2 class="fw-bold mb-3">Primajana Kolaborasi</h2>
+        <p class="lead mb-4">
+            Ruang kolaborasi terbuka bagi siapa pun: pelajar, dosen, peneliti, praktisi, kreator, komunitas, hingga mitra industri.
+        </p>
+
+        <a href="layanan/kolaborasi.html" class="kolaborasi-main-btn">
+            <i class="fa-solid fa-handshake-angle"></i>
+            Mulai Kolaborasi
+        </a>
+    </div>
+</section>
+
+
+<section id="why-primajana" class="why-section">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-3">Mengapa Memilih Primajana?</h2>
+        <p class="text-center text-muted mb-5">
+            Karena untuk mencapai sesuatu, kamu tidak perlu sendirian.
+        </p>
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-3">
+    <div class="why-card card-1">
+        <i class="fa-solid fa-layer-group"></i>
+        <h5>Terlengkap</h5>
+        <p>Dari lomba, beasiswa, publikasi, hingga tools analisis data — semua terintegrasi dalam satu platform.</p>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-3">
+    <div class="why-card card-2">
+        <i class="fa-solid fa-wallet"></i>
+        <h5>Terjangkau</h5>
+        <p>Skema harga fleksibel, transparan, dan dapat diakses oleh pelajar, mahasiswa, hingga profesional.</p>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-3">
+    <div class="why-card card-3">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h5>Terpercaya</h5>
+        <p>Didukung mentor & konsultan berpengalaman dengan ratusan klien yang telah berhasil.</p>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-3">
+    <div class="why-card card-4">
+        <i class="fa-solid fa-rocket"></i>
+        <h5>Berorientasi Dampak</h5>
+        <p>Fokus pada hasil nyata: lolos pendanaan, publikasi terbit, karier meningkat.</p>
+    </div>
+</div>
+
+
+        </div>
+    </div>
+</section>
+
+
+    <section class="gallery-section">
+        <div class="container">
+            <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+
+                    <div class="carousel-item active">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446243/WhatsApp_Image_2025-08-17_at_10.02.47_PM_pmbdw4.jpg" class="d-block w-100" alt="Galeri 1">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446243/WhatsApp_Image_2025-08-17_at_10.02.46_PM_1_vizdd4.jpg" class="d-block w-100" alt="Galeri 2">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446243/WhatsApp_Image_2025-08-17_at_10.02.45_PM_mgp2m2.jpg" class="d-block w-100" alt="Galeri 3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446243/WhatsApp_Image_2025-08-17_at_10.02.46_PM_vnsieh.jpg" class="d-block w-100" alt="Galeri 4">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446242/WhatsApp_Image_2025-08-17_at_10.02.48_PM_jl6far.jpg" class="d-block w-100" alt="Galeri 5">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446243/WhatsApp_Image_2025-08-17_at_10.02.47_PM_1_chf0uy.jpg" class="d-block w-100" alt="Galeri 6">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446241/WhatsApp_Image_2025-08-17_at_10.02.49_PM_s909xg.jpg" class="d-block w-100" alt="Galeri 7">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446242/WhatsApp_Image_2025-08-17_at_10.02.48_PM_1_whxe6t.jpg" class="d-block w-100" alt="Galeri 8">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446241/WhatsApp_Image_2025-08-17_at_10.02.50_PM_w2gkvd.jpg" class="d-block w-100" alt="Galeri 9">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-item">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446242/WhatsApp_Image_2025-08-17_at_10.02.48_PM_1_whxe6t.jpg" class="d-block w-100" alt="Galeri 7">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446241/WhatsApp_Image_2025-08-17_at_10.02.49_PM_1_tggnmw.jpg" class="d-block w-100" alt="Galeri 8">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <img src="https://res.cloudinary.com/djexglfns/image/upload/v1755446241/WhatsApp_Image_2025-08-17_at_10.02.49_PM_2_pudiwn.jpg" class="d-block w-100" alt="Galeri 9">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+            <hr class="my-4 text-white-50">
+            <div class="text-center">
+                <p class="mb-0">© 2026 PT Primajana Bagia Mesari</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/+6285935201571?text=Halo%20Admin%20Primajana%20Center,%20saya%20tertarik%20dengan%20layanan%20Anda." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Hubungi Kami via WhatsApp">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbar = document.querySelector('.navbar');
+            const scrollThreshold = 100; // Jarak scroll dalam piksel
+
+            function handleScroll() {
+                if (window.scrollY > scrollThreshold) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll);
+        });
+    </script>
+</body>
+</html>
