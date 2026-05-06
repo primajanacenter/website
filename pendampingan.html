@@ -41,6 +41,27 @@ body{
 
     overflow-x:hidden;
 
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+
+}
+
+/* =========================================
+GLOBAL IMAGE
+========================================= */
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+    image-rendering:auto;
+
+    backface-visibility:hidden;
+
+    transform:translateZ(0);
+
 }
 
 /* =========================================
@@ -48,9 +69,12 @@ CONTAINER
 ========================================= */
 
 .container{
+
     width:92%;
     max-width:1320px;
+
     margin:auto;
+
 }
 
 /* =========================================
@@ -80,6 +104,8 @@ BACKGROUND GLOW
 
     pointer-events:none;
 
+    filter:blur(10px);
+
 }
 
 /* =========================================
@@ -96,7 +122,9 @@ nav{
 
 }
 
-/* LOGO */
+/* =========================================
+LOGO
+========================================= */
 
 .logo-wrapper{
 
@@ -125,7 +153,7 @@ nav{
     );
 
     box-shadow:
-    0 0 25px rgba(0,132,255,.45);
+    0 0 25px rgba(0,132,255,.35);
 
 }
 
@@ -152,7 +180,7 @@ nav{
 }
 
 /* =========================================
-CONTACT BUTTON
+BUTTON
 ========================================= */
 
 .contact-btn{
@@ -188,7 +216,7 @@ CONTACT BUTTON
 
     box-shadow:
     0 10px 25px rgba(0,0,0,.22),
-    0 0 24px rgba(0,255,128,.22);
+    0 0 24px rgba(0,255,128,.18);
 
 }
 
@@ -198,8 +226,8 @@ CONTACT BUTTON
     translateY(-3px);
 
     box-shadow:
-    0 18px 35px rgba(0,0,0,.28),
-    0 0 34px rgba(0,255,128,.4);
+    0 16px 32px rgba(0,0,0,.28),
+    0 0 34px rgba(0,255,128,.35);
 
 }
 
@@ -209,32 +237,34 @@ CONTACT BUTTON
 
     position:absolute;
 
-    top:0;
-    left:-120%;
-
-    width:70%;
-    height:100%;
+    inset:0;
 
     background:
     linear-gradient(
     115deg,
     transparent,
-    rgba(255,255,255,.35),
+    rgba(255,255,255,.18),
     transparent
     );
 
-    transform:skewX(-20deg);
+    transform:
+    translateX(-140%)
+    skewX(-18deg);
 
     transition:1s;
 
 }
 
 .contact-btn:hover::before{
-    left:160%;
+
+    transform:
+    translateX(180%)
+    skewX(-18deg);
+
 }
 
 /* =========================================
-HERO SECTION
+HERO
 ========================================= */
 
 .hero-pendampingan{
@@ -258,7 +288,9 @@ HERO SECTION
 
 }
 
-/* GLOW */
+/* =========================================
+GLOW
+========================================= */
 
 .hero-glow{
 
@@ -268,7 +300,7 @@ HERO SECTION
 
     filter:blur(90px);
 
-    opacity:.25;
+    opacity:.22;
 
 }
 
@@ -296,7 +328,9 @@ HERO SECTION
 
 }
 
-/* HERO CONTAINER */
+/* =========================================
+HERO CONTAINER
+========================================= */
 
 .hero-container{
 
@@ -304,15 +338,19 @@ HERO SECTION
     z-index:2;
 
     max-width:1300px;
+
     margin:auto;
 
 }
 
-/* GRID */
+/* =========================================
+GRID
+========================================= */
 
 .hero-grid{
 
     display:grid;
+
     grid-template-columns:
     1.1fr .9fr;
 
@@ -322,11 +360,15 @@ HERO SECTION
 
 }
 
-/* CONTENT */
+/* =========================================
+CONTENT
+========================================= */
 
 .hero-content{
+
     position:relative;
     z-index:3;
+
 }
 
 .hero-badge{
@@ -340,10 +382,10 @@ HERO SECTION
     border-radius:999px;
 
     background:
-    rgba(255,255,255,.18);
+    rgba(255,255,255,.14);
 
     border:
-    1px solid rgba(255,255,255,.18);
+    1px solid rgba(255,255,255,.12);
 
     backdrop-filter:blur(12px);
 
@@ -378,32 +420,75 @@ HERO SECTION
 
 }
 
-/* IMAGE */
+/* =========================================
+HERO IMAGE
+========================================= */
 
 .hero-image{
 
+    position:relative;
+
     display:flex;
+    align-items:center;
     justify-content:center;
+
+    isolation:isolate;
+
+}
+
+.hero-image::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:75%;
+    height:75%;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(255,255,255,.18),
+    rgba(0,132,255,.18),
+    transparent 70%
+    );
+
+    filter:blur(40px);
+
+    animation:
+    pulseGlow 5s ease-in-out infinite;
 
 }
 
 .hero-image img{
 
+    position:relative;
+    z-index:2;
+
     width:100%;
-    max-width:620px;
+    max-width:760px;
+
+    object-fit:contain;
 
     animation:
-    heroFloat 5s ease-in-out infinite;
+    floatingHero 5s ease-in-out infinite;
 
     filter:
+
     drop-shadow(
-    0 35px 50px rgba(0,0,0,.28)
+    0 35px 60px rgba(0,0,0,.35)
+    )
+
+    drop-shadow(
+    0 0 25px rgba(80,170,255,.3)
     );
 
 }
 
 /* =========================================
-PROCESS
+PROCESS SECTION
 ========================================= */
 
 .process-wrapper{
@@ -428,8 +513,6 @@ PROCESS
 
 }
 
-/* TITLE */
-
 .process-title{
 
     display:flex;
@@ -437,7 +520,7 @@ PROCESS
     justify-content:center;
     gap:24px;
 
-    margin-bottom:45px;
+    margin-bottom:55px;
 
 }
 
@@ -453,21 +536,21 @@ PROCESS
 
 .process-title h2{
 
-    color:#fff;
-
     font-size:42px;
     font-weight:800;
 
-    text-shadow:
-    0 2px 10px rgba(255,255,255,.15);
+    color:#fff;
 
 }
 
-/* GRID */
+/* =========================================
+PROCESS GRID
+========================================= */
 
 .process-grid{
 
     display:grid;
+
     grid-template-columns:
     repeat(5,1fr);
 
@@ -475,14 +558,18 @@ PROCESS
 
 }
 
-/* CARD */
+/* =========================================
+PROCESS CARD FIX
+========================================= */
 
 .process-card{
 
     position:relative;
 
+    overflow:visible;
+
     padding:
-    70px 22px 28px;
+    90px 22px 32px;
 
     border-radius:28px;
 
@@ -494,7 +581,38 @@ PROCESS
     border:
     1px solid rgba(255,255,255,.10);
 
-    transition:.35s ease;
+    transition:
+    transform .45s ease,
+    box-shadow .45s ease,
+    border-color .45s ease;
+
+    isolation:isolate;
+
+}
+
+.process-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:inherit;
+
+    background:
+    linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.05),
+    transparent
+    );
+
+    transform:
+    translateX(-150%);
+
+    animation:
+    shimmerMove 7s linear infinite;
 
 }
 
@@ -503,23 +621,64 @@ PROCESS
     transform:
     translateY(-8px);
 
-    background:
-    rgba(255,255,255,.07);
+    border-color:
+    rgba(120,190,255,.4);
+
+    box-shadow:
+
+    0 18px 40px rgba(0,0,0,.22),
+
+    0 0 20px rgba(120,190,255,.15);
 
 }
 
+/* =========================================
+PROCESS IMAGE
+========================================= */
+
 .process-card img{
 
-    width:105px;
-    height:105px;
+    position:relative;
+    z-index:2;
+
+    width:130px;
+    height:130px;
+
+    margin:
+    0 auto 26px;
 
     object-fit:contain;
 
-    margin-bottom:24px;
+    animation:
+    floatingCard 4s ease-in-out infinite;
+
+    filter:
+
+    drop-shadow(
+    0 18px 30px rgba(0,0,0,.28)
+    )
+
+    drop-shadow(
+    0 0 18px rgba(90,180,255,.28)
+    );
+
+    transition:
+    transform .45s ease;
+
+}
+
+.process-card:hover img{
+
+    transform:
+    scale(1.08)
+    translateY(-6px);
 
 }
 
 .process-card h3{
+
+    position:relative;
+    z-index:2;
 
     font-size:22px;
     line-height:1.5;
@@ -527,20 +686,22 @@ PROCESS
 
 }
 
-/* STEP */
+/* =========================================
+STEP BADGE FIX
+========================================= */
 
 .step-badge{
 
     position:absolute;
 
-    top:-22px;
+    top:-30px;
     left:50%;
 
     transform:
     translateX(-50%);
 
-    width:62px;
-    height:62px;
+    width:68px;
+    height:68px;
 
     border-radius:50%;
 
@@ -555,13 +716,21 @@ PROCESS
     #2d7dff
     );
 
-    font-size:28px;
+    box-shadow:
+
+    0 12px 25px rgba(0,0,0,.25),
+
+    0 0 20px rgba(90,170,255,.35);
+
+    font-size:30px;
     font-weight:800;
+
+    z-index:10;
 
 }
 
 /* =========================================
-LAYANAN SECTION
+LAYANAN
 ========================================= */
 
 .layanan-pendampingan{
@@ -585,11 +754,10 @@ LAYANAN SECTION
 .layanan-container{
 
     max-width:1400px;
+
     margin:auto;
 
 }
-
-/* TITLE */
 
 .layanan-title{
 
@@ -620,10 +788,9 @@ LAYANAN SECTION
 }
 
 /* =========================================
-LAYANAN GRID RESPONSIVE FIX
+LAYANAN GRID
 ========================================= */
 
-/* DESKTOP */
 .layanan-grid{
 
     display:grid;
@@ -635,51 +802,22 @@ LAYANAN GRID RESPONSIVE FIX
 
 }
 
-/* LAPTOP */
-@media(max-width:1200px){
-
-    .layanan-grid{
-
-        grid-template-columns:
-        repeat(3,1fr);
-
-    }
-
-}
-
-/* TABLET */
-@media(max-width:992px){
-
-    .layanan-grid{
-
-        grid-template-columns:
-        repeat(2,1fr);
-
-    }
-
-}
-
-/* MOBILE */
-@media(max-width:576px){
-
-    .layanan-grid{
-
-        grid-template-columns:1fr;
-
-    }
-
-}
-
-/* CARD */
+/* =========================================
+LAYANAN CARD
+========================================= */
 
 .layanan-card{
+
+    position:relative;
+
+    overflow:hidden;
 
     display:flex;
     align-items:center;
     gap:18px;
 
     padding:
-    22px 20px;
+    24px 22px;
 
     border-radius:24px;
 
@@ -689,36 +827,105 @@ LAYANAN GRID RESPONSIVE FIX
     border:
     1px solid rgba(255,255,255,.10);
 
-    transition:.3s ease;
+    transition:
+    transform .45s ease,
+    box-shadow .45s ease,
+    border-color .45s ease;
 
-    box-shadow:
-    0 10px 25px rgba(0,0,0,.15);
+    isolation:isolate;
+
+}
+
+.layanan-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.05),
+    transparent
+    );
+
+    transform:
+    translateX(-150%);
+
+    animation:
+    shimmerMove 7s linear infinite;
 
 }
 
 .layanan-card:hover{
 
     transform:
-    translateY(-5px);
+    translateY(-6px);
 
-    background:
-    rgba(255,255,255,.07);
+    border-color:
+    rgba(120,190,255,.45);
+
+    box-shadow:
+    0 18px 40px rgba(0,0,0,.22);
 
 }
+
+/* =========================================
+LAYANAN IMAGE
+========================================= */
 
 .layanan-card img{
 
-    width:72px;
-    height:72px;
+    position:relative;
+    z-index:2;
+
+    width:110px;
+    height:110px;
+
+    flex-shrink:0;
 
     object-fit:contain;
 
+    animation:
+    floatingCard 4.5s ease-in-out infinite;
+
+    filter:
+
+    drop-shadow(
+    0 16px 28px rgba(0,0,0,.28)
+    )
+
+    drop-shadow(
+    0 0 16px rgba(110,190,255,.28)
+    );
+
+    transition:
+    transform .45s ease;
+
 }
 
-/* CONTENT */
+.layanan-card:hover img{
+
+    transform:
+    scale(1.08)
+    translateY(-6px);
+
+}
+
+/* =========================================
+LAYANAN CONTENT
+========================================= */
 
 .layanan-content{
+
+    position:relative;
+    z-index:2;
+
     flex:1;
+
 }
 
 .layanan-content h3{
@@ -731,8 +938,6 @@ LAYANAN GRID RESPONSIVE FIX
 
 }
 
-/* PRICE */
-
 .layanan-content .price{
 
     color:#ffd84d;
@@ -743,8 +948,6 @@ LAYANAN GRID RESPONSIVE FIX
     margin-bottom:14px;
 
 }
-
-/* BUTTON */
 
 .layanan-content a{
 
@@ -771,10 +974,19 @@ LAYANAN GRID RESPONSIVE FIX
     font-size:15px;
     font-weight:700;
 
+    transition:.3s ease;
+
+}
+
+.layanan-content a:hover{
+
+    transform:
+    translateY(-2px);
+
 }
 
 /* =========================================
-CTA ADMIN
+CTA
 ========================================= */
 
 .cta-admin{
@@ -811,7 +1023,12 @@ CTA ADMIN
 
 .cta-left img{
 
-    width:120px;
+    width:180px;
+
+    object-fit:contain;
+
+    animation:
+    floatingHero 5s ease-in-out infinite;
 
 }
 
@@ -837,8 +1054,9 @@ CTA ADMIN
 
 .cta-btn{
 
-    display:flex;
+    display:inline-flex;
     align-items:center;
+    justify-content:center;
     gap:12px;
 
     padding:
@@ -856,6 +1074,15 @@ CTA ADMIN
     font-weight:800;
 
     white-space:nowrap;
+
+    transition:.3s ease;
+
+}
+
+.cta-btn:hover{
+
+    transform:
+    translateY(-3px);
 
 }
 
@@ -887,7 +1114,7 @@ footer{
 ANIMATION
 ========================================= */
 
-@keyframes heroFloat{
+@keyframes floatingHero{
 
     0%,100%{
         transform:translateY(0px);
@@ -895,6 +1122,52 @@ ANIMATION
 
     50%{
         transform:translateY(-14px);
+    }
+
+}
+
+@keyframes floatingCard{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+}
+
+@keyframes pulseGlow{
+
+    0%,100%{
+        opacity:.55;
+        transform:scale(1);
+    }
+
+    50%{
+        opacity:.9;
+        transform:scale(1.04);
+    }
+
+}
+
+@keyframes shimmerMove{
+
+    0%{
+
+        transform:
+        translateX(-150%)
+        skewX(-18deg);
+
+    }
+
+    100%{
+
+        transform:
+        translateX(180%)
+        skewX(-18deg);
+
     }
 
 }
@@ -922,12 +1195,12 @@ RESPONSIVE
         text-align:center;
     }
 
-    .hero-content p{
-        margin:auto;
-    }
-
     .hero-content h1{
         font-size:52px;
+    }
+
+    .hero-content p{
+        margin:auto;
     }
 
     .process-grid{
@@ -957,12 +1230,8 @@ RESPONSIVE
     }
 
     .hero-pendampingan{
-
-        padding:
-        70px 18px 50px;
-
+        padding:70px 18px 50px;
         border-radius:24px;
-
     }
 
     .hero-content h1{
@@ -975,7 +1244,7 @@ RESPONSIVE
 
     .process-title h2,
     .layanan-title h2{
-        font-size:28px;
+        font-size:30px;
     }
 
     .process-grid,
@@ -983,9 +1252,19 @@ RESPONSIVE
         grid-template-columns:1fr;
     }
 
+    .process-card img{
+        width:100px;
+        height:100px;
+    }
+
     .layanan-card{
         flex-direction:column;
         text-align:center;
+    }
+
+    .layanan-card img{
+        width:90px;
+        height:90px;
     }
 
     .cta-left h3{
@@ -998,7 +1277,6 @@ RESPONSIVE
 
     .cta-btn{
         width:100%;
-        justify-content:center;
     }
 
 }
@@ -1013,6 +1291,10 @@ RESPONSIVE
         font-size:34px;
     }
 
+    .hero-content p{
+        font-size:16px;
+    }
+
     .process-card h3{
         font-size:18px;
     }
@@ -1022,7 +1304,6 @@ RESPONSIVE
     }
 
 }
-
 
 </style>
 
@@ -1453,7 +1734,7 @@ STYLE MIRIP REFERENSI
       <div class="layanan-card">
 
         <img
-          src="https://cdn-icons-png.flaticon.com/512/427/427735.png"
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778074660/ChatGPT_Image_May_6_2026_09_37_02_PM_1_vaxyps.png"
           alt="Festival"
         >
 
@@ -1480,7 +1761,7 @@ STYLE MIRIP REFERENSI
       <div class="layanan-card">
 
         <img
-          src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778072661/ChatGPT_Image_May_6_2026_09_03_39_PM_1_kvp6bq.png"
           alt="Esai"
         >
 
@@ -1504,7 +1785,7 @@ STYLE MIRIP REFERENSI
 <div class="layanan-card">
 
   <img
-    src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+    src="https://res.cloudinary.com/djexglfns/image/upload/v1778074899/ChatGPT_Image_May_6_2026_09_40_51_PM_1_nzylu6.png"
     alt="CV Beasiswa"
   >
 
@@ -1529,7 +1810,7 @@ STYLE MIRIP REFERENSI
 <div class="layanan-card">
 
   <img
-    src="https://cdn-icons-png.flaticon.com/512/744/744465.png"
+    src="https://res.cloudinary.com/djexglfns/image/upload/v1778075127/ChatGPT_Image_May_6_2026_09_44_35_PM_1_zj6u4d.png"
     alt="Study Plan"
   >
 
@@ -1554,7 +1835,7 @@ STYLE MIRIP REFERENSI
 <div class="layanan-card">
 
   <img
-    src="https://cdn-icons-png.flaticon.com/512/456/456212.png"
+    src="https://res.cloudinary.com/djexglfns/image/upload/v1778075335/ChatGPT_Image_May_6_2026_09_47_56_PM_1_h7sb3c.png"
     alt="Personal Statement"
   >
 
@@ -1579,7 +1860,7 @@ STYLE MIRIP REFERENSI
 <div class="layanan-card">
 
   <img
-    src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+    src="https://res.cloudinary.com/djexglfns/image/upload/v1778075525/ChatGPT_Image_May_6_2026_09_51_25_PM_1_dlaxij.png"
     alt="Proposal Kontribusi"
   >
 
@@ -1607,7 +1888,7 @@ STYLE MIRIP REFERENSI
 <div class="layanan-card">
 
   <img
-    src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png"
+    src="https://res.cloudinary.com/djexglfns/image/upload/v1778075860/ChatGPT_Image_May_6_2026_09_56_52_PM_1_oa14bx.png"
     alt="Portofolio"
   >
 
@@ -1632,7 +1913,7 @@ STYLE MIRIP REFERENSI
 <div class="layanan-card">
 
   <img
-    src="https://cdn-icons-png.flaticon.com/512/561/561127.png"
+    src="https://res.cloudinary.com/djexglfns/image/upload/v1778076023/ChatGPT_Image_May_6_2026_09_59_57_PM_1_mvi9hy.png"
     alt="Surat Rekomendasi"
   >
 
@@ -1657,7 +1938,7 @@ STYLE MIRIP REFERENSI
 <div class="layanan-card">
 
   <img
-    src="https://cdn-icons-png.flaticon.com/512/3079/3079165.png"
+    src="https://res.cloudinary.com/djexglfns/image/upload/v1778076201/ChatGPT_Image_May_6_2026_10_02_48_PM_1_cuyyft.png"
     alt="Laporan Penelitian"
   >
 
@@ -1682,7 +1963,7 @@ STYLE MIRIP REFERENSI
 <div class="layanan-card">
 
   <img
-    src="https://cdn-icons-png.flaticon.com/512/942/942748.png"
+    src="https://res.cloudinary.com/djexglfns/image/upload/v1778076415/ChatGPT_Image_May_6_2026_10_06_19_PM_1_lcdvzy.png"
     alt="Kuesioner Penelitian"
   >
 
@@ -1707,7 +1988,7 @@ STYLE MIRIP REFERENSI
 <div class="layanan-card">
 
   <img
-    src="https://cdn-icons-png.flaticon.com/512/893/893257.png"
+    src="https://res.cloudinary.com/djexglfns/image/upload/v1778039766/ChatGPT_Image_May_6_2026_11_55_21_AM_1_ex4ywb.png"
     alt="Pedoman Wawancara"
   >
 
@@ -1745,7 +2026,7 @@ STYLE MIRIP REFERENSI
       <div class="cta-left">
 
         <img
-          src="https://cdn-icons-png.flaticon.com/512/3059/3059518.png"
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778076676/ChatGPT_Image_May_6_2026_10_10_36_PM_1_bcac6t.png"
           alt="Support"
         >
 
