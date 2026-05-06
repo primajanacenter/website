@@ -619,16 +619,54 @@ LAYANAN SECTION
 
 }
 
-/* GRID */
+/* =========================================
+LAYANAN GRID RESPONSIVE FIX
+========================================= */
 
+/* DESKTOP */
 .layanan-grid{
 
     display:grid;
 
     grid-template-columns:
-    repeat(5,1fr);
+    repeat(4,1fr);
 
     gap:18px;
+
+}
+
+/* LAPTOP */
+@media(max-width:1200px){
+
+    .layanan-grid{
+
+        grid-template-columns:
+        repeat(3,1fr);
+
+    }
+
+}
+
+/* TABLET */
+@media(max-width:992px){
+
+    .layanan-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+
+    }
+
+}
+
+/* MOBILE */
+@media(max-width:576px){
+
+    .layanan-grid{
+
+        grid-template-columns:1fr;
+
+    }
 
 }
 
