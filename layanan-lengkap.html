@@ -11,6 +11,10 @@
 
 <style>
 
+/* =========================
+GLOBAL
+========================= */
+
 *{
     margin:0;
     padding:0;
@@ -18,16 +22,29 @@
     font-family:'Poppins',sans-serif;
 }
 
-body{
-    background:
-    radial-gradient(circle at top left,#0d53ff 0%,#00145a 45%,#000f47 100%);
-    color:white;
-    overflow-x:hidden;
+html{
+    scroll-behavior:smooth;
 }
 
-/* ==========================
+body{
+
+    background:
+    radial-gradient(
+    circle at top left,
+    #0d53ff 0%,
+    #00145a 45%,
+    #000f47 100%
+    );
+
+    color:white;
+
+    overflow-x:hidden;
+
+}
+
+/* =========================
 CONTAINER
-========================== */
+========================= */
 
 .container{
     width:92%;
@@ -35,33 +52,78 @@ CONTAINER
     margin:auto;
 }
 
-/* ==========================
+/* =========================
+BACKGROUND LIGHT
+========================= */
+
+.bg-light{
+
+    position:fixed;
+
+    width:900px;
+    height:900px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(0,162,255,.14),
+    transparent 70%
+    );
+
+    top:-420px;
+    right:-250px;
+
+    z-index:-1;
+
+    pointer-events:none;
+
+}
+
+/* =========================
 NAVBAR
-========================== */
+========================= */
 
 nav{
+
     display:flex;
     justify-content:space-between;
     align-items:center;
+
     padding:28px 0;
+
 }
 
 .logo-wrapper{
+
     display:flex;
     align-items:center;
     gap:16px;
+
 }
 
 .logo-box{
+
     width:46px;
     height:46px;
+
     border-radius:14px;
-    background:linear-gradient(145deg,#4ca2ff,#003bdb);
+
+    background:
+    linear-gradient(
+    145deg,
+    #4ca2ff,
+    #003bdb
+    );
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     box-shadow:
     0 0 25px rgba(0,132,255,.45);
+
 }
 
 .logo-box i{
@@ -70,1129 +132,23 @@ nav{
 }
 
 .logo-text h1{
+
     font-size:20px;
     font-weight:800;
     line-height:1;
+
 }
 
 .logo-text span{
+
     font-size:12px;
     opacity:.85;
-}
-
-.contact-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding:14px 24px;
-    border-radius:16px;
-    background:linear-gradient(135deg,#0d6cff,#0140df);
-    color:white;
-    text-decoration:none;
-    font-weight:600;
-    transition:.3s;
-    box-shadow:
-    0 0 20px rgba(0,102,255,.4);
-}
-
-.contact-btn:hover{
-    transform:translateY(-2px);
-}
-
-/* ==========================
-BACKGROUND LIGHT
-========================== */
-
-.bg-light{
-    position:fixed;
-    width:900px;
-    height:900px;
-    border-radius:50%;
-    background:radial-gradient(circle,rgba(0,162,255,.15),transparent 70%);
-    top:-400px;
-    right:-250px;
-    pointer-events:none;
-    z-index:-1;
-}
-
-/* ==========================
-SERVICES GRID
-========================== */
-
-.services{
-    margin-top:20px;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-}
-
-.service-card{
-    position:relative;
-    background:linear-gradient(180deg,
-    rgba(8,66,255,.35),
-    rgba(0,25,112,.8));
-    border:1px solid rgba(100,180,255,.25);
-    border-radius:22px;
-    padding:22px;
-    overflow:hidden;
-    transition:.35s;
-    backdrop-filter:blur(10px);
-    min-height:365px;
-}
-
-.service-card:hover{
-    transform:translateY(-6px);
-    border-color:#57b3ff;
-    box-shadow:
-    0 15px 35px rgba(0,132,255,.18);
-}
-
-.number{
-    position:absolute;
-
-    top:18px;
-    left:18px;
-
-    width:38px;
-    height:38px;
-
-    border-radius:12px;
-
-    background:
-    linear-gradient(
-    145deg,
-    rgba(37,99,235,.95),
-    rgba(29,78,216,.95)
-    );
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:15px;
-    font-weight:700;
-
-    color:white;
-
-    z-index:5;
-
-    box-shadow:
-    0 8px 18px rgba(0,0,0,.18);
-}
-
-.service-image{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    margin-top:25px;
-    margin-bottom:20px;
-}
-
-.service-image img{
-    width:180px;
-    height:180px;
-    object-fit:contain;
-    filter:drop-shadow(0 15px 30px rgba(0,0,0,.4));
-    transition:.4s;
-}
-
-.service-card:hover img{
-    transform:translateY(-6px) scale(1.02);
-}
-
-.service-title{
-    font-size:20px;
-    font-weight:700;
-    margin-bottom:10px;
-}
-
-.service-desc{
-    font-size:14px;
-    line-height:1.7;
-    opacity:.9;
-    min-height:72px;
-}
-
-.service-link{
-    margin-top:20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    text-decoration:none;
-    color:#7ec8ff;
-    font-weight:500;
-}
-
-.service-link .arrow{
-    width:42px;
-    height:42px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.25);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:.3s;
-}
-
-.service-card:hover .arrow{
-    background:#0b7cff;
-    border-color:#0b7cff;
-}
-
-/* ==========================
-SECTION TITLE
-========================== */
-
-.section-title{
-    text-align:center;
-    font-size:42px;
-    font-weight:800;
-    margin-bottom:40px;
-}
-
-/* ==========================
-TESTIMONI
-========================== */
-
-.testimoni-section{
-    margin-top:70px;
-}
-
-.testimoni-title{
-    text-align:center;
-    font-size:38px;
-    font-weight:800;
-    margin-bottom:28px;
-}
-
-.testimoni-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-}
-
-.testimoni-card{
-    background:linear-gradient(180deg,
-    rgba(8,66,255,.35),
-    rgba(0,25,112,.8));
-    border:1px solid rgba(100,180,255,.2);
-    border-radius:22px;
-    padding:28px;
-}
-
-.quote{
-    color:#4bb6ff;
-    margin-bottom:18px;
-}
-
-.testimoni-card p{
-    line-height:1.8;
-    opacity:.95;
-    font-size:15px;
-}
-
-.stars{
-    margin-top:18px;
-    color:#ffd84d;
-    display:flex;
-    gap:3px;
-}
-
-.client{
-    margin-top:14px;
-    opacity:.85;
-    font-size:14px;
-}
-
-/* ==========================
-WHY
-========================== */
-
-.why-section{
-    margin-top:70px;
-    background:linear-gradient(180deg,
-    rgba(8,66,255,.28),
-    rgba(0,25,112,.65));
-    border-radius:26px;
-    padding:40px;
-    border:1px solid rgba(100,180,255,.15);
-}
-
-.why-title{
-    text-align:center;
-    font-size:40px;
-    font-weight:800;
-    margin-bottom:35px;
-}
-
-.why-grid{
-    display:grid;
-    grid-template-columns:repeat(6,1fr);
-    gap:22px;
-}
-
-.why-card{
-    text-align:center;
-}
-
-.why-icon{
-    width:110px;
-    height:110px;
-    margin:auto;
-    margin-bottom:15px;
-    border-radius:24px;
-    background:linear-gradient(145deg,#1663ff,#002db5);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:
-    0 10px 25px rgba(0,110,255,.35);
-}
-
-.why-icon i{
-    width:42px;
-    height:42px;
-}
-
-.why-card h3{
-    font-size:20px;
-    margin-bottom:10px;
-}
-
-.why-card p{
-    font-size:13px;
-    line-height:1.7;
-    opacity:.85;
-}
-
-/* ==========================
-DOKUMENTASI
-========================== */
-
-.docs{
-    margin-top:70px;
-    margin-bottom:60px;
-}
-
-.docs-title{
-    text-align:center;
-    font-size:40px;
-    font-weight:800;
-    margin-bottom:30px;
-}
-
-.docs-grid{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:18px;
-}
-
-.docs-grid img{
-    width:100%;
-    height:170px;
-    object-fit:cover;
-    border-radius:20px;
-    border:1px solid rgba(255,255,255,.15);
-    transition:.35s;
-}
-
-.docs-grid img:hover{
-    transform:translateY(-6px);
-}
-
-/* ==========================
-FOOTER
-========================== */
-
-footer{
-    text-align:center;
-    padding:28px;
-    border-top:1px solid rgba(255,255,255,.08);
-    background:rgba(0,0,0,.15);
-    font-size:14px;
-    opacity:.8;
-}
-
-/* ==========================
-RESPONSIVE
-========================== */
-
-@media(max-width:1200px){
-
-    .services{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .why-grid{
-        grid-template-columns:repeat(3,1fr);
-    }
-
-    .docs-grid{
-        grid-template-columns:repeat(3,1fr);
-    }
-
-}
-
-@media(max-width:768px){
-
-    nav{
-        gap:15px;
-    }
-
-    .logo-text h1{
-        font-size:18px;
-    }
-
-    .contact-btn{
-        padding:10px 16px;
-        font-size:13px;
-    }
-
-    .services{
-        grid-template-columns:1fr;
-    }
-
-    .testimoni-grid{
-        grid-template-columns:1fr;
-    }
-
-    .why-grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .docs-grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .section-title,
-    .testimoni-title,
-    .why-title,
-    .docs-title{
-        font-size:28px;
-    }
-
-}
-
-@media(max-width:480px){
-
-    nav{
-        flex-direction:row;
-        align-items:center;
-    }
-
-    .logo-wrapper{
-        gap:10px;
-    }
-
-    .logo-box{
-        width:40px;
-        height:40px;
-    }
-
-    .logo-text h1{
-        font-size:16px;
-    }
-
-    .logo-text span{
-        font-size:10px;
-    }
-
-    .contact-btn{
-        font-size:12px;
-        padding:10px 14px;
-        border-radius:12px;
-    }
-
-    .why-grid{
-        grid-template-columns:1fr;
-    }
-
-    .docs-grid{
-        grid-template-columns:1fr;
-    }
 
 }
 
 /* =========================
-FLAT SERVICE ICON
+GREEN CTA BUTTON
 ========================= */
-
-.service-icon{
-
-    width:104px;
-    height:104px;
-
-    margin:
-    34px auto 26px auto;
-
-    border-radius:28px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    position:relative;
-    overflow:hidden;
-
-    transition:.35s ease;
-
-    box-shadow:
-    0 12px 28px rgba(0,0,0,.18);
-
-}
-
-/* ICON */
-.service-icon i{
-
-    width:46px;
-    height:46px;
-
-    color:white;
-
-    stroke-width:2.2;
-
-    z-index:2;
-
-    animation:
-    floatIcon 3.5s ease-in-out infinite;
-}
-
-
-/* BETTER CARD ALIGNMENT */
-
-.service-card{
-
-    display:flex;
-    flex-direction:column;
-
-}
-
-/* TITLE */
-.service-title{
-
-    text-align:left;
-
-    font-size:22px;
-    line-height:1.35;
-
-    margin-bottom:12px;
-
-}
-
-/* DESCRIPTION */
-.service-desc{
-
-    flex-grow:1;
-
-    line-height:1.8;
-
-    opacity:.88;
-}
-
-@media(max-width:768px){
-
-    .service-icon{
-
-        width:88px;
-        height:88px;
-
-        margin:
-        28px auto 22px auto;
-
-        border-radius:24px;
-
-    }
-
-    .service-icon i{
-
-        width:38px;
-        height:38px;
-
-    }
-
-    .number{
-
-        width:34px;
-        height:34px;
-
-        font-size:13px;
-
-        top:14px;
-        left:14px;
-
-    }
-
-}
-
-
-/* GLOW */
-.service-icon::before{
-    content:"";
-    position:absolute;
-
-    width:180%;
-    height:180%;
-
-    background:
-    radial-gradient(
-    circle,
-    rgba(255,255,255,.18),
-    transparent 60%
-    );
-
-    top:-40%;
-    left:-40%;
-}
-
-/* HOVER */
-.service-card:hover .service-icon{
-
-    transform:
-    translateY(-8px)
-    scale(1.05);
-
-    box-shadow:
-    0 20px 40px rgba(0,0,0,.28);
-
-}
-
-/* FLOAT */
-@keyframes floatIcon{
-
-    0%,100%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-8px);
-    }
-
-}
-
-/* =========================
-COLOR VARIANTS
-========================= */
-
-.blue{
-    background:
-    linear-gradient(145deg,#2e7dff,#004cff);
-}
-
-.cyan{
-    background:
-    linear-gradient(145deg,#00cfff,#0077ff);
-}
-
-.purple{
-    background:
-    linear-gradient(145deg,#8b5cf6,#5b21b6);
-}
-
-.orange{
-    background:
-    linear-gradient(145deg,#ff9d2f,#ff6b00);
-}
-
-.green{
-    background:
-    linear-gradient(145deg,#00d26a,#00a94f);
-}
-
-.pink{
-    background:
-    linear-gradient(145deg,#ff5fb7,#ff2e7a);
-}
-
-.yellow{
-    background:
-    linear-gradient(145deg,#ffc83d,#ff9f00);
-}
-
-.teal{
-    background:
-    linear-gradient(145deg,#11d9c5,#009fb2);
-}
-
-/* =========================
-SERVICE CARD
-========================= */
-
-.service-card{
-    position:relative;
-    overflow:hidden;
-}
-
-.service-card::after{
-
-    content:"";
-
-    position:absolute;
-    inset:0;
-
-    background:
-    linear-gradient(
-    135deg,
-    rgba(255,255,255,.06),
-    transparent 45%
-    );
-
-    opacity:0;
-
-    transition:.35s;
-}
-
-.service-card:hover::after{
-    opacity:1;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-
-    .service-icon{
-        width:90px;
-        height:90px;
-        border-radius:24px;
-    }
-
-    .service-icon i{
-        width:42px;
-        height:42px;
-    }
-
-}
-
-
-/* ===================================
-ADVANCED SERVICE CARD ANIMATION
-=================================== */
-
-/* INITIAL */
-.service-card{
-
-    position:relative;
-
-    transform:
-    translateY(0px)
-    scale(1);
-
-    transition:
-    transform .45s ease,
-    box-shadow .45s ease,
-    border-color .45s ease,
-    background .45s ease;
-
-    isolation:isolate;
-}
-
-/* HOVER LIFT */
-.service-card:hover{
-
-    transform:
-    translateY(-12px)
-    scale(1.015);
-
-    border-color:
-    rgba(120,190,255,.6);
-
-    box-shadow:
-    0 25px 50px rgba(0,80,255,.22),
-    0 0 40px rgba(0,140,255,.12);
-
-}
-
-/* ===================================
-SPOTLIGHT EFFECT
-=================================== */
-
-.service-card::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:-1px;
-
-    border-radius:inherit;
-
-    background:
-    radial-gradient(
-    circle at top,
-    rgba(255,255,255,.12),
-    transparent 45%
-    );
-
-    opacity:0;
-
-    transition:.45s ease;
-
-    z-index:0;
-}
-
-.service-card:hover::before{
-    opacity:1;
-}
-
-/* ===================================
-SHINY GLASS EFFECT
-=================================== */
-
-.service-card::after{
-
-    content:"";
-
-    position:absolute;
-
-    top:0;
-    left:-140%;
-
-    width:80%;
-    height:100%;
-
-    background:
-    linear-gradient(
-    115deg,
-    transparent,
-    rgba(255,255,255,.14),
-    transparent
-    );
-
-    transform:skewX(-20deg);
-
-    transition:1s ease;
-
-    z-index:1;
-}
-
-.service-card:hover::after{
-    left:160%;
-}
-
-/* ===================================
-ICON ANIMATION
-=================================== */
-
-.service-card:hover .service-icon{
-
-    transform:
-    translateY(-10px)
-    scale(1.08)
-    rotate(-2deg);
-
-    box-shadow:
-    0 18px 40px rgba(0,0,0,.28),
-    0 0 35px rgba(0,140,255,.25);
-
-}
-
-/* ICON PULSE */
-.service-card:hover .service-icon i{
-
-    animation:
-    pulseIcon .8s ease;
-}
-
-@keyframes pulseIcon{
-
-    0%{
-        transform:scale(1);
-    }
-
-    50%{
-        transform:scale(1.12);
-    }
-
-    100%{
-        transform:scale(1);
-    }
-
-}
-
-/* ===================================
-ARROW ANIMATION
-=================================== */
-
-.service-card:hover .arrow{
-
-    transform:
-    translateX(4px);
-
-    background:
-    linear-gradient(
-    145deg,
-    #1b74ff,
-    #0050ff
-    );
-
-    border-color:
-    rgba(255,255,255,.2);
-
-    box-shadow:
-    0 0 18px rgba(0,132,255,.35);
-}
-
-/* ===================================
-TEXT EFFECT
-=================================== */
-
-.service-title,
-.service-desc,
-.service-link{
-    position:relative;
-    z-index:3;
-}
-
-.service-card:hover .service-title{
-
-    color:#9fd7ff;
-
-    transition:.35s ease;
-}
-
-/* ===================================
-STAGGER ENTRANCE
-=================================== */
-
-.service-card{
-
-    opacity:0;
-
-    animation:
-    cardReveal .8s ease forwards;
-}
-
-.service-card:nth-child(1){ animation-delay:.05s; }
-.service-card:nth-child(2){ animation-delay:.10s; }
-.service-card:nth-child(3){ animation-delay:.15s; }
-.service-card:nth-child(4){ animation-delay:.20s; }
-.service-card:nth-child(5){ animation-delay:.25s; }
-.service-card:nth-child(6){ animation-delay:.30s; }
-.service-card:nth-child(7){ animation-delay:.35s; }
-.service-card:nth-child(8){ animation-delay:.40s; }
-
-@keyframes cardReveal{
-
-    from{
-        opacity:0;
-        transform:
-        translateY(40px)
-        scale(.96);
-    }
-
-    to{
-        opacity:1;
-        transform:
-        translateY(0px)
-        scale(1);
-    }
-
-}
-
-/* ===================================
-MOBILE OPTIMIZATION
-=================================== */
-
-@media(max-width:768px){
-
-    .service-card:hover{
-
-        transform:
-        translateY(-6px)
-        scale(1.01);
-
-    }
-
-}
-
-
-/* ===================================
-GLOW EFFECT FOR SERVICE CARDS
-=================================== */
-
-.service-card{
-
-    position:relative;
-    overflow:hidden;
-
-    /* BASE GLOW */
-    box-shadow:
-    0 0 0 rgba(0,140,255,0),
-
-    0 10px 25px rgba(0,0,0,.18);
-
-    transition:
-    transform .45s ease,
-    box-shadow .45s ease,
-    border-color .45s ease;
-
-}
-
-/* SOFT GLOW ANIMATION */
-.service-card::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:-2px;
-
-    border-radius:inherit;
-
-    background:
-    linear-gradient(
-    135deg,
-    rgba(0,140,255,.25),
-    rgba(0,255,255,.08),
-    rgba(120,80,255,.20)
-    );
-
-    z-index:-1;
-
-    opacity:.55;
-
-    filter:blur(18px);
-
-    animation:
-    glowPulse 4s ease-in-out infinite;
-}
-
-/* HOVER GLOW */
-.service-card:hover{
-
-    transform:
-    translateY(-10px)
-    scale(1.02);
-
-    border-color:
-    rgba(120,190,255,.6);
-
-    box-shadow:
-
-    0 0 18px rgba(0,140,255,.35),
-
-    0 0 35px rgba(0,132,255,.20),
-
-    0 20px 45px rgba(0,70,255,.22);
-
-}
-
-/* STRONGER GLOW ON HOVER */
-.service-card:hover::before{
-
-    opacity:1;
-
-    filter:blur(24px);
-
-}
-
-/* GLOW ANIMATION */
-@keyframes glowPulse{
-
-    0%{
-
-        opacity:.45;
-
-        transform:scale(1);
-
-    }
-
-    50%{
-
-        opacity:.9;
-
-        transform:scale(1.015);
-
-    }
-
-    100%{
-
-        opacity:.45;
-
-        transform:scale(1);
-
-    }
-
-}
-
-/* ===================================
-DIFFERENT GLOW COLORS
-=================================== */
-
-.service-card:nth-child(1)::before{
-    background:
-    radial-gradient(circle,
-    rgba(0,132,255,.35),
-    transparent 70%);
-}
-
-.service-card:nth-child(2)::before{
-    background:
-    radial-gradient(circle,
-    rgba(0,255,255,.30),
-    transparent 70%);
-}
-
-.service-card:nth-child(3)::before{
-    background:
-    radial-gradient(circle,
-    rgba(140,100,255,.35),
-    transparent 70%);
-}
-
-.service-card:nth-child(4)::before{
-    background:
-    radial-gradient(circle,
-    rgba(255,140,0,.30),
-    transparent 70%);
-}
-
-.service-card:nth-child(5)::before{
-    background:
-    radial-gradient(circle,
-    rgba(0,255,140,.30),
-    transparent 70%);
-}
-
-.service-card:nth-child(6)::before{
-    background:
-    radial-gradient(circle,
-    rgba(255,60,160,.30),
-    transparent 70%);
-}
-
-.service-card:nth-child(7)::before{
-    background:
-    radial-gradient(circle,
-    rgba(255,210,0,.30),
-    transparent 70%);
-}
-
-.service-card:nth-child(8)::before{
-    background:
-    radial-gradient(circle,
-    rgba(0,220,200,.30),
-    transparent 70%);
-}
-
-/* ===================================
-MOBILE OPTIMIZATION
-=================================== */
-
-@media(max-width:768px){
-
-    .service-card:hover{
-
-        transform:
-        translateY(-5px)
-        scale(1.01);
-
-    }
-
-}
-
-
-/* ===================================
-GREEN GLOW CONTACT BUTTON
-=================================== */
 
 .contact-btn{
 
@@ -1208,8 +164,8 @@ GREEN GLOW CONTACT BUTTON
 
     text-decoration:none;
 
-    font-weight:600;
     color:white;
+    font-weight:600;
 
     overflow:hidden;
 
@@ -1233,24 +189,14 @@ GREEN GLOW CONTACT BUTTON
 
     transition:
     transform .35s ease,
-    box-shadow .35s ease,
-    background .35s ease;
+    box-shadow .35s ease;
 
     animation:
-    greenPulse 2.2s ease-in-out infinite,
+    greenPulse 2.5s ease-in-out infinite,
     blinkGlow 3s linear infinite;
 
 }
 
-/* ICON */
-.contact-btn i{
-
-    width:18px;
-    height:18px;
-
-}
-
-/* HOVER */
 .contact-btn:hover{
 
     transform:
@@ -1266,10 +212,6 @@ GREEN GLOW CONTACT BUTTON
     0 18px 35px rgba(0,0,0,.28);
 
 }
-
-/* ===================================
-LIGHT SWEEP EFFECT
-=================================== */
 
 .contact-btn::before{
 
@@ -1301,13 +243,9 @@ LIGHT SWEEP EFFECT
     left:160%;
 }
 
-/* ===================================
-PULSE EFFECT
-=================================== */
-
 @keyframes greenPulse{
 
-    0%{
+    0%,100%{
 
         box-shadow:
 
@@ -1327,21 +265,7 @@ PULSE EFFECT
 
     }
 
-    100%{
-
-        box-shadow:
-
-        0 0 12px rgba(0,255,128,.35),
-
-        0 0 24px rgba(0,255,128,.12);
-
-    }
-
 }
-
-/* ===================================
-SUBTLE BLINK EFFECT
-=================================== */
 
 @keyframes blinkGlow{
 
@@ -1355,94 +279,209 @@ SUBTLE BLINK EFFECT
 
 }
 
-/* ===================================
-MOBILE
-=================================== */
+/* =========================
+SERVICES GRID
+========================= */
 
-@media(max-width:768px){
+.services{
 
-    .contact-btn{
+    margin-top:20px;
 
-        padding:12px 18px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
 
-        font-size:13px;
-
-        border-radius:14px;
-
-    }
+    gap:22px;
 
 }
 
-
 /* =========================
-SERVICE ICON IMAGE
+SERVICE CARD
 ========================= */
 
-.service-icon{
+.service-card{
 
-    width:104px;
-    height:104px;
+    position:relative;
 
-    margin:
-    34px auto 26px auto;
+    display:flex;
+    flex-direction:column;
 
-    border-radius:28px;
+    padding:26px 24px 24px;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(8,66,255,.35),
+    rgba(0,25,112,.82)
+    );
+
+    border:
+    1px solid rgba(100,180,255,.18);
+
+    backdrop-filter:blur(14px);
+
+    min-height:480px;
+
+    isolation:isolate;
+
+    transition:
+    transform .45s ease,
+    box-shadow .45s ease,
+    border-color .45s ease;
+
+    animation:
+    cardReveal .8s ease forwards;
+
+}
+
+/* GLOW */
+
+.service-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-2px;
+
+    border-radius:inherit;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(0,140,255,.28),
+    transparent 70%
+    );
+
+    z-index:-1;
+
+    opacity:.6;
+
+    filter:blur(18px);
+
+    animation:
+    glowPulse 4s ease-in-out infinite;
+
+}
+
+.service-card:hover{
+
+    transform:
+    translateY(-12px)
+    scale(1.02);
+
+    border-color:
+    rgba(120,190,255,.55);
+
+    box-shadow:
+
+    0 0 22px rgba(0,140,255,.25),
+
+    0 25px 50px rgba(0,80,255,.25);
+
+}
+
+.service-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-140%;
+
+    width:80%;
+    height:100%;
+
+    background:
+    linear-gradient(
+    115deg,
+    transparent,
+    rgba(255,255,255,.14),
+    transparent
+    );
+
+    transform:skewX(-20deg);
+
+    transition:1s ease;
+
+}
+
+.service-card:hover::after{
+    left:160%;
+}
+
+/* =========================
+CARD NUMBER
+========================= */
+
+.number{
+
+    position:absolute;
+
+    top:18px;
+    left:18px;
+
+    width:38px;
+    height:38px;
+
+    border-radius:12px;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
+    background:
+    linear-gradient(
+    145deg,
+    rgba(37,99,235,.95),
+    rgba(29,78,216,.95)
+    );
+
+    font-size:15px;
+    font-weight:700;
+
+    box-shadow:
+    0 8px 18px rgba(0,0,0,.18);
+
+    z-index:5;
+
+}
+
+/* =========================
+FULL IMAGE ICON
+========================= */
+
+.service-icon{
+
     position:relative;
+
+    width:100%;
+    height:220px;
+
+    margin:
+    40px 0 24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
     overflow:hidden;
 
-    transition:.35s ease;
+    border-radius:24px;
 
-    box-shadow:
-    0 12px 28px rgba(0,0,0,.18);
-
-}
-
-/* IMAGE */
-.service-icon img{
-
-    width:64px;
-    height:64px;
-
-    object-fit:contain;
-
-    z-index:2;
-
-    animation:
-    floatIcon 3.5s ease-in-out infinite;
-
-    transition:.35s ease;
-
-    filter:
-    drop-shadow(0 10px 18px rgba(0,0,0,.18));
+    background:
+    radial-gradient(
+    circle at top,
+    rgba(255,255,255,.10),
+    transparent 70%
+    );
 
 }
 
-/* HOVER */
-.service-card:hover .service-icon{
-
-    transform:
-    translateY(-8px)
-    scale(1.05);
-
-    box-shadow:
-    0 20px 40px rgba(0,0,0,.28);
-
-}
-
-.service-card:hover .service-icon img{
-
-    transform:
-    scale(1.08)
-    rotate(-3deg);
-
-}
-
-/* GLOW */
 .service-icon::before{
 
     content:"";
@@ -1455,8 +494,8 @@ SERVICE ICON IMAGE
     background:
     radial-gradient(
     circle,
-    rgba(255,255,255,.16),
-    transparent 60%
+    rgba(255,255,255,.14),
+    transparent 65%
     );
 
     top:-40%;
@@ -1464,7 +503,387 @@ SERVICE ICON IMAGE
 
 }
 
-/* FLOAT */
+.service-icon img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    padding:10px;
+
+    z-index:2;
+
+    transition:
+    transform .45s ease,
+    filter .45s ease;
+
+    animation:
+    floatIcon 4s ease-in-out infinite;
+
+    filter:
+    drop-shadow(
+    0 18px 30px rgba(0,0,0,.22)
+    );
+
+}
+
+.service-card:hover .service-icon img{
+
+    transform:
+    scale(1.08)
+    translateY(-6px);
+
+}
+
+/* =========================
+TEXT
+========================= */
+
+.service-title{
+
+    position:relative;
+    z-index:3;
+
+    font-size:22px;
+    line-height:1.35;
+    font-weight:700;
+
+    margin-bottom:14px;
+
+}
+
+.service-desc{
+
+    position:relative;
+    z-index:3;
+
+    flex-grow:1;
+
+    font-size:14px;
+    line-height:1.8;
+
+    opacity:.88;
+
+}
+
+/* =========================
+LINK
+========================= */
+
+.service-link{
+
+    position:relative;
+    z-index:3;
+
+    margin-top:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    text-decoration:none;
+
+    color:#7ec8ff;
+
+    font-weight:500;
+
+}
+
+.arrow{
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    border:
+    1px solid rgba(255,255,255,.25);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:.35s ease;
+
+}
+
+.service-card:hover .arrow{
+
+    transform:translateX(4px);
+
+    background:
+    linear-gradient(
+    145deg,
+    #1b74ff,
+    #0050ff
+    );
+
+    box-shadow:
+    0 0 18px rgba(0,132,255,.35);
+
+}
+
+/* =========================
+TESTIMONI
+========================= */
+
+.testimoni-section{
+    margin-top:80px;
+}
+
+.testimoni-title{
+
+    text-align:center;
+
+    font-size:38px;
+    font-weight:800;
+
+    margin-bottom:30px;
+
+}
+
+.testimoni-grid{
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    gap:22px;
+
+}
+
+.testimoni-card{
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(8,66,255,.35),
+    rgba(0,25,112,.8)
+    );
+
+    border:
+    1px solid rgba(100,180,255,.18);
+
+    border-radius:24px;
+
+    padding:28px;
+
+}
+
+.quote{
+
+    color:#4bb6ff;
+
+    margin-bottom:18px;
+
+}
+
+.testimoni-card p{
+
+    line-height:1.8;
+
+    opacity:.95;
+
+    font-size:15px;
+
+}
+
+.stars{
+
+    margin-top:18px;
+
+    color:#ffd84d;
+
+}
+
+.client{
+
+    margin-top:14px;
+
+    opacity:.85;
+
+    font-size:14px;
+
+}
+
+/* =========================
+WHY SECTION
+========================= */
+
+.why-section{
+
+    margin-top:80px;
+
+    padding:40px;
+
+    border-radius:28px;
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(8,66,255,.28),
+    rgba(0,25,112,.65)
+    );
+
+    border:
+    1px solid rgba(100,180,255,.15);
+
+}
+
+.why-title{
+
+    text-align:center;
+
+    font-size:40px;
+    font-weight:800;
+
+    margin-bottom:36px;
+
+}
+
+.why-grid{
+
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+
+    gap:22px;
+
+}
+
+.why-card{
+    text-align:center;
+}
+
+.why-icon{
+
+    width:110px;
+    height:110px;
+
+    margin:auto auto 16px;
+
+    border-radius:26px;
+
+    background:
+    linear-gradient(
+    145deg,
+    #1663ff,
+    #002db5
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+    0 10px 25px rgba(0,110,255,.35);
+
+}
+
+.why-icon i{
+
+    width:42px;
+    height:42px;
+
+}
+
+.why-card h3{
+
+    font-size:20px;
+
+    margin-bottom:10px;
+
+}
+
+.why-card p{
+
+    font-size:13px;
+    line-height:1.7;
+
+    opacity:.85;
+
+}
+
+/* =========================
+DOCUMENTATION
+========================= */
+
+.docs{
+
+    margin:
+    80px 0 60px;
+
+}
+
+.docs-title{
+
+    text-align:center;
+
+    font-size:40px;
+    font-weight:800;
+
+    margin-bottom:30px;
+
+}
+
+.docs-grid{
+
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+
+    gap:18px;
+
+}
+
+.docs-grid img{
+
+    width:100%;
+    height:180px;
+
+    object-fit:cover;
+
+    border-radius:22px;
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+    transition:.35s ease;
+
+}
+
+.docs-grid img:hover{
+
+    transform:
+    translateY(-6px)
+    scale(1.02);
+
+}
+
+/* =========================
+FOOTER
+========================= */
+
+footer{
+
+    text-align:center;
+
+    padding:28px;
+
+    border-top:
+    1px solid rgba(255,255,255,.08);
+
+    background:
+    rgba(0,0,0,.15);
+
+    font-size:14px;
+
+    opacity:.8;
+
+}
+
+/* =========================
+ANIMATIONS
+========================= */
+
 @keyframes floatIcon{
 
     0%,100%{
@@ -1477,29 +896,146 @@ SERVICE ICON IMAGE
 
 }
 
-/* MOBILE */
-@media(max-width:768px){
+@keyframes glowPulse{
 
-    .service-icon{
+    0%,100%{
+        opacity:.45;
+        transform:scale(1);
+    }
 
-        width:88px;
-        height:88px;
+    50%{
+        opacity:.9;
+        transform:scale(1.015);
+    }
 
-        border-radius:24px;
+}
+
+@keyframes cardReveal{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(40px)
+        scale(.96);
 
     }
 
-    .service-icon img{
+    to{
 
-        width:54px;
-        height:54px;
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
 
     }
 
 }
 
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1200px){
+
+    .services{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .why-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .docs-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:768px){
+
+    .services,
+    .testimoni-grid{
+        grid-template-columns:1fr;
+    }
+
+    .why-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .docs-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .service-card{
+        min-height:auto;
+    }
+
+    .service-icon{
+        height:180px;
+    }
+
+    .service-title{
+        font-size:20px;
+    }
+
+    .testimoni-title,
+    .why-title,
+    .docs-title{
+        font-size:30px;
+    }
+
+}
+
+@media(max-width:480px){
+
+    nav{
+        flex-direction:row;
+        gap:12px;
+    }
+
+    .logo-wrapper{
+        gap:10px;
+    }
+
+    .logo-box{
+        width:40px;
+        height:40px;
+    }
+
+    .logo-text h1{
+        font-size:16px;
+    }
+
+    .logo-text span{
+        font-size:10px;
+    }
+
+    .contact-btn{
+        padding:10px 14px;
+        font-size:12px;
+        border-radius:12px;
+    }
+
+    .why-grid,
+    .docs-grid{
+        grid-template-columns:1fr;
+    }
+
+    .service-icon{
+        height:160px;
+    }
+
+    .service-title{
+        font-size:19px;
+    }
+
+}
 
 </style>
+
 </head>
 
 <body>
@@ -1544,7 +1080,7 @@ EXTERNAL IMAGE ICONS
 <div class="number">01</div>
 
 <div class="service-icon blue">
-<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Konsultan">
+<img src="https://res.cloudinary.com/djexglfns/image/upload/v1778039766/ChatGPT_Image_May_6_2026_11_55_21_AM_1_ex4ywb.png" alt="Konsultan">
 </div>
 
 <div class="service-title">
@@ -1573,7 +1109,7 @@ Bekerja berdasarkan proyek dan kebutuhan klien dengan dukungan talenta terbaik d
 <div class="number">02</div>
 
 <div class="service-icon cyan">
-<img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="Pendampingan">
+<img src="https://res.cloudinary.com/djexglfns/image/upload/v1778040535/ChatGPT_Image_May_6_2026_12_08_16_PM_1_issesp.png" alt="Pendampingan">
 </div>
 
 <div class="service-title">
@@ -1602,7 +1138,7 @@ Pendampingan intensif oleh tim ahli dari proses awal sampai selesai.
 <div class="number">03</div>
 
 <div class="service-icon purple">
-<img src="https://cdn-icons-png.flaticon.com/512/942/942799.png" alt="Review">
+<img src="https://res.cloudinary.com/djexglfns/image/upload/v1778040704/ChatGPT_Image_May_6_2026_12_11_11_PM_1_web7vf.png" alt="Review">
 </div>
 
 <div class="service-title">
@@ -1631,7 +1167,7 @@ Penilaian dan perbaikan terhadap proyek yang sudah dikerjakan.
 <div class="number">04</div>
 
 <div class="service-icon orange">
-<img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="Produk">
+<img src="https://res.cloudinary.com/djexglfns/image/upload/v1778040876/ChatGPT_Image_May_6_2026_12_14_00_PM_1_upnd2f.png" alt="Produk">
 </div>
 
 <div class="service-title">
@@ -1660,7 +1196,7 @@ Produk berkualitas yang dirancang untuk mendukung kebutuhanmu.
 <div class="number">05</div>
 
 <div class="service-icon green">
-<img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Tools">
+<img src="https://res.cloudinary.com/djexglfns/image/upload/v1778041061/ChatGPT_Image_May_6_2026_12_16_58_PM_1_c5doqb.png" alt="Tools">
 </div>
 
 <div class="service-title">
