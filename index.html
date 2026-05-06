@@ -539,6 +539,77 @@ footer {
 
 }
 
+
+/* ===== CTA GLOW EFFECT ===== */
+.cta {
+  position: relative;
+  overflow: hidden;
+  
+  background: linear-gradient(135deg, #00e5ff, #00aaff);
+  
+  box-shadow:
+    0 0 10px rgba(0, 229, 255, 0.5),
+    0 0 20px rgba(0, 170, 255, 0.35),
+    0 0 40px rgba(0, 170, 255, 0.2);
+
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+/* HOVER EFFECT */
+.cta:hover {
+  transform: translateY(-2px) scale(1.03);
+
+  box-shadow:
+    0 0 15px rgba(0, 229, 255, 0.8),
+    0 0 30px rgba(0, 170, 255, 0.6),
+    0 0 60px rgba(0, 170, 255, 0.35);
+}
+
+/* GLOW ANIMATION */
+@keyframes pulseGlow {
+
+  0% {
+    box-shadow:
+      0 0 10px rgba(0, 229, 255, 0.45),
+      0 0 20px rgba(0, 170, 255, 0.25),
+      0 0 40px rgba(0, 170, 255, 0.15);
+  }
+
+  50% {
+    box-shadow:
+      0 0 18px rgba(0, 229, 255, 0.75),
+      0 0 35px rgba(0, 170, 255, 0.45),
+      0 0 70px rgba(0, 170, 255, 0.25);
+  }
+
+  100% {
+    box-shadow:
+      0 0 10px rgba(0, 229, 255, 0.45),
+      0 0 20px rgba(0, 170, 255, 0.25),
+      0 0 40px rgba(0, 170, 255, 0.15);
+  }
+
+}
+
+
+/* LIGHT SWEEP EFFECT */
+.cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: rgba(255,255,255,0.25);
+  transform: skewX(-25deg);
+  transition: 0.8s;
+}
+
+.cta:hover::before {
+  left: 140%;
+}
+
+
 </style>
 </head>
 
