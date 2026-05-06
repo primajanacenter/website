@@ -301,10 +301,12 @@ p {
     max-width: 100%;
   }
 
-  .cta {
-    justify-content: center;
-    width: 100%;
-  }
+.cta {
+  justify-content: center;
+  width: fit-content;
+  margin: auto;
+  padding: 14px 22px;
+}
 
   .hero-image img {
     max-width: 300px;
@@ -472,8 +474,21 @@ footer {
 @media (max-width: 480px) {
 
   nav {
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+
+  .login-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+    white-space: nowrap;
   }
 
   .hero-image img {
@@ -503,6 +518,26 @@ footer {
 
 }
 
+
+/* ===== CTA RESPONSIVE ===== */
+.cta {
+  min-width: 180px;
+  max-width: 240px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+
+  .cta {
+    font-size: 14px;
+    padding: 13px 20px;
+    min-width: unset;
+    max-width: unset;
+  }
+
+}
 
 </style>
 </head>
