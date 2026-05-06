@@ -356,6 +356,154 @@ a {
   justify-content: center;
 }
 
+
+/* ===== SECTION SPACING ===== */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+}
+
+/* ===== HERO LAYOUT FIX ===== */
+.hero {
+  min-height: 70vh;
+  align-items: center;
+}
+
+/* HERO IMAGE CENTER */
+.hero-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 620px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.3));
+}
+
+/* ===== FEATURES ===== */
+.features {
+  margin-bottom: 60px;
+}
+
+.feature {
+  padding: 10px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  background: rgba(255,255,255,0.06);
+  transform: translateY(-5px);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  width: 100%;
+  padding: 24px 20px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.12);
+  backdrop-filter: blur(10px);
+}
+
+/* ===== MOBILE IMPROVEMENT ===== */
+@media (max-width: 900px) {
+
+  .container {
+    width: 92%;
+  }
+
+  nav {
+    gap: 12px;
+  }
+
+  .hero {
+    margin-top: 20px;
+    min-height: auto;
+  }
+
+  .hero-text {
+    order: 2;
+  }
+
+  .hero-image {
+    order: 1;
+  }
+
+  .hero-image img {
+    max-width: 360px;
+    margin: auto;
+  }
+
+  h1 {
+    line-height: 1.3;
+  }
+
+  p {
+    line-height: 1.7;
+  }
+
+  .features {
+    margin-top: 40px;
+  }
+
+  .feature {
+    padding: 14px;
+  }
+
+  footer {
+    margin-top: 30px;
+    font-size: 13px;
+  }
+}
+
+/* ===== EXTRA SMALL DEVICES ===== */
+@media (max-width: 480px) {
+
+  nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .hero-image img {
+    max-width: 280px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  p {
+    font-size: 13px;
+  }
+
+  .features {
+    padding: 15px;
+  }
+
+  .feature {
+    gap: 12px;
+  }
+
+  .icon {
+    min-width: 42px;
+    min-height: 42px;
+  }
+
+}
+
+
 </style>
 </head>
 
@@ -394,18 +542,11 @@ a {
   </div>
 
   <div class="hero-image">
-    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1777993706/ChatGPT_Image_May_5_2026_11_06_34_PM_1_v6iemi.png" alt="hero">
+    <img src="https://res.cloudinary.com/djexglfns/image/upload/v1778035410/ChatGPT_Image_May_6_2026_10_42_29_AM_aqqf4y.png" alt="hero">
   </div>
 
 </section>
 
-<!-- FLOATING ICONS -->
-<div class="floating-icons">
-  <div><i data-lucide="trophy"></i></div>
-  <div><i data-lucide="graduation-cap"></i></div>
-  <div><i data-lucide="wallet"></i></div>
-  <div><i data-lucide="briefcase"></i></div>
-</div>
 
 <section class="features">
 
@@ -448,6 +589,12 @@ a {
 <script>
 lucide.createIcons();
 </script>
+
+
+<footer>
+  © 2026 PT Primajana Bagia Mesari. All rights reserved.
+</footer>
+
 
 </body>
 </html>
