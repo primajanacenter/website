@@ -1650,13 +1650,26 @@ HERO KONSULTAN
 
     display:flex;
     justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+    width:100%;
 
 }
 
+/* IMAGE */
+
 .hero-image img{
+
+    display:block;
 
     width:100%;
     max-width:760px;
+
+    height:auto;
+
+    object-fit:contain;
 
     animation:
     heroFloat 5s ease-in-out infinite;
@@ -1665,6 +1678,10 @@ HERO KONSULTAN
     drop-shadow(
     0 30px 50px rgba(0,0,0,.28)
     );
+
+    backface-visibility:hidden;
+
+    transform:translateZ(0);
 
 }
 
@@ -1816,24 +1833,64 @@ PROCESS
 
 /* LINE */
 
-.process-line{
+/* =========================================
+PROCESS GRID FIXED
+========================================= */
+
+.process-grid{
+
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+/* ITEM */
+
+.process-item{
+
+    position:relative;
+
+    flex:1;
+
+    min-width:140px;
+
+    text-align:center;
+
+}
+
+/* CONNECTOR LINE */
+
+.process-item:not(:last-child)::after{
+
+    content:"";
 
     position:absolute;
 
     top:64px;
-    right:-60px;
+    right:-12px;
 
-    width:120px;
-    border-top:
-    3px dashed #3b82f6;
+    width:24px;
+    height:3px;
+
+    background:#3b82f6;
+
+    opacity:.35;
 
 }
 
-/* REMOVE LAST */
+/* MOBILE */
 
-.process-item:last-child
-.process-line{
-    display:none;
+@media(max-width:992px){
+
+    .process-item::after{
+        display:none;
+    }
+
 }
 
 /* =========================================
@@ -2003,211 +2060,197 @@ HERO HEADER PRIMAJANA KONSULTAN
 
 <section class="hero-konsultan">
 
-<!-- BACKGROUND EFFECT -->
-<div class="hero-blur hero-blur-1"></div>
-<div class="hero-blur hero-blur-2"></div>
+  <!-- BACKGROUND EFFECT -->
+  <div class="hero-blur hero-blur-1"></div>
+  <div class="hero-blur hero-blur-2"></div>
 
-<div class="hero-grid">
+  <div class="hero-container">
 
-<!-- LEFT -->
-<div class="hero-content">
+    <div class="hero-grid">
 
-<div class="hero-badge">
-PRIMAJANA KONSULTAN
-</div>
+      <!-- LEFT CONTENT -->
+      <div class="hero-content">
 
-<h1>
-Solusi Profesional
-untuk Kebutuhan Anda
-</h1>
+        <div class="hero-badge">
+          PRIMAJANA KONSULTAN
+        </div>
 
-<p>
-Bekerja berdasarkan proyek dan kebutuhan klien dengan dukungan talenta terbaik di berbagai bidang untuk menghasilkan solusi yang tepat, efektif, dan berkualitas.
-</p>
+        <h1>
+          Solusi Profesional <br>
+          untuk Kebutuhan Anda
+        </h1>
 
-<a href="https://wa.me/+6285935201571" class="hero-btn">
+        <p>
+          Bekerja berdasarkan proyek dan kebutuhan klien dengan dukungan
+          talenta terbaik di berbagai bidang untuk menghasilkan solusi
+          yang tepat, efektif, dan berkualitas.
+        </p>
 
-Mulai Konsultasi
+        <a href="https://wa.me/+6285935201571" class="hero-btn">
+          <span>Mulai Konsultasi</span>
+          <i data-lucide="arrow-right"></i>
+        </a>
 
-<i data-lucide="arrow-right"></i>
+      </div>
 
-</a>
+      <!-- RIGHT IMAGE -->
+      <div class="hero-image">
 
-</div>
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778044735/ChatGPT_Image_May_6_2026_01_18_11_PM_1_hipfd7.png"
+          alt="Hero Primajana"
+        >
 
-<!-- RIGHT -->
-<div class="hero-image">
+      </div>
 
-<img 
-src="https://res.cloudinary.com/djexglfns/image/upload/v1778044735/ChatGPT_Image_May_6_2026_01_18_11_PM_1_hipfd7.png"
-alt="Hero Primajana"
->
+    </div>
 
-</div>
+    <!-- =========================================
+    PROCESS SECTION
+    ========================================= -->
 
-</div>
+    <div class="process-wrapper">
 
-<!-- =========================================
-PROCESS SECTION
-========================================= -->
+      <h2>
+        Bagaimana Prosesnya?
+      </h2>
 
-<div class="process-wrapper">
+      <div class="process-grid">
 
-<h2>
-Bagaimana Prosesnya ?
-</h2>
+        <!-- STEP 1 -->
+        <div class="process-item">
 
-<div class="process-grid">
+          <div class="process-circle">
 
-<!-- STEP 1 -->
-<div class="process-item">
+            <div class="step-number">1</div>
 
-<div class="process-circle">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png"
+              alt="Pilih Layanan"
+            >
 
-<div class="step-number">
-1
-</div>
+          </div>
 
-<img 
-src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png"
-alt=""
->
+          <h3>Pilih Layanan</h3>
 
-</div>
+        </div>
 
-<h3>
-Pilih Layanan
-</h3>
 
-</div>
+        <!-- STEP 2 -->
+        <div class="process-item">
 
-<div class="process-line"></div>
+          <div class="process-circle">
 
-<!-- STEP 2 -->
-<div class="process-item">
+            <div class="step-number">2</div>
 
-<div class="process-circle">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/893/893257.png"
+              alt="Diskusi Layanan"
+            >
 
-<div class="step-number">
-2
-</div>
+          </div>
 
-<img 
-src="https://cdn-icons-png.flaticon.com/512/893/893257.png"
-alt=""
->
+          <h3>
+            Diskusi terkait <br>
+            Layanan
+          </h3>
 
-</div>
+        </div>
 
-<h3>
-Diskusi terkait
-Layanan
-</h3>
+    
 
-</div>
+        <!-- STEP 3 -->
+        <div class="process-item">
 
-<div class="process-line"></div>
+          <div class="process-circle">
 
-<!-- STEP 3 -->
-<div class="process-item">
+            <div class="step-number">3</div>
 
-<div class="process-circle">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png"
+              alt="Pembayaran"
+            >
 
-<div class="step-number">
-3
-</div>
+          </div>
 
-<img 
-src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png"
-alt=""
->
+          <h3>Pembayaran</h3>
 
-</div>
+        </div>
 
-<h3>
-Pembayaran
-</h3>
+        
 
-</div>
+        <!-- STEP 4 -->
+        <div class="process-item">
 
-<div class="process-line"></div>
+          <div class="process-circle">
 
-<!-- STEP 4 -->
-<div class="process-item">
+            <div class="step-number">4</div>
 
-<div class="process-circle">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png"
+              alt="Pengerjaan"
+            >
 
-<div class="step-number">
-4
-</div>
+          </div>
 
-<img 
-src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png"
-alt=""
->
+          <h3>
+            Pengerjaan oleh <br>
+            Tim Primajana
+          </h3>
 
-</div>
+        </div>
 
-<h3>
-Pengerjaan oleh
-Tim Primajana
-</h3>
+        
 
-</div>
+        <!-- STEP 5 -->
+        <div class="process-item">
 
-<div class="process-line"></div>
+          <div class="process-circle">
 
-<!-- STEP 5 -->
-<div class="process-item">
+            <div class="step-number">5</div>
 
-<div class="process-circle">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/942/942748.png"
+              alt="Revisi"
+            >
 
-<div class="step-number">
-5
-</div>
+          </div>
 
-<img 
-src="https://cdn-icons-png.flaticon.com/512/942/942748.png"
-alt=""
->
+          <h3>
+            Revisi dan <br>
+            Finalisasi
+          </h3>
 
-</div>
+        </div>
 
-<h3>
-Revisi dan
-Finalisasi
-</h3>
+        
 
-</div>
+        <!-- STEP 6 -->
+        <div class="process-item">
 
-<div class="process-line"></div>
+          <div class="process-circle">
 
-<!-- STEP 6 -->
-<div class="process-item">
+            <div class="step-number">6</div>
 
-<div class="process-circle">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/679/679720.png"
+              alt="Hasil Akhir"
+            >
 
-<div class="step-number">
-6
-</div>
+          </div>
 
-<img 
-src="https://cdn-icons-png.flaticon.com/512/679/679720.png"
-alt=""
->
+          <h3>
+            Hasil Akhir <br>
+            Diserahkan
+          </h3>
 
-</div>
+        </div>
 
-<h3>
-Hasil Akhir
-Diserahkan
-</h3>
+      </div>
 
-</div>
+    </div>
 
-</div>
-
-</div>
+  </div>
 
 </section>
 
