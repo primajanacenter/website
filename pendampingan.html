@@ -1,0 +1,3779 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Primajana</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+
+/* =========================
+GLOBAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    background:
+    radial-gradient(
+    circle at top left,
+    #0d53ff 0%,
+    #00145a 45%,
+    #000f47 100%
+    );
+
+    color:white;
+
+    overflow-x:hidden;
+
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.container{
+    width:92%;
+    max-width:1280px;
+    margin:auto;
+}
+
+/* =========================
+BACKGROUND LIGHT
+========================= */
+
+.bg-light{
+
+    position:fixed;
+
+    width:900px;
+    height:900px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(0,162,255,.14),
+    transparent 70%
+    );
+
+    top:-420px;
+    right:-250px;
+
+    z-index:-1;
+
+    pointer-events:none;
+
+}
+
+/* =========================
+NAVBAR
+========================= */
+
+nav{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:28px 0;
+
+}
+
+.logo-wrapper{
+
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+}
+
+.logo-box{
+
+    width:46px;
+    height:46px;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+    145deg,
+    #4ca2ff,
+    #003bdb
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+    0 0 25px rgba(0,132,255,.45);
+
+}
+
+.logo-box i{
+    width:26px;
+    height:26px;
+}
+
+.logo-text h1{
+
+    font-size:20px;
+    font-weight:800;
+    line-height:1;
+
+}
+
+.logo-text span{
+
+    font-size:12px;
+    opacity:.85;
+
+}
+
+/* =========================
+GREEN CTA BUTTON
+========================= */
+
+.contact-btn{
+
+    position:relative;
+
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    padding:14px 24px;
+
+    border-radius:16px;
+
+    text-decoration:none;
+
+    color:white;
+    font-weight:600;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+    145deg,
+    #00d26a,
+    #00a94f
+    );
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+
+    0 0 12px rgba(0,255,128,.35),
+
+    0 0 28px rgba(0,255,128,.18),
+
+    0 10px 25px rgba(0,0,0,.22);
+
+    transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+
+    animation:
+    greenPulse 2.5s ease-in-out infinite,
+    blinkGlow 3s linear infinite;
+
+}
+
+.contact-btn:hover{
+
+    transform:
+    translateY(-3px)
+    scale(1.03);
+
+    box-shadow:
+
+    0 0 20px rgba(0,255,140,.65),
+
+    0 0 45px rgba(0,255,140,.35),
+
+    0 18px 35px rgba(0,0,0,.28);
+
+}
+
+.contact-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-140%;
+
+    width:80%;
+    height:100%;
+
+    background:
+    linear-gradient(
+    115deg,
+    transparent,
+    rgba(255,255,255,.35),
+    transparent
+    );
+
+    transform:skewX(-20deg);
+
+    transition:1s ease;
+
+}
+
+.contact-btn:hover::before{
+    left:160%;
+}
+
+@keyframes greenPulse{
+
+    0%,100%{
+
+        box-shadow:
+
+        0 0 12px rgba(0,255,128,.35),
+
+        0 0 24px rgba(0,255,128,.12);
+
+    }
+
+    50%{
+
+        box-shadow:
+
+        0 0 22px rgba(0,255,128,.75),
+
+        0 0 55px rgba(0,255,128,.35);
+
+    }
+
+}
+
+@keyframes blinkGlow{
+
+    0%,100%{
+        filter:brightness(1);
+    }
+
+    50%{
+        filter:brightness(1.08);
+    }
+
+}
+
+/* =========================
+SERVICES GRID
+========================= */
+
+.services{
+
+    margin-top:20px;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    gap:22px;
+
+}
+
+/* =========================
+SERVICE CARD
+========================= */
+
+.service-card{
+
+    position:relative;
+
+    display:flex;
+    flex-direction:column;
+
+    padding:26px 24px 24px;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(8,66,255,.35),
+    rgba(0,25,112,.82)
+    );
+
+    border:
+    1px solid rgba(100,180,255,.18);
+
+    backdrop-filter:blur(14px);
+
+    min-height:480px;
+
+    isolation:isolate;
+
+    transition:
+    transform .45s ease,
+    box-shadow .45s ease,
+    border-color .45s ease;
+
+    animation:
+    cardReveal .8s ease forwards;
+
+}
+
+/* GLOW */
+
+.service-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-2px;
+
+    border-radius:inherit;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(0,140,255,.28),
+    transparent 70%
+    );
+
+    z-index:-1;
+
+    opacity:.6;
+
+    filter:blur(18px);
+
+    animation:
+    glowPulse 4s ease-in-out infinite;
+
+}
+
+.service-card:hover{
+
+    transform:
+    translateY(-12px)
+    scale(1.02);
+
+    border-color:
+    rgba(120,190,255,.55);
+
+    box-shadow:
+
+    0 0 22px rgba(0,140,255,.25),
+
+    0 25px 50px rgba(0,80,255,.25);
+
+}
+
+.service-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-140%;
+
+    width:80%;
+    height:100%;
+
+    background:
+    linear-gradient(
+    115deg,
+    transparent,
+    rgba(255,255,255,.14),
+    transparent
+    );
+
+    transform:skewX(-20deg);
+
+    transition:1s ease;
+
+}
+
+.service-card:hover::after{
+    left:160%;
+}
+
+/* =========================
+CARD NUMBER
+========================= */
+
+.number{
+
+    position:absolute;
+
+    top:18px;
+    left:18px;
+
+    width:38px;
+    height:38px;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    linear-gradient(
+    145deg,
+    rgba(37,99,235,.95),
+    rgba(29,78,216,.95)
+    );
+
+    font-size:15px;
+    font-weight:700;
+
+    box-shadow:
+    0 8px 18px rgba(0,0,0,.18);
+
+    z-index:5;
+
+}
+
+/* =========================
+FULL IMAGE ICON
+========================= */
+
+.service-icon{
+
+    position:relative;
+
+    width:100%;
+    height:220px;
+
+    margin:
+    40px 0 24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    background:
+    radial-gradient(
+    circle at top,
+    rgba(255,255,255,.10),
+    transparent 70%
+    );
+
+}
+
+.service-icon::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180%;
+    height:180%;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(255,255,255,.14),
+    transparent 65%
+    );
+
+    top:-40%;
+    left:-40%;
+
+}
+
+.service-icon img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    padding:10px;
+
+    z-index:2;
+
+    transition:
+    transform .45s ease,
+    filter .45s ease;
+
+    animation:
+    floatIcon 4s ease-in-out infinite;
+
+    filter:
+    drop-shadow(
+    0 18px 30px rgba(0,0,0,.22)
+    );
+
+}
+
+.service-card:hover .service-icon img{
+
+    transform:
+    scale(1.08)
+    translateY(-6px);
+
+}
+
+/* =========================
+TEXT
+========================= */
+
+.service-title{
+
+    position:relative;
+    z-index:3;
+
+    font-size:22px;
+    line-height:1.35;
+    font-weight:700;
+
+    margin-bottom:14px;
+
+}
+
+.service-desc{
+
+    position:relative;
+    z-index:3;
+
+    flex-grow:1;
+
+    font-size:14px;
+    line-height:1.8;
+
+    opacity:.88;
+
+}
+
+/* =========================
+LINK
+========================= */
+
+.service-link{
+
+    position:relative;
+    z-index:3;
+
+    margin-top:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    text-decoration:none;
+
+    color:#7ec8ff;
+
+    font-weight:500;
+
+}
+
+.arrow{
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    border:
+    1px solid rgba(255,255,255,.25);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:.35s ease;
+
+}
+
+.service-card:hover .arrow{
+
+    transform:translateX(4px);
+
+    background:
+    linear-gradient(
+    145deg,
+    #1b74ff,
+    #0050ff
+    );
+
+    box-shadow:
+    0 0 18px rgba(0,132,255,.35);
+
+}
+
+/* =========================
+TESTIMONI
+========================= */
+
+.testimoni-section{
+    margin-top:80px;
+}
+
+.testimoni-title{
+
+    text-align:center;
+
+    font-size:38px;
+    font-weight:800;
+
+    margin-bottom:30px;
+
+}
+
+.testimoni-grid{
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    gap:22px;
+
+}
+
+.testimoni-card{
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(8,66,255,.35),
+    rgba(0,25,112,.8)
+    );
+
+    border:
+    1px solid rgba(100,180,255,.18);
+
+    border-radius:24px;
+
+    padding:28px;
+
+}
+
+.quote{
+
+    color:#4bb6ff;
+
+    margin-bottom:18px;
+
+}
+
+.testimoni-card p{
+
+    line-height:1.8;
+
+    opacity:.95;
+
+    font-size:15px;
+
+}
+
+.stars{
+
+    margin-top:18px;
+
+    color:#ffd84d;
+
+}
+
+.client{
+
+    margin-top:14px;
+
+    opacity:.85;
+
+    font-size:14px;
+
+}
+
+/* =========================
+WHY SECTION
+========================= */
+
+.why-section{
+
+    margin-top:80px;
+
+    padding:40px;
+
+    border-radius:28px;
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(8,66,255,.28),
+    rgba(0,25,112,.65)
+    );
+
+    border:
+    1px solid rgba(100,180,255,.15);
+
+}
+
+.why-title{
+
+    text-align:center;
+
+    font-size:40px;
+    font-weight:800;
+
+    margin-bottom:36px;
+
+}
+
+.why-grid{
+
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+
+    gap:22px;
+
+}
+
+.why-card{
+    text-align:center;
+}
+
+.why-icon{
+
+    width:110px;
+    height:110px;
+
+    margin:auto auto 16px;
+
+    border-radius:26px;
+
+    background:
+    linear-gradient(
+    145deg,
+    #1663ff,
+    #002db5
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+    0 10px 25px rgba(0,110,255,.35);
+
+}
+
+.why-icon i{
+
+    width:42px;
+    height:42px;
+
+}
+
+.why-card h3{
+
+    font-size:20px;
+
+    margin-bottom:10px;
+
+}
+
+.why-card p{
+
+    font-size:13px;
+    line-height:1.7;
+
+    opacity:.85;
+
+}
+
+/* =========================
+DOCUMENTATION
+========================= */
+
+.docs{
+
+    margin:
+    80px 0 60px;
+
+}
+
+.docs-title{
+
+    text-align:center;
+
+    font-size:40px;
+    font-weight:800;
+
+    margin-bottom:30px;
+
+}
+
+.docs-grid{
+
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+
+    gap:18px;
+
+}
+
+.docs-grid img{
+
+    width:100%;
+    height:180px;
+
+    object-fit:cover;
+
+    border-radius:22px;
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+    transition:.35s ease;
+
+}
+
+.docs-grid img:hover{
+
+    transform:
+    translateY(-6px)
+    scale(1.02);
+
+}
+
+/* =========================
+FOOTER
+========================= */
+
+footer{
+
+    text-align:center;
+
+    padding:28px;
+
+    border-top:
+    1px solid rgba(255,255,255,.08);
+
+    background:
+    rgba(0,0,0,.15);
+
+    font-size:14px;
+
+    opacity:.8;
+
+}
+
+/* =========================
+ANIMATIONS
+========================= */
+
+@keyframes floatIcon{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+}
+
+@keyframes glowPulse{
+
+    0%,100%{
+        opacity:.45;
+        transform:scale(1);
+    }
+
+    50%{
+        opacity:.9;
+        transform:scale(1.015);
+    }
+
+}
+
+@keyframes cardReveal{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(40px)
+        scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+    }
+
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1200px){
+
+    .services{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .why-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .docs-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:768px){
+
+    .services,
+    .testimoni-grid{
+        grid-template-columns:1fr;
+    }
+
+    .why-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .docs-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .service-card{
+        min-height:auto;
+    }
+
+    .service-icon{
+        height:180px;
+    }
+
+    .service-title{
+        font-size:20px;
+    }
+
+    .testimoni-title,
+    .why-title,
+    .docs-title{
+        font-size:30px;
+    }
+
+}
+
+@media(max-width:480px){
+
+    nav{
+        flex-direction:row;
+        gap:12px;
+    }
+
+    .logo-wrapper{
+        gap:10px;
+    }
+
+    .logo-box{
+        width:40px;
+        height:40px;
+    }
+
+    .logo-text h1{
+        font-size:16px;
+    }
+
+    .logo-text span{
+        font-size:10px;
+    }
+
+    .contact-btn{
+        padding:10px 14px;
+        font-size:12px;
+        border-radius:12px;
+    }
+
+    .why-grid,
+    .docs-grid{
+        grid-template-columns:1fr;
+    }
+
+    .service-icon{
+        height:160px;
+    }
+
+    .service-title{
+        font-size:19px;
+    }
+
+}
+
+
+/* =========================================
+KONSULTAN SECTION
+========================================= */
+
+.konsultan-section{
+
+    margin-top:50px;
+
+    padding:28px;
+
+    border-radius:28px;
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(255,255,255,.96),
+    rgba(245,247,255,.98)
+    );
+
+    color:#0f172a;
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.22);
+
+}
+
+/* HEADER */
+
+.konsultan-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:30px;
+
+}
+
+.konsultan-header h2{
+
+    font-size:38px;
+    font-weight:800;
+
+    color:#0f2ea6;
+
+}
+
+.konsultan-header p{
+
+    margin-top:6px;
+
+    color:#475569;
+
+}
+
+/* FILTER */
+
+.konsultan-filter{
+
+    display:flex;
+    gap:14px;
+
+}
+
+.search-box{
+
+    position:relative;
+
+}
+
+.search-box input{
+
+    width:240px;
+
+    padding:
+    14px 18px 14px 46px;
+
+    border-radius:16px;
+
+    border:
+    1px solid #dbe4ff;
+
+    outline:none;
+
+    font-size:14px;
+
+}
+
+.search-box i{
+
+    position:absolute;
+
+    left:16px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:18px;
+    height:18px;
+
+    color:#2563eb;
+
+}
+
+.konsultan-filter select{
+
+    padding:14px 18px;
+
+    border-radius:16px;
+
+    border:
+    1px solid #dbe4ff;
+
+    outline:none;
+
+    background:white;
+
+    color:#334155;
+
+}
+
+/* GRID */
+
+.konsultan-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(6,1fr);
+
+    gap:18px;
+
+}
+
+/* CARD */
+
+.konsultan-card{
+
+    position:relative;
+
+    background:white;
+
+    border:
+    1px solid #e6ecff;
+
+    border-radius:20px;
+
+    padding:18px;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+
+}
+
+.konsultan-card:hover{
+
+    transform:
+    translateY(-8px);
+
+    box-shadow:
+    0 18px 40px rgba(37,99,235,.16);
+
+}
+
+/* NUMBER */
+
+.item-number{
+
+    position:absolute;
+
+    top:12px;
+    left:12px;
+
+    width:28px;
+    height:28px;
+
+    border-radius:8px;
+
+    background:
+    linear-gradient(
+    145deg,
+    #2563eb,
+    #1d4ed8
+    );
+
+    color:white;
+
+    font-size:13px;
+    font-weight:700;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+}
+
+/* IMAGE */
+
+.konsultan-card img{
+
+    width:120px;
+    height:120px;
+
+    object-fit:contain;
+
+    margin:
+    10px auto 14px;
+
+    transition:
+    transform .4s ease;
+
+}
+
+.konsultan-card:hover img{
+
+    transform:
+    scale(1.08)
+    translateY(-6px);
+
+}
+
+/* TITLE */
+
+.konsultan-card h3{
+
+    font-size:20px;
+    font-weight:700;
+
+    color:#0f172a;
+
+    line-height:1.35;
+
+    min-height:54px;
+
+}
+
+/* PRICE */
+
+.price{
+
+    margin-top:8px;
+
+    font-size:22px;
+    font-weight:800;
+
+    color:#2563eb;
+
+}
+
+/* BUTTON */
+
+.konsultan-card a{
+
+    margin-top:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+
+    padding:12px;
+
+    border-radius:14px;
+
+    text-decoration:none;
+
+    background:
+    linear-gradient(
+    145deg,
+    #2563eb,
+    #1d4ed8
+    );
+
+    color:white;
+
+    font-weight:600;
+
+    transition:.35s ease;
+
+}
+
+.konsultan-card a:hover{
+
+    transform:
+    scale(1.03);
+
+}
+
+/* CTA */
+
+.bottom-cta{
+
+    margin-top:40px;
+
+    padding:32px;
+
+    border-radius:24px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #003bdb,
+    #0d53ff
+    );
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:20px;
+
+    color:white;
+
+}
+
+.bottom-cta h3{
+
+    font-size:34px;
+    font-weight:800;
+
+}
+
+.bottom-cta p{
+
+    margin-top:8px;
+
+    opacity:.92;
+
+}
+
+.bottom-cta a{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:16px 24px;
+
+    border-radius:16px;
+
+    background:white;
+
+    color:#0f2ea6;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+    white-space:nowrap;
+
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1400px){
+
+    .konsultan-grid{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+}
+
+@media(max-width:992px){
+
+    .konsultan-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .konsultan-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .konsultan-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .bottom-cta{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .konsultan-grid{
+        grid-template-columns:1fr;
+    }
+
+    .search-box input{
+        width:100%;
+    }
+
+    .konsultan-filter{
+        width:100%;
+        flex-direction:column;
+    }
+
+    .konsultan-header h2{
+        font-size:28px;
+    }
+
+    .bottom-cta h3{
+        font-size:26px;
+    }
+
+}
+
+
+/* =========================================
+HERO KONSULTAN
+========================================= */
+
+.hero-konsultan{
+
+    position:relative;
+
+    padding:
+    70px 60px 50px;
+
+    border-radius:0 0 40px 40px;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+    135deg,
+    #0037d6 0%,
+    #001c84 45%,
+    #00145f 100%
+    );
+
+}
+
+/* LIGHT */
+
+.hero-blur{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(120px);
+
+    pointer-events:none;
+
+}
+
+.hero-blur-1{
+
+    width:400px;
+    height:400px;
+
+    background:
+    rgba(0,132,255,.25);
+
+    top:-120px;
+    right:-80px;
+
+}
+
+.hero-blur-2{
+
+    width:300px;
+    height:300px;
+
+    background:
+    rgba(0,255,255,.15);
+
+    bottom:-120px;
+    left:-80px;
+
+}
+
+/* GRID */
+
+.hero-grid{
+
+    display:grid;
+    grid-template-columns:
+    1.1fr 1fr;
+
+    align-items:center;
+
+    gap:30px;
+
+}
+
+/* CONTENT */
+
+.hero-content{
+    position:relative;
+    z-index:3;
+}
+
+.hero-badge{
+
+    display:inline-flex;
+
+    padding:
+    12px 18px;
+
+    border-radius:999px;
+
+    background:
+    rgba(255,255,255,.12);
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(10px);
+
+    color:white;
+
+    font-size:14px;
+    font-weight:700;
+
+    margin-bottom:24px;
+
+}
+
+.hero-content h1{
+
+    font-size:72px;
+    line-height:1.05;
+
+    font-weight:800;
+
+    color:white;
+
+    max-width:700px;
+
+}
+
+.hero-content p{
+
+    margin-top:26px;
+
+    max-width:650px;
+
+    font-size:24px;
+    line-height:1.7;
+
+    color:
+    rgba(255,255,255,.88);
+
+}
+
+/* BUTTON */
+
+.hero-btn{
+
+    margin-top:34px;
+
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+
+    padding:
+    18px 32px;
+
+    border-radius:18px;
+
+    background:
+    linear-gradient(
+    145deg,
+    #1d6dff,
+    #004cff
+    );
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:700;
+    font-size:18px;
+
+    box-shadow:
+    0 15px 40px rgba(0,110,255,.35);
+
+    transition:.35s ease;
+
+}
+
+.hero-btn:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.03);
+
+    box-shadow:
+    0 22px 50px rgba(0,110,255,.45);
+
+}
+
+/* IMAGE */
+
+.hero-image{
+
+    position:relative;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+    width:100%;
+
+}
+
+/* IMAGE */
+
+.hero-image img{
+
+    display:block;
+
+    width:100%;
+    max-width:760px;
+
+    height:auto;
+
+    object-fit:contain;
+
+    animation:
+    heroFloat 5s ease-in-out infinite;
+
+    filter:
+    drop-shadow(
+    0 30px 50px rgba(0,0,0,.28)
+    );
+
+    backface-visibility:hidden;
+
+    transform:translateZ(0);
+
+}
+
+/* =========================================
+PROCESS
+========================================= */
+
+.process-wrapper{
+
+    margin-top:60px;
+
+    padding:
+    40px 36px;
+
+    border-radius:32px;
+
+    background:
+    rgba(255,255,255,.96);
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.15);
+
+}
+
+.process-wrapper h2{
+
+    text-align:center;
+
+    font-size:46px;
+    font-weight:800;
+
+    color:#0037d6;
+
+    margin-bottom:40px;
+
+}
+
+/* GRID */
+
+.process-grid{
+
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+
+    gap:20px;
+
+}
+
+/* ITEM */
+
+.process-item{
+
+    flex:1;
+
+    text-align:center;
+
+    position:relative;
+
+}
+
+/* CIRCLE */
+
+.process-circle{
+
+    position:relative;
+
+    width:130px;
+    height:130px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:white;
+
+    border:
+    1px solid #e5e7eb;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
+
+}
+
+/* STEP NUMBER */
+
+.step-number{
+
+    position:absolute;
+
+    top:-8px;
+    left:-8px;
+
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+
+    background:
+    linear-gradient(
+    145deg,
+    #2563eb,
+    #0037d6
+    );
+
+    color:white;
+
+    font-size:18px;
+    font-weight:700;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+    0 8px 18px rgba(0,0,0,.18);
+
+}
+
+/* IMAGE */
+
+.process-circle img{
+
+    width:70px;
+    height:70px;
+
+    object-fit:contain;
+
+}
+
+/* TEXT */
+
+.process-item h3{
+
+    margin-top:20px;
+
+    font-size:24px;
+    line-height:1.5;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+}
+
+/* LINE */
+
+/* =========================================
+PROCESS GRID FIXED
+========================================= */
+
+.process-grid{
+
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+/* ITEM */
+
+.process-item{
+
+    position:relative;
+
+    flex:1;
+
+    min-width:140px;
+
+    text-align:center;
+
+}
+
+/* CONNECTOR LINE */
+
+.process-item:not(:last-child)::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:64px;
+    right:-12px;
+
+    width:24px;
+    height:3px;
+
+    background:#3b82f6;
+
+    opacity:.35;
+
+}
+
+/* MOBILE */
+
+@media(max-width:992px){
+
+    .process-item::after{
+        display:none;
+    }
+
+}
+
+/* =========================================
+ANIMATION
+========================================= */
+
+@keyframes heroFloat{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+
+}
+
+/* =========================================
+RESPONSIVE
+========================================= */
+
+@media(max-width:1400px){
+
+    .hero-content h1{
+        font-size:56px;
+    }
+
+    .process-item h3{
+        font-size:18px;
+    }
+
+}
+
+@media(max-width:992px){
+
+    .hero-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero-content{
+        text-align:center;
+    }
+
+    .hero-content h1,
+    .hero-content p{
+        max-width:100%;
+    }
+
+    .hero-image{
+        margin-top:30px;
+    }
+
+    .process-grid{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .process-line{
+        display:none;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .hero-konsultan{
+
+        padding:
+        50px 24px 40px;
+
+    }
+
+    .hero-content h1{
+
+        font-size:42px;
+
+    }
+
+    .hero-content p{
+
+        font-size:17px;
+
+    }
+
+    .hero-btn{
+
+        width:100%;
+
+        justify-content:center;
+
+    }
+
+    .process-wrapper{
+
+        padding:
+        30px 20px;
+
+    }
+
+    .process-wrapper h2{
+
+        font-size:32px;
+
+    }
+
+    .process-circle{
+
+        width:100px;
+        height:100px;
+
+    }
+
+    .process-circle img{
+
+        width:54px;
+        height:54px;
+
+    }
+
+    .process-item h3{
+
+        font-size:16px;
+
+    }
+
+}
+
+
+/* =========================================
+HERO PRIMAJANA
+========================================= */
+
+.hero-pendampingan{
+
+  position:relative;
+  overflow:hidden;
+
+  background:
+  linear-gradient(
+  135deg,
+  #0052d9 0%,
+  #0046c0 40%,
+  #0038a8 100%
+  );
+
+  padding:
+  80px 20px 70px;
+
+  border-radius:40px;
+
+  font-family:
+  'Poppins',
+  sans-serif;
+
+  color:#fff;
+
+}
+
+/* =========================================
+CONTAINER
+========================================= */
+
+.hero-container{
+
+  max-width:1300px;
+  margin:auto;
+  position:relative;
+  z-index:2;
+
+}
+
+/* =========================================
+BACKGROUND GLOW
+========================================= */
+
+.hero-glow{
+
+  position:absolute;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:.25;
+
+}
+
+.glow-1{
+
+  width:350px;
+  height:350px;
+
+  background:#4da3ff;
+
+  top:-100px;
+  left:-100px;
+
+}
+
+.glow-2{
+
+  width:300px;
+  height:300px;
+
+  background:#1f7dff;
+
+  bottom:-120px;
+  right:-100px;
+
+}
+
+/* =========================================
+GRID HERO
+========================================= */
+
+.hero-grid{
+
+  display:grid;
+  grid-template-columns:
+  1.1fr .9fr;
+
+  align-items:center;
+  gap:40px;
+
+}
+
+/* =========================================
+CONTENT
+========================================= */
+
+.hero-badge{
+
+  display:inline-flex;
+  align-items:center;
+
+  padding:
+  14px 26px;
+
+  border-radius:999px;
+
+  background:
+  rgba(255,255,255,.18);
+
+  backdrop-filter:blur(12px);
+
+  border:
+  1px solid rgba(255,255,255,.18);
+
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:.5px;
+
+  margin-bottom:28px;
+
+  box-shadow:
+  0 8px 25px rgba(0,0,0,.18);
+
+}
+
+.hero-content h1{
+
+  font-size:64px;
+  line-height:1.08;
+  font-weight:800;
+
+  margin-bottom:28px;
+
+  letter-spacing:-1.5px;
+
+}
+
+.hero-content p{
+
+  font-size:24px;
+  line-height:1.8;
+
+  max-width:760px;
+
+  color:
+  rgba(255,255,255,.9);
+
+}
+
+/* =========================================
+IMAGE
+========================================= */
+
+.hero-image{
+
+  position:relative;
+  display:flex;
+  justify-content:center;
+
+}
+
+.hero-image img{
+
+  width:100%;
+  max-width:620px;
+
+  animation:
+  heroFloat 5s ease-in-out infinite;
+
+  filter:
+  drop-shadow(
+  0 35px 50px rgba(0,0,0,.28)
+  );
+
+}
+
+/* =========================================
+PROCESS
+========================================= */
+
+.process-wrapper{
+
+  margin-top:70px;
+
+  padding:
+  45px 35px;
+
+  border-radius:34px;
+
+  background:
+  rgba(255,255,255,.05);
+
+  backdrop-filter:blur(15px);
+
+  border:
+  1px solid rgba(255,255,255,.08);
+
+  box-shadow:
+  0 10px 40px rgba(0,0,0,.15);
+
+}
+
+/* =========================================
+PROCESS TITLE
+========================================= */
+
+.process-title{
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:24px;
+
+  margin-bottom:45px;
+
+}
+
+.process-title span{
+
+  width:70px;
+  height:2px;
+
+  background:
+  rgba(255,255,255,.55);
+
+}
+
+.process-title h2{
+
+  font-size:42px;
+  font-weight:800;
+
+}
+
+/* =========================================
+PROCESS GRID
+========================================= */
+
+.process-grid{
+
+  display:grid;
+  grid-template-columns:
+  repeat(5,1fr);
+
+  gap:26px;
+
+}
+
+/* =========================================
+PROCESS CARD
+========================================= */
+
+.process-card{
+
+  position:relative;
+
+  padding:
+  70px 22px 28px;
+
+  border-radius:28px;
+
+  text-align:center;
+
+  background:
+  rgba(255,255,255,.03);
+
+  border:
+  1px solid rgba(255,255,255,.10);
+
+  transition:.35s;
+
+}
+
+.process-card:hover{
+
+  transform:
+  translateY(-8px);
+
+  background:
+  rgba(255,255,255,.07);
+
+}
+
+.process-card img{
+
+  width:105px;
+  height:105px;
+
+  object-fit:contain;
+
+  margin-bottom:24px;
+
+  filter:
+  drop-shadow(
+  0 10px 20px rgba(0,0,0,.18)
+  );
+
+}
+
+.process-card h3{
+
+  font-size:24px;
+  line-height:1.5;
+  font-weight:700;
+
+  color:#fff;
+
+}
+
+/* =========================================
+STEP BADGE
+========================================= */
+
+.step-badge{
+
+  position:absolute;
+
+  top:-22px;
+  left:50%;
+
+  transform:
+  translateX(-50%);
+
+  width:62px;
+  height:62px;
+
+  border-radius:50%;
+
+  background:
+  linear-gradient(
+  180deg,
+  #66a8ff,
+  #2d7dff
+  );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:30px;
+  font-weight:800;
+
+  box-shadow:
+  0 10px 20px rgba(0,0,0,.22);
+
+}
+
+/* =========================================
+FLOAT ANIMATION
+========================================= */
+
+@keyframes heroFloat{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-14px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+
+}
+
+/* =========================================
+RESPONSIVE
+========================================= */
+
+@media(max-width:1200px){
+
+  .process-grid{
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+  }
+
+}
+
+@media(max-width:992px){
+
+  .hero-grid{
+
+    grid-template-columns:1fr;
+    text-align:center;
+
+  }
+
+  .hero-content h1{
+
+    font-size:52px;
+
+  }
+
+  .hero-content p{
+
+    margin:auto;
+
+  }
+
+  .hero-image{
+
+    margin-top:20px;
+
+  }
+
+}
+
+@media(max-width:768px){
+
+  .hero-pendampingan{
+
+    padding:
+    70px 18px 50px;
+
+    border-radius:24px;
+
+  }
+
+  .hero-content h1{
+
+    font-size:40px;
+
+  }
+
+  .hero-content p{
+
+    font-size:18px;
+
+  }
+
+  .process-title h2{
+
+    font-size:28px;
+
+  }
+
+  .process-grid{
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+  }
+
+  .process-card h3{
+
+    font-size:18px;
+
+  }
+
+}
+
+@media(max-width:560px){
+
+  .process-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+}
+
+.process-title h2{
+
+  font-size:42px;
+  font-weight:800;
+
+  color:#fff;
+
+  text-shadow:
+  0 2px 10px rgba(255,255,255,.15);
+
+}
+
+
+/* =========================================
+SECTION
+========================================= */
+
+.layanan-pendampingan{
+
+  position:relative;
+
+  background:
+  linear-gradient(
+  135deg,
+  #0052d9,
+  #0042b8
+  );
+
+  padding:
+  50px 20px 70px;
+
+  border-radius:40px;
+
+  overflow:hidden;
+
+  font-family:
+  'Poppins',
+  sans-serif;
+
+}
+
+/* =========================================
+CONTAINER
+========================================= */
+
+.layanan-container{
+
+  max-width:1400px;
+  margin:auto;
+
+}
+
+/* =========================================
+TITLE
+========================================= */
+
+.layanan-title{
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:22px;
+
+  margin-bottom:35px;
+
+}
+
+.layanan-title span{
+
+  width:80px;
+  height:2px;
+
+  background:
+  rgba(255,255,255,.5);
+
+}
+
+.layanan-title h2{
+
+  color:#fff;
+
+  font-size:40px;
+  font-weight:800;
+
+}
+
+/* =========================================
+GRID
+========================================= */
+
+.layanan-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(5,1fr);
+
+  gap:18px;
+
+}
+
+/* =========================================
+CARD
+========================================= */
+
+.layanan-card{
+
+  display:flex;
+  align-items:center;
+  gap:18px;
+
+  padding:
+  22px 20px;
+
+  border-radius:24px;
+
+  background:
+  rgba(255,255,255,.04);
+
+  border:
+  1px solid rgba(255,255,255,.10);
+
+  transition:.3s;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.layanan-card:hover{
+
+  transform:
+  translateY(-5px);
+
+  background:
+  rgba(255,255,255,.07);
+
+}
+
+.layanan-card img{
+
+  width:72px;
+  height:72px;
+
+  object-fit:contain;
+
+  filter:
+  drop-shadow(
+  0 10px 20px rgba(0,0,0,.2)
+  );
+
+}
+
+/* =========================================
+CONTENT
+========================================= */
+
+.layanan-content{
+
+  flex:1;
+
+}
+
+.layanan-content h3{
+
+  color:#fff;
+
+  font-size:18px;
+  line-height:1.45;
+  font-weight:700;
+
+  margin-bottom:10px;
+
+}
+
+.price{
+
+  color:#ffd84d;
+
+  font-size:28px;
+  font-weight:800;
+
+  margin-bottom:14px;
+
+}
+
+.layanan-content a{
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+  linear-gradient(
+  180deg,
+  #ffd84d,
+  #f5c41f
+  );
+
+  color:#222;
+
+  text-decoration:none;
+
+  font-size:15px;
+  font-weight:700;
+
+  padding:
+  10px 24px;
+
+  border-radius:14px;
+
+  box-shadow:
+  0 8px 18px rgba(0,0,0,.2);
+
+}
+
+/* =========================================
+INFO BAR
+========================================= */
+
+.info-bar{
+
+  margin-top:28px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+
+  padding:
+  20px 30px;
+
+  border-radius:20px;
+
+  background:
+  rgba(255,255,255,.05);
+
+  border:
+  1px solid rgba(255,255,255,.08);
+
+  color:#fff;
+
+  font-size:24px;
+  font-weight:600;
+
+}
+
+.info-bar i{
+
+  width:28px;
+  height:28px;
+
+}
+
+/* =========================================
+CTA
+========================================= */
+
+.cta-admin{
+
+  margin-top:30px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:30px;
+
+  padding:
+  35px 40px;
+
+  border-radius:32px;
+
+  background:
+  linear-gradient(
+  135deg,
+  #005eff,
+  #0050db
+  );
+
+  border:
+  1px solid rgba(255,255,255,.1);
+
+}
+
+.cta-left{
+
+  display:flex;
+  align-items:center;
+  gap:25px;
+
+}
+
+.cta-left img{
+
+  width:120px;
+
+}
+
+.cta-left h3{
+
+  color:#fff;
+
+  font-size:44px;
+  line-height:1.2;
+  font-weight:800;
+
+  margin-bottom:12px;
+
+}
+
+.cta-left p{
+
+  color:
+  rgba(255,255,255,.9);
+
+  font-size:24px;
+  line-height:1.7;
+
+}
+
+.cta-btn{
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  background:#fff;
+
+  color:#0d47c7;
+
+  text-decoration:none;
+
+  padding:
+  24px 38px;
+
+  border-radius:24px;
+
+  font-size:28px;
+  font-weight:800;
+
+  white-space:nowrap;
+
+}
+
+/* =========================================
+RESPONSIVE
+========================================= */
+
+@media(max-width:1200px){
+
+  .layanan-grid{
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+  }
+
+}
+
+@media(max-width:768px){
+
+  .layanan-grid{
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+  }
+
+  .cta-admin{
+
+    flex-direction:column;
+
+  }
+
+  .cta-left{
+
+    flex-direction:column;
+    text-align:center;
+
+  }
+
+  .layanan-title h2{
+
+    font-size:28px;
+
+  }
+
+}
+
+@media(max-width:560px){
+
+  .layanan-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+  .layanan-card{
+
+    flex-direction:column;
+    text-align:center;
+
+  }
+
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-light"></div>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<nav>
+
+<div class="logo-wrapper">
+
+<div class="logo-box">
+<i data-lucide="box"></i>
+</div>
+
+<div class="logo-text">
+<h1>PRIMAJANA</h1>
+<span>Solusi Cerdas, Hasil Nyata</span>
+</div>
+
+</div>
+
+<a href="https://wa.me/+6285935201571" class="contact-btn">
+<i data-lucide="send"></i>
+Hubungi Kami
+</a>
+
+</nav>
+
+<!-- =========================================
+HERO HEADER PRIMAJANA PENDAMPINGAN
+STYLE MIRIP DESIGN REFERENSI
+========================================= -->
+
+<section class="hero-pendampingan">
+
+  <!-- BACKGROUND DECORATION -->
+  <div class="hero-glow glow-1"></div>
+  <div class="hero-glow glow-2"></div>
+
+  <div class="hero-container">
+
+    <!-- =========================
+    HERO TOP
+    ========================== -->
+    <div class="hero-grid">
+
+      <!-- LEFT CONTENT -->
+      <div class="hero-content">
+
+        <div class="hero-badge">
+          PRIMAJANA PENDAMPINGAN
+        </div>
+
+        <h1>
+          Wujudkan Project Terbaikmu
+          Bersama Mentor Profesional
+        </h1>
+
+        <p>
+          Primajana Pendampingan siap membantu Anda dari awal
+          hingga hasil akhir dengan bimbingan mentor berpengalaman.
+        </p>
+
+      </div>
+
+      <!-- RIGHT IMAGE -->
+      <div class="hero-image">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778044735/ChatGPT_Image_May_6_2026_01_18_11_PM_1_hipfd7.png"
+          alt="Hero Primajana"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+    PROCESS SECTION
+    ========================== -->
+
+    <div class="process-wrapper">
+
+      <div class="process-title">
+        <span></span>
+        <h2>Bagaimana Prosesnya ?</h2>
+        <span></span>
+      </div>
+
+      <div class="process-grid">
+
+        <!-- STEP 1 -->
+        <div class="process-card">
+
+          <div class="step-badge">1</div>
+
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png"
+            alt="Info layanan"
+          >
+
+          <h3>
+            Infokan layanan
+            yang ingin diikuti
+          </h3>
+
+        </div>
+
+
+        <!-- STEP 2 -->
+        <div class="process-card">
+
+          <div class="step-badge">2</div>
+
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/893/893257.png"
+            alt="Diskusi mentor"
+          >
+
+          <h3>
+            Diskusi chat
+            dengan mentor
+          </h3>
+
+        </div>
+
+
+        <!-- STEP 3 -->
+        <div class="process-card">
+
+          <div class="step-badge">3</div>
+
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png"
+            alt="Pengerjaan"
+          >
+
+          <h3>
+            Pengerjaan
+            didampingi mentor
+            sampai selesai
+          </h3>
+
+        </div>
+
+
+        <!-- STEP 4 -->
+        <div class="process-card">
+
+          <div class="step-badge">4</div>
+
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/942/942748.png"
+            alt="Finalisasi"
+          >
+
+          <h3>
+            Finalisasi
+            project
+          </h3>
+
+        </div>
+
+
+        <!-- STEP 5 -->
+        <div class="process-card">
+
+          <div class="step-badge">5</div>
+
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+            alt="Selesai"
+          >
+
+          <h3>
+            Hasil akhir
+            selesai
+          </h3>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================
+LAYANAN PRIMAJANA PENDAMPINGAN
+STYLE MIRIP REFERENSI
+========================================= -->
+
+<section class="layanan-pendampingan">
+
+  <div class="layanan-container">
+
+    <!-- TITLE -->
+    <div class="layanan-title">
+
+      <span></span>
+
+      <h2>
+        Layanan Primajana Pendampingan
+      </h2>
+
+      <span></span>
+
+    </div>
+
+    <!-- =====================================
+    GRID
+    ====================================== -->
+
+    <div class="layanan-grid">
+
+      <!-- ITEM -->
+      <div class="layanan-card">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+          alt="Esai"
+        >
+
+        <div class="layanan-content">
+
+          <h3>Esai untuk Lomba</h3>
+
+          <div class="price">
+            Rp 85.000
+          </div>
+
+          <a href="https://wa.me/+6285935201571">
+            Order
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="layanan-card">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png"
+          alt="KTI"
+        >
+
+        <div class="layanan-content">
+
+          <h3>
+            Karya Tulis
+            Ilmiah (KTI)
+          </h3>
+
+          <div class="price">
+            Rp 150.000
+          </div>
+
+          <a href="https://wa.me/+6285935201571">
+            Order
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="layanan-card">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png"
+          alt="Infografis"
+        >
+
+        <div class="layanan-content">
+
+          <h3>Infografis</h3>
+
+          <div class="price">
+            Rp 125.000
+          </div>
+
+          <a href="https://wa.me/+6285935201571">
+            Order
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="layanan-card">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
+          alt="Poster"
+        >
+
+        <div class="layanan-content">
+
+          <h3>Poster</h3>
+
+          <div class="price">
+            Rp 125.000
+          </div>
+
+          <a href="https://wa.me/+6285935201571">
+            Order
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="layanan-card">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+          alt="Business Plan"
+        >
+
+        <div class="layanan-content">
+
+          <h3>Business Plan</h3>
+
+          <div class="price">
+            Rp 150.000
+          </div>
+
+          <a href="https://wa.me/+6285935201571">
+            Order
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="layanan-card">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/942/942799.png"
+          alt="Proposal"
+        >
+
+        <div class="layanan-content">
+
+          <h3>Proposal Pendanaan</h3>
+
+          <div class="price">
+            Rp 250.000
+          </div>
+
+          <a href="https://wa.me/+6285935201571">
+            Order
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="layanan-card">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
+          alt="PKM"
+        >
+
+        <div class="layanan-content">
+
+          <h3>
+            Program Kreativitas
+            Mahasiswa (PKM)
+          </h3>
+
+          <div class="price">
+            Rp 150.000
+          </div>
+
+          <a href="https://wa.me/+6285935201571">
+            Order
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="layanan-card">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/2583/2583344.png"
+          alt="OPSI"
+        >
+
+        <div class="layanan-content">
+
+          <h3>
+            Olimpiade Penelitian
+            Siswa Indonesia
+          </h3>
+
+          <div class="price">
+            Rp 150.000
+          </div>
+
+          <a href="https://wa.me/+6285935201571">
+            Order
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="layanan-card">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/427/427735.png"
+          alt="Festival"
+        >
+
+        <div class="layanan-content">
+
+          <h3>
+            Festival Inovasi &
+            Kewirausahaan
+          </h3>
+
+          <div class="price">
+            Rp 150.000
+          </div>
+
+          <a href="https://wa.me/+6285935201571">
+            Order
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="layanan-card">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+          alt="Esai"
+        >
+
+        <div class="layanan-content">
+
+          <h3>Esai Beasiswa</h3>
+
+          <div class="price">
+            Rp 100.000
+          </div>
+
+          <a href="https://wa.me/+6285935201571">
+            Order
+          </a>
+
+        </div>
+
+      </div>
+
+<!-- CV BEASISWA -->
+<div class="layanan-card">
+
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+    alt="CV Beasiswa"
+  >
+
+  <div class="layanan-content">
+
+    <h3>CV Beasiswa</h3>
+
+    <div class="price">
+      Rp 35.000
+    </div>
+
+    <a href="https://wa.me/+6285935201571">
+      Order
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- STUDY PLAN -->
+<div class="layanan-card">
+
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/744/744465.png"
+    alt="Study Plan"
+  >
+
+  <div class="layanan-content">
+
+    <h3>Study Plan</h3>
+
+    <div class="price">
+      Rp 85.000
+    </div>
+
+    <a href="https://wa.me/+6285935201571">
+      Order
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- PERSONAL STATEMENT -->
+<div class="layanan-card">
+
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/456/456212.png"
+    alt="Personal Statement"
+  >
+
+  <div class="layanan-content">
+
+    <h3>Personal Statement</h3>
+
+    <div class="price">
+      Rp 100.000
+    </div>
+
+    <a href="https://wa.me/+6285935201571">
+      Order
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- PROPOSAL RENCANA KONTRIBUSI -->
+<div class="layanan-card">
+
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+    alt="Proposal Kontribusi"
+  >
+
+  <div class="layanan-content">
+
+    <h3>
+      Proposal Rencana
+      Kontribusi
+    </h3>
+
+    <div class="price">
+      Rp 125.000
+    </div>
+
+    <a href="https://wa.me/+6285935201571">
+      Order
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- DESIGN PORTOFOLIO -->
+<div class="layanan-card">
+
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/1829/1829586.png"
+    alt="Portofolio"
+  >
+
+  <div class="layanan-content">
+
+    <h3>Design Portofolio</h3>
+
+    <div class="price">
+      Rp 150.000
+    </div>
+
+    <a href="https://wa.me/+6285935201571">
+      Order
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- SURAT REKOMENDASI -->
+<div class="layanan-card">
+
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/561/561127.png"
+    alt="Surat Rekomendasi"
+  >
+
+  <div class="layanan-content">
+
+    <h3>Surat Rekomendasi</h3>
+
+    <div class="price">
+      Rp 25.000
+    </div>
+
+    <a href="https://wa.me/+6285935201571">
+      Order
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- LAPORAN PENELITIAN -->
+<div class="layanan-card">
+
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/3079/3079165.png"
+    alt="Laporan Penelitian"
+  >
+
+  <div class="layanan-content">
+
+    <h3>Laporan Penelitian</h3>
+
+    <div class="price">
+      Rp 850.000
+    </div>
+
+    <a href="https://wa.me/+6285935201571">
+      Order
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- KUESIONER PENELITIAN -->
+<div class="layanan-card">
+
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/942/942748.png"
+    alt="Kuesioner Penelitian"
+  >
+
+  <div class="layanan-content">
+
+    <h3>Kuesioner Penelitian</h3>
+
+    <div class="price">
+      Rp 50.000
+    </div>
+
+    <a href="https://wa.me/+6285935201571">
+      Order
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- PEDOMAN WAWANCARA -->
+<div class="layanan-card">
+
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/893/893257.png"
+    alt="Pedoman Wawancara"
+  >
+
+  <div class="layanan-content">
+
+    <h3>
+      Pedoman Wawancara
+      Penelitian
+    </h3>
+
+    <div class="price">
+      Rp 55.000
+    </div>
+
+    <a href="https://wa.me/+6285935201571">
+      Order
+    </a>
+
+  </div>
+
+</div>
+
+    </div>
+
+    <!-- =====================================
+    INFO BAR
+    ====================================== -->
+
+    <!-- =====================================
+    CTA
+    ====================================== -->
+
+    <div class="cta-admin">
+
+      <div class="cta-left">
+
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/3059/3059518.png"
+          alt="Support"
+        >
+
+        <div>
+
+          <h3>
+            Langsung Hubungi Admin
+            Jika Ada Layanan yang Tidak Ada
+          </h3>
+
+          <p>
+            Tim kami siap membantu Anda menemukan solusi terbaik
+            sesuai kebutuhan Anda.
+          </p>
+
+        </div>
+
+      </div>
+
+      <a
+        href="https://wa.me/+6285935201571"
+        class="cta-btn"
+      >
+
+        <i data-lucide="message-circle"></i>
+
+        Hubungi Admin
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================
+SEARCH + FILTER SCRIPT
+========================================= -->
+
+<script>
+
+/* =========================
+SEARCH + FILTER
+========================= */
+
+const searchInput =
+document.getElementById(
+"serviceSearch"
+);
+
+const categoryFilter =
+document.getElementById(
+"categoryFilter"
+);
+
+const cards =
+document.querySelectorAll(
+".konsultan-card"
+);
+
+/* FILTER */
+
+function filterServices(){
+
+    const searchValue =
+    searchInput.value
+    .toLowerCase()
+    .trim();
+
+    const categoryValue =
+    categoryFilter.value;
+
+    cards.forEach(card => {
+
+        const title =
+        card.querySelector("h3")
+        .innerText
+        .toLowerCase();
+
+        const category =
+        card.dataset.category;
+
+        const matchSearch =
+        title.includes(searchValue);
+
+        const matchCategory =
+
+        categoryValue === "all" ||
+
+        category === categoryValue;
+
+        if(
+            matchSearch &&
+            matchCategory
+        ){
+
+            card.style.display =
+            "block";
+
+            setTimeout(() => {
+
+                card.style.opacity =
+                "1";
+
+                card.style.transform =
+                "translateY(0px)";
+
+            },50);
+
+        }else{
+
+            card.style.opacity =
+            "0";
+
+            card.style.transform =
+            "translateY(10px)";
+
+            setTimeout(() => {
+
+                card.style.display =
+                "none";
+
+            },200);
+
+        }
+
+    });
+
+}
+
+/* EVENTS */
+
+searchInput.addEventListener(
+"keyup",
+filterServices
+);
+
+categoryFilter.addEventListener(
+"change",
+filterServices
+);
+
+</script>
+
+
+</div>
+
+<footer>
+© 2026 PT Primajana Bagia Mesari. All rights reserved.
+</footer>
+
+<script>
+lucide.createIcons();
+</script>
+
+</body>
+</html>
