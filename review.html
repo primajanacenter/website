@@ -1,0 +1,2646 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Primajana</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+
+/* =========================================
+GLOBAL
+========================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    min-height:100vh;
+
+    background:
+    radial-gradient(
+    circle at top left,
+    #0d53ff 0%,
+    #00145a 45%,
+    #000f47 100%
+    );
+
+    color:#ffffff;
+
+    overflow-x:hidden;
+
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+
+}
+
+/* =========================================
+GLOBAL IMAGE
+========================================= */
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+    image-rendering:auto;
+
+    backface-visibility:hidden;
+
+    transform:translateZ(0);
+
+}
+
+.hero-image img,
+.process-card img,
+.layanan-card img{
+    will-change:transform;
+}
+
+/* =========================================
+CONTAINER
+========================================= */
+
+.container{
+
+    width:92%;
+    max-width:1320px;
+
+    margin:auto;
+
+}
+
+/* =========================================
+BACKGROUND GLOW
+========================================= */
+
+.bg-light{
+
+    position:fixed;
+
+    width:900px;
+    height:900px;
+
+    top:-420px;
+    right:-250px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(0,162,255,.14),
+    transparent 70%
+    );
+
+    z-index:-1;
+
+    pointer-events:none;
+
+    filter:blur(10px);
+
+}
+
+/* =========================================
+NAVBAR
+========================================= */
+
+nav{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:28px 0;
+
+}
+
+/* =========================================
+LOGO
+========================================= */
+
+.logo-wrapper{
+
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+}
+
+.logo-box{
+
+    width:48px;
+    height:48px;
+
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    linear-gradient(
+    145deg,
+    #4ca2ff,
+    #003bdb
+    );
+
+    box-shadow:
+    0 0 25px rgba(0,132,255,.35);
+
+}
+
+.logo-box i{
+
+    width:24px;
+    height:24px;
+
+}
+
+.logo-text h1{
+
+    font-size:20px;
+    font-weight:800;
+    line-height:1;
+
+}
+
+.logo-text span{
+
+    font-size:12px;
+    opacity:.8;
+
+}
+
+/* =========================================
+BUTTON
+========================================= */
+
+.contact-btn{
+
+    position:relative;
+
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    padding:14px 24px;
+
+    border-radius:16px;
+
+    background:
+    linear-gradient(
+    145deg,
+    #00d26a,
+    #00a94f
+    );
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    overflow:hidden;
+
+    transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.22),
+    0 0 24px rgba(0,255,128,.18);
+
+}
+
+.contact-btn:hover{
+
+    transform:
+    translateY(-3px);
+
+}
+
+/* =========================================
+HERO
+========================================= */
+
+.hero-pendampingan{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:
+    80px 24px 70px;
+
+    border-radius:40px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #0052d9 0%,
+    #0046c0 40%,
+    #0038a8 100%
+    );
+
+}
+
+/* =========================================
+GLOW
+========================================= */
+
+.hero-glow{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(90px);
+
+    opacity:.22;
+
+}
+
+.glow-1{
+
+    width:350px;
+    height:350px;
+
+    background:#4da3ff;
+
+    top:-100px;
+    left:-100px;
+
+}
+
+.glow-2{
+
+    width:300px;
+    height:300px;
+
+    background:#1f7dff;
+
+    bottom:-120px;
+    right:-100px;
+
+}
+
+/* =========================================
+HERO CONTAINER
+========================================= */
+
+.hero-container{
+
+    position:relative;
+    z-index:2;
+
+    max-width:1300px;
+
+    margin:auto;
+
+}
+
+/* =========================================
+GRID
+========================================= */
+
+.hero-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    1.1fr .9fr;
+
+    align-items:center;
+
+    gap:40px;
+
+}
+
+/* =========================================
+CONTENT
+========================================= */
+
+.hero-content{
+
+    position:relative;
+    z-index:3;
+
+}
+
+.hero-badge{
+
+    display:inline-flex;
+    align-items:center;
+
+    padding:
+    14px 26px;
+
+    border-radius:999px;
+
+    background:
+    rgba(255,255,255,.14);
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(12px);
+
+    font-size:15px;
+    font-weight:700;
+
+    margin-bottom:28px;
+
+}
+
+.hero-content h1{
+
+    font-size:64px;
+    line-height:1.08;
+    font-weight:800;
+
+    margin-bottom:24px;
+
+    letter-spacing:-1.5px;
+
+}
+
+.hero-content p{
+
+    max-width:760px;
+
+    font-size:24px;
+    line-height:1.8;
+
+    color:
+    rgba(255,255,255,.9);
+
+}
+
+/* =========================================
+HERO IMAGE
+========================================= */
+
+.hero-image{
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    isolation:isolate;
+
+}
+
+.hero-image::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:75%;
+    height:75%;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(255,255,255,.18),
+    rgba(0,132,255,.18),
+    transparent 70%
+    );
+
+    filter:blur(40px);
+
+    animation:
+    pulseGlow 5s ease-in-out infinite;
+
+}
+
+.hero-image img{
+
+    position:relative;
+    z-index:2;
+
+    width:100%;
+    max-width:760px;
+
+    object-fit:contain;
+
+    animation:
+    floatingHero 5s ease-in-out infinite;
+
+    filter:
+    drop-shadow(
+    0 35px 60px rgba(0,0,0,.35)
+    );
+
+}
+
+/* =========================================
+FLOATING ELEMENT HERO
+========================================= */
+
+.floating-card{
+
+    position:absolute;
+
+    z-index:5;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    rgba(255,255,255,.12);
+
+    backdrop-filter:blur(14px);
+
+    border:
+    1px solid rgba(255,255,255,.18);
+
+    box-shadow:
+    0 12px 30px rgba(0,0,0,.18);
+
+}
+
+.floating-chat{
+
+    top:30px;
+    left:40px;
+
+    width:90px;
+    height:90px;
+
+    border-radius:26px;
+
+    font-size:38px;
+
+    color:#fff;
+
+}
+
+.floating-check{
+
+    top:70px;
+    right:-10px;
+
+    width:120px;
+
+    padding:18px;
+
+    border-radius:28px;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    font-size:26px;
+
+    color:#4da3ff;
+
+}
+
+.floating-rating{
+
+    bottom:15px;
+    right:30px;
+
+    padding:
+    18px 26px;
+
+    border-radius:24px;
+
+}
+
+.floating-rating .stars{
+
+    font-size:28px;
+
+    color:#ffd84d;
+
+    letter-spacing:2px;
+
+}
+
+/* =========================================
+PROCESS SECTION
+========================================= */
+
+.process-wrapper{
+
+    margin-top:70px;
+
+    padding:
+    45px 35px;
+
+    border-radius:34px;
+
+    background:
+    rgba(255,255,255,.05);
+
+    backdrop-filter:blur(15px);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+}
+
+.process-title{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:24px;
+
+    margin-bottom:55px;
+
+}
+
+.process-title span{
+
+    width:70px;
+    height:2px;
+
+    background:
+    rgba(255,255,255,.55);
+
+}
+
+.process-title h2{
+
+    font-size:42px;
+    font-weight:800;
+
+}
+
+/* =========================================
+PROCESS GRID
+========================================= */
+
+.process-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(5,1fr);
+
+    gap:26px;
+
+}
+
+/* =========================================
+PROCESS CARD
+========================================= */
+
+.process-card{
+
+    position:relative;
+
+    padding:
+    90px 22px 32px;
+
+    border-radius:28px;
+
+    text-align:center;
+
+    background:
+    rgba(255,255,255,.03);
+
+    border:
+    1px solid rgba(255,255,255,.10);
+
+    transition:
+    .4s ease;
+
+}
+
+.process-card:hover{
+
+    transform:
+    translateY(-8px);
+
+}
+
+.process-card img{
+
+    width:130px;
+    height:130px;
+
+    margin:
+    0 auto 26px;
+
+    object-fit:contain;
+
+    animation:
+    floatingCard 4s ease-in-out infinite;
+
+}
+
+.process-card h3{
+
+    font-size:22px;
+    line-height:1.5;
+    font-weight:700;
+
+}
+
+.step-badge{
+
+    position:absolute;
+
+    top:-30px;
+    left:50%;
+
+    transform:
+    translateX(-50%);
+
+    width:68px;
+    height:68px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    linear-gradient(
+    180deg,
+    #66a8ff,
+    #2d7dff
+    );
+
+    font-size:30px;
+    font-weight:800;
+
+}
+
+/* =========================================
+LAYANAN REVIEW
+========================================= */
+
+.layanan-review{
+
+    margin-top:40px;
+
+    padding:
+    60px 24px 80px;
+
+    border-radius:40px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #0052d9,
+    #0042b8
+    );
+
+}
+
+.layanan-container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+}
+
+.layanan-title{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+
+    margin-bottom:42px;
+
+}
+
+.layanan-title .dot{
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:
+    rgba(255,255,255,.55);
+
+}
+
+.layanan-title h2{
+
+    font-size:42px;
+    font-weight:800;
+
+}
+
+/* =========================================
+GRID
+========================================= */
+
+.layanan-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(5,1fr);
+
+    gap:18px;
+
+}
+
+.layanan-card-center{
+
+    grid-column:
+    3 / span 1;
+
+}
+
+/* =========================================
+CARD
+========================================= */
+
+.layanan-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+
+    min-height:320px;
+
+    padding:
+    24px 18px 20px;
+
+    border-radius:24px;
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(255,255,255,.96),
+    rgba(245,248,255,.94)
+    );
+
+    border:
+    2px solid rgba(255,255,255,.18);
+
+    text-align:center;
+
+    transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.18);
+
+}
+
+.layanan-card:hover{
+
+    transform:
+    translateY(-8px);
+
+}
+
+.layanan-card img{
+
+    width:120px;
+    height:120px;
+
+    object-fit:contain;
+
+    margin-bottom:16px;
+
+}
+
+.layanan-card h3{
+
+    font-size:18px;
+    line-height:1.35;
+    font-weight:700;
+
+    color:#14235f;
+
+    margin-bottom:14px;
+
+}
+
+.layanan-card .price{
+
+    font-size:18px;
+
+    font-weight:800;
+
+    color:#0c4dff;
+
+    margin-bottom:18px;
+
+}
+
+.layanan-card a{
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    width:100%;
+
+    padding:
+    12px 18px;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+    180deg,
+    #2d7dff,
+    #0f56ea
+    );
+
+    color:#fff;
+
+    text-decoration:none;
+
+    font-size:16px;
+    font-weight:700;
+
+}
+
+/* =========================================
+CTA
+========================================= */
+
+.cta-admin{
+
+    margin-top:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:30px;
+
+    padding:
+    30px 34px;
+
+    border-radius:28px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #005eff,
+    #0050db
+    );
+
+}
+
+.cta-left{
+
+    display:flex;
+    align-items:center;
+    gap:24px;
+
+}
+
+.cta-left img{
+
+    width:120px;
+
+}
+
+.cta-text h3{
+
+    font-size:38px;
+    font-weight:800;
+
+    margin-bottom:10px;
+
+}
+
+.cta-text p{
+
+    font-size:20px;
+    line-height:1.7;
+
+    color:
+    rgba(255,255,255,.92);
+
+}
+
+.cta-btn{
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    min-width:260px;
+
+    padding:
+    22px 30px;
+
+    border-radius:22px;
+
+    background:#fff;
+
+    color:#0f56ea;
+
+    text-decoration:none;
+
+    font-size:28px;
+    font-weight:800;
+
+}
+
+/* =========================================
+FOOTER
+========================================= */
+
+footer{
+
+    margin-top:50px;
+
+    text-align:center;
+
+    padding:28px;
+
+    border-top:
+    1px solid rgba(255,255,255,.08);
+
+    background:
+    rgba(0,0,0,.15);
+
+    font-size:14px;
+
+    opacity:.8;
+
+}
+
+/* =========================================
+ANIMATION
+========================================= */
+
+@keyframes floatingHero{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-14px);
+    }
+
+}
+
+@keyframes floatingCard{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+}
+
+@keyframes pulseGlow{
+
+    0%,100%{
+        opacity:.55;
+        transform:scale(1);
+    }
+
+    50%{
+        opacity:.9;
+        transform:scale(1.04);
+    }
+
+}
+
+/* =========================================
+RESPONSIVE
+========================================= */
+
+@media(max-width:1200px){
+
+    .process-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .layanan-grid{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    .layanan-card-center{
+        grid-column:auto;
+    }
+
+}
+
+@media(max-width:992px){
+
+    .hero-grid{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .process-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .layanan-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .cta-admin{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .cta-left{
+        flex-direction:column;
+    }
+
+}
+
+@media(max-width:768px){
+
+    nav{
+        flex-direction:column;
+        gap:18px;
+    }
+
+    .hero-content h1{
+        font-size:40px;
+    }
+
+    .hero-content p{
+        font-size:18px;
+    }
+
+    .process-grid{
+        grid-template-columns:1fr;
+    }
+
+    .layanan-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .cta-btn{
+        width:100%;
+    }
+
+}
+
+@media(max-width:540px){
+
+    .layanan-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero-content h1{
+        font-size:34px;
+    }
+
+    .hero-content p{
+        font-size:16px;
+    }
+
+    .process-title h2,
+    .layanan-title h2{
+        font-size:28px;
+    }
+
+}
+
+
+/* =========================================
+SAAS PREMIUM ANIMATION
+========================================= */
+
+:root{
+
+    --ease:
+    cubic-bezier(.22,1,.36,1);
+
+}
+
+/* =========================================
+SCROLL REVEAL
+========================================= */
+
+.reveal{
+
+    opacity:0;
+
+    transform:
+    translateY(70px)
+    scale(.96);
+
+    transition:
+
+    opacity 1s var(--ease),
+    transform 1s var(--ease);
+
+}
+
+.reveal.active{
+
+    opacity:1;
+
+    transform:
+    translateY(0)
+    scale(1);
+
+}
+
+/* =========================================
+STAGGER EFFECT
+========================================= */
+
+.process-card,
+.layanan-card{
+
+    opacity:0;
+
+    transform:
+    translateY(60px);
+
+    animation:
+    cardReveal 1s var(--ease) forwards;
+
+}
+
+.process-card:nth-child(1),
+.layanan-card:nth-child(1){
+    animation-delay:.05s;
+}
+
+.process-card:nth-child(2),
+.layanan-card:nth-child(2){
+    animation-delay:.12s;
+}
+
+.process-card:nth-child(3),
+.layanan-card:nth-child(3){
+    animation-delay:.18s;
+}
+
+.process-card:nth-child(4),
+.layanan-card:nth-child(4){
+    animation-delay:.24s;
+}
+
+.process-card:nth-child(5),
+.layanan-card:nth-child(5){
+    animation-delay:.30s;
+}
+
+/* =========================================
+CARD PREMIUM EFFECT
+========================================= */
+
+.process-card,
+.layanan-card{
+
+    transform-style:preserve-3d;
+
+    backdrop-filter:blur(18px);
+
+}
+
+.process-card::after,
+.layanan-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:inherit;
+
+    padding:1px;
+
+    background:
+    linear-gradient(
+    145deg,
+    rgba(255,255,255,.25),
+    transparent,
+    rgba(255,255,255,.08)
+    );
+
+    -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite:xor;
+
+    pointer-events:none;
+
+}
+
+/* =========================================
+MAGNETIC HOVER
+========================================= */
+
+.process-card:hover,
+.layanan-card:hover,
+.cta-btn:hover,
+.contact-btn:hover{
+
+    transform:
+    translateY(-10px)
+    scale(1.02);
+
+}
+
+/* =========================================
+PREMIUM SHADOW
+========================================= */
+
+.process-card:hover,
+.layanan-card:hover{
+
+    box-shadow:
+
+    0 25px 60px rgba(0,0,0,.30),
+
+    0 0 40px rgba(92,168,255,.18),
+
+    inset 0 1px 0 rgba(255,255,255,.08);
+
+}
+
+/* =========================================
+BUTTON GLOW
+========================================= */
+
+.contact-btn,
+.cta-btn,
+.layanan-card a{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.contact-btn::after,
+.cta-btn::after,
+.layanan-card a::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-120%;
+
+    width:100%;
+    height:100%;
+
+    background:
+    linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.35),
+    transparent
+    );
+
+    transition:1s;
+
+}
+
+.contact-btn:hover::after,
+.cta-btn:hover::after,
+.layanan-card a:hover::after{
+
+    left:130%;
+
+}
+
+/* =========================================
+FLOATING PARTICLES
+========================================= */
+
+.hero-pendampingan::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background-image:
+
+    radial-gradient(
+    rgba(255,255,255,.18) 1px,
+    transparent 1px
+    );
+
+    background-size:
+    40px 40px;
+
+    opacity:.18;
+
+    animation:
+    movingParticles 20s linear infinite;
+
+}
+
+/* =========================================
+TITLE GLOW
+========================================= */
+
+.hero-content h1,
+.process-title h2,
+.layanan-title h2{
+
+    text-shadow:
+    0 0 18px rgba(255,255,255,.12);
+
+}
+
+/* =========================================
+IMAGE DEPTH
+========================================= */
+
+.hero-image img{
+
+    transition:
+    transform 1s var(--ease),
+    filter 1s var(--ease);
+
+}
+
+.hero-image:hover img{
+
+    transform:
+    scale(1.04)
+    rotate(-1deg);
+
+    filter:
+
+    drop-shadow(
+    0 45px 70px rgba(0,0,0,.38)
+    )
+
+    drop-shadow(
+    0 0 35px rgba(120,190,255,.35)
+    );
+
+}
+
+/* =========================================
+PROCESS ICON MOTION
+========================================= */
+
+.process-card img,
+.layanan-card img{
+
+    transition:
+    transform .8s var(--ease);
+
+}
+
+.process-card:hover img,
+.layanan-card:hover img{
+
+    transform:
+    translateY(-12px)
+    scale(1.08)
+    rotate(-2deg);
+
+}
+
+/* =========================================
+CTA GLASS
+========================================= */
+
+.cta-admin{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.cta-admin::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(255,255,255,.10),
+    transparent
+    );
+
+    pointer-events:none;
+
+}
+
+/* =========================================
+NAVBAR FADE
+========================================= */
+
+nav{
+
+    animation:
+    fadeDown 1s ease forwards;
+
+}
+
+/* =========================================
+HERO CONTENT ANIMATION
+========================================= */
+
+.hero-badge{
+
+    animation:
+    fadeUp .9s ease .1s both;
+
+}
+
+.hero-content h1{
+
+    animation:
+    fadeUp .9s ease .25s both;
+
+}
+
+.hero-content p{
+
+    animation:
+    fadeUp .9s ease .4s both;
+
+}
+
+.hero-image{
+
+    animation:
+    fadeScale 1.1s ease .3s both;
+
+}
+
+/* =========================================
+KEYFRAMES
+========================================= */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+
+    }
+
+}
+
+@keyframes fadeScale{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        scale(.92);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        scale(1);
+
+    }
+
+}
+
+@keyframes fadeDown{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(-20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+
+    }
+
+}
+
+@keyframes cardReveal{
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+
+    }
+
+}
+
+@keyframes movingParticles{
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(-80px);
+    }
+
+}
+
+
+/* =========================================
+NAVBAR FIX MOBILE
+LOGO LEFT — BUTTON RIGHT
+========================================= */
+
+nav{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:16px;
+
+    padding:28px 0;
+
+    flex-wrap:nowrap;
+
+}
+
+/* =========================================
+LOGO
+========================================= */
+
+.logo-wrapper{
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    min-width:0;
+
+    flex-shrink:1;
+
+}
+
+.logo-text{
+
+    min-width:0;
+
+}
+
+.logo-text h1{
+
+    font-size:20px;
+    font-weight:800;
+    line-height:1;
+
+    white-space:nowrap;
+
+}
+
+.logo-text span{
+
+    font-size:12px;
+
+    opacity:.8;
+
+    white-space:nowrap;
+
+}
+
+/* =========================================
+BUTTON
+========================================= */
+
+.contact-btn{
+
+    flex-shrink:0;
+
+    white-space:nowrap;
+
+}
+
+/* =========================================
+RESPONSIVE MOBILE
+========================================= */
+
+@media(max-width:768px){
+
+    nav{
+
+        flex-direction:row !important;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        gap:12px;
+
+    }
+
+    .logo-wrapper{
+
+        gap:10px;
+
+    }
+
+    .logo-box{
+
+        width:42px;
+        height:42px;
+
+        border-radius:12px;
+
+        flex-shrink:0;
+
+    }
+
+    .logo-box i{
+
+        width:20px;
+        height:20px;
+
+    }
+
+    .logo-text h1{
+
+        font-size:16px;
+
+    }
+
+    .logo-text span{
+
+        font-size:10px;
+
+    }
+
+    .contact-btn{
+
+        padding:
+        12px 16px;
+
+        border-radius:14px;
+
+        font-size:13px;
+
+        gap:8px;
+
+    }
+
+}
+
+@media(max-width:480px){
+
+    nav{
+
+        gap:10px;
+
+    }
+
+    .logo-wrapper{
+
+        gap:8px;
+
+    }
+
+    .logo-box{
+
+        width:38px;
+        height:38px;
+
+    }
+
+    .logo-text h1{
+
+        font-size:14px;
+
+    }
+
+    .logo-text span{
+
+        font-size:9px;
+
+    }
+
+    .contact-btn{
+
+        padding:
+        10px 14px;
+
+        font-size:12px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-light"></div>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<nav>
+
+<div class="logo-wrapper">
+
+<div class="logo-box">
+<i data-lucide="box"></i>
+</div>
+
+<div class="logo-text">
+<h1>PRIMAJANA</h1>
+<span>Solusi Cerdas, Hasil Nyata</span>
+</div>
+
+</div>
+
+<a href="https://wa.me/+6285935201571" class="contact-btn">
+<i data-lucide="send"></i>
+Hubungi Kami
+</a>
+
+</nav>
+
+<!-- =========================================
+HERO HEADER PRIMAJANA PENDAMPINGAN
+STYLE MIRIP DESIGN REFERENSI
+========================================= -->
+
+<section class="hero-pendampingan">
+
+  <!-- BACKGROUND DECORATION -->
+<div class="hero-glow glow-1"></div>
+<div class="hero-glow glow-2"></div>
+
+<div class="hero-container">
+
+  <!-- =========================
+  HERO TOP
+  ========================== -->
+  <div class="hero-grid">
+
+    <!-- LEFT CONTENT -->
+    <div class="hero-content">
+
+      <!-- BADGE -->
+      <div class="hero-badge">
+        PRIMAJANA REVIEW
+      </div>
+
+      <!-- TITLE -->
+      <h1>
+        Solusi Tepat untuk
+        <span>Hasil yang Lebih Baik</span>
+      </h1>
+
+      <!-- DESCRIPTION -->
+      <p>
+        Dapatkan review profesional dari mentor berpengalaman
+        untuk menyempurnakan karya Anda sebelum melangkah
+        lebih jauh.
+      </p>
+
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="hero-image">
+
+      <!-- MAIN HERO IMAGE -->
+      <img
+        src="https://res.cloudinary.com/djexglfns/image/upload/v1778166661/ChatGPT_Image_May_7_2026_11_10_05_PM_1_yn0lgd.png"
+        alt="Primajana Review"
+      >
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+PROCESS REVIEW SECTION
+========================== -->
+
+<div class="process-wrapper reveal">
+
+  <div class="process-title">
+    <span></span>
+    <h2>Proses Review oleh Tim Primajana</h2>
+    <span></span>
+  </div>
+
+  <div class="process-grid">
+
+    <!-- STEP 1 -->
+    <div class="process-card">
+
+      <div class="step-badge">1</div>
+
+      <img
+        src="https://res.cloudinary.com/djexglfns/image/upload/v1778071521/ChatGPT_Image_May_6_2026_08_43_52_PM_2_lvencl.png"
+        alt="Submit naskah"
+      >
+
+      <h3>
+        Submit naskah
+        atau dokumen
+        untuk direview
+      </h3>
+
+    </div>
+
+
+    <!-- STEP 2 -->
+    <div class="process-card">
+
+      <div class="step-badge">2</div>
+
+      <img
+        src="https://res.cloudinary.com/djexglfns/image/upload/v1778071771/ChatGPT_Image_May_6_2026_08_48_25_PM_1_xxk2ys.png"
+        alt="Pemeriksaan awal"
+      >
+
+      <h3>
+        Pemeriksaan awal
+        oleh Tim
+        Primajana
+      </h3>
+
+    </div>
+
+
+    <!-- STEP 3 -->
+    <div class="process-card">
+
+      <div class="step-badge">3</div>
+
+      <img
+        src="https://res.cloudinary.com/djexglfns/image/upload/v1778071994/ChatGPT_Image_May_6_2026_08_52_41_PM_1_b2ymzp.png"
+        alt="Proses review"
+      >
+
+      <h3>
+        Proses review
+        mendalam sesuai
+        kebutuhan project
+      </h3>
+
+    </div>
+
+
+    <!-- STEP 4 -->
+    <div class="process-card">
+
+      <div class="step-badge">4</div>
+
+      <img
+        src="https://res.cloudinary.com/djexglfns/image/upload/v1778072239/ChatGPT_Image_May_6_2026_08_56_37_PM_1_d67xxp.png"
+        alt="Revisi dan feedback"
+      >
+
+      <h3>
+        Pemberian revisi,
+        catatan, dan
+        feedback detail
+      </h3>
+
+    </div>
+
+
+    <!-- STEP 5 -->
+    <div class="process-card">
+
+      <div class="step-badge">5</div>
+
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/190/190411.png"
+        alt="Final review selesai"
+      >
+
+      <h3>
+        Hasil review
+        final siap
+        digunakan
+      </h3>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================
+LAYANAN PRIMAJANA REVIEW
+STYLE MODERN BLUE UI
+========================================= -->
+
+<section class="layanan-review reveal">
+
+  <div class="layanan-container">
+
+    <!-- =========================
+    TITLE
+    ========================== -->
+
+    <div class="layanan-title">
+
+      <span class="dot"></span>
+
+      <h2>
+        Layanan Primajana Review
+      </h2>
+
+      <span class="dot"></span>
+
+    </div>
+
+
+    <!-- =========================
+    GRID LAYANAN
+    ========================== -->
+
+    <div class="layanan-grid">
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778072661/ChatGPT_Image_May_6_2026_09_03_39_PM_1_kvp6bq.png"
+          alt="Esai"
+        >
+
+        <h3>Esai untuk Lomba</h3>
+
+        <div class="price">
+          Rp 42.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778072939/ChatGPT_Image_May_6_2026_09_08_11_PM_1_qosfei.png"
+          alt="KTI"
+        >
+
+        <h3>
+          Karya Tulis Ilmiah
+          (KTI)
+        </h3>
+
+        <div class="price">
+          Rp 80.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778073185/ChatGPT_Image_May_6_2026_09_12_19_PM_1_yfdlad.png"
+          alt="Infografis"
+        >
+
+        <h3>Infografis</h3>
+
+        <div class="price">
+          Rp 75.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778073505/ChatGPT_Image_May_6_2026_09_17_45_PM_1_jy3gb0.png"
+          alt="Poster"
+        >
+
+        <h3>Poster</h3>
+
+        <div class="price">
+          Rp 75.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778073778/ChatGPT_Image_May_6_2026_09_22_17_PM_1_ou3see.png"
+          alt="Business Plan"
+        >
+
+        <h3>Business Plan</h3>
+
+        <div class="price">
+          Rp 85.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778073961/ChatGPT_Image_May_6_2026_09_25_27_PM_1_sjt094.png"
+          alt="Proposal"
+        >
+
+        <h3>Proposal Pendanaan</h3>
+
+        <div class="price">
+          Rp 150.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778074187/ChatGPT_Image_May_6_2026_09_29_12_PM_1_lhbsa2.png"
+          alt="PKM"
+        >
+
+        <h3>
+          Program Kreativitas
+          Mahasiswa (PKM)
+        </h3>
+
+        <div class="price">
+          Rp 100.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778074413/ChatGPT_Image_May_6_2026_09_32_51_PM_1_jx2i7j.png"
+          alt="OPSI"
+        >
+
+        <h3>
+          Olimpiade Penelitian
+          Siswa Indonesia
+        </h3>
+
+        <div class="price">
+          Rp 100.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778074660/ChatGPT_Image_May_6_2026_09_37_02_PM_1_vaxyps.png"
+          alt="Penulisan Fiksi"
+        >
+
+        <h3>Penulisan Fiksi</h3>
+
+        <div class="price">
+          Rp 100.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778072661/ChatGPT_Image_May_6_2026_09_03_39_PM_1_kvp6bq.png"
+          alt="Esai Beasiswa"
+        >
+
+        <h3>Esai Beasiswa</h3>
+
+        <div class="price">
+          Rp 60.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778074899/ChatGPT_Image_May_6_2026_09_40_51_PM_1_nzylu6.png"
+          alt="CV"
+        >
+
+        <h3>CV Beasiswa</h3>
+
+        <div class="price">
+          Rp 25.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778075127/ChatGPT_Image_May_6_2026_09_44_35_PM_1_zj6u4d.png"
+          alt="Study Plan"
+        >
+
+        <h3>Study Plan</h3>
+
+        <div class="price">
+          Rp 50.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778075335/ChatGPT_Image_May_6_2026_09_47_56_PM_1_h7sb3c.png"
+          alt="Personal Statement"
+        >
+
+        <h3>Personal Statement</h3>
+
+        <div class="price">
+          Rp 60.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778075525/ChatGPT_Image_May_6_2026_09_51_25_PM_1_dlaxij.png"
+          alt="Kontribusi"
+        >
+
+        <h3>
+          Proposal Rencana
+          Kontribusi
+        </h3>
+
+        <div class="price">
+          Rp 85.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD -->
+      <div class="layanan-card">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778075860/ChatGPT_Image_May_6_2026_09_56_52_PM_1_oa14bx.png"
+          alt="Portofolio"
+        >
+
+        <h3>Design Portofolio</h3>
+
+        <div class="price">
+          Rp 100.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+
+      <!-- CARD CENTER -->
+      <div class="layanan-card layanan-card-center">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778076023/ChatGPT_Image_May_6_2026_09_59_57_PM_1_mvi9hy.png"
+          alt="Surat Rekomendasi"
+        >
+
+        <h3>Draft Surat Rekomendasi</h3>
+
+        <div class="price">
+          Rp 10.000
+        </div>
+
+        <a href="https://wa.me/+6285935201571">
+          🛒 Order
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+    CTA ADMIN
+    ========================== -->
+
+    <div class="cta-admin reveal">
+
+      <div class="cta-left">
+
+        <img
+          src="https://res.cloudinary.com/djexglfns/image/upload/v1778076676/ChatGPT_Image_May_6_2026_10_10_36_PM_1_bcac6t.png"
+          alt="Support"
+        >
+
+        <div class="cta-text">
+
+          <h3>
+            Butuh Layanan Lain?
+          </h3>
+
+          <p>
+            Jika layanan yang Anda butuhkan tidak ada di daftar,
+            langsung hubungi admin kami untuk solusi terbaik.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <a
+        href="https://wa.me/+6285935201571"
+        class="cta-btn"
+      >
+
+        Hubungi Admin
+
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================
+SEARCH + FILTER SCRIPT
+========================================= -->
+
+<script>
+
+/* =========================
+SEARCH + FILTER
+========================= */
+
+const searchInput =
+document.getElementById(
+"serviceSearch"
+);
+
+const categoryFilter =
+document.getElementById(
+"categoryFilter"
+);
+
+const cards =
+document.querySelectorAll(
+".konsultan-card"
+);
+
+/* FILTER */
+
+function filterServices(){
+
+    const searchValue =
+    searchInput.value
+    .toLowerCase()
+    .trim();
+
+    const categoryValue =
+    categoryFilter.value;
+
+    cards.forEach(card => {
+
+        const title =
+        card.querySelector("h3")
+        .innerText
+        .toLowerCase();
+
+        const category =
+        card.dataset.category;
+
+        const matchSearch =
+        title.includes(searchValue);
+
+        const matchCategory =
+
+        categoryValue === "all" ||
+
+        category === categoryValue;
+
+        if(
+            matchSearch &&
+            matchCategory
+        ){
+
+            card.style.display =
+            "block";
+
+            setTimeout(() => {
+
+                card.style.opacity =
+                "1";
+
+                card.style.transform =
+                "translateY(0px)";
+
+            },50);
+
+        }else{
+
+            card.style.opacity =
+            "0";
+
+            card.style.transform =
+            "translateY(10px)";
+
+            setTimeout(() => {
+
+                card.style.display =
+                "none";
+
+            },200);
+
+        }
+
+    });
+
+}
+
+/* EVENTS */
+
+searchInput.addEventListener(
+"keyup",
+filterServices
+);
+
+categoryFilter.addEventListener(
+"change",
+filterServices
+);
+
+</script>
+
+
+<script>
+
+/* =========================================
+SCROLL REVEAL
+========================================= */
+
+const reveals =
+document.querySelectorAll(
+'.reveal'
+);
+
+const observer =
+new IntersectionObserver(
+
+(entries)=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add(
+'active'
+);
+
+}
+
+});
+
+},
+
+{
+threshold:.12
+}
+
+);
+
+reveals.forEach(el=>{
+
+observer.observe(el);
+
+});
+
+/* =========================================
+MAGNETIC BUTTON
+========================================= */
+
+const magnetic =
+document.querySelectorAll(
+'.cta-btn,.contact-btn'
+);
+
+magnetic.forEach(btn=>{
+
+btn.addEventListener(
+'mousemove',
+e=>{
+
+const rect =
+btn.getBoundingClientRect();
+
+const x =
+e.clientX - rect.left;
+
+const y =
+e.clientY - rect.top;
+
+btn.style.transform =
+
+`translate(
+${(x - rect.width/2)/18}px,
+${(y - rect.height/2)/18}px
+)`;
+
+});
+
+btn.addEventListener(
+'mouseleave',
+()=>{
+
+btn.style.transform =
+'translate(0,0)';
+
+});
+
+});
+
+</script>
+
+
+
+</div>
+
+<footer>
+© 2026 PT Primajana Bagia Mesari. All rights reserved.
+</footer>
+
+<script>
+lucide.createIcons();
+</script>
+
+</body>
+</html>
