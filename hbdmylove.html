@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Rita ❤️</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Poppins',sans-serif;
+      background:#fff8f5;
+      color:#4e342e;
+      overflow-x:hidden;
+    }
+
+    section{
+      padding:100px 10%;
+      position:relative;
+    }
+
+    h1,h2,h3{
+      font-family:'Playfair Display',serif;
+    }
+
+    .script-font{
+      font-family:'Dancing Script',cursive;
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      flex-direction:column;
+      background:
+      linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+      url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1600&auto=format&fit=crop');
+      background-size:cover;
+      background-position:center;
+      color:white;
+      overflow:hidden;
+    }
+
+    .hero h1{
+      font-size:4.5rem;
+      margin-bottom:20px;
+    }
+
+    .hero p{
+      max-width:700px;
+      line-height:1.9;
+      font-size:1.1rem;
+      opacity:.95;
+    }
+
+    .hero button{
+      margin-top:40px;
+      padding:16px 34px;
+      border:none;
+      border-radius:100px;
+      background:#f8d7da;
+      color:#5d4037;
+      font-size:1rem;
+      cursor:pointer;
+      transition:.3s;
+      font-weight:600;
+      box-shadow:0 10px 30px rgba(0,0,0,.15);
+    }
+
+    .hero button:hover{
+      transform:translateY(-5px) scale(1.03);
+      background:white;
+    }
+
+    .heart{
+      position:absolute;
+      bottom:-50px;
+      color:rgba(255,255,255,.5);
+      animation:float 10s linear infinite;
+      font-size:20px;
+    }
+
+    @keyframes float{
+      0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:0;
+      }
+
+      10%{
+        opacity:1;
+      }
+
+      100%{
+        transform:translateY(-110vh) rotate(360deg);
+        opacity:0;
+      }
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:70px;
+    }
+
+    .section-title h2{
+      font-size:3.2rem;
+      margin-bottom:15px;
+      color:#6d4c41;
+    }
+
+    .section-title p{
+      color:#8d6e63;
+      font-size:1rem;
+    }
+
+    .letter-card{
+      max-width:900px;
+      margin:auto;
+      background:rgba(255,255,255,.65);
+      backdrop-filter:blur(12px);
+      border-radius:35px;
+      padding:70px;
+      box-shadow:0 20px 50px rgba(0,0,0,.08);
+      line-height:2.1;
+      font-size:1.05rem;
+    }
+
+    .letter-card h3{
+      margin-bottom:30px;
+      font-size:2.6rem;
+      color:#795548;
+    }
+
+    .counter-box{
+      text-align:center;
+      background:#fbe9e7;
+      border-radius:35px;
+      padding:70px 30px;
+      box-shadow:0 15px 40px rgba(0,0,0,.06);
+    }
+
+    .counter-box h2{
+      font-size:3.5rem;
+      margin-bottom:20px;
+      color:#6d4c41;
+    }
+
+    .counter-box p{
+      font-size:1.1rem;
+      color:#795548;
+    }
+
+    .timeline{
+      position:relative;
+      max-width:1100px;
+      margin:auto;
+    }
+
+    .timeline::before{
+      content:'';
+      position:absolute;
+      left:50%;
+      top:0;
+      width:4px;
+      height:100%;
+      background:#d7b7a7;
+      transform:translateX(-50%);
+    }
+
+    .timeline-item{
+      width:50%;
+      padding:30px;
+      position:relative;
+    }
+
+    .timeline-item:nth-child(odd){
+      left:0;
+      text-align:right;
+    }
+
+    .timeline-item:nth-child(even){
+      left:50%;
+    }
+
+    .timeline-content{
+      background:white;
+      padding:30px;
+      border-radius:30px;
+      box-shadow:0 15px 40px rgba(0,0,0,.08);
+      transition:.4s;
+    }
+
+    .timeline-content:hover{
+      transform:translateY(-6px);
+    }
+
+    .timeline-content img{
+      width:100%;
+      height:250px;
+      object-fit:cover;
+      border-radius:20px;
+      margin-bottom:20px;
+    }
+
+    .timeline-content h3{
+      margin-bottom:15px;
+      color:#6d4c41;
+      font-size:1.5rem;
+    }
+
+    .timeline-content p{
+      line-height:1.9;
+      color:#795548;
+    }
+
+    .reason-container{
+      max-width:900px;
+      margin:auto;
+      text-align:center;
+    }
+
+    .reason-card{
+      background:white;
+      padding:60px;
+      border-radius:35px;
+      box-shadow:0 15px 40px rgba(0,0,0,.08);
+      margin-bottom:30px;
+      min-height:220px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:1.5rem;
+      line-height:1.9;
+      color:#6d4c41;
+      transition:.3s;
+    }
+
+    .reason-btn{
+      padding:16px 34px;
+      border:none;
+      border-radius:100px;
+      background:#d7a89e;
+      color:white;
+      cursor:pointer;
+      transition:.3s;
+      font-size:1rem;
+      font-weight:600;
+    }
+
+    .reason-btn:hover{
+      transform:translateY(-3px);
+      background:#c48b7d;
+    }
+
+    .gallery-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:35px;
+    }
+
+    .photo-card{
+      background:white;
+      padding:18px 18px 60px;
+      border-radius:12px;
+      box-shadow:0 10px 30px rgba(0,0,0,.08);
+      transform:rotate(-2deg);
+      transition:.4s;
+    }
+
+    .photo-card:nth-child(even){
+      transform:rotate(2deg);
+    }
+
+    .photo-card:hover{
+      transform:scale(1.03) rotate(0deg);
+    }
+
+    .photo-card img{
+      width:100%;
+      height:320px;
+      object-fit:cover;
+      border-radius:8px;
+      margin-bottom:20px;
+    }
+
+    .photo-card p{
+      text-align:center;
+      font-family:'Dancing Script',cursive;
+      font-size:1.6rem;
+      color:#6d4c41;
+    }
+
+    .ending{
+      background:
+      linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+      url('https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=1600&auto=format&fit=crop');
+      background-size:cover;
+      background-position:center;
+      text-align:center;
+      color:white;
+      padding:170px 10%;
+    }
+
+    .ending h2{
+      font-size:4rem;
+      margin-bottom:30px;
+    }
+
+    .ending p{
+      max-width:850px;
+      margin:auto;
+      line-height:2.1;
+      font-size:1.1rem;
+    }
+
+    .music-btn{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      z-index:999;
+      border:none;
+      width:65px;
+      height:65px;
+      border-radius:50%;
+      background:#d7a89e;
+      color:white;
+      cursor:pointer;
+      box-shadow:0 10px 25px rgba(0,0,0,.15);
+      font-size:1.3rem;
+    }
+
+    .fade-in{
+      opacity:0;
+      transform:translateY(40px);
+      transition:all .9s ease;
+    }
+
+    .fade-in.show{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media(max-width:900px){
+
+      section{
+        padding:80px 7%;
+      }
+
+      .hero h1{
+        font-size:3rem;
+      }
+
+      .section-title h2{
+        font-size:2.4rem;
+      }
+
+      .timeline::before{
+        left:20px;
+      }
+
+      .timeline-item,
+      .timeline-item:nth-child(even),
+      .timeline-item:nth-child(odd){
+        width:100%;
+        left:0;
+        text-align:left;
+        padding-left:60px;
+      }
+
+      .letter-card{
+        padding:40px 30px;
+      }
+
+      .counter-box h2{
+        font-size:2.5rem;
+      }
+
+      .reason-card{
+        font-size:1.2rem;
+        padding:40px 25px;
+      }
+
+      .ending h2{
+        font-size:2.7rem;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mp3">
+  </audio>
+
+  <button class="music-btn" onclick="toggleMusic()">
+    🎵
+  </button>
+
+  <section class="hero">
+
+    <div class="heart" style="left:10%; animation-delay:0s;">❤️</div>
+    <div class="heart" style="left:30%; animation-delay:2s;">❤️</div>
+    <div class="heart" style="left:50%; animation-delay:4s;">❤️</div>
+    <div class="heart" style="left:70%; animation-delay:1s;">❤️</div>
+    <div class="heart" style="left:90%; animation-delay:3s;">❤️</div>
+
+    <h1 class="script-font">Happy Birthday Rita ❤️</h1>
+
+    <p>
+      Untuk perempuan terbaik yang pernah hadir di hidupku.
+      Terima kasih karena selalu menjadi alasan mengapa dunia terasa lebih indah.
+    </p>
+
+    <button onclick="document.getElementById('letter').scrollIntoView()">
+      Open Our Story
+    </button>
+
+  </section>
+
+  <section id="letter">
+
+    <div class="section-title fade-in">
+      <h2 class="script-font">A Letter For You</h2>
+      <p>Sebuah surat kecil untuk perempuan paling spesial</p>
+    </div>
+
+    <div class="letter-card fade-in">
+
+      <h3 class="script-font">Dear Rita,</h3>
+
+      <p>
+        Selamat ulang tahun untuk perempuan yang selalu berhasil membuat hidupku terasa lebih hangat.
+        Terima kasih karena sudah hadir sejak 07 November 2018,
+        dan menjadi bagian terbaik dari perjalanan hidupku.
+      </p>
+
+      <br>
+
+      <p>
+        Terima kasih untuk semua tawa,
+        perhatian kecil,
+        dukungan,
+        dan semua momen sederhana yang akhirnya menjadi kenangan paling berharga.
+      </p>
+
+      <br>
+
+      <p>
+        Aku tahu kita tidak selalu sempurna,
+        tapi aku selalu bersyukur karena kita tetap memilih untuk bertahan bersama.
+      </p>
+
+      <br>
+
+      <p>
+        Semoga di umur barumu ini,
+        kamu selalu sehat,
+        bahagia,
+        dikelilingi orang-orang baik,
+        dan semoga semua impianmu perlahan menjadi nyata.
+      </p>
+
+      <br>
+
+      <p>
+        Dan semoga...
+        aku masih bisa menjadi bagian dari semua cerita indahmu di masa depan ❤️
+      </p>
+
+    </div>
+
+  </section>
+
+  <section>
+
+    <div class="counter-box fade-in">
+      <h2 id="loveCounter">0 Days</h2>
+      <p>Since 07 November 2018 ❤️</p>
+    </div>
+
+  </section>
+
+  <section>
+
+    <div class="section-title fade-in">
+      <h2 class="script-font">Our Story</h2>
+      <p>Perjalanan kecil yang akan selalu aku ingat</p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="timeline-item fade-in">
+        <div class="timeline-content">
+
+          <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1200&auto=format&fit=crop">
+
+          <h3>07 November 2018</h3>
+
+          <p>
+            Hari dimana semuanya dimulai.
+            Hari dimana aku bertemu seseorang yang akhirnya menjadi rumah paling nyaman.
+          </p>
+
+        </div>
+      </div>
+
+      <div class="timeline-item fade-in">
+        <div class="timeline-content">
+
+          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=1200&auto=format&fit=crop">
+
+          <h3>Our Favorite Memories</h3>
+
+          <p>
+            Dari obrolan kecil,
+            candaan random,
+            sampai semua perhatian sederhana yang selalu berhasil membuatku bahagia.
+          </p>
+
+        </div>
+      </div>
+
+      <div class="timeline-item fade-in">
+        <div class="timeline-content">
+
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop">
+
+          <h3>Growing Together</h3>
+
+          <p>
+            Kita belajar,
+            bertumbuh,
+            dan melewati banyak hal bersama.
+            Tidak selalu mudah,
+            tapi selalu berarti.
+          </p>
+
+        </div>
+      </div>
+
+      <div class="timeline-item fade-in">
+        <div class="timeline-content">
+
+          <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=1200&auto=format&fit=crop">
+
+          <h3>Still Choosing You</h3>
+
+          <p>
+            Setelah semua waktu yang berlalu,
+            aku masih memilih kamu.
+            Hari ini,
+            besok,
+            dan seterusnya.
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section>
+
+    <div class="section-title fade-in">
+      <h2 class="script-font">Reasons Why I Love You</h2>
+      <p>10 dari banyak alasan kenapa kamu begitu spesial ❤️</p>
+    </div>
+
+    <div class="reason-container fade-in">
+
+      <div class="reason-card" id="reasonCard">
+        Click the button below ❤️
+      </div>
+
+      <button class="reason-btn" onclick="showReason()">
+        Show Me Another Reason
+      </button>
+
+    </div>
+
+  </section>
+
+  <section>
+
+    <div class="section-title fade-in">
+      <h2 class="script-font">Our Memories</h2>
+      <p>Momen kecil yang selalu ingin aku simpan</p>
+    </div>
+
+    <div class="gallery-grid">
+
+      <div class="photo-card fade-in">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop">
+        <p>Our Happy Day ❤️</p>
+      </div>
+
+      <div class="photo-card fade-in">
+        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1200&auto=format&fit=crop">
+        <p>Still My Favorite Person</p>
+      </div>
+
+      <div class="photo-card fade-in">
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1200&auto=format&fit=crop">
+        <p>You Feel Like Home</p>
+      </div>
+
+      <div class="photo-card fade-in">
+        <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=1200&auto=format&fit=crop">
+        <p>Forever With You</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="ending">
+
+    <h2 class="script-font fade-in">
+      Happy Birthday Rita ❤️
+    </h2>
+
+    <p class="fade-in">
+      Thank you for every smile,
+      every laugh,
+      every little moment,
+      and every memory we created together.
+      <br><br>
+      No matter how much time passes,
+      I will always be grateful that I met you.
+      <br><br>
+      And after all this time...
+      I still choose you.
+      Every single day.
+    </p>
+
+  </section>
+
+  <script>
+
+    const startDate = new Date("2018-11-07T00:00:00");
+
+    function updateCounter(){
+
+      const now = new Date();
+      const diff = now - startDate;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+      document.getElementById("loveCounter").innerText =
+      days + " Days Together ❤️";
+
+    }
+
+    updateCounter();
+
+    const reasons = [
+
+      "I love the way you make ordinary days feel magical.",
+
+      "I love how calm I feel whenever I'm with you.",
+
+      "I love your smile, especially when you laugh unexpectedly.",
+
+      "I love how you always care deeply for the people you love.",
+
+      "I love every tiny thing that makes you uniquely Rita.",
+
+      "I love how your presence alone can make my day better.",
+
+      "I love how we can talk for hours without getting bored.",
+
+      "I love your random cute moments that always make me smile.",
+
+      "I love how strong you are even during difficult times.",
+
+      "I love you simply because you're you ❤️"
+
+    ];
+
+    function showReason(){
+
+      const random = Math.floor(Math.random() * reasons.length);
+
+      document.getElementById("reasonCard").innerText = reasons[random];
+
+    }
+
+    const music = document.getElementById("bgMusic");
+
+    function toggleMusic(){
+
+      if(music.paused){
+        music.play();
+      }
+
+      else{
+        music.pause();
+      }
+
+    }
+
+    const fadeElements = document.querySelectorAll('.fade-in');
+
+    const observer = new IntersectionObserver(entries => {
+
+      entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+        }
+
+      });
+
+    },{
+      threshold:0.1
+    });
+
+    fadeElements.forEach(el => observer.observe(el));
+
+  </script>
+
+</body>
+</html>
+
