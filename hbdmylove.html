@@ -541,9 +541,18 @@
 
   <div id="mainContent" style="display:none; animation:fadePage 1.5s ease;">
 
-  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mp3">
-  </audio>
+<!-- YOUTUBE BACKGROUND MUSIC -->
+
+<iframe
+  id="youtubePlayer"
+  width="0"
+  height="0"
+  src="https://www.youtube.com/embed/9VFip4CQT8I?autoplay=1&loop=1&playlist=9VFip4CQT8I&controls=0&mute=0"
+  title="YouTube video player"
+  frameborder="0"
+  allow="autoplay"
+  allowfullscreen>
+</iframe>
 
   <button class="music-btn" onclick="toggleMusic()">
     🎵
@@ -801,7 +810,7 @@
 
     const screen = document.getElementById("giftScreen");
     const content = document.getElementById("mainContent");
-    const music = document.getElementById("bgMusic");
+    const music = document.getElementById("youtubePlayer");
 
     // fade out opening screen
     screen.style.opacity = "0";
@@ -822,10 +831,6 @@
         content.style.opacity = "1";
       }, 100);
 
-      // autoplay music
-      music.play().catch(() => {
-        console.log("Autoplay blocked by browser");
-      });
 
     }, 1000);
 
