@@ -543,11 +543,13 @@
 
 <!-- YOUTUBE BACKGROUND MUSIC -->
 
+<!-- YOUTUBE BACKGROUND MUSIC -->
+
 <iframe
   id="youtubePlayer"
   width="0"
   height="0"
-  src="https://www.youtube.com/embed/9VFip4CQT8I?autoplay=1&loop=1&playlist=9VFip4CQT8I&controls=0&mute=0"
+  src="https://www.youtube.com/embed/9VFip4CQT8I?autoplay=0&loop=1&playlist=9VFip4CQT8I&controls=0&mute=0"
   title="YouTube video player"
   frameborder="0"
   allow="autoplay"
@@ -831,6 +833,8 @@
         content.style.opacity = "1";
       }, 100);
 
+document.getElementById("youtubePlayer").src =
+"https://www.youtube.com/embed/9VFip4CQT8I?autoplay=1&loop=1&playlist=9VFip4CQT8I&controls=0&mute=0";
 
     }, 1000);
 
@@ -1003,21 +1007,33 @@
 
   }
 
-  // MUSIC TOGGLE
+  // YOUTUBE MUSIC CONTROL
 
-  const music = document.getElementById("bgMusic");
+let isMuted = false;
 
-  function toggleMusic(){
+function toggleMusic(){
 
-    if(music.paused){
-      music.play();
-    }
+  const iframe = document.getElementById("youtubePlayer");
 
-    else{
-      music.pause();
-    }
+  if(isMuted){
+
+    iframe.src =
+    "https://www.youtube.com/embed/9VFip4CQT8I?autoplay=1&loop=1&playlist=9VFip4CQT8I&controls=0&mute=0";
+
+    isMuted = false;
 
   }
+
+  else{
+
+    iframe.src =
+    "https://www.youtube.com/embed/9VFip4CQT8I?autoplay=1&loop=1&playlist=9VFip4CQT8I&controls=0&mute=1";
+
+    isMuted = true;
+
+  }
+
+}
 
   // FADE ANIMATION
 
