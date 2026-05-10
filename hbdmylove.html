@@ -34,6 +34,117 @@
       font-family:'Playfair Display',serif;
     }
 
+    /* OPENING GIFT SCREEN */
+
+    .gift-screen{
+      position:fixed;
+      inset:0;
+      background:
+      radial-gradient(circle at top,#f8d7da 0%,#fff8f5 45%,#f3e5e5 100%);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      z-index:99999;
+      overflow:hidden;
+    }
+
+    .gift-box-container{
+      position:relative;
+      z-index:2;
+      padding:40px;
+    }
+
+    .gift-glow{
+      width:260px;
+      height:260px;
+      background:rgba(255,182,193,.4);
+      border-radius:50%;
+      position:absolute;
+      left:50%;
+      top:20px;
+      transform:translateX(-50%);
+      filter:blur(40px);
+      animation:pulseGlow 2.5s infinite;
+    }
+
+    @keyframes pulseGlow{
+      0%{transform:translateX(-50%) scale(1);opacity:.7;}
+      50%{transform:translateX(-50%) scale(1.15);opacity:1;}
+      100%{transform:translateX(-50%) scale(1);opacity:.7;}
+    }
+
+    .gift-box{
+      width:180px;
+      height:180px;
+      margin:auto;
+      border-radius:40px;
+      background:linear-gradient(145deg,#f8c8d0,#d7a89e);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-size:5rem;
+      cursor:pointer;
+      box-shadow:0 25px 50px rgba(0,0,0,.15);
+      position:relative;
+      animation:giftFloat 3s ease-in-out infinite;
+      transition:.5s;
+    }
+
+    .gift-box:hover{
+      transform:scale(1.05) rotate(3deg);
+    }
+
+    @keyframes giftFloat{
+      0%{transform:translateY(0px);}
+      50%{transform:translateY(-15px);}
+      100%{transform:translateY(0px);}
+    }
+
+    .gift-box-container h1{
+      margin-top:40px;
+      font-size:4rem;
+      color:#6d4c41;
+    }
+
+    .gift-box-container p{
+      margin-top:15px;
+      color:#795548;
+      font-size:1.05rem;
+      line-height:1.9;
+    }
+
+    .gift-box-container button{
+      margin-top:35px;
+      padding:16px 36px;
+      border:none;
+      border-radius:100px;
+      background:#d7a89e;
+      color:white;
+      font-size:1rem;
+      cursor:pointer;
+      transition:.3s;
+      font-weight:600;
+      box-shadow:0 10px 30px rgba(0,0,0,.1);
+    }
+
+    .gift-box-container button:hover{
+      transform:translateY(-4px);
+      background:#c48b7d;
+    }
+
+    @keyframes fadePage{
+      from{
+        opacity:0;
+        transform:scale(1.03);
+      }
+
+      to{
+        opacity:1;
+        transform:scale(1);
+      }
+    }
+
     .script-font{
       font-family:'Dancing Script',cursive;
     }
@@ -402,6 +513,34 @@
 </head>
 <body>
 
+  <!-- OPENING GIFT SCREEN -->
+
+  <div class="gift-screen" id="giftScreen">
+
+    <div class="gift-box-container">
+
+      <div class="gift-glow"></div>
+
+      <div class="gift-box" onclick="openGift()">
+        🎁
+      </div>
+
+      <h1 class="script-font">Happy Birthday Rita ❤️</h1>
+
+      <p>
+        Aku punya sesuatu kecil untuk perempuan paling spesial di hidupku.
+      </p>
+
+      <button onclick="openGift()">
+        Buka Kado
+      </button>
+
+    </div>
+
+  </div>
+
+  <div id="mainContent" style="display:none; animation:fadePage 1.5s ease;">
+
   <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mp3">
   </audio>
@@ -578,7 +717,7 @@
 
     <div class="section-title fade-in">
       <h2 class="script-font">Reasons Why I Love You</h2>
-      <p>10 dari banyak alasan kenapa kamu begitu spesial ❤️</p>
+      <p>101 dari banyak alasan kenapa kamu begitu spesial ❤️</p>
     </div>
 
     <div class="reason-container fade-in">
@@ -646,94 +785,256 @@
       And after all this time...
       I still choose you.
       Every single day.
+      <br><br>
+      Your love ~ Uwi
     </p>
 
-  </section>
+</section>
 
-  <script>
+</section>
 
-    const startDate = new Date("2018-11-07T00:00:00");
+<script>
 
-    function updateCounter(){
+  // OPEN GIFT FUNCTION
 
-      const now = new Date();
-      const diff = now - startDate;
+  function openGift(){
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-      document.getElementById("loveCounter").innerText =
-      days + " Days Together ❤️";
-
-    }
-
-    updateCounter();
-
-    const reasons = [
-
-      "I love the way you make ordinary days feel magical.",
-
-      "I love how calm I feel whenever I'm with you.",
-
-      "I love your smile, especially when you laugh unexpectedly.",
-
-      "I love how you always care deeply for the people you love.",
-
-      "I love every tiny thing that makes you uniquely Rita.",
-
-      "I love how your presence alone can make my day better.",
-
-      "I love how we can talk for hours without getting bored.",
-
-      "I love your random cute moments that always make me smile.",
-
-      "I love how strong you are even during difficult times.",
-
-      "I love you simply because you're you ❤️"
-
-    ];
-
-    function showReason(){
-
-      const random = Math.floor(Math.random() * reasons.length);
-
-      document.getElementById("reasonCard").innerText = reasons[random];
-
-    }
-
+    const screen = document.getElementById("giftScreen");
+    const content = document.getElementById("mainContent");
     const music = document.getElementById("bgMusic");
 
-    function toggleMusic(){
+    // fade out opening screen
+    screen.style.opacity = "0";
+    screen.style.transform = "scale(1.1)";
 
-      if(music.paused){
-        music.play();
-      }
+    setTimeout(() => {
 
-      else{
-        music.pause();
-      }
+      screen.style.display = "none";
+
+      // show main content
+      content.style.display = "block";
+
+      // smooth fade in
+      content.style.opacity = "0";
+
+      setTimeout(() => {
+        content.style.transition = "opacity 1.2s ease";
+        content.style.opacity = "1";
+      }, 100);
+
+      // autoplay music
+      music.play().catch(() => {
+        console.log("Autoplay blocked by browser");
+      });
+
+    }, 1000);
+
+  }
+
+  // LOVE COUNTER
+
+  const startDate = new Date("2018-11-07T00:00:00");
+
+  function updateCounter(){
+
+    const now = new Date();
+    const diff = now - startDate;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    document.getElementById("loveCounter").innerText =
+    days + " Days Together ❤️";
+
+  }
+
+  updateCounter();
+
+  // REASONS
+
+  let currentReason = 0;
+
+  const reasons = [
+
+    "1. I love the way you make ordinary days feel magical.",
+    "2. I love how calm I feel whenever I'm with you.",
+    "3. I love your smile, especially when you laugh unexpectedly.",
+    "4. I love how you always care deeply for the people you love.",
+    "5. I love every tiny thing that makes you uniquely Rita.",
+
+    "6. I love how your presence alone can make my day better.",
+    "7. I love how we can talk for hours without getting bored.",
+    "8. I love your random cute moments that always make me smile.",
+    "9. I love how strong you are even during difficult times.",
+    "10. I love you simply because you're you ❤️",
+
+    "11. I love how your voice instantly calms me.",
+    "12. I love your sleepy morning face.",
+    "13. I love the way your eyes sparkle.",
+    "14. I love your kindness.",
+    "15. I love how caring you are.",
+
+    "16. I love your random stories.",
+    "17. I love every late-night conversation with you.",
+    "18. I love how comfortable silence feels with you.",
+    "19. I love your soft heart.",
+    "20. I love how patient you are with me.",
+
+    "21. I love how you support me.",
+    "22. I love your hugs.",
+    "23. I love how safe I feel around you.",
+    "24. I love your little habits.",
+    "25. I love your laugh.",
+
+    "26. I love your honesty.",
+    "27. I love your warm presence.",
+    "28. I love how beautiful you look naturally.",
+    "29. I love how you make me feel important.",
+    "30. I love your thoughtful messages.",
+
+    "31. I love the way you say my name.",
+    "32. I love your random jokes.",
+    "33. I love your loyalty.",
+    "34. I love how you always try your best.",
+    "35. I love your cute reactions.",
+
+    "36. I love how you motivate me.",
+    "37. I love how we understand each other.",
+    "38. I love your sweetness.",
+    "39. I love your effort in little things.",
+    "40. I love how warm your hands feel.",
+
+    "41. I love your emotional side.",
+    "42. I love how you remember small details.",
+    "43. I love how genuine you are.",
+    "44. I love your confidence.",
+    "45. I love how funny you are.",
+
+    "46. I love how beautiful your soul is.",
+    "47. I love your random excitement.",
+    "48. I love the memories we created together.",
+    "49. I love how you always brighten my day.",
+    "50. I love how adorable you are when you're shy.",
+
+    "51. I love how strong you stay during hard times.",
+    "52. I love your smile in photos.",
+    "53. I love your late-night overthinking talks.",
+    "54. I love how you trust me.",
+    "55. I love your positivity.",
+
+    "56. I love your attention to small things.",
+    "57. I love how we can be weird together.",
+    "58. I love your cute sleepy voice.",
+    "59. I love how much effort you put into relationships.",
+    "60. I love how your happiness makes me happy too.",
+
+    "61. I love your comforting words.",
+    "62. I love your beautiful eyes.",
+    "63. I love how understanding you are.",
+    "64. I love how you always try to make me smile.",
+    "65. I love your sense of humor.",
+
+    "66. I love how naturally lovable you are.",
+    "67. I love your hugs after a long day.",
+    "68. I love how peaceful I feel with you.",
+    "69. I love your adorable jealousy.",
+    "70. I love how gentle you are.",
+
+    "71. I love your maturity.",
+    "72. I love how ambitious you are.",
+    "73. I love your kindness to strangers.",
+    "74. I love your little random dances.",
+    "75. I love how you listen to me.",
+
+    "76. I love your loyalty to the people you care about.",
+    "77. I love how you make hard days easier.",
+    "78. I love your random compliments.",
+    "79. I love how thoughtful you are.",
+    "80. I love your beautiful smile.",
+
+    "81. I love how you never stop trying.",
+    "82. I love your random mood swings sometimes.",
+    "83. I love how cute you are without realizing it.",
+    "84. I love how special you make me feel.",
+    "85. I love how supportive you are of my dreams.",
+
+    "86. I love your calm energy.",
+    "87. I love how naturally beautiful you are.",
+    "88. I love your sincerity.",
+    "89. I love how you always come back after arguments.",
+    "90. I love your affection.",
+
+    "91. I love your playful side.",
+    "92. I love your gentle voice.",
+    "93. I love how lucky I feel because of you.",
+    "94. I love the future I imagine with you.",
+    "95. I love how you became my favorite person.",
+
+    "96. I love your comforting presence.",
+    "97. I love every version of you.",
+    "98. I love the way you love me.",
+    "99. I love how home feels wherever you are.",
+    "100. I love every second spent with you.",
+    "101. I love you more than words could ever explain ❤️"
+
+  ];
+
+  function showReason(){
+
+    if(currentReason < reasons.length){
+
+      document.getElementById("reasonCard").innerText =
+      reasons[currentReason];
+
+      currentReason++;
 
     }
 
-    const fadeElements = document.querySelectorAll('.fade-in');
+    else{
 
-    const observer = new IntersectionObserver(entries => {
+      document.getElementById("reasonCard").innerText =
+      "❤️ Those are just 101 of countless reasons why I love you ❤️";
 
-      entries.forEach(entry => {
+    }
 
-        if(entry.isIntersecting){
-          entry.target.classList.add('show');
-        }
+  }
 
-      });
+  // MUSIC TOGGLE
 
-    },{
-      threshold:0.1
+  const music = document.getElementById("bgMusic");
+
+  function toggleMusic(){
+
+    if(music.paused){
+      music.play();
+    }
+
+    else{
+      music.pause();
+    }
+
+  }
+
+  // FADE ANIMATION
+
+  const fadeElements = document.querySelectorAll('.fade-in');
+
+  const observer = new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+      }
+
     });
 
-    fadeElements.forEach(el => observer.observe(el));
+  },{
+    threshold:0.1
+  });
 
-  </script>
+  fadeElements.forEach(el => observer.observe(el));
+
+</script>
 
 </body>
 </html>
-
