@@ -35,8 +35,9 @@ margin-bottom:40px;
 }
 
 .hero h1{
-font-size:48px;
+font-size:42px;
 font-weight:800;
+line-height:1.1;
 }
 
 .hero p{
@@ -48,11 +49,11 @@ margin-top:10px;
 background:rgba(255,255,255,.12);
 backdrop-filter:blur(14px);
 border:1px solid rgba(255,255,255,.15);
-padding:25px;
-border-radius:24px;
+padding:20px;
+border-radius:20px;
 display:flex;
 gap:15px;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
 .search-box input{
@@ -183,6 +184,48 @@ background:rgba(255,255,255,.12);
 border-radius:24px;
 }
 
+.timeline{
+margin-top:20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:10px;
+}
+
+.timeline-item{
+background:#f8fafc;
+padding:10px 12px;
+border-radius:12px;
+font-size:13px;
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.timeline-done{
+color:#16a34a;
+font-weight:700;
+}
+
+.timeline-pending{
+color:#94a3b8;
+font-weight:700;
+}
+
+.download-btn{
+display:inline-block;
+background:#0d53ff;
+color:white;
+text-decoration:none;
+padding:12px 18px;
+border-radius:12px;
+font-weight:600;
+transition:.2s;
+}
+
+.download-btn:hover{
+background:#0039c7;
+}
+
 .footer-note{
 margin-top:30px;
 text-align:center;
@@ -191,12 +234,91 @@ opacity:.75;
 
 @media(max-width:768px){
 
+.container{
+width:100%;
+padding:20px 15px;
+}
+
+.hero{
+margin-bottom:25px;
+}
+
 .hero h1{
-font-size:32px;
+font-size:28px;
+line-height:1.2;
+}
+
+.hero p{
+font-size:14px;
+padding:0 10px;
 }
 
 .search-box{
 flex-direction:column;
+padding:18px;
+gap:12px;
+border-radius:18px;
+}
+
+.search-box input{
+width:100%;
+padding:14px;
+font-size:16px;
+}
+
+.search-box button{
+width:100%;
+padding:14px;
+font-size:15px;
+}
+
+.card{
+padding:18px;
+border-radius:18px;
+}
+
+.card-header{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.title{
+font-size:18px;
+}
+
+.info{
+grid-template-columns:1fr;
+gap:10px;
+}
+
+.box{
+padding:12px;
+}
+
+.progress-section{
+margin-top:15px;
+}
+
+.timeline{
+display:flex;
+flex-direction:column;
+gap:8px;
+margin-top:18px;
+}
+
+.timeline-item{
+font-size:13px;
+}
+
+.download-btn{
+width:100%;
+display:block;
+text-align:center;
+}
+
+.footer-note{
+font-size:12px;
+padding:0 15px;
 }
 
 }
