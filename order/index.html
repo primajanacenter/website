@@ -8,19 +8,77 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
-body{background:linear-gradient(135deg,#0d53ff,#00145a);color:#fff}
-.container{width:95%;max-width:1600px;margin:auto}
-.header{padding:24px 0;display:flex;justify-content:space-between;align-items:center}
+body{
+background:#f4f7fb;
+color:#0f172a;
+min-height:100vh;
+overflow-x:hidden;
+padding-bottom:20px;
+}
+.container{
+width:100%;
+padding:20px;
+margin:0;
+}
+.header{
+padding:10px 0 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
 .logo{font-size:28px;font-weight:800}
-.badge{background:#ffffff20;padding:8px 14px;border-radius:12px}
+.badge{
+background:#2563eb;
+color:white;
+padding:8px 14px;
+border-radius:12px;
+font-size:13px;
+}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:20px 0}
-.card{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);padding:20px;border-radius:22px;border:1px solid rgba(255,255,255,.15)}
-.card h3{font-size:13px;opacity:.8}
-.card .v{font-size:30px;font-weight:800;margin-top:8px}
+.card{
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:
+0 4px 15px rgba(0,0,0,.06);
+border:1px solid #e5e7eb;
+}
+.card h3{
+font-size:13px;
+color:#64748b;
+font-weight:500;
+}
+.card .v{
+font-size:28px;
+font-weight:700;
+margin-top:8px;
+color:#0f172a;
+}
 .toolbar{display:flex;gap:12px;margin:20px 0}
-input{padding:14px;border-radius:14px;border:none;flex:1}
-.board{display:flex;gap:18px;overflow-x:auto;padding-bottom:30px}
-.column{min-width:320px;background:rgba(255,255,255,.1);border-radius:24px;padding:16px}
+input{
+padding:14px 18px;
+border-radius:14px;
+border:1px solid #dbe3f0;
+background:white;
+flex:1;
+font-size:14px;
+}
+.board{
+display:flex;
+gap:18px;
+overflow-x:auto;
+padding-bottom:30px;
+align-items:flex-start;
+}
+.column{
+min-width:320px;
+background:white;
+border-radius:20px;
+padding:16px;
+box-shadow:
+0 4px 15px rgba(0,0,0,.06);
+border:1px solid #e5e7eb;
+}
 .column h2{font-size:18px;margin-bottom:15px}
 .order{background:#fff;color:#0f172a;border-radius:18px;padding:14px;margin-bottom:12px}
 .order .id{font-size:12px;color:#64748b}
@@ -28,6 +86,41 @@ input{padding:14px;border-radius:14px;border:none;flex:1}
 .row{font-size:13px;margin:3px 0}
 .deadline{margin-top:10px}
 .warn{display:inline-block;background:#ef4444;color:#fff;padding:4px 8px;border-radius:999px;font-size:11px}
+.today{
+display:inline-block;
+background:#f59e0b;
+color:#fff;
+padding:4px 8px;
+border-radius:999px;
+font-size:11px;
+}
+
+.success{
+display:inline-block;
+background:#10b981;
+color:#fff;
+padding:4px 8px;
+border-radius:999px;
+font-size:11px;
+}
+
+.warning{
+display:inline-block;
+background:#f59e0b;
+color:#fff;
+padding:4px 8px;
+border-radius:999px;
+font-size:11px;
+}
+
+.danger{
+display:inline-block;
+background:#ef4444;
+color:#fff;
+padding:4px 8px;
+border-radius:999px;
+font-size:11px;
+}
 .loading{text-align:center;padding:50px}
 </style>
 </head>
@@ -78,6 +171,8 @@ const statuses = [
 
 const board = document.getElementById("board");
 
+board.innerHTML = "";
+
 statuses.forEach(status => {
 
   const col = document.createElement("div");
@@ -109,11 +204,10 @@ function overdue(deadline){
 
   const now = new Date();
 
-  const diff =
-    Math.floor(
-      (now - d) /
-      (1000 * 60 * 60 * 24)
-    );
+  const diff = Math.floor(
+    (now - d) /
+    (1000 * 60 * 60 * 24)
+  );
 
   if(diff > 0){
 
@@ -144,7 +238,7 @@ function paymentBadge(status){
   if(status === "Lunas"){
 
     return `
-      <span class="badge success">
+      <span class="success">
         Lunas
       </span>
     `;
@@ -154,7 +248,7 @@ function paymentBadge(status){
   if(status === "DP"){
 
     return `
-      <span class="badge warning">
+      <span class="warning">
         DP
       </span>
     `;
@@ -162,7 +256,7 @@ function paymentBadge(status){
   }
 
   return `
-    <span class="badge danger">
+    <span class="danger">
       Belum Bayar
     </span>
   `;
@@ -216,18 +310,18 @@ function render(data){
 
   document.getElementById("aktif").textContent =
     data.filter(
-      x => x.status !== "Selesai"
+      item => item.status !== "Selesai"
     ).length;
 
   document.getElementById("selesai").textContent =
     data.filter(
-      x => x.status === "Selesai"
+      item => item.status === "Selesai"
     ).length;
 
   document.getElementById("revenue").textContent =
     money(
       data.reduce(
-        (a,b) =>
+        (a,b)=>
           a + Number(b.biaya || 0),
         0
       )
@@ -235,13 +329,57 @@ function render(data){
 
   document.getElementById("belum").textContent =
     data.filter(
-      x => x.pembayaran === "Belum Bayar"
+      item =>
+      item.pembayaran === "Belum Bayar"
     ).length;
 
   document.getElementById("dp").textContent =
     data.filter(
-      x => x.pembayaran === "DP"
+      item =>
+      item.pembayaran === "DP"
     ).length;
+
+  const todayDate = new Date();
+
+  let todayCount = 0;
+
+  let lateCount = 0;
+
+  data.forEach(item=>{
+
+    if(!item.deadline) return;
+
+    const deadlineDate =
+      new Date(item.deadline);
+
+    const diff =
+      Math.floor(
+        (todayDate - deadlineDate) /
+        (1000*60*60*24)
+      );
+
+    if(diff === 0){
+
+      todayCount++;
+
+    }
+
+    if(
+      diff > 0 &&
+      item.status !== "Selesai"
+    ){
+
+      lateCount++;
+
+    }
+
+  });
+
+  document.getElementById("today").textContent =
+    todayCount;
+
+  document.getElementById("late").textContent =
+    lateCount;
 
   data.sort((a,b)=>{
 
@@ -249,8 +387,10 @@ function render(data){
 
     if(!b.deadline) return -1;
 
-    return new Date(a.deadline)
-      - new Date(b.deadline);
+    return (
+      new Date(a.deadline)
+      - new Date(b.deadline)
+    );
 
   });
 
@@ -268,11 +408,11 @@ function render(data){
 
     card.className = "order";
 
-    card.dataset.search =
-      `${item.id}
-       ${item.wa}
-       ${item.jenis}`
-      .toLowerCase();
+    card.dataset.search = `
+      ${item.id || ""}
+      ${item.wa || ""}
+      ${item.jenis || ""}
+    `.toLowerCase();
 
     card.innerHTML = `
 
@@ -289,7 +429,7 @@ function render(data){
       </div>
 
       <div class="row">
-        ${money(item.biaya)}
+        💰 ${money(item.biaya)}
       </div>
 
       <div class="row">
@@ -315,7 +455,7 @@ document
 .getElementById("search")
 .addEventListener("keyup",e=>{
 
-  const q =
+  const keyword =
     e.target.value.toLowerCase();
 
   document
@@ -323,7 +463,7 @@ document
   .forEach(card=>{
 
     card.style.display =
-      card.dataset.search.includes(q)
+      card.dataset.search.includes(keyword)
       ? "block"
       : "none";
 
@@ -341,6 +481,7 @@ setInterval(
 lucide.createIcons();
 
 </script>
+
 
 </body>
 </html>
