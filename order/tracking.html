@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primajana - Tracking Pesanan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0d53ff,#00145a);
+min-height:100vh;
+color:white;
+}
+
+.container{
+width:95%;
+max-width:1200px;
+margin:auto;
+padding:40px 0;
+}
+
+.hero{
+text-align:center;
+margin-bottom:40px;
+}
+
+.hero h1{
+font-size:48px;
+font-weight:800;
+}
+
+.hero p{
+opacity:.85;
+margin-top:10px;
+}
+
+.search-box{
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.15);
+padding:25px;
+border-radius:24px;
+display:flex;
+gap:15px;
+margin-bottom:30px;
+}
+
+.search-box input{
+flex:1;
+padding:16px;
+border:none;
+border-radius:16px;
+font-size:16px;
+}
+
+.search-box button{
+padding:16px 28px;
+border:none;
+border-radius:16px;
+background:#00d26a;
+color:white;
+font-weight:700;
+cursor:pointer;
+}
+
+.results{
+display:grid;
+gap:18px;
+}
+
+.card{
+background:white;
+color:#0f172a;
+border-radius:22px;
+padding:22px;
+}
+
+.card-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.order-id{
+font-size:14px;
+color:#64748b;
+}
+
+.title{
+font-size:22px;
+font-weight:700;
+}
+
+.badge{
+padding:8px 12px;
+border-radius:999px;
+font-size:12px;
+font-weight:700;
+}
+
+.status-order{
+background:#dbeafe;
+color:#1d4ed8;
+}
+
+.status-done{
+background:#dcfce7;
+color:#166534;
+}
+
+.status-payment-lunas{
+background:#dcfce7;
+color:#166534;
+}
+
+.status-payment-dp{
+background:#ede9fe;
+color:#6d28d9;
+}
+
+.status-payment-belum{
+background:#fee2e2;
+color:#b91c1c;
+}
+
+.info{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:14px;
+margin-top:15px;
+}
+
+.box{
+background:#f8fafc;
+padding:14px;
+border-radius:14px;
+}
+
+.box small{
+display:block;
+color:#64748b;
+}
+
+.box strong{
+display:block;
+margin-top:4px;
+}
+
+.progress-section{
+margin-top:20px;
+}
+
+.progress-bar{
+height:16px;
+background:#e2e8f0;
+border-radius:999px;
+overflow:hidden;
+margin-top:8px;
+}
+
+.progress-fill{
+height:100%;
+background:#0d53ff;
+}
+
+.empty{
+text-align:center;
+padding:50px;
+background:rgba(255,255,255,.12);
+border-radius:24px;
+}
+
+.footer-note{
+margin-top:30px;
+text-align:center;
+opacity:.75;
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:32px;
+}
+
+.search-box{
+flex-direction:column;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="hero">
+
+<h1>Cek Status Pesanan Anda</h1>
+
+<p>
+Masukkan nomor WhatsApp yang digunakan saat melakukan pemesanan.
+</p>
+
+</div>
+
+<div class="search-box">
+
+<input
+type="text"
+id="waInput"
+placeholder="Contoh: 08123456789"
+>
+
+<button onclick="searchOrder()">
+Lihat Status
+</button>
+
+</div>
+
+<div id="results" class="results"></div>
+
+<div class="footer-note">
+PT Primajana Bagia Mesari • Tracking Portal
+</div>
+
+</div>
+
+<script>
+
+const API_URL="PASTE_URL_APPS_SCRIPT_DISINI";
+
+let allOrders=[];
+
+async function loadData(){
+
+if(API_URL==="PASTE_URL_APPS_SCRIPT_DISINI"){
+
+allOrders=[
+{
+id:"PJ-260001",
+wa:"08123456789",
+jenis:"Design PPT",
+deadline:"2026-06-30",
+status:"Dikerjakan",
+pembayaran:"DP",
+biaya:"250000"
+},
+{
+id:"PJ-260002",
+wa:"08123456789",
+jenis:"Pengajuan HKI",
+deadline:"2026-07-15",
+status:"Selesai",
+pembayaran:"Lunas",
+biaya:"350000"
+},
+{
+id:"PJ-260003",
+wa:"08111111111",
+jenis:"Design Poster",
+deadline:"2026-06-28",
+status:"Menunggu Pembayaran",
+pembayaran:"Belum Bayar",
+biaya:"125000"
+}
+];
+
+return;
+}
+
+const res=await fetch(API_URL);
+allOrders=await res.json();
+
+}
+
+function progressPercent(status){
+
+const map={
+"Order Masuk":10,
+"Menunggu Pembayaran":20,
+"DP":35,
+"Dikerjakan":60,
+"Revisi":80,
+"Pelunasan":90,
+"Selesai":100
+};
+
+return map[status]||0;
+
+}
+
+function paymentBadge(status){
+
+if(status==="Lunas"){
+return "status-payment-lunas";
+}
+
+if(status==="DP"){
+return "status-payment-dp";
+}
+
+return "status-payment-belum";
+
+}
+
+function searchOrder(){
+
+const wa=document
+.getElementById("waInput")
+.value
+.trim();
+
+const results=document
+.getElementById("results");
+
+results.innerHTML="";
+
+const orders=allOrders.filter(
+x=>x.wa===wa
+);
+
+if(orders.length===0){
+
+results.innerHTML=`
+<div class="empty">
+<h3>Pesanan Tidak Ditemukan</h3>
+<p>
+Nomor WhatsApp tidak ditemukan dalam sistem.
+</p>
+</div>
+`;
+
+return;
+
+}
+
+orders.forEach(order=>{
+
+const progress=progressPercent(order.status);
+
+results.innerHTML+=`
+<div class="card">
+
+<div class="card-header">
+
+<div>
+
+<div class="order-id">
+${order.id}
+</div>
+
+<div class="title">
+${order.jenis}
+</div>
+
+</div>
+
+<div>
+
+<span class="badge ${order.status==="Selesai" ? "status-done" : "status-order"}">
+${order.status}
+</span>
+
+</div>
+
+</div>
+
+<div class="info">
+
+<div class="box">
+<small>Nomor WhatsApp</small>
+<strong>${order.wa}</strong>
+</div>
+
+<div class="box">
+<small>Status Pembayaran</small>
+<strong>
+<span class="badge ${paymentBadge(order.pembayaran)}">
+${order.pembayaran}
+</span>
+</strong>
+</div>
+
+<div class="box">
+<small>Deadline</small>
+<strong>${order.deadline}</strong>
+</div>
+
+<div class="box">
+<small>Biaya</small>
+<strong>
+Rp${Number(order.biaya).toLocaleString("id-ID")}
+</strong>
+</div>
+
+</div>
+
+<div class="progress-section">
+
+<div>
+Progress Pengerjaan
+</div>
+
+<div class="progress-bar">
+
+<div
+class="progress-fill"
+style="width:${progress}%"
+>
+</div>
+
+</div>
+
+<div style="margin-top:6px;font-size:13px;">
+${progress}% selesai
+</div>
+
+</div>
+
+</div>
+`;
+
+});
+
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>
