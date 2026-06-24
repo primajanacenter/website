@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primajana Finance Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{
+background:linear-gradient(135deg,#0d53ff,#00145a);
+color:white;
+min-height:100vh;
+}
+.container{
+width:95%;
+max-width:1600px;
+margin:auto;
+padding:24px 0;
+}
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:24px;
+}
+.logo{
+font-size:30px;
+font-weight:800;
+}
+.subtitle{
+opacity:.8;
+}
+.panel{
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.15);
+border-radius:24px;
+padding:20px;
+}
+.kpis{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:16px;
+margin-bottom:24px;
+}
+.kpi{
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(14px);
+border-radius:22px;
+padding:20px;
+}
+.kpi h4{
+font-size:13px;
+opacity:.8;
+}
+.kpi .value{
+font-size:30px;
+font-weight:800;
+margin-top:8px;
+}
+.grid{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:20px;
+margin-bottom:24px;
+}
+canvas{
+background:white;
+border-radius:18px;
+padding:12px;
+}
+.table-wrap{
+overflow:auto;
+}
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+color:#0f172a;
+border-radius:18px;
+overflow:hidden;
+}
+th{
+background:#003bdb;
+color:white;
+padding:14px;
+text-align:left;
+}
+td{
+padding:12px;
+border-bottom:1px solid #e2e8f0;
+}
+.badge{
+padding:6px 10px;
+border-radius:999px;
+font-size:12px;
+font-weight:600;
+}
+.lunas{background:#dcfce7;color:#166534;}
+.dp{background:#ede9fe;color:#6d28d9;}
+.belum{background:#fee2e2;color:#b91c1c;}
+
+@media(max-width:1000px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<div>
+<div class="logo">PRIMAJANA</div>
+<div class="subtitle">Finance Dashboard</div>
+</div>
+</div>
+
+<div class="kpis">
+
+<div class="kpi">
+<h4>Total Revenue</h4>
+<div class="value" id="totalRevenue">Rp0</div>
+</div>
+
+<div class="kpi">
+<h4>Revenue Bulan Ini</h4>
+<div class="value" id="monthRevenue">Rp0</div>
+</div>
+
+<div class="kpi">
+<h4>Piutang</h4>
+<div class="value" id="piutang">Rp0</div>
+</div>
+
+<div class="kpi">
+<h4>DP Berjalan</h4>
+<div class="value" id="dpValue">Rp0</div>
+</div>
+
+<div class="kpi">
+<h4>Lunas</h4>
+<div class="value" id="lunasCount">0</div>
+</div>
+
+<div class="kpi">
+<h4>Belum Bayar</h4>
+<div class="value" id="belumCount">0</div>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="panel">
+<h3 style="margin-bottom:15px">Revenue per Bulan</h3>
+<canvas id="revenueChart"></canvas>
+</div>
+
+<div class="panel">
+<h3 style="margin-bottom:15px">Ringkasan Pembayaran</h3>
+
+<div style="display:flex;justify-content:space-between;margin-bottom:12px">
+<span>Lunas</span>
+<strong id="sumLunas">Rp0</strong>
+</div>
+
+<div style="display:flex;justify-content:space-between;margin-bottom:12px">
+<span>DP</span>
+<strong id="sumDP">Rp0</strong>
+</div>
+
+<div style="display:flex;justify-content:space-between;margin-bottom:12px">
+<span>Belum Bayar</span>
+<strong id="sumBelum">Rp0</strong>
+</div>
+
+</div>
+
+</div>
+
+<div class="panel table-wrap">
+
+<h3 style="margin-bottom:15px">Rekap Keuangan Order</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>ID Order</th>
+<th>Jenis Order</th>
+<th>Status Pembayaran</th>
+<th>Biaya</th>
+</tr>
+</thead>
+
+<tbody id="financeTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+const API_URL="PASTE_URL_APPS_SCRIPT_DISINI";
+
+function rupiah(v){
+return "Rp"+Number(v||0).toLocaleString("id-ID");
+}
+
+let chart=null;
+
+async function loadData(){
+
+if(API_URL==="PASTE_URL_APPS_SCRIPT_DISINI"){
+
+const demo=[
+{id:"PJ-260001",jenis:"Design PPT",bulan:"Juni",pembayaran:"DP",biaya:250000},
+{id:"PJ-260002",jenis:"HKI",bulan:"Juni",pembayaran:"Lunas",biaya:350000},
+{id:"PJ-260003",jenis:"Poster",bulan:"Mei",pembayaran:"Belum Bayar",biaya:125000},
+{id:"PJ-260004",jenis:"Analisis Data",bulan:"April",pembayaran:"Lunas",biaya:750000},
+{id:"PJ-260005",jenis:"Modul",bulan:"April",pembayaran:"DP",biaya:500000}
+];
+
+render(demo);
+return;
+}
+
+const res=await fetch(API_URL);
+const data=await res.json();
+
+render(data);
+
+}
+
+function render(data){
+
+let totalRevenue=0;
+let piutang=0;
+let dpValue=0;
+let lunasCount=0;
+let belumCount=0;
+
+const monthly={};
+
+data.forEach(d=>{
+
+const biaya=Number(d.biaya||0);
+
+totalRevenue+=biaya;
+
+monthly[d.bulan]=(monthly[d.bulan]||0)+biaya;
+
+if(d.pembayaran==="Belum Bayar"){
+piutang+=biaya;
+belumCount++;
+}
+
+if(d.pembayaran==="DP"){
+dpValue+=biaya;
+}
+
+if(d.pembayaran==="Lunas"){
+lunasCount++;
+}
+
+});
+
+document.getElementById("totalRevenue").textContent=rupiah(totalRevenue);
+document.getElementById("monthRevenue").textContent=rupiah(totalRevenue);
+document.getElementById("piutang").textContent=rupiah(piutang);
+document.getElementById("dpValue").textContent=rupiah(dpValue);
+document.getElementById("lunasCount").textContent=lunasCount;
+document.getElementById("belumCount").textContent=belumCount;
+
+document.getElementById("sumLunas").textContent=rupiah(
+data.filter(x=>x.pembayaran==="Lunas")
+.reduce((a,b)=>a+Number(b.biaya||0),0)
+);
+
+document.getElementById("sumDP").textContent=rupiah(dpValue);
+
+document.getElementById("sumBelum").textContent=rupiah(piutang);
+
+document.getElementById("financeTable").innerHTML=
+data.map(x=>`
+<tr>
+<td>${x.id}</td>
+<td>${x.jenis}</td>
+<td>
+<span class="badge ${x.pembayaran==="Lunas"?"lunas":x.pembayaran==="DP"?"dp":"belum"}">
+${x.pembayaran}
+</span>
+</td>
+<td>${rupiah(x.biaya)}</td>
+</tr>
+`).join('');
+
+const labels=Object.keys(monthly);
+const values=Object.values(monthly);
+
+if(chart) chart.destroy();
+
+chart=new Chart(
+document.getElementById("revenueChart"),
+{
+type:'bar',
+data:{
+labels:labels,
+datasets:[{
+label:'Revenue',
+data:values
+}]
+},
+options:{
+responsive:true
+}
+}
+);
+
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>
