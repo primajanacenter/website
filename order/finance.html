@@ -58,9 +58,11 @@ font-size:13px;
 opacity:.8;
 }
 .kpi .value{
-font-size:30px;
+font-size:28px;
 font-weight:800;
 margin-top:8px;
+line-height:1.2;
+word-break:break-word;
 }
 .grid{
 display:grid;
@@ -72,6 +74,8 @@ canvas{
 background:white;
 border-radius:18px;
 padding:12px;
+width:100% !important;
+max-width:100%;
 }
 .table-wrap{
 overflow:auto;
@@ -109,6 +113,174 @@ font-weight:600;
 grid-template-columns:1fr;
 }
 }
+
+/* ==========================
+TABLET
+========================== */
+
+@media(max-width:1000px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.container{
+width:96%;
+}
+
+}
+
+/* ==========================
+MOBILE
+========================== */
+
+@media(max-width:768px){
+
+.container{
+width:100%;
+padding:15px;
+}
+
+.header{
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
+margin-bottom:20px;
+}
+
+.logo{
+font-size:24px;
+}
+
+.subtitle{
+font-size:13px;
+}
+
+.kpis{
+
+grid-template-columns:
+repeat(2,minmax(0,1fr));
+
+gap:12px;
+
+}
+
+.kpi{
+
+padding:15px;
+border-radius:18px;
+
+}
+
+.kpi h4{
+
+font-size:12px;
+
+}
+
+.kpi .value{
+
+font-size:18px;
+line-height:1.3;
+word-break:break-word;
+
+}
+
+.panel{
+
+padding:15px;
+border-radius:18px;
+
+}
+
+.panel h3{
+
+font-size:16px;
+
+}
+
+canvas{
+
+height:280px !important;
+padding:10px;
+
+}
+
+.table-wrap{
+
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
+
+}
+
+table{
+
+min-width:700px;
+
+}
+
+th{
+
+padding:10px;
+font-size:12px;
+
+}
+
+td{
+
+padding:10px;
+font-size:12px;
+
+}
+
+.badge{
+
+font-size:11px;
+padding:5px 8px;
+
+}
+
+}
+
+/* ==========================
+SMALL MOBILE
+========================== */
+
+@media(max-width:480px){
+
+.kpis{
+
+grid-template-columns:1fr;
+
+}
+
+.logo{
+
+font-size:22px;
+
+}
+
+.kpi .value{
+
+font-size:20px;
+
+}
+
+.panel{
+
+padding:12px;
+
+}
+
+canvas{
+
+height:240px !important;
+
+}
+
+}
+
+
 </style>
 </head>
 
