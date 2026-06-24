@@ -122,6 +122,154 @@ border-radius:999px;
 font-size:11px;
 }
 .loading{text-align:center;padding:50px}
+
+/* =====================================
+MOBILE RESPONSIVE
+===================================== */
+
+@media screen and (max-width: 768px){
+
+.container{
+padding:12px;
+}
+
+/* Header */
+
+.header{
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
+padding:0 0 15px;
+}
+
+.logo{
+font-size:24px;
+}
+
+.badge{
+font-size:12px;
+padding:6px 10px;
+}
+
+/* KPI */
+
+.kpis{
+grid-template-columns:
+repeat(2,1fr);
+gap:10px;
+}
+
+.card{
+padding:14px;
+border-radius:16px;
+}
+
+.card h3{
+font-size:12px;
+}
+
+.card .v{
+font-size:22px;
+}
+
+/* Search */
+
+.toolbar{
+margin:15px 0;
+}
+
+input{
+padding:12px;
+font-size:14px;
+}
+
+/* Trello Board */
+
+.board{
+gap:12px;
+padding-bottom:20px;
+scroll-snap-type:x mandatory;
+}
+
+.column{
+min-width:280px;
+max-width:280px;
+padding:12px;
+scroll-snap-align:start;
+}
+
+.column h2{
+font-size:16px;
+margin-bottom:10px;
+}
+
+.order{
+padding:12px;
+border-radius:14px;
+}
+
+.order .title{
+font-size:14px;
+}
+
+.row{
+font-size:12px;
+}
+
+.deadline{
+font-size:12px;
+}
+
+/* Badge */
+
+.success,
+.warning,
+.danger,
+.warn,
+.today{
+font-size:10px;
+padding:4px 7px;
+}
+
+/* Loading */
+
+.loading{
+padding:30px 10px;
+font-size:14px;
+}
+
+}
+
+/* =====================================
+SMALL PHONE
+===================================== */
+
+@media screen and (max-width:480px){
+
+.kpis{
+grid-template-columns:1fr 1fr;
+gap:8px;
+}
+
+.card{
+padding:12px;
+}
+
+.card .v{
+font-size:18px;
+}
+
+.logo{
+font-size:20px;
+}
+
+.column{
+min-width:250px;
+max-width:250px;
+}
+
+}
+
 </style>
 </head>
 <body>
