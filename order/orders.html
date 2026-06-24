@@ -13,7 +13,13 @@ body{background:linear-gradient(135deg,#0d53ff,#00145a);color:#fff}
 .logo{font-size:28px;font-weight:800}
 .panel{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);border-radius:22px;padding:18px;border:1px solid rgba(255,255,255,.15)}
 .filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:20px}
-input,select{padding:14px;border:none;border-radius:14px}
+input,select{
+padding:12px 14px;
+border:none;
+border-radius:14px;
+font-size:14px;
+width:100%;
+}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
 .stat{background:rgba(255,255,255,.12);padding:16px;border-radius:18px}
 .stat h4{font-size:12px;opacity:.8}
@@ -32,6 +38,109 @@ td{padding:12px;border-bottom:1px solid #e2e8f0}
 @media(max-width:900px){
 .filters,.stats{grid-template-columns:1fr}
 }
+
+/* ==================================
+MOBILE RESPONSIVE ORDERS
+================================== */
+
+.mobile-cards{
+display:none;
+}
+
+@media(max-width:768px){
+
+.container{
+width:100%;
+padding:15px;
+}
+
+.header{
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
+margin-bottom:15px;
+}
+
+.logo{
+font-size:20px;
+font-weight:800;
+}
+
+.header div:last-child{
+font-size:13px;
+}
+
+.panel{
+padding:12px;
+}
+
+.filters{
+grid-template-columns:1fr;
+gap:10px;
+}
+
+.stats{
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.stat{
+padding:12px;
+}
+
+.stat div{
+font-size:22px;
+font-weight:800;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.table-wrap{
+display:none;
+}
+
+.mobile-cards{
+display:block;
+}
+
+.mobile-order{
+background:white;
+color:#0f172a;
+border-radius:18px;
+padding:15px;
+margin-bottom:12px;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.mobile-id{
+font-size:12px;
+color:#64748b;
+margin-bottom:6px;
+}
+
+.mobile-title{
+font-weight:700;
+font-size:16px;
+margin-bottom:10px;
+}
+
+.mobile-row{
+font-size:13px;
+margin:5px 0;
+}
+
+.mobile-footer{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:10px;
+padding-top:10px;
+border-top:1px solid #e2e8f0;
+}
+
+}
+
 </style>
 </head>
 <body>
@@ -39,7 +148,13 @@ td{padding:12px;border-bottom:1px solid #e2e8f0}
 <div class="header">
 <div>
 <div class="logo">PRIMAJANA</div>
-<div>Orders Management</div>
+<div>
+Orders Management
+<br>
+<small id="lastUpdate">
+Belum diperbarui
+</small>
+</div>
 </div>
 </div>
 
@@ -86,6 +201,7 @@ td{padding:12px;border-bottom:1px solid #e2e8f0}
 <tbody id="tbody"></tbody>
 </table>
 </div>
+<div id="mobileCards" class="mobile-cards"></div>
 </div>
 
 <script>
@@ -106,14 +222,16 @@ function deadlineBadge(deadline){
 
   if(!deadline) return "";
 
-  const d = new Date(deadline);
+  const today = new Date();
+  today.setHours(0,0,0,0);
 
-  const now = new Date();
+  const dueDate = new Date(deadline);
+  dueDate.setHours(0,0,0,0);
 
   const diff =
     Math.floor(
-      (d - now) /
-      (1000*60*60*24)
+      (dueDate - today) /
+      (1000 * 60 * 60 * 24)
     );
 
   if(diff < 0){
@@ -150,12 +268,28 @@ async function loadData(){
     master =
       await res.json();
 
+      document
+.getElementById("lastUpdate")
+.textContent =
+"Diperbarui: " +
+new Date().toLocaleTimeString(
+'id-ID'
+);
+
     render();
 
   }catch(err){
 
     console.error(err);
 
+    document.getElementById("tbody").innerHTML =
+      `
+      <tr>
+        <td colspan="7">
+          Gagal memuat data
+        </td>
+      </tr>
+      `;
   }
 
 }
@@ -243,10 +377,10 @@ function render(){
   data = data.filter(item=>{
 
     const keyword = `
-      ${item.id}
-      ${item.wa}
-      ${item.jenis}
-      ${item.catatan}
+      ${item.id || ""}
+      ${item.wa || ""}
+      ${item.jenis || ""}
+      ${item.catatan || ""}
     `.toLowerCase();
 
     const searchMatch =
@@ -289,49 +423,90 @@ function render(){
 
       <tr>
 
-        <td>
-          ${item.id || "-"}
-        </td>
+        <td>${item.id || "-"}</td>
+
+        <td>${item.wa || "-"}</td>
+
+        <td>${item.jenis || "-"}</td>
 
         <td>
-          ${item.wa || "-"}
-        </td>
-
-        <td>
-          ${item.jenis || "-"}
-        </td>
-
-        <td>
-
           ${item.deadline || "-"}
-
           <br>
-
           ${deadlineBadge(item.deadline)}
-
         </td>
 
         <td>
-
           ${badgeStatus(item.status)}
-
         </td>
 
         <td>
-
           ${badgePay(item.pembayaran)}
-
         </td>
 
         <td>
-
           ${rupiah(item.biaya)}
-
         </td>
 
       </tr>
 
     `).join("");
+
+  const mobileContainer =
+    document.getElementById("mobileCards");
+
+  if(mobileContainer){
+
+    mobileContainer.innerHTML =
+
+    data.map(item=>`
+
+      <div class="mobile-order">
+
+        <div class="mobile-id">
+          ${item.id || "-"}
+        </div>
+
+        <div class="mobile-title">
+${item.jenis || "-"}
+</div>
+
+<div class="mobile-row">
+${badgeStatus(item.status)}
+</div>
+
+        <div class="mobile-row">
+          📱 ${item.wa || "-"}
+        </div>
+
+        <div class="mobile-row">
+          📅 ${item.deadline || "-"}
+        </div>
+
+        <div class="mobile-row">
+          ${deadlineBadge(item.deadline)}
+        </div>
+
+        <div class="mobile-row">
+          ${badgeStatus(item.status)}
+        </div>
+
+        <div class="mobile-row">
+          ${badgePay(item.pembayaran)}
+        </div>
+
+        <div class="mobile-footer">
+
+          <strong>
+            ${rupiah(item.biaya)}
+          </strong>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+  }
 
   document
     .getElementById("total")
@@ -341,7 +516,6 @@ function render(){
   document
     .getElementById("aktif")
     .textContent =
-
       master.filter(
         item =>
         item.status !== "Selesai"
@@ -350,7 +524,6 @@ function render(){
   document
     .getElementById("done")
     .textContent =
-
       master.filter(
         item =>
         item.status === "Selesai"
@@ -359,18 +532,12 @@ function render(){
   document
     .getElementById("rev")
     .textContent =
-
       rupiah(
-
         master.reduce(
           (a,b)=>
-            a +
-            Number(
-              b.biaya || 0
-            ),
+            a + Number(b.biaya || 0),
           0
         )
-
       );
 
 }
@@ -404,6 +571,7 @@ setInterval(
 );
 
 </script>
+
 
 </body>
 </html>
