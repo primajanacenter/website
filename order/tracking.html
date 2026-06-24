@@ -242,206 +242,393 @@ PT Primajana Bagia Mesari • Tracking Portal
 
 <script>
 
-const API_URL="https://script.google.com/macros/s/AKfycby4tiyVFk_bOgCzhWBoD-V5GCznbUKXfa5BEzbRK1f9rm9toYMBeBuVEL5Xtb2NtmRt/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycby4tiyVFk_bOgCzhWBoD-V5GCznbUKXfa5BEzbRK1f9rm9toYMBeBuVEL5Xtb2NtmRt/exec";
 
-let allOrders=[];
+let allOrders = [];
 
 async function loadData(){
 
-if(API_URL==="https://script.google.com/macros/s/AKfycby4tiyVFk_bOgCzhWBoD-V5GCznbUKXfa5BEzbRK1f9rm9toYMBeBuVEL5Xtb2NtmRt/exec"){
+  try{
 
-allOrders=[
-{
-id:"PJ-260001",
-wa:"08123456789",
-jenis:"Design PPT",
-deadline:"2026-06-30",
-status:"Dikerjakan",
-pembayaran:"DP",
-biaya:"250000"
-},
-{
-id:"PJ-260002",
-wa:"08123456789",
-jenis:"Pengajuan HKI",
-deadline:"2026-07-15",
-status:"Selesai",
-pembayaran:"Lunas",
-biaya:"350000"
-},
-{
-id:"PJ-260003",
-wa:"08111111111",
-jenis:"Design Poster",
-deadline:"2026-06-28",
-status:"Menunggu Pembayaran",
-pembayaran:"Belum Bayar",
-biaya:"125000"
-}
-];
+    const res =
+      await fetch(API_URL);
 
-return;
-}
+    allOrders =
+      await res.json();
 
-const res=await fetch(API_URL);
-allOrders=await res.json();
+  }catch(err){
+
+    console.error(err);
+
+  }
 
 }
 
 function progressPercent(status){
 
-const map={
-"Order Masuk":10,
-"Menunggu Pembayaran":20,
-"DP":35,
-"Dikerjakan":60,
-"Revisi":80,
-"Pelunasan":90,
-"Selesai":100
-};
+  const map = {
 
-return map[status]||0;
+    "Order Masuk":10,
+
+    "Menunggu Pembayaran":20,
+
+    "DP":35,
+
+    "Dikerjakan":60,
+
+    "Revisi":80,
+
+    "Pelunasan":90,
+
+    "Selesai":100
+
+  };
+
+  return map[status] || 0;
 
 }
 
 function paymentBadge(status){
 
-if(status==="Lunas"){
-return "status-payment-lunas";
+  if(status === "Lunas"){
+
+    return "status-payment-lunas";
+
+  }
+
+  if(status === "DP"){
+
+    return "status-payment-dp";
+
+  }
+
+  return "status-payment-belum";
+
 }
 
-if(status==="DP"){
-return "status-payment-dp";
-}
+function generateTimeline(status){
 
-return "status-payment-belum";
+  const steps = [
+
+    "Order Masuk",
+
+    "Menunggu Pembayaran",
+
+    "DP",
+
+    "Dikerjakan",
+
+    "Revisi",
+
+    "Pelunasan",
+
+    "Selesai"
+
+  ];
+
+  const current =
+    steps.indexOf(status);
+
+  return steps.map((step,index)=>`
+
+    <div class="timeline-item">
+
+      <span class="${
+        index <= current
+          ? "timeline-done"
+          : "timeline-pending"
+      }">
+
+        ${index <= current ? "✓" : "○"}
+
+      </span>
+
+      ${step}
+
+    </div>
+
+  `).join("");
 
 }
 
 function searchOrder(){
 
-const wa=document
+  const wa =
+    document
+      .getElementById("waInput")
+      .value
+      .trim();
+
+  const results =
+    document
+      .getElementById("results");
+
+  results.innerHTML = "";
+
+  if(!wa){
+
+    results.innerHTML = `
+      <div class="empty">
+        <h3>
+          Masukkan Nomor WhatsApp
+        </h3>
+      </div>
+    `;
+
+    return;
+
+  }
+
+  const orders =
+    allOrders.filter(
+      item =>
+      item.wa === wa
+    );
+
+  if(orders.length === 0){
+
+    results.innerHTML = `
+      <div class="empty">
+
+        <h3>
+          Pesanan Tidak Ditemukan
+        </h3>
+
+        <p>
+
+          Nomor WhatsApp tidak ditemukan
+          dalam sistem.
+
+        </p>
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+  orders.forEach(order=>{
+
+    const progress =
+      progressPercent(
+        order.status
+      );
+
+    results.innerHTML += `
+
+      <div class="card">
+
+        <div class="card-header">
+
+          <div>
+
+            <div class="order-id">
+
+              ${order.id || "-"}
+
+            </div>
+
+            <div class="title">
+
+              ${order.jenis || "-"}
+
+            </div>
+
+          </div>
+
+          <div>
+
+            <span class="badge ${
+              order.status === "Selesai"
+                ? "status-done"
+                : "status-order"
+            }">
+
+              ${order.status || "-"}
+
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="info">
+
+          <div class="box">
+
+            <small>
+              Nomor WhatsApp
+            </small>
+
+            <strong>
+              ${order.wa || "-"}
+            </strong>
+
+          </div>
+
+          <div class="box">
+
+            <small>
+              Status Pembayaran
+            </small>
+
+            <strong>
+
+              <span class="badge ${paymentBadge(order.pembayaran)}">
+
+                ${order.pembayaran || "-"}
+
+              </span>
+
+            </strong>
+
+          </div>
+
+          <div class="box">
+
+            <small>
+              Deadline
+            </small>
+
+            <strong>
+
+              ${order.deadline || "-"}
+
+            </strong>
+
+          </div>
+
+          <div class="box">
+
+            <small>
+              Biaya
+            </small>
+
+            <strong>
+
+              Rp ${Number(
+                order.biaya || 0
+              ).toLocaleString("id-ID")}
+
+            </strong>
+
+          </div>
+
+        </div>
+
+        <div class="progress-section">
+
+          <div>
+
+            Progress Pengerjaan
+
+          </div>
+
+          <div class="progress-bar">
+
+            <div
+              class="progress-fill"
+              style="width:${progress}%"
+            ></div>
+
+          </div>
+
+          <div style="margin-top:6px;font-size:13px;">
+
+            ${progress}% selesai
+
+          </div>
+
+        </div>
+
+        <div class="timeline">
+
+          ${generateTimeline(
+            order.status
+          )}
+
+        </div>
+
+        ${
+          order.link
+
+          ? `
+
+          <div style="margin-top:15px;">
+
+            <a
+              href="${order.link}"
+              target="_blank"
+              class="download-btn"
+            >
+
+              Lihat / Download Hasil
+
+            </a>
+
+          </div>
+
+          `
+
+          : ""
+
+        }
+
+        ${
+          order.tanggal_selesai
+
+          ? `
+
+          <div style="margin-top:10px;">
+
+            <small>
+
+              Tanggal Selesai:
+              ${order.tanggal_selesai}
+
+            </small>
+
+          </div>
+
+          `
+
+          : ""
+
+        }
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+document
 .getElementById("waInput")
-.value
-.trim();
+.addEventListener(
+  "keypress",
+  e=>{
 
-const results=document
-.getElementById("results");
+    if(e.key === "Enter"){
 
-results.innerHTML="";
+      searchOrder();
 
-const orders=allOrders.filter(
-x=>x.wa===wa
+    }
+
+  }
 );
-
-if(orders.length===0){
-
-results.innerHTML=`
-<div class="empty">
-<h3>Pesanan Tidak Ditemukan</h3>
-<p>
-Nomor WhatsApp tidak ditemukan dalam sistem.
-</p>
-</div>
-`;
-
-return;
-
-}
-
-orders.forEach(order=>{
-
-const progress=progressPercent(order.status);
-
-results.innerHTML+=`
-<div class="card">
-
-<div class="card-header">
-
-<div>
-
-<div class="order-id">
-${order.id}
-</div>
-
-<div class="title">
-${order.jenis}
-</div>
-
-</div>
-
-<div>
-
-<span class="badge ${order.status==="Selesai" ? "status-done" : "status-order"}">
-${order.status}
-</span>
-
-</div>
-
-</div>
-
-<div class="info">
-
-<div class="box">
-<small>Nomor WhatsApp</small>
-<strong>${order.wa}</strong>
-</div>
-
-<div class="box">
-<small>Status Pembayaran</small>
-<strong>
-<span class="badge ${paymentBadge(order.pembayaran)}">
-${order.pembayaran}
-</span>
-</strong>
-</div>
-
-<div class="box">
-<small>Deadline</small>
-<strong>${order.deadline}</strong>
-</div>
-
-<div class="box">
-<small>Biaya</small>
-<strong>
-Rp${Number(order.biaya).toLocaleString("id-ID")}
-</strong>
-</div>
-
-</div>
-
-<div class="progress-section">
-
-<div>
-Progress Pengerjaan
-</div>
-
-<div class="progress-bar">
-
-<div
-class="progress-fill"
-style="width:${progress}%"
->
-</div>
-
-</div>
-
-<div style="margin-top:6px;font-size:13px;">
-${progress}% selesai
-</div>
-
-</div>
-
-</div>
-`;
-
-});
-
-}
 
 loadData();
 
+setInterval(
+  loadData,
+  60000
+);
+
 </script>
+
 
 </body>
 </html>
