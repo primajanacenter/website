@@ -211,127 +211,276 @@ grid-template-columns:1fr;
 
 <script>
 
-const API_URL="https://script.google.com/macros/s/AKfycby4tiyVFk_bOgCzhWBoD-V5GCznbUKXfa5BEzbRK1f9rm9toYMBeBuVEL5Xtb2NtmRt/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycby4tiyVFk_bOgCzhWBoD-V5GCznbUKXfa5BEzbRK1f9rm9toYMBeBuVEL5Xtb2NtmRt/exec";
 
-function rupiah(v){
-return "Rp"+Number(v||0).toLocaleString("id-ID");
+let chart = null;
+
+function rupiah(value){
+
+  return "Rp " +
+    Number(value || 0)
+      .toLocaleString("id-ID");
+
 }
-
-let chart=null;
 
 async function loadData(){
 
-if(API_URL==="https://script.google.com/macros/s/AKfycby4tiyVFk_bOgCzhWBoD-V5GCznbUKXfa5BEzbRK1f9rm9toYMBeBuVEL5Xtb2NtmRt/exec"){
+  try{
 
-const demo=[
-{id:"PJ-260001",jenis:"Design PPT",bulan:"Juni",pembayaran:"DP",biaya:250000},
-{id:"PJ-260002",jenis:"HKI",bulan:"Juni",pembayaran:"Lunas",biaya:350000},
-{id:"PJ-260003",jenis:"Poster",bulan:"Mei",pembayaran:"Belum Bayar",biaya:125000},
-{id:"PJ-260004",jenis:"Analisis Data",bulan:"April",pembayaran:"Lunas",biaya:750000},
-{id:"PJ-260005",jenis:"Modul",bulan:"April",pembayaran:"DP",biaya:500000}
-];
+    const res = await fetch(API_URL);
 
-render(demo);
-return;
-}
+    const data = await res.json();
 
-const res=await fetch(API_URL);
-const data=await res.json();
+    render(data);
 
-render(data);
+  }catch(err){
+
+    console.error(err);
+
+  }
 
 }
 
 function render(data){
 
-let totalRevenue=0;
-let piutang=0;
-let dpValue=0;
-let lunasCount=0;
-let belumCount=0;
+  let totalRevenue = 0;
 
-const monthly={};
+  let piutang = 0;
 
-data.forEach(d=>{
+  let dpValue = 0;
 
-const biaya=Number(d.biaya||0);
+  let lunasCount = 0;
 
-totalRevenue+=biaya;
+  let belumCount = 0;
 
-monthly[d.bulan]=(monthly[d.bulan]||0)+biaya;
+  const monthly = {};
 
-if(d.pembayaran==="Belum Bayar"){
-piutang+=biaya;
-belumCount++;
-}
+  const currentMonth =
+    new Date().toLocaleString(
+      "en-US",
+      {
+        month:"long",
+        year:"numeric"
+      }
+    );
 
-if(d.pembayaran==="DP"){
-dpValue+=biaya;
-}
+  let currentMonthRevenue = 0;
 
-if(d.pembayaran==="Lunas"){
-lunasCount++;
-}
+  data.forEach(item=>{
 
-});
+    const biaya =
+      Number(item.biaya || 0);
 
-document.getElementById("totalRevenue").textContent=rupiah(totalRevenue);
-document.getElementById("monthRevenue").textContent=rupiah(totalRevenue);
-document.getElementById("piutang").textContent=rupiah(piutang);
-document.getElementById("dpValue").textContent=rupiah(dpValue);
-document.getElementById("lunasCount").textContent=lunasCount;
-document.getElementById("belumCount").textContent=belumCount;
+    totalRevenue += biaya;
 
-document.getElementById("sumLunas").textContent=rupiah(
-data.filter(x=>x.pembayaran==="Lunas")
-.reduce((a,b)=>a+Number(b.biaya||0),0)
-);
+    if(item.bulan){
 
-document.getElementById("sumDP").textContent=rupiah(dpValue);
+      monthly[item.bulan] =
+        (monthly[item.bulan] || 0)
+        + biaya;
 
-document.getElementById("sumBelum").textContent=rupiah(piutang);
+    }
 
-document.getElementById("financeTable").innerHTML=
-data.map(x=>`
-<tr>
-<td>${x.id}</td>
-<td>${x.jenis}</td>
-<td>
-<span class="badge ${x.pembayaran==="Lunas"?"lunas":x.pembayaran==="DP"?"dp":"belum"}">
-${x.pembayaran}
-</span>
-</td>
-<td>${rupiah(x.biaya)}</td>
-</tr>
-`).join('');
+    if(item.bulan === currentMonth){
 
-const labels=Object.keys(monthly);
-const values=Object.values(monthly);
+      currentMonthRevenue += biaya;
 
-if(chart) chart.destroy();
+    }
 
-chart=new Chart(
-document.getElementById("revenueChart"),
-{
-type:'bar',
-data:{
-labels:labels,
-datasets:[{
-label:'Revenue',
-data:values
-}]
-},
-options:{
-responsive:true
-}
-}
-);
+    if(item.pembayaran === "Belum Bayar"){
+
+      piutang += biaya;
+
+      belumCount++;
+
+    }
+
+    if(item.pembayaran === "DP"){
+
+      dpValue += biaya;
+
+    }
+
+    if(item.pembayaran === "Lunas"){
+
+      lunasCount++;
+
+    }
+
+  });
+
+  document.getElementById(
+    "totalRevenue"
+  ).textContent =
+    rupiah(totalRevenue);
+
+  document.getElementById(
+    "monthRevenue"
+  ).textContent =
+    rupiah(currentMonthRevenue);
+
+  document.getElementById(
+    "piutang"
+  ).textContent =
+    rupiah(piutang);
+
+  document.getElementById(
+    "dpValue"
+  ).textContent =
+    rupiah(dpValue);
+
+  document.getElementById(
+    "lunasCount"
+  ).textContent =
+    lunasCount;
+
+  document.getElementById(
+    "belumCount"
+  ).textContent =
+    belumCount;
+
+  document.getElementById(
+    "sumLunas"
+  ).textContent =
+    rupiah(
+
+      data
+      .filter(
+        x =>
+        x.pembayaran === "Lunas"
+      )
+      .reduce(
+        (a,b)=>
+          a + Number(b.biaya || 0),
+        0
+      )
+
+    );
+
+  document.getElementById(
+    "sumDP"
+  ).textContent =
+    rupiah(dpValue);
+
+  document.getElementById(
+    "sumBelum"
+  ).textContent =
+    rupiah(piutang);
+
+  const sortedData =
+    [...data].sort((a,b)=>{
+
+      return new Date(b.timestamp)
+      - new Date(a.timestamp);
+
+    });
+
+  document.getElementById(
+    "financeTable"
+  ).innerHTML =
+
+    sortedData.map(item=>`
+
+      <tr>
+
+        <td>${item.id || "-"}</td>
+
+        <td>${item.jenis || "-"}</td>
+
+        <td>
+
+          <span class="badge ${
+            item.pembayaran === "Lunas"
+              ? "lunas"
+              : item.pembayaran === "DP"
+                ? "dp"
+                : "belum"
+          }">
+
+            ${item.pembayaran || "-"}
+
+          </span>
+
+        </td>
+
+        <td>
+
+          ${rupiah(item.biaya)}
+
+        </td>
+
+      </tr>
+
+    `).join("");
+
+  const labels =
+    Object.keys(monthly);
+
+  const values =
+    Object.values(monthly);
+
+  if(chart){
+
+    chart.destroy();
+
+  }
+
+  chart =
+    new Chart(
+
+      document.getElementById(
+        "revenueChart"
+      ),
+
+      {
+
+        type:"bar",
+
+        data:{
+
+          labels:labels,
+
+          datasets:[{
+
+            label:"Revenue",
+
+            data:values
+
+          }]
+
+        },
+
+        options:{
+
+          responsive:true,
+
+          plugins:{
+
+            legend:{
+
+              display:false
+
+            }
+
+          }
+
+        }
+
+      }
+
+    );
 
 }
 
 loadData();
 
+setInterval(
+  loadData,
+  60000
+);
+
 </script>
+
 
 </body>
 </html>
