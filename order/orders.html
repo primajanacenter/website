@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primajana Orders</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:linear-gradient(135deg,#0d53ff,#00145a);color:#fff}
+.container{width:95%;max-width:1600px;margin:auto;padding:24px 0}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.logo{font-size:28px;font-weight:800}
+.panel{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);border-radius:22px;padding:18px;border:1px solid rgba(255,255,255,.15)}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:20px}
+input,select{padding:14px;border:none;border-radius:14px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.stat{background:rgba(255,255,255,.12);padding:16px;border-radius:18px}
+.stat h4{font-size:12px;opacity:.8}
+.stat div{font-size:28px;font-weight:800}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;background:white;color:#0f172a;border-radius:18px;overflow:hidden}
+th{background:#003bdb;color:white;padding:14px;text-align:left;position:sticky;top:0}
+td{padding:12px;border-bottom:1px solid #e2e8f0}
+.badge{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.selesai{background:#dcfce7;color:#166534}
+.proses{background:#dbeafe;color:#1d4ed8}
+.revisi{background:#fed7aa;color:#c2410c}
+.bayar{background:#dcfce7;color:#166534}
+.dp{background:#ede9fe;color:#6d28d9}
+.belum{background:#fee2e2;color:#b91c1c}
+@media(max-width:900px){
+.filters,.stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<div>
+<div class="logo">PRIMAJANA</div>
+<div>Orders Management</div>
+</div>
+</div>
+
+<div class="filters">
+<input id="search" placeholder="Cari WA, ID Order, atau Jenis Order">
+<select id="statusFilter">
+<option value="">Semua Status</option>
+<option>Order Masuk</option>
+<option>Menunggu Pembayaran</option>
+<option>DP</option>
+<option>Dikerjakan</option>
+<option>Revisi</option>
+<option>Pelunasan</option>
+<option>Selesai</option>
+</select>
+<select id="paymentFilter">
+<option value="">Semua Pembayaran</option>
+<option>Belum Bayar</option>
+<option>DP</option>
+<option>Lunas</option>
+</select>
+</div>
+
+<div class="stats">
+<div class="stat"><h4>Total Order</h4><div id="total">0</div></div>
+<div class="stat"><h4>Aktif</h4><div id="aktif">0</div></div>
+<div class="stat"><h4>Selesai</h4><div id="done">0</div></div>
+<div class="stat"><h4>Revenue</h4><div id="rev">Rp0</div></div>
+</div>
+
+<div class="panel table-wrap">
+<table>
+<thead>
+<tr>
+<th>ID Order</th>
+<th>Nomor WA</th>
+<th>Jenis Order</th>
+<th>Deadline</th>
+<th>Status</th>
+<th>Pembayaran</th>
+<th>Biaya</th>
+</tr>
+</thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+</div>
+
+<script>
+const API_URL="PASTE_URL_APPS_SCRIPT_DISINI";
+let master=[];
+
+function rupiah(v){return "Rp"+Number(v||0).toLocaleString("id-ID");}
+
+async function loadData(){
+ if(API_URL==="PASTE_URL_APPS_SCRIPT_DISINI"){
+   master=[
+   {id:"PJ-260001",wa:"08123456789",jenis:"Design PPT",deadline:"2026-06-30",status:"Dikerjakan",pembayaran:"DP",biaya:250000},
+   {id:"PJ-260002",wa:"08111111111",jenis:"HKI",deadline:"2026-07-05",status:"Selesai",pembayaran:"Lunas",biaya:350000},
+   {id:"PJ-260003",wa:"08222222222",jenis:"Poster",deadline:"2026-06-28",status:"Revisi",pembayaran:"Belum Bayar",biaya:125000}
+   ];
+   render();
+   return;
+ }
+ const res=await fetch(API_URL);
+ master=await res.json();
+ render();
+}
+
+function badgeStatus(v){
+ if(v==="Selesai") return '<span class="badge selesai">'+v+'</span>';
+ if(v==="Revisi") return '<span class="badge revisi">'+v+'</span>';
+ return '<span class="badge proses">'+v+'</span>';
+}
+
+function badgePay(v){
+ if(v==="Lunas") return '<span class="badge bayar">'+v+'</span>';
+ if(v==="DP") return '<span class="badge dp">'+v+'</span>';
+ return '<span class="badge belum">'+v+'</span>';
+}
+
+function render(){
+ let data=[...master];
+
+ const q=document.getElementById('search').value.toLowerCase();
+ const sf=document.getElementById('statusFilter').value;
+ const pf=document.getElementById('paymentFilter').value;
+
+ data=data.filter(x=>{
+  const match=(x.id+" "+x.wa+" "+x.jenis).toLowerCase().includes(q);
+  const s=!sf || x.status===sf;
+  const p=!pf || x.pembayaran===pf;
+  return match&&s&&p;
+ });
+
+ document.getElementById('tbody').innerHTML=data.map(x=>`
+ <tr>
+ <td>${x.id}</td>
+ <td>${x.wa}</td>
+ <td>${x.jenis}</td>
+ <td>${x.deadline||'-'}</td>
+ <td>${badgeStatus(x.status)}</td>
+ <td>${badgePay(x.pembayaran)}</td>
+ <td>${rupiah(x.biaya)}</td>
+ </tr>`).join('');
+
+ document.getElementById('total').textContent=master.length;
+ document.getElementById('aktif').textContent=master.filter(x=>x.status!=="Selesai").length;
+ document.getElementById('done').textContent=master.filter(x=>x.status==="Selesai").length;
+ document.getElementById('rev').textContent=rupiah(master.reduce((a,b)=>a+Number(b.biaya||0),0));
+}
+
+document.getElementById('search').addEventListener('keyup',render);
+document.getElementById('statusFilter').addEventListener('change',render);
+document.getElementById('paymentFilter').addEventListener('change',render);
+
+loadData();
+</script>
+</body>
+</html>
