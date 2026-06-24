@@ -171,39 +171,77 @@ z-index:100;
 /* =========================
 MOBILE
 ========================= */
+.top-left{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.menu-toggle{
+display:none;
+border:none;
+background:#2563eb;
+color:white;
+width:40px;
+height:40px;
+border-radius:10px;
+cursor:pointer;
+font-size:18px;
+}
 
 @media(max-width:900px){
 
+body{
+overflow:hidden;
+}
+
+.menu-toggle{
+display:block;
+}
+
 .sidebar{
-width:95px;
-padding:12px;
+
+position:fixed;
+
+top:0;
+left:-280px;
+
+width:260px;
+height:100vh;
+
+z-index:999;
+
+transition:.3s ease;
 }
 
-.brand h1{
-font-size:15px;
+.sidebar.show{
+left:0;
 }
 
-.brand p{
-display:none;
+.wrapper{
+display:block;
 }
 
-.menu button{
-font-size:11px;
-padding:10px 6px;
-text-align:center;
+.content{
+height:100vh;
 }
 
 .topbar{
 padding:0 12px;
+height:60px;
 }
 
 .title{
 font-size:15px;
 }
 
+.actions{
+gap:6px;
+}
+
 .actions button{
 padding:8px 10px;
-font-size:12px;
+font-size:11px;
 }
 
 }
@@ -271,10 +309,20 @@ Primajana Dashboard v1.0
 
 <div class="topbar">
 
+<div class="top-left">
+
+<button
+id="menuToggle"
+class="menu-toggle">
+☰
+</button>
+
 <div
 class="title"
 id="pageTitle">
 Dashboard Utama
+</div>
+
 </div>
 
 <div class="actions">
@@ -328,47 +376,110 @@ document.getElementById("mainFrame");
 const loader =
 document.getElementById("loader");
 
+const sidebar =
+document.querySelector(".sidebar");
+
+const menuToggle =
+document.getElementById("menuToggle");
+
+/* =========================
+MOBILE MENU
+========================= */
+
+if(menuToggle){
+
+menuToggle.addEventListener(
+"click",
+()=>{
+
+sidebar.classList.toggle("show");
+
+}
+);
+
+}
+
+/* =========================
+RESET ACTIVE MENU
+========================= */
+
 function resetMenu(){
 
 document
 .querySelectorAll(".menu button")
 .forEach(btn=>{
+
 btn.classList.remove("active");
+
 });
 
 }
 
+/* =========================
+LOAD PAGE
+========================= */
+
 function loadPage(page,btn,title){
 
-loader.style.display="flex";
+loader.style.display = "flex";
 
 resetMenu();
 
 if(btn){
+
 btn.classList.add("active");
+
 }
 
 document
 .getElementById("pageTitle")
-.textContent=title;
+.textContent = title;
 
-iframe.src=page;
+iframe.src = page;
+
+if(window.innerWidth < 900){
+
+sidebar.classList.remove("show");
 
 }
 
-iframe.onload=function(){
+}
 
-loader.style.display="none";
+/* =========================
+IFRAME LOADED
+========================= */
+
+iframe.onload = function(){
+
+loader.style.display = "none";
 
 };
 
+/* =========================
+FALLBACK LOADER
+========================= */
+
+setTimeout(()=>{
+
+loader.style.display = "none";
+
+},5000);
+
+/* =========================
+REFRESH
+========================= */
+
 function refreshFrame(){
 
-loader.style.display="flex";
+loader.style.display = "flex";
 
-iframe.src=iframe.src;
+iframe.src = iframe.src;
 
 }
+
+/* =========================
+FULLSCREEN
+========================= */
 
 function fullscreenFrame(){
 
@@ -384,9 +495,13 @@ iframe.webkitRequestFullscreen();
 
 }
 
+/* =========================
+HOME
+========================= */
+
 function goHome(){
 
-const btn=
+const btn =
 document.querySelector(".menu button");
 
 loadPage(
@@ -397,7 +512,17 @@ btn,
 
 }
 
+/* =========================
+SPREADSHEET
+========================= */
+
 function openSpreadsheet(){
+
+if(window.innerWidth < 900){
+
+sidebar.classList.remove("show");
+
+}
 
 window.open(
 SPREADSHEET_URL,
@@ -406,13 +531,27 @@ SPREADSHEET_URL,
 
 }
 
+/* =========================
+FORMULIR
+========================= */
+
 function openForm(){
 
-window.open("formulir.html","_blank");
+if(window.innerWidth < 900){
+
+sidebar.classList.remove("show");
+
+}
+
+window.open(
+"formulir.html",
+"_blank"
+);
 
 }
 
 </script>
+
 
 </body>
 </html>
