@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Primajana Control Center</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#f4f7fb;
+overflow:hidden;
+}
+
+.wrapper{
+display:flex;
+height:100vh;
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+width:260px;
+background:#0f172a;
+color:white;
+display:flex;
+flex-direction:column;
+padding:20px;
+overflow-y:auto;
+}
+
+.brand{
+padding-bottom:20px;
+margin-bottom:20px;
+border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.brand h1{
+font-size:22px;
+font-weight:700;
+}
+
+.brand p{
+font-size:13px;
+opacity:.7;
+margin-top:5px;
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.menu button{
+border:none;
+background:transparent;
+color:white;
+padding:14px 16px;
+border-radius:12px;
+cursor:pointer;
+font-size:14px;
+text-align:left;
+transition:.25s;
+}
+
+.menu button:hover{
+background:#1e293b;
+}
+
+.menu button.active{
+background:#2563eb;
+}
+
+.sidebar-footer{
+margin-top:auto;
+padding-top:20px;
+font-size:12px;
+opacity:.7;
+border-top:1px solid rgba(255,255,255,.1);
+}
+
+/* =========================
+CONTENT
+========================= */
+
+.content{
+flex:1;
+display:flex;
+flex-direction:column;
+overflow:hidden;
+}
+
+.topbar{
+height:70px;
+background:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 25px;
+border-bottom:1px solid #e5e7eb;
+}
+
+.title{
+font-size:18px;
+font-weight:700;
+color:#0f172a;
+}
+
+.actions{
+display:flex;
+gap:10px;
+}
+
+.actions button{
+border:none;
+background:#2563eb;
+color:white;
+padding:10px 15px;
+border-radius:10px;
+cursor:pointer;
+font-size:14px;
+}
+
+.actions button:hover{
+background:#1d4ed8;
+}
+
+.viewer{
+flex:1;
+position:relative;
+background:white;
+}
+
+.viewer iframe{
+width:100%;
+height:100%;
+border:none;
+}
+
+/* =========================
+LOADING
+========================= */
+
+.loader{
+position:absolute;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:white;
+font-size:18px;
+font-weight:600;
+color:#2563eb;
+z-index:100;
+}
+
+/* =========================
+MOBILE
+========================= */
+.top-left{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.menu-toggle{
+display:none;
+border:none;
+background:#2563eb;
+color:white;
+width:40px;
+height:40px;
+border-radius:10px;
+cursor:pointer;
+font-size:18px;
+}
+
+@media(max-width:900px){
+
+body{
+overflow:hidden;
+}
+
+.menu-toggle{
+display:block;
+}
+
+.sidebar{
+
+position:fixed;
+
+top:0;
+left:-280px;
+
+width:260px;
+height:100vh;
+
+z-index:999;
+
+transition:.3s ease;
+}
+
+.sidebar.show{
+left:0;
+}
+
+.wrapper{
+display:block;
+}
+
+.content{
+height:100vh;
+}
+
+.topbar{
+padding:0 12px;
+height:60px;
+}
+
+.title{
+font-size:15px;
+}
+
+.actions{
+gap:6px;
+}
+
+.actions button{
+padding:8px 10px;
+font-size:11px;
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="wrapper">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="brand">
+<h1>PRIMAJANA</h1>
+<p>Control Center</p>
+</div>
+
+<div class="menu">
+
+<button
+class="active"
+onclick="loadPage('index.html',this,'Dashboard Utama')">
+🏠 Dashboard
+</button>
+
+<button
+onclick="loadPage('orders.html',this,'Manajemen Order')">
+📋 Orders
+</button>
+
+<button
+onclick="loadPage('finance.html',this,'Keuangan')">
+💰 Finance
+</button>
+
+<button
+onclick="loadPage('tracking.html',this,'Portal Tracking')">
+🔍 Tracking
+</button>
+
+<button
+onclick="openSpreadsheet()">
+📄 Database Order
+</button>
+
+<button
+onclick="openForm()">
+➕ Form Pemesanan
+</button>
+
+</div>
+
+<div class="sidebar-footer">
+Primajana Dashboard v1.0
+</div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+<div class="topbar">
+
+<div class="top-left">
+
+<button
+id="menuToggle"
+class="menu-toggle">
+☰
+</button>
+
+<div
+class="title"
+id="pageTitle">
+Dashboard Utama
+</div>
+
+</div>
+
+<div class="actions">
+
+<button onclick="goHome()">
+🏠 Home
+</button>
+
+<button onclick="refreshFrame()">
+🔄 Refresh
+</button>
+
+<button onclick="fullscreenFrame()">
+⛶ Fullscreen
+</button>
+
+</div>
+
+</div>
+
+<div class="viewer">
+
+<div
+class="loader"
+id="loader">
+Loading...
+</div>
+
+<iframe
+id="mainFrame">
+</iframe>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const SPREADSHEET_URL =
+"https://docs.google.com/spreadsheets/d/1_nj0jRT87SxmulWJyP_hHO7AbHOtITbQl9pqr45M1wA/edit?usp=sharing";
+
+const FORM_URL =
+"https://docs.google.com/forms/d/e/1FAIpQLSet9eugKDcfo2yVErPPRf5jUtRup7sTyiEhmtkIYxCxFd01kw/viewform?usp=header";
+
+const iframe =
+document.getElementById("mainFrame");
+
+const loader =
+document.getElementById("loader");
+
+const sidebar =
+document.querySelector(".sidebar");
+
+const menuToggle =
+document.getElementById("menuToggle");
+
+/* =========================
+CACHE-BUSTING HELPER
+========================= */
+// Ditambahkan supaya iframe SELALU memuat versi terbaru dari
+// index.html/orders.html/dll, bukan versi lama yang ke-cache oleh
+// browser. Ini penting terutama setelah file di server diperbarui
+// (misalnya index.html yang baru saja diperbaiki agar update status
+// berhasil tersimpan ke server) — tanpa ini, iframe bisa saja masih
+// menampilkan file lama dari cache walau file di server sudah baru.
+function withCacheBust(page){
+
+  const sep = page.includes("?") ? "&" : "?";
+
+  return page + sep + "_cb=" + Date.now();
+
+}
+
+/* =========================
+MOBILE MENU
+========================= */
+
+if(menuToggle){
+
+menuToggle.addEventListener(
+"click",
+()=>{
+
+sidebar.classList.toggle("show");
+
+}
+);
+
+}
+
+/* =========================
+RESET ACTIVE MENU
+========================= */
+
+function resetMenu(){
+
+document
+.querySelectorAll(".menu button")
+.forEach(btn=>{
+
+btn.classList.remove("active");
+
+});
+
+}
+
+/* =========================
+LOAD PAGE
+========================= */
+
+function loadPage(page,btn,title){
+
+loader.style.display = "flex";
+
+resetMenu();
+
+if(btn){
+
+btn.classList.add("active");
+
+}
+
+document
+.getElementById("pageTitle")
+.textContent = title;
+
+iframe.src = withCacheBust(page);
+
+if(window.innerWidth < 900){
+
+sidebar.classList.remove("show");
+
+}
+
+}
+
+/* =========================
+IFRAME LOADED
+========================= */
+
+iframe.onload = function(){
+
+loader.style.display = "none";
+
+};
+
+/* =========================
+FALLBACK LOADER
+========================= */
+
+setTimeout(()=>{
+
+loader.style.display = "none";
+
+},5000);
+
+/* =========================
+REFRESH
+========================= */
+
+function refreshFrame(){
+
+loader.style.display = "flex";
+
+// Ambil path asli (buang query cache-bust lama) lalu pasang yang baru,
+// supaya benar-benar minta ulang ke server (bukan dari cache).
+const basePage =
+iframe.src.split("?")[0].split("/").pop();
+
+iframe.src = withCacheBust(basePage);
+
+}
+
+/* =========================
+FULLSCREEN
+========================= */
+
+function fullscreenFrame(){
+
+if(iframe.requestFullscreen){
+
+iframe.requestFullscreen();
+
+}else if(iframe.webkitRequestFullscreen){
+
+iframe.webkitRequestFullscreen();
+
+}
+
+}
+
+/* =========================
+HOME
+========================= */
+
+function goHome(){
+
+const btn =
+document.querySelector(".menu button");
+
+loadPage(
+"index.html",
+btn,
+"Dashboard Utama"
+);
+
+}
+
+/* =========================
+SPREADSHEET
+========================= */
+
+function openSpreadsheet(){
+
+if(window.innerWidth < 900){
+
+sidebar.classList.remove("show");
+
+}
+
+window.open(
+SPREADSHEET_URL,
+"_blank"
+);
+
+}
+
+/* =========================
+FORMULIR
+========================= */
+
+function openForm(){
+
+if(window.innerWidth < 900){
+
+sidebar.classList.remove("show");
+
+}
+
+window.open(
+"formulir.html",
+"_blank"
+);
+
+}
+
+/* =========================
+INITIAL LOAD (dengan cache-bust)
+========================= */
+
+iframe.src = withCacheBust("index.html");
+
+</script>
+
+
+</body>
+</html>
