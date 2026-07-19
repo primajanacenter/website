@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tryout Fisika — Paket 1 | Siap TKA</title>
+<meta name="description" content="Latihan tryout Fisika Paket 1 untuk persiapan TKA SMA/MA — 25 soal Kinematika, Dinamika, Fluida, Gelombang, Kalor &amp; Termodinamika, dan Kelistrikan, timer, skor otomatis, dan pembahasan lengkap.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --wrong:#dc2626;
+    --wrong-bg:#fef2f2;
+    --empty:#b45309;
+    --empty-bg:#fffbeb;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .timer{
+    display:flex;align-items:center;gap:8px;
+    font-variant-numeric:tabular-nums;
+    font-weight:700;font-size:1.05rem;
+    padding:8px 16px;border-radius:999px;
+    background:var(--primary-light);color:var(--primary-dark);
+    border:1px solid #c7d2fe;
+  }
+  .timer.low{background:var(--wrong-bg);color:var(--wrong);border-color:#fecaca;}
+  .timer .icon{font-size:1rem;}
+
+  .screen{display:none;}
+  .screen.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+
+  /* ---- math notation helpers (no external library needed) ---- */
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+    margin:0 3px;line-height:1;position:relative;top:0.16em;font-size:0.9em;}
+  .frac .num{padding:0 4px 2px;border-bottom:1.4px solid currentColor;}
+  .frac .den{padding:2px 4px 0;}
+  .rad{border-top:1.4px solid currentColor;padding:0 3px;margin-left:1px;}
+  sup{font-size:.72em;top:-0.55em;}
+  sub{font-size:.72em;bottom:-0.25em;}
+  .qtable{border-collapse:collapse;margin:14px 0;font-size:.92rem;}
+  .qtable th,.qtable td{border:1px solid var(--border);padding:6px 16px;text-align:center;}
+  .qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  /* START SCREEN */
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+  .hero h1{font-size:1.7rem;margin:0 0 6px;}
+  .hero p.lead{color:var(--muted);margin:0 0 24px;font-size:1rem;}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0;}
+  .info-item{background:var(--primary-light);border-radius:10px;padding:14px 16px;}
+  .info-item .num2{font-size:1.4rem;font-weight:800;color:var(--primary-dark);}
+  .info-item .label{font-size:.82rem;color:var(--muted);margin-top:2px;}
+  .rules{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:16px 18px;margin:20px 0;font-size:.92rem;color:var(--text);}
+  .rules b{color:var(--primary-dark);}
+  .rules ul{margin:8px 0 0;padding-left:20px;}
+  .rules li{margin-bottom:4px;}
+  .topics-list{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 24px;}
+  .topic-chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.82rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+    transition:transform .1s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+  .btn-block{width:100%;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+
+  .resume-banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+  /* QUIZ SCREEN */
+  .quiz-layout{display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start;}
+  @media (max-width:760px){.quiz-layout{grid-template-columns:1fr;}}
+
+  .progress-bar{height:6px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:20px;}
+  .progress-bar .fill{height:100%;background:var(--primary);border-radius:999px;transition:width .2s ease;}
+
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;}
+  .q-index{font-weight:700;color:var(--primary-dark);font-size:.95rem;}
+  .q-topic{font-size:.78rem;color:var(--muted);background:var(--primary-light);padding:4px 10px;border-radius:999px;}
+  .q-type-badge{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:#fef3c7;color:#92400e;}
+  .q-hint{font-size:.82rem;color:var(--muted);margin-bottom:14px;font-style:italic;}
+  .q-text{font-size:1.05rem;margin:0 0 20px;}
+  .q-text img{max-width:100%;}
+
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .option{
+    display:flex;align-items:flex-start;gap:12px;
+    border:1.5px solid var(--border);border-radius:10px;
+    padding:13px 16px;cursor:pointer;font-size:.96rem;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .option:hover{border-color:var(--primary);background:var(--primary-light);}
+  .option.selected{border-color:var(--primary);background:var(--primary-light);}
+  .option .letter{
+    width:26px;height:26px;flex:none;border-radius:50%;
+    border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
+    font-size:.8rem;font-weight:700;color:var(--muted);
+  }
+  .option.mcma .letter{border-radius:7px;}
+  .option.selected .letter{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+  .statement-row{border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+  .statement-text{margin-bottom:12px;font-size:.94rem;}
+  .statement-choices{display:flex;gap:10px;}
+  .choice-btn{flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);cursor:pointer;font-weight:700;font-size:.85rem;text-align:center;color:var(--muted);}
+  .choice-btn:hover{border-color:var(--primary);}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark);}
+
+  .quiz-nav-btns{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+
+  .nav-panel{position:sticky;top:78px;}
+  .nav-panel .card{padding:18px;}
+  .nav-panel h4{margin:0 0 4px;font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:14px 0;}
+  .nav-cell{
+    aspect-ratio:1;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);color:var(--muted);font-size:.78rem;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .nav-cell.answered{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);}
+  .nav-cell.current{outline:2px solid var(--primary);outline-offset:1px;}
+  .legend{display:flex;flex-direction:column;gap:6px;font-size:.78rem;color:var(--muted);margin-top:10px;}
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .legend i{width:12px;height:12px;border-radius:4px;display:inline-block;border:1.5px solid var(--border);}
+  .legend i.a{background:var(--primary-light);border-color:var(--primary);}
+
+  /* RESULT SCREEN */
+  .result-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:24px 0;}
+  .stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+  .stat .val{font-size:1.6rem;font-weight:800;}
+  .stat .lbl{font-size:.78rem;color:var(--muted);margin-top:4px;}
+  .stat.score .val{color:var(--primary-dark);}
+  .stat.correct .val{color:var(--correct);}
+  .stat.wrong .val{color:var(--wrong);}
+  .stat.empty .val{color:var(--empty);}
+
+  .topic-bars{display:flex;flex-direction:column;gap:14px;margin:20px 0 8px;}
+  .topic-bar-row .top{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:6px;}
+  .topic-bar-row .top .name{font-weight:600;}
+  .topic-bar-row .top .frac2{color:var(--muted);}
+  .bar-track{height:9px;background:var(--border);border-radius:999px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--primary);border-radius:999px;}
+
+  .section-title{font-size:1.1rem;margin:32px 0 14px;font-weight:700;}
+  .review-item{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--surface);}
+  .review-item summary{
+    list-style:none;cursor:pointer;padding:14px 18px;
+    display:flex;align-items:center;gap:12px;font-weight:600;font-size:.92rem;flex-wrap:wrap;
+  }
+  .review-item summary::-webkit-details-marker{display:none;}
+  .review-item summary .chev{margin-left:auto;color:var(--muted);font-size:.8rem;}
+  .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;flex:none;}
+  .badge.correct{background:var(--correct-bg);color:var(--correct);}
+  .badge.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .badge.empty{background:var(--empty-bg);color:var(--empty);}
+  .badge.typebadge{background:#fef3c7;color:#92400e;}
+  .review-body{padding:0 18px 20px;border-top:1px solid var(--border);}
+  .review-body .q-text{font-size:.96rem;margin:16px 0;}
+  .review-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .review-opt{display:flex;gap:10px;padding:9px 13px;border-radius:8px;border:1px solid var(--border);font-size:.9rem;align-items:center;}
+  .review-opt .letter{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex:none;}
+  .review-opt.is-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-opt.is-correct .letter{background:var(--correct);border-color:var(--correct);color:#fff;}
+  .review-opt.is-wrong-pick{background:var(--wrong-bg);border-color:#fecaca;}
+  .review-opt.is-wrong-pick .letter{background:var(--wrong);border-color:var(--wrong);color:#fff;}
+  .opt-tag{margin-left:auto;font-size:.72rem;color:var(--muted);font-style:italic;}
+  .review-statement{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;font-size:.9rem;}
+  .review-statement.st-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-statement.st-wrong{background:var(--wrong-bg);border-color:#fecaca;}
+  .st-answer{font-size:.78rem;font-weight:700;flex:none;}
+  .pembahasan{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:.9rem;}
+  .pembahasan b{color:var(--primary-dark);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html" class="active">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <!-- START SCREEN -->
+  <section class="screen active" id="screen-start">
+    <div class="card hero">
+      <div id="resumeBanner" style="display:none;" class="resume-banner">
+        <span>Kamu punya progres tryout yang belum selesai.</span>
+        <div class="btn-row" style="margin:0;">
+          <button class="btn btn-primary" id="btnResume">Lanjutkan Tryout</button>
+          <button class="btn btn-ghost" id="btnRestartFresh">Mulai Baru</button>
+        </div>
+      </div>
+
+      <span class="pill pill-gratis">Gratis</span>
+      <h1>Tryout Fisika &mdash; Paket 1</h1>
+      <p class="lead">Simulasi latihan mandiri mengikuti ketentuan resmi TKA 2026: mata uji pilihan Fisika jenjang SMA/MA, mengacu Kerangka Asesmen TKA (Perka BSKAP Kemendikdasmen No. 045/H/AN/2025) &mdash; pemahaman konseptual, penerapan, dan analisis-evaluasi fenomena fisika.</p>
+
+      <div class="info-grid">
+        <div class="info-item"><div class="num2">25</div><div class="label">Soal (campuran bentuk)</div></div>
+        <div class="info-item"><div class="num2">75:00</div><div class="label">Menit pengerjaan</div></div>
+        <div class="info-item"><div class="num2">6</div><div class="label">Elemen materi</div></div>
+        <div class="info-item"><div class="num2">1/6</div><div class="label">Paket soal</div></div>
+      </div>
+
+      <div class="rules">
+        <b>Bentuk soal</b> (sesuai ketentuan resmi TKA):
+        <ul>
+          <li><b>Pilihan Ganda</b> &mdash; satu jawaban paling tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</b> &mdash; bisa lebih dari satu jawaban benar, semua harus dipilih dengan tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Benar/Salah)</b> &mdash; beberapa pernyataan, tiap pernyataan direspons Benar atau Salah.</li>
+        </ul>
+        <b style="display:block;margin-top:10px;">Sistem penilaian per soal (konvensi latihan, bukan rumus resmi Kemendikdasmen):</b> Seluruhnya terjawab tepat <b>+4</b>, ada bagian yang keliru <b>&minus;1</b>, tidak dijawab sama sekali <b>0</b>. Skor maksimum <b>100</b>. TKA sesungguhnya dilaporkan sebagai skor terstandar (bukan skor mentah seperti ini), jadi anggap skor di sini sebagai indikator latihan saja.<br>
+        Pembahasan lengkap tampil setelah kamu menekan <b>Selesai &amp; Lihat Hasil</b>, atau otomatis saat waktu habis. Progres tersimpan otomatis di perangkat ini.
+      </div>
+
+      <div class="topics-list">
+        <span class="topic-chip">Kinematika</span>
+        <span class="topic-chip">Dinamika</span>
+        <span class="topic-chip">Fluida</span>
+        <span class="topic-chip">Gelombang</span>
+        <span class="topic-chip">Kalor &amp; Termodinamika</span>
+        <span class="topic-chip">Kelistrikan</span>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="btnStart" style="font-size:1rem;padding:15px;">Mulai Tryout</button>
+    </div>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz-top">
+      <div style="font-weight:700;color:var(--muted);font-size:.86rem;">Tryout Fisika &middot; Paket 1</div>
+      <div class="timer" id="timerDisplay" style="display:none;"><span class="icon">&#9201;</span><span id="timerText">75:00</span></div>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progressFill" style="width:4%;"></div></div>
+    <div class="quiz-layout">
+      <div class="card">
+        <div class="q-meta">
+          <span class="q-index" id="qIndexLabel">Soal 1 dari 25</span>
+          <span class="q-topic" id="qTopicLabel">Bilangan</span>
+          <span class="q-type-badge" id="qTypeBadge">Pilihan Ganda</span>
+        </div>
+        <div class="q-hint" id="qHint" style="display:none;"></div>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="qOptions"></div>
+        <div class="quiz-nav-btns">
+          <button class="btn btn-ghost" id="btnPrev">&larr; Sebelumnya</button>
+          <button class="btn btn-primary" id="btnNext">Berikutnya &rarr;</button>
+        </div>
+      </div>
+      <aside class="nav-panel">
+        <div class="card">
+          <h4>Navigasi Soal</h4>
+          <div class="nav-grid" id="navGrid"></div>
+          <div class="legend">
+            <span><i class="a"></i> Sudah dijawab</span>
+            <span><i></i> Belum dijawab</span>
+          </div>
+          <button class="btn btn-primary btn-block" id="btnFinish" style="margin-top:16px;">Selesai &amp; Lihat Hasil</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section class="screen" id="screen-result">
+    <div class="card">
+      <h1 style="font-size:1.4rem;margin-top:0;">Hasil Tryout Kamu &mdash; Paket 1</h1>
+      <p class="lead" style="margin-bottom:0;" id="resultSubtitle">Berikut rekap skor dan pembahasan lengkap setiap soal.</p>
+
+      <div class="result-summary">
+        <div class="stat score"><div class="val" id="statScore">0</div><div class="lbl">Skor (maks 100)</div></div>
+        <div class="stat correct"><div class="val" id="statCorrect">0</div><div class="lbl">Benar</div></div>
+        <div class="stat wrong"><div class="val" id="statWrong">0</div><div class="lbl">Salah</div></div>
+        <div class="stat empty"><div class="val" id="statEmpty">0</div><div class="lbl">Kosong</div></div>
+        <div class="stat"><div class="val" id="statTime">-</div><div class="lbl">Waktu terpakai</div></div>
+      </div>
+
+      <div class="section-title">Analisis per Elemen Materi</div>
+      <div class="topic-bars" id="topicBars"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnRetry">&#8635; Ulangi Paket Ini</button>
+        <a class="btn btn-ghost" href="tryout.html">Kembali ke Daftar Tryout</a>
+      </div>
+    </div>
+
+    <div class="section-title">Pembahasan Lengkap</div>
+    <div id="reviewList"></div>
+  </section>
+
+  <div class="note-box">
+    Skor pada tryout ini adalah alat bantu latihan mandiri dan tidak merepresentasikan nilai resmi TKA. Materi mata pelajaran lengkap tersedia di halaman <a href="mata-pelajaran-fisika.html">Fisika</a>.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA &middot; mengacu Kerangka Asesmen TKA Fisika (Pilihan) SMA, Perka BSKAP Kemendikdasmen No. 045/H/AN/2025.</p>
+  </footer>
+
+</div>
+
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+(function(){
+"use strict";
+
+/* small helper to build a stacked fraction as plain HTML/CSS (no external math library needed) */
+function frac(num, den){
+  return "<span class='frac'><span class='num'>"+num+"</span><span class='den'>"+den+"</span></span>";
+}
+/* helper for a radical sign over a multi-character expression */
+function rad(content){
+  return "&radic;<span class='rad'>"+content+"</span>";
+}
+
+
+var QUESTIONS = [
+{
+  type:"single", topic:"Kinematika",
+  text:"Hasil pengukuran panjang dan lebar suatu pelat logam menggunakan jangka sorong masing-masing adalah 12,50 cm dan 4,2 cm. Menurut aturan angka penting, luas pelat tersebut adalah&hellip;",
+  options:["52,5 cm&sup2;","53 cm&sup2;","52 cm&sup2;","52,50 cm&sup2;","50 cm&sup2;"],
+  answer:1,
+  explanation:"12,50 cm memiliki 4 angka penting, sedangkan 4,2 cm memiliki 2 angka penting. Hasil perkalian harus dilaporkan dengan jumlah angka penting paling sedikit di antara kedua bilangan, yaitu 2 angka penting. 12,50 &times; 4,2 = 52,5, dibulatkan menjadi 2 angka penting menjadi 53 cm&sup2;."
+},
+{
+  type:"single", topic:"Kinematika",
+  text:"Sebuah mobil bergerak dengan kecepatan awal 10 m/s mengalami percepatan tetap 2 m/s&sup2;. Tentukan jarak yang ditempuh mobil tersebut setelah 5 sekon.",
+  options:["25 m","50 m","65 m","75 m","100 m"],
+  answer:3,
+  explanation:"Menggunakan persamaan GLBB: s = v&#8320;t + &frac12;at&sup2; = (10)(5) + &frac12;(2)(5&sup2;) = 50 + 25 = 75 m."
+},
+{
+  type:"mcma", topic:"Kinematika",
+  text:"Sebuah benda bergerak dengan kecepatan awal 20 m/s mengalami perlambatan tetap 4 m/s&sup2; hingga berhenti. Manakah pernyataan berikut yang benar? Pilih semua jawaban yang benar!",
+  hint:"Petunjuk: gunakan persamaan GLBB untuk perlambatan (v = v&#8320; &minus; at, dan v&sup2; = v&#8320;&sup2; &minus; 2as).",
+  options:[
+    "Waktu yang dibutuhkan benda hingga berhenti adalah 5 sekon.",
+    "Jarak yang ditempuh benda hingga berhenti adalah 40 m.",
+    "Jarak yang ditempuh benda hingga berhenti adalah 50 m.",
+    "Kecepatan benda pada saat t = 3 sekon adalah 8 m/s.",
+    "Benda akan bergerak mundur setelah berhenti karena masih mengalami perlambatan."
+  ],
+  answer:[0,2,3],
+  explanation:"Waktu berhenti: t = v&#8320;/a = 20/4 = 5 sekon (Benar). Jarak tempuh: s = v&#8320;&sup2;/(2a) = 400/8 = 50 m, bukan 40 m. Kecepatan pada t=3s: v = v&#8320; &minus; at = 20 &minus; 4(3) = 8 m/s (Benar). Setelah benda berhenti (v=0), tidak ada informasi gaya yang membuatnya bergerak mundur, sehingga benda tetap diam."
+},
+{
+  type:"single", topic:"Kinematika",
+  text:"Sebuah peluru ditembakkan dengan kecepatan awal 40 m/s dan sudut elevasi 30&deg; terhadap horizontal (g = 10 m/s&sup2;). Tentukan waktu yang dibutuhkan peluru untuk mencapai titik tertinggi lintasannya.",
+  options:["1 s","2 s","3 s","4 s","5 s"],
+  answer:1,
+  explanation:"Waktu mencapai titik tertinggi: t = (v&#8320; sin&theta;)/g = (40 &times; sin30&deg;)/10 = (40 &times; 0,5)/10 = 2 sekon."
+},
+{
+  type:"single", topic:"Dinamika",
+  text:"Sebuah benda bermassa 4 kg didorong dengan gaya 20 N pada permukaan licin (tanpa gesekan). Tentukan percepatan benda tersebut.",
+  options:["2 m/s&sup2;","4 m/s&sup2;","5 m/s&sup2;","8 m/s&sup2;","10 m/s&sup2;"],
+  answer:2,
+  explanation:"Menggunakan Hukum Newton II: a = F/m = 20/4 = 5 m/s&sup2;."
+},
+{
+  type:"single", topic:"Dinamika",
+  text:"Sebuah balok bermassa 5 kg berada di atas lantai kasar dengan koefisien gesek kinetik 0,2 (g = 10 m/s&sup2;). Balok didorong dengan gaya horizontal 20 N. Tentukan percepatan balok tersebut.",
+  options:["1 m/s&sup2;","2 m/s&sup2;","3 m/s&sup2;","4 m/s&sup2;","6 m/s&sup2;"],
+  answer:1,
+  explanation:"Gaya gesek: f = &mu;mg = 0,2 &times; 5 &times; 10 = 10 N. Gaya total (resultan) = 20 &minus; 10 = 10 N. Percepatan: a = F/m = 10/5 = 2 m/s&sup2;."
+},
+{
+  type:"category", topic:"Dinamika",
+  text:"Dua balok, A (massa 2 kg) dan B (massa 3 kg), saling bersentuhan di atas lantai licin. Balok A didorong dengan gaya horizontal F = 25 N sehingga kedua balok bergerak bersama. Tentukan Benar atau Salah untuk setiap pernyataan berikut!",
+  statements:[
+    {text:"Percepatan sistem balok A dan B adalah 5 m/s&sup2;.", correct:true},
+    {text:"Gaya kontak yang dialami balok B (dari balok A) besarnya 15 N.", correct:true},
+    {text:"Gaya reaksi yang dialami balok A akibat balok B besarnya 25 N.", correct:false},
+    {text:"Jika posisi balok ditukar (B yang didorong terlebih dahulu), percepatan sistem akan berbeda dari sebelumnya.", correct:false}
+  ],
+  explanation:"Percepatan sistem: a = F/(m<sub>A</sub>+m<sub>B</sub>) = 25/5 = 5 m/s&sup2; (Benar). Gaya kontak pada B: F<sub>kontak</sub> = m<sub>B</sub>&middot;a = 3&times;5 = 15 N (Benar). Berdasarkan Hukum Newton III, gaya reaksi pada A dari B besarnya sama dengan gaya kontak, yaitu 15 N, bukan 25 N (Salah). Percepatan sistem hanya bergantung pada gaya total dan massa total, bukan urutan balok, sehingga jika posisinya ditukar percepatannya tetap sama (Salah)."
+},
+{
+  type:"single", topic:"Dinamika",
+  text:"Sebuah bola bermassa 0,5 kg bergerak dengan kecepatan 6 m/s menumbuk dinding dan memantul dengan kecepatan 4 m/s berlawanan arah. Tentukan besar impuls yang bekerja pada bola.",
+  options:["1 N&middot;s","2 N&middot;s","3 N&middot;s","5 N&middot;s","10 N&middot;s"],
+  answer:3,
+  explanation:"Impuls sama dengan perubahan momentum: I = &Delta;p = m(v<sub>2</sub> &minus; v<sub>1</sub>). Dengan arah awal positif, v<sub>1</sub>=+6 m/s dan v<sub>2</sub>=&minus;4 m/s (berlawanan arah): I = 0,5 &times; (&minus;4&minus;6) = 0,5 &times; (&minus;10) = &minus;5 N&middot;s. Besar impuls adalah 5 N&middot;s."
+},
+{
+  type:"single", topic:"Dinamika",
+  text:"Sebuah roda berbentuk cakram pejal bermassa 4 kg dan berjari-jari 0,5 m berotasi akibat momen gaya 10 N&middot;m. Tentukan percepatan sudut roda tersebut. (Momen inersia cakram pejal: I = &frac12;mr&sup2;)",
+  options:["5 rad/s&sup2;","10 rad/s&sup2;","20 rad/s&sup2;","40 rad/s&sup2;","50 rad/s&sup2;"],
+  answer:2,
+  explanation:"Momen inersia: I = &frac12;mr&sup2; = &frac12;(4)(0,5&sup2;) = &frac12;(4)(0,25) = 0,5 kg&middot;m&sup2;. Percepatan sudut: &alpha; = &tau;/I = 10/0,5 = 20 rad/s&sup2;."
+},
+{
+  type:"single", topic:"Fluida",
+  text:"Sebuah balok kayu bervolume 0,02 m&sup3; mengapung di air (&rho;<sub>air</sub> = 1000 kg/m&sup3;) dengan 80% volumenya tercelup dalam air. Tentukan massa balok kayu tersebut. (g = 10 m/s&sup2;)",
+  options:["12 kg","14 kg","16 kg","18 kg","20 kg"],
+  answer:2,
+  explanation:"Karena balok mengapung setimbang, gaya apung sama dengan berat balok: F<sub>apung</sub> = &rho;<sub>air</sub>&middot;V<sub>tercelup</sub>&middot;g = 1000 &times; (0,8&times;0,02) &times; 10 = 1000 &times; 0,016 &times; 10 = 160 N. Massa balok: m = F/g = 160/10 = 16 kg."
+},
+{
+  type:"single", topic:"Fluida",
+  text:"Air mengalir melalui pipa dengan luas penampang A&#8321; = 8 cm&sup2; pada kecepatan 2 m/s. Pipa tersebut menyempit menjadi luas penampang A&#8322; = 2 cm&sup2;. Tentukan kecepatan air pada penampang A&#8322;.",
+  options:["2 m/s","4 m/s","6 m/s","8 m/s","16 m/s"],
+  answer:3,
+  explanation:"Menggunakan persamaan kontinuitas: A&#8321;v&#8321; = A&#8322;v&#8322; &rArr; v&#8322; = A&#8321;v&#8321;/A&#8322; = (8&times;2)/2 = 8 m/s."
+},
+{
+  type:"mcma", topic:"Fluida",
+  text:"Pesawat terbang menghasilkan gaya angkat karena perbedaan kecepatan aliran udara di atas dan di bawah sayapnya. Manakah pernyataan berikut yang benar mengenai prinsip ini? Pilih semua jawaban yang benar!",
+  options:[
+    "Kecepatan aliran udara di atas sayap lebih besar daripada di bawah sayap.",
+    "Tekanan udara di atas sayap lebih besar daripada di bawah sayap.",
+    "Prinsip ini memanfaatkan Hukum Bernoulli, yang menyatakan tekanan fluida berbanding terbalik dengan kecepatan alirannya.",
+    "Gaya angkat dihasilkan karena adanya perbedaan tekanan antara bagian atas dan bawah sayap.",
+    "Semakin besar kecepatan pesawat, semakin kecil gaya angkat yang dihasilkan."
+  ],
+  answer:[0,2,3],
+  explanation:"Bentuk sayap menyebabkan udara mengalir lebih cepat di atas sayap dibanding di bawahnya (Benar). Berdasarkan Hukum Bernoulli, tekanan berbanding terbalik dengan kecepatan aliran, sehingga tekanan di atas sayap justru lebih KECIL, bukan lebih besar (pernyataan 2 Salah). Prinsip ini memang memanfaatkan Hukum Bernoulli (Benar). Perbedaan tekanan atas-bawah inilah yang menghasilkan gaya angkat (Benar). Semakin besar kecepatan pesawat, semakin besar pula gaya angkat yang dihasilkan, bukan semakin kecil (pernyataan 5 Salah)."
+},
+{
+  type:"single", topic:"Gelombang",
+  text:"Taraf intensitas bunyi sebuah mesin adalah 60 dB. Jika terdapat 10 mesin identik yang dinyalakan secara bersamaan, tentukan taraf intensitas bunyi totalnya.",
+  options:["60 dB","65 dB","70 dB","80 dB","600 dB"],
+  answer:2,
+  explanation:"Untuk n sumber bunyi identik: TI<sub>n</sub> = TI<sub>1</sub> + 10 log(n) = 60 + 10 log(10) = 60 + 10(1) = 70 dB."
+},
+{
+  type:"single", topic:"Gelombang",
+  text:"Sebuah lensa cembung memiliki jarak fokus 10 cm. Sebuah benda diletakkan 15 cm di depan lensa. Tentukan jarak bayangan yang terbentuk.",
+  options:["6 cm","10 cm","15 cm","25 cm","30 cm"],
+  answer:4,
+  explanation:"Menggunakan persamaan lensa tipis: 1/f = 1/s + 1/s&prime; &rArr; 1/s&prime; = 1/f &minus; 1/s = 1/10 &minus; 1/15 = 3/30 &minus; 2/30 = 1/30. Jadi s&prime; = 30 cm."
+},
+{
+  type:"category", topic:"Gelombang",
+  text:"Seorang pengamat melihat sebuah koin di dasar gelas berisi air jernih dari posisi tegak lurus di atas permukaan air (indeks bias air = 4/3, indeks bias udara = 1). Karena pembiasan cahaya, koin tersebut tampak berada pada kedalaman semu yang berbeda dari posisi sebenarnya. Tentukan Benar atau Salah untuk setiap pernyataan berikut!",
+  statements:[
+    {text:"Koin yang teramati tampak berada lebih dangkal (lebih dekat ke permukaan) daripada posisi koin yang sebenarnya.", correct:true},
+    {text:"Semakin besar sudut pandang pengamat terhadap garis normal, semakin kecil perbedaan antara posisi koin yang tampak dengan posisi koin yang sebenarnya.", correct:false},
+    {text:"Peristiwa pembiasan ini terjadi karena cahaya melintasi dua medium dengan indeks bias yang berbeda, yaitu air dan udara.", correct:true}
+  ],
+  explanation:"Karena cahaya dibiaskan menjauhi garis normal saat keluar dari air (medium lebih rapat) menuju udara (medium kurang rapat), kedalaman semu koin yang teramati menjadi lebih dangkal daripada kedalaman sebenarnya (Benar). Semakin besar sudut pandang (semakin miring), efek pergeseran akibat pembiasan justru semakin besar, bukan semakin kecil (Salah). Pembiasan memang terjadi karena cahaya melintasi dua medium dengan indeks bias berbeda (Benar)."
+},
+{
+  type:"single", topic:"Gelombang",
+  text:"Sebuah gelombang bunyi merambat di udara dengan frekuensi 425 Hz dan panjang gelombang 0,8 m. Tentukan cepat rambat bunyi tersebut.",
+  options:["240 m/s","300 m/s","320 m/s","340 m/s","360 m/s"],
+  answer:3,
+  explanation:"Cepat rambat gelombang: v = f&middot;&lambda; = 425 &times; 0,8 = 340 m/s."
+},
+{
+  type:"single", topic:"Kalor & Termodinamika",
+  text:"Sejumlah 200 gram air bersuhu 20&deg;C dicampur dengan 100 gram air bersuhu 80&deg;C (kalor jenis air dianggap sama untuk kedua bagian, tidak ada kalor yang hilang ke lingkungan). Tentukan suhu akhir campuran.",
+  options:["30&deg;C","35&deg;C","40&deg;C","45&deg;C","50&deg;C"],
+  answer:2,
+  explanation:"Berdasarkan Asas Black, kalor yang dilepas air panas sama dengan kalor yang diserap air dingin: m&#8321;c(T&minus;T&#8321;) = m&#8322;c(T&#8322;&minus;T) &rArr; 200(T&minus;20) = 100(80&minus;T) &rArr; 200T&minus;4000 = 8000&minus;100T &rArr; 300T = 12000 &rArr; T = 40&deg;C."
+},
+{
+  type:"single", topic:"Kalor & Termodinamika",
+  text:"Suatu gas berada dalam ruang tertutup dengan tekanan 2 atm, volume 4 L, dan suhu 300 K. Gas tersebut dipanaskan hingga suhunya menjadi 450 K dan volumenya menjadi 6 L. Tentukan tekanan gas pada kondisi akhir.",
+  options:["1 atm","1,5 atm","2 atm","2,5 atm","3 atm"],
+  answer:2,
+  explanation:"Menggunakan persamaan gas ideal (Hukum Boyle-Gay Lussac): P&#8321;V&#8321;/T&#8321; = P&#8322;V&#8322;/T&#8322; &rArr; (2&times;4)/300 = (P&#8322;&times;6)/450 &rArr; P&#8322; = (2&times;4&times;450)/(300&times;6) = 3600/1800 = 2 atm."
+},
+{
+  type:"single", topic:"Kalor & Termodinamika",
+  text:"Sebuah mesin Carnot beroperasi antara reservoir suhu tinggi 600 K dan suhu rendah 300 K. Tentukan efisiensi mesin Carnot tersebut.",
+  options:["25%","33%","40%","50%","75%"],
+  answer:3,
+  explanation:"Efisiensi mesin Carnot: &eta; = 1 &minus; (T<sub>rendah</sub>/T<sub>tinggi</sub>) = 1 &minus; (300/600) = 1 &minus; 0,5 = 0,5 = 50%."
+},
+{
+  type:"mcma", topic:"Kalor & Termodinamika",
+  text:"Sebuah mesin Carnot beroperasi antara reservoir suhu tinggi 900 K dan suhu rendah 600 K. Peneliti ingin mengganti mesin dengan mesin Carnot yang efisiensinya lebih tinggi. Mesin Carnot mana saja yang dapat digunakan sebagai pengganti? Pilih semua jawaban yang benar!",
+  hint:"Petunjuk: hitung efisiensi mesin semula terlebih dahulu, lalu bandingkan dengan efisiensi tiap opsi.",
+  options:[
+    "Suhu tinggi 700 K dan suhu rendah 600 K.",
+    "Suhu tinggi 900 K dan suhu rendah 450 K.",
+    "Suhu tinggi 1.000 K dan suhu rendah 600 K.",
+    "Suhu tinggi 1.000 K dan suhu rendah 700 K.",
+    "Suhu tinggi 1.200 K dan suhu rendah 700 K."
+  ],
+  answer:[1,2,4],
+  explanation:"Efisiensi mesin semula: &eta; = 1&minus;(600/900) = 33,3%. Efisiensi tiap opsi: (1) 1&minus;(600/700)=14,3% (lebih rendah); (2) 1&minus;(450/900)=50% (lebih tinggi &#10003;); (3) 1&minus;(600/1000)=40% (lebih tinggi &#10003;); (4) 1&minus;(700/1000)=30% (lebih rendah); (5) 1&minus;(700/1200)=41,7% (lebih tinggi &#10003;). Jawaban benar: opsi 2, 3, dan 5."
+},
+{
+  type:"category", topic:"Kalor & Termodinamika",
+  text:"Tentukan Benar atau Salah untuk setiap pernyataan mengenai efek rumah kaca dan pemanasan global berikut!",
+  statements:[
+    {text:"Efek rumah kaca terjadi karena gas-gas seperti karbon dioksida dan metana menyerap radiasi inframerah yang dipantulkan Bumi.", correct:true},
+    {text:"Efek rumah kaca sepenuhnya merupakan fenomena buatan manusia dan tidak pernah terjadi secara alami.", correct:false},
+    {text:"Peningkatan konsentrasi gas rumah kaca di atmosfer dapat menyebabkan kenaikan suhu rata-rata permukaan Bumi.", correct:true},
+    {text:"Penanaman pohon dan pengurangan emisi karbon dapat membantu mengurangi laju pemanasan global.", correct:true}
+  ],
+  explanation:"Gas rumah kaca seperti CO&#8322; dan metana memang menyerap radiasi inframerah yang dipantulkan Bumi, menahan panas di atmosfer (Benar). Efek rumah kaca sebenarnya adalah fenomena ALAMI yang diperlukan agar Bumi layak huni; yang menjadi masalah adalah efek rumah kaca yang DIPERKUAT oleh aktivitas manusia, bukan fenomena yang sepenuhnya buatan manusia (Salah). Peningkatan konsentrasi gas rumah kaca terbukti menyebabkan kenaikan suhu rata-rata Bumi (Benar). Penanaman pohon dan pengurangan emisi karbon adalah langkah mitigasi yang diakui membantu mengurangi laju pemanasan global (Benar)."
+},
+{
+  type:"single", topic:"Kelistrikan",
+  text:"Dua muatan listrik masing-masing +4 &micro;C dan +9 &micro;C terpisah sejauh 30 cm satu sama lain (k = 9&times;10&#8313; N&middot;m&sup2;/C&sup2;). Tentukan besar gaya Coulomb antara kedua muatan tersebut.",
+  options:["0,9 N","1,8 N","2,4 N","3,6 N","4,8 N"],
+  answer:3,
+  explanation:"Menggunakan Hukum Coulomb: F = kq&#8321;q&#8322;/r&sup2; = (9&times;10&#8313;)(4&times;10&#8315;&#8310;)(9&times;10&#8315;&#8310;)/(0,3)&sup2; = (9&times;10&#8313;)(3,6&times;10&#8315;&sup1;&sup9;)/0,09 = 0,324/0,09 = 3,6 N."
+},
+{
+  type:"category", topic:"Kelistrikan",
+  text:"Sebuah mesin fotokopi memindahkan partikel toner bermuatan negatif q = 2&times;10&#8315;&#8311; C dari drum ke kertas melalui medan listrik dua pelat sejajar. Jarak antar pelat 4 mm, beda potensial 400 V, dan gaya listrik minimum yang diperlukan agar toner berpindah adalah 0,02 N. Tentukan Benar atau Salah untuk setiap pernyataan analisis berikut!",
+  statements:[
+    {text:"Jika jarak antar pelat dikurangi menjadi 2 mm dengan beda potensial tetap 400 V, gaya listrik pada partikel toner akan meningkat sehingga tetap memenuhi syarat fungsional.", correct:true},
+    {text:"Untuk mempertahankan jarak antar pelat tetap 4 mm, beda potensial minimal yang diperlukan agar mesin berfungsi optimal adalah 200 V.", correct:false},
+    {text:"Jika muatan partikel toner diturunkan menjadi 1&times;10&#8315;&#8311; C dengan jarak dan tegangan tetap seperti kondisi awal, gaya listrik yang dihasilkan tidak lagi memenuhi syarat fungsional.", correct:true}
+  ],
+  explanation:"Kondisi awal: E = V/d = 400/0,004 = 100.000 V/m, F = qE = (2&times;10&#8315;&#8311;)(100.000) = 0,02 N (tepat memenuhi syarat minimum). Jika d diperkecil menjadi 2 mm (V tetap): E&prime; = 400/0,002 = 200.000 V/m, F&prime; = (2&times;10&#8315;&#8311;)(200.000) = 0,04 N &gt; 0,02 N, meningkat dan tetap memenuhi syarat (Benar). Beda potensial minimum agar F&ge;0,02 N pada d=4mm adalah V=F&middot;d/q = (0,02&times;0,004)/(2&times;10&#8315;&#8311;) = 400 V, bukan 200 V (Salah). Jika q diturunkan menjadi 1&times;10&#8315;&#8311; C dengan E tetap 100.000 V/m: F=(1&times;10&#8315;&#8311;)(100.000)=0,01 N &lt; 0,02 N, tidak lagi memenuhi syarat (Benar)."
+},
+{
+  type:"single", topic:"Kelistrikan",
+  text:"Tiga buah resistor masing-masing 4&Omega;, 6&Omega;, dan 12&Omega; disusun paralel. Tentukan hambatan pengganti rangkaian tersebut.",
+  options:["1&Omega;","1,5&Omega;","2&Omega;","3&Omega;","22&Omega;"],
+  answer:2,
+  explanation:"Untuk rangkaian paralel: 1/R<sub>p</sub> = 1/4 + 1/6 + 1/12 = 3/12 + 2/12 + 1/12 = 6/12 = 1/2. Jadi R<sub>p</sub> = 2&Omega;."
+},
+{
+  type:"single", topic:"Kelistrikan",
+  text:"Sebuah resistor 10&Omega; dialiri arus listrik sebesar 2 A. Tentukan daya listrik yang diserap resistor tersebut.",
+  options:["5 W","10 W","20 W","40 W","80 W"],
+  answer:3,
+  explanation:"Daya listrik: P = I&sup2;R = (2)&sup2;(10) = 4 &times; 10 = 40 W."
+}
+];
+
+
+var LETTERS = ["A","B","C","D","E"];
+var DURATION_SECONDS = 75*60;
+var STORAGE_KEY = "tka_fisika_paket1_v1";
+var TYPE_LABELS = {single:"Pilihan Ganda", mcma:"PGK &middot; Pilih Lebih dari Satu", category:"PGK &middot; Benar/Salah"};
+
+/* ============ STATE ============ */
+var state = {
+  currentIndex:0,
+  answers:{},          // single: index | mcma: [indices] | category: {stmtIdx: true/false}
+  endTimestamp:null,
+  finished:false,
+  timeTakenSeconds:null
+};
+var timerInterval = null;
+
+/* ============ STORAGE ============ */
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ============ SCREEN HELPERS ============ */
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+}
+
+/* ============ ANSWER HELPERS (type-aware) ============ */
+function isAnswered(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(a===undefined || a===null) return false;
+  if(q.type==="category"){
+    if(typeof a !== "object") return false;
+    for(var k=0;k<q.statements.length;k++){ if(a[k]===undefined) return false; }
+    return true;
+  }
+  if(q.type==="mcma"){
+    return Array.isArray(a) && a.length>0;
+  }
+  return true; // single: any stored value (including 0) counts as answered
+}
+function evaluateQuestion(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(!isAnswered(i)) return "empty";
+  if(q.type==="category"){
+    for(var k=0;k<q.statements.length;k++){
+      if(!!a[k] !== !!q.statements[k].correct) return "wrong";
+    }
+    return "correct";
+  }
+  if(q.type==="mcma"){
+    var correctSet = q.answer.slice().sort(function(x,y){return x-y;});
+    var pickedSet = a.slice().sort(function(x,y){return x-y;});
+    if(correctSet.length !== pickedSet.length) return "wrong";
+    for(var j=0;j<correctSet.length;j++){ if(correctSet[j]!==pickedSet[j]) return "wrong"; }
+    return "correct";
+  }
+  return (a===q.answer) ? "correct":"wrong";
+}
+
+/* ============ TIMER ============ */
+function formatTime(totalSeconds){
+  totalSeconds = Math.max(0, Math.round(totalSeconds));
+  var m = Math.floor(totalSeconds/60);
+  var s = totalSeconds%60;
+  return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+}
+function startTimerLoop(){
+  var display = document.getElementById("timerDisplay");
+  display.style.display = "flex";
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 250);
+  tickTimer();
+}
+function tickTimer(){
+  var remaining = (state.endTimestamp - Date.now())/1000;
+  var textEl = document.getElementById("timerText");
+  var wrap = document.getElementById("timerDisplay");
+  if(remaining <= 0){
+    textEl.textContent = "00:00";
+    clearInterval(timerInterval);
+    finishQuiz(true);
+    return;
+  }
+  textEl.textContent = formatTime(remaining);
+  if(remaining <= 300) wrap.classList.add("low"); else wrap.classList.remove("low");
+}
+function stopTimer(){
+  clearInterval(timerInterval);
+  document.getElementById("timerDisplay").style.display = "none";
+}
+
+/* ============ QUIZ RENDERING ============ */
+function renderNavGrid(){
+  var grid = document.getElementById("navGrid");
+  grid.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var cell = document.createElement("div");
+    cell.className = "nav-cell" + (isAnswered(i)?" answered":"") + (i===state.currentIndex?" current":"");
+    cell.textContent = (i+1);
+    cell.addEventListener("click", function(){
+      state.currentIndex = i;
+      renderQuestion();
+    });
+    grid.appendChild(cell);
+  });
+}
+
+function renderOptionsSingleOrMcma(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var isMcma = q.type==="mcma";
+  var current = state.answers[i];
+  q.options.forEach(function(optText, idx){
+    var picked = isMcma ? (Array.isArray(current) && current.indexOf(idx)!==-1) : (current===idx);
+    var div = document.createElement("div");
+    div.className = "option" + (isMcma?" mcma":"") + (picked ? " selected":"");
+    div.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+    div.addEventListener("click", function(){
+      if(isMcma){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : [];
+        var pos = arr.indexOf(idx);
+        if(pos===-1) arr.push(idx); else arr.splice(pos,1);
+        state.answers[i] = arr;
+      } else {
+        state.answers[i] = idx;
+      }
+      saveState();
+      renderQuestion();
+    });
+    optsWrap.appendChild(div);
+  });
+}
+
+function renderStatements(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var current = (typeof state.answers[i] === "object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+  q.statements.forEach(function(st, k){
+    var row = document.createElement("div");
+    row.className = "statement-row";
+    var textDiv = document.createElement("div");
+    textDiv.className = "statement-text";
+    textDiv.innerHTML = (k+1)+". "+st.text;
+    row.appendChild(textDiv);
+    var choices = document.createElement("div");
+    choices.className = "statement-choices";
+    [["Benar",true], ["Salah",false]].forEach(function(pair){
+      var btn = document.createElement("div");
+      btn.className = "choice-btn" + (current[k]===pair[1] ? " selected":"");
+      btn.textContent = pair[0];
+      btn.addEventListener("click", function(){
+        var obj = (typeof state.answers[i]==="object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+        obj[k] = pair[1];
+        state.answers[i] = obj;
+        saveState();
+        renderQuestion();
+      });
+      choices.appendChild(btn);
+    });
+    row.appendChild(choices);
+    optsWrap.appendChild(row);
+  });
+}
+
+function renderQuestion(){
+  var i = state.currentIndex;
+  var q = QUESTIONS[i];
+  document.getElementById("qIndexLabel").textContent = "Soal "+(i+1)+" dari "+QUESTIONS.length;
+  document.getElementById("qTopicLabel").textContent = q.topic;
+  document.getElementById("qTypeBadge").innerHTML = TYPE_LABELS[q.type] || TYPE_LABELS.single;
+  document.getElementById("qText").innerHTML = q.text;
+
+  var hintEl = document.getElementById("qHint");
+  if(q.hint){ hintEl.style.display="block"; hintEl.textContent = q.hint; }
+  else if(q.type==="category"){ hintEl.style.display="block"; hintEl.textContent = "Beri respons Benar atau Salah untuk setiap pernyataan."; }
+  else { hintEl.style.display="none"; }
+
+  if(q.type==="category") renderStatements(q, i);
+  else renderOptionsSingleOrMcma(q, i);
+
+  document.getElementById("btnPrev").disabled = (i===0);
+  document.getElementById("btnPrev").style.opacity = (i===0)?"0.5":"1";
+  document.getElementById("btnNext").textContent = (i===QUESTIONS.length-1) ? "Selesai →" : "Berikutnya →";
+  document.getElementById("progressFill").style.width = Math.round(((i+1)/QUESTIONS.length)*100)+"%";
+  renderNavGrid();
+}
+
+/* ============ NAVIGATION BUTTONS ============ */
+document.getElementById("btnPrev").addEventListener("click", function(){
+  if(state.currentIndex>0){ state.currentIndex--; renderQuestion(); }
+});
+document.getElementById("btnNext").addEventListener("click", function(){
+  if(state.currentIndex < QUESTIONS.length-1){
+    state.currentIndex++;
+    renderQuestion();
+  } else {
+    confirmFinish();
+  }
+});
+document.getElementById("btnFinish").addEventListener("click", confirmFinish);
+
+function confirmFinish(){
+  var answeredCount = 0;
+  QUESTIONS.forEach(function(q,i){ if(isAnswered(i)) answeredCount++; });
+  var msg = "Kamu telah menjawab "+answeredCount+" dari "+QUESTIONS.length+" soal.\nSelesaikan tryout dan lihat hasil sekarang?";
+  if(window.confirm(msg)){
+    finishQuiz(false);
+  }
+}
+
+/* ============ START / RESUME / RESTART ============ */
+function beginFreshQuiz(){
+  state = {
+    currentIndex:0,
+    answers:{},
+    endTimestamp: Date.now() + DURATION_SECONDS*1000,
+    finished:false,
+    timeTakenSeconds:null
+  };
+  saveState();
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+function resumeQuiz(saved){
+  state = saved;
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+
+document.getElementById("btnStart").addEventListener("click", beginFreshQuiz);
+document.getElementById("btnResume").addEventListener("click", function(){
+  var saved = loadState();
+  if(saved && !saved.finished) resumeQuiz(saved); else beginFreshQuiz();
+});
+document.getElementById("btnRestartFresh").addEventListener("click", function(){
+  clearState();
+  document.getElementById("resumeBanner").style.display = "none";
+  beginFreshQuiz();
+});
+document.getElementById("btnRetry").addEventListener("click", function(){
+  clearState();
+  stopTimer();
+  showScreen("screen-start");
+  document.getElementById("resumeBanner").style.display = "none";
+});
+
+/* ============ FINISH & SCORING ============ */
+function finishQuiz(autoSubmitted){
+  stopTimer();
+  state.finished = true;
+  var elapsed = DURATION_SECONDS - Math.max(0, (state.endTimestamp - Date.now())/1000);
+  state.timeTakenSeconds = Math.min(DURATION_SECONDS, Math.round(elapsed));
+  saveState();
+  renderResult(autoSubmitted);
+  showScreen("screen-result");
+  window.scrollTo(0,0);
+}
+
+function renderResult(autoSubmitted){
+  var correct=0, wrong=0, empty=0, score=0;
+  var topicStats = {};
+  QUESTIONS.forEach(function(q, i){
+    if(!topicStats[q.topic]) topicStats[q.topic] = {correct:0,total:0};
+    topicStats[q.topic].total++;
+    var status = evaluateQuestion(i);
+    if(status==="empty"){ empty++; }
+    else if(status==="correct"){ correct++; score+=4; topicStats[q.topic].correct++; }
+    else { wrong++; score-=1; }
+  });
+
+  document.getElementById("resultSubtitle").textContent = autoSubmitted
+    ? "Waktu habis — tryout otomatis diselesaikan. Berikut rekap skor dan pembahasan lengkap setiap soal."
+    : "Berikut rekap skor dan pembahasan lengkap setiap soal.";
+
+  document.getElementById("statScore").textContent = score;
+  document.getElementById("statCorrect").textContent = correct;
+  document.getElementById("statWrong").textContent = wrong;
+  document.getElementById("statEmpty").textContent = empty;
+  document.getElementById("statTime").textContent = formatTime(state.timeTakenSeconds);
+
+  var barsWrap = document.getElementById("topicBars");
+  barsWrap.innerHTML = "";
+  Object.keys(topicStats).forEach(function(topic){
+    var st = topicStats[topic];
+    var pct = Math.round((st.correct/st.total)*100);
+    var row = document.createElement("div");
+    row.className = "topic-bar-row";
+    row.innerHTML =
+      "<div class='top'><span class='name'>"+topic+"</span><span class='frac2'>"+st.correct+"/"+st.total+"</span></div>"+
+      "<div class='bar-track'><div class='bar-fill' style='width:"+pct+"%;'></div></div>";
+    barsWrap.appendChild(row);
+  });
+
+  var reviewList = document.getElementById("reviewList");
+  reviewList.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var status = evaluateQuestion(i);
+    var statusLabel = status==="empty" ? "Kosong" : (status==="correct" ? "Benar":"Salah");
+
+    var details = document.createElement("details");
+    details.className = "review-item";
+    details.open = (status !== "correct");
+
+    var summary = document.createElement("summary");
+    summary.innerHTML =
+      "<span class='badge "+status+"'>"+statusLabel+"</span>"+
+      "<span class='badge typebadge'>"+(TYPE_LABELS[q.type]||TYPE_LABELS.single)+"</span>"+
+      "<span>Soal "+(i+1)+" — "+q.topic+"</span>"+
+      "<span class='chev'>&#9662;</span>";
+    details.appendChild(summary);
+
+    var body = document.createElement("div");
+    body.className = "review-body";
+
+    var qTextDiv = document.createElement("div");
+    qTextDiv.className = "q-text";
+    qTextDiv.innerHTML = q.text;
+    body.appendChild(qTextDiv);
+
+    if(q.type==="category"){
+      var a = (typeof state.answers[i]==="object" && state.answers[i]!==null) ? state.answers[i] : {};
+      q.statements.forEach(function(st, k){
+        var userVal = a[k];
+        var isCorrectStmt = userVal!==undefined && (!!userVal === !!st.correct);
+        var row = document.createElement("div");
+        row.className = "review-statement " + (userVal===undefined ? "" : (isCorrectStmt ? "st-correct":"st-wrong"));
+        var userLabel = userVal===undefined ? "Tidak dijawab" : (userVal ? "Benar":"Salah");
+        var correctLabel = st.correct ? "Benar":"Salah";
+        row.innerHTML =
+          "<span>"+(k+1)+". "+st.text+"</span>"+
+          "<span class='st-answer'>Jawabanmu: "+userLabel+(isCorrectStmt? "" : " &middot; Kunci: "+correctLabel)+"</span>";
+        body.appendChild(row);
+      });
+    } else if(q.type==="mcma"){
+      var picked = Array.isArray(state.answers[i]) ? state.answers[i] : [];
+      var optsDiv = document.createElement("div");
+      optsDiv.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var isCorrectOpt = q.answer.indexOf(idx)!==-1;
+        var wasPicked = picked.indexOf(idx)!==-1;
+        var cls = "review-opt";
+        var tag = "";
+        if(isCorrectOpt){ cls += " is-correct"; tag = wasPicked ? "Dipilih &amp; tepat" : "Terlewat"; }
+        else if(wasPicked){ cls += " is-wrong-pick"; tag = "Dipilih, tidak tepat"; }
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>"+(tag?"<span class='opt-tag'>"+tag+"</span>":"");
+        optsDiv.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv);
+    } else {
+      var picked2 = state.answers[i];
+      var optsDiv2 = document.createElement("div");
+      optsDiv2.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var cls = "review-opt";
+        if(idx===q.answer) cls += " is-correct";
+        else if(idx===picked2) cls += " is-wrong-pick";
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+        optsDiv2.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv2);
+    }
+
+    var pembahasan = document.createElement("div");
+    pembahasan.className = "pembahasan";
+    pembahasan.style.marginTop = "14px";
+    pembahasan.innerHTML = "<b>Pembahasan:</b><br>"+q.explanation;
+    body.appendChild(pembahasan);
+
+    details.appendChild(body);
+    reviewList.appendChild(details);
+  });
+}
+
+/* ============ INIT ON LOAD ============ */
+(function init(){
+  var saved = loadState();
+  if(saved && !saved.finished && saved.endTimestamp){
+    var remaining = (saved.endTimestamp - Date.now())/1000;
+    if(remaining > 0){
+      document.getElementById("resumeBanner").style.display = "flex";
+    } else {
+      state = saved;
+      finishQuiz(true);
+    }
+  }
+})();
+
+})();
+</script>
+</body>
+</html>
