@@ -1,0 +1,17 @@
+---
+layout: layouts/base.njk
+title: Tryout TKA
+description: Tryout per mata pelajaran - paket 1 gratis, paket 2-6 premium.
+permalink: "tryout/index.html"
+---
+<h1>Tryout TKA per Mata Pelajaran</h1>
+<p>Setiap mata pelajaran punya 6 paket soal. Paket 1 gratis dan bisa langsung dikerjakan di situs ini. Paket 2-6 tersedia sebagai file unduhan PREMIUM.</p>
+<div class="grid">
+{% for item in mapel %}
+  <div class="card">
+    <span class="badge {{ 'badge-wajib' if item.kategori == 'wajib' else 'badge-pilihan' }}">{{ item.kategori | upper }}</span>
+    <h3>{{ item.nama }}</h3>
+    <a class="btn btn-outline" href="/tryout/{{ item.slug }}/">Lihat Paket Tryout</a>
+  </div>
+{% endfor %}
+</div>

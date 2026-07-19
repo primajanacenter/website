@@ -1,0 +1,156 @@
+[
+  {
+    "slug": "bahasa-indonesia",
+    "nama": "Bahasa Indonesia",
+    "kategori": "wajib",
+    "ringkasan": "Fokus pada keterampilan membaca sebagai fondasi belajar dan bekerja.",
+    "definisi": "TKA Bahasa Indonesia difokuskan pada salah satu keterampilan berbahasa, yakni membaca. Membaca dipilih sebagai fokus karena merupakan keterampilan yang menjadi fondasi untuk terus belajar dan bekerja pada era teknologi yang berubah dan berkembang sangat cepat.",
+    "muatan": [
+      "Teks informasi (tunggal maupun jamak): berisi fakta, konsep, prosedur, dan metakognisi dari berbagai bidang, genre, dan konteks (lokal, nasional, global).",
+      "Teks fiksi: realisme atau absurd, latar konkret/abstrak, tokoh berkarakter bulat, konflik tunggal/jamak, alur dan sudut pandang campuran.",
+      "Panjang teks 250-300 kata (kecuali puisi), dengan kompleksitas kosakata dan kalimat yang meningkat."
+    ],
+    "kompetensi": [
+      {
+        "nama": "Pemahaman Tekstual",
+        "deskripsi": "Kemampuan memahami informasi yang dikemukakan secara eksplisit, mengelompokkan, menyusun ulang, dan menyajikan kembali informasi secara eksplisit dari teks.",
+        "subkompetensi": [
+          "Mengidentifikasi informasi tersurat dalam teks.",
+          "Menyusun ulang, mengelompokkan, membuat ikhtisar, dan menyajikan kembali informasi tersurat."
+        ]
+      },
+      {
+        "nama": "Pemahaman Inferensial",
+        "deskripsi": "Kemampuan menarik kesimpulan berdasarkan informasi yang tersirat dalam teks.",
+        "subkompetensi": [
+          "Mengidentifikasi dan menyimpulkan informasi tersirat dalam teks."
+        ]
+      },
+      {
+        "nama": "Evaluasi dan Apresiasi",
+        "deskripsi": "Kemampuan membuat penilaian terhadap ide, menanggapi teks secara emosional dan estetis.",
+        "subkompetensi": [
+          "Menilai gagasan, fakta, atau opini dalam teks.",
+          "Menanggapi isi teks dan bahasa penulis dalam teks."
+        ]
+      }
+    ],
+    "matriks": [
+      { "kompetensi": "Pemahaman Tekstual", "bentukSoal": "PG Sederhana", "jenisTeks": "Informasi & Fiksi" },
+      { "kompetensi": "Pemahaman Inferensial", "bentukSoal": "PG Kompleks (MCMA)", "jenisTeks": "Informasi & Fiksi" },
+      { "kompetensi": "Evaluasi dan Apresiasi", "bentukSoal": "PG Kompleks (Kategori)", "jenisTeks": "Fiksi" }
+    ],
+    "contohSoal": [
+      {
+        "tipe": "pg_sederhana",
+        "stimulus": "CONTOH placeholder - ganti dengan teks resmi/hasil review dari kisi-kisi Perkaban 45/2025 sebelum publish.",
+        "pertanyaan": "Apa gagasan utama paragraf tersebut?",
+        "pilihan": ["Gagasan A", "Gagasan B", "Gagasan C", "Gagasan D"],
+        "kunci": "B",
+        "pembahasan": "CONTOH placeholder pembahasan - isi alasan kunci jawaban di sini."
+      }
+    ]
+  },
+  {
+    "slug": "matematika",
+    "nama": "Matematika",
+    "kategori": "wajib",
+    "ringkasan": "Mengukur pemahaman bilangan, aljabar, geometri, trigonometri, dan data.",
+    "definisi": "CONTOH placeholder - lengkapi definisi & fokus TKA Matematika sesuai Lampiran III Perkaban 45/2025 (materi: Bilangan, Aljabar, Geometri, Trigonometri, Data).",
+    "muatan": [
+      "Bilangan: bilangan real.",
+      "Aljabar: persamaan dan pertidaksamaan.",
+      "Geometri dan pengukuran.",
+      "Trigonometri: perbandingan trigonometri.",
+      "Data dan ketidakpastian."
+    ],
+    "kompetensi": [
+      { "nama": "Pemahaman Konsep", "deskripsi": "CONTOH placeholder.", "subkompetensi": ["Lengkapi dari dokumen resmi."] }
+    ],
+    "matriks": [
+      { "kompetensi": "Pemahaman Konsep", "bentukSoal": "PG Sederhana", "jenisTeks": "-" }
+    ],
+    "contohSoal": [
+      {
+        "tipe": "pg_sederhana",
+        "stimulus": "CONTOH placeholder soal matematika.",
+        "pertanyaan": "Berapa hasil dari 2x + 5 = 15?",
+        "pilihan": ["3", "5", "7", "10"],
+        "kunci": "B",
+        "pembahasan": "2x = 10, x = 5."
+      }
+    ]
+  },
+  {
+    "slug": "bahasa-inggris",
+    "nama": "Bahasa Inggris",
+    "kategori": "wajib",
+    "ringkasan": "Mengukur pemahaman membaca teks berbahasa Inggris.",
+    "definisi": "CONTOH placeholder - lengkapi definisi & fokus TKA Bahasa Inggris sesuai Lampiran III Perkaban 45/2025.",
+    "muatan": ["Teks informasi", "Teks fiksi"],
+    "kompetensi": [
+      { "nama": "Reading Comprehension", "deskripsi": "CONTOH placeholder.", "subkompetensi": ["Lengkapi dari dokumen resmi."] }
+    ],
+    "matriks": [
+      { "kompetensi": "Reading Comprehension", "bentukSoal": "PG Sederhana", "jenisTeks": "Informasi" }
+    ],
+    "contohSoal": [
+      {
+        "tipe": "pg_sederhana",
+        "stimulus": "CONTOH placeholder passage.",
+        "pertanyaan": "What is the main idea of the passage?",
+        "pilihan": ["Idea A", "Idea B", "Idea C", "Idea D"],
+        "kunci": "A",
+        "pembahasan": "CONTOH placeholder pembahasan."
+      }
+    ]
+  },
+  {
+    "slug": "fisika",
+    "nama": "Fisika",
+    "kategori": "pilihan",
+    "ringkasan": "Mengukur pemahaman kinematika, dinamika, fluida, gelombang, kalor, dan kelistrikan.",
+    "definisi": "CONTOH placeholder - lengkapi sesuai Lampiran III Perkaban 45/2025.",
+    "muatan": ["Kinematika", "Dinamika", "Fluida", "Gelombang & Bunyi", "Kalor", "Kelistrikan"],
+    "kompetensi": [
+      { "nama": "Analisis Fenomena Fisis", "deskripsi": "CONTOH placeholder.", "subkompetensi": ["Lengkapi dari dokumen resmi."] }
+    ],
+    "matriks": [
+      { "kompetensi": "Analisis Fenomena Fisis", "bentukSoal": "PG Kompleks (MCMA)", "jenisTeks": "-" }
+    ],
+    "contohSoal": [
+      {
+        "tipe": "pg_sederhana",
+        "stimulus": "CONTOH placeholder soal fisika.",
+        "pertanyaan": "Sebuah benda bergerak dengan kecepatan konstan. Apa yang dapat disimpulkan tentang percepatannya?",
+        "pilihan": ["Nol", "Konstan tidak nol", "Berubah-ubah", "Tidak dapat ditentukan"],
+        "kunci": "A",
+        "pembahasan": "Kecepatan konstan berarti tidak ada perubahan kecepatan, sehingga percepatan = 0."
+      }
+    ]
+  },
+  {
+    "slug": "ekonomi",
+    "nama": "Ekonomi",
+    "kategori": "pilihan",
+    "ringkasan": "Mengukur pemahaman konsep ekonomi mikro, makro, dan literasi keuangan.",
+    "definisi": "CONTOH placeholder - lengkapi sesuai Lampiran III Perkaban 45/2025.",
+    "muatan": ["Ekonomi mikro", "Ekonomi makro", "Literasi keuangan"],
+    "kompetensi": [
+      { "nama": "Penerapan Konsep Ekonomi", "deskripsi": "CONTOH placeholder.", "subkompetensi": ["Lengkapi dari dokumen resmi."] }
+    ],
+    "matriks": [
+      { "kompetensi": "Penerapan Konsep Ekonomi", "bentukSoal": "PG Sederhana", "jenisTeks": "-" }
+    ],
+    "contohSoal": [
+      {
+        "tipe": "pg_sederhana",
+        "stimulus": "CONTOH placeholder soal ekonomi.",
+        "pertanyaan": "Apa yang terjadi pada harga barang jika permintaan naik sementara penawaran tetap?",
+        "pilihan": ["Harga turun", "Harga naik", "Harga tetap", "Tidak dapat ditentukan"],
+        "kunci": "B",
+        "pembahasan": "Permintaan naik tanpa perubahan penawaran mendorong harga keseimbangan naik."
+      }
+    ]
+  }
+]
