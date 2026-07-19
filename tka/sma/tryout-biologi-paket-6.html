@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tryout Biologi — Paket 6 | Siap TKA</title>
+<meta name="description" content="Latihan tryout Biologi Paket 6 untuk persiapan TKA SMA/MA — 25 soal Keanekaragaman Hayati, Sel, dan Proses-proses pada Makhluk Hidup, timer, skor otomatis, dan pembahasan lengkap.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --wrong:#dc2626;
+    --wrong-bg:#fef2f2;
+    --empty:#b45309;
+    --empty-bg:#fffbeb;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .timer{
+    display:flex;align-items:center;gap:8px;
+    font-variant-numeric:tabular-nums;
+    font-weight:700;font-size:1.05rem;
+    padding:8px 16px;border-radius:999px;
+    background:var(--primary-light);color:var(--primary-dark);
+    border:1px solid #c7d2fe;
+  }
+  .timer.low{background:var(--wrong-bg);color:var(--wrong);border-color:#fecaca;}
+  .timer .icon{font-size:1rem;}
+
+  .screen{display:none;}
+  .screen.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+
+  /* ---- math notation helpers (no external library needed) ---- */
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+    margin:0 3px;line-height:1;position:relative;top:0.16em;font-size:0.9em;}
+  .frac .num{padding:0 4px 2px;border-bottom:1.4px solid currentColor;}
+  .frac .den{padding:2px 4px 0;}
+  .rad{border-top:1.4px solid currentColor;padding:0 3px;margin-left:1px;}
+  sup{font-size:.72em;top:-0.55em;}
+  sub{font-size:.72em;bottom:-0.25em;}
+  .qtable{border-collapse:collapse;margin:14px 0;font-size:.92rem;}
+  .qtable th,.qtable td{border:1px solid var(--border);padding:6px 16px;text-align:center;}
+  .qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  /* START SCREEN */
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+  .hero h1{font-size:1.7rem;margin:0 0 6px;}
+  .hero p.lead{color:var(--muted);margin:0 0 24px;font-size:1rem;}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0;}
+  .info-item{background:var(--primary-light);border-radius:10px;padding:14px 16px;}
+  .info-item .num2{font-size:1.4rem;font-weight:800;color:var(--primary-dark);}
+  .info-item .label{font-size:.82rem;color:var(--muted);margin-top:2px;}
+  .rules{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:16px 18px;margin:20px 0;font-size:.92rem;color:var(--text);}
+  .rules b{color:var(--primary-dark);}
+  .rules ul{margin:8px 0 0;padding-left:20px;}
+  .rules li{margin-bottom:4px;}
+  .topics-list{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 24px;}
+  .topic-chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.82rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+    transition:transform .1s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+  .btn-block{width:100%;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+
+  .resume-banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+  /* QUIZ SCREEN */
+  .quiz-layout{display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start;}
+  @media (max-width:760px){.quiz-layout{grid-template-columns:1fr;}}
+
+  .progress-bar{height:6px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:20px;}
+  .progress-bar .fill{height:100%;background:var(--primary);border-radius:999px;transition:width .2s ease;}
+
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;}
+  .q-index{font-weight:700;color:var(--primary-dark);font-size:.95rem;}
+  .q-topic{font-size:.78rem;color:var(--muted);background:var(--primary-light);padding:4px 10px;border-radius:999px;}
+  .q-type-badge{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:#fef3c7;color:#92400e;}
+  .q-hint{font-size:.82rem;color:var(--muted);margin-bottom:14px;font-style:italic;}
+  .q-text{font-size:1.05rem;margin:0 0 20px;}
+  .q-text img{max-width:100%;}
+
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .option{
+    display:flex;align-items:flex-start;gap:12px;
+    border:1.5px solid var(--border);border-radius:10px;
+    padding:13px 16px;cursor:pointer;font-size:.96rem;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .option:hover{border-color:var(--primary);background:var(--primary-light);}
+  .option.selected{border-color:var(--primary);background:var(--primary-light);}
+  .option .letter{
+    width:26px;height:26px;flex:none;border-radius:50%;
+    border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
+    font-size:.8rem;font-weight:700;color:var(--muted);
+  }
+  .option.mcma .letter{border-radius:7px;}
+  .option.selected .letter{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+  .statement-row{border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+  .statement-text{margin-bottom:12px;font-size:.94rem;}
+  .statement-choices{display:flex;gap:10px;}
+  .choice-btn{flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);cursor:pointer;font-weight:700;font-size:.85rem;text-align:center;color:var(--muted);}
+  .choice-btn:hover{border-color:var(--primary);}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark);}
+
+  .quiz-nav-btns{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+
+  .nav-panel{position:sticky;top:78px;}
+  .nav-panel .card{padding:18px;}
+  .nav-panel h4{margin:0 0 4px;font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:14px 0;}
+  .nav-cell{
+    aspect-ratio:1;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);color:var(--muted);font-size:.78rem;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .nav-cell.answered{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);}
+  .nav-cell.current{outline:2px solid var(--primary);outline-offset:1px;}
+  .legend{display:flex;flex-direction:column;gap:6px;font-size:.78rem;color:var(--muted);margin-top:10px;}
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .legend i{width:12px;height:12px;border-radius:4px;display:inline-block;border:1.5px solid var(--border);}
+  .legend i.a{background:var(--primary-light);border-color:var(--primary);}
+
+  /* RESULT SCREEN */
+  .result-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:24px 0;}
+  .stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+  .stat .val{font-size:1.6rem;font-weight:800;}
+  .stat .lbl{font-size:.78rem;color:var(--muted);margin-top:4px;}
+  .stat.score .val{color:var(--primary-dark);}
+  .stat.correct .val{color:var(--correct);}
+  .stat.wrong .val{color:var(--wrong);}
+  .stat.empty .val{color:var(--empty);}
+
+  .topic-bars{display:flex;flex-direction:column;gap:14px;margin:20px 0 8px;}
+  .topic-bar-row .top{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:6px;}
+  .topic-bar-row .top .name{font-weight:600;}
+  .topic-bar-row .top .frac2{color:var(--muted);}
+  .bar-track{height:9px;background:var(--border);border-radius:999px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--primary);border-radius:999px;}
+
+  .section-title{font-size:1.1rem;margin:32px 0 14px;font-weight:700;}
+  .review-item{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--surface);}
+  .review-item summary{
+    list-style:none;cursor:pointer;padding:14px 18px;
+    display:flex;align-items:center;gap:12px;font-weight:600;font-size:.92rem;flex-wrap:wrap;
+  }
+  .review-item summary::-webkit-details-marker{display:none;}
+  .review-item summary .chev{margin-left:auto;color:var(--muted);font-size:.8rem;}
+  .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;flex:none;}
+  .badge.correct{background:var(--correct-bg);color:var(--correct);}
+  .badge.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .badge.empty{background:var(--empty-bg);color:var(--empty);}
+  .badge.typebadge{background:#fef3c7;color:#92400e;}
+  .review-body{padding:0 18px 20px;border-top:1px solid var(--border);}
+  .review-body .q-text{font-size:.96rem;margin:16px 0;}
+  .review-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .review-opt{display:flex;gap:10px;padding:9px 13px;border-radius:8px;border:1px solid var(--border);font-size:.9rem;align-items:center;}
+  .review-opt .letter{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex:none;}
+  .review-opt.is-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-opt.is-correct .letter{background:var(--correct);border-color:var(--correct);color:#fff;}
+  .review-opt.is-wrong-pick{background:var(--wrong-bg);border-color:#fecaca;}
+  .review-opt.is-wrong-pick .letter{background:var(--wrong);border-color:var(--wrong);color:#fff;}
+  .opt-tag{margin-left:auto;font-size:.72rem;color:var(--muted);font-style:italic;}
+  .review-statement{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;font-size:.9rem;}
+  .review-statement.st-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-statement.st-wrong{background:var(--wrong-bg);border-color:#fecaca;}
+  .st-answer{font-size:.78rem;font-weight:700;flex:none;}
+  .pembahasan{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:.9rem;}
+  .pembahasan b{color:var(--primary-dark);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html" class="active">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <!-- START SCREEN -->
+  <section class="screen active" id="screen-start">
+    <div class="card hero">
+      <div id="resumeBanner" style="display:none;" class="resume-banner">
+        <span>Kamu punya progres tryout yang belum selesai.</span>
+        <div class="btn-row" style="margin:0;">
+          <button class="btn btn-primary" id="btnResume">Lanjutkan Tryout</button>
+          <button class="btn btn-ghost" id="btnRestartFresh">Mulai Baru</button>
+        </div>
+      </div>
+
+      <span class="pill pill-premium">Premium</span>
+      <h1>Tryout Biologi &mdash; Paket 6</h1>
+      <p class="lead">Simulasi latihan mandiri mengikuti ketentuan resmi TKA 2026: mata uji pilihan Biologi jenjang SMA/MA, mengacu Kerangka Asesmen TKA (Perka BSKAP Kemendikdasmen No. 045/H/AN/2025) &mdash; pemahaman, penerapan, dan penalaran konsep biologi serta keterampilan proses.</p>
+
+      <div class="info-grid">
+        <div class="info-item"><div class="num2">25</div><div class="label">Soal (campuran bentuk)</div></div>
+        <div class="info-item"><div class="num2">75:00</div><div class="label">Menit pengerjaan</div></div>
+        <div class="info-item"><div class="num2">3</div><div class="label">Elemen materi</div></div>
+        <div class="info-item"><div class="num2">6/6</div><div class="label">Paket soal</div></div>
+      </div>
+
+      <div class="rules">
+        <b>Bentuk soal</b> (sesuai ketentuan resmi TKA):
+        <ul>
+          <li><b>Pilihan Ganda</b> &mdash; satu jawaban paling tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</b> &mdash; bisa lebih dari satu jawaban benar, semua harus dipilih dengan tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Benar/Salah)</b> &mdash; beberapa pernyataan, tiap pernyataan direspons Benar atau Salah.</li>
+        </ul>
+        <b style="display:block;margin-top:10px;">Sistem penilaian per soal (konvensi latihan, bukan rumus resmi Kemendikdasmen):</b> Seluruhnya terjawab tepat <b>+4</b>, ada bagian yang keliru <b>&minus;1</b>, tidak dijawab sama sekali <b>0</b>. Skor maksimum <b>100</b>. TKA sesungguhnya dilaporkan sebagai skor terstandar (bukan skor mentah seperti ini), jadi anggap skor di sini sebagai indikator latihan saja.<br>
+        Pembahasan lengkap tampil setelah kamu menekan <b>Selesai &amp; Lihat Hasil</b>, atau otomatis saat waktu habis. Progres tersimpan otomatis di perangkat ini.
+      </div>
+
+      <div class="topics-list">
+        <span class="topic-chip">Keanekaragaman Hayati</span>
+        <span class="topic-chip">Sel</span>
+        <span class="topic-chip">Proses-proses pada Makhluk Hidup</span>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="btnStart" style="font-size:1rem;padding:15px;">Mulai Tryout</button>
+    </div>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz-top">
+      <div style="font-weight:700;color:var(--muted);font-size:.86rem;">Tryout Biologi &middot; Paket 6</div>
+      <div class="timer" id="timerDisplay" style="display:none;"><span class="icon">&#9201;</span><span id="timerText">75:00</span></div>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progressFill" style="width:4%;"></div></div>
+    <div class="quiz-layout">
+      <div class="card">
+        <div class="q-meta">
+          <span class="q-index" id="qIndexLabel">Soal 1 dari 25</span>
+          <span class="q-topic" id="qTopicLabel">Bilangan</span>
+          <span class="q-type-badge" id="qTypeBadge">Pilihan Ganda</span>
+        </div>
+        <div class="q-hint" id="qHint" style="display:none;"></div>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="qOptions"></div>
+        <div class="quiz-nav-btns">
+          <button class="btn btn-ghost" id="btnPrev">&larr; Sebelumnya</button>
+          <button class="btn btn-primary" id="btnNext">Berikutnya &rarr;</button>
+        </div>
+      </div>
+      <aside class="nav-panel">
+        <div class="card">
+          <h4>Navigasi Soal</h4>
+          <div class="nav-grid" id="navGrid"></div>
+          <div class="legend">
+            <span><i class="a"></i> Sudah dijawab</span>
+            <span><i></i> Belum dijawab</span>
+          </div>
+          <button class="btn btn-primary btn-block" id="btnFinish" style="margin-top:16px;">Selesai &amp; Lihat Hasil</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section class="screen" id="screen-result">
+    <div class="card">
+      <h1 style="font-size:1.4rem;margin-top:0;">Hasil Tryout Kamu &mdash; Paket 6</h1>
+      <p class="lead" style="margin-bottom:0;" id="resultSubtitle">Berikut rekap skor dan pembahasan lengkap setiap soal.</p>
+
+      <div class="result-summary">
+        <div class="stat score"><div class="val" id="statScore">0</div><div class="lbl">Skor (maks 100)</div></div>
+        <div class="stat correct"><div class="val" id="statCorrect">0</div><div class="lbl">Benar</div></div>
+        <div class="stat wrong"><div class="val" id="statWrong">0</div><div class="lbl">Salah</div></div>
+        <div class="stat empty"><div class="val" id="statEmpty">0</div><div class="lbl">Kosong</div></div>
+        <div class="stat"><div class="val" id="statTime">-</div><div class="lbl">Waktu terpakai</div></div>
+      </div>
+
+      <div class="section-title">Analisis per Elemen Materi</div>
+      <div class="topic-bars" id="topicBars"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnRetry">&#8635; Ulangi Paket Ini</button>
+        <a class="btn btn-ghost" href="tryout.html">Kembali ke Daftar Tryout</a>
+      </div>
+    </div>
+
+    <div class="section-title">Pembahasan Lengkap</div>
+    <div id="reviewList"></div>
+  </section>
+
+  <div class="note-box">
+    Skor pada tryout ini adalah alat bantu latihan mandiri dan tidak merepresentasikan nilai resmi TKA. Materi mata pelajaran lengkap tersedia di halaman <a href="mata-pelajaran-biologi.html">Biologi</a>.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA &middot; mengacu Kerangka Asesmen TKA Biologi (Pilihan) SMA, Perka BSKAP Kemendikdasmen No. 045/H/AN/2025.</p>
+  </footer>
+
+</div>
+
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+(function(){
+"use strict";
+
+/* small helper to build a stacked fraction as plain HTML/CSS (no external math library needed) */
+function frac(num, den){
+  return "<span class='frac'><span class='num'>"+num+"</span><span class='den'>"+den+"</span></span>";
+}
+/* helper for a radical sign over a multi-character expression */
+function rad(content){
+  return "&radic;<span class='rad'>"+content+"</span>";
+}
+
+
+var QUESTIONS = [
+{
+  type:"single", topic:"Keanekaragaman Hayati",
+  text:"Kunci determinasi (kunci dikotomis) sering digunakan para ahli biologi untuk mengidentifikasi spesies makhluk hidup berdasarkan serangkaian ciri-ciri yang berlawanan (dikotomis), yang mengarahkan pengguna langkah demi langkah menuju identifikasi spesies yang tepat. Manfaat utama penggunaan kunci determinasi ini adalah&hellip;",
+  options:[
+    "Menciptakan spesies baru secara otomatis.",
+    "Membantu mengidentifikasi dan mengklasifikasikan suatu organisme secara sistematis berdasarkan ciri-ciri morfologis yang dapat diamati, tanpa harus menghafal seluruh nama spesies yang ada.",
+    "Mengubah struktur genetik organisme yang diidentifikasi.",
+    "Hanya dapat digunakan untuk mengidentifikasi hewan, tidak untuk tumbuhan.",
+    "Menggantikan kebutuhan akan penelitian genetik dalam klasifikasi."
+  ],
+  answer:1,
+  explanation:"Kunci determinasi (kunci dikotomis) membantu proses identifikasi dan klasifikasi organisme secara sistematis dengan mengarahkan pengamat melalui serangkaian pilihan ciri-ciri morfologis yang berlawanan (misalnya \"berdaun tunggal\" vs \"berdaun majemuk\"), sehingga memudahkan penentuan identitas suatu spesies tanpa harus menghafal seluruh nama spesies yang ada."
+},
+{
+  type:"single", topic:"Keanekaragaman Hayati",
+  text:"Di kepulauan Wallacea (termasuk Sulawesi, Maluku, dan Nusa Tenggara), ditemukan berbagai spesies unik yang merupakan hasil percampuran fauna Asia dan Australia, seperti anoa dan babirusa. Keunikan biogeografis kawasan Wallacea ini terutama disebabkan oleh&hellip;",
+  options:[
+    "Kawasan ini tidak pernah mengalami perubahan geologis sama sekali.",
+    "Posisi geografis kawasan ini berada di antara dua wilayah biogeografis besar (Asia dan Australia), yang dipisahkan oleh garis Wallace dan Weber, menciptakan zona transisi dengan percampuran dan evolusi spesies yang unik akibat isolasi geografis parsial.",
+    "Seluruh spesies di kawasan ini berasal dari benua Afrika.",
+    "Kawasan ini memiliki iklim yang identik dengan kutub utara.",
+    "Tidak ada faktor geografis yang memengaruhi keanekaragaman hayati di kawasan ini."
+  ],
+  answer:1,
+  explanation:"Kawasan Wallacea terletak di zona transisi biogeografis antara wilayah fauna Asia (Oriental) dan Australia (Australis), yang dipisahkan oleh garis Wallace (di sisi barat) dan garis Weber (di sisi timur). Posisi geografis unik ini, dikombinasikan dengan sejarah geologis berupa isolasi pulau-pulau (tidak pernah menyatu penuh dengan daratan Asia maupun Australia), menciptakan kondisi evolusi yang unik sehingga memunculkan spesies endemik hasil percampuran dan evolusi independen, seperti anoa dan babirusa."
+},
+{
+  type:"mcma", topic:"Keanekaragaman Hayati",
+  text:"Bakteri Helicobacter pylori diketahui dapat menyebabkan tukak lambung (peptic ulcer) dan meningkatkan risiko kanker lambung pada manusia. Manakah pernyataan berikut yang benar mengenai bakteri ini? Pilih semua jawaban yang benar!",
+  hint:"Petunjuk: pertimbangkan bagaimana H. pylori dapat bertahan hidup di lingkungan asam lambung dan dampaknya bagi kesehatan.",
+  options:[
+    "Helicobacter pylori mampu bertahan hidup di lingkungan asam lambung yang ekstrem, salah satunya dengan menghasilkan enzim urease yang menetralkan asam di sekitarnya.",
+    "Infeksi H. pylori yang kronis dapat merusak lapisan pelindung lambung, meningkatkan risiko terjadinya tukak lambung.",
+    "Semua bakteri yang hidup di dalam tubuh manusia bersifat menguntungkan tanpa kecuali, termasuk H. pylori.",
+    "Pengobatan infeksi H. pylori umumnya melibatkan kombinasi antibiotik untuk membasmi bakteri tersebut.",
+    "H. pylori tidak dapat bertahan hidup pada pH rendah (asam) sama sekali."
+  ],
+  answer:[0,1,3],
+  explanation:"H. pylori memang menghasilkan enzim urease yang menetralkan asam lambung di sekitarnya, memungkinkannya bertahan hidup (Benar). Infeksi kronis memang dapat merusak lapisan pelindung lambung dan meningkatkan risiko tukak lambung (Benar). PERNYATAAN bahwa SEMUA bakteri dalam tubuh menguntungkan JUSTRU SALAH, karena H. pylori sendiri merupakan contoh bakteri yang dapat merugikan/patogen (Salah). Pengobatan H. pylori memang umumnya melibatkan kombinasi antibiotik (terapi eradikasi) (Benar). H. pylori JUSTRU MAMPU bertahan hidup pada pH rendah/asam berkat mekanisme adaptasinya (seperti produksi urease), bukan tidak dapat bertahan sama sekali (Salah)."
+},
+{
+  type:"single", topic:"Keanekaragaman Hayati",
+  text:"Bakteri Clostridium botulinum dapat menghasilkan toksin botulinum, salah satu racun paling mematikan yang diketahui, jika berkembang biak pada makanan kaleng yang tidak diproses dengan benar (kondisi anaerob). Namun, dalam dosis yang sangat kecil dan terkontrol, toksin ini dimanfaatkan dalam dunia medis dan kecantikan (dikenal sebagai Botox) untuk&hellip;",
+  options:[
+    "Menyembuhkan seluruh jenis penyakit infeksi secara instan.",
+    "Melumpuhkan otot secara sementara dengan menghambat pelepasan neurotransmiter pada sambungan saraf-otot, dimanfaatkan untuk mengurangi kerutan wajah atau mengobati kondisi medis tertentu seperti kejang otot berlebihan.",
+    "Meningkatkan produksi sel darah merah.",
+    "Menghasilkan energi tambahan bagi sel otot.",
+    "Membunuh seluruh bakteri lain dalam tubuh."
+  ],
+  answer:1,
+  explanation:"Toksin botulinum, dalam dosis sangat kecil dan terkontrol secara medis (Botox), bekerja dengan menghambat pelepasan neurotransmiter asetilkolin pada sambungan saraf-otot, sehingga menyebabkan kelumpuhan otot sementara. Sifat ini dimanfaatkan secara medis untuk mengurangi kerutan wajah (dengan melemaskan otot wajah) atau mengobati kondisi medis seperti kejang otot berlebihan (spastisitas) dan migrain kronis, meskipun dalam dosis besar toksin ini sangat berbahaya dan mematikan."
+},
+{
+  type:"single", topic:"Keanekaragaman Hayati",
+  text:"Program pengawasan resistensi antimikroba (antimicrobial resistance surveillance) di rumah sakit bertujuan memantau pola resistensi bakteri terhadap berbagai jenis antibiotik dari waktu ke waktu. Manfaat utama data pengawasan ini bagi tenaga medis adalah&hellip;",
+  options:[
+    "Tidak memiliki manfaat praktis apa pun bagi pengobatan pasien.",
+    "Membantu dokter memilih jenis antibiotik yang masih efektif untuk mengobati infeksi tertentu berdasarkan pola resistensi terkini, sehingga pengobatan menjadi lebih tepat sasaran dan mengurangi risiko kegagalan terapi.",
+    "Menggantikan kebutuhan untuk melakukan uji sensitivitas antibiotik pada pasien secara individual.",
+    "Hanya berguna untuk kepentingan administrasi rumah sakit, bukan untuk pengobatan pasien.",
+    "Memastikan seluruh bakteri di rumah sakit menjadi resisten terhadap semua antibiotik."
+  ],
+  answer:1,
+  explanation:"Data pengawasan resistensi antimikroba membantu dokter memahami pola resistensi bakteri terkini di suatu wilayah/fasilitas kesehatan, sehingga dapat memilih jenis antibiotik yang masih efektif untuk mengobati infeksi tertentu berdasarkan bukti terkini. Hal ini membuat pengobatan menjadi lebih tepat sasaran, mengurangi risiko kegagalan terapi akibat penggunaan antibiotik yang sudah tidak efektif terhadap galur bakteri resisten yang beredar."
+},
+{
+  type:"single", topic:"Keanekaragaman Hayati",
+  text:"Di suatu hutan hujan tropis, pohon ara (fig tree) memiliki hubungan simbiosis yang sangat spesifik dengan tawon ara (fig wasp), di mana tawon menyerbuki bunga pohon ara dan sebagai imbalannya bertelur di dalam buahnya untuk berkembang biak. Jika populasi tawon ara punah akibat perubahan lingkungan, dampak yang paling mungkin terjadi terhadap populasi pohon ara adalah&hellip;",
+  options:[
+    "Tidak akan ada dampak apa pun karena pohon ara dapat diserbuki oleh serangga lain dengan mudah.",
+    "Populasi pohon ara berpotensi mengalami penurunan reproduksi secara signifikan karena kehilangan agen penyerbuk utamanya yang sangat spesifik terhadap spesies tersebut.",
+    "Pohon ara akan langsung punah dalam waktu satu hari.",
+    "Populasi pohon ara akan meningkat drastis tanpa batas.",
+    "Tawon ara tidak memiliki peran apa pun dalam reproduksi pohon ara."
+  ],
+  answer:1,
+  explanation:"Hubungan mutualisme yang sangat spesifik antara pohon ara dan tawon ara (koevolusi khusus) berarti pohon ara sangat bergantung pada tawon ara sebagai agen penyerbuk utamanya. Jika populasi tawon ara punah, pohon ara berpotensi kehilangan mekanisme penyerbukan efektifnya, yang dapat menyebabkan penurunan reproduksi secara signifikan karena spesies penyerbuk lain umumnya tidak dapat menggantikan peran tawon ara yang sangat terspesialisasi ini."
+},
+{
+  type:"category", topic:"Keanekaragaman Hayati",
+  text:"Tentukan Benar atau Salah untuk setiap pernyataan mengenai suksesi ekologi (perubahan komunitas ekosistem dari waktu ke waktu) berikut!",
+  statements:[
+    {text:"Suksesi primer terjadi pada area yang sebelumnya belum pernah ditumbuhi vegetasi sama sekali, seperti pada lahan bekas letusan gunung berapi yang baru mendingin.", correct:true},
+    {text:"Suksesi sekunder terjadi pada area yang sebelumnya sudah memiliki komunitas ekosistem, tetapi mengalami gangguan (seperti kebakaran hutan) yang tidak menghilangkan tanah dan benih sepenuhnya.", correct:true},
+    {text:"Komunitas klimaks (tahap akhir suksesi) adalah komunitas yang tidak stabil dan akan terus berubah drastis tanpa henti.", correct:false}
+  ],
+  explanation:"Suksesi primer memang terjadi pada area yang belum pernah ditumbuhi vegetasi, seperti lahan vulkanik baru (Benar). Suksesi sekunder memang terjadi pada area yang sebelumnya sudah memiliki komunitas namun mengalami gangguan tanpa menghilangkan tanah/benih sepenuhnya (Benar). Komunitas klimaks JUSTRU merupakan tahap yang relatif STABIL (kondisi keseimbangan dengan lingkungannya), bukan tidak stabil dan terus berubah drastis (Salah)."
+},
+{
+  type:"single", topic:"Keanekaragaman Hayati",
+  text:"Konvensi keanekaragaman hayati internasional (seperti CITES, Convention on International Trade in Endangered Species) mengatur perdagangan spesies langka dan terancam punah antarnegara. Tujuan utama regulasi semacam ini adalah&hellip;",
+  options:[
+    "Mendorong perdagangan bebas seluruh jenis satwa liar tanpa batasan apa pun.",
+    "Mencegah eksploitasi berlebihan terhadap spesies langka melalui perdagangan ilegal, sehingga membantu melindungi kelangsungan hidup spesies tersebut dari kepunahan akibat aktivitas manusia.",
+    "Meningkatkan perburuan liar terhadap spesies yang dilindungi.",
+    "Tidak memiliki dampak apa pun terhadap kelestarian spesies.",
+    "Hanya berlaku untuk tumbuhan, tidak untuk hewan."
+  ],
+  answer:1,
+  explanation:"Regulasi internasional seperti CITES bertujuan mencegah eksploitasi berlebihan terhadap spesies langka dan terancam punah melalui pengaturan dan pengawasan ketat terhadap perdagangan internasional spesies tersebut (termasuk bagian tubuhnya, seperti gading atau kulit), sehingga membantu melindungi kelangsungan hidup spesies dari ancaman kepunahan akibat perburuan dan perdagangan ilegal yang didorong oleh permintaan pasar."
+},
+{
+  type:"single", topic:"Sel",
+  text:"Peroksisom adalah organel sel yang mengandung enzim katalase, berperan menguraikan hidrogen peroksida (H&#8322;O&#8322;) yang bersifat toksik menjadi air dan oksigen sebagai bagian dari mekanisme detoksifikasi sel. Pentingnya keberadaan peroksisom bagi sel adalah&hellip;",
+  options:[
+    "Menghasilkan energi utama sel dalam bentuk ATP.",
+    "Melindungi sel dari kerusakan akibat penumpukan hidrogen peroksida, senyawa reaktif yang jika dibiarkan menumpuk dapat merusak komponen sel seperti protein, lipid, dan DNA.",
+    "Menyimpan materi genetik sel.",
+    "Mensintesis protein untuk disekresikan keluar sel.",
+    "Membentuk dinding sel pada organisme prokariotik."
+  ],
+  answer:1,
+  explanation:"Peroksisom berperan penting melindungi sel dari kerusakan oksidatif dengan menguraikan hidrogen peroksida (H&#8322;O&#8322;), senyawa reaktif yang bersifat toksik, menjadi air dan oksigen menggunakan enzim katalase. Jika hidrogen peroksida dibiarkan menumpuk, senyawa ini dapat merusak komponen sel penting seperti protein, lipid membran, dan DNA melalui proses oksidasi."
+},
+{
+  type:"single", topic:"Sel",
+  text:"Suatu percobaan menunjukkan bahwa enzim amilase saliva (ludah) dapat mengubah pati (amilum) menjadi maltosa secara efektif pada suhu tubuh normal (sekitar 37&deg;C), tetapi aktivitasnya sangat lambat pada suhu 4&deg;C (suhu lemari es). Penjelasan yang tepat mengenai perlambatan aktivitas enzim pada suhu rendah ini (berbeda dengan denaturasi akibat suhu tinggi) adalah&hellip;",
+  options:[
+    "Enzim mengalami denaturasi permanen pada suhu rendah, sama seperti pada suhu sangat tinggi.",
+    "Suhu rendah menurunkan energi kinetik molekul enzim dan substrat, mengurangi frekuensi dan efektivitas tumbukan antara enzim dan substrat, sehingga laju reaksi melambat tanpa merusak struktur enzim secara permanen.",
+    "Enzim berhenti bekerja sama sekali dan tidak dapat aktif kembali meskipun suhu dinaikkan.",
+    "Suhu rendah justru mempercepat kerja enzim melebihi suhu optimum.",
+    "Substrat berubah menjadi zat lain pada suhu rendah."
+  ],
+  answer:1,
+  explanation:"Berbeda dengan denaturasi pada suhu sangat tinggi (yang merusak struktur protein enzim secara permanen), perlambatan aktivitas enzim pada suhu rendah terjadi karena penurunan energi kinetik molekul, yang mengurangi frekuensi dan efektivitas tumbukan antara enzim dan substrat. Struktur enzim pada suhu rendah umumnya tetap utuh (tidak terdenaturasi), sehingga aktivitas enzim dapat kembali normal jika suhu dinaikkan ke kisaran optimumnya."
+},
+{
+  type:"single", topic:"Sel",
+  text:"Kemosintesis adalah proses anabolisme yang dilakukan oleh beberapa jenis bakteri (seperti bakteri nitrifikasi) untuk menghasilkan senyawa organik menggunakan energi kimia dari reaksi oksidasi senyawa anorganik, tanpa memerlukan cahaya matahari. Perbedaan utama kemosintesis dengan fotosintesis adalah&hellip;",
+  options:[
+    "Kemosintesis menggunakan energi cahaya matahari, sedangkan fotosintesis menggunakan energi kimia.",
+    "Kemosintesis menggunakan energi dari reaksi oksidasi senyawa kimia anorganik (seperti amonia atau senyawa sulfur), sedangkan fotosintesis menggunakan energi cahaya matahari untuk menghasilkan senyawa organik.",
+    "Kedua proses ini menggunakan sumber energi yang identik.",
+    "Kemosintesis hanya dapat dilakukan oleh tumbuhan hijau.",
+    "Fotosintesis tidak menghasilkan senyawa organik apa pun."
+  ],
+  answer:1,
+  explanation:"Perbedaan mendasar antara kemosintesis dan fotosintesis terletak pada sumber energinya: kemosintesis memanfaatkan energi kimia yang dilepaskan dari reaksi oksidasi senyawa anorganik (seperti amonia, hidrogen sulfida, atau besi) yang dilakukan oleh bakteri tertentu, sedangkan fotosintesis memanfaatkan energi cahaya matahari yang ditangkap oleh pigmen klorofil untuk menghasilkan senyawa organik dari CO&#8322; dan air."
+},
+{
+  type:"mcma", topic:"Sel",
+  text:"Mitosis dan meiosis merupakan dua jenis pembelahan sel yang memiliki tujuan dan hasil yang berbeda. Manakah pernyataan berikut yang benar mengenai perbedaan mitosis dan meiosis? Pilih semua jawaban yang benar!",
+  hint:"Petunjuk: bandingkan jumlah pembelahan, jumlah sel anak, dan jumlah kromosom sel anak pada kedua jenis pembelahan ini.",
+  options:[
+    "Mitosis menghasilkan dua sel anak yang identik secara genetik dengan sel induknya, dengan jumlah kromosom yang sama (diploid ke diploid).",
+    "Meiosis menghasilkan empat sel anak dengan jumlah kromosom setengah dari sel induknya (diploid menjadi haploid), digunakan dalam pembentukan sel gamet.",
+    "Mitosis berperan penting dalam pertumbuhan dan perbaikan jaringan tubuh, sedangkan meiosis berperan dalam reproduksi seksual untuk menghasilkan sel kelamin.",
+    "Mitosis dan meiosis menghasilkan jumlah sel anak yang identik, yaitu sama-sama empat sel anak.",
+    "Meiosis hanya terjadi satu kali pembelahan, sama seperti mitosis."
+  ],
+  answer:[0,1,2],
+  explanation:"Mitosis memang menghasilkan dua sel anak identik dengan jumlah kromosom sama dengan induknya (Benar). Meiosis memang menghasilkan empat sel anak haploid dari sel induk diploid, digunakan dalam pembentukan gamet (Benar). Mitosis memang berperan dalam pertumbuhan/perbaikan jaringan, sedangkan meiosis berperan dalam reproduksi seksual (Benar). Mitosis JUSTRU MENGHASILKAN DUA sel anak (bukan empat seperti meiosis), sehingga pernyataan bahwa keduanya identik menghasilkan empat sel adalah salah (Salah). Meiosis JUSTRU melibatkan DUA KALI pembelahan (meiosis I dan meiosis II), berbeda dari mitosis yang hanya satu kali pembelahan (Salah)."
+},
+{
+  type:"single", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Sistem peredaran darah manusia digolongkan sebagai sistem peredaran darah ganda (double circulation) karena darah melewati jantung sebanyak dua kali dalam satu siklus peredaran lengkap: peredaran darah kecil (pulmonal) dan peredaran darah besar (sistemik). Keuntungan sistem peredaran darah ganda ini dibandingkan peredaran darah tunggal adalah&hellip;",
+  options:[
+    "Darah yang kaya oksigen dan darah yang miskin oksigen dapat tercampur secara bebas tanpa masalah.",
+    "Darah kaya oksigen dapat dipompa kembali dengan tekanan yang lebih tinggi menuju seluruh tubuh setelah melalui paru-paru, sehingga distribusi oksigen ke jaringan tubuh menjadi lebih efisien.",
+    "Jantung tidak perlu bekerja sama sekali pada sistem peredaran darah ganda.",
+    "Sistem ini menyebabkan darah beredar lebih lambat dibandingkan peredaran darah tunggal.",
+    "Peredaran darah ganda hanya ditemukan pada hewan invertebrata."
+  ],
+  answer:1,
+  explanation:"Pada sistem peredaran darah ganda, darah melewati jantung dua kali: pertama dipompa ke paru-paru untuk mengambil oksigen (peredaran pulmonal), lalu kembali ke jantung untuk dipompa kembali dengan tekanan yang lebih tinggi menuju seluruh tubuh (peredaran sistemik). Hal ini memungkinkan darah kaya oksigen didistribusikan ke jaringan tubuh dengan tekanan yang lebih optimal, meningkatkan efisiensi pengangkutan oksigen dibandingkan sistem peredaran darah tunggal (seperti pada ikan) yang hanya melewati jantung satu kali."
+},
+{
+  type:"single", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Pertukaran gas pada ikan berlangsung melalui insang, berbeda dengan manusia yang menggunakan paru-paru. Mekanisme aliran berlawanan arah (countercurrent exchange) antara aliran darah dan aliran air pada insang ikan berfungsi untuk&hellip;",
+  options:[
+    "Memperlambat proses pertukaran oksigen dan karbon dioksida.",
+    "Memaksimalkan efisiensi penyerapan oksigen dari air dengan mempertahankan gradien konsentrasi oksigen yang menguntungkan sepanjang permukaan insang, sehingga darah dapat menyerap oksigen secara terus-menerus.",
+    "Menghentikan seluruh proses pertukaran gas pada insang.",
+    "Hanya berfungsi untuk mengeluarkan karbon dioksida, tidak untuk menyerap oksigen.",
+    "Tidak memiliki manfaat fungsional apa pun bagi ikan."
+  ],
+  answer:1,
+  explanation:"Pada mekanisme aliran berlawanan arah (countercurrent exchange), darah mengalir berlawanan arah dengan aliran air yang melewati insang. Hal ini mempertahankan gradien konsentrasi oksigen yang menguntungkan di sepanjang permukaan insang (darah dengan kadar oksigen rendah selalu bertemu air dengan kadar oksigen yang relatif lebih tinggi), memungkinkan darah menyerap oksigen secara terus-menerus dan memaksimalkan efisiensi penyerapan oksigen dari air, yang kadar oksigen terlarutnya jauh lebih rendah dibandingkan udara."
+},
+{
+  type:"single", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Sel darah putih (leukosit) memiliki beberapa jenis, salah satunya limfosit yang berperan penting dalam sistem imun spesifik (adaptif). Limfosit T sitotoksik (T killer) berperan langsung dalam&hellip;",
+  options:[
+    "Menghasilkan antibodi untuk menetralkan patogen di cairan tubuh.",
+    "Menghancurkan sel tubuh yang telah terinfeksi virus atau sel kanker secara langsung, dengan mengenali sel abnormal tersebut dan memicu kematian sel (apoptosis).",
+    "Mengangkut oksigen ke seluruh jaringan tubuh.",
+    "Menyaring darah di ginjal.",
+    "Menghasilkan hormon insulin."
+  ],
+  answer:1,
+  explanation:"Limfosit T sitotoksik (T killer) berperan langsung menghancurkan sel tubuh yang telah terinfeksi virus atau sel kanker dengan cara mengenali penanda abnormal pada permukaan sel tersebut dan memicu kematian sel terprogram (apoptosis), berbeda dengan limfosit B yang berperan menghasilkan antibodi untuk menetralkan patogen di cairan tubuh."
+},
+{
+  type:"single", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Ketika seseorang mendaki gunung tinggi terlalu cepat tanpa aklimatisasi (penyesuaian bertahap), ia dapat mengalami penyakit ketinggian akut (acute mountain sickness) dengan gejala seperti sakit kepala, mual, dan sesak napas. Penjelasan fisiologis yang paling tepat mengenai penyebab gejala ini adalah&hellip;",
+  options:[
+    "Tubuh mendapatkan terlalu banyak oksigen sehingga menjadi kelebihan oksigen.",
+    "Tekanan parsial oksigen di ketinggian yang rendah menyebabkan tubuh belum sempat beradaptasi (misalnya melalui peningkatan produksi eritrosit atau laju pernapasan), sehingga jaringan tubuh mengalami kekurangan pasokan oksigen (hipoksia) secara mendadak.",
+    "Ketinggian tempat tidak memiliki pengaruh apa pun terhadap kadar oksigen yang tersedia bagi tubuh.",
+    "Penyakit ketinggian disebabkan oleh kelebihan karbon dioksida semata, tidak berkaitan dengan oksigen.",
+    "Tubuh manusia secara otomatis beradaptasi sempurna dalam hitungan detik tanpa gejala apa pun."
+  ],
+  answer:1,
+  explanation:"Di ketinggian tinggi, tekanan parsial oksigen di atmosfer menurun. Jika seseorang mendaki terlalu cepat tanpa memberi waktu tubuh beradaptasi (aklimatisasi, seperti peningkatan produksi eritrosit dan penyesuaian laju pernapasan), jaringan tubuh dapat mengalami kekurangan pasokan oksigen (hipoksia) secara mendadak, memicu gejala penyakit ketinggian akut seperti sakit kepala, mual, dan sesak napas."
+},
+{
+  type:"category", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Batu ginjal (nefrolitiasis) adalah kondisi terbentuknya endapan mineral keras di dalam ginjal, yang dapat menyebabkan nyeri hebat ketika bergerak melalui saluran kemih. Tentukan Benar atau Salah untuk setiap pernyataan berikut mengenai batu ginjal!",
+  statements:[
+    {text:"Kurangnya asupan cairan (air putih) dapat meningkatkan risiko pembentukan batu ginjal karena urine menjadi lebih pekat sehingga mineral lebih mudah mengendap.", correct:true},
+    {text:"Batu ginjal terbentuk dari penumpukan protein yang berasal dari makanan tinggi karbohidrat.", correct:false},
+    {text:"Batu ginjal yang berukuran cukup besar dapat menyumbat saluran kemih dan mengganggu aliran urine, yang dapat menyebabkan nyeri hebat dan berpotensi merusak fungsi ginjal jika tidak ditangani.", correct:true},
+    {text:"Peningkatan asupan air putih tidak memiliki manfaat apa pun dalam mencegah pembentukan batu ginjal.", correct:false}
+  ],
+  explanation:"Kurangnya asupan cairan memang meningkatkan risiko batu ginjal karena urine menjadi pekat, memudahkan pengendapan mineral (Benar). Batu ginjal umumnya terbentuk dari penumpukan mineral seperti kalsium oksalat atau asam urat, BUKAN dari penumpukan protein akibat karbohidrat (Salah). Batu ginjal berukuran besar memang dapat menyumbat saluran kemih, menyebabkan nyeri hebat dan berpotensi merusak ginjal (Benar). Peningkatan asupan air putih JUSTRU BERMANFAAT mencegah batu ginjal (mengencerkan urine, mengurangi konsentrasi mineral), bukan tidak bermanfaat sama sekali (Salah)."
+},
+{
+  type:"single", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Sistem saraf simpatik dan parasimpatik bekerja secara berlawanan (antagonis) dalam mengatur banyak organ tubuh, termasuk diameter pupil mata. Ketika seseorang berada dalam kondisi cahaya redup atau situasi menegangkan, pupil mata akan melebar (dilatasi). Sistem saraf yang berperan menyebabkan pelebaran pupil ini adalah&hellip;",
+  options:["Sistem saraf parasimpatik", "Sistem saraf simpatik", "Sistem saraf somatik", "Sistem saraf pusat saja tanpa saraf tepi", "Tidak ada sistem saraf yang berperan"],
+  answer:1,
+  explanation:"Sistem saraf simpatik berperan menyebabkan pelebaran pupil (dilatasi), yang terjadi saat kondisi cahaya redup (untuk memasukkan lebih banyak cahaya) atau situasi menegangkan/darurat (\"fight or flight\"), berlawanan dengan sistem saraf parasimpatik yang menyebabkan penyempitan pupil (konstriksi) pada kondisi cahaya terang atau tubuh dalam keadaan tenang."
+},
+{
+  type:"single", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Hormon oksitosin, yang dihasilkan oleh hipotalamus dan dilepaskan melalui kelenjar hipofisis posterior, berperan penting dalam proses persalinan dan menyusui. Peran utama oksitosin dalam proses persalinan adalah&hellip;",
+  options:[
+    "Menghambat kontraksi otot rahim sepenuhnya.",
+    "Merangsang kontraksi otot polos rahim, membantu proses kelahiran bayi, serta merangsang pengeluaran ASI (refleks let-down) saat menyusui.",
+    "Mengatur kadar gula darah ibu selama kehamilan.",
+    "Menghasilkan sel telur baru selama proses persalinan.",
+    "Menghambat produksi ASI setelah melahirkan."
+  ],
+  answer:1,
+  explanation:"Oksitosin berperan merangsang kontraksi otot polos rahim (miometrium) yang membantu mendorong bayi keluar selama proses persalinan. Selain itu, oksitosin juga berperan dalam refleks pengeluaran ASI (let-down reflex) saat menyusui, merangsang sel-sel di sekitar kelenjar susu untuk berkontraksi dan mengalirkan ASI menuju puting."
+},
+{
+  type:"mcma", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Sistem imun tubuh dapat dibantu oleh berbagai faktor eksternal untuk bekerja optimal, termasuk pola makan bergizi, istirahat cukup, dan vaksinasi. Manakah pernyataan berikut yang benar mengenai faktor-faktor yang mendukung fungsi sistem imun? Pilih semua jawaban yang benar!",
+  hint:"Petunjuk: pertimbangkan bagaimana nutrisi, tidur, stres, dan vaksinasi memengaruhi kinerja sel-sel imun.",
+  options:[
+    "Kekurangan tidur kronis dapat menurunkan produksi sel-sel imun tertentu dan melemahkan respons imun tubuh terhadap infeksi.",
+    "Asupan nutrisi yang cukup, termasuk protein dan vitamin (seperti vitamin C dan D), mendukung produksi dan fungsi optimal sel-sel imun.",
+    "Stres kronis yang berkepanjangan dapat meningkatkan kadar hormon kortisol, yang dalam jangka panjang dapat menekan (menurunkan) fungsi sistem imun.",
+    "Vaksinasi tidak memiliki pengaruh apa pun terhadap kesiapan sistem imun tubuh menghadapi infeksi.",
+    "Pola makan dan gaya hidup tidak pernah memengaruhi kinerja sistem imun sama sekali."
+  ],
+  answer:[0,1,2],
+  explanation:"Kurang tidur kronis memang dapat menurunkan produksi sel imun dan melemahkan respons imun (Benar). Nutrisi cukup (protein, vitamin C dan D) memang mendukung fungsi optimal sel imun (Benar). Stres kronis memang meningkatkan kortisol yang dapat menekan fungsi sistem imun dalam jangka panjang (Benar). Vaksinasi JUSTRU SANGAT BERPENGARUH terhadap kesiapan sistem imun (membentuk sel memori), bukan tidak berpengaruh sama sekali (Salah). Pola makan dan gaya hidup JUSTRU SANGAT MEMENGARUHI kinerja sistem imun, bukan tidak pernah memengaruhi (Salah)."
+},
+{
+  type:"category", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Menopause adalah kondisi alami yang dialami wanita ketika fungsi reproduksi (ovulasi dan menstruasi) berhenti secara permanen, umumnya terjadi pada usia sekitar 45&ndash;55 tahun akibat penurunan fungsi ovarium. Tentukan Benar atau Salah untuk setiap pernyataan berikut mengenai menopause!",
+  statements:[
+    {text:"Menopause ditandai dengan penurunan produksi hormon estrogen dan progesteron akibat berkurangnya jumlah folikel ovarium yang responsif.", correct:true},
+    {text:"Setelah menopause, wanita tidak lagi mengalami ovulasi maupun menstruasi secara alami.", correct:true},
+    {text:"Menopause hanya terjadi akibat penyakit tertentu dan tidak pernah merupakan proses alami penuaan.", correct:false},
+    {text:"Pria juga mengalami proses biologis yang identik dengan menopause pada wanita, termasuk penghentian produksi sperma secara total dan mendadak pada usia tertentu.", correct:false}
+  ],
+  explanation:"Menopause memang ditandai penurunan estrogen dan progesteron akibat berkurangnya folikel ovarium responsif (Benar). Setelah menopause, wanita memang tidak lagi mengalami ovulasi dan menstruasi alami (Benar). Menopause JUSTRU MERUPAKAN proses ALAMI penuaan, bukan hanya akibat penyakit tertentu (Salah). Pria TIDAK MENGALAMI proses yang identik dengan menopause; produksi sperma pada pria umumnya menurun secara BERTAHAP seiring usia, bukan berhenti total dan mendadak seperti pada wanita (Salah)."
+},
+{
+  type:"category", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Gondok (goiter) adalah pembengkakan kelenjar tiroid yang salah satu penyebab utamanya adalah kekurangan asupan yodium dalam jangka panjang, karena yodium merupakan komponen penting dalam sintesis hormon tiroksin. Tentukan Benar atau Salah untuk setiap pernyataan berikut mengenai gondok akibat kekurangan yodium!",
+  statements:[
+    {text:"Kekurangan yodium menyebabkan kelenjar tiroid tidak dapat memproduksi hormon tiroksin dalam jumlah cukup, sehingga kelenjar hipofisis melepaskan lebih banyak TSH untuk merangsang tiroid bekerja lebih keras.", correct:true},
+    {text:"Peningkatan rangsangan TSH yang terus-menerus tanpa disertai cukup yodium dapat menyebabkan kelenjar tiroid membesar (hipertrofi), menghasilkan pembengkakan yang tampak sebagai gondok.", correct:true},
+    {text:"Konsumsi garam beryodium tidak memiliki manfaat apa pun dalam mencegah gondok akibat kekurangan yodium.", correct:false},
+    {text:"Gondok akibat kekurangan yodium hanya dapat terjadi pada orang dewasa dan tidak pernah terjadi pada anak-anak.", correct:false}
+  ],
+  explanation:"Kekurangan yodium memang menghambat produksi tiroksin, memicu peningkatan sekresi TSH dari hipofisis sebagai kompensasi (Benar). Rangsangan TSH berlebihan tanpa cukup yodium memang dapat menyebabkan pembesaran/hipertrofi kelenjar tiroid, tampak sebagai gondok (Benar). Konsumsi garam beryodium JUSTRU SANGAT BERMANFAAT mencegah gondok akibat kekurangan yodium, bukan tidak bermanfaat (Salah). Gondok akibat kekurangan yodium JUSTRU DAPAT TERJADI pada anak-anak maupun orang dewasa, bahkan kekurangan yodium pada anak dapat memengaruhi perkembangan kognitif, bukan hanya terjadi pada orang dewasa (Salah)."
+},
+{
+  type:"single", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Seorang siswa ingin menguji pengaruh konsentrasi larutan gula terhadap laju osmosis pada kentang, dengan mengukur perubahan massa potongan kentang setelah direndam dalam larutan gula berbagai konsentrasi selama waktu tertentu. Jika hasil menunjukkan bahwa kentang kehilangan massa pada larutan gula pekat namun bertambah massa pada larutan gula encer, kesimpulan yang paling logis berdasarkan data tersebut adalah&hellip;",
+  options:[
+    "Air selalu berpindah dari larutan encer menuju larutan pekat, tanpa terkecuali arahnya.",
+    "Air berpindah secara osmosis dari daerah dengan konsentrasi air lebih tinggi (larutan encer, konsentrasi zat terlarut rendah) ke daerah dengan konsentrasi air lebih rendah (larutan pekat, konsentrasi zat terlarut tinggi), sehingga kentang kehilangan air (dan massa) pada larutan pekat, serta menyerap air (bertambah massa) pada larutan encer.",
+    "Massa kentang tidak dipengaruhi oleh konsentrasi larutan di sekitarnya.",
+    "Gula secara langsung masuk ke dalam sel kentang tanpa melibatkan proses osmosis air.",
+    "Kentang akan selalu kehilangan massa pada semua jenis larutan tanpa terkecuali."
+  ],
+  answer:1,
+  explanation:"Data menunjukkan pola khas osmosis: air bergerak dari daerah dengan konsentrasi air lebih tinggi (larutan gula encer, kadar air relatif tinggi) menuju daerah dengan konsentrasi air lebih rendah (larutan gula pekat, kadar air relatif rendah) melalui membran sel yang bersifat semipermeabel. Pada larutan pekat (hipertonik terhadap sel kentang), air keluar dari sel kentang menuju larutan sehingga kentang kehilangan massa; pada larutan encer (hipotonik), air masuk ke dalam sel kentang sehingga massanya bertambah."
+},
+{
+  type:"single", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Kelenjar keringat pada kulit manusia tidak hanya berperan dalam ekskresi zat sisa, tetapi juga berperan penting dalam termoregulasi (pengaturan suhu tubuh). Mekanisme pendinginan tubuh melalui penguapan keringat terjadi karena&hellip;",
+  options:[
+    "Keringat yang menempel di kulit menghasilkan panas tambahan bagi tubuh.",
+    "Proses penguapan (evaporasi) keringat dari permukaan kulit membutuhkan energi panas, yang diambil dari permukaan kulit, sehingga permukaan kulit dan tubuh menjadi lebih dingin.",
+    "Keringat mengandung zat kimia yang secara langsung menurunkan suhu inti tubuh tanpa proses fisik apa pun.",
+    "Produksi keringat selalu meningkatkan suhu tubuh secara keseluruhan.",
+    "Penguapan keringat tidak memiliki hubungan apa pun dengan suhu tubuh."
+  ],
+  answer:1,
+  explanation:"Proses penguapan (evaporasi) zat cair, termasuk keringat, memerlukan energi panas (kalor laten penguapan). Energi panas ini diambil dari permukaan kulit tempat keringat menguap, sehingga permukaan kulit menjadi lebih dingin. Efek pendinginan pada kulit ini kemudian membantu menurunkan suhu tubuh secara keseluruhan, menjadikan keringat sebagai salah satu mekanisme termoregulasi penting tubuh manusia saat suhu lingkungan panas atau saat beraktivitas fisik berat."
+},
+{
+  type:"single", topic:"Proses-proses pada Makhluk Hidup",
+  text:"Data dari studi kesehatan masyarakat menunjukkan bahwa daerah dengan tingkat konsumsi sayur dan buah yang tinggi memiliki angka kejadian penyakit jantung koroner yang lebih rendah dibandingkan daerah dengan konsumsi sayur dan buah yang rendah, meskipun faktor lain seperti aktivitas fisik dan kebiasaan merokok relatif serupa antardaerah. Kesimpulan yang paling logis dan didukung mekanisme biologis dari data ini adalah&hellip;",
+  options:[
+    "Sayur dan buah tidak memiliki hubungan apa pun dengan kesehatan jantung.",
+    "Konsumsi sayur dan buah yang tinggi (kaya serat, antioksidan, dan rendah lemak jenuh) berkaitan dengan penurunan risiko penyakit jantung koroner, kemungkinan melalui mekanisme penurunan kadar kolesterol darah dan pengurangan peradangan pembuluh darah, meskipun faktor-faktor lain juga perlu dipertimbangkan.",
+    "Penyakit jantung koroner hanya disebabkan oleh faktor keturunan, pola makan sama sekali tidak berperan.",
+    "Semua orang yang mengonsumsi sedikit sayur dan buah pasti akan terkena penyakit jantung koroner.",
+    "Data semacam ini tidak dapat digunakan untuk menarik kesimpulan kesehatan apa pun."
+  ],
+  answer:1,
+  explanation:"Karena faktor perancu utama (aktivitas fisik dan kebiasaan merokok) relatif serupa antardaerah, data ini memperkuat dugaan hubungan antara konsumsi sayur-buah yang tinggi dengan penurunan risiko penyakit jantung koroner. Kesimpulan ini didukung oleh mekanisme biologis yang telah diketahui: sayur dan buah kaya serat, antioksidan, dan rendah lemak jenuh, yang dapat membantu menurunkan kadar kolesterol LDL darah dan mengurangi peradangan pada dinding pembuluh darah (faktor risiko utama aterosklerosis), meskipun kesimpulan ini tetap perlu mempertimbangkan kemungkinan faktor-faktor lain yang belum terukur."
+}
+];
+
+
+var LETTERS = ["A","B","C","D","E"];
+var DURATION_SECONDS = 75*60;
+var STORAGE_KEY = "tka_biologi_paket6_v1";
+var TYPE_LABELS = {single:"Pilihan Ganda", mcma:"PGK &middot; Pilih Lebih dari Satu", category:"PGK &middot; Benar/Salah"};
+
+/* ============ STATE ============ */
+var state = {
+  currentIndex:0,
+  answers:{},          // single: index | mcma: [indices] | category: {stmtIdx: true/false}
+  endTimestamp:null,
+  finished:false,
+  timeTakenSeconds:null
+};
+var timerInterval = null;
+
+/* ============ STORAGE ============ */
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ============ SCREEN HELPERS ============ */
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+}
+
+/* ============ ANSWER HELPERS (type-aware) ============ */
+function isAnswered(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(a===undefined || a===null) return false;
+  if(q.type==="category"){
+    if(typeof a !== "object") return false;
+    for(var k=0;k<q.statements.length;k++){ if(a[k]===undefined) return false; }
+    return true;
+  }
+  if(q.type==="mcma"){
+    return Array.isArray(a) && a.length>0;
+  }
+  return true; // single: any stored value (including 0) counts as answered
+}
+function evaluateQuestion(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(!isAnswered(i)) return "empty";
+  if(q.type==="category"){
+    for(var k=0;k<q.statements.length;k++){
+      if(!!a[k] !== !!q.statements[k].correct) return "wrong";
+    }
+    return "correct";
+  }
+  if(q.type==="mcma"){
+    var correctSet = q.answer.slice().sort(function(x,y){return x-y;});
+    var pickedSet = a.slice().sort(function(x,y){return x-y;});
+    if(correctSet.length !== pickedSet.length) return "wrong";
+    for(var j=0;j<correctSet.length;j++){ if(correctSet[j]!==pickedSet[j]) return "wrong"; }
+    return "correct";
+  }
+  return (a===q.answer) ? "correct":"wrong";
+}
+
+/* ============ TIMER ============ */
+function formatTime(totalSeconds){
+  totalSeconds = Math.max(0, Math.round(totalSeconds));
+  var m = Math.floor(totalSeconds/60);
+  var s = totalSeconds%60;
+  return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+}
+function startTimerLoop(){
+  var display = document.getElementById("timerDisplay");
+  display.style.display = "flex";
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 250);
+  tickTimer();
+}
+function tickTimer(){
+  var remaining = (state.endTimestamp - Date.now())/1000;
+  var textEl = document.getElementById("timerText");
+  var wrap = document.getElementById("timerDisplay");
+  if(remaining <= 0){
+    textEl.textContent = "00:00";
+    clearInterval(timerInterval);
+    finishQuiz(true);
+    return;
+  }
+  textEl.textContent = formatTime(remaining);
+  if(remaining <= 300) wrap.classList.add("low"); else wrap.classList.remove("low");
+}
+function stopTimer(){
+  clearInterval(timerInterval);
+  document.getElementById("timerDisplay").style.display = "none";
+}
+
+/* ============ QUIZ RENDERING ============ */
+function renderNavGrid(){
+  var grid = document.getElementById("navGrid");
+  grid.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var cell = document.createElement("div");
+    cell.className = "nav-cell" + (isAnswered(i)?" answered":"") + (i===state.currentIndex?" current":"");
+    cell.textContent = (i+1);
+    cell.addEventListener("click", function(){
+      state.currentIndex = i;
+      renderQuestion();
+    });
+    grid.appendChild(cell);
+  });
+}
+
+function renderOptionsSingleOrMcma(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var isMcma = q.type==="mcma";
+  var current = state.answers[i];
+  q.options.forEach(function(optText, idx){
+    var picked = isMcma ? (Array.isArray(current) && current.indexOf(idx)!==-1) : (current===idx);
+    var div = document.createElement("div");
+    div.className = "option" + (isMcma?" mcma":"") + (picked ? " selected":"");
+    div.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+    div.addEventListener("click", function(){
+      if(isMcma){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : [];
+        var pos = arr.indexOf(idx);
+        if(pos===-1) arr.push(idx); else arr.splice(pos,1);
+        state.answers[i] = arr;
+      } else {
+        state.answers[i] = idx;
+      }
+      saveState();
+      renderQuestion();
+    });
+    optsWrap.appendChild(div);
+  });
+}
+
+function renderStatements(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var current = (typeof state.answers[i] === "object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+  q.statements.forEach(function(st, k){
+    var row = document.createElement("div");
+    row.className = "statement-row";
+    var textDiv = document.createElement("div");
+    textDiv.className = "statement-text";
+    textDiv.innerHTML = (k+1)+". "+st.text;
+    row.appendChild(textDiv);
+    var choices = document.createElement("div");
+    choices.className = "statement-choices";
+    [["Benar",true], ["Salah",false]].forEach(function(pair){
+      var btn = document.createElement("div");
+      btn.className = "choice-btn" + (current[k]===pair[1] ? " selected":"");
+      btn.textContent = pair[0];
+      btn.addEventListener("click", function(){
+        var obj = (typeof state.answers[i]==="object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+        obj[k] = pair[1];
+        state.answers[i] = obj;
+        saveState();
+        renderQuestion();
+      });
+      choices.appendChild(btn);
+    });
+    row.appendChild(choices);
+    optsWrap.appendChild(row);
+  });
+}
+
+function renderQuestion(){
+  var i = state.currentIndex;
+  var q = QUESTIONS[i];
+  document.getElementById("qIndexLabel").textContent = "Soal "+(i+1)+" dari "+QUESTIONS.length;
+  document.getElementById("qTopicLabel").textContent = q.topic;
+  document.getElementById("qTypeBadge").innerHTML = TYPE_LABELS[q.type] || TYPE_LABELS.single;
+  document.getElementById("qText").innerHTML = q.text;
+
+  var hintEl = document.getElementById("qHint");
+  if(q.hint){ hintEl.style.display="block"; hintEl.textContent = q.hint; }
+  else if(q.type==="category"){ hintEl.style.display="block"; hintEl.textContent = "Beri respons Benar atau Salah untuk setiap pernyataan."; }
+  else { hintEl.style.display="none"; }
+
+  if(q.type==="category") renderStatements(q, i);
+  else renderOptionsSingleOrMcma(q, i);
+
+  document.getElementById("btnPrev").disabled = (i===0);
+  document.getElementById("btnPrev").style.opacity = (i===0)?"0.5":"1";
+  document.getElementById("btnNext").textContent = (i===QUESTIONS.length-1) ? "Selesai →" : "Berikutnya →";
+  document.getElementById("progressFill").style.width = Math.round(((i+1)/QUESTIONS.length)*100)+"%";
+  renderNavGrid();
+}
+
+/* ============ NAVIGATION BUTTONS ============ */
+document.getElementById("btnPrev").addEventListener("click", function(){
+  if(state.currentIndex>0){ state.currentIndex--; renderQuestion(); }
+});
+document.getElementById("btnNext").addEventListener("click", function(){
+  if(state.currentIndex < QUESTIONS.length-1){
+    state.currentIndex++;
+    renderQuestion();
+  } else {
+    confirmFinish();
+  }
+});
+document.getElementById("btnFinish").addEventListener("click", confirmFinish);
+
+function confirmFinish(){
+  var answeredCount = 0;
+  QUESTIONS.forEach(function(q,i){ if(isAnswered(i)) answeredCount++; });
+  var msg = "Kamu telah menjawab "+answeredCount+" dari "+QUESTIONS.length+" soal.\nSelesaikan tryout dan lihat hasil sekarang?";
+  if(window.confirm(msg)){
+    finishQuiz(false);
+  }
+}
+
+/* ============ START / RESUME / RESTART ============ */
+function beginFreshQuiz(){
+  state = {
+    currentIndex:0,
+    answers:{},
+    endTimestamp: Date.now() + DURATION_SECONDS*1000,
+    finished:false,
+    timeTakenSeconds:null
+  };
+  saveState();
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+function resumeQuiz(saved){
+  state = saved;
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+
+document.getElementById("btnStart").addEventListener("click", beginFreshQuiz);
+document.getElementById("btnResume").addEventListener("click", function(){
+  var saved = loadState();
+  if(saved && !saved.finished) resumeQuiz(saved); else beginFreshQuiz();
+});
+document.getElementById("btnRestartFresh").addEventListener("click", function(){
+  clearState();
+  document.getElementById("resumeBanner").style.display = "none";
+  beginFreshQuiz();
+});
+document.getElementById("btnRetry").addEventListener("click", function(){
+  clearState();
+  stopTimer();
+  showScreen("screen-start");
+  document.getElementById("resumeBanner").style.display = "none";
+});
+
+/* ============ FINISH & SCORING ============ */
+function finishQuiz(autoSubmitted){
+  stopTimer();
+  state.finished = true;
+  var elapsed = DURATION_SECONDS - Math.max(0, (state.endTimestamp - Date.now())/1000);
+  state.timeTakenSeconds = Math.min(DURATION_SECONDS, Math.round(elapsed));
+  saveState();
+  renderResult(autoSubmitted);
+  showScreen("screen-result");
+  window.scrollTo(0,0);
+}
+
+function renderResult(autoSubmitted){
+  var correct=0, wrong=0, empty=0, score=0;
+  var topicStats = {};
+  QUESTIONS.forEach(function(q, i){
+    if(!topicStats[q.topic]) topicStats[q.topic] = {correct:0,total:0};
+    topicStats[q.topic].total++;
+    var status = evaluateQuestion(i);
+    if(status==="empty"){ empty++; }
+    else if(status==="correct"){ correct++; score+=4; topicStats[q.topic].correct++; }
+    else { wrong++; score-=1; }
+  });
+
+  document.getElementById("resultSubtitle").textContent = autoSubmitted
+    ? "Waktu habis — tryout otomatis diselesaikan. Berikut rekap skor dan pembahasan lengkap setiap soal."
+    : "Berikut rekap skor dan pembahasan lengkap setiap soal.";
+
+  document.getElementById("statScore").textContent = score;
+  document.getElementById("statCorrect").textContent = correct;
+  document.getElementById("statWrong").textContent = wrong;
+  document.getElementById("statEmpty").textContent = empty;
+  document.getElementById("statTime").textContent = formatTime(state.timeTakenSeconds);
+
+  var barsWrap = document.getElementById("topicBars");
+  barsWrap.innerHTML = "";
+  Object.keys(topicStats).forEach(function(topic){
+    var st = topicStats[topic];
+    var pct = Math.round((st.correct/st.total)*100);
+    var row = document.createElement("div");
+    row.className = "topic-bar-row";
+    row.innerHTML =
+      "<div class='top'><span class='name'>"+topic+"</span><span class='frac2'>"+st.correct+"/"+st.total+"</span></div>"+
+      "<div class='bar-track'><div class='bar-fill' style='width:"+pct+"%;'></div></div>";
+    barsWrap.appendChild(row);
+  });
+
+  var reviewList = document.getElementById("reviewList");
+  reviewList.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var status = evaluateQuestion(i);
+    var statusLabel = status==="empty" ? "Kosong" : (status==="correct" ? "Benar":"Salah");
+
+    var details = document.createElement("details");
+    details.className = "review-item";
+    details.open = (status !== "correct");
+
+    var summary = document.createElement("summary");
+    summary.innerHTML =
+      "<span class='badge "+status+"'>"+statusLabel+"</span>"+
+      "<span class='badge typebadge'>"+(TYPE_LABELS[q.type]||TYPE_LABELS.single)+"</span>"+
+      "<span>Soal "+(i+1)+" — "+q.topic+"</span>"+
+      "<span class='chev'>&#9662;</span>";
+    details.appendChild(summary);
+
+    var body = document.createElement("div");
+    body.className = "review-body";
+
+    var qTextDiv = document.createElement("div");
+    qTextDiv.className = "q-text";
+    qTextDiv.innerHTML = q.text;
+    body.appendChild(qTextDiv);
+
+    if(q.type==="category"){
+      var a = (typeof state.answers[i]==="object" && state.answers[i]!==null) ? state.answers[i] : {};
+      q.statements.forEach(function(st, k){
+        var userVal = a[k];
+        var isCorrectStmt = userVal!==undefined && (!!userVal === !!st.correct);
+        var row = document.createElement("div");
+        row.className = "review-statement " + (userVal===undefined ? "" : (isCorrectStmt ? "st-correct":"st-wrong"));
+        var userLabel = userVal===undefined ? "Tidak dijawab" : (userVal ? "Benar":"Salah");
+        var correctLabel = st.correct ? "Benar":"Salah";
+        row.innerHTML =
+          "<span>"+(k+1)+". "+st.text+"</span>"+
+          "<span class='st-answer'>Jawabanmu: "+userLabel+(isCorrectStmt? "" : " &middot; Kunci: "+correctLabel)+"</span>";
+        body.appendChild(row);
+      });
+    } else if(q.type==="mcma"){
+      var picked = Array.isArray(state.answers[i]) ? state.answers[i] : [];
+      var optsDiv = document.createElement("div");
+      optsDiv.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var isCorrectOpt = q.answer.indexOf(idx)!==-1;
+        var wasPicked = picked.indexOf(idx)!==-1;
+        var cls = "review-opt";
+        var tag = "";
+        if(isCorrectOpt){ cls += " is-correct"; tag = wasPicked ? "Dipilih &amp; tepat" : "Terlewat"; }
+        else if(wasPicked){ cls += " is-wrong-pick"; tag = "Dipilih, tidak tepat"; }
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>"+(tag?"<span class='opt-tag'>"+tag+"</span>":"");
+        optsDiv.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv);
+    } else {
+      var picked2 = state.answers[i];
+      var optsDiv2 = document.createElement("div");
+      optsDiv2.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var cls = "review-opt";
+        if(idx===q.answer) cls += " is-correct";
+        else if(idx===picked2) cls += " is-wrong-pick";
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+        optsDiv2.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv2);
+    }
+
+    var pembahasan = document.createElement("div");
+    pembahasan.className = "pembahasan";
+    pembahasan.style.marginTop = "14px";
+    pembahasan.innerHTML = "<b>Pembahasan:</b><br>"+q.explanation;
+    body.appendChild(pembahasan);
+
+    details.appendChild(body);
+    reviewList.appendChild(details);
+  });
+}
+
+/* ============ INIT ON LOAD ============ */
+(function init(){
+  var saved = loadState();
+  if(saved && !saved.finished && saved.endTimestamp){
+    var remaining = (saved.endTimestamp - Date.now())/1000;
+    if(remaining > 0){
+      document.getElementById("resumeBanner").style.display = "flex";
+    } else {
+      state = saved;
+      finishQuiz(true);
+    }
+  }
+})();
+
+})();
+</script>
+</body>
+</html>
