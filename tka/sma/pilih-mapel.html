@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilih Mapel &mdash; Siap TKA</title>
+<meta name="description" content="Cari mata pelajaran pilihan TKA yang paling sesuai dengan program studi tujuanmu, berdasarkan Kepmendikdasmen Nomor 102/M/2025 tentang Mata Pelajaran Pendukung Program Studi.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .hero h1{font-size:1.7rem;margin:0 0 8px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-tka{background:var(--primary-light);color:var(--primary-dark);text-decoration:none;}
+
+  label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:var(--text);}
+  select{
+    width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:10px;
+    font-size:.95rem;background:var(--surface);color:var(--text);margin-bottom:18px;
+    font-family:inherit;
+  }
+  select:last-of-type{margin-bottom:0;}
+
+  .result-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:20px;display:none;}
+  .result-card.show{display:block;}
+  .result-card h3{margin:0 0 4px;font-size:1.05rem;color:var(--primary-dark);}
+  .result-card .rumpun-label{font-size:.78rem;color:var(--muted);margin-bottom:14px;}
+  .result-card .official-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:.9rem;margin-bottom:16px;}
+  .result-card .official-box b{color:var(--text);}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .pill-tka{font-size:.82rem;font-weight:600;padding:7px 14px;border-radius:999px;display:inline-block;}
+  .pill-tka:hover{background:var(--primary);color:#fff;}
+  .empty-note{font-size:.86rem;color:var(--muted);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html" class="active">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <section class="card hero">
+    <span class="pill pill-gratis">Gratis</span>
+    <h1>Cari Mata Pelajaran Pilihan TKA</h1>
+    <p class="lead">Peserta TKA memilih 2 mata uji pilihan sesuai program studi tujuan. Pilih rumpun ilmu dan kelompok program studi di bawah untuk melihat mata pelajaran pendukung resmi berdasarkan Kepmendikdasmen Nomor 102/M/2025 tentang Mata Pelajaran Pendukung Program Studi dalam Seleksi Nasional Berdasarkan Prestasi.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Langkah 1&ndash;2: Pilih Rumpun Ilmu dan Program Studi</div>
+
+    <label for="rumpun">Rumpun Ilmu</label>
+    <select id="rumpun">
+      <option value="">&mdash; Pilih rumpun ilmu &mdash;</option>
+    </select>
+
+    <label for="prodi">Kelompok Program Studi</label>
+    <select id="prodi" disabled>
+      <option value="">&mdash; Pilih rumpun ilmu terlebih dahulu &mdash;</option>
+    </select>
+
+    <div class="result-card" id="hasil">
+      <span class="pill pill-gratis" id="hasilRumpun"></span>
+      <h3 id="hasilProdi"></h3>
+      <div class="official-box">
+        <b>Mata pelajaran pendukung resmi (Kurikulum Merdeka):</b>
+        <div id="hasilMapelResmi" style="margin-top:6px;"></div>
+      </div>
+      <div id="hasilTkaWrap">
+        <b style="font-size:.86rem;">Mata pelajaran pilihan TKA yang relevan:</b>
+        <div class="pill-row" id="hasilTkaList" style="margin-top:8px;"></div>
+        <p class="empty-note" id="hasilTkaEmpty" style="display:none;margin-top:8px;">Mata pelajaran pendukung untuk kelompok ini bukan bagian dari 18 mata uji pilihan TKA (misalnya Seni Budaya atau PJOK) &mdash; tidak ada rekomendasi mata uji TKA langsung untuk kelompok ini.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="note-box">
+    Rekomendasi di atas hanya panduan awal berdasarkan mata pelajaran pendukung program studi yang ditetapkan pemerintah, bukan syarat mutlak. Ketentuan penerimaan tetap mengikuti kebijakan masing-masing perguruan tinggi dan program studi tujuan. Lihat juga <a href="mata-pelajaran.html">daftar lengkap Mata Pelajaran TKA</a> dan <a href="tentang-tka.html">Tentang TKA</a>.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+var data = [
+  {r:"Humaniora", p:"Seni", m:"Seni Budaya"},
+  {r:"Humaniora", p:"Sejarah", m:"Sejarah Indonesia"},
+  {r:"Humaniora", p:"Linguistik", m:"Bahasa Indonesia Tingkat Lanjut dan/atau Bahasa Inggris"},
+  {r:"Humaniora", p:"Susastra", m:"Sastra atau Bahasa Indonesia Tingkat Lanjut dan/atau bahasa asing yang relevan"},
+  {r:"Humaniora", p:"Filsafat", m:"Sosiologi"},
+
+  {r:"Ilmu Sosial", p:"Sosial", m:"Sosiologi"},
+  {r:"Ilmu Sosial", p:"Ekonomi", m:"Ekonomi dan/atau Matematika"},
+  {r:"Ilmu Sosial", p:"Pertahanan", m:"Pendidikan Pancasila"},
+  {r:"Ilmu Sosial", p:"Psikologi", m:"Sosiologi dan/atau Matematika"},
+
+  {r:"Ilmu Alam", p:"Kimia", m:"Kimia"},
+  {r:"Ilmu Alam", p:"Ilmu atau Sains Kebumian", m:"Fisika dan/atau Matematika Tingkat Lanjut"},
+  {r:"Ilmu Alam", p:"Ilmu atau Sains Kelautan", m:"Biologi"},
+  {r:"Ilmu Alam", p:"Biologi", m:"Biologi"},
+  {r:"Ilmu Alam", p:"Biofisika", m:"Fisika"},
+  {r:"Ilmu Alam", p:"Fisika", m:"Fisika"},
+  {r:"Ilmu Alam", p:"Astronomi", m:"Fisika dan/atau Matematika Tingkat Lanjut"},
+
+  {r:"Ilmu Formal", p:"Komputer", m:"Matematika Tingkat Lanjut"},
+  {r:"Ilmu Formal", p:"Logika", m:"Matematika Tingkat Lanjut"},
+  {r:"Ilmu Formal", p:"Matematika", m:"Matematika Tingkat Lanjut"},
+
+  {r:"Ilmu Terapan", p:"Ilmu dan Sains Pertanian", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Peternakan", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Perikanan", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Arsitektur", m:"Matematika dan/atau Fisika"},
+  {r:"Ilmu Terapan", p:"Perencanaan Wilayah", m:"Ekonomi dan/atau Matematika"},
+  {r:"Ilmu Terapan", p:"Desain", m:"Seni Budaya dan/atau Matematika"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Akuntansi", m:"Ekonomi"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Manajemen", m:"Ekonomi"},
+  {r:"Ilmu Terapan", p:"Logistik", m:"Ekonomi"},
+  {r:"Ilmu Terapan", p:"Administrasi Bisnis", m:"Ekonomi"},
+  {r:"Ilmu Terapan", p:"Bisnis", m:"Ekonomi"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Komunikasi", m:"Sosiologi dan/atau Antropologi"},
+  {r:"Ilmu Terapan", p:"Pendidikan", m:"Paling banyak 1 (satu) mata pelajaran pendukung yang relevan dengan program studi kependidikannya"},
+  {r:"Ilmu Terapan", p:"Teknik atau Rekayasa", m:"Fisika/Kimia dan/atau Matematika Tingkat Lanjut"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Lingkungan", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Kehutanan", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Kedokteran", m:"Biologi dan/atau Kimia"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Kedokteran Gigi", m:"Biologi dan/atau Kimia"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Veteriner", m:"Biologi dan/atau Kimia"},
+  {r:"Ilmu Terapan", p:"Ilmu Farmasi", m:"Biologi dan/atau Kimia"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Gizi", m:"Biologi dan/atau Kimia"},
+  {r:"Ilmu Terapan", p:"Kesehatan Masyarakat", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Kebidanan", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Keperawatan", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Kesehatan", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Informasi", m:"Matematika Tingkat Lanjut"},
+  {r:"Ilmu Terapan", p:"Hukum", m:"Sosiologi dan/atau Pendidikan Pancasila"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Militer", m:"Sosiologi"},
+  {r:"Ilmu Terapan", p:"Urusan Publik", m:"Sosiologi"},
+  {r:"Ilmu Terapan", p:"Ilmu atau Sains Keolahragaan", m:"Pendidikan Jasmani, Olahraga, dan Kesehatan (PJOK) dan/atau Biologi"},
+  {r:"Ilmu Terapan", p:"Pariwisata", m:"Ekonomi dan/atau Bahasa Inggris Tingkat Lanjut/Bahasa Asing lainnya"},
+  {r:"Ilmu Terapan", p:"Transportasi", m:"Matematika Tingkat Lanjut"},
+  {r:"Ilmu Terapan", p:"Bioteknologi, Biokewirausahaan, Bioinformatika", m:"Biologi dan/atau Matematika"},
+  {r:"Ilmu Terapan", p:"Geografi, Geografi Lingkungan, Sains Informasi Geografi", m:"Geografi dan/atau Matematika"},
+  {r:"Ilmu Terapan", p:"Informatika Medis atau Informatika Kesehatan", m:"Biologi dan/atau Matematika Tingkat Lanjut"},
+  {r:"Ilmu Terapan", p:"Konservasi Biologi, Konservasi Hewan Liar, Konservasi Hutan, Konservasi Sumber Daya Alam", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Teknologi Pangan, Teknologi Hasil Pertanian/Peternakan/Perikanan", m:"Kimia dan/atau Biologi"},
+  {r:"Ilmu Terapan", p:"Sains Data", m:"Matematika Tingkat Lanjut"},
+  {r:"Ilmu Terapan", p:"Sains Perkopian", m:"Biologi"},
+  {r:"Ilmu Terapan", p:"Studi Humanitas", m:"Antropologi dan/atau Sosiologi"}
+];
+
+var subjectMap = [
+  ["Bahasa Indonesia Tingkat Lanjut", "bahasa-indonesia-tingkat-lanjut", "Bahasa Indonesia Tingkat Lanjut"],
+  ["Bahasa Inggris Tingkat Lanjut", "bahasa-inggris-tingkat-lanjut", "Bahasa Inggris Tingkat Lanjut"],
+  ["Matematika Tingkat Lanjut", "matematika-tingkat-lanjut", "Matematika Tingkat Lanjut"],
+  ["Bahasa Indonesia", "bahasa-indonesia", "Bahasa Indonesia"],
+  ["Bahasa Inggris", "bahasa-inggris", "Bahasa Inggris"],
+  ["Matematika", "matematika", "Matematika"],
+  ["Fisika", "fisika", "Fisika"],
+  ["Kimia", "kimia", "Kimia"],
+  ["Biologi", "biologi", "Biologi"],
+  ["Sosiologi", "sosiologi", "Sosiologi"],
+  ["Antropologi", "antropologi", "Antropologi"],
+  ["Ekonomi", "ekonomi", "Ekonomi"],
+  ["Geografi", "geografi", "Geografi"],
+  ["Sejarah", "sejarah", "Sejarah"],
+  ["Pendidikan Pancasila", "pendidikan-pancasila", "Pendidikan Pancasila"],
+  ["PPKn", "pendidikan-pancasila", "Pendidikan Pancasila"]
+];
+
+var rumpunSelect = document.getElementById("rumpun");
+var prodiSelect = document.getElementById("prodi");
+var hasil = document.getElementById("hasil");
+
+var rumpunList = [];
+data.forEach(function(d){
+  if (rumpunList.indexOf(d.r) === -1) rumpunList.push(d.r);
+});
+rumpunList.forEach(function(r){
+  var opt = document.createElement("option");
+  opt.value = r;
+  opt.textContent = r;
+  rumpunSelect.appendChild(opt);
+});
+
+rumpunSelect.addEventListener("change", function(){
+  hasil.classList.remove("show");
+  prodiSelect.innerHTML = "";
+  var placeholder = document.createElement("option");
+  if (!rumpunSelect.value) {
+    placeholder.value = "";
+    placeholder.textContent = "— Pilih rumpun ilmu terlebih dahulu —";
+    prodiSelect.appendChild(placeholder);
+    prodiSelect.disabled = true;
+    return;
+  }
+  placeholder.value = "";
+  placeholder.textContent = "— Pilih kelompok program studi —";
+  prodiSelect.appendChild(placeholder);
+  prodiSelect.disabled = false;
+  data.filter(function(d){ return d.r === rumpunSelect.value; }).forEach(function(d, i){
+    var opt = document.createElement("option");
+    opt.value = d.r + "||" + d.p;
+    opt.textContent = d.p;
+    prodiSelect.appendChild(opt);
+  });
+});
+
+prodiSelect.addEventListener("change", function(){
+  if (!prodiSelect.value) { hasil.classList.remove("show"); return; }
+  var parts = prodiSelect.value.split("||");
+  var found = data.filter(function(d){ return d.r === parts[0] && d.p === parts[1]; })[0];
+  if (!found) { hasil.classList.remove("show"); return; }
+
+  document.getElementById("hasilRumpun").textContent = found.r;
+  document.getElementById("hasilProdi").textContent = found.p;
+  document.getElementById("hasilMapelResmi").textContent = found.m;
+
+  var matched = [];
+  var usedSlugs = [];
+  subjectMap.forEach(function(sm){
+    if (found.m.indexOf(sm[0]) !== -1 && usedSlugs.indexOf(sm[1]) === -1) {
+      matched.push({label: sm[2], slug: sm[1]});
+      usedSlugs.push(sm[1]);
+    }
+  });
+
+  var listEl = document.getElementById("hasilTkaList");
+  var emptyEl = document.getElementById("hasilTkaEmpty");
+  listEl.innerHTML = "";
+  if (matched.length === 0) {
+    emptyEl.style.display = "block";
+  } else {
+    emptyEl.style.display = "none";
+    matched.forEach(function(m){
+      var a = document.createElement("a");
+      a.className = "pill pill-tka";
+      a.href = "mata-pelajaran-" + m.slug + ".html";
+      a.textContent = m.label + " →";
+      listEl.appendChild(a);
+    });
+  }
+
+  hasil.classList.add("show");
+});
+</script>
+</body>
+</html>

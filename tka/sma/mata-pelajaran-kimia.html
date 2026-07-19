@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kimia &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Kimia SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Kimia</h1>
+    <p class="lead">TKA Kimia mengukur kemampuan murid dalam penguasaan konsep kimia, menerapkan konsep kimia dalam penyelesaian permasalahan kimia, serta melakukan analisis pada permasalahan kimia yang terkait dengan materi kimia dalam kehidupan sehari-hari.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>TKA Kimia disusun berdasarkan materi kimia esensial pada Kurikulum 2013 dan Kurikulum Merdeka, mencakup 4 elemen. Konteks soal meliputi penyelidikan ilmiah, fenomena kimia sehari-hari, permasalahan lingkungan, dan proses industri.</p>
+    <table class="qtable">
+      <tr><th>Elemen</th><th>Sub-elemen</th><th>Cakupan / Batasan</th></tr>
+      <tr><td rowspan="2">Kimia Dasar</td><td>Struktur Atom dan Ikatan Kimia</td><td>Konfigurasi elektron, kulit atom, elektron valensi, kestabilan elektron, geometri molekul (VSEPR &amp; Teori Domain Elektron), ikatan ion, kovalen, kovalen koordinasi, ikatan logam, gaya antar molekul.</td></tr>
+      <tr><td>Stoikiometri</td><td>Konsep mol, Hukum Proust, Hukum Avogadro, Hukum Gas, Hukum Kekekalan Massa; penentuan rumus empiris/molekul, massa molar, kadar zat, penyetaraan, pereaksi pembatas, rendemen.</td></tr>
+      <tr><td>Kimia Organik</td><td>Struktur dan Sifat Hidrokarbon</td><td>Senyawa hidrokarbon: alkana, alkena, dan alkuna.</td></tr>
+      <tr><td rowspan="2">Kimia Analitik</td><td>Larutan dan Sifatnya</td><td>Konsentrasi larutan (molar, normal, molal, fraksi mol, persen), daya hantar listrik (elektrolit/non elektrolit), sifat koligatif (kenaikan titik didih, penurunan titik beku, penurunan tekanan uap, tekanan osmosis).</td></tr>
+      <tr><td>Kesetimbangan dalam Larutan Berair</td><td>pH asam-basa kuat/lemah, larutan penyangga, hidrolisis garam, titrasi asam basa, kesetimbangan kelarutan senyawa sukar larut.</td></tr>
+      <tr><td rowspan="3">Kimia Fisik</td><td>Elektrokimia</td><td>Konsep reduksi &amp; oksidasi, sel elektrokimia dan penerapannya.</td></tr>
+      <tr><td>Energetika</td><td>Kalorimetri, Hukum Hess, entalpi reaksi standar, energi disosiasi ikatan.</td></tr>
+      <tr><td>Dinamika</td><td>Laju reaksi dan faktor yang mempengaruhinya, kesetimbangan dinamis.</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Kemampuan kimia diukur pada tiga level kognitif:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman Konsep Kimia (Knowing)</h3>
+      <p>Pengetahuan dan pemahaman dasar tentang konsep kimia &mdash; mengenali fakta, hubungan, dan konsep; menjelaskan sifat, struktur, proses, atau fenomena kimia secara rinci; memberikan contoh fenomena, kegunaan, atau kerugian suatu materi/proses kimia dalam kehidupan sehari-hari.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Penerapan Konsep Kimia (Applying)</h3>
+      <p>Menerapkan pengetahuan tentang fakta, hubungan, proses, konsep, dan metode ilmiah dalam menyelesaikan masalah sesuai konteks &mdash; membandingkan/mengklasifikasikan zat atau proses kimia berdasarkan sifatnya, serta menginterpretasikan model, informasi tekstual, tabular, gambar, dan grafis termasuk perhitungan kimia.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Penalaran (Reasoning)</h3>
+      <p>Menganalisis permasalahan kimia dan menunjukkan penalaran terkait konsep kimia yang relevan dan terintegrasi &mdash; memprediksi hasil, mengevaluasi, merancang eksperimen dan menguji hipotesis, menghubungkan variabel, mengaplikasikan prinsip ilmiah, menarik kesimpulan, menggeneralisasi, dan memberikan penjelasan disertai bukti.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">4 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Kimia Dasar &mdash; Stoikiometri</span><span>Penalaran</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Sekelompok peneliti kimia lingkungan sedang meneliti kandungan bahan organik dalam limbah cair industri makanan. Mereka berhasil memurnikan satu senyawa organik utama, yang diketahui hanya tersusun atas unsur karbon (C), hidrogen (H), dan oksigen (O). Dari hasil uji laboratorium, senyawa tersebut memiliki komposisi massa: 40% karbon, 6,7% hidrogen, dan sisanya oksigen. Melalui spektrometri massa, diketahui bahwa massa molar senyawa tersebut adalah 180 g/mol. Mereka menyimpulkan bahwa rumus empiris dan rumus molekul senyawa itu adalah CH&#8322;O. Apakah kesimpulan tersebut benar? (Ar C=12; H=1; dan O=16)</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Benar, karena CH&#8322;O adalah rumus empiris dan sesuai dengan rumus molekulnya.</li>
+        <li><b>B.</b> Benar, karena rumus molekul harus sama dengan rumus empiris.</li>
+        <li><b>C.</b> Salah, karena rasio mol tidak sesuai dengan komposisi yang diberikan.</li>
+        <li><b>D.</b> Salah, karena massa molar menunjukkan bahwa rumus molekulnya adalah C&#8326;H&#8321;&#8322;O&#8326;.</li>
+        <li><b>E.</b> Salah, karena rumus empiris adalah CH&#8322;O tetapi rumus molekulnya adalah C4H8O4.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: D</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Kimia Analitik &mdash; Larutan dan Sifatnya</span><span>Pemahaman</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Suatu reaksi asam basa dapat didasarkan pada beberapa teori, yaitu teori asam basa Arrhenius, Bronsted-Lowry, dan Lewis. Perhatikan reaksi berikut: H&#8322;PO&#8324;<sup>&minus;</sup> + H&#8322;O &rarr; HPO&#8324;<sup>2&minus;</sup> + H&#8323;O<sup>+</sup>. Berdasarkan reaksi tersebut, pernyataan yang benar mengenai reaksi asam basa berdasarkan teori Bronsted-Lowry adalah&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> H&#8322;O menerima ion hidrogen dari H&#8322;PO&#8324;<sup>&minus;</sup> dan bersifat asam</li>
+        <li><b>B.</b> H&#8323;O<sup>+</sup> memberikan ion hidrogen kepada H&#8322;O dan bersifat asam</li>
+        <li><b>C.</b> H&#8322;PO&#8324;<sup>&minus;</sup> memberikan ion hidrogen kepada H&#8322;O dan bersifat asam</li>
+        <li><b>D.</b> H&#8322;PO&#8324;<sup>&minus;</sup> memberikan ion hidrogen kepada H&#8322;O dan bersifat basa</li>
+        <li><b>E.</b> H&#8322;PO&#8324;<sup>&minus;</sup> memberikan ion hidrogen kepada HPO&#8324;<sup>2&minus;</sup> dan bersifat asam</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Kimia Organik &mdash; Struktur dan Sifat Hidrokarbon</span><span>Penalaran</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Minyak bumi terdiri atas ribuan senyawa hidrokarbon yang sebagian besar bersifat nonpolar dan memiliki titik didih yang berbeda-beda. Proses distilasi fraksional digunakan untuk memisahkan hidrokarbon berdasarkan titik didihnya. Perbedaan titik didih ini tidak hanya ditentukan oleh massa molekul, tetapi juga bentuk molekul, karena bentuk molekul memengaruhi gaya Van der Waals antar molekul. Berdasarkan informasi tersebut, tentukan Tepat atau Tidak Tepat untuk setiap pernyataan mengenai titik didih dari isomer-isomer hidrokarbon berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Titik didih n-butana lebih besar dari titik didih 2-metil-propana.</td><td style="text-align:center;">Tepat</td></tr>
+        <tr><td>Titik didih 2,2-dimetil-propana lebih besar dari titik didih 2-metil-butana.</td><td style="text-align:center;">Tidak Tepat</td></tr>
+        <tr><td>Titik didih n-heksana lebih besar dari titik didih 3-metil-pentana.</td><td style="text-align:center;">Tepat</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Tepat, Tidak Tepat, Tepat</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Kimia Fisik &mdash; Dinamika</span><span>Penerapan</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Produksi H&#8322;SO&#8324; dilakukan melalui proses kontak yang berlangsung melalui reaksi kesetimbangan berikut: 2SO&#8322;(g) + O&#8322;(g) &#8652; 2SO&#8323;(g), &Delta;H = &minus;197 kJ mol<sup>&minus;1</sup>. Untuk meningkatkan produksi H&#8322;SO&#8324; dapat dilakukan dengan memanfaatkan reaksi kesetimbangan yang terjadi. Pernyataan mana saja yang menunjukkan upaya yang dapat dilakukan untuk mendapatkan SO&#8323; sebanyak-banyaknya? Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Memperbesar volume wadah</li>
+        <li><b>2.</b> Menambah O&#8322; ke dalam campuran reaksi</li>
+        <li><b>3.</b> Menurunkan tekanan gas</li>
+        <li><b>4.</b> Menurunkan suhu reaksi</li>
+        <li><b>5.</b> Mengeluarkan SO&#8323; dari wadah</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 2, Pernyataan 4, dan Pernyataan 5</div>
+    </div>
+
+  </section>
+
+  <div class="note-box">Satu contoh soal resmi lain (Kimia Dasar &mdash; Stoikiometri, tentang komposisi larutan AgNO&#8323; dan NaCl dari empat botol reaktan) merujuk pada data komposisi/konsentrasi botol yang tidak tersedia lengkap dalam dokumen sumber sehingga tidak ditampilkan di sini. Lihat dokumen resmi Kerangka Asesmen TKA untuk versi lengkapnya.</div>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Kimia paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-kimia-paket-1.html">Coba Tryout Kimia &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

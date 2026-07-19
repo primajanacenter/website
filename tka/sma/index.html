@@ -1,1 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beranda &mdash; Siap TKA</title>
+<meta name="description" content="Materi persiapan mandiri untuk Tes Kemampuan Akademik (TKA) jenjang SMA/MA: mata pelajaran, tryout, dan tes minat pilih mapel.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
 
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+
+  .hero h1{font-size:1.8rem;margin:0 0 8px;}
+  .hero p.lead{color:var(--muted);margin:0 0 22px;font-size:1rem;max-width:620px;}
+
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0;}
+  .info-item{background:var(--primary-light);border-radius:10px;padding:14px 16px;}
+  .info-item .num2{font-size:1.4rem;font-weight:800;color:var(--primary-dark);}
+  .info-item .label{font-size:.82rem;color:var(--muted);margin-top:2px;}
+
+  .rules{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:16px 18px;margin:20px 0;font-size:.92rem;color:var(--text);}
+  .rules b{color:var(--primary-dark);}
+  .rules ul{margin:8px 0 0;padding-left:20px;}
+  .rules li{margin-bottom:4px;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+    transition:transform .1s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;}
+  .section-card{margin-top:20px;}
+
+  .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px;}
+  .feature-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px;}
+  .feature-card h3{margin:0 0 8px;font-size:1rem;color:var(--primary-dark);}
+  .feature-card p{margin:0;font-size:.9rem;color:var(--muted);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+  footer.note p{margin:4px 0;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <section class="card hero">
+    <h1>Siap Menghadapi TKA</h1>
+    <p class="lead">Materi persiapan mandiri untuk Tes Kemampuan Akademik (TKA) jenjang SMA/MA, mengacu pada Kerangka Asesmen resmi Kemendikdasmen: materi mata pelajaran, tryout per mata uji, dan tes minat memilih mata uji pilihan.</p>
+
+    <div class="info-grid">
+      <div class="info-item"><div class="num2">21</div><div class="label">Mata Uji Wajib &amp; Pilihan</div></div>
+      <div class="info-item"><div class="num2">6</div><div class="label">Paket Tryout / Mata Uji</div></div>
+      <div class="info-item"><div class="num2">3</div><div class="label">Bentuk Soal Resmi TKA</div></div>
+      <div class="info-item"><div class="num2">1</div><div class="label">Paket Gratis / Mata Uji</div></div>
+    </div>
+
+    <div class="btn-row">
+      <a class="btn btn-primary" href="mata-pelajaran.html">Lihat Mata Pelajaran</a>
+      <a class="btn btn-ghost" href="pilih-mapel.html">Tes Minat Pilih Mapel</a>
+      <a class="btn btn-ghost" href="tryout.html">Coba Tryout Gratis</a>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Struktur TKA Singkat</div>
+    <p>Peserta TKA mengerjakan 3 mata uji wajib (Bahasa Indonesia, Matematika, Bahasa Inggris) serta 2 mata uji pilihan sesuai program studi tujuan di perguruan tinggi atau pilihan karier.</p>
+    <div class="rules">
+      <b>Tiga bentuk soal TKA:</b>
+      <ul>
+        <li><b>Pilihan Ganda</b> &mdash; satu jawaban paling tepat.</li>
+        <li><b>Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</b> &mdash; bisa lebih dari satu jawaban benar, semua harus dipilih dengan tepat.</li>
+        <li><b>Pilihan Ganda Kompleks (Benar/Salah)</b> &mdash; beberapa pernyataan, tiap pernyataan direspons Benar atau Salah.</li>
+      </ul>
+    </div>
+    <p style="margin-bottom:0;"><a href="tentang-tka.html">Baca selengkapnya tentang TKA &rarr;</a></p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Tips &amp; Strategi Singkat</div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Kenali bentuk soal</h3>
+        <p>Latih ketiga bentuk soal (sederhana, kompleks pilih lebih dari satu, kompleks benar/salah) agar tidak kaget saat mengerjakan ujian sesungguhnya.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Perkuat literasi membaca</h3>
+        <p>Banyak mata uji TKA berbasis teks/stimulus panjang &mdash; latihan membaca cepat dan cermat sangat membantu di hampir semua mata uji.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Pilih mapel sesuai prodi</h3>
+        <p>Gunakan tes minat untuk mencocokkan 2 mata uji pilihan dengan program studi atau jalur karier yang kamu tuju.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="note">
+    <p>Situs ini adalah materi persiapan mandiri, bukan situs resmi Kementerian Pendidikan Dasar dan Menengah. Untuk informasi resmi dan terbaru, kunjungi pusmendik.kemendikdasmen.go.id.</p>
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahasa Mandarin &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Bahasa Mandarin SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+  .stimulus-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.9rem;}
+  .stimulus-box p{margin:0 0 4px;}
+  .stimulus-box p:last-child{margin-bottom:0;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Bahasa Mandarin</h1>
+    <p class="lead">TKA Bahasa Mandarin menguji kemampuan murid dalam memahami bahasa Mandarin dasar pada level HSK (H&agrave;ny&#468; Shu&iacute;p&iacute;ng K&#462;osh&igrave;) 1, setara level A1 CEFR, berfokus pada keterampilan membaca &mdash; memahami informasi dari teks pendek maupun ungkapan komunikatif seputar kehidupan sehari-hari.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Teks mengacu pada standar HSK 1 dengan topik yang familiar (identitas diri, kehidupan sekolah, kehidupan keluarga, kehidupan sehari-hari, kegiatan waktu senggang/hobi), ditulis dalam Aksara Han/Hanzi sederhana (&#31616;&#20307;&#23383;) disertai Hanyu Pinyin, jarang menggunakan idiom atau konsep abstrak, dengan sekitar 150 kosakata dasar dari HSK 1.</p>
+    <table class="qtable">
+      <tr><th>Pola Kalimat Dasar</th></tr>
+      <tr><td>S + V + O (Subjek + Predikat + Objek)</td></tr>
+      <tr><td>S + &#26159; + N (Subjek + kata kerja "adalah" + Nomina)</td></tr>
+      <tr><td>S + &#22312; + lokasi (Subjek + berada di + tempat)</td></tr>
+    </table>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:0;">Kalimat tanya menggunakan kata tanya umum seperti &#20160;&#20040; (apa), &#35841; (siapa), &#21738;&#37324; (di mana), dan &#21527; (partikel tanya ya/tidak).</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Keterampilan membaca yang diukur mencakup tiga aspek:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman Literal</h3>
+      <p>Mengidentifikasi Hanyu Pinyin, kosakata, guratan, serta makna kata dalam kalimat sederhana; menemukan dan memahami informasi penting yang disajikan secara eksplisit; serta melengkapi kalimat atau teks rumpang untuk menerapkan kosakata.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Reorganisasi</h3>
+      <p>Menyusun kosakata menjadi kalimat sederhana yang tepat, serta mengurutkan kalimat acak menjadi teks sederhana yang runtut dan logis.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Pemahaman Inferensial</h3>
+      <p>Menyimpulkan informasi implisit dari teks atau gambar sederhana, serta menganalisis penggunaan tata bahasa dalam kalimat.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">6 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="stimulus-box">
+      <p>&#30007;: &#35831; &#21548; &#25105; &#35828;&#65281;&#65288;Q&#01710;ng t&#012;ng w&#466; shu&#333;!&#65289;</p>
+      <p>&#22899;: &#22909;&#30340;&#12290;&#65288;H&#462;ode.&#65289;</p>
+      <p>&#30007;: "&#39640;&#20852;"&#65292;&#20320; &#33021; &#20889; &#21527;&#65311;&#65288;"G&#257;ox&igrave;ng", n&#01710; n&eacute;ng xi&#283; ma?&#65289;</p>
+      <p>&#22899;: &#33021;&#65292; &#25105; &#20250; &#20889;&#12290;&#65288;N&eacute;ng, w&#466; hu&igrave; xi&#283;.&#65289;</p>
+      <p>&#30007;: &#24456; &#22909;&#65281;&#37027;&#65292;&#24590;&#20040; &#35835; &#37027; &#20010; &#27721;&#23383;&#65311;&#65288;H&#283;n h&#462;o! N&agrave;, z&#283;nme d&uacute; n&agrave; g&egrave; h&agrave;nz&igrave;?&#65289;</p>
+      <p>&#22899;: &#35835; "&#39640;&#20852;"&#12290;&#65288;D&uacute; "g&#257;ox&igrave;ng".&#65289;</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Pemahaman Literal</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Apa arti kata "&#39640;&#20852;" (g&#257;ox&igrave;ng)?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Baik</li>
+        <li><b>B.</b> Berani</li>
+        <li><b>C.</b> Nyaman</li>
+        <li><b>D.</b> Bersih</li>
+        <li><b>E.</b> Senang</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: E</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Pemahaman Inferensial</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">&#20182;&#20204; &#22312; &#21738;&#20799;&#65311; (T&#257;men z&agrave;i n&#462;r? &mdash; Mereka ada di mana?)</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> &#22312; &#21307;&#38498; (z&agrave;i y&#012;yu&agrave;n &mdash; di rumah sakit)</li>
+        <li><b>B.</b> &#22312; &#23398;&#26657; (z&agrave;i xu&eacute;xi&agrave;o &mdash; di sekolah)</li>
+        <li><b>C.</b> &#22312; &#39277;&#39304; (z&agrave;i f&agrave;nguan &mdash; di restoran)</li>
+        <li><b>D.</b> &#22312; &#21830;&#24215; (z&agrave;i sh&#257;ngdi&agrave;n &mdash; di toko)</li>
+        <li><b>E.</b> &#22312; &#23478;&#37324; (z&agrave;i ji&#257;l&#464; &mdash; di rumah)</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Reorganisasi</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Susunlah kalimat berikut menjadi paragraf padu! (1) &#19978;&#21320; &#20843; &#28857; &#19978;&#35838;&#12290; (Sh&agrave;ngw&#468; b&#257; di&#462;n sh&agrave;ngk&egrave; &mdash; Jam 8 pagi mulai pelajaran.) (2) &#25105; &#27599;&#22825; &#26089;&#19978; &#20845; &#28857; &#345; &#33590;&#12290; (W&#466; m&#283;iti&#257;n z&#462;osh&#257;ng li&ugrave; di&#462;n h&#333; ch&aacute; &mdash; Setiap pagi jam 6 saya minum teh.) (3) &#19971; &#28857; &#21435; &#23398;&#26657;&#12290; (Q&#012; di&#462;n q&ugrave; xu&eacute;xi&agrave;o &mdash; Jam 7 pergi ke sekolah.) (4) &#19979;&#21320; &#21313;&#20108; &#28857; &#22238; &#23478;&#12290; (Xi&agrave;w&#468; sh&iacute; &egrave;r di&#462;n hu&iacute; ji&#257; &mdash; Jam 12 siang pulang ke rumah.)</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> (1) &ndash; (3) &ndash; (4) &ndash; (2)</li>
+        <li><b>B.</b> (2) &ndash; (3) &ndash; (1) &ndash; (4)</li>
+        <li><b>C.</b> (2) &ndash; (4) &ndash; (3) &ndash; (1)</li>
+        <li><b>D.</b> (2) &ndash; (4) &ndash; (1) &ndash; (3)</li>
+        <li><b>E.</b> (1) &ndash; (4) &ndash; (3) &ndash; (2)</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Pemahaman Inferensial</span><span>PGK Kategori</span></div>
+      <p class="soal-question">&#20848;&#20848;&#65306;&#36825; &#26159; &#20160;&#20040;&#65311; (L&aacute;nl&aacute;n: Zh&egrave; sh&igrave; sh&eacute;nme? &mdash; Ini apa?)<br>&#29577;&#20029;&#65306;&#36825; &#26159; &#20070;&#12290; (M&#462;l&igrave;: Zh&egrave; sh&igrave; sh&#363;. &mdash; Ini buku.)<br>&#20848;&#20848;&#65306;&#36825; &#26159; &#20320; &#30340; &#20070; &#21527;&#65311; (L&aacute;nl&aacute;n: Zh&egrave; sh&igrave; n&#01710; de sh&#363; ma? &mdash; Ini bukumu?)<br>&#29577;&#20029;&#65306;&#26159; &#30340;&#65292;&#26159; &#25105; &#30340;&#12290; (M&#462;l&igrave;: Sh&igrave; de, sh&igrave; w&#466; de. &mdash; Ya, ini punyaku.)<br>Apa informasi yang terdapat pada percakapan di atas? Tentukan Benar atau Salah untuk setiap pernyataan berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>&#37027; &#19981;&#26159; &#19968; &#26412; &#20070;&#12290; (N&agrave; b&uacute;sh&igrave; y&igrave; b&#283;n sh&#363; &mdash; Itu bukan sebuah buku.)</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>&#20848;&#20848; &#26377; &#19968; &#26412; &#20070;&#12290; (L&aacute;nl&aacute;n y&#466;u y&igrave; b&#283;n sh&#363; &mdash; Lanlan punya sebuah buku.)</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>&#29577;&#20029; &#35828; &#20070; &#26159; &#22905; &#30340;&#12290; (M&#462;l&igrave; shu&#333; sh&#363; sh&igrave; t&#257; de &mdash; Mali bilang buku itu miliknya.)</td><td style="text-align:center;">Benar</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Salah, Salah, Benar</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Reorganisasi</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Susunlah kosakata berikut menjadi kalimat padu: &#20320; / &#20160;&#20040; / &#33756; / &#21916;&#27426; (n&#01710; / sh&eacute;nme / c&agrave;i / x&#01710;huan). Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> &#33756; &#21916;&#27426; &#20320; &#20160;&#20040;&#65311; (C&agrave;i x&#01710;huan n&#01710; sh&eacute;nme?)</li>
+        <li><b>2.</b> &#20320; &#21916;&#27426; &#20160;&#20040; &#33756;&#65311; (N&#01710; x&#01710;huan sh&eacute;nme c&agrave;i?)</li>
+        <li><b>3.</b> &#20320; &#20160;&#20040; &#21916;&#27426; &#33756;&#65311; (N&#01710; sh&eacute;nme x&#01710;huan c&agrave;i?)</li>
+        <li><b>4.</b> &#20160;&#20040; &#33756; &#20320; &#21916;&#27426;&#65311; (Sh&eacute;nme c&agrave;i n&#01710; x&#01710;huan?)</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 2 dan Pernyataan 4</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 6</span><span>Pemahaman Literal</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">&#20182; &#24456; &#21916;&#27426; ____ &#27721;&#35821;&#12290; (T&#257; h&#283;n x&#01710;huan ____ h&agrave;ny&#468;. &mdash; Dia sangat suka ____ bahasa Mandarin.)</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> &#20570;&#39277; (zu&ograve;f&agrave;n &mdash; memasak)</li>
+        <li><b>B.</b> &#23398;&#20064; (xu&eacute;x&iacute; &mdash; belajar)</li>
+        <li><b>C.</b> &#30561;&#35273; (shu&igrave;ji&agrave;o &mdash; tidur)</li>
+        <li><b>D.</b> &#35828;&#35805; (shu&#333;hu&agrave; &mdash; berbicara)</li>
+        <li><b>E.</b> &#30475;&#35265; (k&agrave;nji&agrave;n &mdash; melihat)</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Bahasa Mandarin paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-bahasa-mandarin-paket-1.html">Coba Tryout Bahasa Mandarin &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

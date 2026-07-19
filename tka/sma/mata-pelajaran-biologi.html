@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biologi &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Biologi SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Biologi</h1>
+    <p class="lead">TKA Biologi mengukur kemampuan berpikir terkait konsep-konsep biologi dan keterampilan proses/inkuiri. Penguasaan konsep biologi menjadi prasyarat untuk dapat melakukan proses berpikir (misalnya menganalisis) dan melakukan inkuiri.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Konsep-konsep biologi yang diukur mencakup keanekaragaman hayati, sel, dan proses-proses pada makhluk hidup, disajikan dalam konteks kehidupan sehari-hari murid seperti topik kesehatan, lingkungan, pertanian, maupun sosiokultural.</p>
+    <table class="qtable">
+      <tr><th>Elemen</th><th>Sub-elemen</th><th>Cakupan / Batasan</th></tr>
+      <tr><td rowspan="3">Keanekaragaman Hayati</td><td>Klasifikasi dan Keanekaragaman Makhluk Hidup</td><td>Prinsip klasifikasi dan permasalahan keanekaragaman hayati di Indonesia.</td></tr>
+      <tr><td>Bakteri</td><td>Struktur bakteri Gram positif dan negatif, resistensi bakteri, dan peranannya terhadap manusia.</td></tr>
+      <tr><td>Ekosistem</td><td>Komponen ekosistem dan interaksi antarkomponen, pelestarian ekosistem di Indonesia.</td></tr>
+      <tr><td>Sel</td><td>Metabolisme Sel</td><td>Katabolisme, anabolisme, sifat dan cara kerja enzim.</td></tr>
+      <tr><td rowspan="4">Proses-proses pada Makhluk Hidup</td><td>Transport &amp; Pertukaran Zat (Sirkulasi, Respirasi, Ekskresi)</td><td>Keterkaitan struktur organ dan fungsinya pada sistem sirkulasi, respirasi, ekskresi, serta keterkaitan antarsistem.</td></tr>
+      <tr><td>Sistem Imun</td><td>Mekanisme kerja sistem imun terhadap kekebalan tubuh.</td></tr>
+      <tr><td>Sistem Koordinasi</td><td>Mekanisme kerja sistem saraf dan sistem hormon.</td></tr>
+      <tr><td>Sistem Reproduksi</td><td>Struktur dan fungsi organ reproduksi pria dan wanita.</td></tr>
+    </table>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:0;">Sebagian soal juga menguji <b>keterampilan proses</b>: mempertanyakan &amp; memprediksi, merencanakan &amp; melakukan penyelidikan, serta memproses &amp; menganalisis data dan informasi.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Kemampuan biologi diukur pada tiga level kognitif:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman</h3>
+      <p>Menjelaskan konsep-konsep biologi berdasarkan informasi yang telah dipelajari atau disediakan.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Penerapan</h3>
+      <p>Menerapkan konsep dan pengetahuan biologi untuk memecahkan masalah biologi.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Penalaran</h3>
+      <p>Menganalisis, mengevaluasi, dan menarik kesimpulan dari informasi biologis yang kompleks atau baru, serta mengembangkan argumen berbasis bukti.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">4 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Sel &mdash; Metabolisme Sel</span><span>Penerapan</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Dalam sebuah penelitian mengenai penyakit pada sel, para ilmuwan menemukan bahwa pada beberapa sel tubuh pasien, retikulum endoplasma kasar (RE kasar) dan retikulum endoplasma halus (RE halus) mengalami kerusakan parah. Hal ini menghambat beberapa fungsi penting dalam sel tersebut. Berdasarkan peranan RE kasar dan RE halus, apa kemungkinan yang dapat terjadi pada sel-sel pasien tersebut? Pilih semua jawaban yang benar! Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Produksi protein terganggu, mengakibatkan sel tidak dapat melakukan fungsi-fungsi penting yang membutuhkan protein.</li>
+        <li><b>2.</b> Sintesis lipid terhambat, sehingga kemampuan sel untuk memproduksi membran dan melakukan detoksifikasi berkurang.</li>
+        <li><b>3.</b> Sel mengalami kesulitan dalam menyimpan kalsium, yang berpotensi mempengaruhi aktivitas seluler yang bergantung pada kalsium, seperti kontraksi otot.</li>
+        <li><b>4.</b> Penurunan produksi ATP yang signifikan terjadi, karena sel tidak dapat menghasilkan energi dengan efisien.</li>
+        <li><b>5.</b> Gangguan dalam pengangkutan protein dan sintesis lipid menyebabkan berbagai proses seluler terganggu.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, Pernyataan 2, Pernyataan 3, dan Pernyataan 5</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Proses pada Makhluk Hidup &mdash; Sistem Imun</span><span>Penalaran</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Data Kemenkes mengenai jumlah kasus Covid-19 sejak Maret 2020 hingga Mei 2025 (soal asli disertai grafik data) menunjukkan tren penurunan kasus setelah pelaksanaan vaksinasi. Vaksin primer diberikan mulai 13 Januari 2021 dan vaksin booster 1 diberikan mulai Januari 2022; terjadi tren penurunan kasus Covid-19 setelah dilaksanakannya vaksinasi. Berdasarkan data dan pengetahuanmu tentang sistem imun, manakah pernyataan berikut yang logis dan didukung data tersebut? Pilih semua jawaban yang benar! Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Penurunan jumlah kasus setelah Januari 2022 menunjukkan bahwa booster memiliki dampak besar terhadap kekebalan seseorang.</li>
+        <li><b>2.</b> Jika vaksin booster tidak diberikan, kemungkinan jumlah kasus tetap menurun karena vaksin primer sudah cukup efektif.</li>
+        <li><b>3.</b> Vaksin primer dan booster bekerja sama membentuk kekebalan kolektif, sehingga menurunkan jumlah kasus secara bertahap.</li>
+        <li><b>4.</b> Penurunan jumlah kasus terjadi secara alami karena vaksin primer menyebabkan virus tidak terlalu ganas.</li>
+        <li><b>5.</b> Vaksin booster sudah efektif menurunkan jumlah kasus, namun perlu vaksin booster lanjutan untuk imunitas jangka panjang.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, Pernyataan 3, dan Pernyataan 5</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Proses pada Makhluk Hidup &mdash; Sistem Reproduksi</span><span>Penalaran</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Seorang perempuan mengalami gangguan kehamilan yang cukup serius. Setelah dilakukan pemeriksaan, dokter menyatakan bahwa zigot tidak berkembang di dalam rahim, melainkan di luar rongga rahim. Kondisi ini dikenal dengan kehamilan ektopik (hamil di luar kandungan). Dari kasus tersebut, tentukan Benar atau Salah untuk setiap pernyataan berikut mengenai penjelasan paling logis yang dapat mendukung diagnosis dokter terkait penyebab kehamilan ektopik tersebut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Pembuahan tetap terjadi di tuba falopi, namun gangguan pada silia tuba menyebabkan zigot gagal mencapai rahim.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Zigot yang tertanam di tuba falopi menunjukkan adanya masalah pada mekanisme transportasi embrio menuju rahim.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Sel telur dan sel sperma bertemu di vagina sehingga zigot tidak dapat menuju rahim dan berkembang di vagina.</td><td style="text-align:center;">Salah</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Benar, Benar, Salah</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Keterampilan Proses &mdash; Merencanakan &amp; Melakukan Penyelidikan</span><span>Penerapan</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Seorang petani jagung membeli benih jagung sebanyak 1 kg di toko pertanian. Harga benih jagung tersebut ternyata beberapa kali lipat lebih mahal dari harga jagung di pasaran. Karena alasan mahalnya benih jagung di toko pertanian, pada saat panen petani tersebut memilih jagung yang kualitasnya bagus untuk dijadikan benih. Tetangganya yang sudah pernah menanam jagung dari benih hasil panen sendiri memberikan nasehat agar tidak melakukan hal itu karena hasil panennya tidak akan bagus. Penasaran dengan ungkapan tetangganya, petani tersebut ingin membuktikan ucapan tetangganya. Tentukan kegiatan yang Tepat Dilakukan atau Tidak Tepat Dilakukan oleh petani untuk membuktikan ucapan tetangganya!</p>
+      <table class="pernyataan-table">
+        <tr><th>Kegiatan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Menguji satu benih toko dan satu benih hasil panen di lahan yang sama, lalu membandingkan hasilnya.</td><td style="text-align:center;">Tidak Tepat Dilakukan</td></tr>
+        <tr><td>Melakukan penanaman beberapa benih toko dan beberapa benih hasil panen di lahan yang sama, tetapi diberi pupuk yang berbeda, lalu membandingkan hasilnya.</td><td style="text-align:center;">Tidak Tepat Dilakukan</td></tr>
+        <tr><td>Menanam beberapa benih toko dan beberapa benih hasil panen di lahan yang sama, diberi pupuk yang sama, kemudian membandingkan hasilnya.</td><td style="text-align:center;">Tepat Dilakukan</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Tidak Tepat Dilakukan, Tidak Tepat Dilakukan, Tepat Dilakukan</div>
+    </div>
+
+  </section>
+
+  <div class="note-box">Satu contoh soal resmi lain (Keanekaragaman Hayati &mdash; Ekosistem, tentang jaring-jaring makanan laut) merujuk pada diagram organisme yang tidak tersedia dalam dokumen sumber sehingga tidak ditampilkan di sini. Lihat dokumen resmi Kerangka Asesmen TKA untuk versi lengkapnya.</div>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Biologi paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-biologi-paket-1.html">Coba Tryout Biologi &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

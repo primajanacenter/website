@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fisika &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Fisika SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Fisika</h1>
+    <p class="lead">TKA Fisika mengukur pemahaman konseptual, kemampuan berpikir kritis, dan penerapan prinsip-prinsip fisika dalam berbagai konteks kehidupan sehari-hari &mdash; termasuk keterampilan proses sains secara terpadu.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Pengetahuan fisika diukur melalui permasalahan dalam 4 konteks: fenomena fisika yang dapat diamati di lingkungan, makhluk hidup, teknologi, dan percobaan/penyelidikan.</p>
+    <table class="qtable">
+      <tr><th>Elemen</th><th>Sub-elemen</th><th>Cakupan / Batasan</th></tr>
+      <tr><td rowspan="3">Kinematika</td><td>Pengukuran</td><td>Alat ukur: jangka sorong, mikrometer sekrup, neraca tiga lengan. Pelaporan hasil mengikuti kaidah angka penting.</td></tr>
+      <tr><td>Gerak Lurus</td><td>Jarak, perpindahan, kecepatan (besar &amp; arah), GLB, dan GLBB.</td></tr>
+      <tr><td>Gerak Lengkung</td><td>Gerak parabola (referensi bidang horizontal); gerak melingkar beraturan.</td></tr>
+      <tr><td rowspan="3">Dinamika</td><td>Hubungan Gaya &amp; Gerak</td><td>Hukum Newton 1, 2, 3, jenis-jenis gaya (besar &amp; arah).</td></tr>
+      <tr><td>Momentum &amp; Impuls</td><td>Konsep momentum &amp; impuls, hukum kekekalan momentum.</td></tr>
+      <tr><td>Dinamika Rotasi</td><td>Momen gaya, momen inersia, Hukum Newton tentang rotasi.</td></tr>
+      <tr><td>Fluida</td><td>Fluida Statis &amp; Dinamis</td><td>Tekanan fluida, Hukum Pascal, Hukum Archimedes, kontinuitas, Hukum Bernoulli.</td></tr>
+      <tr><td rowspan="2">Gelombang</td><td>Bunyi</td><td>Karakteristik gelombang mekanik, sumber &amp; intensitas bunyi.</td></tr>
+      <tr><td>Cahaya</td><td>Karakteristik gelombang elektromagnetik, sifat cahaya, penerapan pada cermin, lensa, dan alat optik.</td></tr>
+      <tr><td rowspan="4">Kalor &amp; Termodinamika</td><td>Kalor &amp; Perpindahannya</td><td>Perubahan suhu, perubahan wujud, pemuaian, perpindahan kalor, pencampuran zat.</td></tr>
+      <tr><td>Pemanasan Global</td><td>Efek rumah kaca: proses, penyebab, cara mengatasi.</td></tr>
+      <tr><td>Gas Ideal</td><td>Hukum Boyle, Boyle-Gay Lussac, persamaan gas ideal.</td></tr>
+      <tr><td>Termodinamika</td><td>Empat proses termodinamika, hukum termodinamika, mesin kalor.</td></tr>
+      <tr><td rowspan="2">Kelistrikan</td><td>Listrik Statis</td><td>Gejala listrik statis, Hukum Coulomb, medan listrik, potensial listrik.</td></tr>
+      <tr><td>Rangkaian Arus Searah</td><td>Hukum Ohm &amp; Kirchoff, rangkaian campuran (seri-paralel) arus searah hingga perhitungan daya.</td></tr>
+    </table>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:0;">Sebagian soal juga menguji <b>keterampilan proses sains</b>: mengamati, mempertanyakan &amp; memprediksi, merencanakan &amp; melakukan penyelidikan, serta menganalisis &amp; mengomunikasikan data.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Kemampuan fisika diukur pada tiga level kognitif:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman</h3>
+      <p>Menggunakan pemahaman tentang konsep, hukum, prinsip, dan keterkaitan antar besaran untuk menjelaskan fenomena &mdash; mengingat informasi, mengklasifikasikan konsep, atau menjelaskan hubungan dasar tanpa perhitungan/analisis mendalam.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Penerapan</h3>
+      <p>Menggunakan konsep untuk menyelesaikan masalah kontekstual &mdash; mengidentifikasi konsep yang sesuai dan melakukan perhitungan sederhana hingga kompleks, menghubungkan konsep dengan situasi nyata.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Analisis dan Evaluasi</h3>
+      <p>Menelaah dan mengevaluasi hubungan antar besaran fisika &mdash; mencari faktor yang memengaruhi suatu kejadian, membangun argumen, berpikir kritis, dan menilai kebenaran suatu prinsip fisika.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">5 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Dinamika</span><span>Penerapan</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Seorang pemain sirkus berjalan di atas seutas tali sambil memegang tongkat panjang yang ujung-ujungnya terkulai ke bawah (soal asli disertai ilustrasi gambar). Tongkat panjang yang terkulai ke bawah membantu pemain sirkus menjaga keseimbangan karena tongkat&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> memperbesar gaya berat sehingga pergerakan ke samping menjadi lebih lambat</li>
+        <li><b>B.</b> menyebabkan pusat massa sistem berada di bawah titik tumpu yang membuat sistem seimbang</li>
+        <li><b>C.</b> memperbesar gaya gesek antara kaki dan tali sehingga orang dapat bertahan lebih lama di tali</li>
+        <li><b>D.</b> menarik tubuh ke bawah sehingga tubuh pemain sirkus tidak mudah terangkat</li>
+        <li><b>E.</b> menambah gaya dorong ke depan agar pemain sirkus dapat lebih mudah dan cepat berjalan</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Fluida</span><span>Pemahaman</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Pada botol semprotan parfum, udara ditiupkan cepat ke atas lubang tabung sempit yang tersambung ke cairan parfum. Mana sajakah penjelasan yang benar mengenai cara kerja alat tersebut? Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Udara yang mengalir cepat di atas permukaan parfum menyebabkan tekanan di tempat itu bertambah besar.</li>
+        <li><b>2.</b> Tekanan di permukaan cairan parfum menjadi lebih tinggi daripada tekanan di atasnya.</li>
+        <li><b>3.</b> Cairan parfum terdorong naik ke atas karena faktor tekanan udara luar.</li>
+        <li><b>4.</b> Volume cairan yang berada di dalam botol parfum memengaruhi aliran parfum.</li>
+        <li><b>5.</b> Alat ini memanfaatkan hukum Pascal dalam proses penyemprotannya.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 2 dan 3</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Gelombang &mdash; Cahaya</span><span>Analisis &amp; Evaluasi</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Seorang pemanah mengikuti lomba menombak ikan di kolam dangkal (soal asli disertai ilustrasi gambar). Sinar cahaya dari ikan menuju mata pemanah membentuk sudut 60&deg; terhadap garis normal. Pemanah tidak membidik langsung ke arah ikan yang terlihat, melainkan membidik ke posisi lebih rendah. (Indeks bias air = 4/3, indeks bias udara = 1). Evaluasilah pernyataan berikut, tentukan Benar atau Salah!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Strategi pemanah membidik lebih rendah dari posisi ikan yang terlihat merupakan strategi yang tepat berdasarkan prinsip pembiasan cahaya.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Penambahan kecepatan saat melempar tombak dapat meminimalisir kesalahan bidikan yang terjadi akibat pembiasan cahaya.</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>Semakin besar sudut pengamatan pemanah terhadap garis normal, semakin besar pula perbedaan antara posisi ikan yang terlihat dengan posisi ikan yang sebenarnya.</td><td style="text-align:center;">Benar</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Benar, Salah, Benar</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Kalor &amp; Termodinamika</span><span>Penerapan</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Sebuah mesin Carnot beroperasi antara reservoir suhu tinggi 800 K dan suhu rendah 480 K. Peneliti ingin mengganti mesin dengan mesin Carnot yang efisiensinya lebih tinggi. Mesin Carnot mana saja yang dapat digunakan sebagai pengganti? Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Suhu tinggi 600 K dan suhu rendah 480 K.</li>
+        <li><b>2.</b> Suhu tinggi 800 K dan suhu rendah 400 K.</li>
+        <li><b>3.</b> Suhu tinggi 900 K dan suhu rendah 500 K.</li>
+        <li><b>4.</b> Suhu tinggi 900 K dan suhu rendah 600 K.</li>
+        <li><b>5.</b> Suhu tinggi 1.000 K dan suhu rendah 600 K.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 2 dan 3</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Kelistrikan</span><span>Analisis &amp; Evaluasi</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Sebuah mesin fotokopi memindahkan partikel toner bermuatan negatif q = 1&times;10<sup>&minus;7</sup> C dari drum ke kertas melalui medan listrik dua pelat sejajar. Jarak pelat 2 mm, beda potensial 200 V, gaya listrik minimum yang diperlukan 0,01 N. Tentukan Benar atau Salah untuk setiap pernyataan analisis berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Jika jarak antar pelat dikurangi menjadi 1,5 mm dengan beda potensial tetap, gaya listrik pada partikel toner akan meningkat sehingga memenuhi syarat fungsional.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Untuk mempertahankan jarak antar pelat tetap 2 mm, beda potensial minimal yang diperlukan agar mesin berfungsi optimal adalah 100 V.</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>Jika muatan partikel toner ditingkatkan menjadi 2&times;10<sup>&minus;7</sup> C, mesin fotokopi akan berfungsi dengan baik tanpa perlu mengubah parameter lainnya.</td><td style="text-align:center;">Benar</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Benar, Salah, Benar</div>
+    </div>
+
+  </section>
+
+  <div class="note-box">Satu contoh soal resmi lain (Kinematika &mdash; Gerak Lurus) menampilkan pilihan jawaban berupa grafik bergambar sehingga tidak ditampilkan di sini. Lihat dokumen resmi Kerangka Asesmen TKA untuk versi lengkapnya.</div>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Fisika paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-fisika-paket-1.html">Coba Tryout Fisika &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

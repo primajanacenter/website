@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahasa Prancis &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Bahasa Prancis SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+  .stimulus-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:.88rem;font-style:italic;}
+  .stimulus-box p{margin:0 0 6px;}
+  .stimulus-box p:last-child{margin-bottom:0;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Bahasa Prancis</h1>
+    <p class="lead">TKA Bahasa Prancis mengukur kemampuan murid dalam berbahasa Prancis sederhana setara level A2-2 Standar CECRL, difokuskan pada kemampuan membaca (compr&eacute;hension &eacute;crite) teks pendek terkait ungkapan komunikatif sehari-hari, hal-hal konkret, dan rutin dalam kehidupan sehari-hari serta lingkungan sekitar.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Teks yang digunakan berupa teks pendek seperti pengumuman, pesan singkat, deskripsi orang dan tempat, serta instruksi tanda dan rambu &mdash; dengan struktur kalimat sederhana (subjek + kata kerja + objek) dalam bentuk pr&eacute;sent, dan kosakata sekitar 60&ndash;80 kata mengenai perkenalan diri, aktivitas sehari-hari, dan lingkungan sekitar.</p>
+    <table class="qtable">
+      <tr><th>Cakupan Materi</th></tr>
+      <tr><td>Ungkapan salam dan berpamitan (salutation et prendre cong&eacute;)</td></tr>
+      <tr><td>Ungkapan selamat dan harapan (f&eacute;liciter et souhaiter quelqu'un)</td></tr>
+      <tr><td>Menyatakan opini (donner des opinions)</td></tr>
+      <tr><td>Kosakata angka (jam, tanggal, dll.)</td></tr>
+      <tr><td>Pemberitahuan (messages courts et annonces)</td></tr>
+      <tr><td>Perkenalan diri dan aktivitas sehari-hari (se pr&eacute;senter, la vie quotidienne)</td></tr>
+      <tr><td>Keberadaan orang dan benda (se situer dans l'espace)</td></tr>
+      <tr><td>Instruksi tanda dan rambu (panneaux, signes)</td></tr>
+      <tr><td>Karakteristik seseorang (caract&egrave;res des personnes)</td></tr>
+      <tr><td>Kosakata benda dan bangunan publik</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Keterampilan membaca yang diukur mencakup tiga aspek:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman Literal</h3>
+      <p>Mengidentifikasi informasi eksplisit dalam teks &mdash; menemukan informasi tersurat dari gambar atau teks pendek, serta melengkapi teks yang dirumpangkan untuk menerapkan kosakata dan ungkapan komunikatif sesuai topik.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Reorganisasi</h3>
+      <p>Mengorganisir kalimat-kalimat pernyataan menjadi paragraf padu.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Pemahaman Inferensial</h3>
+      <p>Menarik kesimpulan atau memahami makna tersirat dalam teks &mdash; menemukan informasi tersirat serta menyimpulkan gambar atau isi teks pendek.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">5 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="stimulus-box">
+      <p><b>Au parc</b></p>
+      <p>L&eacute;o : Salut Emma ! &Ccedil;a va ?<br>
+      Emma : Oui, &ccedil;a va bien, merci. Et toi ?<br>
+      L&eacute;o : &Ccedil;a va aussi ! Je te pr&eacute;sente mon cousin Paul.<br>
+      Emma : Enchant&eacute;e, Paul ! Tu viens d&rsquo;o&ugrave; ?<br>
+      Paul : Enchant&eacute;, Emma ! Je viens de Lyon.<br>
+      Emma : Tu habites &agrave; Lyon aussi?<br>
+      Paul : Non, j&rsquo;habite &agrave; Paris.</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Pemahaman Literal</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Qui est Paul ? Cliquez sur chaque bonne r&eacute;ponse ! Il y a plus d&rsquo;une bonne r&eacute;ponse.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Il est parisien.</li>
+        <li><b>2.</b> Il habite &agrave; Paris.</li>
+        <li><b>3.</b> Il habite &agrave; Lyon.</li>
+        <li><b>4.</b> Il est lyonnais.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 2 dan Pernyataan 4</div>
+    </div>
+
+    <div class="stimulus-box">
+      <p><b>Comprendre les panneaux et les signes</b></p>
+      <p>Sur le chemin de l&rsquo;&eacute;cole, L&eacute;a voit plusieurs panneaux et signes. Devant le passage pi&eacute;ton, un panneau indique aux voitures de s&rsquo;arr&ecirc;ter. Pr&egrave;s du parc, un autre panneau interdit l&rsquo;entr&eacute;e aux chiens. &Agrave; c&ocirc;t&eacute; du supermarch&eacute;, un panneau bleu avec un "P" montre qu&rsquo;il y a un parking. L&eacute;a regarde aussi les feux tricolores avant de traverser la rue. Quand le feu pour pi&eacute;tons est rouge, elle attend patiemment. &Agrave; l&rsquo;arr&ecirc;t de bus, elle lit un panneau qui affiche les horaires des bus. Elle comprend que le prochain bus arrivera dans cinq minutes. L&eacute;a sait maintenant que les panneaux et les signes l&rsquo;aident &agrave; se d&eacute;placer en toute s&eacute;curit&eacute;.</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Pemahaman Literal</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Cochez la bonne r&eacute;ponse &agrave; la question pos&eacute;e! Choisissez Vrai ou Faux pour chaque affirmation!</p>
+      <table class="pernyataan-table">
+        <tr><th>Affirmation</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>L&eacute;a attend patiemment quand le feu pour pi&eacute;tons est rouge.</td><td style="text-align:center;">Vrai</td></tr>
+        <tr><td>Il y a un panneau interdit l&rsquo;entr&eacute;e aux chiens pr&egrave;s du parc.</td><td style="text-align:center;">Vrai</td></tr>
+        <tr><td>L&eacute;a voit un panneau et un signe devant le passage pi&eacute;ton.</td><td style="text-align:center;">Faux</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Vrai, Vrai, Faux</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Pemahaman Inferensial</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">De quoi parle ce texte ? Cliquez sur chaque bonne r&eacute;ponse ! Il y a plus d&rsquo;une bonne r&eacute;ponse.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Au supermarch&eacute;, il n'y a pas de parking.</li>
+        <li><b>2.</b> &Agrave; c&ocirc;t&eacute; du parc, on peut amener des animaux.</li>
+        <li><b>3.</b> Il y a beaucoup de panneaux et signes sur le chemin de l&rsquo;&eacute;cole.</li>
+        <li><b>4.</b> L&eacute;a lit les horaires et elle attend le prochain bus dans 5 minutes.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 3 dan Pernyataan 4</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Pemahaman Literal</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Lisez le texte attentivement! Hier, c'&eacute;tait un grand jour pour Marie. Elle a re&ccedil;u un prix pour ses excellents r&eacute;sultats en math&eacute;matiques. Ses amis l'ont f&eacute;licit&eacute;e en disant : &laquo; Bravo, Marie ! Tu es vraiment ______ en math&eacute;matiques ! &raquo; Marie &eacute;tait tr&egrave;s heureuse et a remerci&eacute; tout le monde pour leur soutien. Compl&eacute;tez la phrase en cochant la bonne r&eacute;ponse.</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> mauvaise.</li>
+        <li><b>B.</b> bonne.</li>
+        <li><b>C.</b> lente.</li>
+        <li><b>D.</b> contente.</li>
+        <li><b>E.</b> belle.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Reorganisasi</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Remettez-les dans le bon ordre. (1) Ensuite, elle prend son petit-d&eacute;jeuner et se pr&eacute;pare pour aller au lyc&eacute;e. (2) Apr&egrave;s les cours, elle rentre chez elle, fait ses devoirs et regarde une s&eacute;rie. (3) Claire se r&eacute;veille &agrave; 6h30 chaque matin. (4) &Agrave; midi, elle d&eacute;jeune avec ses amis &agrave; la cantine. (5) Le soir, elle d&icirc;ne avec sa famille et se couche vers 22h. (6) Elle commence ses cours &agrave; 8h et a plusieurs mati&egrave;res dans la journ&eacute;e. Quel est l&rsquo;ordre correct du message?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> 1 - 3 - 6 - 4 - 2 - 5</li>
+        <li><b>B.</b> 3 - 1 - 6 - 4 - 2 - 5</li>
+        <li><b>C.</b> 3 - 6 - 1 - 4 - 2 - 5</li>
+        <li><b>D.</b> 3 - 1 - 4 - 6 - 2 - 5</li>
+        <li><b>E.</b> 3 - 2 - 1 - 5 - 6 - 4</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Bahasa Prancis paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-bahasa-prancis-paket-1.html">Coba Tryout Bahasa Prancis &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

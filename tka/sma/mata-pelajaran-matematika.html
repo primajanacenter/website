@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matematika &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Matematika SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-wajib{background:var(--primary-light);color:var(--primary-dark);}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.88rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:9px 12px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+  table.qtable td.center,table.qtable th.center{text-align:center;}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 8px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card ul{margin:0;padding-left:20px;font-size:.88rem;color:var(--text);}
+  .comp-card li{margin-bottom:6px;}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.88rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  /* helper notasi matematika, tanpa library eksternal */
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+    margin:0 3px;line-height:1;position:relative;top:0.16em;font-size:0.92em;}
+  .frac .num{padding:0 4px 2px;border-bottom:1.4px solid currentColor;}
+  .frac .den{padding:2px 4px 0;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-wajib">Wajib</span>
+    <h1>Matematika</h1>
+    <p class="lead">TKA Matematika mengukur kemampuan murid dalam memahami fakta, konsep, prinsip, dan prosedur matematika, serta kemampuan menerapkan pengetahuan matematika untuk menyelesaikan masalah (<i>problem solving</i>).</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Muatan TKA Matematika merujuk pada elemen kurikulum matematika pada Kurikulum 2013 dan Kurikulum Merdeka, diukur melalui permasalahan dalam konteks matematika maupun konteks keseharian (personal, keluarga, atau lingkungan sekitar, baik lokal maupun global).</p>
+    <table class="qtable">
+      <tr><th>Elemen</th><th>Sub-elemen</th><th>Cakupan / Batasan</th></tr>
+      <tr><td rowspan="1">Bilangan</td><td>Bilangan Real</td><td>Jenis dan sifat bilangan; operasi bilangan (+, &minus;, &times;, &divide;, dan gabungannya) beserta sifat komutatif, asosiatif, dan distributif. Termasuk bilangan asli berpangkat bulat atau pecahan.</td></tr>
+      <tr><td rowspan="3">Aljabar</td><td>Persamaan &amp; Pertidaksamaan Linear</td><td>Sistem persamaan linear multivariabel; sistem pertidaksamaan linear multivariabel; program linear. Maksimum 3 variabel.</td></tr>
+      <tr><td>Fungsi</td><td>Domain, kodomain, daerah hasil (<i>range</i>), representasi fungsi linear/kuadrat/rasional; invers fungsi; fungsi komposisi. Identifikasi meliputi analitis dan grafis.</td></tr>
+      <tr><td>Barisan &amp; Deret</td><td>Barisan dan deret aritmetika serta geometri; penerapan termasuk pertumbuhan, peluruhan, bunga tunggal, dan bunga majemuk.</td></tr>
+      <tr><td rowspan="3">Geometri &amp; Pengukuran</td><td>Objek Geometri</td><td>Hubungan dua sudut/garis/bidang; hubungan objek geometri pada bangun datar &amp; ruang; kesebangunan/kekongruenan; Teorema Pythagoras.</td></tr>
+      <tr><td>Transformasi Geometri</td><td>Translasi, refleksi, rotasi, dan dilatasi, serta komposisinya (dari titik).</td></tr>
+      <tr><td>Pengukuran</td><td>Keliling &amp; luas bangun datar; volume &amp; luas permukaan bangun ruang; jarak dua objek geometri.</td></tr>
+      <tr><td>Trigonometri</td><td>Perbandingan Trigonometri</td><td>Sinus, kosinus, tangen, kotangen, sekan, kosekan.</td></tr>
+      <tr><td rowspan="2">Data &amp; Peluang</td><td>Data</td><td>Penyajian data (diagram batang/garis/lingkaran, grafik, tabel); ukuran pemusatan &amp; penyebaran data tunggal dan kelompok; aturan pencacahan (penjumlahan, perkalian, permutasi, kombinasi).</td></tr>
+      <tr><td>Peluang</td><td>Peluang kejadian tunggal dan kejadian majemuk.</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Kemampuan matematis yang diukur meliputi pengetahuan matematika, representasi matematis, penalaran dan pembuktian matematis, pemecahan masalah matematis, dan koneksi matematis &mdash; diukur pada tiga level kognitif:</p>
+
+    <div class="comp-card">
+      <h3>1. Pengetahuan dan Pemahaman (Knowing and Understanding)</h3>
+      <ul>
+        <li><b>Menghitung</b> &mdash; melakukan perhitungan berdasarkan prosedur (operasi aritmatika, aljabar, atau operasi matematika lain).</li>
+        <li><b>Memahami informasi</b> &mdash; memahami informasi dari grafik fungsi, tabel, diagram, infografis, atau bentuk visual lain.</li>
+        <li><b>Mengelompokkan</b> &mdash; mengelompokkan objek berdasarkan fakta, konsep, dan prinsip matematika.</li>
+        <li><b>Mengidentifikasi</b> &mdash; mengidentifikasi objek menggunakan konsep, fakta, dan prinsip matematika.</li>
+      </ul>
+    </div>
+
+    <div class="comp-card">
+      <h3>2. Aplikasi (Applying)</h3>
+      <ul>
+        <li><b>Memodelkan</b> &mdash; memodelkan permasalahan kontekstual ke dalam pernyataan matematika.</li>
+        <li><b>Menerapkan</b> &mdash; menerapkan strategi dan operasi matematika untuk menyelesaikan permasalahan yang familiar dan rutin.</li>
+        <li><b>Menginterpretasikan</b> &mdash; memahami dan menjelaskan makna dari situasi, kejadian, pernyataan, atau representasi matematika.</li>
+      </ul>
+    </div>
+
+    <div class="comp-card">
+      <h3>3. Penalaran (Reasoning)</h3>
+      <ul>
+        <li><b>Menganalisis</b> &mdash; menentukan dan menjelaskan hubungan beberapa konsep, fakta, prinsip, atau prosedur matematika.</li>
+        <li><b>Memecahkan masalah</b> &mdash; mengaitkan beberapa konsep untuk menyelesaikan permasalahan dalam situasi baru atau tidak rutin.</li>
+        <li><b>Mengevaluasi</b> &mdash; mengevaluasi alternatif strategi dan solusi dari suatu pemecahan masalah.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Matriks Elemen &amp; Level Kognitif</div>
+    <p style="font-size:.88rem;color:var(--muted);margin-top:0;">Kombinasi berikut diamati dari contoh soal resmi Kemendikdasmen &mdash; dalam pelaksanaan TKA sesungguhnya, kombinasi dapat bervariasi.</p>
+    <table class="qtable">
+      <tr><th>Elemen</th><th>Level Kognitif</th><th>Bentuk Soal</th></tr>
+      <tr><td>Bilangan</td><td>Pengetahuan dan Pemahaman</td><td>Pilihan Ganda</td></tr>
+      <tr><td>Aljabar</td><td>Aplikasi</td><td>Pilihan Ganda Kompleks (Kategori)</td></tr>
+      <tr><td>Geometri &amp; Pengukuran</td><td>Penalaran</td><td>Pilihan Ganda</td></tr>
+      <tr><td>Trigonometri</td><td>Aplikasi</td><td>Pilihan Ganda</td></tr>
+      <tr><td>Data &amp; Peluang</td><td>Penalaran</td><td>Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">5 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Bilangan</span><span>Pengetahuan &amp; Pemahaman</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">
+        <span class="frac"><span class="num">1</span><span class="den">4</span></span> +
+        <span class="frac"><span class="num">7</span><span class="den">4</span></span> &times;
+        <span class="frac"><span class="num">8</span><span class="den">21</span></span> = &hellip;
+      </p>
+      <ul class="opsi-list">
+        <li><b>A.</b> <span class="frac"><span class="num">8</span><span class="den">21</span></span></li>
+        <li><b>B.</b> <span class="frac"><span class="num">8</span><span class="den">11</span></span></li>
+        <li><b>C.</b> <span class="frac"><span class="num">11</span><span class="den">12</span></span></li>
+        <li><b>D.</b> <span class="frac"><span class="num">16</span><span class="den">21</span></span></li>
+        <li><b>E.</b> 2&nbsp;<span class="frac"><span class="num">8</span><span class="den">21</span></span></li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Aljabar &mdash; Program Linear</span><span>Aplikasi</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Mirna akan memproduksi dua jenis kue dengan modal Rp8.000.000,00. Biaya produksi kue bolu Rp15.000,00/kotak dijual dengan laba 40%. Biaya produksi kue brownies Rp20.000,00/kotak dijual dengan laba 35%. Setiap harinya Mirna dapat memproduksi paling banyak 500 kotak kue. Apabila Mirna ingin memperoleh keuntungan maksimum, tentukan Benar atau Salah untuk setiap pernyataan berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Mirna harus memproduksi 200 kotak kue bolu.</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>Mirna harus memproduksi kue brownies lebih banyak.</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>Keuntungan maksimum yang dapat diperoleh Mirna adalah Rp3.100.000,00.</td><td style="text-align:center;">Benar</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Salah, Salah, Benar</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Geometri &amp; Pengukuran</span><span>Penalaran</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Pada sebuah trapesium siku-siku, AB = 3 dan AD &le; BC. Apakah keliling trapesium tersebut lebih dari 25? Putuskan apakah tambahan informasi Pernyataan (1) dan Pernyataan (2) berikut cukup untuk menjawab pertanyaan tersebut (soal asli disertai gambar trapesium yang tidak direproduksi di sini):</p>
+      <p style="font-size:.88rem;margin:0 0 10px;">(1) Luas trapesium ABCD = 24.<br>(2) BC = 10 dan CD = 5.</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi Pernyataan (2) SAJA tidak cukup.</li>
+        <li><b>B.</b> Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi Pernyataan (1) SAJA tidak cukup.</li>
+        <li><b>C.</b> DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup.</li>
+        <li><b>D.</b> Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan Pernyataan (2) SAJA cukup.</li>
+        <li><b>E.</b> Pernyataan (1) dan Pernyataan (2) tidak cukup untuk menjawab pertanyaan.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Trigonometri</span><span>Aplikasi</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Suatu tangga dengan panjang 6 meter disandarkan pada dinding vertikal. Sudut yang dibentuk tangga dengan lantai adalah 60&deg;. Tinggi dinding yang disentuh ujung atas tangga adalah&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> 3 meter</li>
+        <li><b>B.</b> 3&radic;2 meter</li>
+        <li><b>C.</b> 3&radic;3 meter</li>
+        <li><b>D.</b> 4&radic;2 meter</li>
+        <li><b>E.</b> 4&radic;3 meter</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Data &amp; Peluang</span><span>Penalaran</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Rata-rata nilai ulangan 17 murid (skala 100) adalah 83. Ada 3 murid yang mengikuti ujian susulan sehingga rata-rata nilai ulangan dari 20 murid menjadi 82. Tentukan semua pernyataan berikut yang benar terkait nilai ketiga murid yang mengikuti ujian susulan! Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Jumlah nilai ketiga murid yang mengikuti ujian susulan adalah 229.</li>
+        <li><b>2.</b> Rata-rata nilai ketiga murid yang mengikuti ujian susulan lebih dari 70.</li>
+        <li><b>3.</b> Nilai terendah dari ketiga murid yang mengikuti ujian susulan tidak kurang dari 29.</li>
+        <li><b>4.</b> Nilai tertinggi dari ketiga murid yang mengikuti ujian susulan lebih dari 76.</li>
+        <li><b>5.</b> Jangkauan data nilai ketiga murid yang mengikuti ujian susulan lebih dari 72.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, 2, 3, dan 4</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Matematika paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-matematika-paket-1.html">Coba Tryout Matematika &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

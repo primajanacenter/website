@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Minat Pilih Mapel Premium &mdash; Siap TKA</title>
+<meta name="description" content="Kuesioner minat-bakat 13 aspek untuk menemukan 2 mata pelajaran pilihan TKA yang paling sesuai dengan dirimu, terhubung dengan data resmi Kepmendikdasmen 102/M/2025.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .hero h1{font-size:1.7rem;margin:0 0 8px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+  .pill-tka{font-size:.82rem;font-weight:600;padding:7px 14px;border-radius:999px;display:inline-block;background:var(--primary-light);color:var(--primary-dark);text-decoration:none;}
+  .pill-tka:hover{background:var(--primary);color:#fff;}
+
+  .progress-track{height:8px;background:var(--bg);border:1px solid var(--border);border-radius:999px;overflow:hidden;margin-bottom:22px;}
+  .progress-fill{height:100%;background:var(--primary);width:0%;transition:width .2s ease;}
+
+  .q-block{margin-bottom:28px;}
+  .q-block:last-child{margin-bottom:0;}
+  .q-num{font-size:.72rem;font-weight:700;color:var(--primary-dark);background:var(--primary-light);display:inline-block;padding:2px 9px;border-radius:999px;margin-bottom:8px;}
+  .q-text{font-weight:600;margin:0 0 12px;font-size:.98rem;}
+  .likert{display:flex;gap:8px;flex-wrap:wrap;}
+  .likert label{
+    flex:1;min-width:90px;display:flex;flex-direction:column;align-items:center;gap:6px;
+    border:1px solid var(--border);border-radius:10px;padding:10px 6px;cursor:pointer;
+    font-size:.74rem;color:var(--muted);text-align:center;font-weight:500;
+    background:var(--bg);
+  }
+  .likert input{accent-color:var(--primary);width:18px;height:18px;}
+  .likert label.checked{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark);font-weight:700;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-primary:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+
+  #hasilWrap{display:none;}
+  #hasilWrap.show{display:block;}
+  #formWrap.hide{display:none;}
+
+  .rank-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .rank-card:last-child{margin-bottom:0;}
+  .rank-card.top{border-color:var(--primary);background:var(--primary-light);}
+  .rank-left{display:flex;align-items:center;gap:12px;}
+  .rank-badge{width:34px;height:34px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:var(--primary-dark);flex:none;}
+  .rank-card.top .rank-badge{background:var(--primary);color:#fff;border-color:var(--primary);}
+  .rank-name{font-weight:700;font-size:.95rem;margin:0;}
+  .rank-bar-track{height:6px;width:120px;background:var(--surface);border-radius:999px;overflow:hidden;margin-top:4px;}
+  .rank-bar-fill{height:100%;background:var(--primary);}
+
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;margin-bottom:16px;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html" class="active">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <section class="card hero">
+    <span class="pill pill-premium">Premium</span>
+    <h1>Tes Minat Pilih Mapel</h1>
+    <p class="lead">Jawab 26 pernyataan berikut sejujur mungkin sesuai kebiasaan dan ketertarikanmu sehari-hari. Hasilnya akan menunjukkan 2 mata pelajaran pilihan TKA yang paling sesuai dengan minatmu, lengkap dengan rekomendasi rumpun program studi berdasarkan Kepmendikdasmen Nomor 102/M/2025.</p>
+  </section>
+
+  <section class="card section-card" id="formWrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <form id="quizForm"></form>
+    <div style="text-align:right;margin-top:8px;">
+      <button type="button" class="btn btn-primary" id="btnLihatHasil" disabled>Lihat Hasil &rarr;</button>
+    </div>
+  </section>
+
+  <section class="card section-card" id="hasilWrap">
+    <div class="section-title">Hasil Tes Minatmu</div>
+    <div class="kunci-box" id="hasilRingkasan"></div>
+    <div id="rankList"></div>
+    <div style="margin-top:20px;">
+      <button type="button" class="btn btn-ghost" id="btnUlangi">Ulangi Tes</button>
+    </div>
+  </section>
+
+  <div class="note-box">
+    Hasil tes ini adalah gambaran minat berdasarkan jawabanmu sendiri, bukan tes psikologi baku dan bukan jaminan keberhasilan di program studi tertentu. Gunakan sebagai bahan pertimbangan awal, lalu cek juga <a href="pilih-mapel.html">daftar resmi mata pelajaran pendukung program studi</a> dan diskusikan dengan guru BK atau orang tua sebelum menentukan pilihan akhir. Jawaban tersimpan otomatis di perangkatmu.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+var axes = [
+  {slug:"bahasa-indonesia-tingkat-lanjut", label:"Bahasa Indonesia Tingkat Lanjut", statements:[
+    "Saya senang membaca karya sastra (novel, cerpen, atau puisi) atau menulis esai/opini.",
+    "Saya tertarik menganalisis makna tersirat dalam sebuah teks atau karya sastra."
+  ]},
+  {slug:"bahasa-inggris-tingkat-lanjut", label:"Bahasa Inggris Tingkat Lanjut", statements:[
+    "Saya senang membaca artikel atau menonton konten berbahasa Inggris tanpa terjemahan.",
+    "Saya percaya diri berargumen atau berdiskusi topik yang kompleks dalam bahasa Inggris."
+  ]},
+  {slug:"matematika-tingkat-lanjut", label:"Matematika Tingkat Lanjut", statements:[
+    "Saya menikmati proses memecahkan soal matematika yang menantang.",
+    "Saya tertarik pada logika, pola bilangan, dan pembuktian matematis."
+  ]},
+  {slug:"fisika", label:"Fisika", statements:[
+    "Saya penasaran dengan cara kerja suatu alat atau fenomena alam secara mekanis.",
+    "Saya senang melakukan perhitungan dan eksperimen yang melibatkan besaran fisika."
+  ]},
+  {slug:"kimia", label:"Kimia", statements:[
+    "Saya tertarik dengan reaksi kimia dan proses di balik suatu produk (makanan, obat, kosmetik, dsb).",
+    "Saya senang melakukan percobaan laboratorium yang melibatkan zat dan reaksi kimia."
+  ]},
+  {slug:"biologi", label:"Biologi", statements:[
+    "Saya tertarik mempelajari makhluk hidup, tubuh manusia, atau ekosistem.",
+    "Saya senang mengamati dan meneliti fenomena alam hayati di sekitar saya."
+  ]},
+  {slug:"ekonomi", label:"Ekonomi", statements:[
+    "Saya senang mengikuti berita ekonomi, bisnis, atau keuangan.",
+    "Saya tertarik menganalisis bagaimana suatu usaha, pasar, atau kebijakan ekonomi bekerja."
+  ]},
+  {slug:"sosiologi", label:"Sosiologi", statements:[
+    "Saya senang mengamati interaksi dan dinamika sosial di lingkungan sekitar saya.",
+    "Saya tertarik memahami penyebab suatu masalah sosial dan mencari solusinya."
+  ]},
+  {slug:"antropologi", label:"Antropologi", statements:[
+    "Saya tertarik mempelajari budaya, tradisi, dan kebiasaan berbagai kelompok masyarakat.",
+    "Saya senang mengenal cara hidup masyarakat yang berbeda dari kebiasaan saya sendiri."
+  ]},
+  {slug:"sejarah", label:"Sejarah", statements:[
+    "Saya suka membaca atau menonton kisah tentang peristiwa masa lalu.",
+    "Saya tertarik memahami sebab-akibat suatu peristiwa sejarah dan pengaruhnya pada masa kini."
+  ]},
+  {slug:"geografi", label:"Geografi", statements:[
+    "Saya tertarik dengan peta, wilayah, dan fenomena alam suatu daerah.",
+    "Saya senang mempelajari isu lingkungan, cuaca, dan kebencanaan."
+  ]},
+  {slug:"pendidikan-pancasila", label:"Pendidikan Pancasila", statements:[
+    "Saya tertarik pada isu hukum, kewarganegaraan, atau jalannya pemerintahan.",
+    "Saya senang berdiskusi tentang nilai, norma, dan praktik demokrasi di masyarakat."
+  ]},
+  {slug:null, label:"Bahasa Asing (Prancis/Jerman/Jepang/Mandarin/Korea/Arab)", statements:[
+    "Saya tertarik mempelajari bahasa asing selain bahasa Inggris.",
+    "Saya senang mengenal budaya dari negara berbahasa asing tertentu (misalnya lewat musik, film, atau kuliner)."
+  ]}
+];
+
+var likertOptions = [
+  {v:1, l:"Sangat Tidak Setuju"},
+  {v:2, l:"Tidak Setuju"},
+  {v:3, l:"Netral"},
+  {v:4, l:"Setuju"},
+  {v:5, l:"Sangat Setuju"}
+];
+
+var form = document.getElementById("quizForm");
+var totalQuestions = 0;
+axes.forEach(function(ax){ totalQuestions += ax.statements.length; });
+var qCounter = 0;
+
+axes.forEach(function(ax, axIdx){
+  ax.statements.forEach(function(stmt, sIdx){
+    qCounter++;
+    var qName = "q_" + axIdx + "_" + sIdx;
+    var block = document.createElement("div");
+    block.className = "q-block";
+    var numEl = document.createElement("div");
+    numEl.className = "q-num";
+    numEl.textContent = "Pernyataan " + qCounter + " / " + totalQuestions;
+    var textEl = document.createElement("p");
+    textEl.className = "q-text";
+    textEl.textContent = stmt;
+    var likertEl = document.createElement("div");
+    likertEl.className = "likert";
+    likertOptions.forEach(function(opt){
+      var lbl = document.createElement("label");
+      var inp = document.createElement("input");
+      inp.type = "radio";
+      inp.name = qName;
+      inp.value = opt.v;
+      inp.addEventListener("change", onAnswerChange);
+      var span = document.createElement("span");
+      span.textContent = opt.l;
+      lbl.appendChild(inp);
+      lbl.appendChild(span);
+      likertEl.appendChild(lbl);
+    });
+    block.appendChild(numEl);
+    block.appendChild(textEl);
+    block.appendChild(likertEl);
+    form.appendChild(block);
+  });
+});
+
+var progressFill = document.getElementById("progressFill");
+var btnLihatHasil = document.getElementById("btnLihatHasil");
+
+function onAnswerChange(e){
+  var name = e.target.name;
+  var labels = form.querySelectorAll('input[name="' + name + '"]');
+  labels.forEach(function(inp){
+    inp.parentElement.classList.toggle("checked", inp.checked);
+  });
+  updateProgress();
+  saveAnswers();
+}
+
+function updateProgress(){
+  var answered = 0;
+  var allNames = [];
+  axes.forEach(function(ax, axIdx){
+    ax.statements.forEach(function(s, sIdx){ allNames.push("q_" + axIdx + "_" + sIdx); });
+  });
+  allNames.forEach(function(n){
+    if (form.querySelector('input[name="' + n + '"]:checked')) answered++;
+  });
+  var pct = Math.round((answered / totalQuestions) * 100);
+  progressFill.style.width = pct + "%";
+  btnLihatHasil.disabled = (answered < totalQuestions);
+}
+
+function saveAnswers(){
+  try{
+    var result = {};
+    var formData = new FormData(form);
+    formData.forEach(function(val, key){ result[key] = val; });
+    localStorage.setItem("siaptka_pilihmapel_premium", JSON.stringify(result));
+  }catch(e){}
+}
+
+function loadAnswers(){
+  try{
+    var saved = localStorage.getItem("siaptka_pilihmapel_premium");
+    if (!saved) return;
+    var result = JSON.parse(saved);
+    Object.keys(result).forEach(function(name){
+      var inp = form.querySelector('input[name="' + name + '"][value="' + result[name] + '"]');
+      if (inp){ inp.checked = true; inp.parentElement.classList.add("checked"); }
+    });
+    updateProgress();
+  }catch(e){}
+}
+loadAnswers();
+
+btnLihatHasil.addEventListener("click", function(){
+  var scores = axes.map(function(ax, axIdx){
+    var total = 0;
+    ax.statements.forEach(function(s, sIdx){
+      var inp = form.querySelector('input[name="q_' + axIdx + '_' + sIdx + '"]:checked');
+      total += inp ? parseInt(inp.value, 10) : 0;
+    });
+    var max = ax.statements.length * 5;
+    return {label: ax.label, slug: ax.slug, total: total, max: max, pct: Math.round((total / max) * 100)};
+  });
+  scores.sort(function(a, b){ return b.total - a.total; });
+
+  var top2 = scores.slice(0, 2);
+  var ringkasan = document.getElementById("hasilRingkasan");
+  ringkasan.textContent = "Rekomendasi 2 mata pelajaran pilihan: " + top2.map(function(s){ return s.label; }).join(" & ");
+
+  var rankList = document.getElementById("rankList");
+  rankList.innerHTML = "";
+  scores.forEach(function(s, i){
+    var card = document.createElement("div");
+    card.className = "rank-card" + (i < 2 ? " top" : "");
+    var left = document.createElement("div");
+    left.className = "rank-left";
+    var badge = document.createElement("div");
+    badge.className = "rank-badge";
+    badge.textContent = "#" + (i + 1);
+    var nameWrap = document.createElement("div");
+    var nameEl = document.createElement("p");
+    nameEl.className = "rank-name";
+    nameEl.textContent = s.label;
+    var barTrack = document.createElement("div");
+    barTrack.className = "rank-bar-track";
+    var barFill = document.createElement("div");
+    barFill.className = "rank-bar-fill";
+    barFill.style.width = s.pct + "%";
+    barTrack.appendChild(barFill);
+    nameWrap.appendChild(nameEl);
+    nameWrap.appendChild(barTrack);
+    left.appendChild(badge);
+    left.appendChild(nameWrap);
+    card.appendChild(left);
+    if (s.slug){
+      var a = document.createElement("a");
+      a.className = "pill pill-tka";
+      a.href = "mata-pelajaran-" + s.slug + ".html";
+      a.textContent = "Lihat Detail →";
+      card.appendChild(a);
+    } else {
+      var a2 = document.createElement("a");
+      a2.className = "pill pill-tka";
+      a2.href = "mata-pelajaran.html";
+      a2.textContent = "Pilih Bahasa →";
+      card.appendChild(a2);
+    }
+    rankList.appendChild(card);
+  });
+
+  document.getElementById("formWrap").classList.add("hide");
+  document.getElementById("hasilWrap").classList.add("show");
+  window.scrollTo(0, 0);
+});
+
+document.getElementById("btnUlangi").addEventListener("click", function(){
+  document.getElementById("hasilWrap").classList.remove("show");
+  document.getElementById("formWrap").classList.remove("hide");
+  window.scrollTo(0, 0);
+});
+</script>
+</body>
+</html>

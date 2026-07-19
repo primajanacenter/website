@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matematika Tingkat Lanjut &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, dan contoh soal resmi TKA Matematika Tingkat Lanjut SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.86rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:9px 12px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 8px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card ul{margin:0;padding-left:20px;font-size:.88rem;color:var(--text);}
+  .comp-card li{margin-bottom:6px;}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.86rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  /* notasi matriks & vektor sederhana, tanpa library eksternal */
+  .matrix{display:inline-table;border-left:2px solid currentColor;border-right:2px solid currentColor;padding:0 8px;margin:0 4px;vertical-align:middle;}
+  .matrix td{padding:2px 10px;text-align:center;font-size:.95em;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Matematika Tingkat Lanjut</h1>
+    <p class="lead">Sebagaimana TKA Matematika wajib, mata uji ini mengukur kemampuan memahami fakta, konsep, prinsip, dan prosedur matematika serta menerapkannya untuk menyelesaikan masalah &mdash; dengan cakupan materi yang lebih lanjut: matriks, polinomial, vektor, dan limit.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <table class="qtable">
+      <tr><th>Elemen</th><th>Sub-elemen</th><th>Cakupan / Batasan</th></tr>
+      <tr><td rowspan="3">Aljabar</td><td>Matriks</td><td>Determinan matriks, invers matriks, operasi matriks. Elemen matriks berupa bilangan real; determinan &amp; invers matriks berukuran 2&times;2 atau 3&times;3.</td></tr>
+      <tr><td>Polinomial</td><td>Operasi polinomial, pemfaktoran polinomial, suku sisa. Orde polinomial maksimum 4, koefisien berupa bilangan real.</td></tr>
+      <tr><td>Fungsi</td><td>Domain, kodomain, daerah hasil, dan grafik fungsi polinom, rasional, akar, eksponensial, logaritma, mutlak, trigonometri. Fungsi polinom maksimum orde 4; bilangan pokok fungsi eksponensial berupa bilangan asli.</td></tr>
+      <tr><td rowspan="3">Geometri &amp; Pengukuran</td><td>Vektor</td><td>Vektor pada bidang &amp; ruang, panjang vektor, operasi vektor. Komponen vektor maksimum tiga.</td></tr>
+      <tr><td>Lingkaran</td><td>Persamaan lingkaran &amp; persamaan garis singgung lingkaran; luas &amp; keliling daerah lingkaran atau bagiannya.</td></tr>
+      <tr><td>Transformasi Geometri</td><td>Transformasi (translasi, refleksi, rotasi, dilatasi, komposisinya) dari bentuk geometris dan matriks transformasinya. Bentuk geometris meliputi titik, garis, dan bangun datar.</td></tr>
+      <tr><td>Kalkulus</td><td>Limit</td><td>Limit fungsi aljabar dan limit fungsi trigonometri. Limit yang dapat diselesaikan tanpa Teorema L&rsquo;Hopital.</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Sama seperti Matematika wajib, kemampuan matematis diukur pada tiga level kognitif:</p>
+
+    <div class="comp-card">
+      <h3>1. Pengetahuan dan Pemahaman (Knowing and Understanding)</h3>
+      <ul>
+        <li><b>Menghitung</b> &mdash; melakukan perhitungan berdasarkan prosedur (operasi aritmatika, aljabar, atau operasi matematika lain).</li>
+        <li><b>Memahami informasi</b> &mdash; memahami informasi dari grafik fungsi, tabel, diagram, atau bentuk visual lain.</li>
+        <li><b>Mengelompokkan &amp; Mengidentifikasi</b> &mdash; berdasarkan fakta, konsep, dan prinsip matematika.</li>
+      </ul>
+    </div>
+    <div class="comp-card">
+      <h3>2. Aplikasi (Applying)</h3>
+      <ul>
+        <li><b>Memodelkan</b> permasalahan kontekstual ke dalam pernyataan matematika.</li>
+        <li><b>Menerapkan</b> strategi dan operasi matematika untuk permasalahan yang familiar dan rutin.</li>
+        <li><b>Menginterpretasikan</b> makna dari situasi, kejadian, atau representasi matematika.</li>
+      </ul>
+    </div>
+    <div class="comp-card">
+      <h3>3. Penalaran (Reasoning)</h3>
+      <ul>
+        <li><b>Menganalisis</b> hubungan beberapa konsep, fakta, prinsip, atau prosedur matematika.</li>
+        <li><b>Memecahkan masalah</b> dalam situasi baru atau konteks yang tidak rutin.</li>
+        <li><b>Mengevaluasi</b> alternatif strategi dan solusi dari suatu pemecahan masalah.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">6 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Aljabar &mdash; Matriks</span><span>Aplikasi</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">
+        Diketahui M =
+        <table class="matrix"><tr><td>2</td><td>5</td></tr><tr><td>1</td><td>3</td></tr></table>
+        dan M<sup>&minus;1</sup> melambangkan invers dari M. Berapakah nilai p dan q yang tepat memenuhi p&middot;M<sup>&minus;1</sup> = q&middot;
+        <table class="matrix"><tr><td>6</td><td>&minus;10</td></tr><tr><td>&minus;2</td><td>4</td></tr></table>
+        ? Pilih semua jawaban benar! Jawaban benar lebih dari satu.
+      </p>
+      <ul class="opsi-list">
+        <li><b>1.</b> p = 2 dan q = 1</li>
+        <li><b>2.</b> p = 3 dan q = 3</li>
+        <li><b>3.</b> p = 4 dan q = 2</li>
+        <li><b>4.</b> p = 5 dan q = 1</li>
+        <li><b>5.</b> p = 6 dan q = 3</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, 3, dan 5</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Aljabar &mdash; Fungsi</span><span>Penalaran</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Seorang murid memperkirakan banyaknya penonton suatu video (dalam ribuan) yang dibuat content creator A di media sosial mengikuti model f(t) = 3(2<sup>t</sup>), dengan t adalah banyaknya hari sejak video diunggah. Tentukan Benar atau Salah untuk setiap pernyataan berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Video tersebut hanya ditonton oleh 3.000 penonton setelah tepat 24 jam diunggah.</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>Banyaknya penonton video meningkat dua kali lipat dari hari sebelumnya untuk beberapa hari setelah diunggah.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Model banyaknya penonton ini tidak tepat untuk waktu yang cukup besar.</td><td style="text-align:center;">Benar</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Salah, Benar, Benar</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Geometri &amp; Pengukuran &mdash; Vektor</span><span>Aplikasi</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Diketahui <b>u</b>, <b>v</b>, dan <b>w</b> merupakan tiga vektor dengan <b>u</b> = (1, 1, &minus;1), <b>v</b> = (1, v<sub>1</sub>, 2), dan <b>w</b> = (0, w<sub>1</sub>, w<sub>2</sub>). Berapakah nilai v<sub>1</sub> dan w<sub>1</sub> yang mungkin sehingga memenuhi <b>w</b> = <b>u</b> &minus; <b>v</b>? Pilih semua jawaban benar! Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> v<sub>1</sub> = 0 dan w<sub>1</sub> = 1</li>
+        <li><b>2.</b> v<sub>1</sub> = 1 dan w<sub>1</sub> = 0</li>
+        <li><b>3.</b> v<sub>1</sub> = 1 dan w<sub>1</sub> = 2</li>
+        <li><b>4.</b> v<sub>1</sub> = 2 dan w<sub>1</sub> = &minus;1</li>
+        <li><b>5.</b> v<sub>1</sub> = 2 dan w<sub>1</sub> = 2</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, 2, dan 4</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Geometri &amp; Pengukuran &mdash; Transformasi</span><span>Aplikasi</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Segitiga PQR dengan titik P(&minus;1, 3), Q(3, 3), dan R(1, &minus;2) didilatasi dengan pusat titik (0,0) dan faktor skala 3. Luas segitiga tersebut setelah dilakukan dilatasi adalah &hellip; satuan luas.</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> 10</li>
+        <li><b>B.</b> 30</li>
+        <li><b>C.</b> 90</li>
+        <li><b>D.</b> 120</li>
+        <li><b>E.</b> 180</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Kalkulus &mdash; Limit</span><span>Aplikasi</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Diketahui f(x) = 2x untuk 0&lt;x&lt;1; f(x) = 1 untuk x=1; f(x) = 3&minus;x untuk 1&lt;x&le;3; f(x) = 1+(x&minus;3)<sup>2</sup> untuk x&gt;3. Tentukan Benar atau Salah untuk setiap pernyataan berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>lim<sub>x&rarr;1</sub> f(x) = 2</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>lim<sub>x&rarr;3</sub> f(x) = 0</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>lim<sub>x&rarr;4</sub> f(x) = 2</td><td style="text-align:center;">Benar</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Benar, Salah, Benar</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 6</span><span>Kalkulus &mdash; Limit</span><span>Aplikasi</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">lim<sub>x&rarr;&pi;</sub> [ sin(x&minus;&pi;) / (3(&pi;&minus;x)&middot;cos(4x)) ] = &hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> &minus;1/3</li>
+        <li><b>B.</b> 0</li>
+        <li><b>C.</b> 1/3</li>
+        <li><b>D.</b> 1</li>
+        <li><b>E.</b> 3</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: A</div>
+    </div>
+
+  </section>
+
+  <div class="note-box">Soal 1 dan Soal 3 pada dokumen asli menggunakan format kotak centang (bukan huruf A&ndash;E) karena bentuk soalnya Pilihan Ganda Kompleks Pilih Lebih dari Satu &mdash; di sini ditampilkan sebagai daftar bernomor.</div>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Matematika Tingkat Lanjut paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-matematika-tingkat-lanjut-paket-1.html">Coba Tryout &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahasa Indonesia Tingkat Lanjut &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, dan contoh soal resmi TKA Bahasa Indonesia Tingkat Lanjut SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 8px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card ul{margin:0;padding-left:20px;font-size:.88rem;color:var(--text);}
+  .comp-card li{margin-bottom:6px;}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .stimulus-box{background:var(--bg);border-left:3px solid var(--primary);padding:12px 16px;margin-bottom:14px;font-size:.86rem;color:var(--text);}
+  .stimulus-box p{margin:0 0 10px;}
+  .stimulus-box p:last-child{margin-bottom:0;}
+  .stimulus-source{font-size:.78rem;color:var(--muted);font-style:italic;}
+  .poem-box{background:var(--bg);border-left:3px solid var(--primary);padding:14px 18px;margin-bottom:14px;font-size:.9rem;font-style:italic;white-space:pre-line;}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.86rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Bahasa Indonesia Tingkat Lanjut</h1>
+    <p class="lead">Sebagaimana TKA Bahasa Indonesia wajib, mata uji ini juga difokuskan pada keterampilan membaca &mdash; dengan teks yang lebih kompleks dan mencakup ranah akademik, dunia kerja, serta sastra.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Keterampilan membaca diujikan pada teks informasi (tunggal maupun jamak) serta teks fiksi, dengan tingkat kompleksitas lebih tinggi dari versi wajib:</p>
+    <ul>
+      <li><b>Kosakata:</b> kata khusus dan umum, kata berimbuhan kompleks, kata abstrak, makna denotatif, istilah teknis, konotatif konteks luas, nuansa makna.</li>
+      <li><b>Kalimat:</b> kalimat kompleks berbagai pola, kalimat efektif, kalimat logis.</li>
+      <li><b>Wacana:</b> wacana yang kohesif dan koheren, konjungsi antarparagraf, penggunaan ejaan.</li>
+    </ul>
+    <p style="margin-bottom:0;">Panjang teks 300&ndash;350 kata (kecuali teks puisi).</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Sama seperti versi wajib, aspek yang diukur dikelompokkan ke dalam tiga kompetensi, dengan subkompetensi yang lebih menekankan konteks akademik, dunia kerja, dan sastra:</p>
+
+    <div class="comp-card">
+      <h3>1. Pemahaman Tekstual</h3>
+      <ul>
+        <li>Mengidentifikasi informasi dalam teks akademik.</li>
+        <li>Mengidentifikasi kalimat yang tepat untuk menyampaikan tanggapan, respons, dan kritik sesuai norma sosial dan budaya.</li>
+        <li>Mengidentifikasi kalimat yang tepat dalam pengajuan usulan, perumusan masalah, dan pemecahan masalah pada teks bidang akademik dan/atau dunia kerja.</li>
+        <li>Mengidentifikasi karakter, peristiwa, latar pada sastra Indonesia atau terjemahan.</li>
+      </ul>
+    </div>
+
+    <div class="comp-card">
+      <h3>2. Pemahaman Inferensial</h3>
+      <ul>
+        <li>Membandingkan nilai-nilai (budaya, sosial, moral, religius, dan/atau pendidikan) dalam karya sastra Indonesia dan/atau terjemahan.</li>
+        <li>Mengungkapkan kembali isi sastra Melayu Klasik.</li>
+        <li>Mengubah informasi dari tabel/grafik menjadi uraian atau sebaliknya, dalam bidang akademik dan/atau dunia kerja.</li>
+        <li>Menjelaskan ketepatan penggunaan bahasa, kiasan, dan/atau citraan dalam teks.</li>
+        <li>Menjelaskan ketepatan penggunaan afiks, konstruksi frasa, konstruksi klausa, dan/atau kalimat dalam teks.</li>
+        <li>Menjelaskan kohesi dan koherensi dalam teks ilmiah.</li>
+      </ul>
+    </div>
+
+    <div class="comp-card">
+      <h3>3. Evaluasi dan Apresiasi</h3>
+      <ul>
+        <li>Menilai gagasan dan pandangan dalam berbagai teks (digital atau cetak) berdasarkan kaidah logika berpikir.</li>
+        <li>Menilai ketepatan dan kesesuaian isi antarteks (digital atau cetak) dalam bidang sosial, akademik, dan dunia kerja.</li>
+        <li>Menilai gagasan atau tindakan tokoh berdasarkan norma atau nilai individu dan sosial.</li>
+        <li>Mengalihwahanakan puisi (Indonesia dan/atau terjemahan) dalam bentuk prosa.</li>
+        <li>Menyimpulkan respons emosional terhadap unsur puisi, prosa, dan drama Indonesia atau terjemahan.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">6 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="stimulus-box">
+      <p><b>Teks untuk soal 1 s.d. 3 &mdash; Proposal Kegiatan: Pemanfaatan Teknologi Digital untuk Meningkatkan Daya Saing UKM Pangan Lokal</b></p>
+      <p>Dalam beberapa tahun terakhir, perkembangan teknologi digital telah membuka peluang besar bagi pelaku Usaha Kecil dan Menengah (UKM), khususnya di sektor pangan lokal. Berdasarkan survei Dinas Koperasi dan UKM Provinsi Jawa Barat pada 2023, hanya 35% UKM pangan yang aktif menggunakan platform digital untuk pemasaran.</p>
+      <p>Seiring meningkatnya penggunaan internet, konsumen semakin bergeser ke transaksi daring. Oleh karena itu, kami mengajukan program pelatihan bertema &ldquo;Digitalisasi UKM Pangan Lokal&rdquo; yang bertujuan meningkatkan literasi digital, pemahaman e-commerce, serta keterampilan penggunaan dompet digital dan media sosial sebagai sarana promosi.</p>
+      <p>Berdasarkan data Bank Indonesia, nilai transaksi e-commerce Indonesia pada 2022 mencapai Rp476 triliun, 60% didominasi produk konsumsi rumah tangga termasuk pangan &mdash; menunjukkan kebutuhan peningkatan kapasitas pelaku UKM dalam mengakses ekosistem digital.</p>
+      <p class="stimulus-source">Sumber: www.pusedi.or.id/ecommerce-ukm2022, dengan penyesuaian oleh penulis soal</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Pemahaman Tekstual</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Dari pernyataan-pernyataan berikut, manakah yang mengungkapkan kesesuaian antara usulan program dan data pendukung sesuai teks proposal? Tentukan Sesuai atau Tidak Sesuai untuk setiap pernyataan!</p>
+      <table class="pernyataan-table">
+        <tr><th>Usulan Program &amp; Data Pendukung</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Usulan: Mengajukan program pelatihan digitalisasi bagi 100 pelaku UKM di tiga kabupaten. Data: Hanya 35% UKM pangan aktif menggunakan platform digital.</td><td style="text-align:center;">Sesuai</td></tr>
+        <tr><td>Usulan: Mengusulkan pelatihan e-commerce, promosi digital, dan penggunaan dompet digital. Data: Nilai transaksi e-commerce nasional Rp476 triliun, didominasi produk konsumsi termasuk pangan.</td><td style="text-align:center;">Sesuai</td></tr>
+        <tr><td>Usulan: Meminta Kementerian turun langsung ke lapangan sebelum menyetujui usulan. Data: Survei sudah menunjukkan kebutuhan pelatihan tanpa menyebut perlunya kunjungan langsung kementerian.</td><td style="text-align:center;">Tidak Sesuai</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Sesuai, Sesuai, Tidak Sesuai</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Pemahaman Inferensial</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Hubungan koherensi antara paragraf ke-2 dan ke-3 adalah&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> alasan pengajuan proposal yang diperinci dengan contoh UKM</li>
+        <li><b>B.</b> alasan pengajuan program pelatihan yang diperkuat tujuan</li>
+        <li><b>C.</b> akibat dari maraknya fenomena digitalisasi UKM di daerah</li>
+        <li><b>D.</b> akibat dari program literasi digital yang disertai tujuan</li>
+        <li><b>E.</b> alasan pengajuan proposal program dengan persyaratan</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Evaluasi dan Apresiasi</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Berdasarkan teks, manakah argumen yang logis? Tentukan Logis atau Tidak Logis untuk setiap argumen berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Argumen</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Program pelatihan penting karena teknologi digital pasti memperluas jejaring.</td><td style="text-align:center;">Tidak Logis</td></tr>
+        <tr><td>Digitalisasi dapat membantu UKM mengurangi biaya dan memperluas pasar.</td><td style="text-align:center;">Logis</td></tr>
+        <tr><td>Usulan program didasarkan pada data survei dan kebutuhan nyata di lapangan.</td><td style="text-align:center;">Logis</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Tidak Logis, Logis, Logis</div>
+    </div>
+
+    <div class="stimulus-box">
+      <p><b>Kutipan puisi untuk soal 4 s.d. 6 &mdash; &ldquo;Huesca&rdquo;</b></p>
+      <div class="poem-box">jiwa di dunia yang hilang jiwa
+jiwa sayang, kenangan padamu
+adalah derita di sisiku
+bayangan yang bikin tinjauan beku
+
+angin bangkit ketika senja
+ngingatkan musim gugur akan tiba
+aku cemas bisa kehilangan kau
+aku cemas pada kecemasanku sendiri
+
+di batu penghabisan ke Huesca
+batas terakhir dari kebanggaan kita
+kenanglah sayang, dengan mesra
+kau kubayangkan di sisiku ada
+
+dan jika untung malang menghamparkan
+aku dalam kuburan dangkal
+ingatlah sebisamu segala yang indah
+dan cintaku yang kekal</div>
+      <p class="stimulus-source">Puisi &ldquo;Huesca&rdquo; karya John Cornford, diterjemahkan oleh Chairil Anwar</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Pemahaman Inferensial</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">&ldquo;di batu penghabisan ke Huesca / batas terakhir dari kebanggaan kita&rdquo;<br>Makna kiasan <i>batu penghabisan</i> dan <i>batas terakhir</i> memperjelas kondisi yang dialami aku lirik (penyair) tentang&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> perpisahan antara penyair dengan orang yang dikasihi</li>
+        <li><b>B.</b> situasi kejiwaan yang penuh dinamika kehidupan</li>
+        <li><b>C.</b> setiap perjumpaan akan dibatasi dengan perpisahan</li>
+        <li><b>D.</b> semua ikhtiar harus dilakukan sampai batas kemampuan</li>
+        <li><b>E.</b> apa pun hasil akhirnya harus disikapi dengan kebanggaan</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: A</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Pemahaman Inferensial</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">&ldquo;angin bangkit ketika senja / ngingatkan musim gugur akan tiba&rdquo;<br>Makna citraan penglihatan <i>ketika senja</i> dan <i>musim gugur</i> mengkonkretkan gagasan penyair tentang&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> pergantian hari dan musim</li>
+        <li><b>B.</b> batas akhir aktivitas manusia</li>
+        <li><b>C.</b> suasana kedukaan di ujung waktu</li>
+        <li><b>D.</b> siap menghadapi perubahan waktu</li>
+        <li><b>E.</b> kondisi menjelang akhir kehidupan</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: E</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 6</span><span>Evaluasi dan Apresiasi</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">&ldquo;angin bangkit ketika senja / ngingatkan musim gugur akan tiba / aku cemas bisa kehilangan kau / aku cemas pada kecemasanku sendiri&rdquo;<br>Suasana hati yang muncul setelah membaca bait puisi tersebut adalah&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> keriangan hati saat musim gugur sudah tiba</li>
+        <li><b>B.</b> kemuraman saat senja hari di musim gugur</li>
+        <li><b>C.</b> keadaan gersang karena daun berguguran</li>
+        <li><b>D.</b> kesedihan karena takut kehilangan orang terkasih</li>
+        <li><b>E.</b> kebimbangan hati menunggu pergantian musim</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: D</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Bahasa Indonesia Tingkat Lanjut paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-bahasa-indonesia-tingkat-lanjut-paket-1.html">Coba Tryout &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

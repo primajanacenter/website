@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tryout Bahasa Inggris — Paket 2 | Siap TKA</title>
+<meta name="description" content="Latihan tryout Bahasa Inggris Paket 2 untuk persiapan TKA SMA/MA — soal pemahaman teks berbahasa Inggris, timer, skor otomatis, dan pembahasan lengkap.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --wrong:#dc2626;
+    --wrong-bg:#fef2f2;
+    --empty:#b45309;
+    --empty-bg:#fffbeb;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:900px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px;
+  }
+  .section-card{margin-top:18px;}
+  .section-title{font-size:1.05rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .screen{display:none;}
+  .screen.active{display:block;}
+
+  .hero h1{font-size:1.6rem;margin:0 0 8px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:.96rem;max-width:640px;}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0;}
+  .info-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .info-item .num{font-size:1.3rem;font-weight:800;color:var(--primary-dark);}
+  .info-item .lbl{font-size:.76rem;color:var(--muted);margin-top:2px;}
+
+  .rules{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:16px 18px;font-size:.86rem;color:var(--muted);margin:18px 0;}
+  .rules b{color:var(--text);}
+  .rules ul{margin:8px 0 0;padding-left:20px;}
+  .rules li{margin-bottom:4px;}
+
+  .topics-list{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+  .topic-chip{background:var(--primary-light);color:var(--primary-dark);font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:999px;}
+
+  .resume-banner{background:var(--empty-bg);border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:12px 16px;font-size:.86rem;margin:16px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:10px;cursor:pointer;text-decoration:none;font-size:.95rem;font-weight:600;padding:13px 22px;}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+  .btn-block{width:100%;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
+
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .timer{font-weight:800;font-size:1.05rem;background:var(--primary-light);color:var(--primary-dark);padding:8px 16px;border-radius:10px;}
+  .timer.low{background:var(--wrong-bg);color:var(--wrong);}
+  .progress-bar{background:var(--border);border-radius:999px;height:8px;overflow:hidden;margin-bottom:18px;}
+  .progress-bar .fill{background:var(--primary);height:100%;transition:width .2s ease;}
+
+  .quiz-layout{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media(min-width:760px){.quiz-layout{grid-template-columns:2.4fr 1fr;}}
+
+  .q-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
+  .q-index{font-weight:800;color:var(--primary-dark);}
+  .q-topic{background:var(--primary-light);color:var(--primary-dark);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;}
+  .q-type-badge{background:var(--bg);border:1px solid var(--border);font-size:.72rem;font-weight:600;color:var(--muted);padding:3px 10px;border-radius:999px;}
+  .q-hint{font-size:.78rem;color:var(--muted);margin:2px 0 12px;}
+  .q-text{font-size:.98rem;margin:0 0 14px;font-weight:600;}
+
+  .stimulus-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:16px;font-size:.9rem;color:var(--text);}
+  .stimulus-box .st-label{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;}
+  .stimulus-box p{margin:0 0 10px;}
+  .stimulus-box p:last-child{margin-bottom:0;}
+
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .option{border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:.9rem;cursor:pointer;display:flex;gap:10px;align-items:flex-start;background:var(--surface);}
+  .option:hover{border-color:var(--primary);}
+  .option .opt-mark{flex:none;width:22px;height:22px;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--muted);}
+  .option.mcma .opt-mark{border-radius:6px;}
+  .option.selected{border-color:var(--primary);background:var(--primary-light);}
+  .option.selected .opt-mark{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+  .pernyataan-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+  .statement-row{border-bottom:1px solid var(--border);}
+  .statement-row:last-child{border-bottom:none;}
+  .statement-text{padding:12px 8px 12px 0;text-align:left;vertical-align:middle;}
+  .statement-choices{padding:12px 0;white-space:nowrap;text-align:right;}
+  .choice-btn{border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;margin-left:6px;color:var(--muted);}
+  .choice-btn.active-true{background:var(--correct-bg);border-color:var(--correct);color:var(--correct);}
+  .choice-btn.active-false{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong);}
+
+  .nav-panel{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;align-self:start;}
+  .nav-panel h4{margin:0 0 10px;font-size:.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px;}
+  .nav-cell{aspect-ratio:1;border:1px solid var(--border);border-radius:7px;background:var(--surface);font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .nav-cell.answered{background:var(--correct-bg);border-color:var(--correct);color:var(--correct);}
+  .nav-cell.current{outline:2px solid var(--primary);outline-offset:1px;}
+
+  .quiz-nav-btns{display:flex;justify-content:space-between;gap:10px;margin-top:16px;}
+
+  .result-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:18px 0;}
+  .stat{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .stat .num{font-size:1.4rem;font-weight:800;color:var(--primary-dark);}
+  .stat .lbl{font-size:.74rem;color:var(--muted);margin-top:2px;}
+
+  .topic-bars{margin:18px 0;}
+  .topic-bar-row{margin-bottom:12px;}
+  .topic-bar-row .tb-label{display:flex;justify-content:space-between;font-size:.84rem;margin-bottom:4px;}
+  .bar-track{background:var(--border);border-radius:999px;height:8px;overflow:hidden;}
+  .bar-fill{background:var(--primary);height:100%;}
+
+  .review-item{border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;}
+  .review-item summary{padding:12px 14px;cursor:pointer;font-size:.88rem;font-weight:600;display:flex;gap:10px;align-items:center;list-style:none;}
+  .review-item summary::-webkit-details-marker{display:none;}
+  .review-body{padding:0 16px 16px;font-size:.88rem;}
+  .badge{font-size:.7rem;font-weight:800;padding:3px 9px;border-radius:999px;}
+  .badge.correct{background:var(--correct-bg);color:var(--correct);}
+  .badge.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .badge.empty{background:var(--empty-bg);color:var(--empty);}
+  .badge.typebadge{background:var(--bg);color:var(--muted);border:1px solid var(--border);}
+
+  .review-opts{display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+  .review-opt{border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:.86rem;}
+  .review-opt.is-correct{border-color:var(--correct);background:var(--correct-bg);}
+  .review-opt.is-wrong-pick{border-color:var(--wrong);background:var(--wrong-bg);}
+
+  .review-statement{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--border);padding:8px 0;font-size:.86rem;}
+  .review-statement:last-child{border-bottom:none;}
+  .st-correct{color:var(--correct);font-weight:700;}
+  .st-wrong{color:var(--wrong);font-weight:700;}
+
+  .pembahasan{background:var(--primary-light);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:.85rem;color:var(--primary-dark);}
+  .pembahasan b{display:block;margin-bottom:3px;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html" class="active">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <!-- SCREEN: INTRO -->
+  <section class="screen active" id="screen-intro">
+    <div class="card hero">
+      <span class="pill pill-premium">Premium</span>
+      <h1>Tryout Bahasa Inggris — Paket 2</h1>
+      <p class="lead">Latihan soal pemahaman teks berbahasa Inggris bergaya TKA: teks descriptive, narrative, recount, procedure, dan analytical exposition, dengan tiga bentuk soal (Pilihan Ganda, Pilihan Ganda Kompleks Pilih Lebih dari Satu, dan Pilihan Ganda Kompleks Kategori Benar/Salah).</p>
+
+      <div class="info-grid">
+        <div class="info-item"><div class="num">15</div><div class="lbl">Soal</div></div>
+        <div class="info-item"><div class="num">45:00</div><div class="lbl">Menit</div></div>
+        <div class="info-item"><div class="num">3</div><div class="lbl">Teks Bacaan</div></div>
+        <div class="info-item"><div class="num">2/6</div><div class="lbl">Paket</div></div>
+      </div>
+
+      <div class="topics-list" id="topics-list"></div>
+
+      <div class="rules">
+        <b>Sebelum mulai:</b>
+        <ul>
+          <li>Kerjakan dalam satu sesi tanpa jeda — timer berjalan mundur otomatis dan berhenti sendiri saat waktu habis.</li>
+          <li>Bacalah teks berbahasa Inggris pada setiap kelompok soal dengan saksama sebelum menjawab.</li>
+          <li>Skor menggunakan konvensi latihan mandiri (benar +4, salah &minus;1, tidak dijawab 0, skor maksimum 100) &mdash; <b>bukan</b> rumus penilaian resmi Kemendikdasmen.</li>
+          <li>Progres tersimpan otomatis di perangkat ini (localStorage). Kamu bisa melanjutkan jika sesi tertutup sebelum selesai.</li>
+        </ul>
+      </div>
+
+      <div class="resume-banner" id="resume-banner" style="display:none;">
+        <span>Ada sesi yang belum selesai. Lanjutkan dari soal terakhir?</span>
+        <span style="display:flex;gap:8px;">
+          <button class="btn btn-ghost" onclick="resetQuiz()">Mulai Ulang</button>
+          <button class="btn btn-primary" onclick="resumeQuiz()">Lanjutkan</button>
+        </span>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="start-btn" onclick="startQuiz()">Mulai Tryout</button>
+    </div>
+  </section>
+
+  <!-- SCREEN: QUIZ -->
+  <section class="screen" id="screen-quiz">
+    <div class="card">
+      <div class="quiz-top">
+        <div id="q-position" style="font-weight:700;color:var(--muted);font-size:.86rem;"></div>
+        <div class="timer" id="timer">--:--</div>
+      </div>
+      <div class="progress-bar"><div class="fill" id="progress-fill" style="width:0%;"></div></div>
+
+      <div class="quiz-layout">
+        <div id="question-host"></div>
+        <div class="nav-panel">
+          <h4>Navigasi Soal</h4>
+          <div class="nav-grid" id="nav-grid"></div>
+          <button class="btn btn-ghost btn-block" onclick="finishQuiz()">Selesai &amp; Lihat Skor</button>
+        </div>
+      </div>
+
+      <div class="quiz-nav-btns">
+        <button class="btn btn-ghost" id="prev-btn" onclick="goPrev()">&larr; Sebelumnya</button>
+        <button class="btn btn-primary" id="next-btn" onclick="goNext()">Selanjutnya &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN: RESULT -->
+  <section class="screen" id="screen-result">
+    <div class="card">
+      <div class="section-title">Hasil Tryout — Paket 2</div>
+      <div class="result-summary" id="result-summary"></div>
+      <div class="topic-bars" id="topic-bars"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-ghost" onclick="resetQuiz()">Ulangi Paket Ini</button>
+        <a class="btn btn-primary" href="tryout.html">Kembali ke Daftar Tryout</a>
+      </div>
+    </div>
+    <div class="card section-card">
+      <div class="section-title">Pembahasan Tiap Soal</div>
+      <div id="review-host"></div>
+    </div>
+  </section>
+
+  <div class="note-box">
+    Skor pada tryout ini adalah alat bantu latihan mandiri dan tidak merepresentasikan nilai resmi TKA. Materi mata pelajaran lengkap tersedia di halaman <a href="mata-pelajaran-bahasa-inggris.html">Bahasa Inggris</a>.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+var STORAGE_KEY = "tka_bing_paket2_v1";
+var DURATION_SECONDS = 2700;
+var TOPICS = ["Pemahaman Tekstual", "Pemahaman Inferensial", "Evaluasi dan Apresiasi"];
+
+var QUESTIONS = [
+  {
+    "topic": "Pemahaman Tekstual",
+    "type": "single",
+    "stimulus": "Making a fruit smoothie at home is quick and does not require any special cooking skills. First, gather your ingredients: one ripe banana, a cup of frozen strawberries, half a cup of plain yogurt, and half a cup of milk. You can also add a spoonful of honey if you prefer a sweeter taste.\n\nNext, peel the banana and cut it into smaller pieces so it blends more easily. Place the banana, frozen strawberries, yogurt, and milk into a blender. Make sure the lid is closed tightly before you start blending, since spilled liquid can be messy and slippery on the kitchen floor.\n\nBlend the mixture on medium speed for about thirty seconds, then check the texture. If the smoothie looks too thick, add a little more milk and blend again for ten more seconds. If it looks too thin, add a few more frozen strawberries instead of ice, so the smoothie does not become watery.\n\nFinally, pour the smoothie into a glass and enjoy it immediately, since fruit smoothies taste best when they are freshly made and still cold.",
+    "text": "According to the text, what should you do if the smoothie looks too thick?",
+    "options": [
+      "Add more frozen strawberries",
+      "Add a little more milk and blend again",
+      "Add more honey",
+      "Pour it into a glass immediately",
+      "Blend it for another thirty seconds without adding anything"
+    ],
+    "answer": 1,
+    "pembahasan": "Teks menyebutkan &ldquo;If the smoothie looks too thick, add a little more milk and blend again for ten more seconds&rdquo;."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "single",
+    "stimulus": null,
+    "text": "Why does the text suggest closing the blender lid tightly before blending?",
+    "options": [
+      "To make the smoothie taste sweeter",
+      "To prevent the liquid from spilling and making a mess",
+      "To make the blending process faster",
+      "To keep the smoothie cold for longer",
+      "To avoid using too much fruit"
+    ],
+    "answer": 1,
+    "pembahasan": "Teks menyebutkan &ldquo;spilled liquid can be messy and slippery on the kitchen floor&rdquo; sebagai alasan menutup blender dengan rapat."
+  },
+  {
+    "topic": "Pemahaman Tekstual",
+    "type": "mcma",
+    "stimulus": null,
+    "text": "According to the text, which ingredients are used to make the smoothie? Choose all that apply.",
+    "options": [
+      "A ripe banana",
+      "Frozen strawberries",
+      "Plain yogurt",
+      "Fresh orange juice",
+      "Ice cubes"
+    ],
+    "answer": [
+      0,
+      1,
+      2
+    ],
+    "pembahasan": "Bahan yang disebutkan dalam teks adalah pisang matang, stroberi beku, dan yoghurt plain (serta susu). Jus jeruk segar dan es batu tidak disebutkan dalam resep ini."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "category",
+    "stimulus": null,
+    "text": "Determine whether each statement is True or False based on the text!",
+    "statements": [
+      {
+        "text": "The text recommends adding ice instead of frozen strawberries if the smoothie is too thin.",
+        "correct": false
+      },
+      {
+        "text": "The banana should be cut into smaller pieces before blending.",
+        "correct": true
+      },
+      {
+        "text": "The smoothie should be drunk immediately after it is made.",
+        "correct": true
+      }
+    ],
+    "pembahasan": "Teks justru menyarankan menambah stroberi beku, bukan es, agar smoothie tidak menjadi encer (pernyataan 1 salah); pisang dipotong lebih kecil agar mudah diblender (pernyataan 2 benar); smoothie disarankan diminum segera selagi dingin (pernyataan 3 benar)."
+  },
+  {
+    "topic": "Evaluasi dan Apresiasi",
+    "type": "single",
+    "stimulus": null,
+    "text": "What type of text is this passage, based on its structure and purpose?",
+    "options": [
+      "A narrative telling a personal story",
+      "A procedure text explaining how to do something step by step",
+      "A descriptive text about a place",
+      "An analytical exposition arguing an opinion",
+      "A recount of a past event"
+    ],
+    "answer": 1,
+    "pembahasan": "Teks berisi langkah-langkah berurutan (bahan, mencampur, memblender, menyajikan) yang merupakan ciri khas teks prosedur."
+  },
+  {
+    "topic": "Pemahaman Tekstual",
+    "type": "single",
+    "stimulus": "It was almost nine in the evening when the lights suddenly went out across the entire neighborhood. Rani, who had been finishing her homework at the kitchen table, sat frozen in the darkness for a moment before remembering where her mother kept the flashlight.\n\nShe carefully made her way to the drawer under the television, feeling along the wall to avoid bumping into furniture. Just as her fingers found the flashlight, she heard a soft knock at the front door. It was her neighbor, Pak Joko, holding a candle and asking if her family was alright.\n\nRani explained that her parents were still at work and would not be home for another hour. Pak Joko offered to wait with her until either the power returned or her parents arrived, not wanting her to stay alone in the dark. Grateful for the company, Rani made two cups of warm tea using the last of the hot water in the thermos.\n\nThey sat together at the kitchen table, talking quietly by candlelight, until the lights flickered back on almost forty minutes later, followed shortly by the sound of her parents' car pulling into the driveway.",
+    "text": "What did Rani do immediately after the power went out?",
+    "options": [
+      "She called her parents",
+      "She went to find a flashlight",
+      "She knocked on her neighbor's door",
+      "She made tea for herself",
+      "She waited outside the house"
+    ],
+    "answer": 1,
+    "pembahasan": "Teks menyebutkan Rani teringat &ldquo;where her mother kept the flashlight&rdquo; dan segera mencarinya."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "single",
+    "stimulus": null,
+    "text": "What can be inferred about Pak Joko's character from his actions in the story?",
+    "options": [
+      "He is inconsiderate and only thinks about himself",
+      "He is caring and concerned about his neighbor's safety",
+      "He is afraid of the dark",
+      "He dislikes spending time with children",
+      "He is impatient and easily annoyed"
+    ],
+    "answer": 1,
+    "pembahasan": "Pak Joko datang membawa lilin dan menawarkan menemani Rani agar tidak sendirian dalam gelap, menunjukkan kepeduliannya."
+  },
+  {
+    "topic": "Pemahaman Tekstual",
+    "type": "mcma",
+    "stimulus": null,
+    "text": "According to the text, which of the following statements are true? Choose all that apply.",
+    "options": [
+      "The power outage happened at almost nine in the evening.",
+      "Rani's parents were already at home when the lights went out.",
+      "Pak Joko brought a candle when he visited.",
+      "Rani made tea while waiting for the power to return.",
+      "The lights came back on before Pak Joko arrived."
+    ],
+    "answer": [
+      0,
+      2,
+      3
+    ],
+    "pembahasan": "Teks menyebutkan pemadaman terjadi hampir jam sembilan malam, Pak Joko membawa lilin, dan Rani membuat teh. Orang tua Rani justru masih bekerja (belum pulang), dan lampu menyala kembali setelah Pak Joko datang, bukan sebelumnya."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "category",
+    "stimulus": null,
+    "text": "Determine whether each statement is True or False based on the text!",
+    "statements": [
+      {
+        "text": "Rani was left completely alone with no one to accompany her during the outage.",
+        "correct": false
+      },
+      {
+        "text": "The power returned before Rani's parents arrived home.",
+        "correct": true
+      },
+      {
+        "text": "Rani felt annoyed by Pak Joko's visit and wanted him to leave.",
+        "correct": false
+      }
+    ],
+    "pembahasan": "Pak Joko menemani Rani sehingga ia tidak sendirian (pernyataan 1 salah); lampu menyala kembali sekitar empat puluh menit kemudian, sebelum mobil orang tuanya terdengar tiba (pernyataan 2 benar); Rani justru bersyukur atas kehadiran Pak Joko (pernyataan 3 salah)."
+  },
+  {
+    "topic": "Evaluasi dan Apresiasi",
+    "type": "single",
+    "stimulus": null,
+    "text": "What is the main theme of this story?",
+    "options": [
+      "The danger of living without electricity",
+      "The importance of neighborly kindness during difficult moments",
+      "The struggle of doing homework without light",
+      "The conflict between neighbors over noise",
+      "The excitement of unexpected events at night"
+    ],
+    "answer": 1,
+    "pembahasan": "Kisah ini berpusat pada kebaikan tetangga (Pak Joko) yang menemani Rani saat listrik padam, menonjolkan tema kepedulian antartetangga."
+  },
+  {
+    "topic": "Pemahaman Tekstual",
+    "type": "single",
+    "stimulus": "The question of whether students should be allowed to bring mobile phones into classrooms has become a common topic of debate among teachers, parents, and education policymakers. Those who support allowing phones argue that they can be valuable learning tools when used properly.\n\nSupporters point out that smartphones give students quick access to information, dictionaries, and educational applications that can support classroom activities. In some schools, teachers even use interactive quiz applications that require students to use their phones during lessons, making the learning process more engaging.\n\nOn the other hand, many educators worry that phones are more often a source of distraction than a learning aid. Students may secretly check social media, play games, or exchange messages instead of paying attention to the lesson, especially when the teacher is not actively monitoring them.\n\nFurthermore, some studies suggest that constant phone notifications can reduce students' ability to concentrate for long periods, even when the phone itself is not being used actively during class.\n\nConsidering both the benefits and the risks, many schools have chosen a middle path: allowing phone use only during specific activities approved by the teacher, while keeping phones away during regular instruction time.",
+    "text": "According to the text, why do some teachers use interactive quiz applications?",
+    "options": [
+      "To reduce the amount of homework given to students",
+      "To make the learning process more engaging by involving phone use",
+      "To punish students who misuse their phones",
+      "To replace textbooks completely",
+      "To test students' typing speed"
+    ],
+    "answer": 1,
+    "pembahasan": "Teks menyebutkan aplikasi kuis interaktif digunakan agar &ldquo;the learning process more engaging&rdquo;."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "single",
+    "stimulus": null,
+    "text": "What can be inferred about the writer's overall position on this issue?",
+    "options": [
+      "The writer strongly believes phones should be completely banned",
+      "The writer strongly believes phones should always be allowed without restriction",
+      "The writer presents both sides and suggests a balanced approach",
+      "The writer avoids giving any information about the topic",
+      "The writer believes only teachers should be allowed to use phones"
+    ],
+    "answer": 2,
+    "pembahasan": "Teks memaparkan argumen pendukung dan penentang secara seimbang, lalu menyimpulkan bahwa banyak sekolah memilih jalan tengah."
+  },
+  {
+    "topic": "Pemahaman Tekstual",
+    "type": "mcma",
+    "stimulus": null,
+    "text": "According to the text, which of the following are mentioned as arguments in favor of allowing phones in class? Choose all that apply.",
+    "options": [
+      "Quick access to information and dictionaries",
+      "Reduced need for teachers in the classroom",
+      "Support for educational applications and interactive quizzes",
+      "Guaranteed improvement in exam scores",
+      "Access to educational applications that support classroom activities"
+    ],
+    "answer": [
+      0,
+      2,
+      4
+    ],
+    "pembahasan": "Teks menyebutkan akses cepat ke informasi/kamus, dukungan aplikasi kuis interaktif, dan aplikasi edukasi sebagai argumen pendukung. Teks tidak menyebutkan pengurangan kebutuhan guru maupun jaminan peningkatan nilai ujian."
+  },
+  {
+    "topic": "Evaluasi dan Apresiasi",
+    "type": "category",
+    "stimulus": null,
+    "text": "Determine whether each statement is True or False based on the text!",
+    "statements": [
+      {
+        "text": "The text argues that mobile phones have no benefits in the classroom at all.",
+        "correct": false
+      },
+      {
+        "text": "Some studies suggest that phone notifications can reduce students' concentration.",
+        "correct": true
+      },
+      {
+        "text": "Many schools have decided to allow phone use only during teacher-approved activities.",
+        "correct": true
+      }
+    ],
+    "pembahasan": "Teks justru menyebutkan manfaat ponsel sebagai alat belajar (pernyataan 1 salah); notifikasi ponsel disebut dapat mengurangi konsentrasi (pernyataan 2 benar); banyak sekolah memilih mengizinkan ponsel hanya untuk aktivitas yang disetujui guru (pernyataan 3 benar)."
+  },
+  {
+    "topic": "Evaluasi dan Apresiasi",
+    "type": "single",
+    "stimulus": null,
+    "text": "What is the writer's purpose in presenting this text?",
+    "options": [
+      "To tell a personal story about using a phone in school",
+      "To give step-by-step instructions for using educational apps",
+      "To discuss both sides of an issue and present a balanced conclusion",
+      "To describe the physical features of a classroom",
+      "To persuade readers that all technology should be banned in schools"
+    ],
+    "answer": 2,
+    "pembahasan": "Teks bersifat analytical exposition yang membahas dua sisi argumen (mendukung dan menentang) lalu menutup dengan pendekatan seimbang."
+  }
+];
+
+var state = {
+  current: 0,
+  answers: {},
+  endTimestamp: null,
+  finished: false
+};
+var timerInterval = null;
+
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){}
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+function renderTopicsList(){
+  var host = document.getElementById("topics-list");
+  host.innerHTML = "";
+  TOPICS.forEach(function(t){
+    var span = document.createElement("span");
+    span.className = "topic-chip";
+    span.textContent = t;
+    host.appendChild(span);
+  });
+}
+renderTopicsList();
+
+(function init(){
+  var saved = loadState();
+  if(saved && !saved.finished && saved.endTimestamp && saved.endTimestamp > Date.now()){
+    document.getElementById("resume-banner").style.display = "flex";
+  } else if(saved){
+    clearState();
+  }
+})();
+
+function startQuiz(){
+  state = {
+    current: 0,
+    answers: {},
+    endTimestamp: Date.now() + DURATION_SECONDS * 1000,
+    finished: false
+  };
+  saveState();
+  showScreen("quiz");
+  buildNavGrid();
+  renderQuestion(0);
+  startTimer();
+}
+
+function resumeQuiz(){
+  var saved = loadState();
+  if(!saved){ startQuiz(); return; }
+  state = saved;
+  showScreen("quiz");
+  buildNavGrid();
+  renderQuestion(state.current);
+  startTimer();
+}
+
+function resetQuiz(){
+  clearState();
+  document.getElementById("resume-banner").style.display = "none";
+  if(timerInterval) clearInterval(timerInterval);
+  showScreen("intro");
+}
+
+function showScreen(name){
+  ["intro","quiz","result"].forEach(function(s){
+    document.getElementById("screen-"+s).classList.toggle("active", s===name);
+  });
+}
+
+function startTimer(){
+  if(timerInterval) clearInterval(timerInterval);
+  tick();
+  timerInterval = setInterval(tick, 1000);
+}
+function tick(){
+  var remain = Math.max(0, Math.round((state.endTimestamp - Date.now())/1000));
+  var m = Math.floor(remain/60), s = remain%60;
+  var el = document.getElementById("timer");
+  el.textContent = (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+  el.classList.toggle("low", remain <= 120);
+  if(remain <= 0){
+    clearInterval(timerInterval);
+    finishQuiz();
+  }
+}
+
+function buildNavGrid(){
+  var grid = document.getElementById("nav-grid");
+  grid.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var cell = document.createElement("div");
+    cell.className = "nav-cell";
+    cell.textContent = (i+1);
+    cell.onclick = function(){ renderQuestion(i); };
+    grid.appendChild(cell);
+  });
+  refreshNavGrid();
+}
+function refreshNavGrid(){
+  var cells = document.querySelectorAll("#nav-grid .nav-cell");
+  cells.forEach(function(cell, i){
+    cell.classList.toggle("answered", isAnswered(i));
+    cell.classList.toggle("current", i === state.current);
+  });
+}
+function isAnswered(i){
+  var a = state.answers[i];
+  if(a === undefined || a === null) return false;
+  var q = QUESTIONS[i];
+  if(q.type === "single") return a !== null && a !== undefined;
+  if(q.type === "mcma") return Array.isArray(a) && a.length > 0;
+  if(q.type === "category") return Array.isArray(a) && a.some(function(v){ return v !== null && v !== undefined; });
+  return false;
+}
+
+function renderQuestion(i){
+  state.current = i;
+  saveState();
+  var q = QUESTIONS[i];
+  var host = document.getElementById("question-host");
+  document.getElementById("q-position").textContent = "Soal " + (i+1) + " dari " + QUESTIONS.length;
+  document.getElementById("progress-fill").style.width = Math.round(((i+1)/QUESTIONS.length)*100) + "%";
+
+  var typeLabel = q.type === "single" ? "Pilihan Ganda" : (q.type === "mcma" ? "PGK &mdash; Pilih Lebih dari Satu" : "PGK &mdash; Kategori Benar/Salah");
+
+  var html = "";
+  html += '<div class="q-meta"><span class="q-index">Soal ' + (i+1) + '</span><span class="q-topic">' + q.topic + '</span><span class="q-type-badge">' + typeLabel + '</span></div>';
+  if(q.hint){ html += '<div class="q-hint">' + q.hint + '</div>'; }
+  if(q.stimulus){
+    html += '<div class="stimulus-box"><div class="st-label">Reading Text</div>';
+    q.stimulus.split("\n\n").forEach(function(p){ html += "<p>" + p + "</p>"; });
+    html += '</div>';
+  }
+  html += '<div class="q-text">' + q.text + '</div>';
+
+  if(q.type === "single"){
+    html += '<div class="options" id="opts-host"></div>';
+  } else if(q.type === "mcma"){
+    html += '<div class="options" id="opts-host"></div>';
+  } else if(q.type === "category"){
+    html += '<table class="pernyataan-table"><tbody id="opts-host"></tbody></table>';
+  }
+
+  host.innerHTML = html;
+
+  var optsHost = document.getElementById("opts-host");
+  var marks = ["A","B","C","D","E"];
+
+  if(q.type === "single"){
+    q.options.forEach(function(opt, oi){
+      var div = document.createElement("div");
+      div.className = "option" + (state.answers[i] === oi ? " selected" : "");
+      div.innerHTML = '<span class="opt-mark">' + marks[oi] + '</span><span>' + opt + '</span>';
+      div.onclick = function(){
+        state.answers[i] = oi;
+        saveState();
+        renderQuestion(i);
+        refreshNavGrid();
+      };
+      optsHost.appendChild(div);
+    });
+  } else if(q.type === "mcma"){
+    var current = Array.isArray(state.answers[i]) ? state.answers[i] : [];
+    q.options.forEach(function(opt, oi){
+      var div = document.createElement("div");
+      div.className = "option mcma" + (current.indexOf(oi) > -1 ? " selected" : "");
+      div.innerHTML = '<span class="opt-mark">' + marks[oi] + '</span><span>' + opt + '</span>';
+      div.onclick = function(){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : [];
+        var idx = arr.indexOf(oi);
+        if(idx > -1){ arr.splice(idx,1); } else { arr.push(oi); }
+        state.answers[i] = arr;
+        saveState();
+        renderQuestion(i);
+        refreshNavGrid();
+      };
+      optsHost.appendChild(div);
+    });
+  } else if(q.type === "category"){
+    var cur = Array.isArray(state.answers[i]) ? state.answers[i] : q.statements.map(function(){ return null; });
+    q.statements.forEach(function(st, si){
+      var tr = document.createElement("tr");
+      tr.className = "statement-row";
+      var td1 = document.createElement("td");
+      td1.className = "statement-text";
+      td1.textContent = st.text;
+      var td2 = document.createElement("td");
+      td2.className = "statement-choices";
+      var btnTrue = document.createElement("button");
+      btnTrue.className = "choice-btn" + (cur[si] === true ? " active-true" : "");
+      btnTrue.textContent = "Benar";
+      btnTrue.onclick = function(){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : q.statements.map(function(){ return null; });
+        arr[si] = true;
+        state.answers[i] = arr;
+        saveState();
+        renderQuestion(i);
+        refreshNavGrid();
+      };
+      var btnFalse = document.createElement("button");
+      btnFalse.className = "choice-btn" + (cur[si] === false ? " active-false" : "");
+      btnFalse.textContent = "Salah";
+      btnFalse.onclick = function(){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : q.statements.map(function(){ return null; });
+        arr[si] = false;
+        state.answers[i] = arr;
+        saveState();
+        renderQuestion(i);
+        refreshNavGrid();
+      };
+      td2.appendChild(btnTrue);
+      td2.appendChild(btnFalse);
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      optsHost.appendChild(tr);
+    });
+  }
+
+  document.getElementById("prev-btn").disabled = (i === 0);
+  document.getElementById("next-btn").textContent = (i === QUESTIONS.length - 1) ? "Selesai →" : "Selanjutnya →";
+  document.getElementById("next-btn").onclick = (i === QUESTIONS.length - 1) ? finishQuiz : goNext;
+
+  refreshNavGrid();
+}
+
+function goNext(){
+  if(state.current < QUESTIONS.length - 1){ renderQuestion(state.current + 1); }
+}
+function goPrev(){
+  if(state.current > 0){ renderQuestion(state.current - 1); }
+}
+
+function isSingleCorrect(q, a){ return a === q.answer; }
+function isMcmaCorrect(q, a){
+  if(!Array.isArray(a)) return false;
+  var sortedA = a.slice().sort();
+  var sortedB = q.answer.slice().sort();
+  if(sortedA.length !== sortedB.length) return false;
+  for(var k=0;k<sortedA.length;k++){ if(sortedA[k] !== sortedB[k]) return false; }
+  return true;
+}
+function isCategoryCorrect(q, a){
+  if(!Array.isArray(a)) return false;
+  for(var k=0;k<q.statements.length;k++){
+    if(a[k] !== q.statements[k].correct) return false;
+  }
+  return true;
+}
+
+function scoreQuestion(i){
+  var q = QUESTIONS[i];
+  var a = state.answers[i];
+  if(!isAnswered(i)) return 0;
+  var correct = false;
+  if(q.type === "single") correct = isSingleCorrect(q, a);
+  else if(q.type === "mcma") correct = isMcmaCorrect(q, a);
+  else if(q.type === "category") correct = isCategoryCorrect(q, a);
+  return correct ? 4 : -1;
+}
+
+function finishQuiz(){
+  if(timerInterval) clearInterval(timerInterval);
+  state.finished = true;
+  saveState();
+  showScreen("result");
+  renderResult();
+}
+
+function renderResult(){
+  var totalRaw = 0, maxRaw = QUESTIONS.length * 4;
+  var nCorrect = 0, nWrong = 0, nEmpty = 0;
+  var topicStats = {};
+  TOPICS.forEach(function(t){ topicStats[t] = {correct:0, total:0}; });
+
+  QUESTIONS.forEach(function(q, i){
+    var s = scoreQuestion(i);
+    totalRaw += s;
+    if(!isAnswered(i)){ nEmpty++; }
+    else if(s > 0){ nCorrect++; }
+    else { nWrong++; }
+    topicStats[q.topic].total++;
+    if(isAnswered(i) && s > 0){ topicStats[q.topic].correct++; }
+  });
+
+  var scoreNorm = Math.max(0, Math.round((totalRaw / maxRaw) * 100));
+
+  var summary = document.getElementById("result-summary");
+  summary.innerHTML =
+    '<div class="stat"><div class="num">' + scoreNorm + '</div><div class="lbl">Skor (0&ndash;100)</div></div>' +
+    '<div class="stat"><div class="num">' + nCorrect + '</div><div class="lbl">Benar</div></div>' +
+    '<div class="stat"><div class="num">' + nWrong + '</div><div class="lbl">Salah</div></div>' +
+    '<div class="stat"><div class="num">' + nEmpty + '</div><div class="lbl">Kosong</div></div>';
+
+  var bars = document.getElementById("topic-bars");
+  bars.innerHTML = "";
+  TOPICS.forEach(function(t){
+    var st = topicStats[t];
+    var pct = st.total ? Math.round((st.correct/st.total)*100) : 0;
+    var row = document.createElement("div");
+    row.className = "topic-bar-row";
+    row.innerHTML = '<div class="tb-label"><span>' + t + '</span><span>' + st.correct + '/' + st.total + '</span></div><div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;"></div></div>';
+    bars.appendChild(row);
+  });
+
+  renderReview();
+}
+
+function renderReview(){
+  var host = document.getElementById("review-host");
+  host.innerHTML = "";
+  var marks = ["A","B","C","D","E"];
+  QUESTIONS.forEach(function(q, i){
+    var a = state.answers[i];
+    var answered = isAnswered(i);
+    var s = scoreQuestion(i);
+    var badgeClass = !answered ? "empty" : (s > 0 ? "correct" : "wrong");
+    var badgeLabel = !answered ? "Kosong" : (s > 0 ? "Benar" : "Salah");
+
+    var det = document.createElement("details");
+    det.className = "review-item";
+    var summaryHtml = '<summary><span class="badge ' + badgeClass + '">' + badgeLabel + '</span><span class="badge typebadge">' + q.topic + '</span><span>Soal ' + (i+1) + '</span></summary>';
+
+    var bodyHtml = '<div class="review-body">';
+    if(q.stimulus){
+      bodyHtml += '<div class="stimulus-box"><div class="st-label">Reading Text</div>';
+      q.stimulus.split("\n\n").forEach(function(p){ bodyHtml += "<p>" + p + "</p>"; });
+      bodyHtml += '</div>';
+    }
+    bodyHtml += '<div class="q-text">' + q.text + '</div>';
+
+    if(q.type === "single"){
+      bodyHtml += '<div class="review-opts">';
+      q.options.forEach(function(opt, oi){
+        var cls = "review-opt";
+        if(oi === q.answer) cls += " is-correct";
+        else if(a === oi) cls += " is-wrong-pick";
+        bodyHtml += '<div class="' + cls + '">' + marks[oi] + '. ' + opt + '</div>';
+      });
+      bodyHtml += '</div>';
+    } else if(q.type === "mcma"){
+      bodyHtml += '<div class="review-opts">';
+      q.options.forEach(function(opt, oi){
+        var cls = "review-opt";
+        var isCorrectOpt = q.answer.indexOf(oi) > -1;
+        var wasPicked = Array.isArray(a) && a.indexOf(oi) > -1;
+        if(isCorrectOpt) cls += " is-correct";
+        else if(wasPicked) cls += " is-wrong-pick";
+        bodyHtml += '<div class="' + cls + '">' + marks[oi] + '. ' + opt + '</div>';
+      });
+      bodyHtml += '</div>';
+    } else if(q.type === "category"){
+      bodyHtml += '<div>';
+      q.statements.forEach(function(st, si){
+        var picked = Array.isArray(a) ? a[si] : null;
+        var pickedLabel = picked === true ? "Benar" : (picked === false ? "Salah" : "Tidak dijawab");
+        var correctLabel = st.correct ? "Benar" : "Salah";
+        var ok = picked === st.correct;
+        bodyHtml += '<div class="review-statement"><span>' + st.text + '</span><span class="' + (ok ? "st-correct" : "st-wrong") + '">Jawabanmu: ' + pickedLabel + ' &middot; Kunci: ' + correctLabel + '</span></div>';
+      });
+      bodyHtml += '</div>';
+    }
+
+    bodyHtml += '<div class="pembahasan"><b>Pembahasan</b>' + q.pembahasan + '</div>';
+    bodyHtml += '</div>';
+
+    det.innerHTML = summaryHtml + bodyHtml;
+    host.appendChild(det);
+  });
+}
+</script>
+</body>
+</html>

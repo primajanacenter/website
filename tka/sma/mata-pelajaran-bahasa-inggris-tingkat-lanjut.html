@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahasa Inggris Tingkat Lanjut &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, dan contoh soal resmi TKA Bahasa Inggris Tingkat Lanjut SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  .level-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .level-card h3{margin:0 0 6px;font-size:.95rem;color:var(--primary-dark);}
+  .level-card p.desc{margin:0 0 8px;font-size:.86rem;color:var(--muted);}
+  .level-card ul{margin:0;padding-left:20px;font-size:.86rem;}
+  .level-card li{margin-bottom:5px;}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 8px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card ul{margin:0;padding-left:20px;font-size:.88rem;color:var(--text);}
+  .comp-card li{margin-bottom:6px;}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .stimulus-box{background:var(--bg);border-left:3px solid var(--primary);padding:12px 16px;margin-bottom:14px;font-size:.86rem;color:var(--text);}
+  .stimulus-box p{margin:0 0 10px;}
+  .stimulus-box p:last-child{margin-bottom:0;}
+  .soal-question{font-weight:600;margin:0 0 10px;font-style:italic;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.88rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Bahasa Inggris Tingkat Lanjut</h1>
+    <p class="lead">Sebagaimana TKA Bahasa Inggris wajib, mata uji ini berfokus pada keterampilan membaca teks berbahasa Inggris dalam berbagai situasi komunikasi sehari-hari, vokasional, dan akademik &mdash; dengan teks yang lebih kompleks dan bertopik teknologi serta isu-isu faktual.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <ul>
+      <li><b>Jenis teks:</b> exposition dan discussion.</li>
+      <li><b>Konteks komunikasi:</b> sehari-hari, vokasi, dan akademik.</li>
+      <li><b>Topik:</b> teknologi dan isu-isu faktual.</li>
+    </ul>
+    <p style="margin-bottom:10px;">Menggunakan dua tingkat kompleksitas teks mengacu CEFR:</p>
+    <div class="level-card">
+      <h3>Tingkat B2 (Upper-Intermediate)</h3>
+      <p class="desc">Target kemahiran utama Kurikulum 2013 dan Kurikulum Merdeka untuk mata uji tingkat lanjut.</p>
+      <ul>
+        <li>Panjang teks sekitar 300&ndash;400 kata.</li>
+        <li>Kosakata berfrekuensi tinggi (hingga 4.000 kata).</li>
+        <li>Struktur kalimat kompleks.</li>
+        <li>Konteks vokasional dan akademik terkait minat, pengalaman, dan kebutuhan informasi umum maupun spesifik.</li>
+      </ul>
+    </div>
+    <div class="level-card">
+      <h3>Tingkat B1 (Intermediate)</h3>
+      <p class="desc">Untuk mengakomodasi peserta dengan kemampuan di bawah B2.</p>
+      <ul>
+        <li>Panjang teks sekitar 250&ndash;350 kata.</li>
+        <li>Kosakata berfrekuensi tinggi (hingga 3.000 kata).</li>
+        <li>Struktur kalimat sederhana serta kompleks.</li>
+        <li>Konteks vokasional dan akademik dasar terkait minat, pengalaman, dan kebutuhan informasi umum.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <div class="comp-card">
+      <h3>1. Pemahaman Tekstual</h3>
+      <ul>
+        <li><b>Menemukan/mengidentifikasi informasi</b> &mdash; gagasan utama serta informasi penting yang eksplisit.</li>
+        <li><b>Mengklasifikasi</b> argumen, fakta, dan pendapat berdasarkan kategori atau pola penyajian.</li>
+        <li><b>Membuat kerangka</b> &mdash; poin-poin utama ke peta konsep, diagram, diagram alir, atau daftar.</li>
+        <li><b>Meringkas</b> isi teks, mempertahankan gagasan utama dan argumen kunci.</li>
+        <li><b>Mensintesis</b> informasi dari sumber lain.</li>
+      </ul>
+    </div>
+    <div class="comp-card">
+      <h3>2. Pemahaman Inferensial</h3>
+      <ul>
+        <li><b>Menyimpulkan detail pendukung</b> yang memperkuat/memperjelas argumen.</li>
+        <li><b>Menyimpulkan topik/ide pokok</b>, makna, target pembaca, tujuan penulisan, atau pesan moral.</li>
+        <li><b>Menyimpulkan hubungan antar-ide</b> &mdash; argumen, alasan, dan bukti untuk memahami logika penyajian.</li>
+        <li><b>Menyimpulkan hubungan sebab-akibat</b> antarperistiwa/kebijakan/fenomena.</li>
+        <li><b>Menyimpulkan sudut pandang penulis</b> terhadap suatu isu.</li>
+        <li><b>Memprediksi implikasi atau konsekuensi</b> dari suatu gagasan/argumen.</li>
+      </ul>
+    </div>
+    <div class="comp-card">
+      <h3>3. Evaluasi dan Apresiasi</h3>
+      <ul>
+        <li><b>Menilai fakta atau opini</b> berdasarkan bukti pendukung.</li>
+        <li><b>Menilai keakuratan dan kecukupan informasi</b> &mdash; kredibilitas dan cakupan perspektif.</li>
+        <li><b>Menilai kecukupan dan validitas informasi</b> dibandingkan sumber lain.</li>
+        <li><b>Menilai kekuatan argumen</b> &mdash; seberapa logis dan meyakinkan.</li>
+        <li><b>Menanggapi isi teks secara kritis</b> dari sudut pandang berbeda.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">6 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="stimulus-box">
+      <p><b>Text for questions 1&ndash;3 &mdash; AI in the Workplace</b></p>
+      <p>AI is increasingly used in various areas of life, including the workplace. Supporters present three main points: efficiency and productivity, better decision-making, and learning and development through personalized training.</p>
+      <p>Critics, however, raise concerns: job displacement, lack of human touch (AI cannot replicate empathy and emotional intelligence), and ethical/privacy issues around data use.</p>
+      <p>Conclusion: AI should be used in the workplace, but with proper regulations to maximize benefits and minimize risks.</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Pemahaman Tekstual</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Based on the information given, which industry sectors are heavily impacted by AI? Click Yes or No for each statement!</p>
+      <table class="pernyataan-table">
+        <tr><th>Industry Sector</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Information and communication</td><td style="text-align:center;">Yes</td></tr>
+        <tr><td>Financial and insurance activities</td><td style="text-align:center;">Yes</td></tr>
+        <tr><td>Agriculture, Forestry and Fisheries</td><td style="text-align:center;">No</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Yes, Yes, No</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Pemahaman Inferensial</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Paragraph two mainly discussed AI as&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> a tool to enhance workplace productivity and employee growth.</li>
+        <li><b>B.</b> the cause of job losses and emotional stress among workers.</li>
+        <li><b>C.</b> a system that replaces human leaders in decision-making.</li>
+        <li><b>D.</b> a machine incapable of human empathy and connection.</li>
+        <li><b>E.</b> the threat to employee's privacy and data security.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: A</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Evaluasi dan Apresiasi</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">According to the text, as a student who will soon join the workforce, what should you do to compete with AI? There is more than one correct answer.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Improve your emotional intelligence</li>
+        <li><b>2.</b> Avoid industries where AI is widely applied</li>
+        <li><b>3.</b> Undergo personalized training to close skill gaps</li>
+        <li><b>4.</b> Switch to jobs with minimal technology involvement</li>
+        <li><b>5.</b> Focus on tasks that require creativity and complex thinking</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1 dan 5</div>
+    </div>
+
+    <div class="stimulus-box">
+      <p><b>Text for questions 4&ndash;6 &mdash; The Cashless Generation</b></p>
+      <p>In recent years, more people, especially young ones, prefer using digital payment methods like e-wallets, mobile banking, and contactless cards &mdash; giving rise to the &ldquo;cashless generation.&rdquo; Main reasons: convenience (faster, reduces risk of theft) and the growth of technology (smartphones, internet access); many schools and cafes now even refuse cash.</p>
+      <p>However, some argue going cashless can exclude older generations or those without smartphones/bank accounts, and raises privacy and security concerns. Despite these issues, the cashless trend continues to grow, with governments and businesses working to make it more secure and inclusive.</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Pemahaman Tekstual</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">According to the text, what are the main reasons why many people are going cashless? There is more than one correct answer.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Digital payments are quicker and more practical</li>
+        <li><b>2.</b> People want to save more by using e-wallets</li>
+        <li><b>3.</b> Schools and cafes have started refusing cash</li>
+        <li><b>4.</b> Using cards helps people earn extra income</li>
+        <li><b>5.</b> Governments are banning physical money</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1 dan 2</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Pemahaman Inferensial</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Who is the author writing this text for? There is more than one correct answer.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Teenagers and young adults adapting to digital payment.</li>
+        <li><b>2.</b> Government officials promoting cashless policies.</li>
+        <li><b>3.</b> Bank staff working on mobile banking systems.</li>
+        <li><b>4.</b> Students learning about modern lifestyles.</li>
+        <li><b>5.</b> People unfamiliar with digital technology.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1 dan 4</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 6</span><span>Evaluasi dan Apresiasi</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">How does the writer present different viewpoints about the topic?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> By showing only negative effects of a cashless society</li>
+        <li><b>B.</b> By clearly supporting the idea of going fully digital</li>
+        <li><b>C.</b> By including statistics from international research</li>
+        <li><b>D.</b> By giving emotional opinions from young people</li>
+        <li><b>E.</b> By mentioning pros and cons of going cashless</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: E</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Bahasa Inggris Tingkat Lanjut paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-bahasa-inggris-tingkat-lanjut-paket-1.html">Coba Tryout &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

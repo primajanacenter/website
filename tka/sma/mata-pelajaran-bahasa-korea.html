@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahasa Korea &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Bahasa Korea SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Bahasa Korea</h1>
+    <p class="lead">TKA Bahasa Korea mengukur kemampuan membaca dalam memahami berbagai jenis teks sederhana Bahasa Korea &mdash; pemahaman literal, reorganisasi, dan pemahaman inferensial &mdash; setara CEFR Level A1 atau Test of Proficiency in Korean (TOPIK) I Level 1.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Teks mengacu pada TOPIK I Level 1 dengan sekitar 800 kosakata dasar dan gramatika sederhana, panjang teks maksimal 200 karakter Hangeul, disajikan dalam berbagai format seperti teks pendek, ilustrasi gambar, dialog, pengumuman, memo, dan pesan teks.</p>
+    <table class="qtable">
+      <tr><th>Topik</th></tr>
+      <tr><td>Perkenalan diri (&#51088;&#44592; &#49548;&#44228;)</td></tr>
+      <tr><td>Salam (&#51064;&#49328;)</td></tr>
+      <tr><td>Belanja (&#49900;&#54924;)</td></tr>
+      <tr><td>Hobi (&#52734;&#48120;)</td></tr>
+      <tr><td>Transportasi (&#44368;&#53415;)</td></tr>
+      <tr><td>Cuaca (&#45817;&#49328;)</td></tr>
+      <tr><td>Kehidupan sehari-hari (&#51068;&#49345;&#49373;&#54876;)</td></tr>
+      <tr><td>Kehidupan keluarga (&#44032;&#51102;&#49373;&#54876;)</td></tr>
+      <tr><td>Wisata (&#50668;&#54665;)</td></tr>
+      <tr><td>Kehidupan sekolah (&#54617;&#44368;&#54876;&#46041;)</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Keterampilan membaca yang diukur mencakup tiga aspek:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman Literal</h3>
+      <p>Memahami huruf Hangeul dan tata bahasa dasar pada kata, frasa, atau kalimat sederhana, serta memahami fakta/informasi tersurat pada kalimat atau teks sederhana.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Reorganisasi</h3>
+      <p>Menyusun urutan kata atau kalimat, serta mengkategorikan fakta/informasi dari kalimat atau teks sederhana.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Pemahaman Inferensial</h3>
+      <p>Menyimpulkan fakta/informasi tersirat, menyimpulkan hubungan sebab akibat atau perbandingan, serta mengaplikasikan penggunaan tata bahasa bentuk negasi dan kala (kini, lampau, akan datang) pada teks sederhana.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">3 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Reorganisasi</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Susunlah kalimat berikut menjadi paragraf padu! &#44032;) &#51020;&#50529;&#51012; &#46308;&#50516;&#48124; &#44592;&#48221;&#51060; &#51339;&#49845;&#45768;&#45796;. (Mendengarkan musik membuat perasaan senang.) &#45208;) &#51200;&#45716; &#51005;&#52768;&#50640; &#51068;&#50612;&#45208;&#49436; 라디오를 켜고 음악을 듣습니다. (Saya bangun pagi, menyalakan radio, dan mendengarkan musik.) &#45796;) &#44536;&#47340;&#49436; &#52397;&#49548;&#54633; &#47572;&#51064;&#44032; &#44277;&#48512;&#54633; &#47572; &#51020;&#50529;&#51012; &#51088;&#51452; &#46308;&#49845;&#45768;&#45796;. (Jadi saya sering mendengarkan musik saat membersihkan atau belajar.)</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> &#45796; &mdash; &#45208; &mdash; &#44032;</li>
+        <li><b>B.</b> &#45208; &mdash; &#45796; &mdash; &#44032;</li>
+        <li><b>C.</b> &#45208; &mdash; &#44032; &mdash; &#45796;</li>
+        <li><b>D.</b> &#44032; &mdash; &#45796; &mdash; &#45208;</li>
+        <li><b>E.</b> &#45796; &mdash; &#44032; &mdash; &#45208;</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Pemahaman Inferensial</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Bacalah teks berikut: "&#48124;&#49688;&#45716; &#50500;&#52380; 6&#49884;&#50640; &#51068;&#50612;&#45208;&#50836;. 7&#49884;&#50784; &#50500;&#52380;&#51012; &#47749;&#44256; &#54617;&#44368;&#50640; &#44032;&#50836;. &#50724;&#54980;&#50640;&#45716; &#54617;&#50896;&#50640; &#44032;&#49436; &#44277;&#48512;&#54644;&#50836;. &#48160;&#50640;&#45716; &#49569;&#51228;&#47484; &#54616;&#44256; 10&#49884;&#50784; &#51088;&#50836;." (Minsu bangun jam 6 pagi. Sarapan jam 7 lalu pergi ke sekolah. Sore pergi ke bimbel dan belajar. Malam mengerjakan PR lalu tidur jam 10.) &#48160; 9&#49884;&#50784; &#48124;&#49688;&#44032; &#54620; &#51068;&#51008; &#47924;&#50503;&#51064;&#44032;&#50836;? (Apa yang Minsu lakukan pada jam 9 malam?)</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> &#50500;&#52380;&#51012; &#47749;&#50696;&#50836;. (Sarapan.)</li>
+        <li><b>B.</b> &#51037;&#51012; &#51088;&#50836;. (Tidur.)</li>
+        <li><b>C.</b> &#49569;&#51228;&#51012; &#54644;&#50836;. (Mengerjakan PR.)</li>
+        <li><b>D.</b> &#54617;&#44368;&#50640; &#44032;&#50836;. (Pergi ke sekolah.)</li>
+        <li><b>E.</b> &#51068;&#50612;&#45208;&#50836;. (Bangun.)</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Pemahaman Literal</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Bacalah teks berikut: "&#51200;&#45716; &#51064;&#46356;&#45804;&#49884;&#50500;&#50640;&#49436; &#50724; &#49324;&#46988;&#51077;&#45768;&#45796;. &#51088;&#52971;&#47932;&#51032;&#50612;&#49436; &#49328;&#44256; &#51080;&#49845;&#45768;&#45796;. &#44536;&#47532;&#44256; &#51200;&#45716; &#54620;&#44397;&#50612;&#47484; &#50500;&#51452; &#51339;&#50500;&#54644;&#49436; &#54620;&#44397;&#50612;&#47484; &#48176;&#50864;&#44592; &#49884;&#51089;&#54588;&#45845;&#45768;&#45796;. 친구들&#46020; &#54620;&#44397;&#50612;&#47484; &#54633; &#49688; &#51080;&#49845;&#45768;&#45796;. &#51200;&#45716; &#54620;&#44397; &#51020;&#50529;, &#46020;&#46972;&#47932; &#44536;&#47532;&#44256; &#47986;&#54868;&#47484; &#44288;&#49676;&#51060; &#47784;&#49845;&#45768;&#45796;. &#45817;&#51473;&#50640; &#49884;&#44036;&#51060; &#51080;&#51032;&#47732; &#54620;&#44397;&#50640; &#44032;&#44256; &#49475;&#49845;&#45768;&#45796;. &#54620;&#44397;&#50640; &#44032;&#47732; &#50656;&#47932;&#50752; &#46041;&#49373;&#51060;&#46172; &#44032;&#44256; &#49475;&#49845;&#45768;&#45796;." (Saya berasal dari Indonesia. Saya tinggal di Jakarta. Saya sangat suka Bahasa Korea sehingga saya mulai belajar Bahasa Korea. Teman-teman saya juga bisa berbahasa Korea. Saya sangat tertarik dengan musik, drama, dan budaya Korea. Nanti kalau ada waktu, saya ingin pergi ke Korea. Kalau pergi ke Korea, saya ingin pergi bersama ibu dan adik.) Tentukan Benar (O) atau Salah (X) untuk setiap pernyataan berikut mengenai dengan siapa orang tersebut ingin pergi ke Korea!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>친구들 (Teman-teman)</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>&#50656;&#47932; (Ibu)</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>&#46041;&#49373; (Adik)</td><td style="text-align:center;">Benar</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Salah, Benar, Benar</div>
+    </div>
+
+  </section>
+
+  <div class="note-box">Tiga contoh soal resmi lain (2 soal Pemahaman Literal tentang isi sebuah memo, dan 1 soal Pemahaman Literal tentang biodata seorang murid) merujuk pada teks sumber yang tidak tersedia dalam dokumen sumber sehingga tidak ditampilkan di sini. Lihat dokumen resmi Kerangka Asesmen TKA untuk versi lengkapnya.</div>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Bahasa Korea paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-bahasa-korea-paket-1.html">Coba Tryout Bahasa Korea &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

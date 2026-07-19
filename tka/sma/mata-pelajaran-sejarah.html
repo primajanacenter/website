@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sejarah &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Sejarah SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Sejarah</h1>
+    <p class="lead">TKA Sejarah mengukur kemampuan murid dalam memahami dan mengkaji peristiwa sejarah dalam konteks ruang dan waktu, serta mengembangkan kemampuan berpikir historis &mdash; menganalisis, mengkritisi, menghubungkan, menginterpretasi, dan merefleksikan peristiwa sejarah dengan konteks sosial, ekonomi, politik, dan budaya.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Muatan TKA Sejarah difokuskan pada kemampuan memahami perubahan dan keberlanjutan sejarah, serta mengidentifikasi sebab-akibat dari berbagai peristiwa penting dalam sejarah Indonesia mulai dari periode Hindu-Buddha hingga Reformasi, mencakup 6 elemen berikut.</p>
+    <table class="qtable">
+      <tr><th>Elemen</th></tr>
+      <tr><td>Pengantar Ilmu Sejarah</td></tr>
+      <tr><td>Periode Kerajaan Hindu-Buddha dan Islam</td></tr>
+      <tr><td>Perlawanan terhadap Bangsa Eropa</td></tr>
+      <tr><td>Pergerakan Nasional sampai Proklamasi Kemerdekaan</td></tr>
+      <tr><td>Revolusi Kemerdekaan Indonesia sampai Demokrasi Terpimpin</td></tr>
+      <tr><td>Orde Baru sampai Reformasi</td></tr>
+    </table>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:0;">Soal menggunakan bacaan/ilustrasi berdasar sumber sejarah primer maupun sekunder tentang kronologi, sebab-akibat, serta kesinambungan dan perubahan dalam sejarah Indonesia, disertai kutipan dokumen, peta, tabel, atau foto untuk membantu analisis.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Kemampuan Sejarah diukur pada tiga level kognitif:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman (Knowing)</h3>
+      <p>Mengenali, mengingat, mengidentifikasi, dan memahami konsep serta informasi sejarah secara faktual &mdash; menyebutkan tokoh, peristiwa, tanggal, tempat, serta istilah-istilah penting dalam sejarah.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Penerapan (Applying)</h3>
+      <p>Menerapkan konsep dan informasi sejarah dalam berbagai konteks &mdash; menganalisis dan menginterpretasikan data, fakta, atau sumber sejarah (teks, gambar, peta, tabel), menyusun kronologi, menjelaskan hubungan sebab-akibat, serta membandingkan peristiwa sejarah.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Penalaran (Reasoning)</h3>
+      <p>Berpikir kritis dan menalar secara logis dengan mengaitkan konsep-konsep sejarah terhadap fenomena atau realitas sosial masa kini &mdash; mengevaluasi dan merefleksi informasi dari berbagai sumber sejarah, menjawab pertanyaan inferensial, serta menyusun argumentasi berbasis bukti historis.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">6 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Pengantar Ilmu Sejarah</span><span>Pemahaman</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Sejarawan R. Moh. Ali mendefinisikan sejarah sebagai ilmu yang menyelidiki perkembangan mengenai peristiwa dan kejadian di masa lampau. Berdasarkan pengertian tersebut, apa ciri utama sejarah sebagai ilmu?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Disusun berdasarkan kesaksian lisan dari para pelaku sejarah.</li>
+        <li><b>B.</b> Mengkaji peristiwa masa lalu secara sistematis dan berdasarkan bukti.</li>
+        <li><b>C.</b> Menyelidiki perubahan dan kesinambungan tradisi dalam masyarakat.</li>
+        <li><b>D.</b> Mempelajari semua peristiwa yang pernah terjadi di masa lampau.</li>
+        <li><b>E.</b> Menyusun narasi tentang kejadian di masa lalu berdasarkan imajinasi.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Periode Kerajaan Hindu-Buddha dan Islam</span><span>Penerapan</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Kerajaan-kerajaan Islam di Indonesia, seperti Demak, Aceh, Mataram Islam, dan Ternate-Tidore, telah memberikan pengaruh besar terhadap perkembangan budaya masyarakat. Pengaruh tersebut tidak hanya tampak dalam sistem pemerintahan dan arsitektur, tetapi juga dalam tradisi, seni pertunjukan, dan upacara keagamaan yang masih dilestarikan hingga kini. Manakah yang merupakan peninggalan budaya dari masa kerajaan Islam yang masih berlanjut di masa kini? Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Upacara Kasada</li>
+        <li><b>2.</b> Tradisi Sekaten</li>
+        <li><b>3.</b> Tradisi Tabuik</li>
+        <li><b>4.</b> Wayang Topeng Malangan</li>
+        <li><b>5.</b> Tari Reog Ponorogo</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 2 dan Pernyataan 3</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Perlawanan terhadap Bangsa Eropa</span><span>Penerapan</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Sultan Hasanuddin merupakan salah satu penguasa lokal yang tidak mau tunduk pada monopoli dagang VOC sehingga menimbulkan konflik bersenjata selama beberapa tahun. Pada akhirnya VOC berhasil memaksa Sultan Hasanuddin untuk melakukan perundingan di Bongaya pada 18 November 1667. Isi perjanjian tersebut membatasi wilayah kekuasaan Kesultanan Gowa dan memperkuat kedudukan VOC. Pilihlah Tepat atau Tidak Tepat pada pernyataan berikut yang menggambarkan kondisi konflik Gowa dengan VOC!</p>
+      <table class="pernyataan-table">
+        <tr><th>Kondisi Konflik Gowa dengan VOC</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>VOC berusaha melemahkan Gowa karena posisinya yang strategis dalam perdagangan di kawasan timur kepulauan Nusantara.</td><td style="text-align:center;">Tepat</td></tr>
+        <tr><td>Sultan Hasanuddin bersedia menandatangani Perjanjian Bongaya untuk memperoleh konsesi dagang yang lebih luas.</td><td style="text-align:center;">Tidak Tepat</td></tr>
+        <tr><td>Perjanjian Bongaya memperkuat kedudukan VOC dalam monopoli perdagangan di Nusantara.</td><td style="text-align:center;">Tepat</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Tepat, Tidak Tepat, Tepat</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Pergerakan Nasional sampai Proklamasi Kemerdekaan</span><span>Penerapan</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Pada masa-masa akhir pendudukannya di Indonesia, Jepang semakin terdesak dalam Perang Asia Timur Raya. Untuk memperoleh dukungan rakyat Indonesia, Jepang menjanjikan kemerdekaan dan membentuk BPUPK sebagai langkah awal persiapan. BPUPK kemudian menjadi forum penting bagi tokoh-tokoh bangsa dalam merumuskan dasar negara dan arah masa depan Indonesia. Dari berbagai latar belakang politik dan militer saat itu, pilih yang menjadi alasan paling tepat dan mendalam bagi Jepang membentuk BPUPK?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Menjaga citra baiknya di mata rakyat Indonesia setelah kekalahan mulai tampak.</li>
+        <li><b>B.</b> Memperlihatkan kepada dunia bahwa mereka mendukung kemerdekaan bangsa-bangsa Asia.</li>
+        <li><b>C.</b> Percaya bahwa rakyat Indonesia sudah siap memimpin negaranya sendiri tanpa intervensi asing.</li>
+        <li><b>D.</b> Menghindari tekanan dari negara-negara Barat dengan menunjukkan kemajuan politik di wilayah jajahannya.</li>
+        <li><b>E.</b> Terdesak dalam perang dan perlu dukungan rakyat Indonesia, maka memberi janji kemerdekaan sebagai strategi politik.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: E</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Revolusi Kemerdekaan sampai Demokrasi Terpimpin</span><span>Penerapan</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Pada masa Demokrasi Liberal, Indonesia mengalami ketidakstabilan politik akibat sering bergantinya kabinet. Untuk mengatasi hal ini, pemerintah mengeluarkan UU No. 7 Tahun 1953 yang mengatur pelaksanaan Pemilu 1955. Pemilu tersebut menjadi tonggak penting dalam sejarah demokrasi Indonesia karena melibatkan partisipasi politik yang luas. Hasilnya menunjukkan adanya keberagaman kekuatan politik dan tantangan dalam mewujudkan stabilitas pemerintahan. Pada peristiwa Pemilu 1955, manakah pernyataan berikut yang menggambarkan perkembangan politik Indonesia saat itu? Pilihlah Tepat atau Tidak Tepat untuk setiap pernyataan berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Perkembangan Politik</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Pemilu 1955 bertujuan menyederhanakan partai politik dan mewujudkan sistem parlementer yang stabil.</td><td style="text-align:center;">Tepat</td></tr>
+        <tr><td>Salah satu hasil Pemilu 1955 adalah terbentuknya sistem pemerintahan presidensial yang kuat dan stabil.</td><td style="text-align:center;">Tidak Tepat</td></tr>
+        <tr><td>Partisipasi pemilih dalam Pemilu 1955 menunjukkan antusiasme rakyat terhadap demokrasi.</td><td style="text-align:center;">Tepat</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Tepat, Tidak Tepat, Tepat</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 6</span><span>Orde Baru sampai Reformasi</span><span>Pemahaman</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Pada akhir masa pemerintahan Presiden Soeharto, Indonesia mengalami krisis multidimensi. Krisis ekonomi akibat utang luar negeri yang besar, kekeringan karena El Nino, dan kebakaran hutan memperburuk situasi. Tekanan dari dalam negeri dan luar negeri mendorong desakan agar Indonesia segera melakukan reformasi. Puncaknya, Soeharto mengundurkan diri pada 21 Mei 1998. Sebutkan faktor-faktor utama penyebab lahirnya Reformasi di Indonesia pada tahun 1998! Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Ketidakmampuan pemerintah menangani krisis ekonomi yang melanda seluruh sektor.</li>
+        <li><b>2.</b> Kemenangan kubu oposisi dalam pemilihan umum yang demokratis.</li>
+        <li><b>3.</b> Desakan internasional agar Indonesia menerima bantuan IMF dengan syarat reformasi.</li>
+        <li><b>4.</b> Kekecewaan masyarakat terhadap rezim Orde Baru yang dianggap antidemokratis.</li>
+        <li><b>5.</b> Suksesnya pembangunan infrastruktur nasional secara merata.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, Pernyataan 3, dan Pernyataan 4</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Sejarah paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-sejarah-paket-1.html">Coba Tryout Sejarah &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

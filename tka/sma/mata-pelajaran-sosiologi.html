@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sosiologi &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Sosiologi SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Sosiologi</h1>
+    <p class="lead">TKA Sosiologi dirancang untuk mengukur pemahaman murid terhadap konsep-konsep sosiologi serta kemampuan analisis terhadap fenomena sosial yang terjadi di masyarakat &mdash; kesadaran sosial, keterampilan berpikir analitis, dan kemampuan beradaptasi dalam lingkungan sosial yang dinamis.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Muatan TKA Sosiologi merujuk pada irisan materi Sosiologi pada Kurikulum 2013 dengan Kurikulum Merdeka, mencakup 5 elemen berikut.</p>
+    <table class="qtable">
+      <tr><th>Elemen</th><th>Cakupan</th></tr>
+      <tr><td>Sosiologi sebagai Ilmu</td><td>Hakikat, konsep, sejarah, perspektif, dan ruang lingkup sosiologi sebagai landasan memahami fenomena sosial secara sistematis.</td></tr>
+      <tr><td>Hubungan dan Gejala Sosial</td><td>Faktor yang memengaruhi interaksi, pembentukan identitas, bentuk hubungan sosial, lembaga sosial, ragam gejala sosial, dan masyarakat multikultural.</td></tr>
+      <tr><td>Penelitian Sosial</td><td>Konsep dasar penelitian sosial, prosedur, teknik pengumpulan data, dan berbagai jenis metode penelitian sosial.</td></tr>
+      <tr><td>Kelompok Sosial, Kesetaraan, dan Konflik Sosial</td><td>Konsep &amp; dinamika kelompok sosial, ketidaksetaraan sosial dan upaya kesetaraan, konflik sosial dan penanganannya.</td></tr>
+      <tr><td>Perubahan Sosial dan Globalisasi</td><td>Bentuk-bentuk perubahan sosial dan dampaknya, globalisasi dan dampaknya, serta sikap kritis terhadap globalisasi.</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Kemampuan Sosiologi diukur pada tiga level kognitif:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman (Knowing)</h3>
+      <p>Kemampuan dasar mengenali, mengingat, dan memahami konsep-konsep sosiologi secara faktual &mdash; menguji pengetahuan tentang definisi, konsep, teori, serta langkah prosedural yang menjadi pondasi penyelidikan sosiologi.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Penerapan (Applying)</h3>
+      <p>Menerapkan konsep-konsep sosiologi pada fenomena sosial nyata &mdash; menganalisis kasus, menginterpretasikan data sosial, serta menerapkan prinsip sosiologi dalam memecahkan masalah sosial seperti konflik antar kelompok atau ketimpangan sosial.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Penalaran (Reasoning)</h3>
+      <p>Berpikir kritis dan menalar secara logis dengan mengaitkan konsep sosiologi dengan fenomena/realitas nyata &mdash; menganalisis data berdasarkan kasus sosial, menemukan pola, merumuskan kesimpulan, hingga memberikan rekomendasi yang sesuai dengan dinamika sosial yang dihadapi.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">5 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Sosiologi sebagai Ilmu</span><span>Pemahaman</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Objek kajian sosiologi memiliki karakteristik yang berbeda dibandingkan dengan cabang ilmu lainnya. Berdasarkan pernyataan berikut, manakah yang paling tepat menggambarkan objek kajian sosiologi?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Gempa bumi berkekuatan 7,7 yang terjadi di Myanmar dan terasa hingga Thailand pada 28 Maret 2025 sebagai akibat pergeseran lempeng bumi.</li>
+        <li><b>B.</b> Kecanduan teknologi di kalangan generasi muda yang mengubah cara berpikir, berperilaku, dan berinteraksi dalam kehidupan sehari-hari.</li>
+        <li><b>C.</b> Long COVID yang menyebabkan gangguan kesehatan fisik dan mental selama berbulan-bulan pada sebagian besar penyintas COVID-19.</li>
+        <li><b>D.</b> Aktivitas vulkanik yang menyebabkan kerusakan infrastruktur dan memaksa masyarakat mengungsi dari daerah rawan bencana.</li>
+        <li><b>E.</b> Penyebaran virus baru yang menimbulkan krisis kesehatan global dan berdampak pada sistem imun tubuh manusia.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Hubungan dan Gejala Sosial</span><span>Penerapan</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Sebuah infografis (sumber: indonesia.go.id) berisi anjuran terkait gejala sosial yang timbul akibat penggunaan internet yang tidak terkontrol oleh anak-anak. Manakah dari pernyataan berikut yang paling tepat menggambarkan gejala sosial dalam infografis tersebut? Tentukan Sesuai atau Tidak Sesuai untuk setiap pernyataan berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Penggunaan internet pada anak perlu diawasi oleh orang tua agar anak tidak mudah terpapar konten negatif.</td><td style="text-align:center;">Sesuai</td></tr>
+        <tr><td>Pola asuh yang terlalu longgar terhadap penggunaan internet dapat memengaruhi pembentukan kepribadian anak.</td><td style="text-align:center;">Sesuai</td></tr>
+        <tr><td>Anak-anak merupakan salah satu kelompok pengguna internet terbesar di Indonesia dan dapat diklasifikasikan berdasarkan jenjang usia.</td><td style="text-align:center;">Tidak Sesuai</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Sesuai, Sesuai, Tidak Sesuai</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Penelitian Sosial</span><span>Penalaran</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Seorang murid ingin melakukan penelitian sosial sederhana mengenai pengaruh pergaulan sebaya terhadap kelekatan hubungan antar anggota keluarga di kalangan remaja. Ia telah merancang beberapa langkah awal, yaitu: (1) Merumuskan masalah: apakah terdapat hubungan antara pergaulan sebaya dengan kelekatan hubungan antar anggota keluarga? (2) Menyusun pertanyaan terbuka sebanyak sepuluh butir untuk menggali pengalaman responden. (3) Mengolah jawaban informan menjadi bentuk angka dan menganalisisnya dengan aplikasi statistik. Berdasarkan langkah-langkah tersebut, manakah pernyataan yang tepat untuk menyempurnakan penelitian tersebut? Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Peneliti perlu memperjelas rumusan masalah agar sesuai dengan pengalaman sosial remaja dalam berinteraksi dengan keluarga dan teman sebaya.</li>
+        <li><b>2.</b> Peneliti perlu mengubah jenis pertanyaan menjadi pertanyaan tertutup agar data lebih mudah dianalisis secara statistik.</li>
+        <li><b>3.</b> Peneliti perlu menyesuaikan kembali isi penelitian agar tidak terlalu rumit dan tetap sesuai dengan kemampuan.</li>
+        <li><b>4.</b> Peneliti perlu menentukan jenis dan jumlah sampel terlebih dahulu sebelum menyusun instrumen pengumpulan data.</li>
+        <li><b>5.</b> Peneliti sebaiknya menggunakan metode observasi partisipatif untuk menggantikan instrumen pertanyaan terbuka.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, Pernyataan 2, dan Pernyataan 4</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Kelompok Sosial, Kesetaraan, dan Konflik Sosial</span><span>Penalaran</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Kota Praja merupakan kota multikultural yang memiliki banyak komunitas. Baru-baru ini di kota tersebut terjadi konflik antara penduduk lama dengan pendatang terkait dengan penggunaan ruang publik untuk kegiatan budaya. Penduduk lama merasa tradisi turun-temurun mereka mulai dipinggirkan, sedangkan pendatang mengklaim kebutuhan aktivitas mereka diabaikan. Ketegangan meningkat di media sosial melalui perang tagar dan mulai mengarah pada protes dan ancaman kekerasan. Pemerintah setempat berada di bawah tekanan untuk mengembalikan kedamaian dan mencegah eskalasi konflik lebih lanjut. Apa rekomendasi yang dapat diberikan untuk menurunkan tensi konflik berdasarkan kasus tersebut? Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Menegakkan regulasi ketat untuk melarang acara budaya guna menghindari bentrokan antar masyarakat.</li>
+        <li><b>2.</b> Membentuk forum yang dipimpin oleh komunitas untuk pengambilan keputusan partisipatif tentang penggunaan ruang publik.</li>
+        <li><b>3.</b> Memfasilitasi dialog komunitas yang inklusif dengan melibatkan kedua pihak untuk membangun saling pengertian.</li>
+        <li><b>4.</b> Menggunakan mediasi oleh pihak ketiga yang netral dan terlatih tentang kepekaan budaya.</li>
+        <li><b>5.</b> Memisahkan kelompok secara permanen ke kawasan yang berbeda untuk mengurangi interaksi.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 2, Pernyataan 3, dan Pernyataan 4</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Perubahan Sosial dan Globalisasi</span><span>Penalaran</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Gelombang Korea (Hallyu) telah berkembang dan menyebar pesat satu dekade ini. Musik K-Pop, Drama Korea, mode, makanan dan tren gaya hidup banyak digandrungi anak muda di Indonesia. Pada satu sisi budaya ini memberikan inspirasi budaya baru dan konektivitas global. Di sisi lain, budaya ini juga memengaruhi perilaku remaja, mulai dari konsumerisme berlebih terhadap barang-barang bermerek, pengabaian produk lokal, dan standar kecantikan yang tidak realistis. Beberapa kalangan mulai mengungkapkan keprihatinan atas pergeseran nilai dan identitas di kalangan remaja. Manakah respon kritis yang tepat untuk menanggapi perubahan sosial tersebut? Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Mengikuti tren tanpa syarat sebagai bagian dari masyarakat global.</td><td style="text-align:center;">Tidak Tepat</td></tr>
+        <tr><td>Mendorong refleksi diri dan literasi media untuk memahami pengaruh budaya.</td><td style="text-align:center;">Tepat</td></tr>
+        <tr><td>Menyeimbangkan penghargaan terhadap tren Korea dengan dukungan untuk budaya lokal.</td><td style="text-align:center;">Tepat</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Tidak Tepat, Tepat, Tepat</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Sosiologi paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-sosiologi-paket-1.html">Coba Tryout Sosiologi &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

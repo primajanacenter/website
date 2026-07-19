@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahasa Inggris &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Bahasa Inggris SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-wajib{background:var(--primary-light);color:var(--primary-dark);}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.88rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:9px 12px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+  table.qtable td.center,table.qtable th.center{text-align:center;}
+
+  .level-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .level-card h3{margin:0 0 6px;font-size:.95rem;color:var(--primary-dark);}
+  .level-card p.desc{margin:0 0 8px;font-size:.86rem;color:var(--muted);}
+  .level-card ul{margin:0;padding-left:20px;font-size:.86rem;}
+  .level-card li{margin-bottom:5px;}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 8px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card ul{margin:0;padding-left:20px;font-size:.88rem;color:var(--text);}
+  .comp-card li{margin-bottom:6px;}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .stimulus-box{background:var(--bg);border-left:3px solid var(--primary);padding:12px 16px;margin-bottom:14px;font-size:.86rem;color:var(--text);}
+  .stimulus-box p{margin:0 0 10px;}
+  .stimulus-box p:last-child{margin-bottom:0;}
+  .soal-question{font-weight:600;margin:0 0 10px;font-style:italic;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.88rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-wajib">Wajib</span>
+    <h1>Bahasa Inggris</h1>
+    <p class="lead">TKA Bahasa Inggris mengukur keterampilan membaca beragam jenis teks berbahasa Inggris dalam berbagai situasi komunikasi sehari-hari, vokasional, dan akademik.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Muatan merupakan irisan jenis teks, konteks komunikasi, topik, dan kompleksitas teks pada Kurikulum 2013 dan Kurikulum Merdeka.</p>
+    <ul>
+      <li><b>Jenis teks:</b> descriptive, recount, narrative, procedure, dan analytical exposition.</li>
+      <li><b>Konteks komunikasi:</b> sehari-hari, tempat kerja (vokasional), dan akademik &mdash; secara proporsional.</li>
+      <li><b>Topik:</b> gabungan topik pada kedua kurikulum, menghindari kosakata teknis yang terlampau jarang digunakan.</li>
+    </ul>
+
+    <p style="margin-bottom:10px;">TKA menggunakan dua tingkat kompleksitas teks mengacu <i>Common European Framework of Reference for Languages</i> (CEFR):</p>
+    <div class="level-card">
+      <h3>Tingkat B1 (Intermediate)</h3>
+      <p class="desc">Target kemahiran utama Kurikulum 2013 dan Kurikulum Merdeka.</p>
+      <ul>
+        <li>Panjang teks sekitar 250&ndash;350 kata.</li>
+        <li>Kosakata berfrekuensi tinggi (hingga 3.000 kata).</li>
+        <li>Struktur kalimat sederhana serta kompleks.</li>
+        <li>Konteks sehari-hari, vokasional, dan akademik dasar terkait minat, pengalaman, dan kebutuhan informasi umum.</li>
+      </ul>
+    </div>
+    <div class="level-card">
+      <h3>Tingkat A2 (Elementary)</h3>
+      <p class="desc">Untuk mengakomodasi peserta dengan kemampuan di bawah B1.</p>
+      <ul>
+        <li>Panjang teks sekitar 200&ndash;300 kata.</li>
+        <li>Kosakata berfrekuensi tinggi (hingga 2.000 kata).</li>
+        <li>Struktur kalimat sederhana dan beberapa bentuk majemuk dasar.</li>
+        <li>Konteks sehari-hari dan vokasional yang konkret dan dikenal.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Tiga level kompetensi dalam keterampilan membaca:</p>
+
+    <div class="comp-card">
+      <h3>1. Pemahaman Tekstual</h3>
+      <p style="font-size:.88rem;margin:0 0 8px;">Mampu memahami informasi yang eksplisit, mengelompokkan, menyusun ulang, dan menyajikan kembali informasi eksplisit dari teks.</p>
+      <ul>
+        <li><b>Menemukan/mengidentifikasi informasi</b> yang disebutkan secara eksplisit dalam teks.</li>
+        <li><b>Mengklasifikasi</b> orang, benda, tempat, atau peristiwa berdasarkan kategori tertentu.</li>
+        <li><b>Membuat kerangka</b> poin-poin utama dari teks.</li>
+        <li><b>Meringkas</b> isi teks dengan mengutip bagian penting.</li>
+        <li><b>Mensintesis</b> informasi dari sumber lain untuk pemahaman yang lebih komprehensif.</li>
+      </ul>
+    </div>
+
+    <div class="comp-card">
+      <h3>2. Pemahaman Inferensial</h3>
+      <p style="font-size:.88rem;margin:0 0 8px;">Mampu menarik kesimpulan berdasarkan informasi tersirat dalam teks, pengalaman pribadi, serta intuisi.</p>
+      <ul>
+        <li><b>Menyimpulkan detail pendukung</b> yang membuat teks lebih informatif, menarik, atau persuasif.</li>
+        <li><b>Menyimpulkan topik/ide pokok</b>, makna, target pembaca, tujuan penulisan, atau pesan moral yang tidak eksplisit.</li>
+        <li><b>Menyimpulkan urutan kejadian</b> atau memperkirakan isi selanjutnya.</li>
+        <li><b>Menyimpulkan perbandingan</b> antartokoh, waktu, tempat, benda, atau gagasan.</li>
+        <li><b>Menyimpulkan hubungan sebab-akibat</b> antargagasan/tindakan.</li>
+        <li><b>Menyimpulkan karakter tokoh</b> berdasarkan petunjuk eksplisit.</li>
+        <li><b>Memprediksi hasil cerita</b> setelah membaca bagian awal.</li>
+      </ul>
+    </div>
+
+    <div class="comp-card">
+      <h3>3. Evaluasi dan Apresiasi</h3>
+      <p style="font-size:.88rem;margin:0 0 8px;">Mampu membuat penilaian terhadap ide, menanggapi teks secara emosional dan estetis.</p>
+      <ul>
+        <li><b>Menilai realitas atau fantasi</b> berdasarkan pengalaman dan pengetahuan pribadi.</li>
+        <li><b>Menilai fakta atau opini</b> yang diberikan penulis.</li>
+        <li><b>Menilai kecukupan dan validitas informasi</b> dibandingkan sumber lain.</li>
+        <li><b>Menilai kesesuaian</b> bagian teks untuk menggambarkan karakter atau aspek bacaan.</li>
+        <li><b>Menanggapi isi teks</b> &mdash; mengungkapkan perasaan/kesan/pendapat terhadap bacaan.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Matriks Kompetensi &amp; Kompleksitas Teks</div>
+    <p style="font-size:.88rem;color:var(--muted);margin-top:0;">Kombinasi berikut diamati dari contoh soal resmi Kemendikdasmen &mdash; dalam pelaksanaan TKA sesungguhnya, kombinasi dapat bervariasi.</p>
+    <table class="qtable">
+      <tr><th>Kompetensi</th><th>Kompleksitas Teks</th><th>Bentuk Soal</th></tr>
+      <tr><td>Pemahaman Tekstual</td><td>B1 &amp; A2</td><td>Pilihan Ganda, PGK Kategori</td></tr>
+      <tr><td>Pemahaman Inferensial</td><td>B1 &amp; A2</td><td>Pilihan Ganda, PGK Pilih Lebih dari Satu</td></tr>
+      <tr><td>Evaluasi dan Apresiasi</td><td>B1</td><td>Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">6 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="stimulus-box">
+      <p><b>Text for questions 1&ndash;3 &mdash; Exploring Bali's Natural Wonders</b></p>
+      <p>Bali, a beautiful island in Indonesia, is known for its stunning landscapes and rich culture. While many come for the beaches and temples, the island also offers natural attractions that amaze nature lovers from around the world.</p>
+      <p>In the west lies West Bali National Park, a peaceful area filled with green forests, calm mangrove swamps, and colorful coral reefs along the sea. Heading north, travelers find the scenic Munduk Waterfall, surrounded by green hills and forests. Water flows gently over rocky cliffs into a cool clear pool.</p>
+      <p>Near the cultural center Ubud, the famous Tegalalang rice terraces stretch across the hills in green steps, shaped by generations of farmers who work the land by hand. In the morning, mist rises above the fields, and sunlight reflects off the water in the paddies.</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Pemahaman Tekstual</span><span>B1</span><span>PGK Kategori</span></div>
+      <p class="soal-question">What is the main purpose of visiting these places: to support conservation or to relax? Click Conservation or Relaxation for each place!</p>
+      <table class="pernyataan-table">
+        <tr><th>Place</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Munduk Waterfall</td><td style="text-align:center;">Relaxation</td></tr>
+        <tr><td>West Bali National Park</td><td style="text-align:center;">Conservation</td></tr>
+        <tr><td>Tegalalang Rice Terraces</td><td style="text-align:center;">Relaxation</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Relaxation, Conservation, Relaxation</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Pemahaman Inferensial</span><span>B1</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">The text mainly talks about Bali's &hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> wildlife species and nature lovers.</li>
+        <li><b>B.</b> unique cultural treasures and sites.</li>
+        <li><b>C.</b> stunning nature and remarkable sites.</li>
+        <li><b>D.</b> generations and cultural conservation.</li>
+        <li><b>E.</b> scenic beauty and local farming practices.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Evaluasi dan Apresiasi</span><span>B1</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Which parts of the text best support the description of Bali as "Bali is full of natural beauty"? There is more than one correct answer.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> A peaceful area filled with green forests, calm mangrove swamps, and colorful coral reefs along the sea.</li>
+        <li><b>2.</b> These terraces are shaped by generations of farmers who work the land by hand.</li>
+        <li><b>3.</b> Water flows gently over rocky cliffs into a cool, clear pool. Mist rises into the air, mixing with the calming sound of falling water.</li>
+        <li><b>4.</b> In the morning, mist rises above the fields, and sunlight reflects off the water in the paddies.</li>
+        <li><b>5.</b> Farmers in wide-brimmed hats plant rice carefully, their feet sinking into the soft earth.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, 3, dan 4</div>
+    </div>
+
+    <div class="stimulus-box">
+      <p><b>Text for questions 4&ndash;6 &mdash; My Experience as an Intern at a Sports Club</b></p>
+      <p>Last summer, I had the opportunity to work as an intern at a local sports club. On my first day, I met the head coach, who welcomed me and explained my tasks. Every morning I had to wake up early, arrive on time, and follow instructions carefully.</p>
+      <p>In the second month, during football practice, a player fell and hurt his ankle. I quickly ran to get the first aid kit and helped the coach assess the injury while ensuring the player stayed calm.</p>
+      <p>At the end of my internship, the coaches highlighted my strengths in teamwork, responsibility, and communication. It was a great experience, and I hope to work in a sports club again in the future.</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Pemahaman Tekstual</span><span>A2</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">During the internship, what did the writer do every morning?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Made schedules and explained them to the coaches.</li>
+        <li><b>B.</b> Played football with the team and got the first aid kit.</li>
+        <li><b>C.</b> Prepared a club gift, guided the coaches, and gave t-shirts.</li>
+        <li><b>D.</b> Woke up early, arrived on time, and followed the instructions.</li>
+        <li><b>E.</b> Set up cones, brought water, and checked emergency schedules.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: D</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Pemahaman Inferensial</span><span>A2</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">What are the best words to describe the writer's personality during the internship? There is more than one correct answer.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Careful and ready to help</li>
+        <li><b>2.</b> Confident and enjoys working alone</li>
+        <li><b>3.</b> Responsible and willing to learn</li>
+        <li><b>4.</b> Friendly and works well with others</li>
+        <li><b>5.</b> Creative and likes to try new things</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, 3, dan 4</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 6</span><span>Pemahaman Inferensial</span><span>A2</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">What will the writer most likely do after finishing the internship?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Considering a career in sports medicine</li>
+        <li><b>B.</b> Stop working and focus only on school</li>
+        <li><b>C.</b> Look for another chance to work in a sports club</li>
+        <li><b>D.</b> Study medicine to become a doctor</li>
+        <li><b>E.</b> Train as a professional football player</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Bahasa Inggris paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-bahasa-inggris-paket-1.html">Coba Tryout Bahasa Inggris &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

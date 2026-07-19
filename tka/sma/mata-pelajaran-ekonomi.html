@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ekonomi &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Ekonomi SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Ekonomi</h1>
+    <p class="lead">TKA Ekonomi menilai pemahaman konseptual dan keterampilan analitis murid dalam bidang ekonomi, sekaligus mengukur keterampilan berpikir kritis dalam menganalisis isu ekonomi dan keuangan berdasarkan fenomena aktual di masyarakat, baik lingkup nasional maupun global.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Muatan TKA Ekonomi mencakup 4 elemen yang disajikan secara konseptual maupun dalam berbagai konteks yang mencerminkan permasalahan ekonomi di dunia nyata.</p>
+    <table class="qtable">
+      <tr><th>Elemen</th><th>Cakupan</th></tr>
+      <tr><td>Konsep Dasar Ilmu Ekonomi</td><td>Kelangkaan, biaya peluang, dan kegiatan ekonomi.</td></tr>
+      <tr><td>Ekonomi Mikro dan Makro</td><td>Permintaan dan penawaran, pertumbuhan dan pembangunan ekonomi, ketenagakerjaan, kebijakan moneter dan fiskal serta dampaknya terhadap kesejahteraan masyarakat.</td></tr>
+      <tr><td>Ekonomi Internasional</td><td>Perdagangan global, kerja sama ekonomi, dan neraca pembayaran.</td></tr>
+      <tr><td>Akuntansi Keuangan Dasar</td><td>Pemahaman laporan keuangan dan analisis kondisi keuangan suatu unit usaha.</td></tr>
+    </table>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:0;">Selain penguasaan konsep, soal juga menguji <b>keterampilan proses</b>: keterampilan analitis, pemecahan masalah ekonomi, dan pengambilan keputusan ekonomi berdasarkan data, grafik, dan fenomena nyata.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Kemampuan Ekonomi diukur pada tiga level kognitif:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman (Knowing)</h3>
+      <p>Mengenali, mengingat, dan memahami konsep dasar ilmu ekonomi, ekonomi makro dan mikro, ekonomi internasional, serta konsep dasar akuntansi. Soal menguji pengetahuan tentang definisi, teori, serta konsep dasar yang menjadi fondasi ekonomi.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Penerapan (Applying)</h3>
+      <p>Mengaplikasikan konsep dasar ilmu ekonomi, ekonomi makro dan mikro, ekonomi internasional, serta konsep dasar akuntansi &mdash; melakukan perhitungan berdasarkan konsep yang ada, menginterpretasikan data, dan menerapkan prinsip ekonomi untuk menyelesaikan masalah.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Penalaran (Reasoning)</h3>
+      <p>Berpikir kritis dan menalar secara logis dengan mengaitkan konsep-konsep ilmu ekonomi dengan fenomena/realitas nyata &mdash; menganalisis data berdasarkan kasus ekonomi, mengevaluasi, dan menarik kesimpulan dalam pengambilan keputusan ekonomi.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">5 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Konsep Dasar Ilmu Ekonomi</span><span>Penalaran</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Kota Maju sedang menghadapi masalah serius terkait kelangkaan air bersih akibat musim kemarau panjang selama 5 bulan berturut-turut. Data dari Dinas Lingkungan Hidup menunjukkan: ketersediaan air bersih turun 25% dibanding tahun sebelumnya; konsumsi air per kapita justru meningkat 10% karena pertumbuhan penduduk dan aktivitas ekonomi; sebagian besar rumah tangga masih menggunakan metode pengambilan air konvensional; infrastruktur penyediaan air saat ini belum mampu memenuhi kebutuhan masyarakat secara optimal. Pemerintah kota mempertimbangkan beberapa opsi solusi untuk jangka pendek dan menengah: membatasi penggunaan air dan menaikkan tarif air; mengedukasi masyarakat tentang konservasi dan teknologi hemat air; membangun fasilitas pengolahan air bersih baru namun memerlukan waktu dan biaya besar. Berdasarkan informasi tersebut, manakah solusi yang sebaiknya diterapkan dan dievaluasi oleh pemerintah untuk mengatasi kelangkaan air bersih di Kota Maju? Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Pembatasan penggunaan air dan peningkatan tarif menjadi salah satu cara untuk mengendalikan permintaan air secara langsung.</li>
+        <li><b>2.</b> Mengedukasi masyarakat tentang konservasi air dapat membantu menurunkan konsumsi air jangka panjang.</li>
+        <li><b>3.</b> Membangun fasilitas baru adalah solusi terbaik dan paling cepat untuk mengatasi kelangkaan air saat ini.</li>
+        <li><b>4.</b> Pemerintah perlu melakukan evaluasi berkala terhadap efektivitas kebijakan pengendalian penggunaan air.</li>
+        <li><b>5.</b> Pendekatan teknologi hemat air tidak tepat karena masyarakat belum terbiasa menggunakannya.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, Pernyataan 2, dan Pernyataan 4</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Ekonomi Mikro dan Makro &mdash; Ketenagakerjaan</span><span>Penerapan</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Pengangguran merupakan salah satu permasalahan krusial yang terjadi di Indonesia. Beberapa wilayah dengan tingkat pengangguran tertinggi berdasarkan data Badan Pusat Statistik (BPS) pada Agustus 2024 di antaranya Provinsi Jawa Barat (6,75%), Banten (6,68%), Papua (6,48%), Papua Barat Daya (6,48%), dan Kepulauan Riau (6,39%). Pengangguran terjadi disebabkan oleh berbagai faktor, di antaranya kesenjangan antara keterampilan pencari kerja dengan kebutuhan pasar, keterbatasan lapangan kerja, serta faktor ekonomi makro. Manakah solusi yang dapat diterapkan untuk menyelesaikan permasalahan tersebut? Tentukan Benar atau Salah untuk setiap pernyataan berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Solusi</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Peningkatan upah bagi tenaga kerja.</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>Mendorong investasi daerah melalui insentif pajak dan kemudahan perizinan.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Menyediakan akses pembiayaan, pelatihan, dan pendampingan bagi pelaku UMKM.</td><td style="text-align:center;">Benar</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Salah, Benar, Benar</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Ekonomi Mikro dan Makro &mdash; Bank Sentral &amp; Kebijakan Moneter</span><span>Pemahaman</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Pada akhir tahun 2024, inflasi di Indonesia mulai menunjukkan tren peningkatan yang cukup signifikan. Untuk merespons hal tersebut, Bank Indonesia memutuskan menaikkan suku bunga acuan (BI Rate). Kebijakan ini diambil agar masyarakat mengurangi konsumsi dan menahan laju inflasi. Berdasarkan ilustrasi di atas, Bank Indonesia sedang menjalankan fungsi sebagai&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> penyelamat likuiditas bank</li>
+        <li><b>B.</b> pengawasan sistem keuangan</li>
+        <li><b>C.</b> penjaga stabilitas sistem pembayaran</li>
+        <li><b>D.</b> pelaksana kebijakan moneter</li>
+        <li><b>E.</b> pengelola cadangan devisa</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: D</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Ekonomi Internasional</span><span>Penerapan</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Selama tiga bulan pertama tahun 2024, ekspor Indonesia turun 15% karena permintaan dunia terhadap komoditas utama seperti batu bara dan minyak sawit menurun. Sementara itu, impor barang konsumsi naik 10%. Akibatnya, neraca perdagangan Indonesia mengalami defisit sebesar USD 1,2 miliar. Pemerintah berencana mengambil langkah strategis untuk meningkatkan ekspor dan mengendalikan impor. Berdasarkan informasi, kebijakan apa yang dapat diterapkan pemerintah untuk memperbaiki neraca perdagangan tersebut?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Memberikan insentif ekspor untuk sektor industri strategis dan mengenakan tarif tinggi untuk semua barang impor.</li>
+        <li><b>B.</b> Meningkatkan ekspor produk manufaktur dan mengurangi ketergantungan pada ekspor komoditas mentah.</li>
+        <li><b>C.</b> Menurunkan suku bunga agar masyarakat lebih konsumtif sehingga meningkatkan impor.</li>
+        <li><b>D.</b> Meningkatkan belanja negara produk manufaktur agar mendorong lebih banyak konsumsi barang impor.</li>
+        <li><b>E.</b> Menghentikan semua impor barang modal untuk mengurangi pengeluaran devisa.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: B</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Akuntansi Keuangan Dasar</span><span>Penerapan</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Berikut adalah data keuangan PT Sejahtera Makmur per 31 Desember 2023: Pendapatan usaha Rp120.000.000,00; Beban gaji karyawan Rp25.000.000,00; Beban listrik dan air Rp5.000.000,00; Beban penyusutan peralatan Rp10.000.000,00; Beban sewa gedung Rp15.000.000,00; Aset lancar Rp80.000.000,00; Aset tetap Rp150.000.000,00; Utang jangka pendek Rp30.000.000,00; Utang jangka panjang Rp50.000.000,00; Modal awal pemilik Rp100.000.000,00. Berdasarkan data tersebut, berapakah laba bersih yang diperoleh perusahaan?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Rp50.000.000,00</li>
+        <li><b>B.</b> Rp58.000.000,00</li>
+        <li><b>C.</b> Rp65.000.000,00</li>
+        <li><b>D.</b> Rp72.000.000,00</li>
+        <li><b>E.</b> Rp80.000.000,00</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Ekonomi paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-ekonomi-paket-1.html">Coba Tryout Ekonomi &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

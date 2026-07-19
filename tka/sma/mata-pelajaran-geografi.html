@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geografi &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Geografi SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Geografi</h1>
+    <p class="lead">TKA Geografi mengukur kemampuan murid jenjang SMA dalam memahami, menerapkan, dan menganalisis pengetahuan faktual, konseptual, serta prosedural yang berkaitan dengan fenomena geosfer.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Muatan TKA Geografi mencakup 5 elemen berikut.</p>
+    <table class="qtable">
+      <tr><th>Elemen</th><th>Cakupan</th></tr>
+      <tr><td>Wilayah Tempat Tinggal dan Lingkungan Sekitar</td><td>Karakteristik fisik &amp; sosial wilayah, dinamika kependudukan, keterkaitan karakteristik wilayah fisik &amp; sosial terhadap daya dukung lingkungan, penelitian geografi untuk permasalahan kewilayahan.</td></tr>
+      <tr><td>Proses yang Memengaruhi Lingkungan Fisik dan Sosial</td><td>Faktor yang memengaruhi lingkungan sosial, dinamika kependudukan, proses/fenomena yang memengaruhi lingkungan fisik, peranan manusia mengubah lingkungan fisik, persebaran bioma dunia.</td></tr>
+      <tr><td>Interaksi Antargejala Fisik Alam dan Manusia serta Pengaruhnya terhadap Kehidupan</td><td>Posisi geografis strategis Indonesia, potensi Sumber Daya Alam Indonesia dan pengelolaannya secara berkelanjutan.</td></tr>
+      <tr><td>Cara Mitigasi dan Adaptasi terhadap Bencana Alam</td><td>Ragam risiko dan faktor penyebab bencana geologis/hidroklimatologis, bentuk adaptasi masyarakat, dan upaya pengurangan risiko bencana.</td></tr>
+      <tr><td>Fenomena Geografi dalam Kehidupan Sehari-hari dan Manfaatnya</td><td>Peta, penginderaan jauh, dan Sistem Informasi Geografis (SIG); analisis fenomena geosfer dari peta/citra penginderaan jauh.</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Kemampuan Geografi diukur pada tiga level kognitif, masing-masing diterapkan pada kelima elemen di atas:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman</h3>
+      <p>Memahami karakteristik dan masalah wilayah tempat tinggal dan lingkungan sekitar, proses yang memengaruhi lingkungan fisik dan sosial, interaksi antar faktor/gejala fisik alam dan manusia, cara mitigasi dan adaptasi bencana, serta fenomena geografi sehari-hari.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Penerapan</h3>
+      <p>Menerapkan pemahaman tersebut dalam konteks nyata &mdash; menggunakan data, peta, dan informasi spasial untuk menjelaskan dan memecahkan permasalahan kewilayahan.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Penalaran</h3>
+      <p>Menyelesaikan permasalahan yang terkait karakteristik wilayah, proses lingkungan, interaksi fisik-manusia, mitigasi bencana, dan fenomena geografi melalui analisis dan evaluasi berbasis data.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">4 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Wilayah Tempat Tinggal &mdash; Permasalahan Kewilayahan</span><span>Penerapan</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Berdasarkan tangkapan citra satelit (soal asli disertai gambar), seorang kepala daerah mengidentifikasi terdapatnya indikasi banjir pada wilayah yang berbatasan dengan laut. Berdasarkan informasi tersebut, seorang peneliti akan menindaklanjuti permasalahan tersebut. Rumusan masalah manakah yang tepat? Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Bagaimana pengaruh bencana terhadap perekonomian penduduk?</li>
+        <li><b>2.</b> Apa saja jenis-jenis bencana alam yang berdampak luas terhadap masyarakat?</li>
+        <li><b>3.</b> Bagaimana hubungan antara pasang air laut dengan topografi wilayah?</li>
+        <li><b>4.</b> Mengapa siswa perlu mengetahui pentingnya menjaga lingkungan secara berkelanjutan?</li>
+        <li><b>5.</b> Bagaimana bentuk mitigasi bencana beserta dengan contohnya yang konkret di sekolah.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1 dan Pernyataan 3</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Proses yang Memengaruhi Lingkungan Fisik</span><span>Penerapan</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Danau Bandung Purba terbentuk sekitar 125.000 tahun lalu ketika material erupsi Gunung Sunda membendung aliran Sungai Citarum Purba. Kedalaman rata-rata danau Bandung Purba saat itu sekitar 20&ndash;30 meter. Peristiwa gempa bumi dan longsor akibat erosi di antara Curug Cukangrahong dan Curug Halimun sekitar 16.000 tahun lalu berakibat air danau ini mengalir ke utara. Dampaknya adalah air danau mulai terkuras kemudian membuat bentang lahan Cekungan Bandung menjadi rawa dan berangsur-angsur mengering. Danau Bandung Purba juga menjadi wilayah yang dihuni oleh manusia sejak lama dengan ditemukan adanya perkakas obsidian yang tersebar di sekitarnya. Tentukan apakah pernyataan tentang fenomena Bandung Purba terkait aktivitas manusia berikut Benar atau Salah!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Data menunjukkan bahwa Bandung pernah berada di bawah permukaan air.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Manusia mulai menempati kawasan Danau Bandung Purba setelah mengering.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Manusia mulai mengembangkan pertanian di utara danau.</td><td style="text-align:center;">Salah</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Benar, Benar, Salah</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Potensi Sumber Daya Alam Indonesia</span><span>Penalaran</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Kawasan pesisir di Desa Bedono, Kabupaten Demak, Jawa Tengah, mengalami abrasi parah sejak tahun 1990-an akibat kombinasi faktor alami dan aktivitas manusia (soal asli disertai foto lokasi). Sekitar 6 km&sup2; daratan tenggelam, memaksa ratusan keluarga meninggalkan rumah mereka. Kerusakan ini diperparah oleh konversi hutan mangrove menjadi tambak udang tanpa mempertimbangkan daya dukung lingkungan. Data Dinas Lingkungan Hidup tahun 2022 mencatat bahwa hanya sekitar 20% dari luasan mangrove awal yang masih bertahan, menyebabkan kerusakan ekosistem pesisir dan memperparah risiko bencana. Sejak 2015, berbagai upaya rehabilitasi dilakukan oleh pemerintah daerah, LSM, dan masyarakat setempat. Program restorasi mangrove ditargetkan menanam kembali 150.000 bibit mangrove hingga tahun 2025. Selain itu, dikembangkan konsep ekowisata berbasis konservasi. Hasil awal monitoring tahun 2023 menunjukkan bahwa 65% dari bibit mangrove yang ditanam berhasil tumbuh, mengurangi kecepatan abrasi rata-rata sebesar 10% per tahun di beberapa titik kritis. Tentukan fakta berikut ini Benar atau Salah terkait keberlanjutan pengelolaan SDA berdasarkan prinsip konservasi dan restorasi lingkungan!</p>
+      <table class="pernyataan-table">
+        <tr><th>Fakta</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Kerusakan hutan mangrove di Desa Bedono disebabkan oleh faktor alami.</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>Contoh pengelolaan berkelanjutan adalah ekowisata berbasis konservasi.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Penanaman mangrove terbukti dapat mengurangi abrasi pantai.</td><td style="text-align:center;">Benar</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Salah, Benar, Benar</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Mitigasi &amp; Adaptasi Bencana Geologis</span><span>Penalaran</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Tanaman sayuran seperti kubis, wortel, dan kentang (soal asli disertai gambar) tumbuh dengan baik di lahan sekitar gunung berapi. Sebagian lahan pernah tertimbun abu vulkanik dari letusan beberapa tahun sebelumnya. Petani menyebut tanah di wilayah tersebut sangat cocok untuk pertanian karena kandungan mineralnya tinggi. Tentukan Benar atau Salah untuk setiap pernyataan berikut terkait hubungan antara letusan gunung api dengan kondisi lahan!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Abu vulkanik yang jatuh ke permukaan tanah akan memperkaya unsur hara seperti kalium dan fosfor yang bermanfaat bagi tanaman.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Letusan gunung berapi selalu merusak seluruh lahan pertanian dan membuatnya tidak dapat digunakan selama puluhan tahun.</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>Lahan bekas aliran lava tidak pernah bisa dimanfaatkan kembali untuk pertanian.</td><td style="text-align:center;">Benar</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Benar, Salah, Benar</div>
+    </div>
+
+  </section>
+
+  <div class="note-box">Satu contoh soal resmi lain (Fenomena Geografi &mdash; Peta, Penginderaan Jauh dan SIG, tentang produk analisis dari citra satelit) memerlukan tampilan gambar citra yang tidak tersedia dalam dokumen sumber sehingga tidak ditampilkan di sini. Lihat dokumen resmi Kerangka Asesmen TKA untuk versi lengkapnya.</div>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Geografi paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-geografi-paket-1.html">Coba Tryout Geografi &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

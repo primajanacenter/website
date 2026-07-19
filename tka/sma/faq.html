@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pertanyaan Umum &mdash; Siap TKA</title>
+<meta name="description" content="Jawaban atas pertanyaan umum seputar TKA, mata pelajaran, tryout, data pengguna, dan paket premium di Siap TKA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .hero h1{font-size:1.7rem;margin:0 0 8px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  .cat-nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .cat-nav a{
+    font-size:.82rem;font-weight:600;color:var(--primary-dark);background:var(--primary-light);
+    padding:7px 14px;border-radius:999px;text-decoration:none;
+  }
+  .cat-nav a:hover{background:var(--primary);color:#fff;}
+
+  details{
+    border:1px solid var(--border);border-radius:10px;padding:0;margin-bottom:10px;background:var(--bg);
+    overflow:hidden;
+  }
+  details:last-child{margin-bottom:0;}
+  details summary{
+    padding:14px 16px;cursor:pointer;font-weight:600;font-size:.92rem;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  }
+  details summary::-webkit-details-marker{display:none;}
+  details summary::after{
+    content:"+";font-size:1.2rem;font-weight:400;color:var(--primary);flex:none;
+  }
+  details[open] summary::after{content:"\2212";}
+  details p{margin:0;padding:0 16px 16px;font-size:.88rem;color:var(--muted);}
+  details p a{color:var(--primary-dark);font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <section class="card hero">
+    <h1>Pertanyaan Umum</h1>
+    <p class="lead">Jawaban singkat seputar TKA, mata pelajaran, tryout, data penggunaan, dan paket premium di Siap TKA.</p>
+    <div class="cat-nav">
+      <a href="#tka">Tentang TKA</a>
+      <a href="#mapel">Mata Pelajaran</a>
+      <a href="#tryout">Tryout</a>
+      <a href="#data">Data &amp; Privasi</a>
+      <a href="#premium">Premium</a>
+    </div>
+  </section>
+
+  <section class="card section-card" id="tka">
+    <div class="section-title">Tentang TKA</div>
+
+    <details>
+      <summary>Apa itu TKA?</summary>
+      <p>Tes Kemampuan Akademik (TKA) adalah asesmen standar nasional untuk jenjang SMA/MA/SMK/MAK, berdasarkan Peraturan Kepala BSKAP Kemendikdasmen Nomor 045/H/AN/2025 tentang Kerangka Asesmen TKA. TKA mengukur pemahaman, penerapan, dan penalaran murid pada mata pelajaran wajib dan pilihan. Lihat penjelasan lengkap di <a href="tentang-tka.html">Tentang TKA</a>.</p>
+    </details>
+
+    <details>
+      <summary>Berapa banyak mata uji yang diujikan dalam TKA?</summary>
+      <p>Total 5 mata uji: 3 mata uji wajib (Bahasa Indonesia, Matematika, Bahasa Inggris) yang dikerjakan semua peserta, ditambah 2 mata uji pilihan yang dipilih peserta dari 18 mata uji yang tersedia untuk jenjang SMA/MA.</p>
+    </details>
+
+    <details>
+      <summary>Apa saja bentuk soal yang muncul di TKA?</summary>
+      <p>Ada 3 bentuk soal: Pilihan Ganda (sederhana), Pilihan Ganda Kompleks &ndash; Pilih Lebih dari Satu (MCMA), dan Pilihan Ganda Kompleks &ndash; Kategori (misalnya Benar/Salah atau Tepat/Tidak Tepat untuk beberapa pernyataan sekaligus).</p>
+    </details>
+
+    <details>
+      <summary>Apakah hasil TKA bisa digunakan untuk seleksi masuk perguruan tinggi?</summary>
+      <p>Hasil TKA dapat menjadi salah satu pertimbangan dalam seleksi penerimaan mahasiswa baru berdasarkan prestasi, dengan mata uji pilihan yang dirujukkan pada mata pelajaran pendukung program studi sesuai Kepmendikdasmen Nomor 102/M/2025. Untuk ketentuan seleksi yang berlaku di tahunmu, cek informasi resmi di situs Pusmendik.</p>
+    </details>
+
+    <details>
+      <summary>Kapan dan di mana TKA dilaksanakan?</summary>
+      <p>Jadwal dan lokasi pelaksanaan TKA ditetapkan oleh Pusmendik Kemendikdasmen dan dapat berubah tiap tahun. Selalu cek jadwal resmi terbaru di <a href="https://pusmendik.kemendikdasmen.go.id/tka/tka/view/mata-pelajaran-wajib/sma" target="_blank" rel="noopener">situs resmi Pusmendik</a>.</p>
+    </details>
+  </section>
+
+  <section class="card section-card" id="mapel">
+    <div class="section-title">Mata Pelajaran</div>
+
+    <details>
+      <summary>Bagaimana cara memilih 2 mata uji pilihan yang tepat?</summary>
+      <p>Gunakan halaman <a href="pilih-mapel.html">Pilih Mapel</a> untuk mencari mata pelajaran pendukung program studi tujuanmu berdasarkan data resmi Kepmendikdasmen Nomor 102/M/2025, atau coba Tes Minat Pilih Mapel untuk rekomendasi yang lebih personal.</p>
+    </details>
+
+    <details>
+      <summary>Apakah materi di situs ini mencakup semua mata uji TKA?</summary>
+      <p>Ya. Seluruh 21 mata uji &mdash; 3 wajib dan 18 pilihan &mdash; memiliki halaman materi berisi definisi, muatan, kompetensi, dan contoh soal resmi. Lihat daftar lengkapnya di <a href="mata-pelajaran.html">Mata Pelajaran</a>.</p>
+    </details>
+
+    <details>
+      <summary>Dari mana sumber contoh soal dan materi di situs ini?</summary>
+      <p>Semua definisi, muatan, kompetensi, dan contoh soal diambil dari Peraturan Kepala BSKAP Kemendikdasmen Nomor 045/H/AN/2025 tentang Kerangka Asesmen TKA. Beberapa contoh soal resmi yang aslinya menyertakan gambar/grafik yang tidak dapat direproduksi secara teks tidak ditampilkan, dan diberi catatan pada halaman terkait.</p>
+    </details>
+  </section>
+
+  <section class="card section-card" id="tryout">
+    <div class="section-title">Tryout &amp; Latihan Soal</div>
+
+    <details>
+      <summary>Apakah soal tryout di situs ini adalah soal resmi TKA?</summary>
+      <p>Tryout di situs ini adalah latihan mandiri yang disusun mengacu pada kerangka dan contoh soal resmi TKA, bukan bank soal ujian yang sesungguhnya. Soal ujian resmi TKA hanya dikeluarkan oleh penyelenggara resmi.</p>
+    </details>
+
+    <details>
+      <summary>Apakah skor tryout memengaruhi hasil TKA saya yang sesungguhnya?</summary>
+      <p>Tidak. Skor tryout di situs ini murni untuk latihan dan evaluasi mandiri, tidak terhubung dan tidak memengaruhi hasil TKA resmi.</p>
+    </details>
+
+    <details>
+      <summary>Bagaimana cara kerja skor dan pembahasan pada tryout?</summary>
+      <p>Setelah selesai mengerjakan, sistem langsung menghitung skor dan menampilkan kunci jawaban beserta pembahasan singkat untuk setiap soal, tanpa perlu menunggu atau mengirim jawaban ke server mana pun.</p>
+    </details>
+
+    <details>
+      <summary>Berapa banyak paket tryout yang tersedia per mata pelajaran?</summary>
+      <p>Setiap mata pelajaran punya 1 paket gratis (Paket 1) dan 5 paket tambahan (Paket 2&ndash;6) yang bisa diakses melalui premium. Lihat rinciannya di <a href="harga.html">Harga</a>.</p>
+    </details>
+  </section>
+
+  <section class="card section-card" id="data">
+    <div class="section-title">Data &amp; Privasi</div>
+
+    <details>
+      <summary>Apakah saya perlu membuat akun untuk menggunakan Siap TKA?</summary>
+      <p>Tidak perlu. Situs ini bisa langsung digunakan tanpa pendaftaran, login, atau data pribadi apa pun.</p>
+    </details>
+
+    <details>
+      <summary>Di mana skor dan progres saya tersimpan?</summary>
+      <p>Semua skor dan progres tersimpan secara lokal di penyimpanan browser (localStorage) pada perangkat yang kamu gunakan. Data ini tidak dikirim atau disimpan di server mana pun.</p>
+    </details>
+
+    <details>
+      <summary>Apakah progres saya akan hilang jika ganti perangkat atau menghapus cache browser?</summary>
+      <p>Ya. Karena data tersimpan secara lokal per perangkat dan per browser, mengganti perangkat, membersihkan cache/data situs, atau menggunakan mode penyamaran (incognito) akan menghapus progres yang tersimpan.</p>
+    </details>
+  </section>
+
+  <section class="card section-card" id="premium">
+    <div class="section-title">Premium</div>
+
+    <details>
+      <summary>Apa bedanya paket gratis dan premium?</summary>
+      <p>Paket gratis mencakup materi seluruh mata pelajaran dan 1 paket tryout tiap mata pelajaran. Paket premium menambahkan 5 paket tryout tambahan per mata pelajaran serta Tes Minat Pilih Mapel versi lengkap. Bandingkan detailnya di <a href="harga.html">Harga</a>.</p>
+    </details>
+
+    <details>
+      <summary>Apakah saya harus membeli premium untuk semua mata pelajaran sekaligus?</summary>
+      <p>Tidak. Premium dibeli per mata pelajaran, jadi kamu bisa fokus menambah latihan hanya untuk mata uji pilihan yang kamu ambil.</p>
+    </details>
+
+    <details>
+      <summary>Bagaimana cara mendapatkan paket premium?</summary>
+      <p>Kunjungi halaman <a href="harga.html">Harga</a> dan klik tombol "Tambah Paket Premium" pada mata pelajaran yang kamu inginkan.</p>
+    </details>
+  </section>
+
+  <div class="note-box">
+    Tidak menemukan jawaban yang kamu cari? Jelajahi <a href="tentang-tka.html">Tentang TKA</a>, <a href="mata-pelajaran.html">Mata Pelajaran</a>, atau kunjungi <a href="https://pusmendik.kemendikdasmen.go.id/tka/tka/view/mata-pelajaran-wajib/sma" target="_blank" rel="noopener">situs resmi Pusmendik</a> untuk informasi terbaru.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahasa Indonesia &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Bahasa Indonesia SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-wajib{background:var(--primary-light);color:var(--primary-dark);}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.9rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:9px 14px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+  table.qtable td.center,table.qtable th.center{text-align:center;}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 8px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card ul{margin:0;padding-left:20px;font-size:.88rem;color:var(--text);}
+  .comp-card li{margin-bottom:6px;}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .stimulus-box{background:var(--bg);border-left:3px solid var(--primary);padding:12px 16px;margin-bottom:14px;font-size:.88rem;color:var(--text);}
+  .stimulus-box p{margin:0 0 10px;}
+  .stimulus-box p:last-child{margin-bottom:0;}
+  .stimulus-source{font-size:.78rem;color:var(--muted);font-style:italic;}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.88rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-wajib">Wajib</span>
+    <h1>Bahasa Indonesia</h1>
+    <p class="lead">TKA Bahasa Indonesia difokuskan pada salah satu keterampilan berbahasa, yakni membaca &mdash; keterampilan yang menjadi fondasi untuk terus belajar dan bekerja pada era teknologi yang berubah dan berkembang sangat cepat.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Keterampilan membaca diujikan pada dua jenis teks:</p>
+    <ul>
+      <li><b>Teks informasi</b> (tunggal maupun jamak) &mdash; berisi fakta, konsep, prosedur, dan metakognisi dari berbagai bidang atau topik, genre, dan konteks pada skala lokal, nasional, dan global.</li>
+      <li><b>Teks fiksi</b> &mdash; dapat berupa realisme atau absurd, dengan latar cerita konkret atau abstrak, tokoh berkarakter bulat, konflik tunggal atau jamak dengan penyelesaian terbuka, alur campuran, dan sudut pandang campuran.</li>
+    </ul>
+    <p style="margin-bottom:0;">Teks yang digunakan memiliki panjang 250&ndash;300 kata (kecuali puisi), dengan karakteristik kosakata (kata khusus/umum, berimbuhan kompleks, istilah teknis), kalimat (8&ndash;12 kata per kalimat, kalimat kompleks dan inversi), serta wacana (konjungsi antarparagraf bermakna pertentangan dan sebab-akibat).</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Aspek keterampilan membaca dikelompokkan ke dalam tiga kompetensi:</p>
+
+    <div class="comp-card">
+      <h3>1. Pemahaman Tekstual</h3>
+      <p style="font-size:.88rem;margin:0 0 8px;">Kemampuan memahami informasi yang dikemukakan secara eksplisit, mengelompokkan, menyusun ulang, dan menyajikan kembali informasi secara eksplisit dari teks.</p>
+      <ul>
+        <li>Mengidentifikasi penggunaan kata serapan dari bahasa daerah/asing dalam berbagai bidang.</li>
+        <li>Mengidentifikasi latar, karakter, dan/atau fenomena berdasarkan kosakata yang digunakan dalam teks fiksi atau nonfiksi.</li>
+        <li>Menyusun kerangka atau bagan berdasarkan bagian-bagian penting dalam teks.</li>
+      </ul>
+    </div>
+
+    <div class="comp-card">
+      <h3>2. Pemahaman Inferensial</h3>
+      <p style="font-size:.88rem;margin:0 0 8px;">Kemampuan menarik kesimpulan berdasarkan informasi yang tersirat dalam teks.</p>
+      <ul>
+        <li>Menyimpulkan ide pokok, gagasan pendukung, tokoh, peristiwa, latar, konflik, atau nilai-nilai dalam teks.</li>
+        <li>Menjelaskan hubungan makna antarkalimat dan/atau antarparagraf dalam teks.</li>
+        <li>Memprediksi lanjutan atau akhir uraian/cerita berdasarkan bagian tertentu dalam teks.</li>
+      </ul>
+    </div>
+
+    <div class="comp-card">
+      <h3>3. Evaluasi dan Apresiasi</h3>
+      <p style="font-size:.88rem;margin:0 0 8px;">Kemampuan membuat penilaian terhadap ide, menanggapi teks secara emosional dan estetis dengan mempertimbangkan dampaknya terhadap perasaan, imajinasi, serta penggunaan bahasa oleh penulis.</p>
+      <ul>
+        <li>Menilai relevansi peristiwa dalam teks dengan kehidupan sehari-hari.</li>
+        <li>Menilai keakuratan, kesesuaian, kecukupan, atau ketepatan informasi dalam teks.</li>
+        <li>Menilai ketepatan dan kesesuaian penggunaan bahasa dalam teks.</li>
+        <li>Menilai ketepatan bagian teks untuk menggambarkan karakter, peristiwa, atau latar dalam teks fiksi.</li>
+        <li>Menyimpulkan respons emosional terhadap unsur puisi, prosa, dan drama.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Matriks Kompetensi &amp; Bentuk Soal</div>
+    <p style="font-size:.88rem;color:var(--muted);margin-top:0;">Kombinasi berikut diamati dari contoh soal resmi Kemendikdasmen &mdash; dalam pelaksanaan TKA sesungguhnya, kombinasi bentuk soal untuk tiap kompetensi dapat bervariasi.</p>
+    <table class="qtable">
+      <tr><th>Kompetensi</th><th>Bentuk Soal yang Pernah Digunakan</th></tr>
+      <tr><td>Pemahaman Tekstual</td><td>Pilihan Ganda</td></tr>
+      <tr><td>Pemahaman Inferensial</td><td>Pilihan Ganda Kompleks (Kategori)</td></tr>
+      <tr><td>Evaluasi dan Apresiasi</td><td>Pilihan Ganda Kompleks (Kategori), Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">5 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="stimulus-box">
+      <p><b>Teks untuk soal 2 dan 3 &mdash; Dampak Ekonomi Digital terhadap Pertumbuhan Usaha Kecil dan Menengah (UKM)</b></p>
+      <p>Ekonomi digital telah membawa perubahan besar dalam berbagai aspek bisnis, terutama bagi Usaha Kecil dan Menengah (UKM). Dengan adanya teknologi digital, UKM kini memiliki peluang lebih besar untuk berkembang dan bersaing di pasar yang lebih luas. Transformasi ini didorong oleh beberapa faktor utama, seperti perkembangan e-commerce, sistem pembayaran digital, pemasaran berbasis data, serta pemanfaatan teknologi berbasis kecerdasan buatan (artificial intelligence).</p>
+      <p>Salah satu perubahan signifikan dalam ekonomi digital adalah kemudahan akses ke platform e-commerce. UKM yang sebelumnya hanya mengandalkan toko fisik kini dapat menjual produknya melalui berbagai marketplace daring. Hal ini memungkinkan mereka menjangkau konsumen di luar wilayah lokal, bahkan hingga ke pasar internasional. Dengan biaya operasional yang lebih rendah dibandingkan toko fisik, UKM dapat mengalokasikan dana untuk inovasi dan peningkatan kualitas produk.</p>
+      <p>Selain akses pasar yang lebih luas, sistem pembayaran digital juga telah meningkatkan efisiensi transaksi keuangan. Melalui analisis data pelanggan, UKM dapat memahami tren pasar dan perilaku konsumen dengan lebih baik. Meskipun menawarkan banyak manfaat, transformasi digital juga menghadirkan tantangan: UKM harus mampu beradaptasi dengan perkembangan teknologi, meningkatkan literasi digital, dan menjaga keamanan data agar tetap kompetitif.</p>
+      <p class="stimulus-source">Sumber: Kementerian Koperasi dan UKM Republik Indonesia</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Pemahaman Inferensial</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Bagaimana pola pengembangan paragraf ke-1, ke-2, dan ke-3 pada teks tersebut? Tentukan Benar atau Salah untuk setiap pernyataan berdasarkan isi teks!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th class="center" style="text-align:center;">Kunci</th></tr>
+        <tr><td>Paragraf pertama (1) menggunakan pola sebab-akibat karena menjelaskan bagaimana teknologi digital menyebabkan perubahan bagi UKM.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Paragraf kedua (2) menggunakan pola proses karena menjelaskan langkah-langkah bagaimana UKM memanfaatkan e-commerce.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Paragraf ketiga (3) menggunakan pola klasifikasi karena membagi sistem pembayaran UKM menjadi beberapa kategori yang berbeda.</td><td style="text-align:center;">Salah</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Benar, Benar, Salah</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Evaluasi dan Apresiasi</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Dini: &ldquo;Teks tersebut sangat menarik dan bisa menambah wawasan kita, terutama jika kita berencana untuk mengembangkan suatu bisnis kecil.&rdquo;<br>
+      Rio: &ldquo;Iya, pilihan katanya juga sangat mudah dimengerti sehingga orang yang awam terhadap istilah di bidang ekonomi juga mudah memahami isi informasi yang disajikan.&rdquo;<br>
+      Sena: &ldquo;Aku sependapat dengan kalian berdua, tetapi rasanya teks tersebut akan lebih baik jika disertai data pertumbuhan UKM dalam kurun waktu lima tahun terakhir atau pendapat ahli di bidang ekonomi.&rdquo;<br><br>
+      Berdasarkan percakapan tersebut, mengapa pendapat Sena sangat baik dalam menilai keakuratan dari informasi yang disajikan tersebut? Tentukan Setuju atau Tidak Setuju untuk setiap alasan berdasarkan isi teks!</p>
+      <table class="pernyataan-table">
+        <tr><th>Alasan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Sena menyoroti bahwa teks harus mudah dipahami oleh semua kalangan, termasuk yang awam terhadap ekonomi.</td><td style="text-align:center;">Tidak Setuju</td></tr>
+        <tr><td>Sena mempertimbangkan kelengkapan dan dasar bukti dari informasi yang merupakan bagian dari menilai keakuratan teks.</td><td style="text-align:center;">Setuju</td></tr>
+        <tr><td>Sena memiliki inisiatif untuk memperbaiki isi teks dengan pendapat pribadinya sebagai ahli ekonomi agar lebih informatif.</td><td style="text-align:center;">Tidak Setuju</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Tidak Setuju, Setuju, Tidak Setuju</div>
+    </div>
+
+    <div class="stimulus-box">
+      <p><b>Teks untuk soal 4 s.d. 6 &mdash; kutipan cerpen &ldquo;Seragam&rdquo;</b></p>
+      <p>&ldquo;Hampir 25 tahun lalu kami berpisah karena keluarga saya harus boyongan ke kota tempat kerja Ayah yang baru di luar pulau. Tak satupun barang tertinggal di rumah lama. Begitu juga dengan sahabatku, kami harus berpisah.&rdquo;</p>
+      <p>Bertemu dengannya setelah sekian lama, mengingatkan kembali pada pengalaman kami dahulu&hellip; Saat malam itu saya berada di sini, memperhatikannya belajar. Selesai belajar, dia menyuruh saya pulang karena hendak pergi mencari jangkrik. Saya langsung menyatakan ingin ikut, tapi dia keberatan. Ayah dan ibunya pun melarang. Tapi malam itu saya nekat dan sahabat saya itu akhirnya tidak kuasa menolak.</p>
+      <p>Saya mengambil alih obor dari tangannya. Rasanya belum terlalu lama kami berada di sana ketika tiba-tiba angin berubah perangai. Api dengan cepat berpindah membakar punggung saya! Terdengar teriakannya sembari melepaskan seragam coklatnya untuk dipakai menyabet punggung saya. Sahabat saya itu tanggap melingkupi tubuh saya dengan seragam coklatnya melihat saya mulai menangis dan menggigil. Sadar saya membutuhkan pertolongan secepatnya, dia menggendong saya lalu berlari sembari membujuk-bujuk saya untuk tetap tenang. Napasnya memburu kelelahan, tapi rasa tanggung jawab yang besar seperti memberinya kekuatan berlipat untuk tetap bersama saya.</p>
+      <p class="stimulus-source">Kutipan Cerpen &ldquo;Seragam&rdquo; karya Aris Kurniawan Basuki, dengan penyesuaian</p>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Pemahaman Tekstual</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">&ldquo;Hampir 25 tahun lalu kami berpisah karena keluarga saya harus boyongan ke kota tempat kerja Ayah yang baru di luar pulau.&rdquo; Penggunaan kata serapan <i>boyongan</i> dapat memperjelas peristiwa yang dialami tokoh saya, yaitu&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Peristiwa pindahan yang sering dialami pegawai suatu instansi untuk kepentingan promosi jabatan.</li>
+        <li><b>B.</b> Peristiwa pindah rumah dari kampung halaman ke tempat yang jauh untuk jangka waktu lama.</li>
+        <li><b>C.</b> Pindah rumah bersama seluruh anggota keluarga dengan membawa semua barang rumah tangga.</li>
+        <li><b>D.</b> Pindah rumah untuk mengikuti tugas kedinasan orang tua di tempat baru yang letaknya sangat jauh.</li>
+        <li><b>E.</b> Kegiatan pindah rumah untuk sementara waktu dan akan berpindah lagi ke rumah dinas yang lain.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Pemahaman Inferensial</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Peristiwa apa yang mungkin akan terjadi kepada sahabatnya jika tokoh saya tidak ikut mencari jangkrik malam itu? Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Sahabat tokoh saya masih memiliki seragam pramuka untuk dipakai.</td><td style="text-align:center;">Tepat</td></tr>
+        <tr><td>Punggung sahabat tokoh saya tidak akan memiliki luka bakar.</td><td style="text-align:center;">Tidak Tepat</td></tr>
+        <tr><td>Sahabat tokoh saya akan mencari jangkrik tanpa perlu berlari.</td><td style="text-align:center;">Tepat</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Tepat, Tidak Tepat, Tepat</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 6</span><span>Evaluasi dan Apresiasi</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Kalimat mana saja dari kutipan cerpen tersebut yang membuktikan karakter sahabat tokoh saya merupakan seorang yang setia kawan? Pilihlah jawaban yang benar! Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Saya langsung menyatakan ingin ikut, tapi dia keberatan.</li>
+        <li><b>2.</b> Dia memang tidak memiliki banyak pakaian hingga seragam sekolah biasa dipakai kapan saja.</li>
+        <li><b>3.</b> Sahabat saya itu tanggap melingkupi tubuh saya dengan seragam coklatnya.</li>
+        <li><b>4.</b> Dia menggendong saya lalu berlari sembari membujuk-bujuk saya untuk tetap tenang.</li>
+        <li><b>5.</b> Rasa tanggung jawab yang besar seperti memberinya kekuatan berlipat untuk tetap bersama saya.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 3, 4, dan 5</div>
+    </div>
+
+    <div class="note-box">Satu contoh soal resmi lain (Soal 1, kompetensi Pemahaman Tekstual) menggunakan pilihan jawaban berupa bagan/diagram bergambar sehingga tidak ditampilkan di sini. Lihat dokumen resmi Kerangka Asesmen TKA untuk versi lengkapnya.</div>
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Bahasa Indonesia paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-bahasa-indonesia-paket-1.html">Coba Tryout Bahasa Indonesia &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

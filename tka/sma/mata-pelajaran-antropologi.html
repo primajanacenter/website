@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antropologi &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Antropologi SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Antropologi</h1>
+    <p class="lead">TKA Antropologi memberikan gambaran holistik mengenai kemampuan murid dalam memahami, menganalisis, dan mengaplikasikan antropologi sebagai disiplin keilmuan &mdash; baik aspek konseptual maupun praktis dalam menerapkan metode dan cara berpikir antropologis untuk menganalisis problematika sosial dan budaya.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Materi TKA Antropologi merupakan irisan Kurikulum 2013 dan Kurikulum Merdeka, mencakup 6 elemen berikut.</p>
+    <table class="qtable">
+      <tr><th>Elemen</th></tr>
+      <tr><td>Pengantar dan Ruang Lingkup Antropologi</td></tr>
+      <tr><td>Etnografi</td></tr>
+      <tr><td>Masyarakat Multikultural</td></tr>
+      <tr><td>Perubahan Sosial Budaya</td></tr>
+      <tr><td>Antropologi Sosial dan Antropologi Budaya</td></tr>
+      <tr><td>Kearifan Lokal dan Tradisi Lisan</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Kemampuan Antropologi diukur pada tiga level kognitif:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman (Knowing)</h3>
+      <p>Mengenali, mengingat, dan memahami konsep-konsep dasar dalam Antropologi, seperti kebudayaan, sistem sosial, etnografi, dan perubahan budaya.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Penerapan (Applying)</h3>
+      <p>Menerapkan konsep dalam menganalisis fenomena sosial budaya &mdash; menghubungkan teori dengan realitas, mengidentifikasi pola dalam kehidupan masyarakat, serta membandingkan kebudayaan yang berbeda. Level ini erat kaitannya dengan materi etnografi dalam penelitian antropologi.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Penalaran (Reasoning)</h3>
+      <p>Merefleksi dan mengevaluasi berbagai teori dan perspektif antropologi secara kritis serta menyusun pemikiran baru berdasarkan analisis yang dilakukan &mdash; menghasilkan sintesis dari berbagai konsep atau membuat interpretasi baru mengenai suatu fenomena budaya.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">5 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Pengantar &amp; Ruang Lingkup Antropologi</span><span>Penerapan</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Seorang murid melakukan observasi terhadap komunitas adat yang masih melakukan ritual panen secara turun-temurun. Komunitas tersebut juga menolak teknologi pertanian modern karena dianggap mengganggu keseimbangan alam dan leluhur. Manakah dari pernyataan berikut yang mencerminkan penerapan prinsip-prinsip dasar Antropologi yang dapat diterapkan oleh murid tersebut? Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Menghargai sistem kepercayaan komunitas sebagai bagian dari pandangan dunia mereka.</td><td style="text-align:center;">Tepat</td></tr>
+        <tr><td>Menilai bahwa komunitas tersebut bersifat tradisional karena tidak mengikuti kemajuan zaman.</td><td style="text-align:center;">Tidak Tepat</td></tr>
+        <tr><td>Menggunakan pendekatan holistik untuk memahami hubungan antara ritual dan sistem kepercayaan mereka.</td><td style="text-align:center;">Tepat</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Tepat, Tidak Tepat, Tepat</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>Etnografi</span><span>Penerapan</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Buku etnografi dengan judul <i>Tempat Terbaik di Dunia</i> mengisahkan kehidupan sehari-hari warga yang tinggal di kolong jembatan Jakarta, sebuah komunitas marginal yang kerap luput dari perhatian publik. Penulis buku tersebut, Roanne van Voorst, seorang antropolog asal Belanda, tinggal bersama komunitas ini selama beberapa waktu sebagai bagian dari penelitian lapangannya. Melalui pendekatan partisipatif dan observasi mendalam, Roanne merekam dinamika sosial, cara bertahan hidup, nilai kekeluargaan, solidaritas, serta harapan-harapan yang tumbuh di tengah kemiskinan ekstrem. Penelitian sebagaimana dijelaskan di atas merupakan jenis penelitian etnografis. Manakah dari pernyataan berikut yang sesuai dengan prinsip-prinsip dasar penelitian tersebut? Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Membaur dengan masyarakat dan mengikuti kegiatan sehari-hari warga yang tinggal di kolong jembatan Jakarta.</li>
+        <li><b>2.</b> Menggunakan pendekatan observasi partisipatif untuk memahami praktik budaya secara langsung dari komunitas marjinal di Jakarta tersebut.</li>
+        <li><b>3.</b> Melakukan wawancara dengan aparat desa saja agar tidak mengganggu praktik sosial warga.</li>
+        <li><b>4.</b> Mencatat secara rinci dengan observasi mendalam makna simbolik dari praktik dinamika sosial, cara bertahan hidup, dan nilai kekeluargaan.</li>
+        <li><b>5.</b> Menghindari keterlibatan langsung karena peneliti harus menjaga jarak objektif dengan cara ke perpustakaan.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, Pernyataan 2, dan Pernyataan 4</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Masyarakat Multikultural</span><span>Pemahaman</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Masyarakat multikultural terdiri atas beragam suku, ras, agama, dan budaya, seperti masyarakat Indonesia yang dikenal kaya akan keberagaman. Manakah contoh penerapan keberagaman masyarakat multikultural yang tepat dalam kehidupan sehari-hari?</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> Tokoh masyarakat menjalankan tradisi lokal sesuai dengan budaya daerahnya.</li>
+        <li><b>B.</b> Masyarakat adat mengadakan upacara adat sesuai dengan kebiasaan nenek moyang.</li>
+        <li><b>C.</b> Masyarakat mengenakan pakaian batik dalam peringatan Hari Batik Nasional.</li>
+        <li><b>D.</b> Warga melakukan kegiatan jual beli di pasar tradisional setiap hari.</li>
+        <li><b>E.</b> Umat dari agama lain ikut membantu saat perayaan hari besar keagamaan suatu agama.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: E</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Kearifan Lokal dan Tradisi Lisan</span><span>Penalaran</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Di sebuah desa adat di Bali, masyarakat secara turun-temurun menjalankan tradisi Subak, yaitu sistem irigasi berbasis komunitas yang mengatur pembagian air untuk sawah secara adil. Sistem ini juga mengandung nilai spiritual karena melibatkan upacara dan koordinasi antar kelompok petani. Namun, dalam beberapa tahun terakhir, muncul tantangan: lahan pertanian banyak dijual untuk pembangunan vila, anak muda tidak lagi tertarik bertani, dan sistem teknologi irigasi modern perlahan menggantikan peran tradisional Subak. Berdasarkan cerita tersebut, tentukan Sesuai atau Tidak Sesuai untuk setiap pernyataan berikut yang menggambarkan fungsi kearifan lokal dalam masyarakat!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Alih fungsi lahan dan pembangunan vila menunjukkan tantangan kearifan lokal sebagai dampak pariwisata.</td><td style="text-align:center;">Sesuai</td></tr>
+        <tr><td>Resistensi anak muda terhadap sistem Subak merupakan bentuk pelestarian budaya sebagai bagian kearifan lokal.</td><td style="text-align:center;">Tidak Sesuai</td></tr>
+        <tr><td>Penggantian sistem Subak dengan irigasi modern dapat mengikis nilai-nilai kolektivitas dalam masyarakat.</td><td style="text-align:center;">Sesuai</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Sesuai, Tidak Sesuai, Sesuai</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>Antropologi Sosial dan Antropologi Budaya</span><span>Penalaran</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Di Desa Wae Rebo, Nusa Tenggara Timur, masyarakat masih mempertahankan bentuk rumah adat Mbaru Niang dan sistem gotong royong dalam kehidupan sehari-hari. Dalam menghadapi arus pariwisata dan modernisasi, pemerintah daerah bekerja sama dengan antropolog untuk menjaga nilai-nilai budaya lokal sambil mengembangkan potensi ekonomi masyarakat. Berdasarkan ilustrasi di atas, manakah yang merupakan bentuk penerapan Antropologi Sosial dan Antropologi Budaya sebagai Antropologi Terapan? Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Mengkaji struktur sosial dan sistem gotong royong masyarakat Wae Rebo untuk merancang kebijakan pembangunan yang sesuai.</li>
+        <li><b>2.</b> Meneliti makna simbolik rumah adat Mbaru Niang dan menjadikannya dasar pengembangan ekowisata berbasis budaya.</li>
+        <li><b>3.</b> Mengganti tradisi lokal dengan budaya global agar masyarakat dapat lebih cepat beradaptasi dengan pariwisata modern.</li>
+        <li><b>4.</b> Memberikan pelatihan kepada masyarakat tentang bagaimana mempertahankan identitas budaya di tengah arus wisatawan.</li>
+        <li><b>5.</b> Menstandarkan budaya lokal agar seragam dan mudah dipromosikan secara nasional.</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 1, Pernyataan 2, dan Pernyataan 4</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Antropologi paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-antropologi-paket-1.html">Coba Tryout Antropologi &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

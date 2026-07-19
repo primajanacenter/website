@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahasa Jerman &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, dan kompetensi resmi TKA Bahasa Jerman SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Bahasa Jerman</h1>
+    <p class="lead">TKA Bahasa Jerman mengukur kemampuan murid dalam berbahasa Jerman pada level A1 Plus hingga A2.1 sesuai standar GER/CEFR, difokuskan pada keterampilan membaca &mdash; memahami ungkapan komunikatif sehari-hari, hal-hal konkret dan rutin, dari berbagai teks tulis sederhana dengan konteks situasi di negara-negara penutur Bahasa Jerman.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Teks yang digunakan berupa teks tulis sederhana berbentuk naratif, deskripsi, dialog, dan teks fungsional (formulir, kartu identitas, jadwal pelajaran, e-mail, pemberitahuan, iklan singkat, papan petunjuk, buku harian, tiket dan jadwal perjalanan, resep makanan, brosur, statistik sederhana, rencana perjalanan) dengan jumlah kosakata sekitar 750 kata (650 kata level A1 Plus dan 100 kata baru level A2.1).</p>
+    <table class="qtable">
+      <tr><th>Topik</th></tr>
+      <tr><td>Identit&auml;t (Identitas)</td></tr>
+      <tr><td>Schulleben (Kehidupan Sekolah)</td></tr>
+      <tr><td>Familien (Keluarga)</td></tr>
+      <tr><td>Wohnen (Tempat Tinggal)</td></tr>
+      <tr><td>Freizeitaktivit&auml;ten (Aktivitas Waktu Luang)</td></tr>
+      <tr><td>Berufe (Pekerjaan)</td></tr>
+      <tr><td>Essen und Trinken (Makanan dan Minuman)</td></tr>
+      <tr><td>Einkaufen (Berbelanja)</td></tr>
+      <tr><td>Reisen (Perjalanan)</td></tr>
+    </table>
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:0;">Cakupan tata bahasa (Grammatik) meliputi antara lain Nomen, Artikel im Nominativ, Konjugationen, Konjunktionen, Aussages&auml;tzen/W-Fragen/Ja-Nein-Fragen, Verben (regelm&auml;&szlig;ig, sein, haben, Vokalwechsel), Pr&auml;positionen mit Dativ/Akkusativ, Wechselpr&auml;positionen, Modalverben, Negation, Possessivartikel, Nominativ und Akkusativ, Personalpronomen, Imperativ, Pr&auml;teritum von haben/sein, Perfekt, dan Indefinitpronomen man.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Keterampilan membaca yang diukur mencakup tiga aspek:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman Literal</h3>
+      <p>Menentukan informasi spesifik (selektiv) dan informasi detail (detailliert) yang tersurat dalam teks, serta menggunakan kosakata dan ungkapan komunikatif yang tepat sesuai konteks secara literal dalam teks rumpang.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Reorganisasi</h3>
+      <p>Menyusun sebuah teks berdasarkan pemahaman terhadap sebuah teks tulis sederhana berbentuk naratif, deskripsi, transaksional, atau teks fungsional.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Pemahaman Inferensial</h3>
+      <p>Menentukan informasi umum (global), spesifik (selektiv), dan detail (detailliert) yang tersirat dalam teks, serta menggunakan kosakata dan ungkapan komunikatif yang tepat sesuai konteks secara inferensial dalam teks rumpang.</p>
+    </div>
+  </section>
+
+  <div class="note-box">Contoh soal resmi TKA Bahasa Jerman pada Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 seluruhnya merujuk pada teks bacaan, formulir, foto, dan dialog sumber (misalnya jadwal harian Ulrike, foto keluarga Weber, formulir data Tim) yang tidak tersedia dalam dokumen sumber yang dapat diakses &mdash; sehingga tidak ditampilkan di halaman ini agar tidak keliru. Lihat dokumen resmi Kerangka Asesmen TKA untuk versi lengkapnya.</div>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Bahasa Jerman paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-bahasa-jerman-paket-1.html">Coba Tryout Bahasa Jerman &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

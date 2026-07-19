@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harga &mdash; Siap TKA</title>
+<meta name="description" content="Bandingkan paket Gratis dan Premium Siap TKA — materi 21 mata pelajaran, tryout, dan tes minat pilih mapel untuk persiapan TKA SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .hero h1{font-size:1.7rem;margin:0 0 8px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+
+  .price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+  .price-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:24px;display:flex;flex-direction:column;}
+  .price-card.highlight{border:2px solid var(--primary);background:var(--primary-light);}
+  .price-card h3{margin:0 0 4px;font-size:1.15rem;}
+  .price-card .harga{font-size:1.6rem;font-weight:800;color:var(--primary-dark);margin:8px 0 4px;}
+  .price-card .harga small{font-size:.85rem;font-weight:600;color:var(--muted);}
+  .price-card .desk{font-size:.86rem;color:var(--muted);margin:0 0 16px;}
+  .feature-list{list-style:none;margin:0 0 20px;padding:0;flex:1;}
+  .feature-list li{font-size:.88rem;padding:7px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:flex-start;}
+  .feature-list li:last-child{border-bottom:none;}
+  .feature-list li b{color:var(--correct);flex:none;}
+
+  table.compare{width:100%;border-collapse:collapse;margin:14px 0 0;font-size:.85rem;}
+  table.compare th,table.compare td{border:1px solid var(--border);padding:10px 12px;text-align:left;}
+  table.compare th{background:var(--primary-light);color:var(--primary-dark);}
+  table.compare td.center{text-align:center;}
+  table.compare td.yes{color:var(--correct);font-weight:700;}
+  table.compare td.no{color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  .faq-item{margin-bottom:16px;}
+  .faq-item:last-child{margin-bottom:0;}
+  .faq-item h4{margin:0 0 4px;font-size:.92rem;}
+  .faq-item p{margin:0;font-size:.86rem;color:var(--muted);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html" class="active">Harga</a>
+    </nav>
+  </div>
+
+  <section class="card hero">
+    <h1>Harga</h1>
+    <p class="lead">Mulai belajar tanpa biaya. Materi lengkap, tes minat, dan 1 paket tryout tiap mata pelajaran selamanya gratis. Butuh latihan soal lebih banyak? Tambahkan paket premium per mata pelajaran.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Bandingkan Paket</div>
+    <div class="price-grid">
+
+      <div class="price-card">
+        <span class="pill pill-gratis">Gratis</span>
+        <h3>Paket Gratis</h3>
+        <div class="harga">Rp0</div>
+        <p class="desk">Cukup untuk mulai memahami TKA dan mencoba latihan soal di semua mata pelajaran.</p>
+        <ul class="feature-list">
+          <li><b>&#10003;</b> Info lengkap TKA &amp; bentuk soal</li>
+          <li><b>&#10003;</b> Materi 21 mata pelajaran (definisi, muatan, kompetensi, contoh soal resmi)</li>
+          <li><b>&#10003;</b> Tes Minat Pilih Mapel (versi dasar)</li>
+          <li><b>&#10003;</b> Tryout Paket 1 di setiap mata pelajaran</li>
+          <li><b>&#10003;</b> Skor otomatis &amp; pembahasan Paket 1</li>
+        </ul>
+        <a class="btn btn-ghost" href="tryout.html">Mulai Gratis</a>
+      </div>
+
+      <div class="price-card highlight">
+        <span class="pill pill-premium">Premium</span>
+        <h3>Paket Premium</h3>
+        <div class="harga">Rp50.000 <small>/ mata pelajaran</small></div>
+        <p class="desk">Untuk latihan lebih mendalam di mata pelajaran yang kamu pilih untuk TKA.</p>
+        <ul class="feature-list">
+          <li><b>&#10003;</b> Semua yang ada di Paket Gratis</li>
+          <li><b>&#10003;</b> 5 paket tryout tambahan (Paket 2&ndash;6) per mata pelajaran</li>
+          <li><b>&#10003;</b> Skor otomatis &amp; pembahasan lengkap tiap paket</li>
+          <li><b>&#10003;</b> Tes Minat Pilih Mapel versi lengkap (26 pernyataan)</li>
+          <li><b>&#10003;</b> Variasi soal berbeda di tiap paket untuk latihan berulang</li>
+        </ul>
+        <a class="btn btn-primary" href="#">Tambah Paket Premium</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Rincian Perbandingan</div>
+    <table class="compare">
+      <tr><th>Fitur</th><th class="center">Gratis</th><th class="center">Premium</th></tr>
+      <tr><td>Info TKA &amp; bentuk soal</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+      <tr><td>Materi 21 mata pelajaran</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+      <tr><td>Tes Minat Pilih Mapel dasar</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+      <tr><td>Tes Minat Pilih Mapel lengkap (26 pernyataan)</td><td class="center no">&mdash;</td><td class="center yes">&#10003;</td></tr>
+      <tr><td>Tryout Paket 1 per mata pelajaran</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+      <tr><td>Tryout Paket 2&ndash;6 per mata pelajaran</td><td class="center no">&mdash;</td><td class="center yes">&#10003;</td></tr>
+      <tr><td>Pembahasan lengkap tiap soal</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+      <tr><td>Skor tersimpan di perangkat</td><td class="center yes">&#10003;</td><td class="center yes">&#10003;</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Pertanyaan Umum</div>
+    <div class="faq-item">
+      <h4>Apakah paket gratis benar-benar gratis selamanya?</h4>
+      <p>Ya. Materi 21 mata pelajaran, Tes Minat Pilih Mapel dasar, dan Tryout Paket 1 di setiap mata pelajaran bisa diakses gratis tanpa batas waktu.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Apakah saya harus membeli premium untuk semua mata pelajaran?</h4>
+      <p>Tidak. Paket premium dibeli per mata pelajaran, jadi kamu bisa fokus menambah latihan hanya untuk 2 mata uji pilihan yang kamu ambil di TKA.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Apakah perlu membuat akun untuk menggunakan Siap TKA?</h4>
+      <p>Tidak perlu akun maupun login. Progres dan skor tryout tersimpan otomatis di penyimpanan lokal (localStorage) perangkat yang kamu gunakan.</p>
+    </div>
+    <div class="faq-item">
+      <h4>Bagaimana cara mendapatkan paket premium?</h4>
+      <p>Klik tombol "Tambah Paket Premium" pada mata pelajaran yang kamu inginkan untuk melihat cara mendapatkannya.</p>
+    </div>
+  </section>
+
+  <div class="note-box">
+    Punya pertanyaan lain seputar TKA atau cara kerja situs ini? Lihat halaman <a href="tentang-tka.html">Tentang TKA</a> atau jelajahi <a href="mata-pelajaran.html">daftar Mata Pelajaran</a> untuk mulai belajar.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

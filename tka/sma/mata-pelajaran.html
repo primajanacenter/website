@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mata Pelajaran &mdash; Siap TKA</title>
+<meta name="description" content="Daftar mata uji wajib dan pilihan TKA jenjang SMA/MA: definisi, muatan, kompetensi, matriks asesmen, dan contoh soal.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 4px;font-weight:700;color:var(--text);}
+  .section-sub{color:var(--muted);font-size:.88rem;margin:0 0 16px;}
+
+  .hero h1{font-size:1.7rem;margin:0 0 8px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  .pill{display:inline-block;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-wajib{background:var(--primary-light);color:var(--primary-dark);}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .subject-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
+  .subject-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column;}
+  .subject-card h3{margin:0 0 6px;font-size:1rem;}
+  .subject-card p{margin:0 0 14px;font-size:.86rem;color:var(--muted);flex:1;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.88rem;font-weight:600;padding:9px 16px;
+    transition:background .15s ease;
+  }
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);align-self:flex-start;}
+  .btn-ghost:hover{background:var(--primary-light);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.9rem;color:var(--text);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <section class="card hero">
+    <h1>Mata Pelajaran TKA</h1>
+    <p class="lead">Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal untuk setiap mata uji wajib dan pilihan TKA jenjang SMA/MA.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Wajib</div>
+    <p class="section-sub">Dikerjakan oleh semua peserta TKA.</p>
+    <div class="subject-grid">
+
+      <div class="subject-card">
+        <span class="pill pill-wajib">Wajib</span>
+        <h3>Bahasa Indonesia</h3>
+        <p>Mengukur keterampilan membaca teks informasi dan teks fiksi.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-bahasa-indonesia.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-wajib">Wajib</span>
+        <h3>Matematika</h3>
+        <p>Mengukur pemahaman bilangan, aljabar, geometri, trigonometri, dan data.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-matematika.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-wajib">Wajib</span>
+        <h3>Bahasa Inggris</h3>
+        <p>Mengukur pemahaman membaca teks berbahasa Inggris.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-bahasa-inggris.html">Lihat Detail</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Pilihan</div>
+    <p class="section-sub">Peserta memilih 2 mata uji pilihan sesuai program studi tujuan. Belum yakin memilih yang mana? Coba <a href="pilih-mapel.html">Tes Minat Pilih Mapel</a>.</p>
+    <div class="subject-grid">
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Bahasa Indonesia Tingkat Lanjut</h3>
+        <p>Versi lanjutan Bahasa Indonesia dengan teks dan penalaran yang lebih kompleks.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-bahasa-indonesia-tingkat-lanjut.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Matematika Tingkat Lanjut</h3>
+        <p>Versi lanjutan Matematika dengan materi dan penalaran yang lebih mendalam.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-matematika-tingkat-lanjut.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Bahasa Inggris Tingkat Lanjut</h3>
+        <p>Versi lanjutan Bahasa Inggris dengan teks dan penalaran yang lebih kompleks.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-bahasa-inggris-tingkat-lanjut.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Fisika</h3>
+        <p>Mengukur pemahaman kinematika, dinamika, fluida, gelombang, kalor, dan kelistrikan.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-fisika.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Kimia</h3>
+        <p>Mengukur pemahaman konsep, penerapan, dan penalaran kimia.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-kimia.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Biologi</h3>
+        <p>Mengukur pemahaman konsep dan penerapan ilmu hayati.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-biologi.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Pendidikan Pancasila dan Kewarganegaraan</h3>
+        <p>Mengukur pemahaman nilai, norma, dan wawasan kebangsaan.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-pendidikan-pancasila.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Ekonomi</h3>
+        <p>Mengukur pemahaman konsep ekonomi mikro, makro, dan literasi keuangan.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-ekonomi.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Geografi</h3>
+        <p>Mengukur pemahaman fenomena geosfer dan interaksi keruangan.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-geografi.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Sosiologi</h3>
+        <p>Mengukur pemahaman fenomena dan interaksi sosial di masyarakat.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-sosiologi.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Sejarah</h3>
+        <p>Mengukur pemahaman peristiwa dan penalaran sejarah.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-sejarah.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Antropologi</h3>
+        <p>Mengukur pemahaman keragaman budaya dan kehidupan manusia.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-antropologi.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Bahasa Prancis</h3>
+        <p>Mengukur pemahaman membaca teks berbahasa Prancis.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-bahasa-prancis.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Bahasa Jerman</h3>
+        <p>Mengukur pemahaman membaca teks berbahasa Jerman.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-bahasa-jerman.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Bahasa Jepang</h3>
+        <p>Mengukur pemahaman membaca teks berbahasa Jepang.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-bahasa-jepang.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Bahasa Mandarin</h3>
+        <p>Mengukur pemahaman membaca teks berbahasa Mandarin.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-bahasa-mandarin.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Bahasa Korea</h3>
+        <p>Mengukur pemahaman membaca teks berbahasa Korea.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-bahasa-korea.html">Lihat Detail</a>
+      </div>
+
+      <div class="subject-card">
+        <span class="pill pill-pilihan">Pilihan</span>
+        <h3>Bahasa Arab</h3>
+        <p>Mengukur pemahaman membaca teks berbahasa Arab.</p>
+        <a class="btn btn-ghost" href="mata-pelajaran-bahasa-arab.html">Lihat Detail</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="note-box">
+    Ringkasan singkat di atas untuk gambaran awal. Detail lengkap tiap mata uji (definisi, muatan, kompetensi, matriks asesmen, dan contoh soal) tersedia di masing-masing halaman detail, mengacu pada Kerangka Asesmen TKA Kemendikdasmen. Lihat juga <a href="tentang-tka.html">Tentang TKA</a> untuk penjelasan jenis dan bentuk soal.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

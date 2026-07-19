@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pendidikan Pancasila &mdash; Mata Pelajaran TKA &mdash; Siap TKA</title>
+<meta name="description" content="Definisi, muatan, kompetensi, matriks asesmen, dan contoh soal resmi TKA Pendidikan Pancasila dan Kewarganegaraan SMA/MA.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .breadcrumb{font-size:.85rem;margin-bottom:14px;}
+  .breadcrumb a{color:var(--primary-dark);text-decoration:none;font-weight:600;}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+  .section-title{font-size:1.1rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-pilihan{background:#ede9fe;color:#5b21b6;}
+
+  .hero h1{font-size:1.6rem;margin:6px 0 10px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:1rem;max-width:640px;}
+
+  table.qtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;}
+  table.qtable th,table.qtable td{border:1px solid var(--border);padding:8px 11px;text-align:left;vertical-align:top;}
+  table.qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  .comp-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+  .comp-card:last-child{margin-bottom:0;}
+  .comp-card h3{margin:0 0 6px;font-size:.98rem;color:var(--primary-dark);}
+  .comp-card p{margin:0;font-size:.86rem;color:var(--text);}
+
+  .soal-block{border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;background:var(--surface);}
+  .soal-block:last-child{margin-bottom:0;}
+  .soal-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .soal-meta span{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--primary-light);color:var(--primary-dark);}
+  .soal-question{font-weight:600;margin:0 0 10px;}
+  .opsi-list{list-style:none;margin:0 0 12px;padding:0;}
+  .opsi-list li{padding:9px 13px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:.9rem;}
+  .opsi-list li b{margin-right:6px;color:var(--primary-dark);}
+  table.pernyataan-table{width:100%;border-collapse:collapse;margin:0 0 12px;font-size:.85rem;}
+  table.pernyataan-table th,table.pernyataan-table td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.pernyataan-table th{background:var(--primary-light);color:var(--primary-dark);}
+  .kunci-box{background:var(--correct-bg);border:1px solid #bbf7d0;color:var(--correct);border-radius:8px;padding:10px 14px;font-size:.88rem;font-weight:700;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:16px;font-size:.86rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+  }
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html" class="active">Mata Pelajaran</a>
+      <a href="tryout.html">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <div class="breadcrumb"><a href="mata-pelajaran.html">&larr; Semua Mata Pelajaran</a></div>
+
+  <section class="card hero">
+    <span class="pill pill-pilihan">Pilihan</span>
+    <h1>Pendidikan Pancasila</h1>
+    <p class="lead">TKA Pendidikan Pancasila dan Kewarganegaraan/Pendidikan Pancasila mengukur kemampuan murid dalam menjelaskan, menerapkan, dan menganalisis Pancasila, Undang-Undang Dasar Negara Republik Indonesia Tahun 1945, Bhinneka Tunggal Ika, dan komitmen terhadap Negara Kesatuan Republik Indonesia sebagai warga negara yang cerdas, demokratis, dan bertanggung jawab.</p>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Muatan</div>
+    <p>Muatan disusun berdasarkan elemen Pendidikan Pancasila dan Kewarganegaraan pada Kurikulum 2013 dengan Pendidikan Pancasila pada Kurikulum Merdeka, terdiri dari 4 elemen berikut.</p>
+    <table class="qtable">
+      <tr><th>Elemen</th><th>Cakupan / Sub-elemen</th></tr>
+      <tr><td>Pancasila</td><td>Pancasila sebagai dasar negara, ideologi negara, identitas nasional, hak asasi manusia dan demokrasi Pancasila; makna sila-sila Pancasila, sejarah perumusan Pancasila, serta permasalahan dan solusi dalam penerapan nilai-nilai Pancasila.</td></tr>
+      <tr><td>Undang-Undang Dasar Negara Republik Indonesia Tahun 1945</td><td>Penegakan hukum, perlindungan HAM, ketentuan UUD NRI Tahun 1945, demokrasi, hubungan pemerintah pusat dan daerah, kewenangan lembaga negara, hak dan kewajiban warga negara.</td></tr>
+      <tr><td>Bhinneka Tunggal Ika</td><td>Integrasi nasional, mengelola kebinekaan sebagai modal sosial, harmoni dalam keberagaman, implementasi prinsip gotong royong, dan ancaman terhadap kebinekaan.</td></tr>
+      <tr><td>Negara Kesatuan Republik Indonesia</td><td>Perilaku warga negara yang baik, bentuk negara, bentuk dan sistem pemerintahan, pengaruh kemajuan IPTEKS terhadap NKRI, Wawasan Nusantara, demokrasi Indonesia, sistem pertahanan, dan peran Indonesia dalam perdamaian dunia.</td></tr>
+    </table>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Kompetensi</div>
+    <p>Kemampuan Pendidikan Pancasila diukur pada tiga level kognitif, masing-masing diterapkan pada keempat elemen di atas:</p>
+    <div class="comp-card">
+      <h3>1. Pemahaman</h3>
+      <p>Menjelaskan konsep Pancasila, UUD Tahun 1945, Bhinneka Tunggal Ika, dan komitmen terhadap Negara Kesatuan Republik Indonesia.</p>
+    </div>
+    <div class="comp-card">
+      <h3>2. Penerapan</h3>
+      <p>Menerapkan konsep Pancasila, UUD Tahun 1945, Bhinneka Tunggal Ika, dan komitmen terhadap Negara Kesatuan Republik Indonesia dalam konteks kehidupan sehari-hari.</p>
+    </div>
+    <div class="comp-card">
+      <h3>3. Penalaran</h3>
+      <p>Menganalisis dan menyelesaikan permasalahan terkait Pancasila, UUD Tahun 1945, Bhinneka Tunggal Ika, dan komitmen terhadap Negara Kesatuan Republik Indonesia.</p>
+    </div>
+  </section>
+
+  <section class="card section-card">
+    <div class="section-title">Contoh Soal</div>
+    <p style="font-size:.86rem;color:var(--muted);margin-top:0;">5 contoh soal resmi berikut dikutip dari Lampiran IV Peraturan Kepala BSKAP Kemendikdasmen No. 045/H/AN/2025 tentang Kerangka Asesmen TKA.</p>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 1</span><span>Pancasila</span><span>Penalaran</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Pada awal kemerdekaan Indonesia, terdapat perdebatan tajam tentang dasar negara karena perbedaan keinginan antara negara berdasarkan agama tertentu, paham sekuler, dan sosialisme. Namun pada akhirnya, Pancasila dipilih sebagai dasar dan ideologi negara. Alasan utama Pancasila diterima sebagai ideologi negara dalam situasi keberagaman ideologis tersebut karena Pancasila&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> menyatukan paham ideologi-ideologi yang berkembang di masyarakat</li>
+        <li><b>B.</b> berfungsi sebagai identitas nasional yang menghilangkan keberagaman</li>
+        <li><b>C.</b> menjadi dokumen resmi pertama yang ditulis dalam Pembukaan UUD 1945</li>
+        <li><b>D.</b> menyatukan perbedaan pandangan seluruh golongan masyarakat secara adil</li>
+        <li><b>E.</b> merupakan ideologi yang nilai-nilainya mudah diterapkan pada masa tersebut</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: D</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 2</span><span>UUD NRI Tahun 1945</span><span>Penerapan</span><span>PGK Pilih Lebih dari Satu</span></div>
+      <p class="soal-question">Pada suatu masyarakat adat di suatu desa terpencil, terjadi penolakan terhadap pembangunan gedung pemerintah desa, karena merasa tidak membutuhkan fasilitas tersebut. Pemerintah daerah setempat berupaya mencari solusi agar pembangunan tetap berjalan dengan melakukan dialog dan bertemu dengan para tokoh masyarakat adat. Solusi yang dilakukan dengan mengangkat beberapa tokoh adat menjadi petugas di kantor desa tersebut. Berdasarkan ilustrasi, tentukan alasan pentingnya dilakukan solusi atas kasus tersebut berdasarkan pernyataan berikut! Jawaban benar lebih dari satu.</p>
+      <ul class="opsi-list">
+        <li><b>1.</b> Menunjukkan kewenangan pemerintah pusat dalam mengendalikan masyarakat adat</li>
+        <li><b>2.</b> Memudahkan pemerintah untuk membantu memenuhi kebutuhan masyarakat adat</li>
+        <li><b>3.</b> Pemerintah menyadari masyarakat adat memiliki kekuasaan penuh pada daerahnya</li>
+        <li><b>4.</b> Hak masyarakat untuk mendapatkan pelayanan publik dapat dipenuhi secara merata</li>
+        <li><b>5.</b> Menghindari konflik yang dapat merusak hubungan pemerintah dan masyarakat adat</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: Pernyataan 2, Pernyataan 4, dan Pernyataan 5</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 3</span><span>Negara Kesatuan Republik Indonesia</span><span>Penalaran</span><span>Pilihan Ganda</span></div>
+      <p class="soal-question">Platform media sosial tidak hanya digunakan untuk hiburan, tetapi juga dijadikan sebagai sarana menyuarakan aspirasi politik, membentuk opini publik, bahkan memengaruhi kebijakan publik. Berdasarkan ilustrasi, dampak strategis tersebut terhadap eksistensi NKRI yaitu&hellip;</p>
+      <ul class="opsi-list">
+        <li><b>A.</b> menguatkan stabilitas nasional dengan penyebaran informasi yang cepat dan merata ke seluruh wilayah</li>
+        <li><b>B.</b> mendorong kemandirian masyarakat daerah dalam menentukan kebijakan politik secara otonom</li>
+        <li><b>C.</b> meningkatkan risiko disintegrasi apabila informasi tersebut disalahgunakan oleh masyarakat</li>
+        <li><b>D.</b> menumbuhkan kesadaran politik masyarakat yang mampu mengurangi konflik antarwilayah</li>
+        <li><b>E.</b> menghasilkan kebijakan publik yang dapat menyerap seluruh keinginan dari masyarakat</li>
+      </ul>
+      <div class="kunci-box">Kunci Jawaban: C</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 4</span><span>Bhinneka Tunggal Ika</span><span>Pemahaman</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Gotong royong dilakukan oleh warga lintas suku dalam membersihkan lingkungan di wilayah perkotaan yang penduduknya berasal dari berbagai daerah. Kondisi masyarakat tersebut sesuai dengan penerapan dari Bhinneka Tunggal Ika. Tentukan Benar atau Salah untuk setiap pernyataan di bawah ini terkait hal tersebut!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Kegiatan gotong royong mencerminkan semangat persatuan dan keberagaman.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Perilaku dalam ilustrasi aktualisasi nyata dari nilai Bhinneka Tunggal Ika.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Kegiatan lintas suku tersebut mengontrol kepentingan masyarakat yang beragam.</td><td style="text-align:center;">Salah</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Benar, Benar, Salah</div>
+    </div>
+
+    <div class="soal-block">
+      <div class="soal-meta"><span>Soal 5</span><span>UUD NRI Tahun 1945</span><span>Pemahaman</span><span>PGK Kategori</span></div>
+      <p class="soal-question">Pasca amandemen ketiga UUD NRI Tahun 1945 telah dibentuk Mahkamah Konstitusi (MK) sebagai salah satu lembaga yang melaksanakan kekuasaan kehakiman. Tentukan Benar atau Salah untuk setiap pernyataan berikut terkait contoh penerapan kewenangan Mahkamah Konstitusi!</p>
+      <table class="pernyataan-table">
+        <tr><th>Pernyataan</th><th style="text-align:center;">Kunci</th></tr>
+        <tr><td>Menguji Undang-Undang terhadap UUD NRI Tahun 1945.</td><td style="text-align:center;">Benar</td></tr>
+        <tr><td>Mengawasi aktivitas organisasi lembaga partai politik.</td><td style="text-align:center;">Salah</td></tr>
+        <tr><td>Memutuskan sengketa kewenangan organisasi masyarakat.</td><td style="text-align:center;">Salah</td></tr>
+      </table>
+      <div class="kunci-box">Kunci Jawaban: Benar, Salah, Salah</div>
+    </div>
+
+  </section>
+
+  <section class="card section-card" style="text-align:center;">
+    <div class="section-title" style="text-align:left;">Siap Coba Latihan?</div>
+    <p style="color:var(--muted);margin-top:0;">Kerjakan tryout Pendidikan Pancasila paket 1 secara gratis, lengkap dengan skor dan pembahasan.</p>
+    <a class="btn btn-primary" href="tryout-pendidikan-pancasila-paket-1.html">Coba Tryout Pendidikan Pancasila &rarr;</a>
+  </section>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
