@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tryout Pendidikan Pancasila — Paket 4 | Siap TKA</title>
+<meta name="description" content="Latihan tryout Pendidikan Pancasila Paket 4 untuk persiapan TKA SMA/MA — 25 soal Pancasila, UUD NRI Tahun 1945, Bhinneka Tunggal Ika, dan Negara Kesatuan Republik Indonesia, timer, skor otomatis, dan pembahasan lengkap.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --wrong:#dc2626;
+    --wrong-bg:#fef2f2;
+    --empty:#b45309;
+    --empty-bg:#fffbeb;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .timer{
+    display:flex;align-items:center;gap:8px;
+    font-variant-numeric:tabular-nums;
+    font-weight:700;font-size:1.05rem;
+    padding:8px 16px;border-radius:999px;
+    background:var(--primary-light);color:var(--primary-dark);
+    border:1px solid #c7d2fe;
+  }
+  .timer.low{background:var(--wrong-bg);color:var(--wrong);border-color:#fecaca;}
+  .timer .icon{font-size:1rem;}
+
+  .screen{display:none;}
+  .screen.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+
+  /* ---- math notation helpers (no external library needed) ---- */
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+    margin:0 3px;line-height:1;position:relative;top:0.16em;font-size:0.9em;}
+  .frac .num{padding:0 4px 2px;border-bottom:1.4px solid currentColor;}
+  .frac .den{padding:2px 4px 0;}
+  .rad{border-top:1.4px solid currentColor;padding:0 3px;margin-left:1px;}
+  sup{font-size:.72em;top:-0.55em;}
+  sub{font-size:.72em;bottom:-0.25em;}
+  .qtable{border-collapse:collapse;margin:14px 0;font-size:.92rem;}
+  .qtable th,.qtable td{border:1px solid var(--border);padding:6px 16px;text-align:center;}
+  .qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  /* START SCREEN */
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+  .hero h1{font-size:1.7rem;margin:0 0 6px;}
+  .hero p.lead{color:var(--muted);margin:0 0 24px;font-size:1rem;}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0;}
+  .info-item{background:var(--primary-light);border-radius:10px;padding:14px 16px;}
+  .info-item .num2{font-size:1.4rem;font-weight:800;color:var(--primary-dark);}
+  .info-item .label{font-size:.82rem;color:var(--muted);margin-top:2px;}
+  .rules{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:16px 18px;margin:20px 0;font-size:.92rem;color:var(--text);}
+  .rules b{color:var(--primary-dark);}
+  .rules ul{margin:8px 0 0;padding-left:20px;}
+  .rules li{margin-bottom:4px;}
+  .topics-list{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 24px;}
+  .topic-chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.82rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+    transition:transform .1s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+  .btn-block{width:100%;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+
+  .resume-banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+  /* QUIZ SCREEN */
+  .quiz-layout{display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start;}
+  @media (max-width:760px){.quiz-layout{grid-template-columns:1fr;}}
+
+  .progress-bar{height:6px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:20px;}
+  .progress-bar .fill{height:100%;background:var(--primary);border-radius:999px;transition:width .2s ease;}
+
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;}
+  .q-index{font-weight:700;color:var(--primary-dark);font-size:.95rem;}
+  .q-topic{font-size:.78rem;color:var(--muted);background:var(--primary-light);padding:4px 10px;border-radius:999px;}
+  .q-type-badge{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:#fef3c7;color:#92400e;}
+  .q-hint{font-size:.82rem;color:var(--muted);margin-bottom:14px;font-style:italic;}
+  .q-text{font-size:1.05rem;margin:0 0 20px;}
+  .q-text img{max-width:100%;}
+
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .option{
+    display:flex;align-items:flex-start;gap:12px;
+    border:1.5px solid var(--border);border-radius:10px;
+    padding:13px 16px;cursor:pointer;font-size:.96rem;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .option:hover{border-color:var(--primary);background:var(--primary-light);}
+  .option.selected{border-color:var(--primary);background:var(--primary-light);}
+  .option .letter{
+    width:26px;height:26px;flex:none;border-radius:50%;
+    border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
+    font-size:.8rem;font-weight:700;color:var(--muted);
+  }
+  .option.mcma .letter{border-radius:7px;}
+  .option.selected .letter{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+  .statement-row{border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+  .statement-text{margin-bottom:12px;font-size:.94rem;}
+  .statement-choices{display:flex;gap:10px;}
+  .choice-btn{flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);cursor:pointer;font-weight:700;font-size:.85rem;text-align:center;color:var(--muted);}
+  .choice-btn:hover{border-color:var(--primary);}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark);}
+
+  .quiz-nav-btns{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+
+  .nav-panel{position:sticky;top:78px;}
+  .nav-panel .card{padding:18px;}
+  .nav-panel h4{margin:0 0 4px;font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:14px 0;}
+  .nav-cell{
+    aspect-ratio:1;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);color:var(--muted);font-size:.78rem;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .nav-cell.answered{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);}
+  .nav-cell.current{outline:2px solid var(--primary);outline-offset:1px;}
+  .legend{display:flex;flex-direction:column;gap:6px;font-size:.78rem;color:var(--muted);margin-top:10px;}
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .legend i{width:12px;height:12px;border-radius:4px;display:inline-block;border:1.5px solid var(--border);}
+  .legend i.a{background:var(--primary-light);border-color:var(--primary);}
+
+  /* RESULT SCREEN */
+  .result-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:24px 0;}
+  .stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+  .stat .val{font-size:1.6rem;font-weight:800;}
+  .stat .lbl{font-size:.78rem;color:var(--muted);margin-top:4px;}
+  .stat.score .val{color:var(--primary-dark);}
+  .stat.correct .val{color:var(--correct);}
+  .stat.wrong .val{color:var(--wrong);}
+  .stat.empty .val{color:var(--empty);}
+
+  .topic-bars{display:flex;flex-direction:column;gap:14px;margin:20px 0 8px;}
+  .topic-bar-row .top{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:6px;}
+  .topic-bar-row .top .name{font-weight:600;}
+  .topic-bar-row .top .frac2{color:var(--muted);}
+  .bar-track{height:9px;background:var(--border);border-radius:999px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--primary);border-radius:999px;}
+
+  .section-title{font-size:1.1rem;margin:32px 0 14px;font-weight:700;}
+  .review-item{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--surface);}
+  .review-item summary{
+    list-style:none;cursor:pointer;padding:14px 18px;
+    display:flex;align-items:center;gap:12px;font-weight:600;font-size:.92rem;flex-wrap:wrap;
+  }
+  .review-item summary::-webkit-details-marker{display:none;}
+  .review-item summary .chev{margin-left:auto;color:var(--muted);font-size:.8rem;}
+  .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;flex:none;}
+  .badge.correct{background:var(--correct-bg);color:var(--correct);}
+  .badge.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .badge.empty{background:var(--empty-bg);color:var(--empty);}
+  .badge.typebadge{background:#fef3c7;color:#92400e;}
+  .review-body{padding:0 18px 20px;border-top:1px solid var(--border);}
+  .review-body .q-text{font-size:.96rem;margin:16px 0;}
+  .review-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .review-opt{display:flex;gap:10px;padding:9px 13px;border-radius:8px;border:1px solid var(--border);font-size:.9rem;align-items:center;}
+  .review-opt .letter{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex:none;}
+  .review-opt.is-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-opt.is-correct .letter{background:var(--correct);border-color:var(--correct);color:#fff;}
+  .review-opt.is-wrong-pick{background:var(--wrong-bg);border-color:#fecaca;}
+  .review-opt.is-wrong-pick .letter{background:var(--wrong);border-color:var(--wrong);color:#fff;}
+  .opt-tag{margin-left:auto;font-size:.72rem;color:var(--muted);font-style:italic;}
+  .review-statement{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;font-size:.9rem;}
+  .review-statement.st-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-statement.st-wrong{background:var(--wrong-bg);border-color:#fecaca;}
+  .st-answer{font-size:.78rem;font-weight:700;flex:none;}
+  .pembahasan{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:.9rem;}
+  .pembahasan b{color:var(--primary-dark);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html" class="active">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <!-- START SCREEN -->
+  <section class="screen active" id="screen-start">
+    <div class="card hero">
+      <div id="resumeBanner" style="display:none;" class="resume-banner">
+        <span>Kamu punya progres tryout yang belum selesai.</span>
+        <div class="btn-row" style="margin:0;">
+          <button class="btn btn-primary" id="btnResume">Lanjutkan Tryout</button>
+          <button class="btn btn-ghost" id="btnRestartFresh">Mulai Baru</button>
+        </div>
+      </div>
+
+      <span class="pill pill-premium">Premium</span>
+      <h1>Tryout Pendidikan Pancasila &mdash; Paket 4</h1>
+      <p class="lead">Simulasi latihan mandiri mengikuti ketentuan resmi TKA 2026: mata uji pilihan Pendidikan Pancasila jenjang SMA/MA, mengacu Kerangka Asesmen TKA (Perka BSKAP Kemendikdasmen No. 045/H/AN/2025) &mdash; pemahaman, penerapan, dan penalaran Pancasila, UUD NRI Tahun 1945, Bhinneka Tunggal Ika, dan komitmen NKRI.</p>
+
+      <div class="info-grid">
+        <div class="info-item"><div class="num2">25</div><div class="label">Soal (campuran bentuk)</div></div>
+        <div class="info-item"><div class="num2">75:00</div><div class="label">Menit pengerjaan</div></div>
+        <div class="info-item"><div class="num2">4</div><div class="label">Elemen materi</div></div>
+        <div class="info-item"><div class="num2">4/6</div><div class="label">Paket soal</div></div>
+      </div>
+
+      <div class="rules">
+        <b>Bentuk soal</b> (sesuai ketentuan resmi TKA):
+        <ul>
+          <li><b>Pilihan Ganda</b> &mdash; satu jawaban paling tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</b> &mdash; bisa lebih dari satu jawaban benar, semua harus dipilih dengan tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Benar/Salah)</b> &mdash; beberapa pernyataan, tiap pernyataan direspons Benar atau Salah.</li>
+        </ul>
+        <b style="display:block;margin-top:10px;">Sistem penilaian per soal (konvensi latihan, bukan rumus resmi Kemendikdasmen):</b> Seluruhnya terjawab tepat <b>+4</b>, ada bagian yang keliru <b>&minus;1</b>, tidak dijawab sama sekali <b>0</b>. Skor maksimum <b>100</b>. TKA sesungguhnya dilaporkan sebagai skor terstandar (bukan skor mentah seperti ini), jadi anggap skor di sini sebagai indikator latihan saja.<br>
+        Pembahasan lengkap tampil setelah kamu menekan <b>Selesai &amp; Lihat Hasil</b>, atau otomatis saat waktu habis. Progres tersimpan otomatis di perangkat ini.
+      </div>
+
+      <div class="topics-list">
+        <span class="topic-chip">Pancasila</span>
+        <span class="topic-chip">UUD NRI Tahun 1945</span>
+        <span class="topic-chip">Bhinneka Tunggal Ika</span>
+        <span class="topic-chip">Negara Kesatuan Republik Indonesia</span>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="btnStart" style="font-size:1rem;padding:15px;">Mulai Tryout</button>
+    </div>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz-top">
+      <div style="font-weight:700;color:var(--muted);font-size:.86rem;">Tryout Pendidikan Pancasila &middot; Paket 4</div>
+      <div class="timer" id="timerDisplay" style="display:none;"><span class="icon">&#9201;</span><span id="timerText">75:00</span></div>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progressFill" style="width:4%;"></div></div>
+    <div class="quiz-layout">
+      <div class="card">
+        <div class="q-meta">
+          <span class="q-index" id="qIndexLabel">Soal 1 dari 25</span>
+          <span class="q-topic" id="qTopicLabel">Bilangan</span>
+          <span class="q-type-badge" id="qTypeBadge">Pilihan Ganda</span>
+        </div>
+        <div class="q-hint" id="qHint" style="display:none;"></div>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="qOptions"></div>
+        <div class="quiz-nav-btns">
+          <button class="btn btn-ghost" id="btnPrev">&larr; Sebelumnya</button>
+          <button class="btn btn-primary" id="btnNext">Berikutnya &rarr;</button>
+        </div>
+      </div>
+      <aside class="nav-panel">
+        <div class="card">
+          <h4>Navigasi Soal</h4>
+          <div class="nav-grid" id="navGrid"></div>
+          <div class="legend">
+            <span><i class="a"></i> Sudah dijawab</span>
+            <span><i></i> Belum dijawab</span>
+          </div>
+          <button class="btn btn-primary btn-block" id="btnFinish" style="margin-top:16px;">Selesai &amp; Lihat Hasil</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section class="screen" id="screen-result">
+    <div class="card">
+      <h1 style="font-size:1.4rem;margin-top:0;">Hasil Tryout Kamu &mdash; Paket 4</h1>
+      <p class="lead" style="margin-bottom:0;" id="resultSubtitle">Berikut rekap skor dan pembahasan lengkap setiap soal.</p>
+
+      <div class="result-summary">
+        <div class="stat score"><div class="val" id="statScore">0</div><div class="lbl">Skor (maks 100)</div></div>
+        <div class="stat correct"><div class="val" id="statCorrect">0</div><div class="lbl">Benar</div></div>
+        <div class="stat wrong"><div class="val" id="statWrong">0</div><div class="lbl">Salah</div></div>
+        <div class="stat empty"><div class="val" id="statEmpty">0</div><div class="lbl">Kosong</div></div>
+        <div class="stat"><div class="val" id="statTime">-</div><div class="lbl">Waktu terpakai</div></div>
+      </div>
+
+      <div class="section-title">Analisis per Elemen Materi</div>
+      <div class="topic-bars" id="topicBars"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnRetry">&#8635; Ulangi Paket Ini</button>
+        <a class="btn btn-ghost" href="tryout.html">Kembali ke Daftar Tryout</a>
+      </div>
+    </div>
+
+    <div class="section-title">Pembahasan Lengkap</div>
+    <div id="reviewList"></div>
+  </section>
+
+  <div class="note-box">
+    Skor pada tryout ini adalah alat bantu latihan mandiri dan tidak merepresentasikan nilai resmi TKA. Materi mata pelajaran lengkap tersedia di halaman <a href="mata-pelajaran-pendidikan-pancasila.html">Pendidikan Pancasila</a>.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA &middot; mengacu Kerangka Asesmen TKA Pendidikan Pancasila (Pilihan) SMA, Perka BSKAP Kemendikdasmen No. 045/H/AN/2025.</p>
+  </footer>
+
+</div>
+
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+(function(){
+"use strict";
+
+/* small helper to build a stacked fraction as plain HTML/CSS (no external math library needed) */
+function frac(num, den){
+  return "<span class='frac'><span class='num'>"+num+"</span><span class='den'>"+den+"</span></span>";
+}
+/* helper for a radical sign over a multi-character expression */
+function rad(content){
+  return "&radic;<span class='rad'>"+content+"</span>";
+}
+
+
+var QUESTIONS = [
+{
+  type:"single", topic:"Pancasila",
+  text:"Pancasila terdiri atas lima sila yang saling berkaitan dan tidak dapat dipisahkan satu sama lain (bersifat sistematis dan hierarkis piramidal). Hal ini bermakna bahwa&hellip;",
+  options:[
+    "Setiap sila berdiri sendiri tanpa hubungan dengan sila lainnya.",
+    "Kelima sila merupakan satu kesatuan yang utuh, di mana sila pertama menjiwai sila-sila berikutnya, dan sila kelima diliputi serta dijiwai oleh sila-sila sebelumnya.",
+    "Sila kelima merupakan sila yang paling penting sehingga dapat mengesampingkan sila-sila lainnya.",
+    "Hanya sila pertama yang relevan dalam kehidupan bernegara.",
+    "Kelima sila dapat diterapkan secara terpisah tanpa mempertimbangkan sila lainnya."
+  ],
+  answer:1,
+  explanation:"Sifat sistematis dan hierarkis piramidal Pancasila bermakna bahwa kelima sila merupakan satu kesatuan yang utuh dan saling berkaitan, di mana sila pertama (Ketuhanan Yang Maha Esa) menjiwai dan mendasari sila-sila berikutnya, sedangkan sila-sila berikutnya (hingga sila kelima) diliputi dan dijiwai oleh sila-sila sebelumnya, sehingga tidak dapat dipisahkan atau diterapkan secara terpisah satu sama lain."
+},
+{
+  type:"single", topic:"Pancasila",
+  text:"Sebuah organisasi kepemudaan mengadakan kegiatan bakti sosial dengan mengunjungi panti asuhan dan panti jompo secara rutin setiap bulan, tanpa membedakan latar belakang agama penghuni panti tersebut. Kegiatan tersebut paling mencerminkan pengamalan sila&hellip;",
+  options:[
+    "Ketuhanan Yang Maha Esa",
+    "Kemanusiaan yang Adil dan Beradab",
+    "Persatuan Indonesia",
+    "Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan",
+    "Keadilan Sosial bagi Seluruh Rakyat Indonesia"
+  ],
+  answer:1,
+  explanation:"Kegiatan bakti sosial mengunjungi panti asuhan dan panti jompo secara rutin tanpa membedakan latar belakang agama penghuninya mencerminkan pengamalan sila kedua, Kemanusiaan yang Adil dan Beradab, yang menekankan sikap saling mencintai sesama manusia dan gemar melakukan kegiatan kemanusiaan."
+},
+{
+  type:"mcma", topic:"Pancasila",
+  text:"Sila kelima Pancasila, Keadilan Sosial bagi Seluruh Rakyat Indonesia, mengandung berbagai nilai penting dalam kehidupan berbangsa. Manakah pernyataan berikut yang benar mengenai pengamalan sila kelima? Pilih semua jawaban yang benar!",
+  hint:"Petunjuk: pertimbangkan aspek pemerataan kesejahteraan, gotong royong, dan sikap adil terhadap sesama.",
+  options:[
+    "Sila kelima menekankan pentingnya keseimbangan antara hak dan kewajiban dalam kehidupan bersama, termasuk menghormati hak orang lain.",
+    "Mengembangkan sikap adil terhadap sesama, tidak bersikap boros, serta tidak bergaya hidup mewah yang bertentangan dengan usaha pemerataan, merupakan bagian dari pengamalan sila kelima.",
+    "Sila kelima berarti seluruh warga negara harus memiliki tingkat kekayaan yang persis sama tanpa perbedaan apa pun.",
+    "Gotong royong merupakan salah satu wujud pengamalan sila kelima dalam kehidupan bermasyarakat.",
+    "Sila kelima hanya berlaku bagi pemerintah, tidak melibatkan tanggung jawab individu warga negara."
+  ],
+  answer:[0,1,3],
+  explanation:"Sila kelima memang menekankan keseimbangan hak dan kewajiban, termasuk menghormati hak orang lain (Benar). Sikap adil, tidak boros, dan tidak bergaya hidup mewah memang bagian dari pengamalan sila kelima (Benar). Sila kelima BUKAN BERARTI kesamaan kekayaan mutlak bagi semua orang, melainkan pemerataan kesempatan dan keadilan dalam distribusi kesejahteraan, sehingga pernyataan tentang kekayaan yang persis sama adalah salah (Salah). Gotong royong memang wujud pengamalan sila kelima dalam kehidupan bermasyarakat (Benar). Sila kelima JUSTRU MELIBATKAN tanggung jawab baik pemerintah maupun individu warga negara, bukan hanya pemerintah semata (Salah)."
+},
+{
+  type:"single", topic:"Pancasila",
+  text:"Rumusan dasar negara mengalami beberapa kali perubahan sejak diusulkan dalam sidang BPUPKI hingga akhirnya disahkan secara resmi oleh Panitia Persiapan Kemerdekaan Indonesia (PPKI). Rumusan Pancasila yang sah dan resmi berlaku hingga saat ini termaktub dalam&hellip;",
+  options:[
+    "Piagam Jakarta tanggal 22 Juni 1945.",
+    "Pembukaan UUD NRI Tahun 1945 alinea keempat, yang disahkan PPKI pada 18 Agustus 1945.",
+    "Pidato Ir. Soekarno tanggal 1 Juni 1945.",
+    "Naskah proklamasi kemerdekaan tanggal 17 Agustus 1945.",
+    "Konstitusi RIS tahun 1949."
+  ],
+  answer:1,
+  explanation:"Rumusan Pancasila yang sah dan resmi berlaku hingga saat ini termaktub dalam Pembukaan UUD NRI Tahun 1945 alinea keempat, yang disahkan oleh PPKI pada tanggal 18 Agustus 1945, sehari setelah proklamasi kemerdekaan, dengan beberapa penyesuaian dari rumusan sebelumnya yang tercantum dalam Piagam Jakarta."
+},
+{
+  type:"single", topic:"Pancasila",
+  text:"Dalam praktik demokrasi Pancasila, pengambilan keputusan melalui pemungutan suara (voting) baru dilakukan apabila&hellip;",
+  options:[
+    "Sejak awal tanpa perlu mengupayakan musyawarah untuk mufakat terlebih dahulu.",
+    "Musyawarah untuk mencapai mufakat telah diupayakan secara maksimal namun tidak berhasil mencapai kesepakatan bersama.",
+    "Salah satu pihak yang berkepentingan menginginkannya tanpa mempertimbangkan pihak lain.",
+    "Tidak pernah dilakukan sama sekali dalam sistem demokrasi Pancasila.",
+    "Keputusan sudah ditentukan sebelumnya oleh pemimpin tanpa melibatkan anggota lainnya."
+  ],
+  answer:1,
+  explanation:"Dalam praktik demokrasi Pancasila, musyawarah untuk mencapai mufakat selalu diutamakan sebagai mekanisme pengambilan keputusan bersama. Pemungutan suara (voting) baru dilakukan sebagai alternatif terakhir, apabila musyawarah untuk mencapai mufakat telah diupayakan secara maksimal namun tidak berhasil mencapai kesepakatan bersama."
+},
+{
+  type:"single", topic:"Pancasila",
+  text:"Hak Asasi Manusia dalam perspektif Pancasila menegaskan bahwa kebebasan individu harus tetap memperhatikan hak dan kepentingan orang lain serta masyarakat secara luas, berbeda dengan konsep HAM yang menekankan kebebasan individu secara mutlak tanpa batasan. Prinsip ini paling sesuai dengan penerapan sila&hellip;",
+  options:[
+    "Ketuhanan Yang Maha Esa semata.",
+    "Kemanusiaan yang Adil dan Beradab, dipadukan dengan sila keempat dan kelima yang menekankan keseimbangan antara hak individu dan kepentingan bersama.",
+    "Persatuan Indonesia semata tanpa kaitan dengan sila lain.",
+    "Hanya sila kelima tanpa kaitan dengan sila lainnya.",
+    "Tidak berkaitan dengan sila mana pun dalam Pancasila."
+  ],
+  answer:1,
+  explanation:"Prinsip HAM dalam perspektif Pancasila yang menekankan keseimbangan antara kebebasan individu dengan hak dan kepentingan orang lain serta masyarakat, paling sesuai dengan penerapan sila kedua (Kemanusiaan yang Adil dan Beradab), dipadukan dengan sila keempat (musyawarah yang menghormati hak semua pihak) dan sila kelima (keadilan sosial bagi seluruh rakyat), menunjukkan bahwa HAM dalam konteks Pancasila bersifat komunal-individual, bukan individualistis mutlak."
+},
+{
+  type:"category", topic:"Pancasila",
+  text:"Sebuah perguruan tinggi negeri menerapkan sistem penerimaan mahasiswa baru melalui jalur afirmasi bagi calon mahasiswa dari daerah tertinggal, terluar, dan terdepan (3T), dengan tujuan memberikan kesempatan pendidikan yang lebih merata bagi seluruh anak bangsa. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai kebijakan afirmasi ini dari perspektif nilai-nilai Pancasila!",
+  statements:[
+    {text:"Kebijakan afirmasi tersebut mencerminkan upaya mewujudkan keadilan sosial bagi seluruh rakyat Indonesia, khususnya bagi masyarakat di daerah 3T yang memiliki keterbatasan akses pendidikan.", correct:true},
+    {text:"Kebijakan afirmasi ini bertentangan dengan nilai persamaan hak yang terkandung dalam Pancasila karena memberikan perlakuan khusus bagi kelompok tertentu.", correct:false},
+    {text:"Kebijakan semacam ini sejalan dengan semangat gotong royong dan kepedulian terhadap kesenjangan pembangunan antarwilayah di Indonesia.", correct:true}
+  ],
+  explanation:"Kebijakan afirmasi memang mencerminkan upaya mewujudkan keadilan sosial, khususnya bagi masyarakat 3T dengan keterbatasan akses (Benar). Kebijakan afirmasi JUSTRU SEJALAN dengan nilai keadilan Pancasila, karena bertujuan mengoreksi ketimpangan akses yang sudah ada (affirmative action), bukan bertentangan dengan persamaan hak (Salah). Kebijakan semacam ini memang sejalan dengan semangat gotong royong dan kepedulian terhadap kesenjangan pembangunan antarwilayah (Benar)."
+},
+{
+  type:"single", topic:"UUD NRI Tahun 1945",
+  text:"UUD NRI Tahun 1945 mengatur bahwa Presiden dan Wakil Presiden dipilih dalam satu pasangan secara langsung oleh rakyat melalui pemilihan umum. Masa jabatan Presiden dan Wakil Presiden menurut UUD NRI Tahun 1945 adalah&hellip;",
+  options:[
+    "3 tahun dan dapat dipilih kembali tanpa batas periode.",
+    "5 tahun dan sesudahnya dapat dipilih kembali dalam jabatan yang sama, hanya untuk satu kali masa jabatan.",
+    "10 tahun tanpa batasan periode pemilihan kembali.",
+    "Seumur hidup tanpa pemilihan ulang.",
+    "1 tahun dengan pemilihan ulang setiap tahunnya."
+  ],
+  answer:1,
+  explanation:"Menurut UUD NRI Tahun 1945 (Pasal 7), Presiden dan Wakil Presiden memegang jabatan selama 5 tahun, dan sesudahnya dapat dipilih kembali dalam jabatan yang sama, hanya untuk satu kali masa jabatan, sehingga seorang Presiden maksimal dapat menjabat selama dua periode (10 tahun)."
+},
+{
+  type:"single", topic:"UUD NRI Tahun 1945",
+  text:"Pasal 29 ayat (2) UUD NRI Tahun 1945 menjamin kemerdekaan setiap penduduk untuk memeluk agamanya masing-masing dan beribadat menurut agama dan kepercayaannya itu. Ketentuan ini menjadi dasar konstitusional bagi&hellip;",
+  options:[
+    "Kewajiban seluruh penduduk Indonesia untuk memeluk satu agama tertentu.",
+    "Perlindungan hukum terhadap kebebasan beragama dan beribadah bagi seluruh penduduk Indonesia, tanpa memaksakan satu agama tertentu.",
+    "Larangan bagi penduduk untuk menjalankan ibadah keagamaannya.",
+    "Penghapusan seluruh tempat ibadah yang telah dibangun masyarakat.",
+    "Diskriminasi terhadap kelompok agama minoritas."
+  ],
+  answer:1,
+  explanation:"Pasal 29 ayat (2) UUD NRI Tahun 1945 menjadi dasar konstitusional bagi perlindungan hukum terhadap kebebasan beragama dan beribadah bagi seluruh penduduk Indonesia, menjamin bahwa setiap orang bebas memeluk agama dan kepercayaannya masing-masing serta menjalankan ibadah sesuai keyakinannya, tanpa negara memaksakan satu agama tertentu kepada seluruh penduduk."
+},
+{
+  type:"single", topic:"UUD NRI Tahun 1945",
+  text:"Dewan Perwakilan Daerah (DPD) merupakan lembaga negara yang dibentuk pasca amandemen UUD NRI Tahun 1945 untuk mewakili kepentingan daerah di tingkat nasional. Berbeda dengan DPR, keanggotaan DPD dipilih berdasarkan&hellip;",
+  options:[
+    "Perwakilan partai politik di setiap daerah pemilihan.",
+    "Perwakilan setiap provinsi, tanpa melalui partai politik, sehingga anggota DPD merupakan wakil individu (perseorangan) dari masing-masing provinsi.",
+    "Penunjukan langsung oleh Presiden.",
+    "Perwakilan kelompok profesi tertentu saja.",
+    "Pengangkatan oleh Mahkamah Konstitusi."
+  ],
+  answer:1,
+  explanation:"Berbeda dengan anggota DPR yang dipilih melalui partai politik, anggota Dewan Perwakilan Daerah (DPD) dipilih sebagai wakil perseorangan (individu, bukan melalui partai politik) dari setiap provinsi, dengan jumlah anggota yang sama untuk setiap provinsi, guna mewakili kepentingan dan aspirasi daerah di tingkat nasional."
+},
+{
+  type:"single", topic:"UUD NRI Tahun 1945",
+  text:"Prinsip kedaulatan rakyat sebagaimana diatur dalam Pasal 1 ayat (2) UUD NRI Tahun 1945 menyatakan bahwa kedaulatan berada di tangan rakyat dan dilaksanakan menurut&hellip;",
+  options:[
+    "Kehendak pribadi Presiden semata.",
+    "Undang-Undang Dasar, yang berarti pelaksanaan kedaulatan rakyat harus berdasarkan pada ketentuan konstitusi yang berlaku, bukan secara sewenang-wenang.",
+    "Kehendak partai politik yang berkuasa tanpa batasan hukum.",
+    "Kebijakan negara lain yang memengaruhi Indonesia.",
+    "Keputusan sepihak dari lembaga militer."
+  ],
+  answer:1,
+  explanation:"Pasal 1 ayat (2) UUD NRI Tahun 1945 menyatakan bahwa kedaulatan berada di tangan rakyat dan dilaksanakan menurut Undang-Undang Dasar, yang berarti pelaksanaan kedaulatan rakyat (misalnya melalui pemilihan umum dan lembaga perwakilan) harus dilakukan sesuai dengan mekanisme konstitusional yang diatur dalam UUD, bukan secara sewenang-wenang oleh pihak mana pun."
+},
+{
+  type:"mcma", topic:"UUD NRI Tahun 1945",
+  text:"Amandemen UUD NRI Tahun 1945 membawa perubahan signifikan pada struktur ketatanegaraan Indonesia. Manakah pernyataan berikut yang benar mengenai perubahan struktur ketatanegaraan pasca amandemen? Pilih semua jawaban yang benar!",
+  hint:"Petunjuk: pertimbangkan perubahan kedudukan MPR, pembentukan lembaga baru, dan mekanisme pemilihan pejabat negara.",
+  options:[
+    "MPR tidak lagi menjadi lembaga tertinggi negara dengan kekuasaan tidak terbatas, melainkan menjadi lembaga negara yang sejajar dengan lembaga negara lainnya.",
+    "Pasca amandemen, dibentuk lembaga-lembaga negara baru seperti Mahkamah Konstitusi, Komisi Yudisial, dan Dewan Perwakilan Daerah.",
+    "Kekuasaan Presiden menjadi tidak terbatas dan tidak dapat diawasi oleh lembaga negara mana pun pasca amandemen.",
+    "Pemilihan Presiden dan Wakil Presiden dilakukan secara langsung oleh rakyat pasca amandemen, berbeda dengan sebelumnya yang dipilih oleh MPR.",
+    "Amandemen UUD NRI Tahun 1945 menghapuskan seluruh pasal tentang Hak Asasi Manusia."
+  ],
+  answer:[0,1,3],
+  explanation:"MPR memang tidak lagi menjadi lembaga tertinggi negara pasca amandemen, melainkan sejajar dengan lembaga negara lain (Benar). Pasca amandemen memang dibentuk lembaga baru seperti MK, KY, dan DPD (Benar). Kekuasaan Presiden JUSTRU DIBATASI dan diawasi melalui sistem checks and balances pasca amandemen, bukan menjadi tidak terbatas (Salah). Pemilihan Presiden dan Wakil Presiden memang dilakukan secara langsung oleh rakyat pasca amandemen (Benar). Amandemen UUD NRI Tahun 1945 JUSTRU MEMPERKUAT (menambahkan Bab XA) pasal-pasal tentang HAM, bukan menghapuskannya (Salah)."
+},
+{
+  type:"single", topic:"UUD NRI Tahun 1945",
+  text:"Setiap warga negara memiliki kewajiban konstitusional selain hak-hak yang dijaminnya, salah satunya kewajiban untuk ikut serta dalam upaya pembelaan negara sebagaimana diatur dalam Pasal 27 ayat (3) UUD NRI Tahun 1945. Ketentuan ini menegaskan bahwa&hellip;",
+  options:[
+    "Bela negara hanya menjadi kewajiban anggota TNI dan Polri semata.",
+    "Setiap warga negara memiliki hak sekaligus kewajiban untuk ikut serta dalam upaya pembelaan negara sesuai kapasitas dan perannya masing-masing.",
+    "Warga negara sipil tidak memiliki peran apa pun dalam pertahanan negara.",
+    "Kewajiban bela negara hanya berlaku pada masa perang.",
+    "Bela negara tidak diatur dalam UUD NRI Tahun 1945."
+  ],
+  answer:1,
+  explanation:"Pasal 27 ayat (3) UUD NRI Tahun 1945 menegaskan bahwa setiap warga negara berhak dan wajib ikut serta dalam upaya pembelaan negara, yang berarti bela negara bukan hanya tanggung jawab TNI dan Polri, melainkan kewajiban seluruh warga negara sesuai kapasitas dan perannya masing-masing, baik pada masa damai maupun masa darurat."
+},
+{
+  type:"single", topic:"UUD NRI Tahun 1945",
+  text:"Sesuai UUD NRI Tahun 1945, apabila Presiden dan Wakil Presiden mangkat, berhenti, diberhentikan, atau tidak dapat melakukan kewajibannya dalam masa jabatannya secara bersamaan, pelaksana tugas kepresidenan sementara dijalankan oleh&hellip;",
+  options:[
+    "Ketua DPR",
+    "Menteri Luar Negeri, Menteri Dalam Negeri, dan Menteri Pertahanan secara bersama-sama",
+    "Ketua Mahkamah Agung",
+    "Panglima TNI",
+    "Ketua Mahkamah Konstitusi"
+  ],
+  answer:1,
+  explanation:"Sesuai UUD NRI Tahun 1945, apabila Presiden dan Wakil Presiden berhenti secara bersamaan dalam masa jabatannya, pelaksana tugas kepresidenan sementara dijalankan oleh Menteri Luar Negeri, Menteri Dalam Negeri, dan Menteri Pertahanan secara bersama-sama, sampai MPR menyelenggarakan sidang untuk memilih Presiden dan Wakil Presiden baru dari dua pasangan calon yang diusulkan oleh partai politik atau gabungan partai politik yang meraih suara terbanyak."
+},
+{
+  type:"single", topic:"Bhinneka Tunggal Ika",
+  text:"Semboyan Bhinneka Tunggal Ika pertama kali dikutip dari kitab Sutasoma karya seorang pujangga pada masa Kerajaan Majapahit, yaitu&hellip;",
+  options:["Mpu Tantular", "Mpu Prapanca", "Mpu Sedah", "Mpu Panuluh", "Mpu Kanwa"],
+  answer:0,
+  explanation:"Semboyan Bhinneka Tunggal Ika berasal dari kutipan kitab Sutasoma karya Mpu Tantular, seorang pujangga pada masa Kerajaan Majapahit. Kalimat lengkapnya adalah \"Bhinneka Tunggal Ika, Tan Hana Dharma Mangrwa\" yang berarti berbeda-beda tetapi tetap satu, tidak ada kebenaran yang mendua/bercabang."
+},
+{
+  type:"single", topic:"Bhinneka Tunggal Ika",
+  text:"Perkembangan media sosial memudahkan penyebaran konten yang mengandung ujaran kebencian berbasis SARA secara cepat dan luas. Dampak jangka panjang yang paling perlu diwaspadai dari fenomena ini terhadap kebinekaan bangsa adalah&hellip;",
+  options:[
+    "Tidak akan berdampak apa pun terhadap kehidupan sosial masyarakat.",
+    "Memicu polarisasi sosial yang semakin dalam antarkelompok masyarakat, melemahkan rasa saling percaya, dan berpotensi menimbulkan konflik horizontal yang mengancam persatuan bangsa.",
+    "Akan secara otomatis memperkuat persatuan bangsa tanpa perlu penanganan apa pun.",
+    "Hanya berdampak pada individu yang menyebarkan konten tersebut, tidak berdampak pada masyarakat luas.",
+    "Selalu dapat diselesaikan dengan sendirinya tanpa perlu edukasi literasi digital."
+  ],
+  answer:1,
+  explanation:"Penyebaran ujaran kebencian berbasis SARA melalui media sosial secara cepat dan luas dapat memicu polarisasi sosial yang semakin dalam antarkelompok masyarakat, melemahkan rasa saling percaya (trust), dan berpotensi menimbulkan konflik horizontal yang mengancam persatuan bangsa, sehingga memerlukan penanganan serius melalui edukasi literasi digital dan penegakan hukum."
+},
+{
+  type:"single", topic:"Bhinneka Tunggal Ika",
+  text:"Festival budaya nasional yang menampilkan berbagai kesenian daerah, seperti tari-tarian, musik tradisional, dan kuliner khas dari Sabang sampai Merauke, secara rutin diadakan pemerintah untuk&hellip;",
+  options:[
+    "Menghapuskan identitas budaya daerah demi keseragaman nasional.",
+    "Memperkenalkan, melestarikan, dan merayakan kekayaan budaya bangsa sebagai bagian dari identitas nasional yang majemuk, sekaligus mempererat rasa persatuan melalui apresiasi terhadap keberagaman.",
+    "Membatasi interaksi antarwarga dari daerah yang berbeda.",
+    "Hanya menguntungkan sektor pariwisata tanpa manfaat sosial apa pun.",
+    "Mendorong kompetisi antardaerah yang berpotensi memecah belah bangsa."
+  ],
+  answer:1,
+  explanation:"Festival budaya nasional yang menampilkan kekayaan budaya dari berbagai daerah bertujuan memperkenalkan, melestarikan, dan merayakan kekayaan budaya bangsa sebagai bagian dari identitas nasional yang majemuk, sekaligus mempererat rasa persatuan melalui apresiasi bersama terhadap keberagaman budaya, sejalan dengan semangat Bhinneka Tunggal Ika."
+},
+{
+  type:"category", topic:"Bhinneka Tunggal Ika",
+  text:"Sebuah kampus di Indonesia menerima mahasiswa dari berbagai provinsi dengan latar belakang suku dan agama yang beragam. Untuk memperkuat kerukunan, kampus tersebut membentuk organisasi mahasiswa lintas daerah yang secara rutin mengadakan diskusi budaya dan kegiatan sosial bersama. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai upaya kampus ini!",
+  statements:[
+    {text:"Pembentukan organisasi mahasiswa lintas daerah tersebut merupakan salah satu upaya konkret mengelola keberagaman sebagai modal sosial di lingkungan pendidikan tinggi.", correct:true},
+    {text:"Kegiatan diskusi budaya dan sosial bersama dapat membantu mahasiswa saling memahami perbedaan latar belakang dan mengurangi potensi kesalahpahaman antarkelompok.", correct:true},
+    {text:"Interaksi antarmahasiswa dari berbagai daerah seharusnya dihindari karena berpotensi menimbulkan konflik identitas yang tidak dapat dikelola.", correct:false}
+  ],
+  explanation:"Pembentukan organisasi lintas daerah memang upaya konkret mengelola keberagaman sebagai modal sosial di lingkungan kampus (Benar). Kegiatan diskusi budaya dan sosial bersama memang membantu mahasiswa saling memahami perbedaan dan mengurangi kesalahpahaman (Benar). Interaksi antarmahasiswa dari berbagai daerah JUSTRU PERLU DIDORONG (bukan dihindari), karena interaksi yang dikelola dengan baik justru memperkuat persatuan, bukan menimbulkan konflik yang tidak dapat dikelola (Salah)."
+},
+{
+  type:"single", topic:"Bhinneka Tunggal Ika",
+  text:"Prinsip \"unity in diversity\" (persatuan dalam keberagaman) yang mendasari Bhinneka Tunggal Ika menuntut sikap saling menghargai perbedaan tanpa harus menghapuskan identitas masing-masing kelompok. Penerapan prinsip ini dalam kebijakan pendidikan nasional tercermin dari&hellip;",
+  options:[
+    "Kurikulum yang hanya mengajarkan satu budaya daerah tertentu sebagai budaya nasional tunggal.",
+    "Kurikulum pendidikan yang memperkenalkan kekayaan budaya, sejarah, dan kearifan lokal dari berbagai daerah di Indonesia, menumbuhkan rasa saling menghargai dan bangga terhadap keberagaman bangsa.",
+    "Larangan bagi sekolah untuk mengajarkan bahasa daerah kepada siswa.",
+    "Kurikulum yang mengabaikan sejarah dan budaya daerah-daerah tertentu.",
+    "Penyeragaman seluruh mata pelajaran tanpa mempertimbangkan konteks lokal."
+  ],
+  answer:1,
+  explanation:"Penerapan prinsip \"unity in diversity\" dalam kebijakan pendidikan nasional tercermin dari kurikulum yang memperkenalkan kekayaan budaya, sejarah, dan kearifan lokal dari berbagai daerah di Indonesia, sehingga menumbuhkan rasa saling menghargai dan bangga terhadap keberagaman bangsa, bukan dengan hanya mengajarkan satu budaya tertentu atau mengabaikan kekayaan budaya daerah lainnya."
+},
+{
+  type:"mcma", topic:"Negara Kesatuan Republik Indonesia",
+  text:"Perkembangan e-commerce dan transaksi digital lintas negara membawa dampak signifikan bagi perekonomian nasional Indonesia. Manakah pernyataan berikut yang benar mengenai dampak perkembangan ini terhadap kedaulatan ekonomi NKRI? Pilih semua jawaban yang benar!",
+  hint:"Petunjuk: pertimbangkan baik peluang perluasan pasar maupun tantangan perlindungan produk dalam negeri dan penerimaan pajak negara.",
+  options:[
+    "E-commerce dapat memperluas akses pasar bagi produk UMKM (Usaha Mikro, Kecil, dan Menengah) dalam negeri ke skala nasional maupun internasional.",
+    "Regulasi yang tepat diperlukan untuk melindungi produk dalam negeri dari persaingan tidak sehat dengan produk impor melalui platform digital.",
+    "Seluruh transaksi digital lintas negara secara otomatis menguntungkan perekonomian Indonesia tanpa perlu pengawasan apa pun.",
+    "Penerimaan pajak dari transaksi digital menjadi salah satu aspek penting yang perlu diatur negara demi menjaga penerimaan negara di era ekonomi digital.",
+    "Perkembangan e-commerce tidak memiliki kaitan apa pun dengan kedaulatan ekonomi nasional."
+  ],
+  answer:[0,1,3],
+  explanation:"E-commerce memang dapat memperluas akses pasar bagi produk UMKM dalam negeri (Benar). Regulasi memang diperlukan untuk melindungi produk dalam negeri dari persaingan tidak sehat (Benar). TIDAK SEMUA transaksi digital lintas negara otomatis menguntungkan Indonesia tanpa pengawasan; justru pengawasan diperlukan untuk memastikan manfaatnya (Salah). Penerimaan pajak dari transaksi digital memang menjadi aspek penting yang perlu diatur negara (Benar). Perkembangan e-commerce JUSTRU SANGAT BERKAITAN dengan kedaulatan ekonomi nasional, bukan tidak berkaitan sama sekali (Salah)."
+},
+{
+  type:"category", topic:"Negara Kesatuan Republik Indonesia",
+  text:"Indonesia menganut sistem pemerintahan daerah yang membagi wilayah menjadi provinsi, kabupaten/kota, hingga kecamatan dan desa/kelurahan, dengan kewenangan yang berjenjang sesuai peraturan perundang-undangan. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai sistem pemerintahan daerah Indonesia!",
+  statements:[
+    {text:"Pembagian wilayah administratif Indonesia bertujuan mendekatkan pelayanan pemerintahan kepada masyarakat di berbagai tingkatan wilayah.", correct:true},
+    {text:"Kepala daerah (gubernur, bupati, wali kota) dipilih secara langsung oleh rakyat di wilayahnya melalui pemilihan kepala daerah (Pilkada).", correct:true},
+    {text:"Pembentukan daerah otonom baru dapat dilakukan oleh siapa pun tanpa memerlukan persetujuan pemerintah pusat maupun DPR.", correct:false}
+  ],
+  explanation:"Pembagian wilayah administratif memang bertujuan mendekatkan pelayanan pemerintahan kepada masyarakat (Benar). Kepala daerah memang dipilih secara langsung oleh rakyat melalui Pilkada (Benar). Pembentukan daerah otonom baru JUSTRU HARUS MELALUI mekanisme dan persetujuan resmi dari pemerintah pusat dan DPR (melalui undang-undang), bukan dapat dilakukan sembarangan tanpa persetujuan (Salah)."
+},
+{
+  type:"single", topic:"Negara Kesatuan Republik Indonesia",
+  text:"TNI (Tentara Nasional Indonesia) memiliki tiga matra: Angkatan Darat, Angkatan Laut, dan Angkatan Udara, yang bertugas menjaga kedaulatan dan keutuhan wilayah NKRI di darat, laut, dan udara. Konsep pertahanan yang melibatkan ketiga matra ini secara terintegrasi mencerminkan penerapan&hellip;",
+  options:[
+    "Sistem pertahanan yang hanya mengandalkan satu matra saja.",
+    "Wawasan Nusantara dalam bidang pertahanan dan keamanan, yang memandang wilayah darat, laut, dan udara Indonesia sebagai satu kesatuan pertahanan yang utuh dan tidak terpisahkan.",
+    "Kebijakan yang tidak berkaitan dengan konsep kesatuan wilayah.",
+    "Sistem pertahanan yang hanya berfokus pada wilayah perbatasan darat.",
+    "Pengabaian terhadap pentingnya wilayah laut dan udara Indonesia."
+  ],
+  answer:1,
+  explanation:"Keterlibatan tiga matra TNI (Angkatan Darat, Laut, dan Udara) secara terintegrasi dalam menjaga kedaulatan NKRI mencerminkan penerapan Wawasan Nusantara dalam bidang pertahanan dan keamanan, yang memandang wilayah darat, laut, dan udara Indonesia sebagai satu kesatuan pertahanan yang utuh dan tidak terpisahkan, sesuai karakteristik Indonesia sebagai negara kepulauan."
+},
+{
+  type:"single", topic:"Negara Kesatuan Republik Indonesia",
+  text:"Indonesia menjadi salah satu negara yang aktif dalam Gerakan Non-Blok (GNB) sejak era Perang Dingin, yang menghimpun negara-negara yang tidak memihak blok Barat maupun blok Timur. Keikutsertaan Indonesia dalam GNB mencerminkan konsistensi terhadap prinsip&hellip;",
+  options:[
+    "Politik luar negeri bebas aktif, yang tidak memihak blok kekuatan tertentu namun tetap berperan aktif dalam isu-isu perdamaian dan kerja sama internasional.",
+    "Ketergantungan penuh pada salah satu negara adikuasa.",
+    "Isolasi total dari pergaulan internasional.",
+    "Penolakan terhadap seluruh bentuk kerja sama dengan negara lain.",
+    "Kebijakan yang bertentangan dengan Pembukaan UUD NRI Tahun 1945."
+  ],
+  answer:0,
+  explanation:"Keikutsertaan Indonesia dalam Gerakan Non-Blok (GNB) sejak era Perang Dingin mencerminkan konsistensi terhadap prinsip politik luar negeri bebas aktif, yang tidak memihak blok kekuatan tertentu (Barat maupun Timur) namun tetap berperan aktif dalam isu-isu perdamaian dan kerja sama internasional, sejalan dengan amanat Pembukaan UUD NRI Tahun 1945 untuk turut serta melaksanakan ketertiban dunia."
+},
+{
+  type:"category", topic:"Negara Kesatuan Republik Indonesia",
+  text:"Program Wajib Militer Sukarela dan pelatihan komponen cadangan (Komcad) merupakan bagian dari upaya memperkuat sistem pertahanan rakyat semesta di Indonesia, yang melibatkan warga sipil terlatih untuk mendukung TNI apabila diperlukan dalam keadaan darurat. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai konsep ini!",
+  statements:[
+    {text:"Komponen cadangan terdiri atas warga negara yang telah dipersiapkan untuk dikerahkan guna memperbesar dan memperkuat kekuatan komponen utama (TNI) dalam menghadapi ancaman.", correct:true},
+    {text:"Keikutsertaan dalam program komponen cadangan bersifat wajib bagi seluruh warga negara tanpa pengecualian dan tanpa proses seleksi apa pun.", correct:false},
+    {text:"Program semacam ini mencerminkan penerapan sistem pertahanan rakyat semesta yang melibatkan partisipasi warga sipil dalam upaya bela negara.", correct:true}
+  ],
+  explanation:"Komponen cadangan memang terdiri atas warga negara yang dipersiapkan untuk memperkuat komponen utama (TNI) saat diperlukan (Benar). Keikutsertaan dalam program komponen cadangan JUSTRU BERSIFAT SUKARELA dan melalui proses seleksi, BUKAN wajib bagi seluruh warga negara tanpa pengecualian (Salah). Program semacam ini memang mencerminkan penerapan sistem pertahanan rakyat semesta yang melibatkan partisipasi warga sipil dalam bela negara (Benar)."
+},
+{
+  type:"single", topic:"Negara Kesatuan Republik Indonesia",
+  text:"Seorang warga negara yang secara konsisten membayar pajak tepat waktu, menghormati hak-hak tetangga dalam bermasyarakat, serta ikut menjaga fasilitas umum di lingkungannya, menunjukkan perwujudan&hellip;",
+  options:[
+    "Sikap individualisme yang mengabaikan kepentingan bersama.",
+    "Tanggung jawab kewarganegaraan yang baik, yang mendukung keberlangsungan pembangunan nasional dan keharmonisan hidup bermasyarakat dalam kerangka NKRI.",
+    "Pelanggaran terhadap norma-norma sosial yang berlaku.",
+    "Sikap apatis terhadap kehidupan bernegara.",
+    "Tindakan yang tidak memiliki hubungan dengan nilai kewarganegaraan."
+  ],
+  answer:1,
+  explanation:"Membayar pajak tepat waktu, menghormati hak-hak tetangga, dan menjaga fasilitas umum merupakan wujud nyata tanggung jawab kewarganegaraan yang baik, yang mendukung keberlangsungan pembangunan nasional (melalui kontribusi pajak) dan keharmonisan hidup bermasyarakat (melalui sikap saling menghormati dan menjaga kepentingan bersama) dalam kerangka Negara Kesatuan Republik Indonesia."
+}
+];
+
+
+var LETTERS = ["A","B","C","D","E"];
+var DURATION_SECONDS = 75*60;
+var STORAGE_KEY = "tka_pkn_paket4_v1";
+var TYPE_LABELS = {single:"Pilihan Ganda", mcma:"PGK &middot; Pilih Lebih dari Satu", category:"PGK &middot; Benar/Salah"};
+
+/* ============ STATE ============ */
+var state = {
+  currentIndex:0,
+  answers:{},          // single: index | mcma: [indices] | category: {stmtIdx: true/false}
+  endTimestamp:null,
+  finished:false,
+  timeTakenSeconds:null
+};
+var timerInterval = null;
+
+/* ============ STORAGE ============ */
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ============ SCREEN HELPERS ============ */
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+}
+
+/* ============ ANSWER HELPERS (type-aware) ============ */
+function isAnswered(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(a===undefined || a===null) return false;
+  if(q.type==="category"){
+    if(typeof a !== "object") return false;
+    for(var k=0;k<q.statements.length;k++){ if(a[k]===undefined) return false; }
+    return true;
+  }
+  if(q.type==="mcma"){
+    return Array.isArray(a) && a.length>0;
+  }
+  return true; // single: any stored value (including 0) counts as answered
+}
+function evaluateQuestion(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(!isAnswered(i)) return "empty";
+  if(q.type==="category"){
+    for(var k=0;k<q.statements.length;k++){
+      if(!!a[k] !== !!q.statements[k].correct) return "wrong";
+    }
+    return "correct";
+  }
+  if(q.type==="mcma"){
+    var correctSet = q.answer.slice().sort(function(x,y){return x-y;});
+    var pickedSet = a.slice().sort(function(x,y){return x-y;});
+    if(correctSet.length !== pickedSet.length) return "wrong";
+    for(var j=0;j<correctSet.length;j++){ if(correctSet[j]!==pickedSet[j]) return "wrong"; }
+    return "correct";
+  }
+  return (a===q.answer) ? "correct":"wrong";
+}
+
+/* ============ TIMER ============ */
+function formatTime(totalSeconds){
+  totalSeconds = Math.max(0, Math.round(totalSeconds));
+  var m = Math.floor(totalSeconds/60);
+  var s = totalSeconds%60;
+  return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+}
+function startTimerLoop(){
+  var display = document.getElementById("timerDisplay");
+  display.style.display = "flex";
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 250);
+  tickTimer();
+}
+function tickTimer(){
+  var remaining = (state.endTimestamp - Date.now())/1000;
+  var textEl = document.getElementById("timerText");
+  var wrap = document.getElementById("timerDisplay");
+  if(remaining <= 0){
+    textEl.textContent = "00:00";
+    clearInterval(timerInterval);
+    finishQuiz(true);
+    return;
+  }
+  textEl.textContent = formatTime(remaining);
+  if(remaining <= 300) wrap.classList.add("low"); else wrap.classList.remove("low");
+}
+function stopTimer(){
+  clearInterval(timerInterval);
+  document.getElementById("timerDisplay").style.display = "none";
+}
+
+/* ============ QUIZ RENDERING ============ */
+function renderNavGrid(){
+  var grid = document.getElementById("navGrid");
+  grid.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var cell = document.createElement("div");
+    cell.className = "nav-cell" + (isAnswered(i)?" answered":"") + (i===state.currentIndex?" current":"");
+    cell.textContent = (i+1);
+    cell.addEventListener("click", function(){
+      state.currentIndex = i;
+      renderQuestion();
+    });
+    grid.appendChild(cell);
+  });
+}
+
+function renderOptionsSingleOrMcma(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var isMcma = q.type==="mcma";
+  var current = state.answers[i];
+  q.options.forEach(function(optText, idx){
+    var picked = isMcma ? (Array.isArray(current) && current.indexOf(idx)!==-1) : (current===idx);
+    var div = document.createElement("div");
+    div.className = "option" + (isMcma?" mcma":"") + (picked ? " selected":"");
+    div.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+    div.addEventListener("click", function(){
+      if(isMcma){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : [];
+        var pos = arr.indexOf(idx);
+        if(pos===-1) arr.push(idx); else arr.splice(pos,1);
+        state.answers[i] = arr;
+      } else {
+        state.answers[i] = idx;
+      }
+      saveState();
+      renderQuestion();
+    });
+    optsWrap.appendChild(div);
+  });
+}
+
+function renderStatements(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var current = (typeof state.answers[i] === "object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+  q.statements.forEach(function(st, k){
+    var row = document.createElement("div");
+    row.className = "statement-row";
+    var textDiv = document.createElement("div");
+    textDiv.className = "statement-text";
+    textDiv.innerHTML = (k+1)+". "+st.text;
+    row.appendChild(textDiv);
+    var choices = document.createElement("div");
+    choices.className = "statement-choices";
+    [["Benar",true], ["Salah",false]].forEach(function(pair){
+      var btn = document.createElement("div");
+      btn.className = "choice-btn" + (current[k]===pair[1] ? " selected":"");
+      btn.textContent = pair[0];
+      btn.addEventListener("click", function(){
+        var obj = (typeof state.answers[i]==="object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+        obj[k] = pair[1];
+        state.answers[i] = obj;
+        saveState();
+        renderQuestion();
+      });
+      choices.appendChild(btn);
+    });
+    row.appendChild(choices);
+    optsWrap.appendChild(row);
+  });
+}
+
+function renderQuestion(){
+  var i = state.currentIndex;
+  var q = QUESTIONS[i];
+  document.getElementById("qIndexLabel").textContent = "Soal "+(i+1)+" dari "+QUESTIONS.length;
+  document.getElementById("qTopicLabel").textContent = q.topic;
+  document.getElementById("qTypeBadge").innerHTML = TYPE_LABELS[q.type] || TYPE_LABELS.single;
+  document.getElementById("qText").innerHTML = q.text;
+
+  var hintEl = document.getElementById("qHint");
+  if(q.hint){ hintEl.style.display="block"; hintEl.textContent = q.hint; }
+  else if(q.type==="category"){ hintEl.style.display="block"; hintEl.textContent = "Beri respons Benar atau Salah untuk setiap pernyataan."; }
+  else { hintEl.style.display="none"; }
+
+  if(q.type==="category") renderStatements(q, i);
+  else renderOptionsSingleOrMcma(q, i);
+
+  document.getElementById("btnPrev").disabled = (i===0);
+  document.getElementById("btnPrev").style.opacity = (i===0)?"0.5":"1";
+  document.getElementById("btnNext").textContent = (i===QUESTIONS.length-1) ? "Selesai →" : "Berikutnya →";
+  document.getElementById("progressFill").style.width = Math.round(((i+1)/QUESTIONS.length)*100)+"%";
+  renderNavGrid();
+}
+
+/* ============ NAVIGATION BUTTONS ============ */
+document.getElementById("btnPrev").addEventListener("click", function(){
+  if(state.currentIndex>0){ state.currentIndex--; renderQuestion(); }
+});
+document.getElementById("btnNext").addEventListener("click", function(){
+  if(state.currentIndex < QUESTIONS.length-1){
+    state.currentIndex++;
+    renderQuestion();
+  } else {
+    confirmFinish();
+  }
+});
+document.getElementById("btnFinish").addEventListener("click", confirmFinish);
+
+function confirmFinish(){
+  var answeredCount = 0;
+  QUESTIONS.forEach(function(q,i){ if(isAnswered(i)) answeredCount++; });
+  var msg = "Kamu telah menjawab "+answeredCount+" dari "+QUESTIONS.length+" soal.\nSelesaikan tryout dan lihat hasil sekarang?";
+  if(window.confirm(msg)){
+    finishQuiz(false);
+  }
+}
+
+/* ============ START / RESUME / RESTART ============ */
+function beginFreshQuiz(){
+  state = {
+    currentIndex:0,
+    answers:{},
+    endTimestamp: Date.now() + DURATION_SECONDS*1000,
+    finished:false,
+    timeTakenSeconds:null
+  };
+  saveState();
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+function resumeQuiz(saved){
+  state = saved;
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+
+document.getElementById("btnStart").addEventListener("click", beginFreshQuiz);
+document.getElementById("btnResume").addEventListener("click", function(){
+  var saved = loadState();
+  if(saved && !saved.finished) resumeQuiz(saved); else beginFreshQuiz();
+});
+document.getElementById("btnRestartFresh").addEventListener("click", function(){
+  clearState();
+  document.getElementById("resumeBanner").style.display = "none";
+  beginFreshQuiz();
+});
+document.getElementById("btnRetry").addEventListener("click", function(){
+  clearState();
+  stopTimer();
+  showScreen("screen-start");
+  document.getElementById("resumeBanner").style.display = "none";
+});
+
+/* ============ FINISH & SCORING ============ */
+function finishQuiz(autoSubmitted){
+  stopTimer();
+  state.finished = true;
+  var elapsed = DURATION_SECONDS - Math.max(0, (state.endTimestamp - Date.now())/1000);
+  state.timeTakenSeconds = Math.min(DURATION_SECONDS, Math.round(elapsed));
+  saveState();
+  renderResult(autoSubmitted);
+  showScreen("screen-result");
+  window.scrollTo(0,0);
+}
+
+function renderResult(autoSubmitted){
+  var correct=0, wrong=0, empty=0, score=0;
+  var topicStats = {};
+  QUESTIONS.forEach(function(q, i){
+    if(!topicStats[q.topic]) topicStats[q.topic] = {correct:0,total:0};
+    topicStats[q.topic].total++;
+    var status = evaluateQuestion(i);
+    if(status==="empty"){ empty++; }
+    else if(status==="correct"){ correct++; score+=4; topicStats[q.topic].correct++; }
+    else { wrong++; score-=1; }
+  });
+
+  document.getElementById("resultSubtitle").textContent = autoSubmitted
+    ? "Waktu habis — tryout otomatis diselesaikan. Berikut rekap skor dan pembahasan lengkap setiap soal."
+    : "Berikut rekap skor dan pembahasan lengkap setiap soal.";
+
+  document.getElementById("statScore").textContent = score;
+  document.getElementById("statCorrect").textContent = correct;
+  document.getElementById("statWrong").textContent = wrong;
+  document.getElementById("statEmpty").textContent = empty;
+  document.getElementById("statTime").textContent = formatTime(state.timeTakenSeconds);
+
+  var barsWrap = document.getElementById("topicBars");
+  barsWrap.innerHTML = "";
+  Object.keys(topicStats).forEach(function(topic){
+    var st = topicStats[topic];
+    var pct = Math.round((st.correct/st.total)*100);
+    var row = document.createElement("div");
+    row.className = "topic-bar-row";
+    row.innerHTML =
+      "<div class='top'><span class='name'>"+topic+"</span><span class='frac2'>"+st.correct+"/"+st.total+"</span></div>"+
+      "<div class='bar-track'><div class='bar-fill' style='width:"+pct+"%;'></div></div>";
+    barsWrap.appendChild(row);
+  });
+
+  var reviewList = document.getElementById("reviewList");
+  reviewList.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var status = evaluateQuestion(i);
+    var statusLabel = status==="empty" ? "Kosong" : (status==="correct" ? "Benar":"Salah");
+
+    var details = document.createElement("details");
+    details.className = "review-item";
+    details.open = (status !== "correct");
+
+    var summary = document.createElement("summary");
+    summary.innerHTML =
+      "<span class='badge "+status+"'>"+statusLabel+"</span>"+
+      "<span class='badge typebadge'>"+(TYPE_LABELS[q.type]||TYPE_LABELS.single)+"</span>"+
+      "<span>Soal "+(i+1)+" — "+q.topic+"</span>"+
+      "<span class='chev'>&#9662;</span>";
+    details.appendChild(summary);
+
+    var body = document.createElement("div");
+    body.className = "review-body";
+
+    var qTextDiv = document.createElement("div");
+    qTextDiv.className = "q-text";
+    qTextDiv.innerHTML = q.text;
+    body.appendChild(qTextDiv);
+
+    if(q.type==="category"){
+      var a = (typeof state.answers[i]==="object" && state.answers[i]!==null) ? state.answers[i] : {};
+      q.statements.forEach(function(st, k){
+        var userVal = a[k];
+        var isCorrectStmt = userVal!==undefined && (!!userVal === !!st.correct);
+        var row = document.createElement("div");
+        row.className = "review-statement " + (userVal===undefined ? "" : (isCorrectStmt ? "st-correct":"st-wrong"));
+        var userLabel = userVal===undefined ? "Tidak dijawab" : (userVal ? "Benar":"Salah");
+        var correctLabel = st.correct ? "Benar":"Salah";
+        row.innerHTML =
+          "<span>"+(k+1)+". "+st.text+"</span>"+
+          "<span class='st-answer'>Jawabanmu: "+userLabel+(isCorrectStmt? "" : " &middot; Kunci: "+correctLabel)+"</span>";
+        body.appendChild(row);
+      });
+    } else if(q.type==="mcma"){
+      var picked = Array.isArray(state.answers[i]) ? state.answers[i] : [];
+      var optsDiv = document.createElement("div");
+      optsDiv.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var isCorrectOpt = q.answer.indexOf(idx)!==-1;
+        var wasPicked = picked.indexOf(idx)!==-1;
+        var cls = "review-opt";
+        var tag = "";
+        if(isCorrectOpt){ cls += " is-correct"; tag = wasPicked ? "Dipilih &amp; tepat" : "Terlewat"; }
+        else if(wasPicked){ cls += " is-wrong-pick"; tag = "Dipilih, tidak tepat"; }
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>"+(tag?"<span class='opt-tag'>"+tag+"</span>":"");
+        optsDiv.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv);
+    } else {
+      var picked2 = state.answers[i];
+      var optsDiv2 = document.createElement("div");
+      optsDiv2.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var cls = "review-opt";
+        if(idx===q.answer) cls += " is-correct";
+        else if(idx===picked2) cls += " is-wrong-pick";
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+        optsDiv2.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv2);
+    }
+
+    var pembahasan = document.createElement("div");
+    pembahasan.className = "pembahasan";
+    pembahasan.style.marginTop = "14px";
+    pembahasan.innerHTML = "<b>Pembahasan:</b><br>"+q.explanation;
+    body.appendChild(pembahasan);
+
+    details.appendChild(body);
+    reviewList.appendChild(details);
+  });
+}
+
+/* ============ INIT ON LOAD ============ */
+(function init(){
+  var saved = loadState();
+  if(saved && !saved.finished && saved.endTimestamp){
+    var remaining = (saved.endTimestamp - Date.now())/1000;
+    if(remaining > 0){
+      document.getElementById("resumeBanner").style.display = "flex";
+    } else {
+      state = saved;
+      finishQuiz(true);
+    }
+  }
+})();
+
+})();
+</script>
+</body>
+</html>
