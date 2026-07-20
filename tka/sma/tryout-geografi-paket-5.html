@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tryout Geografi — Paket 5 | Siap TKA</title>
+<meta name="description" content="Latihan tryout Geografi Paket 5 untuk persiapan TKA SMA/MA — 25 soal wilayah tempat tinggal, proses lingkungan fisik dan sosial, interaksi gejala fisik-manusia, mitigasi bencana, dan fenomena geografi sehari-hari, timer, skor otomatis, dan pembahasan lengkap.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --wrong:#dc2626;
+    --wrong-bg:#fef2f2;
+    --empty:#b45309;
+    --empty-bg:#fffbeb;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .timer{
+    display:flex;align-items:center;gap:8px;
+    font-variant-numeric:tabular-nums;
+    font-weight:700;font-size:1.05rem;
+    padding:8px 16px;border-radius:999px;
+    background:var(--primary-light);color:var(--primary-dark);
+    border:1px solid #c7d2fe;
+  }
+  .timer.low{background:var(--wrong-bg);color:var(--wrong);border-color:#fecaca;}
+  .timer .icon{font-size:1rem;}
+
+  .screen{display:none;}
+  .screen.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+
+  /* ---- math notation helpers (no external library needed) ---- */
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+    margin:0 3px;line-height:1;position:relative;top:0.16em;font-size:0.9em;}
+  .frac .num{padding:0 4px 2px;border-bottom:1.4px solid currentColor;}
+  .frac .den{padding:2px 4px 0;}
+  .rad{border-top:1.4px solid currentColor;padding:0 3px;margin-left:1px;}
+  sup{font-size:.72em;top:-0.55em;}
+  sub{font-size:.72em;bottom:-0.25em;}
+  .qtable{border-collapse:collapse;margin:14px 0;font-size:.92rem;}
+  .qtable th,.qtable td{border:1px solid var(--border);padding:6px 16px;text-align:center;}
+  .qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  /* START SCREEN */
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+  .hero h1{font-size:1.7rem;margin:0 0 6px;}
+  .hero p.lead{color:var(--muted);margin:0 0 24px;font-size:1rem;}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0;}
+  .info-item{background:var(--primary-light);border-radius:10px;padding:14px 16px;}
+  .info-item .num2{font-size:1.4rem;font-weight:800;color:var(--primary-dark);}
+  .info-item .label{font-size:.82rem;color:var(--muted);margin-top:2px;}
+  .rules{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:16px 18px;margin:20px 0;font-size:.92rem;color:var(--text);}
+  .rules b{color:var(--primary-dark);}
+  .rules ul{margin:8px 0 0;padding-left:20px;}
+  .rules li{margin-bottom:4px;}
+  .topics-list{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 24px;}
+  .topic-chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.82rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+    transition:transform .1s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+  .btn-block{width:100%;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+
+  .resume-banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+  /* QUIZ SCREEN */
+  .quiz-layout{display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start;}
+  @media (max-width:760px){.quiz-layout{grid-template-columns:1fr;}}
+
+  .progress-bar{height:6px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:20px;}
+  .progress-bar .fill{height:100%;background:var(--primary);border-radius:999px;transition:width .2s ease;}
+
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;}
+  .q-index{font-weight:700;color:var(--primary-dark);font-size:.95rem;}
+  .q-topic{font-size:.78rem;color:var(--muted);background:var(--primary-light);padding:4px 10px;border-radius:999px;}
+  .q-type-badge{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:#fef3c7;color:#92400e;}
+  .q-hint{font-size:.82rem;color:var(--muted);margin-bottom:14px;font-style:italic;}
+  .q-text{font-size:1.05rem;margin:0 0 20px;}
+  .q-text img{max-width:100%;}
+
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .option{
+    display:flex;align-items:flex-start;gap:12px;
+    border:1.5px solid var(--border);border-radius:10px;
+    padding:13px 16px;cursor:pointer;font-size:.96rem;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .option:hover{border-color:var(--primary);background:var(--primary-light);}
+  .option.selected{border-color:var(--primary);background:var(--primary-light);}
+  .option .letter{
+    width:26px;height:26px;flex:none;border-radius:50%;
+    border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
+    font-size:.8rem;font-weight:700;color:var(--muted);
+  }
+  .option.mcma .letter{border-radius:7px;}
+  .option.selected .letter{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+  .statement-row{border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+  .statement-text{margin-bottom:12px;font-size:.94rem;}
+  .statement-choices{display:flex;gap:10px;}
+  .choice-btn{flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);cursor:pointer;font-weight:700;font-size:.85rem;text-align:center;color:var(--muted);}
+  .choice-btn:hover{border-color:var(--primary);}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark);}
+
+  .quiz-nav-btns{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+
+  .nav-panel{position:sticky;top:78px;}
+  .nav-panel .card{padding:18px;}
+  .nav-panel h4{margin:0 0 4px;font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:14px 0;}
+  .nav-cell{
+    aspect-ratio:1;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);color:var(--muted);font-size:.78rem;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .nav-cell.answered{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);}
+  .nav-cell.current{outline:2px solid var(--primary);outline-offset:1px;}
+  .legend{display:flex;flex-direction:column;gap:6px;font-size:.78rem;color:var(--muted);margin-top:10px;}
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .legend i{width:12px;height:12px;border-radius:4px;display:inline-block;border:1.5px solid var(--border);}
+  .legend i.a{background:var(--primary-light);border-color:var(--primary);}
+
+  /* RESULT SCREEN */
+  .result-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:24px 0;}
+  .stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+  .stat .val{font-size:1.6rem;font-weight:800;}
+  .stat .lbl{font-size:.78rem;color:var(--muted);margin-top:4px;}
+  .stat.score .val{color:var(--primary-dark);}
+  .stat.correct .val{color:var(--correct);}
+  .stat.wrong .val{color:var(--wrong);}
+  .stat.empty .val{color:var(--empty);}
+
+  .topic-bars{display:flex;flex-direction:column;gap:14px;margin:20px 0 8px;}
+  .topic-bar-row .top{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:6px;}
+  .topic-bar-row .top .name{font-weight:600;}
+  .topic-bar-row .top .frac2{color:var(--muted);}
+  .bar-track{height:9px;background:var(--border);border-radius:999px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--primary);border-radius:999px;}
+
+  .section-title{font-size:1.1rem;margin:32px 0 14px;font-weight:700;}
+  .review-item{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--surface);}
+  .review-item summary{
+    list-style:none;cursor:pointer;padding:14px 18px;
+    display:flex;align-items:center;gap:12px;font-weight:600;font-size:.92rem;flex-wrap:wrap;
+  }
+  .review-item summary::-webkit-details-marker{display:none;}
+  .review-item summary .chev{margin-left:auto;color:var(--muted);font-size:.8rem;}
+  .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;flex:none;}
+  .badge.correct{background:var(--correct-bg);color:var(--correct);}
+  .badge.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .badge.empty{background:var(--empty-bg);color:var(--empty);}
+  .badge.typebadge{background:#fef3c7;color:#92400e;}
+  .review-body{padding:0 18px 20px;border-top:1px solid var(--border);}
+  .review-body .q-text{font-size:.96rem;margin:16px 0;}
+  .review-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .review-opt{display:flex;gap:10px;padding:9px 13px;border-radius:8px;border:1px solid var(--border);font-size:.9rem;align-items:center;}
+  .review-opt .letter{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex:none;}
+  .review-opt.is-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-opt.is-correct .letter{background:var(--correct);border-color:var(--correct);color:#fff;}
+  .review-opt.is-wrong-pick{background:var(--wrong-bg);border-color:#fecaca;}
+  .review-opt.is-wrong-pick .letter{background:var(--wrong);border-color:var(--wrong);color:#fff;}
+  .opt-tag{margin-left:auto;font-size:.72rem;color:var(--muted);font-style:italic;}
+  .review-statement{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;font-size:.9rem;}
+  .review-statement.st-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-statement.st-wrong{background:var(--wrong-bg);border-color:#fecaca;}
+  .st-answer{font-size:.78rem;font-weight:700;flex:none;}
+  .pembahasan{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:.9rem;}
+  .pembahasan b{color:var(--primary-dark);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html" class="active">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <!-- START SCREEN -->
+  <section class="screen active" id="screen-start">
+    <div class="card hero">
+      <div id="resumeBanner" style="display:none;" class="resume-banner">
+        <span>Kamu punya progres tryout yang belum selesai.</span>
+        <div class="btn-row" style="margin:0;">
+          <button class="btn btn-primary" id="btnResume">Lanjutkan Tryout</button>
+          <button class="btn btn-ghost" id="btnRestartFresh">Mulai Baru</button>
+        </div>
+      </div>
+
+      <span class="pill pill-premium">Premium</span>
+      <h1>Tryout Geografi &mdash; Paket 5</h1>
+      <p class="lead">Simulasi latihan mandiri mengikuti ketentuan resmi TKA 2026: mata uji pilihan Geografi jenjang SMA/MA, mengacu Kerangka Asesmen TKA (Perka BSKAP Kemendikdasmen No. 045/H/AN/2025) &mdash; pemahaman, penerapan, dan penalaran wilayah tempat tinggal, proses lingkungan, interaksi gejala fisik-manusia, mitigasi bencana, dan fenomena geografi sehari-hari.</p>
+
+      <div class="info-grid">
+        <div class="info-item"><div class="num2">25</div><div class="label">Soal (campuran bentuk)</div></div>
+        <div class="info-item"><div class="num2">75:00</div><div class="label">Menit pengerjaan</div></div>
+        <div class="info-item"><div class="num2">5</div><div class="label">Elemen materi</div></div>
+        <div class="info-item"><div class="num2">5/6</div><div class="label">Paket soal</div></div>
+      </div>
+
+      <div class="rules">
+        <b>Bentuk soal</b> (sesuai ketentuan resmi TKA):
+        <ul>
+          <li><b>Pilihan Ganda</b> &mdash; satu jawaban paling tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</b> &mdash; bisa lebih dari satu jawaban benar, semua harus dipilih dengan tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Benar/Salah)</b> &mdash; beberapa pernyataan, tiap pernyataan direspons Benar atau Salah.</li>
+        </ul>
+        <b style="display:block;margin-top:10px;">Sistem penilaian per soal (konvensi latihan, bukan rumus resmi Kemendikdasmen):</b> Seluruhnya terjawab tepat <b>+4</b>, ada bagian yang keliru <b>&minus;1</b>, tidak dijawab sama sekali <b>0</b>. Skor maksimum <b>100</b>. TKA sesungguhnya dilaporkan sebagai skor terstandar (bukan skor mentah seperti ini), jadi anggap skor di sini sebagai indikator latihan saja.<br>
+        Pembahasan lengkap tampil setelah kamu menekan <b>Selesai &amp; Lihat Hasil</b>, atau otomatis saat waktu habis. Progres tersimpan otomatis di perangkat ini.
+      </div>
+
+      <div class="topics-list">
+        <span class="topic-chip">Wilayah Tempat Tinggal</span>
+        <span class="topic-chip">Proses Lingkungan Fisik &amp; Sosial</span>
+        <span class="topic-chip">Interaksi Fisik-Manusia</span>
+        <span class="topic-chip">Mitigasi Bencana</span>
+        <span class="topic-chip">Fenomena Geografi Sehari-hari</span>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="btnStart" style="font-size:1rem;padding:15px;">Mulai Tryout</button>
+    </div>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz-top">
+      <div style="font-weight:700;color:var(--muted);font-size:.86rem;">Tryout Geografi &middot; Paket 5</div>
+      <div class="timer" id="timerDisplay" style="display:none;"><span class="icon">&#9201;</span><span id="timerText">75:00</span></div>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progressFill" style="width:4%;"></div></div>
+    <div class="quiz-layout">
+      <div class="card">
+        <div class="q-meta">
+          <span class="q-index" id="qIndexLabel">Soal 1 dari 25</span>
+          <span class="q-topic" id="qTopicLabel">Bilangan</span>
+          <span class="q-type-badge" id="qTypeBadge">Pilihan Ganda</span>
+        </div>
+        <div class="q-hint" id="qHint" style="display:none;"></div>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="qOptions"></div>
+        <div class="quiz-nav-btns">
+          <button class="btn btn-ghost" id="btnPrev">&larr; Sebelumnya</button>
+          <button class="btn btn-primary" id="btnNext">Berikutnya &rarr;</button>
+        </div>
+      </div>
+      <aside class="nav-panel">
+        <div class="card">
+          <h4>Navigasi Soal</h4>
+          <div class="nav-grid" id="navGrid"></div>
+          <div class="legend">
+            <span><i class="a"></i> Sudah dijawab</span>
+            <span><i></i> Belum dijawab</span>
+          </div>
+          <button class="btn btn-primary btn-block" id="btnFinish" style="margin-top:16px;">Selesai &amp; Lihat Hasil</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section class="screen" id="screen-result">
+    <div class="card">
+      <h1 style="font-size:1.4rem;margin-top:0;">Hasil Tryout Kamu &mdash; Paket 5</h1>
+      <p class="lead" style="margin-bottom:0;" id="resultSubtitle">Berikut rekap skor dan pembahasan lengkap setiap soal.</p>
+
+      <div class="result-summary">
+        <div class="stat score"><div class="val" id="statScore">0</div><div class="lbl">Skor (maks 100)</div></div>
+        <div class="stat correct"><div class="val" id="statCorrect">0</div><div class="lbl">Benar</div></div>
+        <div class="stat wrong"><div class="val" id="statWrong">0</div><div class="lbl">Salah</div></div>
+        <div class="stat empty"><div class="val" id="statEmpty">0</div><div class="lbl">Kosong</div></div>
+        <div class="stat"><div class="val" id="statTime">-</div><div class="lbl">Waktu terpakai</div></div>
+      </div>
+
+      <div class="section-title">Analisis per Elemen Materi</div>
+      <div class="topic-bars" id="topicBars"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnRetry">&#8635; Ulangi Paket Ini</button>
+        <a class="btn btn-ghost" href="tryout.html">Kembali ke Daftar Tryout</a>
+      </div>
+    </div>
+
+    <div class="section-title">Pembahasan Lengkap</div>
+    <div id="reviewList"></div>
+  </section>
+
+  <div class="note-box">
+    Skor pada tryout ini adalah alat bantu latihan mandiri dan tidak merepresentasikan nilai resmi TKA. Materi mata pelajaran lengkap tersedia di halaman <a href="mata-pelajaran-geografi.html">Geografi</a>.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA &middot; mengacu Kerangka Asesmen TKA Geografi (Pilihan) SMA, Perka BSKAP Kemendikdasmen No. 045/H/AN/2025.</p>
+  </footer>
+
+</div>
+
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+(function(){
+"use strict";
+
+/* small helper to build a stacked fraction as plain HTML/CSS (no external math library needed) */
+function frac(num, den){
+  return "<span class='frac'><span class='num'>"+num+"</span><span class='den'>"+den+"</span></span>";
+}
+/* helper for a radical sign over a multi-character expression */
+function rad(content){
+  return "&radic;<span class='rad'>"+content+"</span>";
+}
+
+
+var QUESTIONS = [
+{
+  type:"single", topic:"Wilayah Tempat Tinggal dan Lingkungan Sekitar",
+  text:"Suatu wilayah memiliki dataran rendah dekat muara sungai besar, tanah yang selalu tergenang air sepanjang tahun, serta mayoritas penduduk bermata pencaharian sebagai petani gambut dan pengumpul hasil hutan rawa. Karakteristik fisik dan sosial wilayah tersebut paling mencerminkan wilayah&hellip;",
+  options:[
+    "Pegunungan, karena topografi yang berbukit.",
+    "Rawa gambut, karena tanah yang selalu tergenang air, letak dekat muara sungai, dan mata pencaharian penduduk yang sesuai dengan potensi ekosistem rawa.",
+    "Gurun, karena curah hujan yang sangat rendah.",
+    "Dataran tinggi bersalju, karena suhu udara yang sangat dingin.",
+    "Perkotaan padat, karena kepadatan penduduk yang tinggi."
+  ],
+  answer:1,
+  explanation:"Karakteristik dataran rendah dekat muara sungai, tanah yang selalu tergenang, dan mata pencaharian penduduk sebagai petani gambut dan pengumpul hasil hutan rawa mencerminkan wilayah rawa gambut, yang memiliki ekosistem khas dengan tanah jenuh air sepanjang tahun."
+},
+{
+  type:"single", topic:"Wilayah Tempat Tinggal dan Lingkungan Sekitar",
+  text:"Suatu kecamatan memiliki jumlah penduduk usia produktif (15&ndash;64 tahun) sebanyak 12.000 jiwa, penduduk usia belum produktif (0&ndash;14 tahun) sebanyak 3.000 jiwa, dan penduduk usia tidak produktif lagi (65 tahun ke atas) sebanyak 1.800 jiwa. Berdasarkan data tersebut, besarnya angka rasio ketergantungan (dependency ratio) kecamatan tersebut adalah&hellip;",
+  options:[
+    "30",
+    "35",
+    "40",
+    "45",
+    "50"
+  ],
+  answer:2,
+  explanation:"Rasio ketergantungan = ((3.000 + 1.800) / 12.000) &times; 100 = (4.800/12.000) &times; 100 = 40. Artinya, setiap 100 penduduk usia produktif menanggung 40 penduduk usia tidak produktif."
+},
+{
+  type:"single", topic:"Wilayah Tempat Tinggal dan Lingkungan Sekitar",
+  text:"Suatu kawasan permukiman di tepi danau terus menerima penambahan keramba jaring apung untuk budi daya ikan, sementara kualitas air danau tidak dipantau secara berkala, sehingga kadar oksigen air menurun dan menyebabkan kematian massal ikan budi daya. Kondisi ini menggambarkan bahwa kawasan tersebut telah&hellip;",
+  options:[
+    "Meningkatkan daya dukung lingkungannya secara signifikan.",
+    "Melampaui daya dukung lingkungan (carrying capacity), yaitu kondisi ketika jumlah keramba melebihi kemampuan perairan danau menyediakan oksigen dan menyerap limbah pakan secara berkelanjutan.",
+    "Mengalami penurunan jumlah keramba secara drastis.",
+    "Tidak memiliki keterkaitan antara jumlah keramba dan kualitas air danau.",
+    "Mencapai keseimbangan ekologis yang ideal."
+  ],
+  answer:1,
+  explanation:"Kondisi penambahan keramba yang tidak diimbangi pemantauan kualitas air menggambarkan kawasan tersebut telah melampaui daya dukung lingkungan (carrying capacity), yaitu ketika jumlah keramba melebihi kemampuan perairan danau menyediakan oksigen dan menyerap limbah pakan secara berkelanjutan."
+},
+{
+  type:"single", topic:"Wilayah Tempat Tinggal dan Lingkungan Sekitar",
+  text:"Seorang peneliti geografi mengamati bahwa kawasan perkebunan di suatu kabupaten mengalami perluasan yang signifikan ke arah lereng bukit dengan kemiringan curam berdasarkan analisis citra satelit. Rumusan masalah yang paling tepat untuk mendalami fenomena tersebut secara geografis adalah&hellip;",
+  options:[
+    "Bagaimana hubungan antara perluasan perkebunan di lereng curam dengan tingkat risiko erosi dan longsor di kawasan tersebut?",
+    "Berapa jumlah pekerja perkebunan yang bekerja di kawasan tersebut secara keseluruhan?",
+    "Apa jenis alat pertanian yang digunakan oleh petani setempat?",
+    "Siapa nama pemilik lahan perkebunan yang paling luas di kawasan tersebut?",
+    "Bagaimana sejarah pembukaan perkebunan tersebut sejak masa kolonial?"
+  ],
+  answer:0,
+  explanation:"Rumusan masalah yang tepat untuk mendalami fenomena perluasan perkebunan di lereng curam secara geografis adalah yang menghubungkan fenomena fisik (perluasan lahan di lereng curam) dengan risiko yang mungkin ditimbulkan (erosi dan longsor), mengarahkan penelitian pada analisis sebab-akibat kewilayahan."
+},
+{
+  type:"mcma", topic:"Wilayah Tempat Tinggal dan Lingkungan Sekitar",
+  text:"Berdasarkan citra satelit, seorang kepala daerah mengidentifikasi adanya indikasi kerusakan tutupan lahan di kawasan hulu yang berkontribusi terhadap peningkatan sedimentasi di waduk penyedia air baku. Seorang peneliti geografi akan menindaklanjuti temuan tersebut dengan penelitian lapangan. Rumusan masalah manakah yang tepat untuk penelitian tersebut? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan rumusan masalah yang menghubungkan fenomena fisik hulu dengan dampaknya terhadap waduk dan upaya penanganannya.",
+  options:[
+    "Bagaimana hubungan antara kerusakan tutupan lahan di kawasan hulu dengan laju sedimentasi yang terjadi di waduk?",
+    "Apa dampak peningkatan sedimentasi tersebut terhadap kapasitas tampung dan usia layan waduk sebagai penyedia air baku?",
+    "Berapa jumlah toko kelontong yang beroperasi di sekitar kawasan waduk tersebut?",
+    "Bagaimana efektivitas program rehabilitasi lahan hulu yang telah dilakukan pemerintah daerah setempat?",
+    "Apa jenis olahraga air yang populer dilakukan di waduk tersebut?"
+  ],
+  answer:[0,1,3],
+  explanation:"Rumusan masalah tentang hubungan kerusakan tutupan lahan hulu dengan laju sedimentasi waduk relevan secara geografis (tepat). Dampak terhadap kapasitas tampung dan usia layan waduk juga relevan (tepat). Efektivitas program rehabilitasi lahan hulu relevan untuk aspek mitigasi dan pengelolaan wilayah (tepat). Pertanyaan tentang jumlah toko kelontong TIDAK RELEVAN dengan fokus fenomena sedimentasi waduk (tidak tepat). Pertanyaan tentang olahraga air TIDAK RELEVAN dengan rumusan masalah geografis mengenai fenomena tersebut (tidak tepat)."
+},
+{
+  type:"single", topic:"Proses yang Memengaruhi Lingkungan Fisik dan Sosial",
+  text:"Gletser yang bergerak perlahan menuruni lembah pegunungan selama ribuan tahun mengikis dan mengangkut material batuan di sepanjang jalurnya, membentuk lembah berbentuk U yang khas serta menumpuk material batuan (morena) di ujung gletser. Proses geomorfologi yang menyebabkan pembentukan bentang lahan tersebut adalah&hellip;",
+  options:[
+    "Erosi air sungai, karena aliran air yang mengikis permukaan lembah.",
+    "Glasiasi, yaitu proses pengikisan dan pengangkutan material oleh massa es (gletser) yang bergerak, membentuk lembah berbentuk U dan endapan morena di kawasan pegunungan tinggi atau lintang tinggi.",
+    "Pelapukan kimiawi semata.",
+    "Tektonisme, karena adanya pergerakan lempeng bumi.",
+    "Vulkanisme, karena adanya aktivitas gunung berapi."
+  ],
+  answer:1,
+  explanation:"Pembentukan lembah berbentuk U dan endapan morena disebabkan oleh proses glasiasi, yaitu pengikisan dan pengangkutan material oleh massa es (gletser) yang bergerak perlahan menuruni lembah pegunungan dalam jangka waktu yang sangat lama."
+},
+{
+  type:"single", topic:"Proses yang Memengaruhi Lingkungan Fisik dan Sosial",
+  text:"Suatu wilayah mengalami perpindahan penduduk dalam jumlah besar akibat program pemerintah yang memindahkan penduduk dari pulau padat penduduk ke pulau yang lebih jarang penduduknya untuk pemerataan pembangunan dan pemanfaatan lahan. Fenomena kependudukan ini disebut&hellip;",
+  options:[
+    "Urbanisasi, karena penduduk desa pindah ke kota.",
+    "Transmigrasi, yaitu perpindahan penduduk yang difasilitasi pemerintah dari wilayah padat penduduk ke wilayah yang lebih jarang penduduknya untuk pemerataan pembangunan.",
+    "Ruralisasi semata, tanpa fasilitasi pemerintah.",
+    "Migrasi internasional.",
+    "Bonus demografi yang belum termanfaatkan."
+  ],
+  answer:1,
+  explanation:"Perpindahan penduduk yang difasilitasi pemerintah dari wilayah padat penduduk ke wilayah yang lebih jarang penduduknya untuk pemerataan pembangunan dan pemanfaatan lahan disebut transmigrasi, salah satu kebijakan kependudukan yang pernah diterapkan secara luas di Indonesia."
+},
+{
+  type:"single", topic:"Proses yang Memengaruhi Lingkungan Fisik dan Sosial",
+  text:"Pembangunan bandara baru yang menimbun sebagian kawasan rawa dan mengubah pola aliran air di sekitarnya dapat memengaruhi lingkungan fisik di wilayah tersebut. Salah satu dampak utama dari peranan manusia mengubah lingkungan fisik melalui penimbunan rawa tersebut adalah&hellip;",
+  options:[
+    "Peningkatan kapasitas resapan air kawasan secara signifikan.",
+    "Berkurangnya fungsi rawa sebagai penampung air alami, yang dapat meningkatkan risiko genangan atau banjir di kawasan permukiman sekitar akibat aliran air yang tidak lagi tertampung.",
+    "Peningkatan keanekaragaman hayati rawa secara drastis.",
+    "Tidak adanya dampak apa pun terhadap kondisi hidrologi kawasan sekitar.",
+    "Penurunan risiko banjir secara signifikan di kawasan sekitar."
+  ],
+  answer:1,
+  explanation:"Penimbunan kawasan rawa untuk pembangunan bandara mengurangi fungsi rawa sebagai penampung air alami (retention basin), yang dapat meningkatkan risiko genangan atau banjir di kawasan permukiman sekitar akibat aliran air yang tidak lagi memiliki tempat tertampung sebagaimana sebelumnya."
+},
+{
+  type:"single", topic:"Proses yang Memengaruhi Lingkungan Fisik dan Sosial",
+  text:"Suatu kawasan memiliki ciri suhu udara dingin sepanjang tahun namun tidak sedingin tundra, didominasi pohon konifer berdaun jarum seperti pinus dan cemara, serta memiliki musim dingin yang panjang dengan salju. Bioma yang sesuai dengan ciri-ciri tersebut adalah&hellip;",
+  options:[
+    "Tundra, karena tanah yang membeku secara permanen.",
+    "Hutan hujan tropis, karena curah hujan tinggi sepanjang tahun.",
+    "Taiga (hutan boreal), yaitu bioma yang dicirikan oleh dominasi pohon konifer berdaun jarum, musim dingin panjang bersalju, dan suhu udara dingin namun tidak sedingin tundra.",
+    "Sabana, karena didominasi padang rumput dengan pohon jarang.",
+    "Gurun, karena curah hujan yang sangat rendah."
+  ],
+  answer:2,
+  explanation:"Ciri-ciri dominasi pohon konifer berdaun jarum, musim dingin panjang bersalju, dan suhu dingin namun tidak sedingin tundra merupakan karakteristik bioma taiga (hutan boreal), yang banyak ditemukan di kawasan lintang tinggi seperti Rusia, Kanada, dan Skandinavia."
+},
+{
+  type:"category", topic:"Proses yang Memengaruhi Lingkungan Fisik dan Sosial",
+  text:"Gunung Merapi di perbatasan Jawa Tengah dan Yogyakarta dikenal sebagai salah satu gunung berapi paling aktif di dunia, dengan letusan besar terjadi pada tahun 2010 yang menyebabkan ribuan penduduk mengungsi dan kerusakan luas di lereng gunung. Meskipun demikian, kawasan lereng Merapi kembali dihuni dan dimanfaatkan untuk pertanian dalam beberapa tahun setelah letusan. Tentukan Benar atau Salah untuk setiap pernyataan berikut terkait fenomena Gunung Merapi!",
+  statements:[
+    {text:"Letusan Merapi tahun 2010 merupakan proses vulkanisme yang menyebabkan kerusakan luas di lereng gunung dan pengungsian penduduk dalam jumlah besar.", correct:true},
+    {text:"Kawasan lereng Merapi tidak pernah kembali dihuni maupun dimanfaatkan untuk pertanian setelah letusan tahun 2010.", correct:false},
+    {text:"Aktivitas vulkanik Merapi yang tinggi menjadikan kawasan tersebut memerlukan sistem pemantauan berkelanjutan meskipun sudah lama tidak meletus besar.", correct:true}
+  ],
+  explanation:"Letusan Merapi 2010 memang merupakan proses vulkanisme yang menyebabkan kerusakan luas dan pengungsian penduduk (Benar). Kawasan lereng Merapi JUSTRU KEMBALI DIHUNI dan dimanfaatkan untuk pertanian dalam beberapa tahun setelah letusan, bukan tidak pernah dihuni kembali (Salah). Aktivitas vulkanik Merapi yang tinggi memang menjadikan kawasan tersebut memerlukan pemantauan berkelanjutan (Benar)."
+},
+{
+  type:"single", topic:"Interaksi Antargejala Fisik Alam dan Manusia serta Pengaruhnya terhadap Kehidupan",
+  text:"Indonesia berada tepat di garis khatulistiwa (ekuator), menyebabkan sebagian besar wilayahnya beriklim tropis dengan sinar matahari yang melimpah sepanjang tahun. Kondisi iklim tropis ini memberikan Indonesia potensi besar dalam pengembangan&hellip;",
+  options:[
+    "Energi terbarukan berbasis sinar matahari (energi surya) serta pertanian tropis dengan masa tanam yang relatif panjang sepanjang tahun.",
+    "Energi berbasis salju dan es karena suhu yang sangat dingin.",
+    "Pertanian lahan kering ekstrem tanpa curah hujan sama sekali.",
+    "Industri berbasis suhu beku sepanjang tahun.",
+    "Wilayah tanpa potensi sumber daya energi apa pun."
+  ],
+  answer:0,
+  explanation:"Posisi Indonesia tepat di garis khatulistiwa dengan sinar matahari yang melimpah sepanjang tahun memberikan potensi besar dalam pengembangan energi terbarukan berbasis sinar matahari (energi surya) serta pertanian tropis dengan masa tanam yang relatif panjang sepanjang tahun dibandingkan wilayah beriklim subtropis atau sedang."
+},
+{
+  type:"single", topic:"Interaksi Antargejala Fisik Alam dan Manusia serta Pengaruhnya terhadap Kehidupan",
+  text:"Kawasan hutan mangrove di sepanjang pesisir Indonesia memiliki fungsi ekologis penting sebagai penahan abrasi, habitat biota laut, dan penyerap karbon (blue carbon). Salah satu tantangan utama dalam pengelolaan sumber daya mangrove tersebut agar berkelanjutan adalah&hellip;",
+  options:[
+    "Mengabaikan fungsi ekologis mangrove demi memaksimalkan konversi lahan menjadi tambak.",
+    "Menyeimbangkan kebutuhan ekonomi masyarakat pesisir (seperti budi daya tambak) dengan pelestarian fungsi ekologis mangrove melalui zonasi pemanfaatan lahan yang jelas.",
+    "Menghentikan seluruh kegiatan budi daya tambak tanpa mempertimbangkan kontribusi ekonominya bagi masyarakat pesisir.",
+    "Menyerahkan sepenuhnya pengelolaan kawasan mangrove kepada pihak asing tanpa pengawasan pemerintah.",
+    "Mengizinkan konversi mangrove tanpa batas tanpa memperhatikan fungsi ekologisnya."
+  ],
+  answer:1,
+  explanation:"Tantangan utama dalam pengelolaan sumber daya mangrove agar berkelanjutan adalah menyeimbangkan kebutuhan ekonomi masyarakat pesisir (seperti budi daya tambak) dengan pelestarian fungsi ekologis mangrove melalui zonasi pemanfaatan lahan yang jelas, sehingga kedua kepentingan dapat berjalan berdampingan."
+},
+{
+  type:"single", topic:"Interaksi Antargejala Fisik Alam dan Manusia serta Pengaruhnya terhadap Kehidupan",
+  text:"Konsep pertanian berkelanjutan (sustainable agriculture) dalam pengelolaan sumber daya lahan menekankan pada&hellip;",
+  options:[
+    "Penggunaan pupuk kimia dan pestisida secara maksimal tanpa mempertimbangkan dampak jangka panjang terhadap kesuburan tanah.",
+    "Praktik bertani yang menjaga kesuburan tanah, keanekaragaman hayati, dan efisiensi penggunaan air, sehingga produktivitas lahan dapat terjaga untuk generasi mendatang.",
+    "Penghentian total seluruh kegiatan pertanian di suatu wilayah.",
+    "Pemanfaatan lahan pertanian hanya untuk kepentingan segelintir pihak tertentu.",
+    "Pengabaian aspek lingkungan demi hasil panen maksimal semata."
+  ],
+  answer:1,
+  explanation:"Konsep pertanian berkelanjutan menekankan pada praktik bertani yang menjaga kesuburan tanah, keanekaragaman hayati, dan efisiensi penggunaan air, sehingga produktivitas lahan dapat terjaga untuk generasi mendatang, berbeda dengan praktik pertanian intensif yang mengabaikan dampak jangka panjang."
+},
+{
+  type:"single", topic:"Interaksi Antargejala Fisik Alam dan Manusia serta Pengaruhnya terhadap Kehidupan",
+  text:"Penambangan batu bara secara terbuka (open pit mining) di Kalimantan Timur telah meninggalkan lubang-lubang bekas tambang yang tergenang air (void) dan berpotensi mencemari lingkungan sekitar jika tidak dikelola dengan baik. Dampak lubang bekas tambang tersebut terhadap lingkungan adalah&hellip;",
+  options:[
+    "Meningkatkan kesuburan tanah di sekitar lubang tambang secara signifikan.",
+    "Berpotensi mencemari sumber air tanah dan permukaan di sekitarnya akibat kandungan logam berat dan tingkat keasaman air yang tinggi jika tidak direklamasi dengan baik.",
+    "Tidak memiliki dampak apa pun terhadap lingkungan sekitar.",
+    "Meningkatkan hasil pertanian di sekitar lubang tambang secara drastis.",
+    "Menurunkan risiko pencemaran lingkungan secara signifikan."
+  ],
+  answer:1,
+  explanation:"Lubang bekas tambang batu bara yang tergenang air (void) berpotensi mencemari sumber air tanah dan permukaan di sekitarnya akibat kandungan logam berat dan tingkat keasaman air yang tinggi (air asam tambang), jika tidak dikelola dan direklamasi dengan baik sesuai standar lingkungan."
+},
+{
+  type:"mcma", topic:"Interaksi Antargejala Fisik Alam dan Manusia serta Pengaruhnya terhadap Kehidupan",
+  text:"Kawasan bekas tambang batu bara di suatu kabupaten meninggalkan sejumlah lubang tambang yang tergenang air dan berpotensi mencemari lingkungan sekitar. Pemerintah daerah bersama perusahaan tambang mulai mempertimbangkan sejumlah langkah reklamasi. Manakah pernyataan berikut yang tepat mengenai pengelolaan lahan bekas tambang secara berkelanjutan? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan upaya reklamasi, revegetasi, dan pemantauan kualitas air sebagai bagian dari pengelolaan berkelanjutan.",
+  options:[
+    "Reklamasi lahan bekas tambang dengan penanaman kembali vegetasi (revegetasi) dapat membantu memulihkan fungsi ekologis kawasan tersebut.",
+    "Pemantauan kualitas air secara berkala pada lubang bekas tambang dapat membantu mendeteksi potensi pencemaran sejak dini.",
+    "Membiarkan lubang bekas tambang tanpa pengelolaan apa pun karena dianggap tidak lagi menjadi tanggung jawab perusahaan tambang.",
+    "Pemanfaatan sebagian lubang bekas tambang menjadi kawasan wisata air dengan pengelolaan yang tepat dapat menjadi salah satu bentuk pemanfaatan alternatif.",
+    "Kualitas air pada lubang bekas tambang tidak memiliki kaitan apa pun dengan aktivitas penambangan yang pernah dilakukan sebelumnya."
+  ],
+  answer:[0,1,3],
+  explanation:"Reklamasi dengan revegetasi memang membantu memulihkan fungsi ekologis kawasan (tepat). Pemantauan kualitas air secara berkala memang membantu mendeteksi pencemaran sejak dini (tepat). Pemanfaatan sebagian lubang tambang menjadi kawasan wisata air dengan pengelolaan tepat memang dapat menjadi alternatif pemanfaatan (tepat). Membiarkan lubang tambang tanpa pengelolaan JUSTRU MENGABAIKAN tanggung jawab reklamasi yang seharusnya menjadi kewajiban perusahaan tambang (tidak tepat). Kualitas air pada lubang tambang JUSTRU SANGAT BERKAITAN dengan aktivitas penambangan sebelumnya, bukan tidak berkaitan sama sekali (tidak tepat)."
+},
+{
+  type:"single", topic:"Cara Mitigasi dan Adaptasi terhadap Bencana Alam",
+  text:"Letusan gunung berapi eksplosif, gempa bumi akibat sesar aktif, dan tsunami akibat longsoran bawah laut termasuk dalam kategori bencana&hellip;, sedangkan angin puting beliung, gelombang panas, dan banjir bandang akibat curah hujan ekstrem termasuk dalam kategori bencana&hellip;",
+  options:[
+    "Hidroklimatologis; geologis.",
+    "Geologis; hidroklimatologis, karena kelompok pertama berkaitan dengan proses geologi bumi, sedangkan kelompok kedua berkaitan dengan kondisi atmosfer dan hidrologi ekstrem.",
+    "Biologis; geologis.",
+    "Klimatologis; biologis.",
+    "Sosial; geologis."
+  ],
+  answer:1,
+  explanation:"Letusan gunung berapi eksplosif, gempa bumi akibat sesar aktif, dan tsunami akibat longsoran bawah laut termasuk bencana geologis, sedangkan angin puting beliung, gelombang panas, dan banjir bandang termasuk bencana hidroklimatologis karena berkaitan dengan kondisi atmosfer dan hidrologi."
+},
+{
+  type:"single", topic:"Cara Mitigasi dan Adaptasi terhadap Bencana Alam",
+  text:"Penetapan status siaga darurat bencana, penyusunan rencana kontinjensi daerah, dan pelatihan relawan penanggulangan bencana oleh pemerintah daerah merupakan contoh upaya mitigasi bencana yang bersifat&hellip;",
+  options:[
+    "Struktural, karena melibatkan pembangunan fisik secara langsung.",
+    "Non-struktural, yaitu upaya mitigasi bencana melalui kebijakan, perencanaan, dan penguatan kapasitas kelembagaan tanpa pembangunan fisik/infrastruktur.",
+    "Ekonomi semata, tanpa keterkaitan dengan keselamatan.",
+    "Budaya semata, tanpa keterkaitan dengan risiko bencana.",
+    "Teknologi semata, tanpa keterkaitan dengan kelembagaan."
+  ],
+  answer:1,
+  explanation:"Penetapan status siaga darurat bencana, penyusunan rencana kontinjensi daerah, dan pelatihan relawan penanggulangan bencana merupakan contoh mitigasi non-struktural, yaitu upaya mitigasi bencana melalui kebijakan, perencanaan, dan penguatan kapasitas kelembagaan tanpa pembangunan fisik."
+},
+{
+  type:"single", topic:"Cara Mitigasi dan Adaptasi terhadap Bencana Alam",
+  text:"Beberapa daerah rawan longsor di Indonesia kini dilengkapi dengan alat pendeteksi pergerakan tanah (extensometer) yang dapat mengirimkan sinyal peringatan otomatis kepada warga sekitar ketika terdeteksi pergerakan tanah yang mencurigakan. Sistem tersebut termasuk dalam upaya&hellip;",
+  options:[
+    "Rehabilitasi pascabencana semata.",
+    "Early warning system (sistem peringatan dini) longsor, yaitu sistem yang mendeteksi indikator pergerakan tanah dan menyebarkan peringatan kepada masyarakat sebelum longsor terjadi.",
+    "Rekonstruksi infrastruktur pascabencana semata.",
+    "Tanggap darurat pascabencana semata.",
+    "Evakuasi permanen penduduk semata."
+  ],
+  answer:1,
+  explanation:"Alat pendeteksi pergerakan tanah (extensometer) yang mengirimkan sinyal peringatan otomatis kepada warga termasuk dalam upaya early warning system (sistem peringatan dini) longsor, salah satu komponen penting mitigasi bencana untuk mengurangi risiko korban jiwa akibat tanah longsor."
+},
+{
+  type:"mcma", topic:"Cara Mitigasi dan Adaptasi terhadap Bencana Alam",
+  text:"Masyarakat yang tinggal di kawasan rawan tanah longsor di perbukitan Jawa Barat telah mengembangkan berbagai bentuk adaptasi untuk mengurangi risiko bencana. Manakah pernyataan berikut yang tepat mengenai bentuk adaptasi masyarakat terhadap risiko tanah longsor tersebut? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan bentuk adaptasi berupa penanaman vegetasi penahan lereng, pemantauan mandiri, dan tata guna lahan yang mempertimbangkan kestabilan lereng.",
+  options:[
+    "Penanaman vegetasi berakar dalam di lereng bukit membantu memperkuat struktur tanah dan mengurangi risiko longsor.",
+    "Pemantauan mandiri terhadap tanda-tanda awal longsor, seperti retakan tanah atau air keruh dari mata air, membantu warga mengambil langkah evakuasi dini.",
+    "Membangun permukiman baru tepat di bawah lereng curam yang sudah pernah longsor sebelumnya tanpa mempertimbangkan risiko ulang.",
+    "Membatasi aktivitas penggalian tanah di lereng curam yang berpotensi mengganggu kestabilan lereng.",
+    "Mengabaikan retakan tanah yang muncul karena dianggap tidak berbahaya selama belum terjadi longsor besar."
+  ],
+  answer:[0,1,3],
+  explanation:"Penanaman vegetasi berakar dalam memang membantu memperkuat struktur tanah dan mengurangi risiko longsor (tepat). Pemantauan mandiri terhadap tanda-tanda awal longsor memang membantu evakuasi dini (tepat). Membatasi aktivitas penggalian tanah di lereng curam memang membantu menjaga kestabilan lereng (tepat). Membangun permukiman baru di bawah lereng yang sudah pernah longsor JUSTRU MENINGKATKAN risiko, bukan bentuk adaptasi yang tepat (tidak tepat). Mengabaikan retakan tanah JUSTRU BERBAHAYA karena retakan merupakan tanda awal potensi longsor yang perlu segera direspons (tidak tepat)."
+},
+{
+  type:"category", topic:"Cara Mitigasi dan Adaptasi terhadap Bencana Alam",
+  text:"Lahan pertanian di sekitar kompleks Gunung Ijen, Jawa Timur, menghasilkan kopi dan buah-buahan dengan kualitas baik berkat tanah vulkanik yang subur, meskipun kawasan tersebut juga dikenal memiliki danau kawah dengan tingkat keasaman tinggi yang berpotensi berbahaya jika terjadi letusan freatik. Tentukan Benar atau Salah untuk setiap pernyataan berikut terkait pemanfaatan lahan di kawasan vulkanik seperti Gunung Ijen!",
+  statements:[
+    {text:"Tanah vulkanik yang subur di kawasan Gunung Ijen mendukung produktivitas pertanian kopi dan buah-buahan bagi masyarakat sekitar.", correct:true},
+    {text:"Keberadaan danau kawah dengan tingkat keasaman tinggi tidak memiliki potensi bahaya apa pun bagi kawasan sekitarnya.", correct:false},
+    {text:"Masyarakat dan wisatawan di kawasan gunung berapi aktif tetap perlu mematuhi zona aman yang ditetapkan otoritas terkait meskipun kawasan tersebut memiliki daya tarik ekonomi dan wisata.", correct:true}
+  ],
+  explanation:"Tanah vulkanik yang subur memang mendukung produktivitas pertanian kopi dan buah-buahan (Benar). Danau kawah dengan tingkat keasaman tinggi JUSTRU MEMILIKI potensi bahaya, terutama jika terjadi letusan freatik yang dapat menyemburkan gas beracun atau material asam, bukan tidak memiliki potensi bahaya sama sekali (Salah). Masyarakat dan wisatawan memang tetap perlu mematuhi zona aman yang ditetapkan otoritas terkait meskipun kawasan tersebut memiliki daya tarik ekonomi dan wisata (Benar)."
+},
+{
+  type:"single", topic:"Fenomena Geografi dalam Kehidupan Sehari-hari dan Manfaatnya",
+  text:"Pada sebuah peta, jarak antara Kota I dan Kota J tergambar sepanjang 3 cm. Jika jarak sebenarnya antara kedua kota tersebut adalah 9 km, maka skala peta tersebut adalah&hellip;",
+  options:[
+    "1:150.000",
+    "1:200.000",
+    "1:250.000",
+    "1:300.000",
+    "1:350.000"
+  ],
+  answer:3,
+  explanation:"Skala peta = jarak sebenarnya / jarak pada peta = 900.000 cm / 3 cm = 300.000. Jadi skala peta tersebut adalah 1:300.000, yang berarti setiap 1 cm pada peta mewakili 300.000 cm (3 km) jarak sebenarnya di lapangan."
+},
+{
+  type:"single", topic:"Fenomena Geografi dalam Kehidupan Sehari-hari dan Manfaatnya",
+  text:"Satelit penginderaan jauh yang dilengkapi sensor radar aktif dapat memancarkan gelombang mikro sendiri dan menerima pantulannya untuk menghasilkan citra permukaan bumi, sehingga tetap dapat merekam data meskipun kondisi cuaca berawan atau pada malam hari. Kemampuan tersebut merupakan keunggulan dari&hellip;",
+  options:[
+    "Penginderaan jauh pasif, yang bergantung pada sinar matahari sebagai sumber energi.",
+    "Penginderaan jauh aktif, yaitu sistem yang memancarkan gelombang (seperti radar) secara mandiri dan menerima pantulannya, sehingga tidak bergantung pada cahaya matahari dan tetap dapat merekam data pada kondisi berawan atau malam hari.",
+    "Fotografi udara konvensional semata.",
+    "Survei terestris tanpa bantuan satelit.",
+    "Kartografi manual tanpa teknologi digital."
+  ],
+  answer:1,
+  explanation:"Kemampuan satelit merekam data meskipun kondisi berawan atau malam hari merupakan keunggulan penginderaan jauh aktif, yaitu sistem yang memancarkan gelombang (seperti radar) secara mandiri dan menerima pantulannya, berbeda dengan penginderaan jauh pasif yang bergantung pada sinar matahari sebagai sumber energi."
+},
+{
+  type:"single", topic:"Fenomena Geografi dalam Kehidupan Sehari-hari dan Manfaatnya",
+  text:"Pemerintah daerah ingin menentukan zona prioritas pembangunan puskesmas baru dengan mempertimbangkan kepadatan penduduk, jarak dari fasilitas kesehatan yang sudah ada, dan aksesibilitas jalan. Teknik analisis Sistem Informasi Geografis (SIG) yang paling sesuai untuk menentukan zona tersebut adalah&hellip;",
+  options:[
+    "Analisis buffering di sekitar fasilitas kesehatan yang sudah ada dikombinasikan dengan overlay data kepadatan penduduk, untuk mengidentifikasi kawasan yang masih kekurangan akses layanan kesehatan.",
+    "Digitasi peta semata tanpa analisis spasial.",
+    "Interpretasi citra tanpa data spasial lainnya.",
+    "Pengukuran jarak lurus antar dua titik semata tanpa mempertimbangkan kepadatan penduduk.",
+    "Klasifikasi tutupan lahan semata."
+  ],
+  answer:0,
+  explanation:"Kombinasi analisis buffering di sekitar fasilitas kesehatan yang sudah ada dengan overlay data kepadatan penduduk merupakan teknik SIG yang paling sesuai untuk mengidentifikasi kawasan yang masih kekurangan akses layanan kesehatan, sehingga dapat menjadi dasar penentuan zona prioritas pembangunan puskesmas baru."
+},
+{
+  type:"category", topic:"Fenomena Geografi dalam Kehidupan Sehari-hari dan Manfaatnya",
+  text:"Seorang analis menggunakan citra satelit untuk memantau perubahan luas tutupan salju di puncak Pegunungan Jayawijaya, Papua, selama beberapa dekade terakhir sebagai indikator perubahan iklim. Tentukan Benar atau Salah untuk setiap pernyataan berikut mengenai pemanfaatan citra penginderaan jauh tersebut!",
+  statements:[
+    {text:"Perbandingan citra satelit pada periode waktu berbeda dapat digunakan untuk memantau penyusutan atau perluasan tutupan salju secara spasial.", correct:true},
+    {text:"Data hasil pemantauan citra satelit tidak dapat digunakan sebagai indikator perubahan iklim dalam skala regional maupun global.", correct:false},
+    {text:"Informasi hasil pemantauan tutupan salju dapat menjadi bahan pertimbangan bagi peneliti dan pengambil kebijakan terkait dampak perubahan iklim.", correct:true}
+  ],
+  explanation:"Perbandingan citra satelit pada periode waktu berbeda memang dapat memantau penyusutan atau perluasan tutupan salju secara spasial (Benar). Data hasil pemantauan citra satelit JUSTRU DAPAT DIGUNAKAN sebagai salah satu indikator perubahan iklim dalam skala regional maupun global, bukan tidak dapat digunakan sama sekali (Salah). Informasi hasil pemantauan tutupan salju memang dapat menjadi bahan pertimbangan bagi peneliti dan pengambil kebijakan (Benar)."
+},
+{
+  type:"category", topic:"Fenomena Geografi dalam Kehidupan Sehari-hari dan Manfaatnya",
+  text:"Aplikasi pemantauan lalu lintas pada telepon pintar menampilkan kondisi kepadatan jalan secara real-time dengan memanfaatkan data lokasi dari jutaan pengguna aplikasi yang bergerak di jalan raya. Tentukan Benar atau Salah untuk setiap pernyataan berikut mengenai pemanfaatan teknologi tersebut!",
+  statements:[
+    {text:"Aplikasi pemantauan lalu lintas memanfaatkan data spasial pergerakan pengguna untuk menyajikan informasi kepadatan jalan secara real-time.", correct:true},
+    {text:"Informasi kepadatan lalu lintas yang ditampilkan aplikasi tersebut tidak memiliki manfaat apa pun bagi pengguna dalam merencanakan perjalanan.", correct:false},
+    {text:"Pemanfaatan data lokasi pengguna pada aplikasi pemantauan lalu lintas merupakan salah satu contoh nyata penerapan fenomena geografi dalam kehidupan sehari-hari.", correct:true}
+  ],
+  explanation:"Aplikasi pemantauan lalu lintas memang memanfaatkan data spasial pergerakan pengguna untuk menyajikan kepadatan jalan secara real-time (Benar). Informasi kepadatan lalu lintas JUSTRU SANGAT BERMANFAAT bagi pengguna dalam merencanakan perjalanan dan memilih rute alternatif, bukan tidak bermanfaat sama sekali (Salah). Pemanfaatan data lokasi pengguna pada aplikasi tersebut memang merupakan contoh nyata penerapan fenomena geografi dalam kehidupan sehari-hari (Benar)."
+}
+];
+
+
+var LETTERS = ["A","B","C","D","E"];
+var DURATION_SECONDS = 75*60;
+var STORAGE_KEY = "tka_geografi_paket5_v1";
+var TYPE_LABELS = {single:"Pilihan Ganda", mcma:"PGK &middot; Pilih Lebih dari Satu", category:"PGK &middot; Benar/Salah"};
+
+/* ============ STATE ============ */
+var state = {
+  currentIndex:0,
+  answers:{},          // single: index | mcma: [indices] | category: {stmtIdx: true/false}
+  endTimestamp:null,
+  finished:false,
+  timeTakenSeconds:null
+};
+var timerInterval = null;
+
+/* ============ STORAGE ============ */
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ============ SCREEN HELPERS ============ */
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+}
+
+/* ============ ANSWER HELPERS (type-aware) ============ */
+function isAnswered(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(a===undefined || a===null) return false;
+  if(q.type==="category"){
+    if(typeof a !== "object") return false;
+    for(var k=0;k<q.statements.length;k++){ if(a[k]===undefined) return false; }
+    return true;
+  }
+  if(q.type==="mcma"){
+    return Array.isArray(a) && a.length>0;
+  }
+  return true; // single: any stored value (including 0) counts as answered
+}
+function evaluateQuestion(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(!isAnswered(i)) return "empty";
+  if(q.type==="category"){
+    for(var k=0;k<q.statements.length;k++){
+      if(!!a[k] !== !!q.statements[k].correct) return "wrong";
+    }
+    return "correct";
+  }
+  if(q.type==="mcma"){
+    var correctSet = q.answer.slice().sort(function(x,y){return x-y;});
+    var pickedSet = a.slice().sort(function(x,y){return x-y;});
+    if(correctSet.length !== pickedSet.length) return "wrong";
+    for(var j=0;j<correctSet.length;j++){ if(correctSet[j]!==pickedSet[j]) return "wrong"; }
+    return "correct";
+  }
+  return (a===q.answer) ? "correct":"wrong";
+}
+
+/* ============ TIMER ============ */
+function formatTime(totalSeconds){
+  totalSeconds = Math.max(0, Math.round(totalSeconds));
+  var m = Math.floor(totalSeconds/60);
+  var s = totalSeconds%60;
+  return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+}
+function startTimerLoop(){
+  var display = document.getElementById("timerDisplay");
+  display.style.display = "flex";
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 250);
+  tickTimer();
+}
+function tickTimer(){
+  var remaining = (state.endTimestamp - Date.now())/1000;
+  var textEl = document.getElementById("timerText");
+  var wrap = document.getElementById("timerDisplay");
+  if(remaining <= 0){
+    textEl.textContent = "00:00";
+    clearInterval(timerInterval);
+    finishQuiz(true);
+    return;
+  }
+  textEl.textContent = formatTime(remaining);
+  if(remaining <= 300) wrap.classList.add("low"); else wrap.classList.remove("low");
+}
+function stopTimer(){
+  clearInterval(timerInterval);
+  document.getElementById("timerDisplay").style.display = "none";
+}
+
+/* ============ QUIZ RENDERING ============ */
+function renderNavGrid(){
+  var grid = document.getElementById("navGrid");
+  grid.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var cell = document.createElement("div");
+    cell.className = "nav-cell" + (isAnswered(i)?" answered":"") + (i===state.currentIndex?" current":"");
+    cell.textContent = (i+1);
+    cell.addEventListener("click", function(){
+      state.currentIndex = i;
+      renderQuestion();
+    });
+    grid.appendChild(cell);
+  });
+}
+
+function renderOptionsSingleOrMcma(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var isMcma = q.type==="mcma";
+  var current = state.answers[i];
+  q.options.forEach(function(optText, idx){
+    var picked = isMcma ? (Array.isArray(current) && current.indexOf(idx)!==-1) : (current===idx);
+    var div = document.createElement("div");
+    div.className = "option" + (isMcma?" mcma":"") + (picked ? " selected":"");
+    div.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+    div.addEventListener("click", function(){
+      if(isMcma){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : [];
+        var pos = arr.indexOf(idx);
+        if(pos===-1) arr.push(idx); else arr.splice(pos,1);
+        state.answers[i] = arr;
+      } else {
+        state.answers[i] = idx;
+      }
+      saveState();
+      renderQuestion();
+    });
+    optsWrap.appendChild(div);
+  });
+}
+
+function renderStatements(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var current = (typeof state.answers[i] === "object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+  q.statements.forEach(function(st, k){
+    var row = document.createElement("div");
+    row.className = "statement-row";
+    var textDiv = document.createElement("div");
+    textDiv.className = "statement-text";
+    textDiv.innerHTML = (k+1)+". "+st.text;
+    row.appendChild(textDiv);
+    var choices = document.createElement("div");
+    choices.className = "statement-choices";
+    [["Benar",true], ["Salah",false]].forEach(function(pair){
+      var btn = document.createElement("div");
+      btn.className = "choice-btn" + (current[k]===pair[1] ? " selected":"");
+      btn.textContent = pair[0];
+      btn.addEventListener("click", function(){
+        var obj = (typeof state.answers[i]==="object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+        obj[k] = pair[1];
+        state.answers[i] = obj;
+        saveState();
+        renderQuestion();
+      });
+      choices.appendChild(btn);
+    });
+    row.appendChild(choices);
+    optsWrap.appendChild(row);
+  });
+}
+
+function renderQuestion(){
+  var i = state.currentIndex;
+  var q = QUESTIONS[i];
+  document.getElementById("qIndexLabel").textContent = "Soal "+(i+1)+" dari "+QUESTIONS.length;
+  document.getElementById("qTopicLabel").textContent = q.topic;
+  document.getElementById("qTypeBadge").innerHTML = TYPE_LABELS[q.type] || TYPE_LABELS.single;
+  document.getElementById("qText").innerHTML = q.text;
+
+  var hintEl = document.getElementById("qHint");
+  if(q.hint){ hintEl.style.display="block"; hintEl.textContent = q.hint; }
+  else if(q.type==="category"){ hintEl.style.display="block"; hintEl.textContent = "Beri respons Benar atau Salah untuk setiap pernyataan."; }
+  else { hintEl.style.display="none"; }
+
+  if(q.type==="category") renderStatements(q, i);
+  else renderOptionsSingleOrMcma(q, i);
+
+  document.getElementById("btnPrev").disabled = (i===0);
+  document.getElementById("btnPrev").style.opacity = (i===0)?"0.5":"1";
+  document.getElementById("btnNext").textContent = (i===QUESTIONS.length-1) ? "Selesai →" : "Berikutnya →";
+  document.getElementById("progressFill").style.width = Math.round(((i+1)/QUESTIONS.length)*100)+"%";
+  renderNavGrid();
+}
+
+/* ============ NAVIGATION BUTTONS ============ */
+document.getElementById("btnPrev").addEventListener("click", function(){
+  if(state.currentIndex>0){ state.currentIndex--; renderQuestion(); }
+});
+document.getElementById("btnNext").addEventListener("click", function(){
+  if(state.currentIndex < QUESTIONS.length-1){
+    state.currentIndex++;
+    renderQuestion();
+  } else {
+    confirmFinish();
+  }
+});
+document.getElementById("btnFinish").addEventListener("click", confirmFinish);
+
+function confirmFinish(){
+  var answeredCount = 0;
+  QUESTIONS.forEach(function(q,i){ if(isAnswered(i)) answeredCount++; });
+  var msg = "Kamu telah menjawab "+answeredCount+" dari "+QUESTIONS.length+" soal.\nSelesaikan tryout dan lihat hasil sekarang?";
+  if(window.confirm(msg)){
+    finishQuiz(false);
+  }
+}
+
+/* ============ START / RESUME / RESTART ============ */
+function beginFreshQuiz(){
+  state = {
+    currentIndex:0,
+    answers:{},
+    endTimestamp: Date.now() + DURATION_SECONDS*1000,
+    finished:false,
+    timeTakenSeconds:null
+  };
+  saveState();
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+function resumeQuiz(saved){
+  state = saved;
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+
+document.getElementById("btnStart").addEventListener("click", beginFreshQuiz);
+document.getElementById("btnResume").addEventListener("click", function(){
+  var saved = loadState();
+  if(saved && !saved.finished) resumeQuiz(saved); else beginFreshQuiz();
+});
+document.getElementById("btnRestartFresh").addEventListener("click", function(){
+  clearState();
+  document.getElementById("resumeBanner").style.display = "none";
+  beginFreshQuiz();
+});
+document.getElementById("btnRetry").addEventListener("click", function(){
+  clearState();
+  stopTimer();
+  showScreen("screen-start");
+  document.getElementById("resumeBanner").style.display = "none";
+});
+
+/* ============ FINISH & SCORING ============ */
+function finishQuiz(autoSubmitted){
+  stopTimer();
+  state.finished = true;
+  var elapsed = DURATION_SECONDS - Math.max(0, (state.endTimestamp - Date.now())/1000);
+  state.timeTakenSeconds = Math.min(DURATION_SECONDS, Math.round(elapsed));
+  saveState();
+  renderResult(autoSubmitted);
+  showScreen("screen-result");
+  window.scrollTo(0,0);
+}
+
+function renderResult(autoSubmitted){
+  var correct=0, wrong=0, empty=0, score=0;
+  var topicStats = {};
+  QUESTIONS.forEach(function(q, i){
+    if(!topicStats[q.topic]) topicStats[q.topic] = {correct:0,total:0};
+    topicStats[q.topic].total++;
+    var status = evaluateQuestion(i);
+    if(status==="empty"){ empty++; }
+    else if(status==="correct"){ correct++; score+=4; topicStats[q.topic].correct++; }
+    else { wrong++; score-=1; }
+  });
+
+  document.getElementById("resultSubtitle").textContent = autoSubmitted
+    ? "Waktu habis — tryout otomatis diselesaikan. Berikut rekap skor dan pembahasan lengkap setiap soal."
+    : "Berikut rekap skor dan pembahasan lengkap setiap soal.";
+
+  document.getElementById("statScore").textContent = score;
+  document.getElementById("statCorrect").textContent = correct;
+  document.getElementById("statWrong").textContent = wrong;
+  document.getElementById("statEmpty").textContent = empty;
+  document.getElementById("statTime").textContent = formatTime(state.timeTakenSeconds);
+
+  var barsWrap = document.getElementById("topicBars");
+  barsWrap.innerHTML = "";
+  Object.keys(topicStats).forEach(function(topic){
+    var st = topicStats[topic];
+    var pct = Math.round((st.correct/st.total)*100);
+    var row = document.createElement("div");
+    row.className = "topic-bar-row";
+    row.innerHTML =
+      "<div class='top'><span class='name'>"+topic+"</span><span class='frac2'>"+st.correct+"/"+st.total+"</span></div>"+
+      "<div class='bar-track'><div class='bar-fill' style='width:"+pct+"%;'></div></div>";
+    barsWrap.appendChild(row);
+  });
+
+  var reviewList = document.getElementById("reviewList");
+  reviewList.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var status = evaluateQuestion(i);
+    var statusLabel = status==="empty" ? "Kosong" : (status==="correct" ? "Benar":"Salah");
+
+    var details = document.createElement("details");
+    details.className = "review-item";
+    details.open = (status !== "correct");
+
+    var summary = document.createElement("summary");
+    summary.innerHTML =
+      "<span class='badge "+status+"'>"+statusLabel+"</span>"+
+      "<span class='badge typebadge'>"+(TYPE_LABELS[q.type]||TYPE_LABELS.single)+"</span>"+
+      "<span>Soal "+(i+1)+" — "+q.topic+"</span>"+
+      "<span class='chev'>&#9662;</span>";
+    details.appendChild(summary);
+
+    var body = document.createElement("div");
+    body.className = "review-body";
+
+    var qTextDiv = document.createElement("div");
+    qTextDiv.className = "q-text";
+    qTextDiv.innerHTML = q.text;
+    body.appendChild(qTextDiv);
+
+    if(q.type==="category"){
+      var a = (typeof state.answers[i]==="object" && state.answers[i]!==null) ? state.answers[i] : {};
+      q.statements.forEach(function(st, k){
+        var userVal = a[k];
+        var isCorrectStmt = userVal!==undefined && (!!userVal === !!st.correct);
+        var row = document.createElement("div");
+        row.className = "review-statement " + (userVal===undefined ? "" : (isCorrectStmt ? "st-correct":"st-wrong"));
+        var userLabel = userVal===undefined ? "Tidak dijawab" : (userVal ? "Benar":"Salah");
+        var correctLabel = st.correct ? "Benar":"Salah";
+        row.innerHTML =
+          "<span>"+(k+1)+". "+st.text+"</span>"+
+          "<span class='st-answer'>Jawabanmu: "+userLabel+(isCorrectStmt? "" : " &middot; Kunci: "+correctLabel)+"</span>";
+        body.appendChild(row);
+      });
+    } else if(q.type==="mcma"){
+      var picked = Array.isArray(state.answers[i]) ? state.answers[i] : [];
+      var optsDiv = document.createElement("div");
+      optsDiv.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var isCorrectOpt = q.answer.indexOf(idx)!==-1;
+        var wasPicked = picked.indexOf(idx)!==-1;
+        var cls = "review-opt";
+        var tag = "";
+        if(isCorrectOpt){ cls += " is-correct"; tag = wasPicked ? "Dipilih &amp; tepat" : "Terlewat"; }
+        else if(wasPicked){ cls += " is-wrong-pick"; tag = "Dipilih, tidak tepat"; }
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>"+(tag?"<span class='opt-tag'>"+tag+"</span>":"");
+        optsDiv.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv);
+    } else {
+      var picked2 = state.answers[i];
+      var optsDiv2 = document.createElement("div");
+      optsDiv2.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var cls = "review-opt";
+        if(idx===q.answer) cls += " is-correct";
+        else if(idx===picked2) cls += " is-wrong-pick";
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+        optsDiv2.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv2);
+    }
+
+    var pembahasan = document.createElement("div");
+    pembahasan.className = "pembahasan";
+    pembahasan.style.marginTop = "14px";
+    pembahasan.innerHTML = "<b>Pembahasan:</b><br>"+q.explanation;
+    body.appendChild(pembahasan);
+
+    details.appendChild(body);
+    reviewList.appendChild(details);
+  });
+}
+
+/* ============ INIT ON LOAD ============ */
+(function init(){
+  var saved = loadState();
+  if(saved && !saved.finished && saved.endTimestamp){
+    var remaining = (saved.endTimestamp - Date.now())/1000;
+    if(remaining > 0){
+      document.getElementById("resumeBanner").style.display = "flex";
+    } else {
+      state = saved;
+      finishQuiz(true);
+    }
+  }
+})();
+
+})();
+</script>
+</body>
+</html>
