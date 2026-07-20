@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tryout Sosiologi — Paket 4 | Siap TKA</title>
+<meta name="description" content="Latihan tryout Sosiologi Paket 4 untuk persiapan TKA SMA/MA — 25 soal sosiologi sebagai ilmu, hubungan dan gejala sosial, penelitian sosial, kelompok sosial-kesetaraan-konflik sosial, dan perubahan sosial-globalisasi, timer, skor otomatis, dan pembahasan lengkap.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --wrong:#dc2626;
+    --wrong-bg:#fef2f2;
+    --empty:#b45309;
+    --empty-bg:#fffbeb;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .timer{
+    display:flex;align-items:center;gap:8px;
+    font-variant-numeric:tabular-nums;
+    font-weight:700;font-size:1.05rem;
+    padding:8px 16px;border-radius:999px;
+    background:var(--primary-light);color:var(--primary-dark);
+    border:1px solid #c7d2fe;
+  }
+  .timer.low{background:var(--wrong-bg);color:var(--wrong);border-color:#fecaca;}
+  .timer .icon{font-size:1rem;}
+
+  .screen{display:none;}
+  .screen.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+
+  /* ---- math notation helpers (no external library needed) ---- */
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+    margin:0 3px;line-height:1;position:relative;top:0.16em;font-size:0.9em;}
+  .frac .num{padding:0 4px 2px;border-bottom:1.4px solid currentColor;}
+  .frac .den{padding:2px 4px 0;}
+  .rad{border-top:1.4px solid currentColor;padding:0 3px;margin-left:1px;}
+  sup{font-size:.72em;top:-0.55em;}
+  sub{font-size:.72em;bottom:-0.25em;}
+  .qtable{border-collapse:collapse;margin:14px 0;font-size:.92rem;}
+  .qtable th,.qtable td{border:1px solid var(--border);padding:6px 16px;text-align:center;}
+  .qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  /* START SCREEN */
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+  .hero h1{font-size:1.7rem;margin:0 0 6px;}
+  .hero p.lead{color:var(--muted);margin:0 0 24px;font-size:1rem;}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0;}
+  .info-item{background:var(--primary-light);border-radius:10px;padding:14px 16px;}
+  .info-item .num2{font-size:1.4rem;font-weight:800;color:var(--primary-dark);}
+  .info-item .label{font-size:.82rem;color:var(--muted);margin-top:2px;}
+  .rules{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:16px 18px;margin:20px 0;font-size:.92rem;color:var(--text);}
+  .rules b{color:var(--primary-dark);}
+  .rules ul{margin:8px 0 0;padding-left:20px;}
+  .rules li{margin-bottom:4px;}
+  .topics-list{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 24px;}
+  .topic-chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.82rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+    transition:transform .1s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+  .btn-block{width:100%;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+
+  .resume-banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+  /* QUIZ SCREEN */
+  .quiz-layout{display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start;}
+  @media (max-width:760px){.quiz-layout{grid-template-columns:1fr;}}
+
+  .progress-bar{height:6px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:20px;}
+  .progress-bar .fill{height:100%;background:var(--primary);border-radius:999px;transition:width .2s ease;}
+
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;}
+  .q-index{font-weight:700;color:var(--primary-dark);font-size:.95rem;}
+  .q-topic{font-size:.78rem;color:var(--muted);background:var(--primary-light);padding:4px 10px;border-radius:999px;}
+  .q-type-badge{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:#fef3c7;color:#92400e;}
+  .q-hint{font-size:.82rem;color:var(--muted);margin-bottom:14px;font-style:italic;}
+  .q-text{font-size:1.05rem;margin:0 0 20px;}
+  .q-text img{max-width:100%;}
+
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .option{
+    display:flex;align-items:flex-start;gap:12px;
+    border:1.5px solid var(--border);border-radius:10px;
+    padding:13px 16px;cursor:pointer;font-size:.96rem;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .option:hover{border-color:var(--primary);background:var(--primary-light);}
+  .option.selected{border-color:var(--primary);background:var(--primary-light);}
+  .option .letter{
+    width:26px;height:26px;flex:none;border-radius:50%;
+    border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
+    font-size:.8rem;font-weight:700;color:var(--muted);
+  }
+  .option.mcma .letter{border-radius:7px;}
+  .option.selected .letter{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+  .statement-row{border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+  .statement-text{margin-bottom:12px;font-size:.94rem;}
+  .statement-choices{display:flex;gap:10px;}
+  .choice-btn{flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);cursor:pointer;font-weight:700;font-size:.85rem;text-align:center;color:var(--muted);}
+  .choice-btn:hover{border-color:var(--primary);}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark);}
+
+  .quiz-nav-btns{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+
+  .nav-panel{position:sticky;top:78px;}
+  .nav-panel .card{padding:18px;}
+  .nav-panel h4{margin:0 0 4px;font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:14px 0;}
+  .nav-cell{
+    aspect-ratio:1;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);color:var(--muted);font-size:.78rem;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .nav-cell.answered{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);}
+  .nav-cell.current{outline:2px solid var(--primary);outline-offset:1px;}
+  .legend{display:flex;flex-direction:column;gap:6px;font-size:.78rem;color:var(--muted);margin-top:10px;}
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .legend i{width:12px;height:12px;border-radius:4px;display:inline-block;border:1.5px solid var(--border);}
+  .legend i.a{background:var(--primary-light);border-color:var(--primary);}
+
+  /* RESULT SCREEN */
+  .result-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:24px 0;}
+  .stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+  .stat .val{font-size:1.6rem;font-weight:800;}
+  .stat .lbl{font-size:.78rem;color:var(--muted);margin-top:4px;}
+  .stat.score .val{color:var(--primary-dark);}
+  .stat.correct .val{color:var(--correct);}
+  .stat.wrong .val{color:var(--wrong);}
+  .stat.empty .val{color:var(--empty);}
+
+  .topic-bars{display:flex;flex-direction:column;gap:14px;margin:20px 0 8px;}
+  .topic-bar-row .top{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:6px;}
+  .topic-bar-row .top .name{font-weight:600;}
+  .topic-bar-row .top .frac2{color:var(--muted);}
+  .bar-track{height:9px;background:var(--border);border-radius:999px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--primary);border-radius:999px;}
+
+  .section-title{font-size:1.1rem;margin:32px 0 14px;font-weight:700;}
+  .review-item{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--surface);}
+  .review-item summary{
+    list-style:none;cursor:pointer;padding:14px 18px;
+    display:flex;align-items:center;gap:12px;font-weight:600;font-size:.92rem;flex-wrap:wrap;
+  }
+  .review-item summary::-webkit-details-marker{display:none;}
+  .review-item summary .chev{margin-left:auto;color:var(--muted);font-size:.8rem;}
+  .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;flex:none;}
+  .badge.correct{background:var(--correct-bg);color:var(--correct);}
+  .badge.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .badge.empty{background:var(--empty-bg);color:var(--empty);}
+  .badge.typebadge{background:#fef3c7;color:#92400e;}
+  .review-body{padding:0 18px 20px;border-top:1px solid var(--border);}
+  .review-body .q-text{font-size:.96rem;margin:16px 0;}
+  .review-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .review-opt{display:flex;gap:10px;padding:9px 13px;border-radius:8px;border:1px solid var(--border);font-size:.9rem;align-items:center;}
+  .review-opt .letter{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex:none;}
+  .review-opt.is-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-opt.is-correct .letter{background:var(--correct);border-color:var(--correct);color:#fff;}
+  .review-opt.is-wrong-pick{background:var(--wrong-bg);border-color:#fecaca;}
+  .review-opt.is-wrong-pick .letter{background:var(--wrong);border-color:var(--wrong);color:#fff;}
+  .opt-tag{margin-left:auto;font-size:.72rem;color:var(--muted);font-style:italic;}
+  .review-statement{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;font-size:.9rem;}
+  .review-statement.st-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-statement.st-wrong{background:var(--wrong-bg);border-color:#fecaca;}
+  .st-answer{font-size:.78rem;font-weight:700;flex:none;}
+  .pembahasan{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:.9rem;}
+  .pembahasan b{color:var(--primary-dark);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html" class="active">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <!-- START SCREEN -->
+  <section class="screen active" id="screen-start">
+    <div class="card hero">
+      <div id="resumeBanner" style="display:none;" class="resume-banner">
+        <span>Kamu punya progres tryout yang belum selesai.</span>
+        <div class="btn-row" style="margin:0;">
+          <button class="btn btn-primary" id="btnResume">Lanjutkan Tryout</button>
+          <button class="btn btn-ghost" id="btnRestartFresh">Mulai Baru</button>
+        </div>
+      </div>
+
+      <span class="pill pill-premium">Premium</span>
+      <h1>Tryout Sosiologi &mdash; Paket 4</h1>
+      <p class="lead">Simulasi latihan mandiri mengikuti ketentuan resmi TKA 2026: mata uji pilihan Sosiologi jenjang SMA/MA, mengacu Kerangka Asesmen TKA (Perka BSKAP Kemendikdasmen No. 045/H/AN/2025) &mdash; pemahaman, penerapan, dan penalaran sosiologi sebagai ilmu, hubungan dan gejala sosial, penelitian sosial, kelompok sosial &amp; kesetaraan &amp; konflik sosial, serta perubahan sosial dan globalisasi.</p>
+
+      <div class="info-grid">
+        <div class="info-item"><div class="num2">25</div><div class="label">Soal (campuran bentuk)</div></div>
+        <div class="info-item"><div class="num2">75:00</div><div class="label">Menit pengerjaan</div></div>
+        <div class="info-item"><div class="num2">5</div><div class="label">Elemen materi</div></div>
+        <div class="info-item"><div class="num2">4/6</div><div class="label">Paket soal</div></div>
+      </div>
+
+      <div class="rules">
+        <b>Bentuk soal</b> (sesuai ketentuan resmi TKA):
+        <ul>
+          <li><b>Pilihan Ganda</b> &mdash; satu jawaban paling tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</b> &mdash; bisa lebih dari satu jawaban benar, semua harus dipilih dengan tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Benar/Salah)</b> &mdash; beberapa pernyataan, tiap pernyataan direspons Benar atau Salah.</li>
+        </ul>
+        <b style="display:block;margin-top:10px;">Sistem penilaian per soal (konvensi latihan, bukan rumus resmi Kemendikdasmen):</b> Seluruhnya terjawab tepat <b>+4</b>, ada bagian yang keliru <b>&minus;1</b>, tidak dijawab sama sekali <b>0</b>. Skor maksimum <b>100</b>. TKA sesungguhnya dilaporkan sebagai skor terstandar (bukan skor mentah seperti ini), jadi anggap skor di sini sebagai indikator latihan saja.<br>
+        Pembahasan lengkap tampil setelah kamu menekan <b>Selesai &amp; Lihat Hasil</b>, atau otomatis saat waktu habis. Progres tersimpan otomatis di perangkat ini.
+      </div>
+
+      <div class="topics-list">
+        <span class="topic-chip">Sosiologi sebagai Ilmu</span>
+        <span class="topic-chip">Hubungan &amp; Gejala Sosial</span>
+        <span class="topic-chip">Penelitian Sosial</span>
+        <span class="topic-chip">Kelompok Sosial, Kesetaraan &amp; Konflik</span>
+        <span class="topic-chip">Perubahan Sosial &amp; Globalisasi</span>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="btnStart" style="font-size:1rem;padding:15px;">Mulai Tryout</button>
+    </div>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz-top">
+      <div style="font-weight:700;color:var(--muted);font-size:.86rem;">Tryout Sosiologi &middot; Paket 4</div>
+      <div class="timer" id="timerDisplay" style="display:none;"><span class="icon">&#9201;</span><span id="timerText">75:00</span></div>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progressFill" style="width:4%;"></div></div>
+    <div class="quiz-layout">
+      <div class="card">
+        <div class="q-meta">
+          <span class="q-index" id="qIndexLabel">Soal 1 dari 25</span>
+          <span class="q-topic" id="qTopicLabel">Bilangan</span>
+          <span class="q-type-badge" id="qTypeBadge">Pilihan Ganda</span>
+        </div>
+        <div class="q-hint" id="qHint" style="display:none;"></div>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="qOptions"></div>
+        <div class="quiz-nav-btns">
+          <button class="btn btn-ghost" id="btnPrev">&larr; Sebelumnya</button>
+          <button class="btn btn-primary" id="btnNext">Berikutnya &rarr;</button>
+        </div>
+      </div>
+      <aside class="nav-panel">
+        <div class="card">
+          <h4>Navigasi Soal</h4>
+          <div class="nav-grid" id="navGrid"></div>
+          <div class="legend">
+            <span><i class="a"></i> Sudah dijawab</span>
+            <span><i></i> Belum dijawab</span>
+          </div>
+          <button class="btn btn-primary btn-block" id="btnFinish" style="margin-top:16px;">Selesai &amp; Lihat Hasil</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section class="screen" id="screen-result">
+    <div class="card">
+      <h1 style="font-size:1.4rem;margin-top:0;">Hasil Tryout Kamu &mdash; Paket 4</h1>
+      <p class="lead" style="margin-bottom:0;" id="resultSubtitle">Berikut rekap skor dan pembahasan lengkap setiap soal.</p>
+
+      <div class="result-summary">
+        <div class="stat score"><div class="val" id="statScore">0</div><div class="lbl">Skor (maks 100)</div></div>
+        <div class="stat correct"><div class="val" id="statCorrect">0</div><div class="lbl">Benar</div></div>
+        <div class="stat wrong"><div class="val" id="statWrong">0</div><div class="lbl">Salah</div></div>
+        <div class="stat empty"><div class="val" id="statEmpty">0</div><div class="lbl">Kosong</div></div>
+        <div class="stat"><div class="val" id="statTime">-</div><div class="lbl">Waktu terpakai</div></div>
+      </div>
+
+      <div class="section-title">Analisis per Elemen Materi</div>
+      <div class="topic-bars" id="topicBars"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnRetry">&#8635; Ulangi Paket Ini</button>
+        <a class="btn btn-ghost" href="tryout.html">Kembali ke Daftar Tryout</a>
+      </div>
+    </div>
+
+    <div class="section-title">Pembahasan Lengkap</div>
+    <div id="reviewList"></div>
+  </section>
+
+  <div class="note-box">
+    Skor pada tryout ini adalah alat bantu latihan mandiri dan tidak merepresentasikan nilai resmi TKA. Materi mata pelajaran lengkap tersedia di halaman <a href="mata-pelajaran-sosiologi.html">Sosiologi</a>.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA &middot; mengacu Kerangka Asesmen TKA Sosiologi (Pilihan) SMA, Perka BSKAP Kemendikdasmen No. 045/H/AN/2025.</p>
+  </footer>
+
+</div>
+
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+(function(){
+"use strict";
+
+/* small helper to build a stacked fraction as plain HTML/CSS (no external math library needed) */
+function frac(num, den){
+  return "<span class='frac'><span class='num'>"+num+"</span><span class='den'>"+den+"</span></span>";
+}
+/* helper for a radical sign over a multi-character expression */
+function rad(content){
+  return "&radic;<span class='rad'>"+content+"</span>";
+}
+
+
+var QUESTIONS = [
+{
+  type:"single", topic:"Sosiologi sebagai Ilmu",
+  text:"Sosiologi lahir sebagai respons terhadap perubahan sosial besar di Eropa pada abad ke-19, seperti revolusi industri dan revolusi Prancis, yang menimbulkan berbagai gejolak dan permasalahan sosial baru. Konteks kelahiran sosiologi tersebut menunjukkan bahwa&hellip;",
+  options:[
+    "Sosiologi muncul tanpa kaitan apa pun dengan peristiwa sejarah tertentu.",
+    "Sosiologi lahir sebagai upaya memahami dan menjelaskan secara ilmiah perubahan sosial besar serta permasalahan yang menyertainya, sehingga masyarakat dapat lebih memahami dan mengelola dinamika sosial tersebut.",
+    "Sosiologi hanya relevan pada masa revolusi industri dan tidak berlaku pada era modern.",
+    "Sosiologi diciptakan khusus untuk mendukung revolusi industri semata.",
+    "Sosiologi lahir tanpa pengaruh dari kondisi sosial-politik pada masanya."
+  ],
+  answer:1,
+  explanation:"Konteks kelahiran sosiologi pada abad ke-19 menunjukkan bahwa sosiologi lahir sebagai upaya memahami dan menjelaskan secara ilmiah perubahan sosial besar (revolusi industri dan revolusi Prancis) serta permasalahan sosial yang menyertainya, sehingga masyarakat dapat lebih memahami dan mengelola dinamika sosial yang terjadi pada masa itu maupun masa berikutnya."
+},
+{
+  type:"single", topic:"Sosiologi sebagai Ilmu",
+  text:"Herbert Spencer dikenal sebagai salah satu tokoh awal sosiologi karena kontribusinya dalam&hellip;",
+  options:[
+    "Mengembangkan teori evolusi sosial yang menganalogikan masyarakat sebagai organisme hidup yang berkembang dari bentuk sederhana menuju kompleks.",
+    "Menciptakan konsep fakta sosial sebagai objek kajian sosiologi.",
+    "Mengembangkan konsep tindakan sosial dan pemahaman verstehen.",
+    "Merumuskan teori materialisme historis dan perjuangan kelas.",
+    "Menciptakan istilah \"sosiologi\" untuk pertama kalinya."
+  ],
+  answer:0,
+  explanation:"Herbert Spencer dikenal karena mengembangkan teori evolusi sosial yang menganalogikan masyarakat sebagai organisme hidup yang berkembang dari bentuk sederhana menuju kompleks, mirip dengan proses evolusi biologis, sebuah pendekatan yang khas pada masa awal perkembangan sosiologi."
+},
+{
+  type:"single", topic:"Sosiologi sebagai Ilmu",
+  text:"Seorang jurnalis menulis opini yang menyatakan bahwa pergaulan bebas remaja merupakan perilaku yang \"berdosa\" dan harus dihukum tanpa menganalisis faktor-faktor sosial yang melatarbelakanginya. Pendekatan tersebut berbeda dari pendekatan sosiologis karena&hellip;",
+  options:[
+    "Sosiologi cenderung menganalisis faktor-faktor sosial yang melatarbelakangi suatu fenomena secara objektif (nonetis), bukan sekadar memberikan penilaian moral seperti benar-salah atau berdosa-tidaknya suatu perilaku.",
+    "Sosiologi selalu sependapat dengan penilaian moral semacam itu.",
+    "Sosiologi tidak pernah mempelajari fenomena remaja sama sekali.",
+    "Sosiologi hanya mempelajari perilaku yang dianggap baik oleh masyarakat.",
+    "Sosiologi mengabaikan seluruh aspek sosial dalam analisisnya."
+  ],
+  answer:0,
+  explanation:"Pendekatan sosiologis berbeda dari opini yang menghakimi secara moral karena sosiologi cenderung menganalisis faktor-faktor sosial yang melatarbelakangi suatu fenomena secara objektif (ciri nonetis), bukan sekadar memberikan penilaian moral seperti benar-salah atau berdosa-tidaknya suatu perilaku tanpa analisis mendalam."
+},
+{
+  type:"single", topic:"Sosiologi sebagai Ilmu",
+  text:"Fungsi sosiologi sebagai alat penelitian (research) tercermin dalam contoh&hellip;",
+  options:[
+    "Seorang peneliti sosiologi merancang dan melaksanakan survei untuk mengumpulkan data mengenai tingkat kepercayaan masyarakat terhadap lembaga pemerintah, kemudian menganalisisnya secara sistematis.",
+    "Seorang individu membuat keputusan berdasarkan firasat semata tanpa data pendukung.",
+    "Sebuah organisasi mengabaikan hasil survei kepuasan anggotanya.",
+    "Pemerintah menetapkan kebijakan tanpa melibatkan proses pengumpulan data sosial.",
+    "Seorang tokoh masyarakat menyampaikan pendapat pribadi tanpa dasar penelitian."
+  ],
+  answer:0,
+  explanation:"Fungsi sosiologi sebagai alat penelitian tercermin dalam contoh peneliti sosiologi yang merancang dan melaksanakan survei untuk mengumpulkan data mengenai tingkat kepercayaan masyarakat terhadap lembaga pemerintah, kemudian menganalisisnya secara sistematis untuk menghasilkan temuan yang dapat dipertanggungjawabkan secara ilmiah."
+},
+{
+  type:"mcma", topic:"Sosiologi sebagai Ilmu",
+  text:"Sosiologi memiliki ruang lingkup kajian yang luas, mencakup berbagai tingkatan analisis sosial, mulai dari individu hingga masyarakat secara keseluruhan. Manakah pernyataan berikut yang tepat mengenai ruang lingkup kajian sosiologi? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan tingkatan analisis sosiologi, mulai dari interaksi individu hingga struktur masyarakat yang lebih luas.",
+  options:[
+    "Sosiologi mengkaji interaksi sosial pada tingkat mikro, seperti hubungan antarindividu dalam kehidupan sehari-hari.",
+    "Sosiologi juga mengkaji fenomena pada tingkat makro, seperti struktur sosial, lembaga sosial, dan perubahan sosial dalam skala masyarakat luas.",
+    "Sosiologi hanya mengkaji fenomena pada tingkat makro dan tidak pernah membahas interaksi individu.",
+    "Kajian sosiologi dapat mencakup analisis pada tingkat menengah (meso), seperti dinamika organisasi atau komunitas tertentu.",
+    "Ruang lingkup sosiologi terbatas hanya pada satu negara tertentu dan tidak dapat diterapkan secara lintas budaya."
+  ],
+  answer:[0,1,3],
+  explanation:"Sosiologi memang mengkaji interaksi sosial pada tingkat mikro seperti hubungan antarindividu (tepat). Sosiologi juga memang mengkaji fenomena tingkat makro seperti struktur sosial dan perubahan sosial (tepat). Sosiologi JUSTRU TIDAK HANYA mengkaji tingkat makro; kajian tingkat mikro seperti interaksi individu juga menjadi bagian penting sosiologi, bukan diabaikan (tidak tepat). Kajian sosiologi memang dapat mencakup analisis tingkat menengah (meso) seperti dinamika organisasi atau komunitas (tepat). Ruang lingkup sosiologi JUSTRU TIDAK TERBATAS pada satu negara tertentu, karena konsep dan teori sosiologi dapat diterapkan secara lintas budaya dan negara (tidak tepat)."
+},
+{
+  type:"single", topic:"Hubungan dan Gejala Sosial",
+  text:"Ketika seorang pelajar menyapa gurunya melalui pesan singkat di aplikasi percakapan untuk menanyakan tugas sekolah dan gurunya membalas pesan tersebut, jenis kontak sosial yang terjadi adalah kontak sosial&hellip;",
+  options:[
+    "Primer (langsung), karena terjadi tatap muka.",
+    "Sekunder (tidak langsung), yaitu kontak sosial yang terjadi melalui perantara media atau alat komunikasi, seperti telepon, pesan singkat, atau media sosial, tanpa pertemuan fisik secara langsung.",
+    "Negatif, karena berpotensi menimbulkan kesalahpahaman.",
+    "Nonverbal semata, karena hanya melibatkan simbol.",
+    "Bukan kontak sosial, karena tidak melibatkan pertemuan fisik."
+  ],
+  answer:1,
+  explanation:"Interaksi antara pelajar dan guru melalui pesan singkat di aplikasi percakapan merupakan kontak sosial sekunder (tidak langsung), yaitu kontak sosial yang terjadi melalui perantara media atau alat komunikasi tanpa pertemuan fisik secara langsung antara kedua pihak."
+},
+{
+  type:"single", topic:"Hubungan dan Gejala Sosial",
+  text:"Proses ketika seorang mantan narapidana mengikuti program pembinaan di lembaga pemasyarakatan untuk mempelajari kembali nilai dan norma yang berlaku di masyarakat sebelum kembali berbaur dengan lingkungan sosialnya disebut&hellip;",
+  options:[
+    "Sosialisasi primer, karena terjadi pada masa kanak-kanak.",
+    "Desosialisasi, karena individu melepaskan seluruh nilai lama secara permanen tanpa mempelajari nilai baru.",
+    "Resosialisasi, yaitu proses mempelajari kembali nilai dan norma yang berlaku di masyarakat, biasanya dijalani individu yang sebelumnya mengalami pemutusan hubungan dengan nilai sosial umum, seperti mantan narapidana.",
+    "Sosialisasi partisipatif, karena melibatkan imbalan semata.",
+    "Sosialisasi sekunder biasa tanpa tujuan khusus."
+  ],
+  answer:2,
+  explanation:"Proses ketika mantan narapidana mempelajari kembali nilai dan norma yang berlaku di masyarakat melalui program pembinaan sebelum kembali berbaur dengan lingkungan sosialnya disebut resosialisasi, yaitu proses adaptasi ulang terhadap nilai-nilai sosial umum setelah mengalami pemutusan hubungan sementara dengan lingkungan sosial tersebut."
+},
+{
+  type:"single", topic:"Hubungan dan Gejala Sosial",
+  text:"Lembaga politik, sebagai salah satu lembaga sosial, menjalankan fungsi manifes (fungsi yang disadari dan menjadi tujuan utama) berupa&hellip;",
+  options:[
+    "Mengatur dan menjalankan proses pemerintahan, penyusunan kebijakan publik, serta penyelenggaraan pemilihan umum secara terstruktur.",
+    "Menjadi sarana pembentukan jaringan pertemanan secara tidak sengaja antaraktivis politik.",
+    "Menjadi tempat individu mencari pasangan hidup melalui kegiatan politik.",
+    "Menjadi sarana mobilitas sosial tanpa disadari oleh pelaku politik.",
+    "Mengurangi tingkat kriminalitas secara tidak langsung tanpa tujuan eksplisit."
+  ],
+  answer:0,
+  explanation:"Fungsi manifes (fungsi yang disadari dan menjadi tujuan utama) lembaga politik adalah mengatur dan menjalankan proses pemerintahan, penyusunan kebijakan publik, serta penyelenggaraan pemilihan umum secara terstruktur, sebagaimana tujuan utama keberadaan lembaga politik dalam suatu negara."
+},
+{
+  type:"single", topic:"Hubungan dan Gejala Sosial",
+  text:"Sekelompok masyarakat yang menganggap budaya dan tradisi kelompoknya sendiri sebagai yang paling unggul, sehingga cenderung memandang rendah budaya kelompok lain, mencerminkan sikap&hellip;",
+  options:[
+    "Toleransi, karena menghargai perbedaan budaya.",
+    "Etnosentrisme, yaitu sikap menilai budaya kelompok lain berdasarkan standar budaya sendiri, dengan menganggap budaya sendiri lebih unggul dibandingkan budaya kelompok lain.",
+    "Relativisme budaya, karena menilai budaya berdasarkan konteksnya masing-masing.",
+    "Multikulturalisme, karena mengakui keberagaman budaya secara setara.",
+    "Asimilasi, karena budaya melebur menjadi satu."
+  ],
+  answer:1,
+  explanation:"Sikap menganggap budaya dan tradisi kelompok sendiri sebagai yang paling unggul, sehingga cenderung memandang rendah budaya kelompok lain, mencerminkan sikap etnosentrisme, yang berpotensi menimbulkan konflik dan menghambat harmoni dalam masyarakat multikultural."
+},
+{
+  type:"category", topic:"Hubungan dan Gejala Sosial",
+  text:"Sebuah laporan menunjukkan meningkatnya kasus tawuran antarpelajar di suatu kota yang dipicu oleh provokasi melalui media sosial dan rivalitas antarsekolah yang berlangsung turun-temurun. Manakah dari pernyataan berikut yang paling tepat menggambarkan gejala sosial dalam laporan tersebut? Tentukan Sesuai atau Tidak Sesuai untuk setiap pernyataan berikut!",
+  statements:[
+    {text:"Tawuran antarpelajar merupakan gejala sosial yang dapat dipengaruhi oleh faktor provokasi media sosial dan rivalitas kelompok yang diwariskan secara sosial.", correct:true},
+    {text:"Program mediasi dan dialog antarsekolah dapat menjadi salah satu upaya mengurangi rivalitas yang memicu tawuran.", correct:true},
+    {text:"Tawuran antarpelajar hanya dapat terjadi pada sekolah dengan fasilitas pendidikan yang kurang memadai.", correct:false}
+  ],
+  explanation:"Tawuran antarpelajar memang merupakan gejala sosial yang dapat dipengaruhi oleh provokasi media sosial dan rivalitas kelompok yang diwariskan secara sosial (Sesuai). Program mediasi dan dialog antarsekolah memang dapat menjadi upaya mengurangi rivalitas yang memicu tawuran (Sesuai). Tawuran antarpelajar JUSTRU DAPAT TERJADI pada sekolah dengan berbagai tingkat fasilitas pendidikan, tidak hanya yang kurang memadai (Tidak Sesuai)."
+},
+{
+  type:"single", topic:"Penelitian Sosial",
+  text:"Seorang peneliti sosiologi ingin mengetahui efektivitas suatu program pelatihan kewirausahaan dengan cara membandingkan tingkat pendapatan peserta sebelum dan sesudah mengikuti program tersebut, dengan mengontrol variabel lain seperti tingkat pendidikan dan modal awal. Jenis penelitian yang digunakan peneliti tersebut adalah&hellip;",
+  options:[
+    "Penelitian kualitatif deskriptif, karena hanya menggambarkan fenomena.",
+    "Penelitian kuantitatif eksperimental atau kuasi-eksperimental, yaitu penelitian yang menguji pengaruh suatu perlakuan (intervensi) terhadap hasil tertentu dengan mengontrol variabel lain yang dapat memengaruhi hasil.",
+    "Penelitian etnografi, karena melibatkan observasi budaya.",
+    "Penelitian studi kasus tunggal, karena hanya fokus pada satu individu.",
+    "Penelitian fenomenologi, karena berfokus pada pengalaman subjektif."
+  ],
+  answer:1,
+  explanation:"Penelitian yang menguji pengaruh suatu program (perlakuan/intervensi) terhadap hasil tertentu, seperti tingkat pendapatan, dengan mengontrol variabel lain yang dapat memengaruhi hasil, merupakan penelitian kuantitatif eksperimental atau kuasi-eksperimental, yang bertujuan menguji hubungan sebab-akibat secara terukur."
+},
+{
+  type:"single", topic:"Penelitian Sosial",
+  text:"Seorang peneliti mengumpulkan sekelompok kecil warga dari berbagai latar belakang untuk berdiskusi secara terarah mengenai persepsi mereka terhadap kebijakan relokasi pasar tradisional, dengan dipandu oleh moderator yang mengarahkan topik diskusi. Teknik pengumpulan data yang digunakan peneliti tersebut adalah&hellip;",
+  options:[
+    "Wawancara individual, karena melibatkan satu responden dalam satu waktu.",
+    "Focus group discussion (FGD), yaitu teknik pengumpulan data melalui diskusi terarah dengan sekelompok kecil partisipan yang dipandu moderator untuk menggali persepsi atau pandangan mereka mengenai suatu topik tertentu.",
+    "Studi dokumentasi, karena menggunakan data arsip.",
+    "Observasi nonpartisipatif, karena peneliti hanya mengamati tanpa terlibat.",
+    "Angket tertutup, karena menggunakan pilihan jawaban yang telah ditentukan."
+  ],
+  answer:1,
+  explanation:"Teknik pengumpulan data melalui diskusi terarah dengan sekelompok kecil partisipan yang dipandu moderator untuk menggali persepsi mereka mengenai suatu topik tertentu disebut focus group discussion (FGD), teknik yang efektif untuk memahami dinamika pandangan kelompok terhadap suatu isu."
+},
+{
+  type:"single", topic:"Penelitian Sosial",
+  text:"Dalam sebuah penelitian tentang pengaruh jam kerja terhadap tingkat stres karyawan, peneliti merumuskan dugaan awal bahwa \"semakin panjang jam kerja, semakin tinggi tingkat stres karyawan\" sebelum melakukan pengujian data di lapangan. Dugaan awal tersebut disebut&hellip;",
+  options:[
+    "Variabel penelitian, karena berkaitan dengan jam kerja dan stres.",
+    "Hipotesis, yaitu dugaan atau jawaban sementara terhadap rumusan masalah penelitian yang masih perlu diuji kebenarannya melalui data empiris.",
+    "Populasi penelitian, karena mencakup seluruh karyawan.",
+    "Sampel penelitian, karena merupakan bagian yang diteliti.",
+    "Instrumen penelitian, karena digunakan untuk mengumpulkan data."
+  ],
+  answer:1,
+  explanation:"Dugaan awal bahwa \"semakin panjang jam kerja, semakin tinggi tingkat stres karyawan\" yang dirumuskan sebelum pengujian data di lapangan disebut hipotesis, yaitu jawaban sementara terhadap rumusan masalah penelitian yang masih perlu diuji kebenarannya melalui data empiris yang dikumpulkan."
+},
+{
+  type:"single", topic:"Penelitian Sosial",
+  text:"Seorang peneliti ingin memastikan bahwa sampel yang dipilihnya benar-benar mewakili keberagaman karakteristik populasi, sehingga ia membagi populasi menjadi beberapa kelompok berdasarkan tingkat pendapatan, kemudian mengambil sampel secara proporsional dari setiap kelompok tersebut. Teknik pengambilan sampel yang digunakan peneliti tersebut disebut&hellip;",
+  options:[
+    "Simple random sampling, karena dipilih secara acak sederhana tanpa pengelompokan.",
+    "Stratified random sampling, yaitu teknik pengambilan sampel dengan membagi populasi ke dalam beberapa strata atau kelompok berdasarkan karakteristik tertentu, kemudian mengambil sampel secara proporsional dari setiap strata.",
+    "Cluster sampling, karena mengambil sampel berdasarkan wilayah geografis.",
+    "Purposive sampling, karena sampel dipilih berdasarkan pertimbangan subjektif peneliti semata.",
+    "Snowball sampling, karena sampel diperoleh melalui rekomendasi berantai."
+  ],
+  answer:1,
+  explanation:"Teknik pengambilan sampel dengan membagi populasi ke dalam beberapa strata atau kelompok berdasarkan karakteristik tertentu (seperti tingkat pendapatan), kemudian mengambil sampel secara proporsional dari setiap strata, disebut stratified random sampling, yang bertujuan memastikan sampel benar-benar mewakili keberagaman karakteristik populasi."
+},
+{
+  type:"mcma", topic:"Penelitian Sosial",
+  text:"Seorang murid ingin melakukan penelitian sosial mengenai pengaruh keikutsertaan organisasi ekstrakurikuler terhadap keterampilan kepemimpinan siswa. Ia telah merancang beberapa langkah awal, yaitu: (1) merumuskan masalah dengan jelas dan terukur; (2) memilih untuk menyebarkan angket tertutup kepada seluruh siswa tanpa mempertimbangkan apakah mereka aktif berorganisasi atau tidak; (3) menyusun indikator keterampilan kepemimpinan berdasarkan teori yang relevan. Berdasarkan langkah-langkah tersebut, manakah pernyataan yang tepat untuk menyempurnakan penelitian tersebut? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan relevansi sampel penelitian dengan variabel yang ingin diukur (keikutsertaan organisasi).",
+  options:[
+    "Merumuskan masalah dengan jelas dan terukur pada tahap awal sudah merupakan langkah yang tepat.",
+    "Peneliti perlu mempertimbangkan pembagian sampel antara siswa yang aktif berorganisasi dan yang tidak, agar dapat membandingkan perbedaan keterampilan kepemimpinan di antara kedua kelompok tersebut.",
+    "Menyusun indikator keterampilan kepemimpinan berdasarkan teori yang relevan sudah merupakan langkah yang tepat dalam penelitian.",
+    "Peneliti tidak perlu membedakan siswa yang aktif berorganisasi dengan yang tidak, karena semua siswa dianggap memiliki keterampilan kepemimpinan yang sama.",
+    "Angket tertutup sebaiknya diganti dengan wawancara terhadap satu siswa saja untuk mewakili seluruh populasi penelitian."
+  ],
+  answer:[0,1,2],
+  explanation:"Merumuskan masalah dengan jelas dan terukur memang langkah yang tepat (tepat). Peneliti memang perlu mempertimbangkan pembagian sampel antara siswa aktif dan tidak aktif berorganisasi untuk dapat membandingkan perbedaannya, karena inilah inti dari variabel yang diteliti (tepat sebagai koreksi). Menyusun indikator berdasarkan teori yang relevan memang langkah yang tepat (tepat). Menganggap semua siswa memiliki keterampilan kepemimpinan yang sama JUSTRU MENGABAIKAN variabel utama penelitian, yaitu perbedaan keikutsertaan organisasi (tidak tepat). Mengganti angket dengan wawancara satu siswa saja JUSTRU TIDAK REPRESENTATIF untuk mewakili populasi yang lebih besar (tidak tepat)."
+},
+{
+  type:"single", topic:"Kelompok Sosial, Kesetaraan, dan Konflik Sosial",
+  text:"Komunitas pencinta alam yang terbentuk berdasarkan kesamaan minat dan hobi, dengan anggota yang berasal dari berbagai latar belakang sosial namun bersatu karena tujuan dan aktivitas yang sama, merupakan contoh kelompok sosial yang disebut&hellip;",
+  options:[
+    "Kelompok askriptif, karena keanggotaan diperoleh sejak lahir.",
+    "Kelompok volunter (sukarela), yaitu kelompok sosial yang terbentuk berdasarkan kesamaan minat, tujuan, atau kepentingan tertentu, dengan keanggotaan yang bersifat sukarela tanpa paksaan.",
+    "Kelompok primer, karena hubungan bersifat sangat intim seperti keluarga.",
+    "Out-group, karena dianggap sebagai kelompok luar.",
+    "Kelompok formal dengan struktur birokrasi yang ketat."
+  ],
+  answer:1,
+  explanation:"Komunitas pencinta alam yang terbentuk berdasarkan kesamaan minat dan hobi dengan keanggotaan yang bersifat sukarela merupakan contoh kelompok volunter (sukarela), berbeda dengan kelompok askriptif yang keanggotaannya diperoleh sejak lahir seperti kelompok etnis atau kekerabatan."
+},
+{
+  type:"single", topic:"Kelompok Sosial, Kesetaraan, dan Konflik Sosial",
+  text:"Perbedaan kesempatan mendapatkan akses internet berkualitas antara masyarakat di kawasan perkotaan dengan masyarakat di kawasan pedalaman, akibat keterbatasan infrastruktur telekomunikasi di daerah terpencil, merupakan salah satu bentuk kesenjangan yang disebut&hellip;",
+  options:[
+    "Kesenjangan digital (digital divide), yaitu kesenjangan akses terhadap teknologi informasi dan komunikasi antarkelompok masyarakat akibat faktor infrastruktur, ekonomi, atau geografis.",
+    "Mobilitas sosial horizontal, karena adanya perpindahan status yang sederajat.",
+    "Diferensiasi sosial, karena hanya menunjukkan perbedaan tanpa jenjang.",
+    "Integrasi sosial, karena menyatukan kelompok masyarakat.",
+    "Stratifikasi tertutup, karena status sosial diwariskan secara turun-temurun."
+  ],
+  answer:0,
+  explanation:"Perbedaan kesempatan mendapatkan akses internet berkualitas antara masyarakat perkotaan dan pedalaman akibat keterbatasan infrastruktur telekomunikasi merupakan bentuk kesenjangan digital (digital divide), salah satu bentuk ketidaksetaraan sosial di era teknologi informasi yang perlu diatasi melalui pemerataan infrastruktur."
+},
+{
+  type:"single", topic:"Kelompok Sosial, Kesetaraan, dan Konflik Sosial",
+  text:"Konflik antara dua kelompok suporter sepak bola yang berujung pada kerusuhan, kemudian ditangani oleh aparat keamanan dengan cara memisahkan kedua kelompok secara fisik untuk sementara waktu guna mencegah eskalasi kekerasan lebih lanjut, merupakan salah satu bentuk penanganan konflik yang disebut&hellip;",
+  options:[
+    "Akomodasi berupa segregasi sementara, yaitu upaya memisahkan pihak yang berkonflik secara fisik untuk sementara waktu guna meredakan ketegangan dan mencegah eskalasi kekerasan, sebelum dilanjutkan dengan upaya penyelesaian yang lebih permanen.",
+    "Arbitrase, karena melibatkan keputusan pihak ketiga yang mengikat secara hukum.",
+    "Asimilasi, karena kedua kelompok melebur menjadi satu.",
+    "Negosiasi, karena kedua pihak berunding secara langsung.",
+    "Toleransi penuh tanpa intervensi apa pun dari pihak keamanan."
+  ],
+  answer:0,
+  explanation:"Pemisahan kedua kelompok suporter secara fisik untuk sementara waktu guna mencegah eskalasi kekerasan lebih lanjut merupakan bentuk akomodasi berupa segregasi sementara, langkah awal yang biasanya diikuti dengan upaya penyelesaian konflik yang lebih permanen seperti dialog atau mediasi."
+},
+{
+  type:"mcma", topic:"Kelompok Sosial, Kesetaraan, dan Konflik Sosial",
+  text:"Kota Harmoni Sejahtera mengalami konflik antara warga asli dengan kelompok pekerja migran terkait persaingan mendapatkan pekerjaan di sektor informal. Warga asli merasa kesempatan kerja mereka berkurang, sedangkan pekerja migran merasa berhak mendapatkan pekerjaan yang sama seperti warga lainnya. Ketegangan meningkat melalui ujaran kebencian di media sosial. Apa rekomendasi yang dapat diberikan untuk menurunkan tensi konflik berdasarkan kasus tersebut? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan rekomendasi yang bersifat inklusif dan berbasis pemberdayaan ekonomi, bukan yang diskriminatif.",
+  options:[
+    "Mengembangkan program pelatihan keterampilan kerja bagi warga asli dan pekerja migran agar keduanya memiliki daya saing yang lebih baik di pasar kerja.",
+    "Memfasilitasi dialog antara kedua kelompok untuk membangun saling pengertian mengenai kondisi dan kebutuhan masing-masing.",
+    "Melarang seluruh pekerja migran mencari pekerjaan di kota tersebut demi melindungi kesempatan kerja warga asli.",
+    "Mendorong pemerintah daerah menciptakan lebih banyak lapangan kerja baru agar persaingan tidak terlalu ketat.",
+    "Membiarkan ujaran kebencian di media sosial terus berlangsung karena dianggap sebagai kebebasan berpendapat tanpa batas."
+  ],
+  answer:[0,1,3],
+  explanation:"Pelatihan keterampilan kerja bagi kedua kelompok memang membantu meningkatkan daya saing secara adil (tepat). Memfasilitasi dialog untuk membangun saling pengertian juga tepat (tepat). Mendorong penciptaan lapangan kerja baru memang dapat mengurangi ketatnya persaingan (tepat). Melarang pekerja migran mencari kerja JUSTRU BERSIFAT DISKRIMINATIF dan melanggar hak mereka untuk bekerja (tidak tepat). Membiarkan ujaran kebencian terus berlangsung JUSTRU BERBAHAYA karena dapat memperburuk ketegangan sosial, bukan bagian dari kebebasan berpendapat yang bertanggung jawab (tidak tepat)."
+},
+{
+  type:"category", topic:"Kelompok Sosial, Kesetaraan, dan Konflik Sosial",
+  text:"Sebuah studi menunjukkan bahwa anak-anak dari keluarga kurang mampu di beberapa daerah masih menghadapi kesulitan mengakses pendidikan tinggi akibat keterbatasan biaya, meskipun memiliki potensi akademik yang baik. Tentukan Benar atau Salah untuk setiap pernyataan berikut mengenai fenomena ketidaksetaraan tersebut!",
+  statements:[
+    {text:"Keterbatasan biaya pendidikan tinggi bagi anak dari keluarga kurang mampu merupakan salah satu bentuk ketidaksetaraan sosial dalam bidang pendidikan.", correct:true},
+    {text:"Program beasiswa berbasis kebutuhan ekonomi dapat menjadi salah satu upaya mengurangi ketidaksetaraan akses pendidikan tinggi tersebut.", correct:true},
+    {text:"Potensi akademik anak dari keluarga kurang mampu selalu lebih rendah dibandingkan anak dari keluarga mampu.", correct:false}
+  ],
+  explanation:"Keterbatasan biaya pendidikan tinggi bagi anak dari keluarga kurang mampu memang merupakan bentuk ketidaksetaraan sosial dalam pendidikan (Benar). Program beasiswa berbasis kebutuhan ekonomi memang dapat menjadi upaya mengurangi ketidaksetaraan tersebut (Benar). Potensi akademik JUSTRU TIDAK SELALU berkaitan dengan latar belakang ekonomi keluarga; anak dari keluarga kurang mampu dapat memiliki potensi akademik yang sama baiknya dengan anak dari keluarga mampu, bukan selalu lebih rendah (Salah)."
+},
+{
+  type:"single", topic:"Perubahan Sosial dan Globalisasi",
+  text:"Perubahan pola kerja dari sistem kerja kantor konvensional menjadi sistem kerja hibrida (kombinasi kerja di kantor dan dari rumah) yang terjadi secara cepat dalam hitungan bulan akibat pandemi global merupakan contoh perubahan sosial yang termasuk dalam kategori&hellip;",
+  options:[
+    "Evolusi, karena terjadi secara bertahap dalam waktu lama.",
+    "Revolusi kecil atau perubahan cepat yang dipicu oleh peristiwa eksternal mendadak, yaitu perubahan sosial yang terjadi dalam waktu relatif singkat akibat kondisi darurat atau krisis yang memaksa masyarakat beradaptasi secara cepat.",
+    "Perubahan yang sepenuhnya tidak berpengaruh terhadap struktur sosial.",
+    "Perubahan regresif yang menurunkan produktivitas kerja secara keseluruhan.",
+    "Perubahan yang hanya bersifat sementara tanpa dampak jangka panjang."
+  ],
+  answer:1,
+  explanation:"Perubahan pola kerja dari sistem konvensional menjadi hibrida yang terjadi cepat dalam hitungan bulan akibat pandemi global merupakan contoh perubahan sosial cepat yang dipicu oleh peristiwa eksternal mendadak, memaksa masyarakat beradaptasi secara cepat, berbeda dengan evolusi yang berlangsung bertahap dalam waktu lama."
+},
+{
+  type:"single", topic:"Perubahan Sosial dan Globalisasi",
+  text:"Globalisasi informasi ditandai dengan kemudahan mengakses berita dan informasi dari berbagai belahan dunia secara instan melalui internet. Salah satu dampak positif globalisasi informasi bagi masyarakat Indonesia adalah&hellip;",
+  options:[
+    "Meningkatnya akses masyarakat terhadap pengetahuan dan perkembangan terkini dari berbagai belahan dunia, yang dapat mendukung peningkatan wawasan dan daya saing.",
+    "Hilangnya seluruh kemampuan masyarakat untuk berpikir kritis akibat banjir informasi.",
+    "Meningkatnya ketergantungan penuh pada sumber informasi asing tanpa perkembangan media lokal.",
+    "Terhambatnya seluruh akses informasi dari dalam negeri.",
+    "Menurunnya minat masyarakat terhadap informasi apa pun."
+  ],
+  answer:0,
+  explanation:"Salah satu dampak positif globalisasi informasi bagi masyarakat Indonesia adalah meningkatnya akses masyarakat terhadap pengetahuan dan perkembangan terkini dari berbagai belahan dunia, yang dapat mendukung peningkatan wawasan dan daya saing, meskipun tetap perlu diimbangi dengan literasi media yang baik."
+},
+{
+  type:"single", topic:"Perubahan Sosial dan Globalisasi",
+  text:"Maraknya tren diet dan gaya hidup sehat dari negara lain yang dipromosikan melalui media sosial dapat memberikan manfaat berupa kesadaran kesehatan yang lebih baik, namun juga berisiko menciptakan standar tubuh ideal yang tidak realistis bagi sebagian remaja. Sikap kritis yang tepat dalam menghadapi fenomena tersebut adalah&hellip;",
+  options:[
+    "Mengikuti seluruh tren diet tanpa berkonsultasi dengan ahli kesehatan terlebih dahulu.",
+    "Mengadopsi kebiasaan hidup sehat secara bijak dengan tetap mempertimbangkan kondisi tubuh masing-masing dan berkonsultasi dengan ahli, tanpa terjebak pada standar tubuh ideal yang tidak realistis.",
+    "Menolak seluruh informasi kesehatan dari luar negeri tanpa terkecuali.",
+    "Mengabaikan pentingnya gaya hidup sehat karena dianggap hanya tren sesaat.",
+    "Membandingkan tubuh sendiri secara berlebihan dengan standar yang ditampilkan di media sosial."
+  ],
+  answer:1,
+  explanation:"Sikap kritis yang tepat dalam menghadapi fenomena tersebut adalah mengadopsi kebiasaan hidup sehat secara bijak dengan tetap mempertimbangkan kondisi tubuh masing-masing dan berkonsultasi dengan ahli kesehatan, tanpa terjebak pada standar tubuh ideal yang tidak realistis dan berpotensi merugikan kesehatan mental."
+},
+{
+  type:"category", topic:"Perubahan Sosial dan Globalisasi",
+  text:"Perubahan sosial dapat terjadi akibat faktor internal (dari dalam masyarakat) maupun faktor eksternal (dari luar masyarakat). Tentukan Benar atau Salah untuk setiap pernyataan berikut mengenai faktor internal dan eksternal perubahan sosial!",
+  statements:[
+    {text:"Penemuan baru (discovery dan invention) dalam masyarakat merupakan salah satu faktor internal yang dapat mendorong perubahan sosial.", correct:true},
+    {text:"Peperangan atau bencana alam yang berasal dari luar batas suatu masyarakat dapat menjadi salah satu faktor eksternal pendorong perubahan sosial.", correct:true},
+    {text:"Faktor internal dan eksternal tidak pernah saling memengaruhi dalam mendorong terjadinya perubahan sosial.", correct:false}
+  ],
+  explanation:"Penemuan baru (discovery dan invention) memang merupakan salah satu faktor internal pendorong perubahan sosial (Benar). Peperangan atau bencana alam dari luar masyarakat memang dapat menjadi faktor eksternal pendorong perubahan sosial (Benar). Faktor internal dan eksternal JUSTRU DAPAT SALING MEMENGARUHI dalam mendorong perubahan sosial, misalnya penemuan teknologi baru dapat dipicu oleh kebutuhan menghadapi bencana dari luar, bukan tidak pernah saling memengaruhi (Salah)."
+},
+{
+  type:"category", topic:"Perubahan Sosial dan Globalisasi",
+  text:"Tren wisata halal yang berkembang di berbagai destinasi wisata dunia, termasuk Indonesia, menunjukkan adaptasi industri pariwisata global terhadap kebutuhan wisatawan muslim. Sebagian pelaku usaha pariwisata lokal mulai mengembangkan paket wisata yang menggabungkan kearifan lokal dengan standar layanan ramah muslim. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai respons terhadap fenomena tersebut!",
+  statements:[
+    {text:"Pengembangan paket wisata yang menggabungkan kearifan lokal dengan layanan ramah muslim merupakan bentuk adaptasi kreatif terhadap tren globalisasi pariwisata.", correct:true},
+    {text:"Pelaku usaha pariwisata lokal sebaiknya mengabaikan tren wisata halal karena dianggap hanya berlaku di negara-negara tertentu.", correct:false},
+    {text:"Diversifikasi produk wisata yang responsif terhadap kebutuhan pasar global dapat meningkatkan daya saing pariwisata Indonesia di kancah internasional.", correct:true}
+  ],
+  explanation:"Pengembangan paket wisata yang menggabungkan kearifan lokal dengan layanan ramah muslim memang bentuk adaptasi kreatif terhadap tren globalisasi pariwisata (Tepat). Pelaku usaha JUSTRU SEBAIKNYA TIDAK mengabaikan tren wisata halal, karena pasar wisatawan muslim terus berkembang secara global, bukan hanya di negara tertentu (Tidak Tepat). Diversifikasi produk wisata yang responsif terhadap kebutuhan pasar global memang dapat meningkatkan daya saing pariwisata Indonesia (Tepat)."
+}
+];
+
+
+var LETTERS = ["A","B","C","D","E"];
+var DURATION_SECONDS = 75*60;
+var STORAGE_KEY = "tka_sosiologi_paket4_v1";
+var TYPE_LABELS = {single:"Pilihan Ganda", mcma:"PGK &middot; Pilih Lebih dari Satu", category:"PGK &middot; Benar/Salah"};
+
+/* ============ STATE ============ */
+var state = {
+  currentIndex:0,
+  answers:{},          // single: index | mcma: [indices] | category: {stmtIdx: true/false}
+  endTimestamp:null,
+  finished:false,
+  timeTakenSeconds:null
+};
+var timerInterval = null;
+
+/* ============ STORAGE ============ */
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ============ SCREEN HELPERS ============ */
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+}
+
+/* ============ ANSWER HELPERS (type-aware) ============ */
+function isAnswered(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(a===undefined || a===null) return false;
+  if(q.type==="category"){
+    if(typeof a !== "object") return false;
+    for(var k=0;k<q.statements.length;k++){ if(a[k]===undefined) return false; }
+    return true;
+  }
+  if(q.type==="mcma"){
+    return Array.isArray(a) && a.length>0;
+  }
+  return true; // single: any stored value (including 0) counts as answered
+}
+function evaluateQuestion(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(!isAnswered(i)) return "empty";
+  if(q.type==="category"){
+    for(var k=0;k<q.statements.length;k++){
+      if(!!a[k] !== !!q.statements[k].correct) return "wrong";
+    }
+    return "correct";
+  }
+  if(q.type==="mcma"){
+    var correctSet = q.answer.slice().sort(function(x,y){return x-y;});
+    var pickedSet = a.slice().sort(function(x,y){return x-y;});
+    if(correctSet.length !== pickedSet.length) return "wrong";
+    for(var j=0;j<correctSet.length;j++){ if(correctSet[j]!==pickedSet[j]) return "wrong"; }
+    return "correct";
+  }
+  return (a===q.answer) ? "correct":"wrong";
+}
+
+/* ============ TIMER ============ */
+function formatTime(totalSeconds){
+  totalSeconds = Math.max(0, Math.round(totalSeconds));
+  var m = Math.floor(totalSeconds/60);
+  var s = totalSeconds%60;
+  return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+}
+function startTimerLoop(){
+  var display = document.getElementById("timerDisplay");
+  display.style.display = "flex";
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 250);
+  tickTimer();
+}
+function tickTimer(){
+  var remaining = (state.endTimestamp - Date.now())/1000;
+  var textEl = document.getElementById("timerText");
+  var wrap = document.getElementById("timerDisplay");
+  if(remaining <= 0){
+    textEl.textContent = "00:00";
+    clearInterval(timerInterval);
+    finishQuiz(true);
+    return;
+  }
+  textEl.textContent = formatTime(remaining);
+  if(remaining <= 300) wrap.classList.add("low"); else wrap.classList.remove("low");
+}
+function stopTimer(){
+  clearInterval(timerInterval);
+  document.getElementById("timerDisplay").style.display = "none";
+}
+
+/* ============ QUIZ RENDERING ============ */
+function renderNavGrid(){
+  var grid = document.getElementById("navGrid");
+  grid.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var cell = document.createElement("div");
+    cell.className = "nav-cell" + (isAnswered(i)?" answered":"") + (i===state.currentIndex?" current":"");
+    cell.textContent = (i+1);
+    cell.addEventListener("click", function(){
+      state.currentIndex = i;
+      renderQuestion();
+    });
+    grid.appendChild(cell);
+  });
+}
+
+function renderOptionsSingleOrMcma(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var isMcma = q.type==="mcma";
+  var current = state.answers[i];
+  q.options.forEach(function(optText, idx){
+    var picked = isMcma ? (Array.isArray(current) && current.indexOf(idx)!==-1) : (current===idx);
+    var div = document.createElement("div");
+    div.className = "option" + (isMcma?" mcma":"") + (picked ? " selected":"");
+    div.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+    div.addEventListener("click", function(){
+      if(isMcma){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : [];
+        var pos = arr.indexOf(idx);
+        if(pos===-1) arr.push(idx); else arr.splice(pos,1);
+        state.answers[i] = arr;
+      } else {
+        state.answers[i] = idx;
+      }
+      saveState();
+      renderQuestion();
+    });
+    optsWrap.appendChild(div);
+  });
+}
+
+function renderStatements(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var current = (typeof state.answers[i] === "object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+  q.statements.forEach(function(st, k){
+    var row = document.createElement("div");
+    row.className = "statement-row";
+    var textDiv = document.createElement("div");
+    textDiv.className = "statement-text";
+    textDiv.innerHTML = (k+1)+". "+st.text;
+    row.appendChild(textDiv);
+    var choices = document.createElement("div");
+    choices.className = "statement-choices";
+    [["Benar",true], ["Salah",false]].forEach(function(pair){
+      var btn = document.createElement("div");
+      btn.className = "choice-btn" + (current[k]===pair[1] ? " selected":"");
+      btn.textContent = pair[0];
+      btn.addEventListener("click", function(){
+        var obj = (typeof state.answers[i]==="object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+        obj[k] = pair[1];
+        state.answers[i] = obj;
+        saveState();
+        renderQuestion();
+      });
+      choices.appendChild(btn);
+    });
+    row.appendChild(choices);
+    optsWrap.appendChild(row);
+  });
+}
+
+function renderQuestion(){
+  var i = state.currentIndex;
+  var q = QUESTIONS[i];
+  document.getElementById("qIndexLabel").textContent = "Soal "+(i+1)+" dari "+QUESTIONS.length;
+  document.getElementById("qTopicLabel").textContent = q.topic;
+  document.getElementById("qTypeBadge").innerHTML = TYPE_LABELS[q.type] || TYPE_LABELS.single;
+  document.getElementById("qText").innerHTML = q.text;
+
+  var hintEl = document.getElementById("qHint");
+  if(q.hint){ hintEl.style.display="block"; hintEl.textContent = q.hint; }
+  else if(q.type==="category"){ hintEl.style.display="block"; hintEl.textContent = "Beri respons Benar atau Salah untuk setiap pernyataan."; }
+  else { hintEl.style.display="none"; }
+
+  if(q.type==="category") renderStatements(q, i);
+  else renderOptionsSingleOrMcma(q, i);
+
+  document.getElementById("btnPrev").disabled = (i===0);
+  document.getElementById("btnPrev").style.opacity = (i===0)?"0.5":"1";
+  document.getElementById("btnNext").textContent = (i===QUESTIONS.length-1) ? "Selesai →" : "Berikutnya →";
+  document.getElementById("progressFill").style.width = Math.round(((i+1)/QUESTIONS.length)*100)+"%";
+  renderNavGrid();
+}
+
+/* ============ NAVIGATION BUTTONS ============ */
+document.getElementById("btnPrev").addEventListener("click", function(){
+  if(state.currentIndex>0){ state.currentIndex--; renderQuestion(); }
+});
+document.getElementById("btnNext").addEventListener("click", function(){
+  if(state.currentIndex < QUESTIONS.length-1){
+    state.currentIndex++;
+    renderQuestion();
+  } else {
+    confirmFinish();
+  }
+});
+document.getElementById("btnFinish").addEventListener("click", confirmFinish);
+
+function confirmFinish(){
+  var answeredCount = 0;
+  QUESTIONS.forEach(function(q,i){ if(isAnswered(i)) answeredCount++; });
+  var msg = "Kamu telah menjawab "+answeredCount+" dari "+QUESTIONS.length+" soal.\nSelesaikan tryout dan lihat hasil sekarang?";
+  if(window.confirm(msg)){
+    finishQuiz(false);
+  }
+}
+
+/* ============ START / RESUME / RESTART ============ */
+function beginFreshQuiz(){
+  state = {
+    currentIndex:0,
+    answers:{},
+    endTimestamp: Date.now() + DURATION_SECONDS*1000,
+    finished:false,
+    timeTakenSeconds:null
+  };
+  saveState();
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+function resumeQuiz(saved){
+  state = saved;
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+
+document.getElementById("btnStart").addEventListener("click", beginFreshQuiz);
+document.getElementById("btnResume").addEventListener("click", function(){
+  var saved = loadState();
+  if(saved && !saved.finished) resumeQuiz(saved); else beginFreshQuiz();
+});
+document.getElementById("btnRestartFresh").addEventListener("click", function(){
+  clearState();
+  document.getElementById("resumeBanner").style.display = "none";
+  beginFreshQuiz();
+});
+document.getElementById("btnRetry").addEventListener("click", function(){
+  clearState();
+  stopTimer();
+  showScreen("screen-start");
+  document.getElementById("resumeBanner").style.display = "none";
+});
+
+/* ============ FINISH & SCORING ============ */
+function finishQuiz(autoSubmitted){
+  stopTimer();
+  state.finished = true;
+  var elapsed = DURATION_SECONDS - Math.max(0, (state.endTimestamp - Date.now())/1000);
+  state.timeTakenSeconds = Math.min(DURATION_SECONDS, Math.round(elapsed));
+  saveState();
+  renderResult(autoSubmitted);
+  showScreen("screen-result");
+  window.scrollTo(0,0);
+}
+
+function renderResult(autoSubmitted){
+  var correct=0, wrong=0, empty=0, score=0;
+  var topicStats = {};
+  QUESTIONS.forEach(function(q, i){
+    if(!topicStats[q.topic]) topicStats[q.topic] = {correct:0,total:0};
+    topicStats[q.topic].total++;
+    var status = evaluateQuestion(i);
+    if(status==="empty"){ empty++; }
+    else if(status==="correct"){ correct++; score+=4; topicStats[q.topic].correct++; }
+    else { wrong++; score-=1; }
+  });
+
+  document.getElementById("resultSubtitle").textContent = autoSubmitted
+    ? "Waktu habis — tryout otomatis diselesaikan. Berikut rekap skor dan pembahasan lengkap setiap soal."
+    : "Berikut rekap skor dan pembahasan lengkap setiap soal.";
+
+  document.getElementById("statScore").textContent = score;
+  document.getElementById("statCorrect").textContent = correct;
+  document.getElementById("statWrong").textContent = wrong;
+  document.getElementById("statEmpty").textContent = empty;
+  document.getElementById("statTime").textContent = formatTime(state.timeTakenSeconds);
+
+  var barsWrap = document.getElementById("topicBars");
+  barsWrap.innerHTML = "";
+  Object.keys(topicStats).forEach(function(topic){
+    var st = topicStats[topic];
+    var pct = Math.round((st.correct/st.total)*100);
+    var row = document.createElement("div");
+    row.className = "topic-bar-row";
+    row.innerHTML =
+      "<div class='top'><span class='name'>"+topic+"</span><span class='frac2'>"+st.correct+"/"+st.total+"</span></div>"+
+      "<div class='bar-track'><div class='bar-fill' style='width:"+pct+"%;'></div></div>";
+    barsWrap.appendChild(row);
+  });
+
+  var reviewList = document.getElementById("reviewList");
+  reviewList.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var status = evaluateQuestion(i);
+    var statusLabel = status==="empty" ? "Kosong" : (status==="correct" ? "Benar":"Salah");
+
+    var details = document.createElement("details");
+    details.className = "review-item";
+    details.open = (status !== "correct");
+
+    var summary = document.createElement("summary");
+    summary.innerHTML =
+      "<span class='badge "+status+"'>"+statusLabel+"</span>"+
+      "<span class='badge typebadge'>"+(TYPE_LABELS[q.type]||TYPE_LABELS.single)+"</span>"+
+      "<span>Soal "+(i+1)+" — "+q.topic+"</span>"+
+      "<span class='chev'>&#9662;</span>";
+    details.appendChild(summary);
+
+    var body = document.createElement("div");
+    body.className = "review-body";
+
+    var qTextDiv = document.createElement("div");
+    qTextDiv.className = "q-text";
+    qTextDiv.innerHTML = q.text;
+    body.appendChild(qTextDiv);
+
+    if(q.type==="category"){
+      var a = (typeof state.answers[i]==="object" && state.answers[i]!==null) ? state.answers[i] : {};
+      q.statements.forEach(function(st, k){
+        var userVal = a[k];
+        var isCorrectStmt = userVal!==undefined && (!!userVal === !!st.correct);
+        var row = document.createElement("div");
+        row.className = "review-statement " + (userVal===undefined ? "" : (isCorrectStmt ? "st-correct":"st-wrong"));
+        var userLabel = userVal===undefined ? "Tidak dijawab" : (userVal ? "Benar":"Salah");
+        var correctLabel = st.correct ? "Benar":"Salah";
+        row.innerHTML =
+          "<span>"+(k+1)+". "+st.text+"</span>"+
+          "<span class='st-answer'>Jawabanmu: "+userLabel+(isCorrectStmt? "" : " &middot; Kunci: "+correctLabel)+"</span>";
+        body.appendChild(row);
+      });
+    } else if(q.type==="mcma"){
+      var picked = Array.isArray(state.answers[i]) ? state.answers[i] : [];
+      var optsDiv = document.createElement("div");
+      optsDiv.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var isCorrectOpt = q.answer.indexOf(idx)!==-1;
+        var wasPicked = picked.indexOf(idx)!==-1;
+        var cls = "review-opt";
+        var tag = "";
+        if(isCorrectOpt){ cls += " is-correct"; tag = wasPicked ? "Dipilih &amp; tepat" : "Terlewat"; }
+        else if(wasPicked){ cls += " is-wrong-pick"; tag = "Dipilih, tidak tepat"; }
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>"+(tag?"<span class='opt-tag'>"+tag+"</span>":"");
+        optsDiv.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv);
+    } else {
+      var picked2 = state.answers[i];
+      var optsDiv2 = document.createElement("div");
+      optsDiv2.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var cls = "review-opt";
+        if(idx===q.answer) cls += " is-correct";
+        else if(idx===picked2) cls += " is-wrong-pick";
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+        optsDiv2.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv2);
+    }
+
+    var pembahasan = document.createElement("div");
+    pembahasan.className = "pembahasan";
+    pembahasan.style.marginTop = "14px";
+    pembahasan.innerHTML = "<b>Pembahasan:</b><br>"+q.explanation;
+    body.appendChild(pembahasan);
+
+    details.appendChild(body);
+    reviewList.appendChild(details);
+  });
+}
+
+/* ============ INIT ON LOAD ============ */
+(function init(){
+  var saved = loadState();
+  if(saved && !saved.finished && saved.endTimestamp){
+    var remaining = (saved.endTimestamp - Date.now())/1000;
+    if(remaining > 0){
+      document.getElementById("resumeBanner").style.display = "flex";
+    } else {
+      state = saved;
+      finishQuiz(true);
+    }
+  }
+})();
+
+})();
+</script>
+</body>
+</html>

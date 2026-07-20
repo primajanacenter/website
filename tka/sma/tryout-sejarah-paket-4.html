@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tryout Sejarah — Paket 4 | Siap TKA</title>
+<meta name="description" content="Latihan tryout Sejarah Paket 4 untuk persiapan TKA SMA/MA — 25 soal pengantar ilmu sejarah, periode kerajaan Hindu-Buddha dan Islam, perlawanan terhadap bangsa Eropa, pergerakan nasional sampai proklamasi, revolusi kemerdekaan sampai Demokrasi Terpimpin, dan Orde Baru sampai Reformasi, timer, skor otomatis, dan pembahasan lengkap.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --wrong:#dc2626;
+    --wrong-bg:#fef2f2;
+    --empty:#b45309;
+    --empty-bg:#fffbeb;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .timer{
+    display:flex;align-items:center;gap:8px;
+    font-variant-numeric:tabular-nums;
+    font-weight:700;font-size:1.05rem;
+    padding:8px 16px;border-radius:999px;
+    background:var(--primary-light);color:var(--primary-dark);
+    border:1px solid #c7d2fe;
+  }
+  .timer.low{background:var(--wrong-bg);color:var(--wrong);border-color:#fecaca;}
+  .timer .icon{font-size:1rem;}
+
+  .screen{display:none;}
+  .screen.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+
+  /* ---- math notation helpers (no external library needed) ---- */
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+    margin:0 3px;line-height:1;position:relative;top:0.16em;font-size:0.9em;}
+  .frac .num{padding:0 4px 2px;border-bottom:1.4px solid currentColor;}
+  .frac .den{padding:2px 4px 0;}
+  .rad{border-top:1.4px solid currentColor;padding:0 3px;margin-left:1px;}
+  sup{font-size:.72em;top:-0.55em;}
+  sub{font-size:.72em;bottom:-0.25em;}
+  .qtable{border-collapse:collapse;margin:14px 0;font-size:.92rem;}
+  .qtable th,.qtable td{border:1px solid var(--border);padding:6px 16px;text-align:center;}
+  .qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  /* START SCREEN */
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+  .hero h1{font-size:1.7rem;margin:0 0 6px;}
+  .hero p.lead{color:var(--muted);margin:0 0 24px;font-size:1rem;}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0;}
+  .info-item{background:var(--primary-light);border-radius:10px;padding:14px 16px;}
+  .info-item .num2{font-size:1.4rem;font-weight:800;color:var(--primary-dark);}
+  .info-item .label{font-size:.82rem;color:var(--muted);margin-top:2px;}
+  .rules{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:16px 18px;margin:20px 0;font-size:.92rem;color:var(--text);}
+  .rules b{color:var(--primary-dark);}
+  .rules ul{margin:8px 0 0;padding-left:20px;}
+  .rules li{margin-bottom:4px;}
+  .topics-list{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 24px;}
+  .topic-chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.82rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+    transition:transform .1s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+  .btn-block{width:100%;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+
+  .resume-banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+  /* QUIZ SCREEN */
+  .quiz-layout{display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start;}
+  @media (max-width:760px){.quiz-layout{grid-template-columns:1fr;}}
+
+  .progress-bar{height:6px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:20px;}
+  .progress-bar .fill{height:100%;background:var(--primary);border-radius:999px;transition:width .2s ease;}
+
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;}
+  .q-index{font-weight:700;color:var(--primary-dark);font-size:.95rem;}
+  .q-topic{font-size:.78rem;color:var(--muted);background:var(--primary-light);padding:4px 10px;border-radius:999px;}
+  .q-type-badge{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:#fef3c7;color:#92400e;}
+  .q-hint{font-size:.82rem;color:var(--muted);margin-bottom:14px;font-style:italic;}
+  .q-text{font-size:1.05rem;margin:0 0 20px;}
+  .q-text img{max-width:100%;}
+
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .option{
+    display:flex;align-items:flex-start;gap:12px;
+    border:1.5px solid var(--border);border-radius:10px;
+    padding:13px 16px;cursor:pointer;font-size:.96rem;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .option:hover{border-color:var(--primary);background:var(--primary-light);}
+  .option.selected{border-color:var(--primary);background:var(--primary-light);}
+  .option .letter{
+    width:26px;height:26px;flex:none;border-radius:50%;
+    border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
+    font-size:.8rem;font-weight:700;color:var(--muted);
+  }
+  .option.mcma .letter{border-radius:7px;}
+  .option.selected .letter{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+  .statement-row{border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+  .statement-text{margin-bottom:12px;font-size:.94rem;}
+  .statement-choices{display:flex;gap:10px;}
+  .choice-btn{flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);cursor:pointer;font-weight:700;font-size:.85rem;text-align:center;color:var(--muted);}
+  .choice-btn:hover{border-color:var(--primary);}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark);}
+
+  .quiz-nav-btns{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+
+  .nav-panel{position:sticky;top:78px;}
+  .nav-panel .card{padding:18px;}
+  .nav-panel h4{margin:0 0 4px;font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:14px 0;}
+  .nav-cell{
+    aspect-ratio:1;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);color:var(--muted);font-size:.78rem;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .nav-cell.answered{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);}
+  .nav-cell.current{outline:2px solid var(--primary);outline-offset:1px;}
+  .legend{display:flex;flex-direction:column;gap:6px;font-size:.78rem;color:var(--muted);margin-top:10px;}
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .legend i{width:12px;height:12px;border-radius:4px;display:inline-block;border:1.5px solid var(--border);}
+  .legend i.a{background:var(--primary-light);border-color:var(--primary);}
+
+  /* RESULT SCREEN */
+  .result-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:24px 0;}
+  .stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+  .stat .val{font-size:1.6rem;font-weight:800;}
+  .stat .lbl{font-size:.78rem;color:var(--muted);margin-top:4px;}
+  .stat.score .val{color:var(--primary-dark);}
+  .stat.correct .val{color:var(--correct);}
+  .stat.wrong .val{color:var(--wrong);}
+  .stat.empty .val{color:var(--empty);}
+
+  .topic-bars{display:flex;flex-direction:column;gap:14px;margin:20px 0 8px;}
+  .topic-bar-row .top{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:6px;}
+  .topic-bar-row .top .name{font-weight:600;}
+  .topic-bar-row .top .frac2{color:var(--muted);}
+  .bar-track{height:9px;background:var(--border);border-radius:999px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--primary);border-radius:999px;}
+
+  .section-title{font-size:1.1rem;margin:32px 0 14px;font-weight:700;}
+  .review-item{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--surface);}
+  .review-item summary{
+    list-style:none;cursor:pointer;padding:14px 18px;
+    display:flex;align-items:center;gap:12px;font-weight:600;font-size:.92rem;flex-wrap:wrap;
+  }
+  .review-item summary::-webkit-details-marker{display:none;}
+  .review-item summary .chev{margin-left:auto;color:var(--muted);font-size:.8rem;}
+  .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;flex:none;}
+  .badge.correct{background:var(--correct-bg);color:var(--correct);}
+  .badge.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .badge.empty{background:var(--empty-bg);color:var(--empty);}
+  .badge.typebadge{background:#fef3c7;color:#92400e;}
+  .review-body{padding:0 18px 20px;border-top:1px solid var(--border);}
+  .review-body .q-text{font-size:.96rem;margin:16px 0;}
+  .review-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .review-opt{display:flex;gap:10px;padding:9px 13px;border-radius:8px;border:1px solid var(--border);font-size:.9rem;align-items:center;}
+  .review-opt .letter{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex:none;}
+  .review-opt.is-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-opt.is-correct .letter{background:var(--correct);border-color:var(--correct);color:#fff;}
+  .review-opt.is-wrong-pick{background:var(--wrong-bg);border-color:#fecaca;}
+  .review-opt.is-wrong-pick .letter{background:var(--wrong);border-color:var(--wrong);color:#fff;}
+  .opt-tag{margin-left:auto;font-size:.72rem;color:var(--muted);font-style:italic;}
+  .review-statement{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;font-size:.9rem;}
+  .review-statement.st-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-statement.st-wrong{background:var(--wrong-bg);border-color:#fecaca;}
+  .st-answer{font-size:.78rem;font-weight:700;flex:none;}
+  .pembahasan{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:.9rem;}
+  .pembahasan b{color:var(--primary-dark);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html" class="active">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <!-- START SCREEN -->
+  <section class="screen active" id="screen-start">
+    <div class="card hero">
+      <div id="resumeBanner" style="display:none;" class="resume-banner">
+        <span>Kamu punya progres tryout yang belum selesai.</span>
+        <div class="btn-row" style="margin:0;">
+          <button class="btn btn-primary" id="btnResume">Lanjutkan Tryout</button>
+          <button class="btn btn-ghost" id="btnRestartFresh">Mulai Baru</button>
+        </div>
+      </div>
+
+      <span class="pill pill-premium">Premium</span>
+      <h1>Tryout Sejarah &mdash; Paket 4</h1>
+      <p class="lead">Simulasi latihan mandiri mengikuti ketentuan resmi TKA 2026: mata uji pilihan Sejarah jenjang SMA/MA, mengacu Kerangka Asesmen TKA (Perka BSKAP Kemendikdasmen No. 045/H/AN/2025) &mdash; pemahaman, penerapan, dan penalaran atas pengantar ilmu sejarah, periode kerajaan Hindu-Buddha dan Islam, perlawanan terhadap bangsa Eropa, pergerakan nasional sampai proklamasi kemerdekaan, revolusi kemerdekaan Indonesia sampai Demokrasi Terpimpin, serta Orde Baru sampai Reformasi.</p>
+
+      <div class="info-grid">
+        <div class="info-item"><div class="num2">25</div><div class="label">Soal (campuran bentuk)</div></div>
+        <div class="info-item"><div class="num2">75:00</div><div class="label">Menit pengerjaan</div></div>
+        <div class="info-item"><div class="num2">6</div><div class="label">Elemen materi</div></div>
+        <div class="info-item"><div class="num2">4/6</div><div class="label">Paket soal</div></div>
+      </div>
+
+      <div class="rules">
+        <b>Bentuk soal</b> (sesuai ketentuan resmi TKA):
+        <ul>
+          <li><b>Pilihan Ganda</b> &mdash; satu jawaban paling tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</b> &mdash; bisa lebih dari satu jawaban benar, semua harus dipilih dengan tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Benar/Salah)</b> &mdash; beberapa pernyataan, tiap pernyataan direspons Benar atau Salah.</li>
+        </ul>
+        <b style="display:block;margin-top:10px;">Sistem penilaian per soal (konvensi latihan, bukan rumus resmi Kemendikdasmen):</b> Seluruhnya terjawab tepat <b>+4</b>, ada bagian yang keliru <b>&minus;1</b>, tidak dijawab sama sekali <b>0</b>. Skor maksimum <b>100</b>. TKA sesungguhnya dilaporkan sebagai skor terstandar (bukan skor mentah seperti ini), jadi anggap skor di sini sebagai indikator latihan saja.<br>
+        Pembahasan lengkap tampil setelah kamu menekan <b>Selesai &amp; Lihat Hasil</b>, atau otomatis saat waktu habis. Progres tersimpan otomatis di perangkat ini.
+      </div>
+
+      <div class="topics-list">
+        <span class="topic-chip">Pengantar Ilmu Sejarah</span>
+        <span class="topic-chip">Periode Kerajaan Hindu-Buddha &amp; Islam</span>
+        <span class="topic-chip">Perlawanan terhadap Bangsa Eropa</span>
+        <span class="topic-chip">Pergerakan Nasional &amp; Proklamasi</span>
+        <span class="topic-chip">Revolusi Kemerdekaan &amp; Demokrasi Terpimpin</span>
+        <span class="topic-chip">Orde Baru &amp; Reformasi</span>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="btnStart" style="font-size:1rem;padding:15px;">Mulai Tryout</button>
+    </div>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz-top">
+      <div style="font-weight:700;color:var(--muted);font-size:.86rem;">Tryout Sejarah &middot; Paket 4</div>
+      <div class="timer" id="timerDisplay" style="display:none;"><span class="icon">&#9201;</span><span id="timerText">75:00</span></div>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progressFill" style="width:4%;"></div></div>
+    <div class="quiz-layout">
+      <div class="card">
+        <div class="q-meta">
+          <span class="q-index" id="qIndexLabel">Soal 1 dari 25</span>
+          <span class="q-topic" id="qTopicLabel">Bilangan</span>
+          <span class="q-type-badge" id="qTypeBadge">Pilihan Ganda</span>
+        </div>
+        <div class="q-hint" id="qHint" style="display:none;"></div>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="qOptions"></div>
+        <div class="quiz-nav-btns">
+          <button class="btn btn-ghost" id="btnPrev">&larr; Sebelumnya</button>
+          <button class="btn btn-primary" id="btnNext">Berikutnya &rarr;</button>
+        </div>
+      </div>
+      <aside class="nav-panel">
+        <div class="card">
+          <h4>Navigasi Soal</h4>
+          <div class="nav-grid" id="navGrid"></div>
+          <div class="legend">
+            <span><i class="a"></i> Sudah dijawab</span>
+            <span><i></i> Belum dijawab</span>
+          </div>
+          <button class="btn btn-primary btn-block" id="btnFinish" style="margin-top:16px;">Selesai &amp; Lihat Hasil</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section class="screen" id="screen-result">
+    <div class="card">
+      <h1 style="font-size:1.4rem;margin-top:0;">Hasil Tryout Kamu &mdash; Paket 4</h1>
+      <p class="lead" style="margin-bottom:0;" id="resultSubtitle">Berikut rekap skor dan pembahasan lengkap setiap soal.</p>
+
+      <div class="result-summary">
+        <div class="stat score"><div class="val" id="statScore">0</div><div class="lbl">Skor (maks 100)</div></div>
+        <div class="stat correct"><div class="val" id="statCorrect">0</div><div class="lbl">Benar</div></div>
+        <div class="stat wrong"><div class="val" id="statWrong">0</div><div class="lbl">Salah</div></div>
+        <div class="stat empty"><div class="val" id="statEmpty">0</div><div class="lbl">Kosong</div></div>
+        <div class="stat"><div class="val" id="statTime">-</div><div class="lbl">Waktu terpakai</div></div>
+      </div>
+
+      <div class="section-title">Analisis per Elemen Materi</div>
+      <div class="topic-bars" id="topicBars"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnRetry">&#8635; Ulangi Paket Ini</button>
+        <a class="btn btn-ghost" href="tryout.html">Kembali ke Daftar Tryout</a>
+      </div>
+    </div>
+
+    <div class="section-title">Pembahasan Lengkap</div>
+    <div id="reviewList"></div>
+  </section>
+
+  <div class="note-box">
+    Skor pada tryout ini adalah alat bantu latihan mandiri dan tidak merepresentasikan nilai resmi TKA. Materi mata pelajaran lengkap tersedia di halaman <a href="mata-pelajaran-sejarah.html">Sejarah</a>.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA &middot; mengacu Kerangka Asesmen TKA Sejarah (Pilihan) SMA, Perka BSKAP Kemendikdasmen No. 045/H/AN/2025.</p>
+  </footer>
+
+</div>
+
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+(function(){
+"use strict";
+
+/* small helper to build a stacked fraction as plain HTML/CSS (no external math library needed) */
+function frac(num, den){
+  return "<span class='frac'><span class='num'>"+num+"</span><span class='den'>"+den+"</span></span>";
+}
+/* helper for a radical sign over a multi-character expression */
+function rad(content){
+  return "&radic;<span class='rad'>"+content+"</span>";
+}
+
+
+var QUESTIONS = [
+{
+  type:"single", topic:"Pengantar Ilmu Sejarah",
+  text:"Peringatan Hari Kemerdekaan setiap 17 Agustus dan pengajaran sejarah perjuangan bangsa di sekolah-sekolah bertujuan menumbuhkan rasa kebangsaan pada generasi muda. Fenomena tersebut menunjukkan bahwa sejarah memiliki peran penting sebagai&hellip;",
+  options:[
+    "Pembentuk identitas dan memori kolektif bangsa, yang menghubungkan generasi masa kini dengan perjuangan dan nilai-nilai pendahulunya.",
+    "Alat hiburan semata tanpa keterkaitan dengan kehidupan masyarakat masa kini.",
+    "Sumber informasi yang hanya relevan bagi kalangan akademisi dan peneliti sejarah.",
+    "Catatan administratif pemerintah yang tidak memiliki nilai edukatif bagi masyarakat.",
+    "Bahan kajian yang hanya digunakan untuk kepentingan pariwisata semata."
+  ],
+  answer:0,
+  explanation:"Peringatan hari-hari bersejarah dan pengajaran sejarah perjuangan bangsa menunjukkan peran penting sejarah sebagai pembentuk identitas dan memori kolektif bangsa, yang menghubungkan generasi masa kini dengan perjuangan dan nilai-nilai luhur para pendahulunya."
+},
+{
+  type:"single", topic:"Pengantar Ilmu Sejarah",
+  text:"Letak geografis Selat Malaka yang strategis sebagai jalur pelayaran dan perdagangan internasional turut memengaruhi mengapa banyak kerajaan maritim, seperti Sriwijaya dan Malaka, tumbuh menjadi pusat perdagangan besar. Hal ini menunjukkan pentingnya unsur&hellip;",
+  options:[
+    "Ruang, karena kondisi geografis suatu wilayah dapat memengaruhi jalannya suatu peristiwa dan perkembangan sejarah di wilayah tersebut.",
+    "Waktu, karena unsur ini hanya berkaitan dengan kapan suatu peristiwa terjadi tanpa memengaruhi jalannya peristiwa.",
+    "Kausalitas, karena unsur ini hanya berkaitan dengan hubungan sebab-akibat antarperistiwa tanpa memperhatikan lokasi.",
+    "Historiografi, karena unsur ini hanya berkaitan dengan tahap penulisan akhir hasil penelitian sejarah.",
+    "Heuristik, karena unsur ini hanya berkaitan dengan tahap pengumpulan sumber-sumber sejarah."
+  ],
+  answer:0,
+  explanation:"Letak geografis Selat Malaka yang strategis menunjukkan pentingnya unsur ruang dalam sejarah, karena kondisi geografis suatu wilayah dapat memengaruhi jalannya suatu peristiwa, termasuk mengapa kerajaan-kerajaan maritim seperti Sriwijaya dan Malaka tumbuh menjadi pusat perdagangan besar."
+},
+{
+  type:"single", topic:"Pengantar Ilmu Sejarah",
+  text:"Berbeda dari historiografi kolonial yang bersifat Eropa-sentris, historiografi modern Indonesia yang berkembang setelah kemerdekaan, misalnya karya-karya sejarawan Sartono Kartodirdjo, memiliki ciri&hellip;",
+  options:[
+    "Bersifat Indonesia-sentris dan menggunakan metode penelitian ilmiah yang lebih kritis, dengan menempatkan rakyat Indonesia sebagai pelaku aktif sejarah, bukan sekadar objek pasif.",
+    "Tetap menempatkan kepentingan kolonial Belanda sebagai pusat penulisan sejarah.",
+    "Hanya berfokus pada sejarah kerajaan-kerajaan Hindu-Buddha tanpa membahas masa kolonial maupun kemerdekaan.",
+    "Ditulis tanpa menggunakan metode ilmiah maupun sumber-sumber sejarah yang kredibel.",
+    "Sepenuhnya berupa karya sastra fiksi tanpa dasar penelitian sejarah yang ilmiah."
+  ],
+  answer:0,
+  explanation:"Historiografi modern Indonesia, seperti karya-karya Sartono Kartodirdjo, bersifat Indonesia-sentris dan menggunakan metode penelitian ilmiah yang lebih kritis, dengan menempatkan rakyat Indonesia sebagai pelaku aktif sejarah, berbeda dari historiografi kolonial yang Eropa-sentris."
+},
+{
+  type:"mcma", topic:"Pengantar Ilmu Sejarah",
+  text:"Sebagai sebuah ilmu, sejarah memiliki karakteristik tersendiri yang membedakannya dari ilmu-ilmu lain, mencakup objek kajian, metode penelitian, dan sifat kebenarannya. Manakah pernyataan berikut yang tepat menggambarkan sejarah sebagai ilmu? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan objek kajian, metode, dan sifat kebenaran dalam ilmu sejarah dibandingkan ilmu-ilmu alam.",
+  options:[
+    "Sejarah memiliki objek kajian berupa peristiwa-peristiwa masa lampau yang menyangkut kehidupan manusia dalam ruang dan waktu tertentu.",
+    "Sejarah menggunakan metode ilmiah yang sistematis, yaitu heuristik, kritik, interpretasi, dan historiografi, dalam proses penelitiannya.",
+    "Berbeda dari ilmu-ilmu alam, kebenaran dalam sejarah bersifat mutlak dan tidak akan pernah berubah meski ditemukan sumber baru.",
+    "Sejarah dapat diuji kebenarannya melalui sumber-sumber sejarah yang dapat diverifikasi keasliannya.",
+    "Sejarah tidak memerlukan metode ilmiah apa pun karena hanya bergantung pada opini penulisnya."
+  ],
+  answer:[0,1,3],
+  explanation:"Sejarah memang memiliki objek kajian berupa peristiwa masa lampau kehidupan manusia (tepat). Sejarah memang menggunakan metode ilmiah heuristik-kritik-interpretasi-historiografi (tepat). Kebenaran sejarah JUSTRU BERSIFAT TERBUKA terhadap revisi bila ditemukan sumber baru, bukan mutlak tak berubah (tidak tepat). Sejarah memang dapat diuji melalui sumber yang dapat diverifikasi (tepat). Sejarah JUSTRU MEMERLUKAN metode ilmiah yang ketat, bukan sekadar opini penulis (tidak tepat)."
+},
+{
+  type:"single", topic:"Periode Kerajaan Hindu-Buddha dan Islam",
+  text:"Kerajaan Mataram Kuno diperintah oleh dua dinasti besar yang hidup berdampingan, yaitu Dinasti Sanjaya yang bercorak Hindu dan Dinasti Syailendra yang bercorak Buddha. Bukti mengenai keberadaan kedua dinasti tersebut antara lain terdapat dalam&hellip;",
+  options:[
+    "Prasasti Canggal dan Prasasti Kalasan, yang masing-masing memuat informasi mengenai Dinasti Sanjaya dan Dinasti Syailendra.",
+    "Prasasti Yupa, yang menjadi bukti tertulis tertua mengenai pengaruh Hindu di Kutai, Kalimantan Timur.",
+    "Kitab Negarakertagama, yang menggambarkan kejayaan Kerajaan Majapahit pada masa Hayam Wuruk.",
+    "Berita I-Tsing, yang mencatat peran Sriwijaya sebagai pusat pendidikan agama Buddha.",
+    "Piagam Jakarta, yang memuat rumusan dasar negara Indonesia merdeka."
+  ],
+  answer:0,
+  explanation:"Prasasti Canggal memuat informasi mengenai Dinasti Sanjaya yang bercorak Hindu, sedangkan Prasasti Kalasan memuat informasi mengenai Dinasti Syailendra yang bercorak Buddha, menunjukkan bahwa kedua dinasti tersebut hidup berdampingan di Kerajaan Mataram Kuno."
+},
+{
+  type:"single", topic:"Periode Kerajaan Hindu-Buddha dan Islam",
+  text:"Kesultanan Ternate dan Tidore di Maluku menjadi rebutan bangsa Portugis dan Spanyol karena kekayaan rempah-rempah, terutama cengkih dan pala. Perebutan pengaruh tersebut akhirnya diselesaikan melalui&hellip;",
+  options:[
+    "Perjanjian Zaragoza (1529), yang membagi wilayah pengaruh Portugis dan Spanyol di kawasan Maluku dan sekitarnya.",
+    "Perjanjian Bongaya (1667), yang mengatur pembatasan wilayah kekuasaan Kesultanan Gowa.",
+    "Perjanjian Renville (1948), yang mengatur garis demarkasi antara Indonesia dan Belanda.",
+    "Perjanjian Linggarjati (1946), yang mengatur pengakuan wilayah kekuasaan Republik Indonesia.",
+    "Konferensi Meja Bundar (1949), yang mengatur pengakuan kedaulatan Indonesia oleh Belanda."
+  ],
+  answer:0,
+  explanation:"Perebutan pengaruh antara Portugis dan Spanyol di kawasan Maluku, termasuk Ternate dan Tidore, diselesaikan melalui Perjanjian Zaragoza (1529), yang membagi wilayah pengaruh kedua bangsa tersebut di kawasan tersebut dan sekitarnya."
+},
+{
+  type:"single", topic:"Periode Kerajaan Hindu-Buddha dan Islam",
+  text:"Kesultanan Gowa-Tallo di Sulawesi Selatan berkembang menjadi salah satu pusat penyebaran Islam penting di kawasan timur Nusantara, dengan pelabuhan utamanya yang ramai dikunjungi pedagang dari berbagai wilayah, yaitu&hellip;",
+  options:[
+    "Somba Opu, yang menjadi pelabuhan dagang utama sekaligus pusat pemerintahan Kesultanan Gowa-Tallo.",
+    "Sunda Kelapa, yang menjadi pelabuhan dagang utama Kesultanan Banten di Jawa bagian barat.",
+    "Malaka, yang menjadi pelabuhan dagang utama sebelum dikuasai Portugis pada 1511.",
+    "Batavia, yang menjadi pusat pemerintahan VOC di Nusantara.",
+    "Bandar Aceh Darussalam, yang menjadi pusat pemerintahan Kesultanan Aceh."
+  ],
+  answer:0,
+  explanation:"Somba Opu menjadi pelabuhan dagang utama sekaligus pusat pemerintahan Kesultanan Gowa-Tallo, yang berkembang menjadi salah satu pusat penyebaran Islam penting di kawasan timur Nusantara dan ramai dikunjungi pedagang dari berbagai wilayah."
+},
+{
+  type:"category", topic:"Periode Kerajaan Hindu-Buddha dan Islam",
+  text:"Selain teori Gujarat, Mekah, dan Persia, sebagian ahli juga mengajukan teori Cina mengenai proses masuknya Islam ke Nusantara, salah satunya dikaitkan dengan pelayaran Laksamana Cheng Ho (Zheng He). Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai teori tersebut!",
+  statements:[
+    {text:"Teori Cina berpendapat bahwa sebagian penyebaran Islam di Nusantara turut dipengaruhi oleh interaksi dengan komunitas muslim Tionghoa, termasuk melalui pelayaran Laksamana Cheng Ho pada awal abad ke-15.", correct:true},
+    {text:"Keberadaan bangunan bercorak Tionghoa pada beberapa masjid kuno di pesisir utara Jawa menjadi salah satu bukti yang mendukung teori Cina.", correct:true},
+    {text:"Teori Cina merupakan satu-satunya teori yang diterima secara mutlak oleh seluruh sejarawan tanpa adanya perdebatan dengan teori lain.", correct:false}
+  ],
+  explanation:"Teori Cina memang mengaitkan penyebaran Islam dengan komunitas muslim Tionghoa dan pelayaran Cheng Ho (Tepat). Bangunan bercorak Tionghoa pada beberapa masjid kuno memang menjadi salah satu bukti pendukung teori ini (Tepat). Teori Cina JUSTRU MASIH DIPERDEBATKAN bersama teori Gujarat, Mekah, dan Persia, bukan diterima mutlak tanpa perdebatan (Tidak Tepat)."
+},
+{
+  type:"single", topic:"Perlawanan terhadap Bangsa Eropa",
+  text:"Sultan Ageng Tirtayasa dari Kesultanan Banten dikenal gigih menentang upaya VOC memonopoli perdagangan di kawasan Selat Sunda. Namun, perlawanan tersebut melemah setelah&hellip;",
+  options:[
+    "Putranya sendiri, Sultan Haji, justru bekerja sama dengan VOC untuk merebut takhta dari Sultan Ageng Tirtayasa.",
+    "Sultan Ageng Tirtayasa menyerahkan seluruh wilayah Banten secara sukarela kepada VOC tanpa perlawanan.",
+    "VOC menandatangani perjanjian damai yang menguntungkan penuh bagi Kesultanan Banten.",
+    "Sultan Ageng Tirtayasa berhasil mengusir VOC sepenuhnya dari wilayah Nusantara.",
+    "Portugis membantu Sultan Ageng Tirtayasa mengalahkan pasukan VOC di Selat Sunda."
+  ],
+  answer:0,
+  explanation:"Perlawanan Sultan Ageng Tirtayasa melemah setelah putranya sendiri, Sultan Haji, justru bekerja sama dengan VOC untuk merebut takhta, sehingga VOC berhasil memanfaatkan konflik internal keluarga kesultanan untuk memperkuat pengaruhnya di Banten."
+},
+{
+  type:"single", topic:"Perlawanan terhadap Bangsa Eropa",
+  text:"Salah satu sebab utama Perang Bali (Puputan) adalah penolakan Belanda terhadap hak tawan karang, yaitu hak adat raja-raja Bali untuk&hellip;",
+  options:[
+    "Menyita muatan kapal asing yang terdampar di wilayah perairan kerajaannya sebagai bagian dari hukum adat setempat.",
+    "Memungut pajak dari seluruh kapal dagang yang berlabuh di pelabuhan kerajaannya.",
+    "Mewajibkan seluruh penduduk asing di Bali untuk memeluk agama Hindu.",
+    "Melarang seluruh kapal asing memasuki wilayah perairan Bali tanpa izin.",
+    "Mengangkat penguasa asing sebagai penasihat kerajaan dalam urusan perdagangan."
+  ],
+  answer:0,
+  explanation:"Hak tawan karang adalah hak adat raja-raja Bali untuk menyita muatan kapal asing yang terdampar di wilayah perairan kerajaannya. Belanda menolak hak ini karena dianggap merugikan kepentingan dagangnya, yang kemudian menjadi salah satu sebab utama meletusnya Perang Bali (Puputan)."
+},
+{
+  type:"single", topic:"Perlawanan terhadap Bangsa Eropa",
+  text:"Perlawanan rakyat Maluku yang dipimpin Pattimura pada 1817 dipicu oleh kebijakan monopoli dagang dan kerja paksa yang diterapkan Belanda. Salah satu peristiwa penting dalam perlawanan ini adalah&hellip;",
+  options:[
+    "Penyerbuan dan penguasaan Benteng Duurstede oleh pasukan Pattimura sebagai simbol perlawanan terhadap kekuasaan Belanda di Saparua.",
+    "Penandatanganan Perjanjian Bongaya antara Pattimura dan VOC di Sulawesi.",
+    "Pembentukan Peta (Pembela Tanah Air) oleh Pattimura untuk melawan pendudukan Jepang.",
+    "Pengangkatan Pattimura sebagai gubernur Maluku oleh pemerintah kolonial Belanda.",
+    "Perundingan damai antara Pattimura dan Belanda yang menghasilkan otonomi penuh bagi Maluku."
+  ],
+  answer:0,
+  explanation:"Salah satu peristiwa penting dalam perlawanan Pattimura adalah penyerbuan dan penguasaan Benteng Duurstede di Saparua oleh pasukannya, sebagai simbol perlawanan rakyat Maluku terhadap kebijakan monopoli dagang dan kerja paksa yang diterapkan Belanda."
+},
+{
+  type:"mcma", topic:"Perlawanan terhadap Bangsa Eropa",
+  text:"Kolonialisme Belanda di Nusantara membawa berbagai dampak, baik yang merugikan maupun yang secara tidak sengaja meninggalkan warisan tertentu bagi Indonesia. Manakah pernyataan berikut yang tepat mengenai dampak kolonialisme Belanda tersebut? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan dampak kolonialisme baik dari sisi eksploitasi maupun warisan infrastruktur dan sistem yang ditinggalkan.",
+  options:[
+    "Kolonialisme Belanda menyebabkan eksploitasi sumber daya alam dan tenaga kerja rakyat Indonesia secara besar-besaran demi kepentingan ekonomi Belanda.",
+    "Pemerintah kolonial meninggalkan sejumlah infrastruktur, seperti jalur kereta api dan jalan raya, meskipun awalnya dibangun untuk kepentingan eksploitasi kolonial, bukan untuk kesejahteraan rakyat.",
+    "Kolonialisme Belanda sepenuhnya membawa kemakmuran merata bagi seluruh rakyat Indonesia tanpa ada unsur eksploitasi sama sekali.",
+    "Sistem pendidikan Barat yang diperkenalkan pada masa kolonial turut melahirkan golongan terpelajar yang kelak menjadi pelopor pergerakan nasional.",
+    "Kolonialisme Belanda tidak meninggalkan dampak apa pun bagi perkembangan Indonesia setelah kemerdekaan."
+  ],
+  answer:[0,1,3],
+  explanation:"Kolonialisme memang menyebabkan eksploitasi sumber daya dan tenaga kerja besar-besaran (tepat). Infrastruktur seperti rel kereta api memang ditinggalkan meski awalnya untuk kepentingan eksploitasi kolonial (tepat). Kolonialisme JUSTRU TIDAK membawa kemakmuran merata, melainkan penuh eksploitasi (tidak tepat). Sistem pendidikan Barat memang melahirkan golongan terpelajar pelopor pergerakan nasional (tepat). Kolonialisme JUSTRU MENINGGALKAN banyak dampak, baik positif maupun negatif, bagi Indonesia setelah kemerdekaan (tidak tepat)."
+},
+{
+  type:"single", topic:"Pergerakan Nasional sampai Proklamasi Kemerdekaan",
+  text:"Kongres Pemuda I yang diselenggarakan pada 1926 di Jakarta merupakan pertemuan awal berbagai organisasi pemuda kedaerahan sebelum akhirnya menghasilkan Sumpah Pemuda pada Kongres Pemuda II tahun 1928. Kondisi Kongres Pemuda I saat itu adalah&hellip;",
+  options:[
+    "Belum mencapai kesepakatan penuh mengenai gagasan persatuan bangsa, namun menjadi langkah awal penting menuju terbentuknya kesadaran nasional yang lebih kuat.",
+    "Berhasil menghasilkan ikrar Sumpah Pemuda yang sama persis dengan hasil Kongres Pemuda II.",
+    "Dihadiri langsung oleh pemerintah kolonial Belanda sebagai penyelenggara utama.",
+    "Menghasilkan keputusan untuk membubarkan seluruh organisasi pemuda kedaerahan.",
+    "Menjadi forum yang menetapkan Soekarno sebagai presiden pertama Republik Indonesia."
+  ],
+  answer:0,
+  explanation:"Kongres Pemuda I (1926) belum mencapai kesepakatan penuh mengenai gagasan persatuan bangsa karena masih kuatnya sentimen kedaerahan di antara organisasi-organisasi pemuda yang hadir, namun menjadi langkah awal penting yang mengantarkan pada Kongres Pemuda II dan Sumpah Pemuda pada 1928."
+},
+{
+  type:"single", topic:"Pergerakan Nasional sampai Proklamasi Kemerdekaan",
+  text:"PPKI (Panitia Persiapan Kemerdekaan Indonesia) dibentuk pada 7 Agustus 1945 untuk menggantikan BPUPK yang telah dibubarkan. Perbedaan utama antara BPUPK dan PPKI adalah&hellip;",
+  options:[
+    "BPUPK bertugas menyelidiki dan merumuskan usulan dasar negara, sedangkan PPKI bertugas mempersiapkan segala hal yang diperlukan untuk kemerdekaan Indonesia.",
+    "BPUPK beranggotakan tokoh-tokoh Belanda, sedangkan PPKI beranggotakan tokoh-tokoh Jepang.",
+    "BPUPK dibentuk setelah proklamasi kemerdekaan, sedangkan PPKI dibentuk sebelum proklamasi kemerdekaan.",
+    "BPUPK bertugas menyusun teks proklamasi, sedangkan PPKI bertugas menyebarkan berita proklamasi ke seluruh daerah.",
+    "BPUPK merupakan organisasi militer, sedangkan PPKI merupakan organisasi keagamaan."
+  ],
+  answer:0,
+  explanation:"BPUPK bertugas menyelidiki dan merumuskan usulan-usulan penting mengenai dasar negara Indonesia merdeka, sedangkan PPKI yang dibentuk setelahnya bertugas mempersiapkan segala hal yang diperlukan untuk pelaksanaan kemerdekaan Indonesia, termasuk mengesahkan UUD dan memilih presiden-wakil presiden."
+},
+{
+  type:"single", topic:"Pergerakan Nasional sampai Proklamasi Kemerdekaan",
+  text:"Pada upacara proklamasi kemerdekaan 17 Agustus 1945, bendera pusaka Merah Putih yang telah dijahit oleh Fatmawati dikibarkan oleh&hellip;",
+  options:[
+    "Latief Hendraningrat dan Suhud, yang mengibarkan bendera pusaka Merah Putih setelah pembacaan teks proklamasi oleh Soekarno.",
+    "Ahmad Soebardjo dan Sayuti Melik, yang bertugas mengetik naskah proklamasi sebelum dibacakan.",
+    "Laksamana Tadashi Maeda, yang menyediakan rumahnya sebagai tempat perumusan naskah proklamasi.",
+    "Chaerul Saleh dan Sukarni, yang membawa Soekarno-Hatta ke Rengasdengklok pada 16 Agustus 1945.",
+    "Mohammad Hatta seorang diri, tanpa bantuan tokoh lain, mengibarkan bendera pusaka."
+  ],
+  answer:0,
+  explanation:"Bendera pusaka Merah Putih yang telah dijahit oleh Fatmawati dikibarkan oleh Latief Hendraningrat dan Suhud pada upacara proklamasi kemerdekaan 17 Agustus 1945, setelah teks proklamasi selesai dibacakan oleh Soekarno."
+},
+{
+  type:"category", topic:"Pergerakan Nasional sampai Proklamasi Kemerdekaan",
+  text:"Proklamasi kemerdekaan Indonesia yang dibacakan pada 17 Agustus 1945 melalui rangkaian proses persiapan yang melibatkan berbagai tokoh bangsa. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai peristiwa proklamasi tersebut!",
+  statements:[
+    {text:"Teks proklamasi kemerdekaan Indonesia dibacakan oleh Soekarno didampingi Mohammad Hatta di kediaman Soekarno, Jalan Pegangsaan Timur 56, Jakarta.", correct:true},
+    {text:"Naskah proklamasi yang telah dirumuskan kemudian diketik oleh Sayuti Melik sebelum dibacakan pada upacara proklamasi.", correct:true},
+    {text:"Proklamasi kemerdekaan Indonesia dibacakan pada malam hari, tepat pukul 24.00 WIB tanggal 17 Agustus 1945.", correct:false}
+  ],
+  explanation:"Teks proklamasi memang dibacakan Soekarno didampingi Hatta di Jalan Pegangsaan Timur 56 (Tepat). Naskah tersebut memang diketik oleh Sayuti Melik sebelum dibacakan (Tepat). Proklamasi JUSTRU DIBACAKAN pada pagi hari, sekitar pukul 10.00 WIB tanggal 17 Agustus 1945, bukan pada tengah malam (Tidak Tepat)."
+},
+{
+  type:"single", topic:"Revolusi Kemerdekaan Indonesia sampai Demokrasi Terpimpin",
+  text:"Peristiwa Bandung Lautan Api pada Maret 1946 terjadi ketika rakyat dan pejuang Bandung membakar wilayah Bandung Selatan sebelum meninggalkan kota tersebut. Tindakan tersebut bertujuan untuk&hellip;",
+  options:[
+    "Menerapkan taktik bumi hangus agar wilayah dan fasilitas strategis Bandung tidak dapat dimanfaatkan oleh tentara Sekutu dan NICA.",
+    "Merayakan kemenangan rakyat Bandung atas pasukan Sekutu yang telah berhasil diusir sepenuhnya.",
+    "Membangun kembali kota Bandung yang telah hancur akibat bencana alam sebelumnya.",
+    "Menyambut kedatangan pasukan Jepang yang akan membantu mempertahankan kota Bandung.",
+    "Memenuhi perintah pemerintah Belanda untuk mengosongkan wilayah tersebut secara damai."
+  ],
+  answer:0,
+  explanation:"Peristiwa Bandung Lautan Api merupakan penerapan taktik bumi hangus, yaitu membakar wilayah dan fasilitas strategis Bandung Selatan sebelum ditinggalkan, agar tidak dapat dimanfaatkan oleh tentara Sekutu dan NICA yang hendak menguasai kota tersebut."
+},
+{
+  type:"single", topic:"Revolusi Kemerdekaan Indonesia sampai Demokrasi Terpimpin",
+  text:"Serangan Umum 1 Maret 1949 di Yogyakarta yang dipimpin oleh Letnan Kolonel Soeharto memiliki arti penting secara internasional karena&hellip;",
+  options:[
+    "Membuktikan kepada dunia internasional bahwa Republik Indonesia dan TNI masih eksis, meskipun Belanda mengklaim telah menghancurkan kekuatan Indonesia.",
+    "Berhasil merebut kembali seluruh wilayah Indonesia yang dikuasai Belanda secara permanen.",
+    "Mengakhiri seluruh perundingan antara Indonesia dan Belanda tanpa perlu kesepakatan lebih lanjut.",
+    "Menjadi dasar hukum bagi pembentukan negara Republik Indonesia Serikat.",
+    "Menandai dimulainya Agresi Militer Belanda II terhadap wilayah Yogyakarta."
+  ],
+  answer:0,
+  explanation:"Serangan Umum 1 Maret 1949 memiliki arti penting karena berhasil membuktikan kepada dunia internasional bahwa Republik Indonesia dan TNI masih eksis, meskipun Belanda mengklaim telah menghancurkan kekuatan Indonesia melalui Agresi Militer Belanda II."
+},
+{
+  type:"single", topic:"Revolusi Kemerdekaan Indonesia sampai Demokrasi Terpimpin",
+  text:"Kabinet Burhanuddin Harahap yang memerintah pada 1955-1956 dikenal sebagai kabinet yang berhasil menyelenggarakan agenda penting pada masa Demokrasi Liberal, yaitu&hellip;",
+  options:[
+    "Pemilihan Umum 1955, yang menjadi pemilu pertama sejak Indonesia merdeka dan dianggap salah satu pemilu paling demokratis.",
+    "Konferensi Meja Bundar, yang menghasilkan pengakuan kedaulatan Indonesia oleh Belanda.",
+    "Dekrit Presiden 5 Juli 1959, yang mengembalikan berlakunya UUD 1945.",
+    "Perundingan Roem-Royen, yang mengatur pengembalian pemerintahan RI ke Yogyakarta.",
+    "Konferensi Asia Afrika, yang diselenggarakan di Bandung pada 1955."
+  ],
+  answer:0,
+  explanation:"Kabinet Burhanuddin Harahap berhasil menyelenggarakan Pemilihan Umum 1955, pemilu pertama sejak Indonesia merdeka yang dianggap salah satu pemilu paling demokratis dalam sejarah Indonesia, meskipun kabinet ini sendiri tidak lama bertahan setelahnya."
+},
+{
+  type:"mcma", topic:"Revolusi Kemerdekaan Indonesia sampai Demokrasi Terpimpin",
+  text:"Peristiwa Gerakan 30 September (G30S) 1965 dilatarbelakangi oleh berbagai faktor yang saling berkaitan, termasuk ketegangan ideologi dan politik menjelang akhir masa Demokrasi Terpimpin. Manakah pernyataan berikut yang tepat mengenai latar belakang peristiwa G30S tersebut? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan situasi politik, ketegangan antarkekuatan politik, dan isu-isu yang berkembang menjelang akhir 1965.",
+  options:[
+    "Terjadi ketegangan ideologi dan politik antara PKI dengan sebagian kalangan TNI Angkatan Darat menjelang akhir masa Demokrasi Terpimpin.",
+    "Beredar isu mengenai Dewan Jenderal yang dituduh PKI hendak melakukan kudeta terhadap pemerintahan Presiden Soekarno.",
+    "G30S 1965 sama sekali tidak berkaitan dengan kondisi politik nasional dan hanya merupakan peristiwa kriminal biasa.",
+    "Peristiwa ini mengakibatkan gugurnya sejumlah perwira tinggi TNI Angkatan Darat yang kemudian dimakamkan di Taman Makam Pahlawan Kalibata.",
+    "G30S 1965 terjadi pada masa pemerintahan Orde Baru di bawah kepemimpinan Soeharto."
+  ],
+  answer:[0,1,3],
+  explanation:"Ketegangan ideologi antara PKI dan sebagian TNI AD memang menjadi latar belakang penting (tepat). Isu Dewan Jenderal memang beredar sebagai salah satu pemicu (tepat). G30S JUSTRU SANGAT TERKAIT dengan kondisi politik nasional saat itu, bukan sekadar peristiwa kriminal biasa (tidak tepat). Peristiwa ini memang mengakibatkan gugurnya perwira tinggi TNI AD yang dimakamkan di Kalibata (tepat). G30S JUSTRU terjadi pada masa Demokrasi Terpimpin (akhir kekuasaan Soekarno), bukan pada masa Orde Baru (tidak tepat)."
+},
+{
+  type:"single", topic:"Orde Baru sampai Reformasi",
+  text:"Untuk mendorong pertumbuhan ekonomi, pemerintah Orde Baru mengeluarkan Undang-Undang Penanaman Modal Asing (UU PMA) pada 1967. Kebijakan ini bertujuan untuk&hellip;",
+  options:[
+    "Menarik investasi dari luar negeri guna mendukung pembangunan ekonomi nasional yang saat itu masih terpuruk akibat krisis ekonomi sebelumnya.",
+    "Melarang seluruh investasi asing masuk ke Indonesia demi melindungi perusahaan dalam negeri.",
+    "Menasionalisasi seluruh perusahaan asing yang beroperasi di Indonesia tanpa kompensasi.",
+    "Membentuk kembali sistem ekonomi Nasakom yang diterapkan pada masa Demokrasi Terpimpin.",
+    "Menghapuskan seluruh bentuk perdagangan internasional yang dilakukan Indonesia."
+  ],
+  answer:0,
+  explanation:"UU Penanaman Modal Asing (1967) bertujuan menarik investasi dari luar negeri guna mendukung pembangunan ekonomi nasional yang saat itu masih terpuruk akibat krisis ekonomi peninggalan masa akhir Demokrasi Terpimpin, sebagai bagian dari kebijakan stabilisasi dan pembangunan ekonomi Orde Baru."
+},
+{
+  type:"single", topic:"Orde Baru sampai Reformasi",
+  text:"Gerakan mahasiswa pada Mei 1998 mencapai puncaknya ketika ribuan mahasiswa dari berbagai kampus melakukan aksi besar-besaran hingga&hellip;",
+  options:[
+    "Menduduki gedung DPR/MPR di Jakarta sebagai simbol tuntutan reformasi total dan desakan agar Presiden Soeharto mundur.",
+    "Mendirikan pemerintahan tandingan di luar Jakarta untuk menggantikan pemerintahan Soeharto.",
+    "Bergabung dengan militer untuk melakukan kudeta terhadap Presiden Soeharto.",
+    "Meminta pemerintah Belanda kembali membantu mengatur pemerintahan Indonesia.",
+    "Menuntut penerapan kembali sistem Demokrasi Terpimpin seperti pada masa Soekarno."
+  ],
+  answer:0,
+  explanation:"Puncak aksi mahasiswa pada Mei 1998 ditandai dengan pendudukan gedung DPR/MPR di Jakarta oleh ribuan mahasiswa sebagai simbol tuntutan reformasi total dan desakan agar Presiden Soeharto segera mundur dari jabatannya."
+},
+{
+  type:"single", topic:"Orde Baru sampai Reformasi",
+  text:"Pemilihan presiden dan wakil presiden secara langsung oleh rakyat pertama kali dilaksanakan di Indonesia pada tahun 2004, sebagai hasil dari&hellip;",
+  options:[
+    "Amandemen UUD 1945, yang mengubah mekanisme pemilihan presiden dari dipilih MPR menjadi dipilih langsung oleh rakyat.",
+    "Dekrit Presiden 5 Juli 1959, yang mengembalikan berlakunya UUD 1945.",
+    "Konferensi Meja Bundar, yang mengatur pengakuan kedaulatan Indonesia oleh Belanda.",
+    "Supersemar, yang memberikan wewenang kepada Soeharto untuk mengambil tindakan keamanan.",
+    "Perjanjian Roem-Royen, yang mengatur pengembalian pemerintahan RI ke Yogyakarta."
+  ],
+  answer:0,
+  explanation:"Pemilihan presiden dan wakil presiden secara langsung oleh rakyat pertama kali dilaksanakan pada 2004 sebagai hasil amandemen UUD 1945, yang mengubah mekanisme pemilihan presiden dari sebelumnya dipilih oleh MPR menjadi dipilih langsung oleh rakyat."
+},
+{
+  type:"category", topic:"Orde Baru sampai Reformasi",
+  text:"Gerakan reformasi 1998 mengusung beberapa agenda utama yang mencakup berbagai bidang kehidupan bernegara. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai agenda reformasi tersebut!",
+  statements:[
+    {text:"Salah satu agenda reformasi adalah pemberantasan korupsi, kolusi, dan nepotisme (KKN) yang dianggap merajalela pada masa Orde Baru.", correct:true},
+    {text:"Salah satu agenda reformasi adalah penghapusan dwifungsi ABRI agar militer tidak lagi terlibat dalam kehidupan politik dan pemerintahan.", correct:true},
+    {text:"Seluruh agenda reformasi berhasil dilaksanakan secara sempurna tanpa kendala dalam waktu kurang dari satu tahun setelah Soeharto mundur.", correct:false}
+  ],
+  explanation:"Pemberantasan KKN memang menjadi salah satu agenda utama reformasi (Tepat). Penghapusan dwifungsi ABRI memang menjadi salah satu agenda reformasi penting (Tepat). Pelaksanaan agenda reformasi JUSTRU BERLANGSUNG BERTAHAP dan menghadapi berbagai kendala selama bertahun-tahun, bukan selesai sempurna dalam waktu kurang dari satu tahun (Tidak Tepat)."
+},
+{
+  type:"category", topic:"Orde Baru sampai Reformasi",
+  text:"Amandemen UUD 1945 yang dilakukan sebanyak empat kali pada periode 1999-2002 membawa perubahan mendasar dalam sistem ketatanegaraan Indonesia. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai perubahan tersebut!",
+  statements:[
+    {text:"Setelah amandemen, MPR tidak lagi berkedudukan sebagai lembaga tertinggi negara, melainkan sejajar dengan lembaga-lembaga negara lainnya.", correct:true},
+    {text:"Amandemen UUD 1945 memperkenalkan Mahkamah Konstitusi sebagai lembaga baru yang berwenang menguji undang-undang terhadap UUD.", correct:true},
+    {text:"Amandemen UUD 1945 menghapuskan sepenuhnya keberadaan lembaga legislatif (DPR) dalam sistem ketatanegaraan Indonesia.", correct:false}
+  ],
+  explanation:"Setelah amandemen, MPR memang tidak lagi menjadi lembaga tertinggi negara, melainkan sejajar dengan lembaga negara lain (Tepat). Amandemen memang memperkenalkan Mahkamah Konstitusi sebagai lembaga baru (Tepat). DPR JUSTRU TETAP DIPERTAHANKAN, bahkan kewenangannya diperkuat pasca-amandemen, bukan dihapuskan (Tidak Tepat)."
+}
+];
+
+
+var LETTERS = ["A","B","C","D","E"];
+var DURATION_SECONDS = 75*60;
+var STORAGE_KEY = "tka_sejarah_paket4_v1";
+var TYPE_LABELS = {single:"Pilihan Ganda", mcma:"PGK &middot; Pilih Lebih dari Satu", category:"PGK &middot; Benar/Salah"};
+
+/* ============ STATE ============ */
+var state = {
+  currentIndex:0,
+  answers:{},          // single: index | mcma: [indices] | category: {stmtIdx: true/false}
+  endTimestamp:null,
+  finished:false,
+  timeTakenSeconds:null
+};
+var timerInterval = null;
+
+/* ============ STORAGE ============ */
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ============ SCREEN HELPERS ============ */
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+}
+
+/* ============ ANSWER HELPERS (type-aware) ============ */
+function isAnswered(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(a===undefined || a===null) return false;
+  if(q.type==="category"){
+    if(typeof a !== "object") return false;
+    for(var k=0;k<q.statements.length;k++){ if(a[k]===undefined) return false; }
+    return true;
+  }
+  if(q.type==="mcma"){
+    return Array.isArray(a) && a.length>0;
+  }
+  return true; // single: any stored value (including 0) counts as answered
+}
+function evaluateQuestion(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(!isAnswered(i)) return "empty";
+  if(q.type==="category"){
+    for(var k=0;k<q.statements.length;k++){
+      if(!!a[k] !== !!q.statements[k].correct) return "wrong";
+    }
+    return "correct";
+  }
+  if(q.type==="mcma"){
+    var correctSet = q.answer.slice().sort(function(x,y){return x-y;});
+    var pickedSet = a.slice().sort(function(x,y){return x-y;});
+    if(correctSet.length !== pickedSet.length) return "wrong";
+    for(var j=0;j<correctSet.length;j++){ if(correctSet[j]!==pickedSet[j]) return "wrong"; }
+    return "correct";
+  }
+  return (a===q.answer) ? "correct":"wrong";
+}
+
+/* ============ TIMER ============ */
+function formatTime(totalSeconds){
+  totalSeconds = Math.max(0, Math.round(totalSeconds));
+  var m = Math.floor(totalSeconds/60);
+  var s = totalSeconds%60;
+  return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+}
+function startTimerLoop(){
+  var display = document.getElementById("timerDisplay");
+  display.style.display = "flex";
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 250);
+  tickTimer();
+}
+function tickTimer(){
+  var remaining = (state.endTimestamp - Date.now())/1000;
+  var textEl = document.getElementById("timerText");
+  var wrap = document.getElementById("timerDisplay");
+  if(remaining <= 0){
+    textEl.textContent = "00:00";
+    clearInterval(timerInterval);
+    finishQuiz(true);
+    return;
+  }
+  textEl.textContent = formatTime(remaining);
+  if(remaining <= 300) wrap.classList.add("low"); else wrap.classList.remove("low");
+}
+function stopTimer(){
+  clearInterval(timerInterval);
+  document.getElementById("timerDisplay").style.display = "none";
+}
+
+/* ============ QUIZ RENDERING ============ */
+function renderNavGrid(){
+  var grid = document.getElementById("navGrid");
+  grid.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var cell = document.createElement("div");
+    cell.className = "nav-cell" + (isAnswered(i)?" answered":"") + (i===state.currentIndex?" current":"");
+    cell.textContent = (i+1);
+    cell.addEventListener("click", function(){
+      state.currentIndex = i;
+      renderQuestion();
+    });
+    grid.appendChild(cell);
+  });
+}
+
+function renderOptionsSingleOrMcma(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var isMcma = q.type==="mcma";
+  var current = state.answers[i];
+  q.options.forEach(function(optText, idx){
+    var picked = isMcma ? (Array.isArray(current) && current.indexOf(idx)!==-1) : (current===idx);
+    var div = document.createElement("div");
+    div.className = "option" + (isMcma?" mcma":"") + (picked ? " selected":"");
+    div.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+    div.addEventListener("click", function(){
+      if(isMcma){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : [];
+        var pos = arr.indexOf(idx);
+        if(pos===-1) arr.push(idx); else arr.splice(pos,1);
+        state.answers[i] = arr;
+      } else {
+        state.answers[i] = idx;
+      }
+      saveState();
+      renderQuestion();
+    });
+    optsWrap.appendChild(div);
+  });
+}
+
+function renderStatements(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var current = (typeof state.answers[i] === "object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+  q.statements.forEach(function(st, k){
+    var row = document.createElement("div");
+    row.className = "statement-row";
+    var textDiv = document.createElement("div");
+    textDiv.className = "statement-text";
+    textDiv.innerHTML = (k+1)+". "+st.text;
+    row.appendChild(textDiv);
+    var choices = document.createElement("div");
+    choices.className = "statement-choices";
+    [["Benar",true], ["Salah",false]].forEach(function(pair){
+      var btn = document.createElement("div");
+      btn.className = "choice-btn" + (current[k]===pair[1] ? " selected":"");
+      btn.textContent = pair[0];
+      btn.addEventListener("click", function(){
+        var obj = (typeof state.answers[i]==="object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+        obj[k] = pair[1];
+        state.answers[i] = obj;
+        saveState();
+        renderQuestion();
+      });
+      choices.appendChild(btn);
+    });
+    row.appendChild(choices);
+    optsWrap.appendChild(row);
+  });
+}
+
+function renderQuestion(){
+  var i = state.currentIndex;
+  var q = QUESTIONS[i];
+  document.getElementById("qIndexLabel").textContent = "Soal "+(i+1)+" dari "+QUESTIONS.length;
+  document.getElementById("qTopicLabel").textContent = q.topic;
+  document.getElementById("qTypeBadge").innerHTML = TYPE_LABELS[q.type] || TYPE_LABELS.single;
+  document.getElementById("qText").innerHTML = q.text;
+
+  var hintEl = document.getElementById("qHint");
+  if(q.hint){ hintEl.style.display="block"; hintEl.textContent = q.hint; }
+  else if(q.type==="category"){ hintEl.style.display="block"; hintEl.textContent = "Beri respons Benar atau Salah untuk setiap pernyataan."; }
+  else { hintEl.style.display="none"; }
+
+  if(q.type==="category") renderStatements(q, i);
+  else renderOptionsSingleOrMcma(q, i);
+
+  document.getElementById("btnPrev").disabled = (i===0);
+  document.getElementById("btnPrev").style.opacity = (i===0)?"0.5":"1";
+  document.getElementById("btnNext").textContent = (i===QUESTIONS.length-1) ? "Selesai →" : "Berikutnya →";
+  document.getElementById("progressFill").style.width = Math.round(((i+1)/QUESTIONS.length)*100)+"%";
+  renderNavGrid();
+}
+
+/* ============ NAVIGATION BUTTONS ============ */
+document.getElementById("btnPrev").addEventListener("click", function(){
+  if(state.currentIndex>0){ state.currentIndex--; renderQuestion(); }
+});
+document.getElementById("btnNext").addEventListener("click", function(){
+  if(state.currentIndex < QUESTIONS.length-1){
+    state.currentIndex++;
+    renderQuestion();
+  } else {
+    confirmFinish();
+  }
+});
+document.getElementById("btnFinish").addEventListener("click", confirmFinish);
+
+function confirmFinish(){
+  var answeredCount = 0;
+  QUESTIONS.forEach(function(q,i){ if(isAnswered(i)) answeredCount++; });
+  var msg = "Kamu telah menjawab "+answeredCount+" dari "+QUESTIONS.length+" soal.\nSelesaikan tryout dan lihat hasil sekarang?";
+  if(window.confirm(msg)){
+    finishQuiz(false);
+  }
+}
+
+/* ============ START / RESUME / RESTART ============ */
+function beginFreshQuiz(){
+  state = {
+    currentIndex:0,
+    answers:{},
+    endTimestamp: Date.now() + DURATION_SECONDS*1000,
+    finished:false,
+    timeTakenSeconds:null
+  };
+  saveState();
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+function resumeQuiz(saved){
+  state = saved;
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+
+document.getElementById("btnStart").addEventListener("click", beginFreshQuiz);
+document.getElementById("btnResume").addEventListener("click", function(){
+  var saved = loadState();
+  if(saved && !saved.finished) resumeQuiz(saved); else beginFreshQuiz();
+});
+document.getElementById("btnRestartFresh").addEventListener("click", function(){
+  clearState();
+  document.getElementById("resumeBanner").style.display = "none";
+  beginFreshQuiz();
+});
+document.getElementById("btnRetry").addEventListener("click", function(){
+  clearState();
+  stopTimer();
+  showScreen("screen-start");
+  document.getElementById("resumeBanner").style.display = "none";
+});
+
+/* ============ FINISH & SCORING ============ */
+function finishQuiz(autoSubmitted){
+  stopTimer();
+  state.finished = true;
+  var elapsed = DURATION_SECONDS - Math.max(0, (state.endTimestamp - Date.now())/1000);
+  state.timeTakenSeconds = Math.min(DURATION_SECONDS, Math.round(elapsed));
+  saveState();
+  renderResult(autoSubmitted);
+  showScreen("screen-result");
+  window.scrollTo(0,0);
+}
+
+function renderResult(autoSubmitted){
+  var correct=0, wrong=0, empty=0, score=0;
+  var topicStats = {};
+  QUESTIONS.forEach(function(q, i){
+    if(!topicStats[q.topic]) topicStats[q.topic] = {correct:0,total:0};
+    topicStats[q.topic].total++;
+    var status = evaluateQuestion(i);
+    if(status==="empty"){ empty++; }
+    else if(status==="correct"){ correct++; score+=4; topicStats[q.topic].correct++; }
+    else { wrong++; score-=1; }
+  });
+
+  document.getElementById("resultSubtitle").textContent = autoSubmitted
+    ? "Waktu habis — tryout otomatis diselesaikan. Berikut rekap skor dan pembahasan lengkap setiap soal."
+    : "Berikut rekap skor dan pembahasan lengkap setiap soal.";
+
+  document.getElementById("statScore").textContent = score;
+  document.getElementById("statCorrect").textContent = correct;
+  document.getElementById("statWrong").textContent = wrong;
+  document.getElementById("statEmpty").textContent = empty;
+  document.getElementById("statTime").textContent = formatTime(state.timeTakenSeconds);
+
+  var barsWrap = document.getElementById("topicBars");
+  barsWrap.innerHTML = "";
+  Object.keys(topicStats).forEach(function(topic){
+    var st = topicStats[topic];
+    var pct = Math.round((st.correct/st.total)*100);
+    var row = document.createElement("div");
+    row.className = "topic-bar-row";
+    row.innerHTML =
+      "<div class='top'><span class='name'>"+topic+"</span><span class='frac2'>"+st.correct+"/"+st.total+"</span></div>"+
+      "<div class='bar-track'><div class='bar-fill' style='width:"+pct+"%;'></div></div>";
+    barsWrap.appendChild(row);
+  });
+
+  var reviewList = document.getElementById("reviewList");
+  reviewList.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var status = evaluateQuestion(i);
+    var statusLabel = status==="empty" ? "Kosong" : (status==="correct" ? "Benar":"Salah");
+
+    var details = document.createElement("details");
+    details.className = "review-item";
+    details.open = (status !== "correct");
+
+    var summary = document.createElement("summary");
+    summary.innerHTML =
+      "<span class='badge "+status+"'>"+statusLabel+"</span>"+
+      "<span class='badge typebadge'>"+(TYPE_LABELS[q.type]||TYPE_LABELS.single)+"</span>"+
+      "<span>Soal "+(i+1)+" — "+q.topic+"</span>"+
+      "<span class='chev'>&#9662;</span>";
+    details.appendChild(summary);
+
+    var body = document.createElement("div");
+    body.className = "review-body";
+
+    var qTextDiv = document.createElement("div");
+    qTextDiv.className = "q-text";
+    qTextDiv.innerHTML = q.text;
+    body.appendChild(qTextDiv);
+
+    if(q.type==="category"){
+      var a = (typeof state.answers[i]==="object" && state.answers[i]!==null) ? state.answers[i] : {};
+      q.statements.forEach(function(st, k){
+        var userVal = a[k];
+        var isCorrectStmt = userVal!==undefined && (!!userVal === !!st.correct);
+        var row = document.createElement("div");
+        row.className = "review-statement " + (userVal===undefined ? "" : (isCorrectStmt ? "st-correct":"st-wrong"));
+        var userLabel = userVal===undefined ? "Tidak dijawab" : (userVal ? "Benar":"Salah");
+        var correctLabel = st.correct ? "Benar":"Salah";
+        row.innerHTML =
+          "<span>"+(k+1)+". "+st.text+"</span>"+
+          "<span class='st-answer'>Jawabanmu: "+userLabel+(isCorrectStmt? "" : " &middot; Kunci: "+correctLabel)+"</span>";
+        body.appendChild(row);
+      });
+    } else if(q.type==="mcma"){
+      var picked = Array.isArray(state.answers[i]) ? state.answers[i] : [];
+      var optsDiv = document.createElement("div");
+      optsDiv.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var isCorrectOpt = q.answer.indexOf(idx)!==-1;
+        var wasPicked = picked.indexOf(idx)!==-1;
+        var cls = "review-opt";
+        var tag = "";
+        if(isCorrectOpt){ cls += " is-correct"; tag = wasPicked ? "Dipilih &amp; tepat" : "Terlewat"; }
+        else if(wasPicked){ cls += " is-wrong-pick"; tag = "Dipilih, tidak tepat"; }
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>"+(tag?"<span class='opt-tag'>"+tag+"</span>":"");
+        optsDiv.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv);
+    } else {
+      var picked2 = state.answers[i];
+      var optsDiv2 = document.createElement("div");
+      optsDiv2.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var cls = "review-opt";
+        if(idx===q.answer) cls += " is-correct";
+        else if(idx===picked2) cls += " is-wrong-pick";
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+        optsDiv2.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv2);
+    }
+
+    var pembahasan = document.createElement("div");
+    pembahasan.className = "pembahasan";
+    pembahasan.style.marginTop = "14px";
+    pembahasan.innerHTML = "<b>Pembahasan:</b><br>"+q.explanation;
+    body.appendChild(pembahasan);
+
+    details.appendChild(body);
+    reviewList.appendChild(details);
+  });
+}
+
+/* ============ INIT ON LOAD ============ */
+(function init(){
+  var saved = loadState();
+  if(saved && !saved.finished && saved.endTimestamp){
+    var remaining = (saved.endTimestamp - Date.now())/1000;
+    if(remaining > 0){
+      document.getElementById("resumeBanner").style.display = "flex";
+    } else {
+      state = saved;
+      finishQuiz(true);
+    }
+  }
+})();
+
+})();
+</script>
+</body>
+</html>
