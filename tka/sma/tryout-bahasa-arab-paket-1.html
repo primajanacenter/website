@@ -97,6 +97,23 @@
   .btn-block{width:100%;}
   .btn:disabled{opacity:.5;cursor:not-allowed;}
 
+  .btn-cta{
+    background:linear-gradient(135deg,#f97316,#ea580c);
+    color:#fff;
+    box-shadow:0 4px 14px -2px rgba(234,88,12,.55);
+    animation:cta-pulse 1.8s ease-in-out infinite;
+    position:relative;
+  }
+  .btn-cta:hover{
+    background:linear-gradient(135deg,#fb923c,#f97316);
+    transform:translateY(-1px);
+    box-shadow:0 8px 20px -3px rgba(234,88,12,.65);
+  }
+  @keyframes cta-pulse{
+    0%,100%{box-shadow:0 4px 14px -2px rgba(234,88,12,.55);}
+    50%{box-shadow:0 4px 22px 2px rgba(234,88,12,.85);}
+  }
+
   .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
   .timer{font-weight:800;font-size:1.05rem;background:var(--primary-light);color:var(--primary-dark);padding:8px 16px;border-radius:10px;}
   .timer.low{background:var(--wrong-bg);color:var(--wrong);}
@@ -277,6 +294,7 @@
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
         <button class="btn btn-ghost" onclick="resetQuiz()">Ulangi Paket Ini</button>
         <a class="btn btn-primary" href="tryout.html">Kembali ke Daftar Tryout</a>
+        <a class="btn btn-cta" href="https://mayar.id/PLACEHOLDER-LINK-PRODUK" target="_blank" rel="noopener">🔥 Coba Tryout Lainnya</a>
       </div>
     </div>
     <div class="card section-card">
