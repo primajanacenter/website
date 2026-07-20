@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tryout Antropologi — Paket 6 | Siap TKA</title>
+<meta name="description" content="Latihan tryout Antropologi Paket 6 untuk persiapan TKA SMA/MA — 25 soal pengantar dan ruang lingkup antropologi, etnografi, masyarakat multikultural, perubahan sosial budaya, antropologi sosial dan budaya, serta kearifan lokal dan tradisi lisan, timer, skor otomatis, dan pembahasan lengkap.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --wrong:#dc2626;
+    --wrong-bg:#fef2f2;
+    --empty:#b45309;
+    --empty-bg:#fffbeb;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:960px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .timer{
+    display:flex;align-items:center;gap:8px;
+    font-variant-numeric:tabular-nums;
+    font-weight:700;font-size:1.05rem;
+    padding:8px 16px;border-radius:999px;
+    background:var(--primary-light);color:var(--primary-dark);
+    border:1px solid #c7d2fe;
+  }
+  .timer.low{background:var(--wrong-bg);color:var(--wrong);border-color:#fecaca;}
+  .timer .icon{font-size:1rem;}
+
+  .screen{display:none;}
+  .screen.active{display:block;animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px;
+  }
+  .section-card{margin-top:20px;}
+
+  /* ---- math notation helpers (no external library needed) ---- */
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+    margin:0 3px;line-height:1;position:relative;top:0.16em;font-size:0.9em;}
+  .frac .num{padding:0 4px 2px;border-bottom:1.4px solid currentColor;}
+  .frac .den{padding:2px 4px 0;}
+  .rad{border-top:1.4px solid currentColor;padding:0 3px;margin-left:1px;}
+  sup{font-size:.72em;top:-0.55em;}
+  sub{font-size:.72em;bottom:-0.25em;}
+  .qtable{border-collapse:collapse;margin:14px 0;font-size:.92rem;}
+  .qtable th,.qtable td{border:1px solid var(--border);padding:6px 16px;text-align:center;}
+  .qtable th{background:var(--primary-light);color:var(--primary-dark);}
+
+  /* START SCREEN */
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+  .hero h1{font-size:1.7rem;margin:0 0 6px;}
+  .hero p.lead{color:var(--muted);margin:0 0 24px;font-size:1rem;}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0;}
+  .info-item{background:var(--primary-light);border-radius:10px;padding:14px 16px;}
+  .info-item .num2{font-size:1.4rem;font-weight:800;color:var(--primary-dark);}
+  .info-item .label{font-size:.82rem;color:var(--muted);margin-top:2px;}
+  .rules{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:16px 18px;margin:20px 0;font-size:.92rem;color:var(--text);}
+  .rules b{color:var(--primary-dark);}
+  .rules ul{margin:8px 0 0;padding-left:20px;}
+  .rules li{margin-bottom:4px;}
+  .topics-list{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 24px;}
+  .topic-chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:.82rem;color:var(--muted);}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:none;border-radius:10px;cursor:pointer;text-decoration:none;
+    font-size:.95rem;font-weight:600;padding:13px 22px;
+    transition:transform .1s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+  .btn-block{width:100%;}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+
+  .resume-banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+  /* QUIZ SCREEN */
+  .quiz-layout{display:grid;grid-template-columns:1fr 260px;gap:20px;align-items:start;}
+  @media (max-width:760px){.quiz-layout{grid-template-columns:1fr;}}
+
+  .progress-bar{height:6px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:20px;}
+  .progress-bar .fill{height:100%;background:var(--primary);border-radius:999px;transition:width .2s ease;}
+
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;}
+  .q-index{font-weight:700;color:var(--primary-dark);font-size:.95rem;}
+  .q-topic{font-size:.78rem;color:var(--muted);background:var(--primary-light);padding:4px 10px;border-radius:999px;}
+  .q-type-badge{font-size:.7rem;font-weight:700;padding:3px 9px;border-radius:999px;background:#fef3c7;color:#92400e;}
+  .q-hint{font-size:.82rem;color:var(--muted);margin-bottom:14px;font-style:italic;}
+  .q-text{font-size:1.05rem;margin:0 0 20px;}
+  .q-text img{max-width:100%;}
+
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .option{
+    display:flex;align-items:flex-start;gap:12px;
+    border:1.5px solid var(--border);border-radius:10px;
+    padding:13px 16px;cursor:pointer;font-size:.96rem;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .option:hover{border-color:var(--primary);background:var(--primary-light);}
+  .option.selected{border-color:var(--primary);background:var(--primary-light);}
+  .option .letter{
+    width:26px;height:26px;flex:none;border-radius:50%;
+    border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;
+    font-size:.8rem;font-weight:700;color:var(--muted);
+  }
+  .option.mcma .letter{border-radius:7px;}
+  .option.selected .letter{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+  .statement-row{border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+  .statement-text{margin-bottom:12px;font-size:.94rem;}
+  .statement-choices{display:flex;gap:10px;}
+  .choice-btn{flex:1;padding:10px;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);cursor:pointer;font-weight:700;font-size:.85rem;text-align:center;color:var(--muted);}
+  .choice-btn:hover{border-color:var(--primary);}
+  .choice-btn.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark);}
+
+  .quiz-nav-btns{display:flex;justify-content:space-between;margin-top:24px;gap:10px;}
+
+  .nav-panel{position:sticky;top:78px;}
+  .nav-panel .card{padding:18px;}
+  .nav-panel h4{margin:0 0 4px;font-size:.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:14px 0;}
+  .nav-cell{
+    aspect-ratio:1;border-radius:8px;border:1.5px solid var(--border);
+    background:var(--surface);color:var(--muted);font-size:.78rem;font-weight:700;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .nav-cell.answered{background:var(--primary-light);border-color:var(--primary);color:var(--primary-dark);}
+  .nav-cell.current{outline:2px solid var(--primary);outline-offset:1px;}
+  .legend{display:flex;flex-direction:column;gap:6px;font-size:.78rem;color:var(--muted);margin-top:10px;}
+  .legend span{display:flex;align-items:center;gap:6px;}
+  .legend i{width:12px;height:12px;border-radius:4px;display:inline-block;border:1.5px solid var(--border);}
+  .legend i.a{background:var(--primary-light);border-color:var(--primary);}
+
+  /* RESULT SCREEN */
+  .result-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:24px 0;}
+  .stat{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+  .stat .val{font-size:1.6rem;font-weight:800;}
+  .stat .lbl{font-size:.78rem;color:var(--muted);margin-top:4px;}
+  .stat.score .val{color:var(--primary-dark);}
+  .stat.correct .val{color:var(--correct);}
+  .stat.wrong .val{color:var(--wrong);}
+  .stat.empty .val{color:var(--empty);}
+
+  .topic-bars{display:flex;flex-direction:column;gap:14px;margin:20px 0 8px;}
+  .topic-bar-row .top{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:6px;}
+  .topic-bar-row .top .name{font-weight:600;}
+  .topic-bar-row .top .frac2{color:var(--muted);}
+  .bar-track{height:9px;background:var(--border);border-radius:999px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--primary);border-radius:999px;}
+
+  .section-title{font-size:1.1rem;margin:32px 0 14px;font-weight:700;}
+  .review-item{border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;background:var(--surface);}
+  .review-item summary{
+    list-style:none;cursor:pointer;padding:14px 18px;
+    display:flex;align-items:center;gap:12px;font-weight:600;font-size:.92rem;flex-wrap:wrap;
+  }
+  .review-item summary::-webkit-details-marker{display:none;}
+  .review-item summary .chev{margin-left:auto;color:var(--muted);font-size:.8rem;}
+  .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;flex:none;}
+  .badge.correct{background:var(--correct-bg);color:var(--correct);}
+  .badge.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .badge.empty{background:var(--empty-bg);color:var(--empty);}
+  .badge.typebadge{background:#fef3c7;color:#92400e;}
+  .review-body{padding:0 18px 20px;border-top:1px solid var(--border);}
+  .review-body .q-text{font-size:.96rem;margin:16px 0;}
+  .review-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .review-opt{display:flex;gap:10px;padding:9px 13px;border-radius:8px;border:1px solid var(--border);font-size:.9rem;align-items:center;}
+  .review-opt .letter{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex:none;}
+  .review-opt.is-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-opt.is-correct .letter{background:var(--correct);border-color:var(--correct);color:#fff;}
+  .review-opt.is-wrong-pick{background:var(--wrong-bg);border-color:#fecaca;}
+  .review-opt.is-wrong-pick .letter{background:var(--wrong);border-color:var(--wrong);color:#fff;}
+  .opt-tag{margin-left:auto;font-size:.72rem;color:var(--muted);font-style:italic;}
+  .review-statement{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;border:1px solid var(--border);margin-bottom:8px;font-size:.9rem;}
+  .review-statement.st-correct{background:var(--correct-bg);border-color:#bbf7d0;}
+  .review-statement.st-wrong{background:var(--wrong-bg);border-color:#fecaca;}
+  .st-answer{font-size:.78rem;font-weight:700;flex:none;}
+  .pembahasan{background:var(--bg);border-radius:10px;padding:14px 16px;font-size:.9rem;}
+  .pembahasan b{color:var(--primary-dark);}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html" class="active">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <!-- START SCREEN -->
+  <section class="screen active" id="screen-start">
+    <div class="card hero">
+      <div id="resumeBanner" style="display:none;" class="resume-banner">
+        <span>Kamu punya progres tryout yang belum selesai.</span>
+        <div class="btn-row" style="margin:0;">
+          <button class="btn btn-primary" id="btnResume">Lanjutkan Tryout</button>
+          <button class="btn btn-ghost" id="btnRestartFresh">Mulai Baru</button>
+        </div>
+      </div>
+
+      <span class="pill pill-premium">Premium</span>
+      <h1>Tryout Antropologi &mdash; Paket 6</h1>
+      <p class="lead">Simulasi latihan mandiri mengikuti ketentuan resmi TKA 2026: mata uji pilihan Antropologi jenjang SMA/MA, mengacu Kerangka Asesmen TKA (Perka BSKAP Kemendikdasmen No. 045/H/AN/2025) &mdash; pemahaman, penerapan, dan penalaran atas pengantar dan ruang lingkup antropologi, etnografi, masyarakat multikultural, perubahan sosial budaya, antropologi sosial &amp; antropologi budaya, serta kearifan lokal dan tradisi lisan.</p>
+
+      <div class="info-grid">
+        <div class="info-item"><div class="num2">25</div><div class="label">Soal (campuran bentuk)</div></div>
+        <div class="info-item"><div class="num2">75:00</div><div class="label">Menit pengerjaan</div></div>
+        <div class="info-item"><div class="num2">6</div><div class="label">Elemen materi</div></div>
+        <div class="info-item"><div class="num2">6/6</div><div class="label">Paket soal</div></div>
+      </div>
+
+      <div class="rules">
+        <b>Bentuk soal</b> (sesuai ketentuan resmi TKA):
+        <ul>
+          <li><b>Pilihan Ganda</b> &mdash; satu jawaban paling tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Pilih Lebih dari Satu)</b> &mdash; bisa lebih dari satu jawaban benar, semua harus dipilih dengan tepat.</li>
+          <li><b>Pilihan Ganda Kompleks (Benar/Salah)</b> &mdash; beberapa pernyataan, tiap pernyataan direspons Benar atau Salah.</li>
+        </ul>
+        <b style="display:block;margin-top:10px;">Sistem penilaian per soal (konvensi latihan, bukan rumus resmi Kemendikdasmen):</b> Seluruhnya terjawab tepat <b>+4</b>, ada bagian yang keliru <b>&minus;1</b>, tidak dijawab sama sekali <b>0</b>. Skor maksimum <b>100</b>. TKA sesungguhnya dilaporkan sebagai skor terstandar (bukan skor mentah seperti ini), jadi anggap skor di sini sebagai indikator latihan saja.<br>
+        Pembahasan lengkap tampil setelah kamu menekan <b>Selesai &amp; Lihat Hasil</b>, atau otomatis saat waktu habis. Progres tersimpan otomatis di perangkat ini.
+      </div>
+
+      <div class="topics-list">
+        <span class="topic-chip">Pengantar &amp; Ruang Lingkup Antropologi</span>
+        <span class="topic-chip">Etnografi</span>
+        <span class="topic-chip">Masyarakat Multikultural</span>
+        <span class="topic-chip">Perubahan Sosial Budaya</span>
+        <span class="topic-chip">Antropologi Sosial &amp; Budaya</span>
+        <span class="topic-chip">Kearifan Lokal &amp; Tradisi Lisan</span>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="btnStart" style="font-size:1rem;padding:15px;">Mulai Tryout</button>
+    </div>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section class="screen" id="screen-quiz">
+    <div class="quiz-top">
+      <div style="font-weight:700;color:var(--muted);font-size:.86rem;">Tryout Antropologi &middot; Paket 6</div>
+      <div class="timer" id="timerDisplay" style="display:none;"><span class="icon">&#9201;</span><span id="timerText">75:00</span></div>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progressFill" style="width:4%;"></div></div>
+    <div class="quiz-layout">
+      <div class="card">
+        <div class="q-meta">
+          <span class="q-index" id="qIndexLabel">Soal 1 dari 25</span>
+          <span class="q-topic" id="qTopicLabel">Bilangan</span>
+          <span class="q-type-badge" id="qTypeBadge">Pilihan Ganda</span>
+        </div>
+        <div class="q-hint" id="qHint" style="display:none;"></div>
+        <div class="q-text" id="qText"></div>
+        <div class="options" id="qOptions"></div>
+        <div class="quiz-nav-btns">
+          <button class="btn btn-ghost" id="btnPrev">&larr; Sebelumnya</button>
+          <button class="btn btn-primary" id="btnNext">Berikutnya &rarr;</button>
+        </div>
+      </div>
+      <aside class="nav-panel">
+        <div class="card">
+          <h4>Navigasi Soal</h4>
+          <div class="nav-grid" id="navGrid"></div>
+          <div class="legend">
+            <span><i class="a"></i> Sudah dijawab</span>
+            <span><i></i> Belum dijawab</span>
+          </div>
+          <button class="btn btn-primary btn-block" id="btnFinish" style="margin-top:16px;">Selesai &amp; Lihat Hasil</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section class="screen" id="screen-result">
+    <div class="card">
+      <h1 style="font-size:1.4rem;margin-top:0;">Hasil Tryout Kamu &mdash; Paket 6</h1>
+      <p class="lead" style="margin-bottom:0;" id="resultSubtitle">Berikut rekap skor dan pembahasan lengkap setiap soal.</p>
+
+      <div class="result-summary">
+        <div class="stat score"><div class="val" id="statScore">0</div><div class="lbl">Skor (maks 100)</div></div>
+        <div class="stat correct"><div class="val" id="statCorrect">0</div><div class="lbl">Benar</div></div>
+        <div class="stat wrong"><div class="val" id="statWrong">0</div><div class="lbl">Salah</div></div>
+        <div class="stat empty"><div class="val" id="statEmpty">0</div><div class="lbl">Kosong</div></div>
+        <div class="stat"><div class="val" id="statTime">-</div><div class="lbl">Waktu terpakai</div></div>
+      </div>
+
+      <div class="section-title">Analisis per Elemen Materi</div>
+      <div class="topic-bars" id="topicBars"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnRetry">&#8635; Ulangi Paket Ini</button>
+        <a class="btn btn-ghost" href="tryout.html">Kembali ke Daftar Tryout</a>
+      </div>
+    </div>
+
+    <div class="section-title">Pembahasan Lengkap</div>
+    <div id="reviewList"></div>
+  </section>
+
+  <div class="note-box">
+    Skor pada tryout ini adalah alat bantu latihan mandiri dan tidak merepresentasikan nilai resmi TKA. Materi mata pelajaran lengkap tersedia di halaman <a href="mata-pelajaran-antropologi.html">Antropologi</a>.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA &middot; mengacu Kerangka Asesmen TKA Antropologi (Pilihan) SMA, Perka BSKAP Kemendikdasmen No. 045/H/AN/2025.</p>
+  </footer>
+
+</div>
+
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+(function(){
+"use strict";
+
+/* small helper to build a stacked fraction as plain HTML/CSS (no external math library needed) */
+function frac(num, den){
+  return "<span class='frac'><span class='num'>"+num+"</span><span class='den'>"+den+"</span></span>";
+}
+/* helper for a radical sign over a multi-character expression */
+function rad(content){
+  return "&radic;<span class='rad'>"+content+"</span>";
+}
+
+
+var QUESTIONS = [
+{
+  type:"single", topic:"Pengantar dan Ruang Lingkup Antropologi",
+  text:"Antropologi dapat membantu memahami akar permasalahan sosial kontemporer, seperti kemiskinan dan migrasi, dengan cara&hellip;",
+  options:[
+    "Mengkaji konteks sosial-budaya di balik permasalahan tersebut, sehingga solusi yang dirumuskan lebih tepat sasaran dan sesuai dengan kondisi masyarakat yang mengalaminya.",
+    "Hanya menyediakan data statistik tanpa memberikan analisis mengenai penyebab permasalahan tersebut.",
+    "Mengabaikan sepenuhnya faktor budaya dan hanya berfokus pada aspek ekonomi semata.",
+    "Menyeragamkan seluruh kebijakan penanganan masalah sosial tanpa mempertimbangkan konteks lokal.",
+    "Menyerahkan sepenuhnya penanganan masalah sosial kepada disiplin ilmu lain tanpa kontribusi antropologi."
+  ],
+  answer:0,
+  explanation:"Antropologi membantu memahami akar permasalahan sosial kontemporer, seperti kemiskinan dan migrasi, dengan mengkaji konteks sosial-budaya di balik permasalahan tersebut, sehingga solusi yang dirumuskan oleh pembuat kebijakan dapat lebih tepat sasaran dan sesuai dengan kondisi nyata masyarakat yang mengalaminya."
+},
+{
+  type:"single", topic:"Pengantar dan Ruang Lingkup Antropologi",
+  text:"Sistem pengetahuan sebagai salah satu unsur kebudayaan universal mencakup pengetahuan tradisional masyarakat mengenai alam sekitarnya, misalnya pengetahuan tentang khasiat tumbuhan obat atau tanda-tanda perubahan cuaca. Pengetahuan tersebut penting karena&hellip;",
+  options:[
+    "Membantu masyarakat bertahan hidup dan beradaptasi dengan lingkungan sekitarnya berdasarkan pengalaman yang telah teruji secara turun-temurun.",
+    "Selalu bertentangan dengan pengetahuan ilmiah modern sehingga tidak memiliki nilai apa pun.",
+    "Hanya relevan bagi masyarakat yang hidup pada masa praaksara, tidak relevan bagi masyarakat masa kini.",
+    "Tidak memiliki kaitan apa pun dengan unsur-unsur kebudayaan lainnya, seperti sistem religi.",
+    "Hanya dimiliki oleh masyarakat yang telah mengenal pendidikan formal modern."
+  ],
+  answer:0,
+  explanation:"Sistem pengetahuan tradisional, seperti pengetahuan tentang khasiat tumbuhan obat atau tanda-tanda perubahan cuaca, penting karena membantu masyarakat bertahan hidup dan beradaptasi dengan lingkungan sekitarnya berdasarkan pengalaman yang telah teruji secara turun-temurun, sehingga menjadi salah satu unsur kebudayaan universal yang bernilai tinggi."
+},
+{
+  type:"single", topic:"Pengantar dan Ruang Lingkup Antropologi",
+  text:"Clifford Geertz memandang kebudayaan sebagai suatu sistem simbol dan makna. Pandangan ini menekankan bahwa&hellip;",
+  options:[
+    "Setiap tindakan dan benda dalam suatu kebudayaan mengandung makna simbolik tertentu yang perlu dipahami dan ditafsirkan secara mendalam oleh peneliti.",
+    "Kebudayaan hanya terdiri atas benda-benda fisik tanpa makna simbolik apa pun di baliknya.",
+    "Seluruh simbol dalam kebudayaan memiliki makna yang benar-benar sama di setiap masyarakat di dunia.",
+    "Makna dalam suatu kebudayaan dapat dipahami tanpa perlu mempertimbangkan konteks sosial-budayanya.",
+    "Simbol dalam kebudayaan tidak memiliki kaitan apa pun dengan cara masyarakat memandang dunia."
+  ],
+  answer:0,
+  explanation:"Pandangan Clifford Geertz mengenai kebudayaan sebagai sistem simbol dan makna menekankan bahwa setiap tindakan dan benda dalam suatu kebudayaan mengandung makna simbolik tertentu yang perlu dipahami dan ditafsirkan secara mendalam oleh peneliti, sejalan dengan pendekatan thick description yang ia kembangkan dalam kajian etnografi."
+},
+{
+  type:"mcma", topic:"Pengantar dan Ruang Lingkup Antropologi",
+  text:"Kebudayaan dapat dipandang sebagai suatu sistem simbolik yang diwariskan dari satu generasi ke generasi berikutnya. Manakah pernyataan berikut yang tepat menggambarkan ciri kebudayaan sebagai sistem simbolik? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan bagaimana simbol, termasuk bahasa, berperan dalam mewariskan makna budaya.",
+  options:[
+    "Bahasa merupakan salah satu sistem simbol terpenting yang digunakan manusia untuk menyampaikan dan mewariskan makna budaya.",
+    "Simbol dalam suatu kebudayaan, seperti warna atau bentuk tertentu, dapat memiliki makna yang berbeda-beda antarmasyarakat.",
+    "Simbol dalam kebudayaan bersifat tetap dan memiliki makna yang benar-benar sama di seluruh dunia tanpa perbedaan.",
+    "Pemahaman terhadap simbol suatu kebudayaan memerlukan pengetahuan mengenai konteks sosial-budaya masyarakat pemiliknya.",
+    "Sistem simbolik dalam kebudayaan tidak memiliki kaitan apa pun dengan proses pewarisan nilai antargenerasi."
+  ],
+  answer:[0,1,3],
+  explanation:"Bahasa memang menjadi sistem simbol terpenting untuk mewariskan makna budaya (tepat). Simbol memang dapat memiliki makna berbeda antarmasyarakat (tepat). Simbol JUSTRU BERVARIASI MAKNANYA antarmasyarakat, bukan selalu sama di seluruh dunia (tidak tepat). Pemahaman terhadap simbol memang memerlukan pengetahuan konteks sosial-budaya (tepat). Sistem simbolik JUSTRU SANGAT BERKAITAN dengan proses pewarisan nilai antargenerasi, bukan tidak berkaitan sama sekali (tidak tepat)."
+},
+{
+  type:"single", topic:"Etnografi",
+  text:"Dalam penelitian etnografi, derajat keterlibatan peneliti dapat bervariasi mulai dari observer penuh hingga participant penuh. Seorang peneliti yang memilih untuk sepenuhnya membaur dan hidup sebagaimana anggota masyarakat yang diteliti tergolong sebagai&hellip;",
+  options:[
+    "Complete participant (partisipan penuh), yang memberikan pemahaman mendalam namun berisiko mengurangi objektivitas peneliti terhadap fenomena yang diamati.",
+    "Complete observer (pengamat penuh), yang sama sekali tidak berinteraksi dengan masyarakat yang diteliti.",
+    "Peneliti yang tidak memerlukan izin apa pun untuk memasuki wilayah penelitian.",
+    "Peneliti yang hanya menggunakan data sekunder tanpa terjun langsung ke lapangan.",
+    "Peneliti yang menolak sepenuhnya interaksi sosial dengan informan penelitian."
+  ],
+  answer:0,
+  explanation:"Peneliti yang memilih untuk sepenuhnya membaur dan hidup sebagaimana anggota masyarakat yang diteliti tergolong sebagai complete participant (partisipan penuh), yang memberikan pemahaman mendalam mengenai kehidupan masyarakat tersebut, namun berisiko mengurangi objektivitas peneliti karena terlalu terlibat secara emosional maupun sosial dengan subjek penelitiannya."
+},
+{
+  type:"single", topic:"Etnografi",
+  text:"Ketika seorang peneliti hendak melakukan penelitian etnografi pada masyarakat adat atau suku pedalaman, hal penting yang perlu diperhatikan sejak awal adalah&hellip;",
+  options:[
+    "Memperoleh izin dan persetujuan dari tokoh adat atau perwakilan masyarakat setempat, serta menghormati aturan dan tata krama yang berlaku di wilayah tersebut.",
+    "Langsung memasuki wilayah tersebut tanpa perlu berkoordinasi dengan tokoh adat maupun otoritas setempat.",
+    "Mengabaikan aturan adat setempat demi mempercepat proses pengumpulan data penelitian.",
+    "Memaksakan metode penelitian modern tanpa mempertimbangkan kesesuaiannya dengan budaya masyarakat setempat.",
+    "Menghindari interaksi dengan tokoh adat karena dianggap dapat memengaruhi objektivitas penelitian."
+  ],
+  answer:0,
+  explanation:"Hal penting yang perlu diperhatikan sejak awal ketika meneliti masyarakat adat atau suku pedalaman adalah memperoleh izin dan persetujuan dari tokoh adat atau perwakilan masyarakat setempat, serta menghormati aturan dan tata krama yang berlaku di wilayah tersebut, sebagai bagian dari etika penelitian dan penghormatan terhadap kedaulatan budaya masyarakat setempat."
+},
+{
+  type:"single", topic:"Etnografi",
+  text:"Setelah data lapangan terkumpul, peneliti etnografi umumnya melakukan analisis tematik, yaitu&hellip;",
+  options:[
+    "Mengelompokkan data yang telah dikumpulkan ke dalam tema-tema tertentu untuk memudahkan proses interpretasi dan penulisan hasil penelitian.",
+    "Menghapus seluruh data yang telah dikumpulkan karena dianggap tidak relevan.",
+    "Mengubah seluruh data kualitatif menjadi data numerik tanpa memperhatikan makna kontekstualnya.",
+    "Mengabaikan konteks sosial-budaya dari data yang telah dikumpulkan selama penelitian.",
+    "Menyerahkan seluruh proses analisis data kepada pihak lain di luar peneliti."
+  ],
+  answer:0,
+  explanation:"Analisis tematik dalam penelitian etnografi adalah proses mengelompokkan data yang telah dikumpulkan ke dalam tema-tema tertentu, untuk memudahkan peneliti melakukan interpretasi dan menyusun hasil penelitian menjadi suatu narasi etnografi yang sistematis dan bermakna."
+},
+{
+  type:"category", topic:"Etnografi",
+  text:"Catatan lapangan (field notes) dalam penelitian etnografi umumnya terdiri atas catatan deskriptif dan catatan reflektif. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai perbedaan keduanya!",
+  statements:[
+    {text:"Catatan deskriptif berisi pencatatan objektif mengenai apa yang diamati peneliti di lapangan, seperti kejadian, percakapan, dan kondisi fisik lingkungan.", correct:true},
+    {text:"Catatan reflektif berisi pemikiran, perasaan, dan interpretasi awal peneliti terhadap apa yang diamati atau dialami selama penelitian berlangsung.", correct:true},
+    {text:"Catatan deskriptif dan catatan reflektif merupakan dua istilah yang benar-benar sama tanpa perbedaan fungsi maupun isi apa pun.", correct:false}
+  ],
+  explanation:"Catatan deskriptif memang berisi pencatatan objektif mengenai apa yang diamati (Tepat). Catatan reflektif memang berisi pemikiran dan interpretasi awal peneliti (Tepat). Keduanya JUSTRU MEMILIKI FUNGSI DAN ISI YANG BERBEDA, bukan sama persis, karena catatan deskriptif bersifat objektif sedangkan catatan reflektif bersifat subjektif dan interpretatif (Tidak Tepat)."
+},
+{
+  type:"single", topic:"Masyarakat Multikultural",
+  text:"Apabila keberagaman suku, agama, ras, dan golongan dalam masyarakat multikultural tidak dikelola dengan baik, salah satu potensi risiko yang dapat muncul adalah&hellip;",
+  options:[
+    "Disintegrasi sosial akibat konflik SARA yang dapat mengancam persatuan dan stabilitas suatu wilayah atau negara.",
+    "Terciptanya masyarakat yang semakin harmonis tanpa perlu upaya pengelolaan apa pun.",
+    "Hilangnya seluruh keberagaman budaya secara otomatis tanpa adanya konflik apa pun.",
+    "Meningkatnya kesejahteraan ekonomi masyarakat secara merata tanpa hambatan apa pun.",
+    "Terciptanya kesetaraan sosial yang sempurna tanpa perlu kebijakan afirmatif apa pun."
+  ],
+  answer:0,
+  explanation:"Apabila keberagaman dalam masyarakat multikultural tidak dikelola dengan baik, salah satu potensi risiko yang dapat muncul adalah disintegrasi sosial akibat konflik SARA (suku, agama, ras, dan antargolongan), yang dapat mengancam persatuan dan stabilitas suatu wilayah atau negara."
+},
+{
+  type:"single", topic:"Masyarakat Multikultural",
+  text:"Tokoh masyarakat atau tokoh adat memiliki peran penting dalam menjaga kerukunan di tengah masyarakat multikultural, yaitu&hellip;",
+  options:[
+    "Menjadi mediator dan panutan dalam menyelesaikan perselisihan antarkelompok masyarakat, sekaligus menjaga nilai-nilai kearifan lokal yang mendukung kerukunan.",
+    "Mendorong konflik antarkelompok agar tercipta persaingan yang lebih ketat di antara warga masyarakat.",
+    "Hanya mementingkan kepentingan kelompoknya sendiri tanpa memperhatikan kelompok masyarakat lainnya.",
+    "Menghapuskan seluruh tradisi lokal agar masyarakat lebih mudah menerima budaya asing.",
+    "Tidak memiliki peran apa pun dalam menjaga hubungan sosial antarkelompok masyarakat."
+  ],
+  answer:0,
+  explanation:"Tokoh masyarakat atau tokoh adat memiliki peran penting sebagai mediator dan panutan dalam menyelesaikan perselisihan antarkelompok masyarakat, sekaligus menjaga nilai-nilai kearifan lokal yang mendukung kerukunan, sehingga membantu menjaga stabilitas sosial di tengah masyarakat yang beragam."
+},
+{
+  type:"single", topic:"Masyarakat Multikultural",
+  text:"Konsep jembatan budaya (cultural bridging) dalam komunikasi antarkelompok masyarakat multikultural merujuk pada&hellip;",
+  options:[
+    "Upaya menghubungkan dan memfasilitasi pemahaman antara dua kelompok budaya yang berbeda agar komunikasi dapat berjalan lebih efektif dan minim kesalahpahaman.",
+    "Upaya memisahkan sepenuhnya interaksi antara dua kelompok budaya yang berbeda.",
+    "Kebijakan yang melarang komunikasi lintas budaya dalam suatu wilayah tertentu.",
+    "Proses penghapusan salah satu kebudayaan agar tercipta budaya yang seragam.",
+    "Sikap yang menganggap salah satu kebudayaan lebih unggul dibandingkan kebudayaan lainnya."
+  ],
+  answer:0,
+  explanation:"Konsep jembatan budaya (cultural bridging) merujuk pada upaya menghubungkan dan memfasilitasi pemahaman antara dua kelompok budaya yang berbeda, misalnya melalui mediator budaya atau kegiatan lintas budaya, agar komunikasi dapat berjalan lebih efektif dan minim kesalahpahaman antarkelompok masyarakat."
+},
+{
+  type:"mcma", topic:"Masyarakat Multikultural",
+  text:"Berbagai kearifan lokal di Indonesia turut mendukung terciptanya kerukunan antarumat beragama dalam masyarakat multikultural. Manakah pernyataan berikut yang tepat mengenai contoh kearifan lokal tersebut? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan praktik-praktik lokal yang melibatkan kerja sama lintas kelompok agama atau budaya.",
+  options:[
+    "Tradisi gotong royong yang melibatkan warga lintas agama dalam membangun fasilitas umum di suatu desa dapat memperkuat rasa kebersamaan.",
+    "Praktik saling membantu dalam persiapan perayaan hari besar keagamaan antarumat beragama dapat menumbuhkan sikap toleransi.",
+    "Kearifan lokal selalu hanya melibatkan satu kelompok agama tertentu tanpa keterlibatan kelompok agama lainnya.",
+    "Musyawarah adat yang melibatkan tokoh dari berbagai latar belakang agama dapat menjadi sarana penyelesaian masalah bersama.",
+    "Kearifan lokal tidak memiliki kaitan sama sekali dengan upaya menjaga kerukunan antarumat beragama."
+  ],
+  answer:[0,1,3],
+  explanation:"Gotong royong lintas agama memang memperkuat rasa kebersamaan (tepat). Saling membantu dalam perayaan hari besar keagamaan antarumat memang menumbuhkan toleransi (tepat). Kearifan lokal JUSTRU SERING MELIBATKAN LINTAS KELOMPOK AGAMA, bukan hanya satu kelompok saja (tidak tepat). Musyawarah adat lintas agama memang menjadi sarana penyelesaian masalah bersama (tepat). Kearifan lokal JUSTRU SANGAT BERKAITAN dengan upaya menjaga kerukunan antarumat beragama, bukan tidak berkaitan sama sekali (tidak tepat)."
+},
+{
+  type:"single", topic:"Perubahan Sosial Budaya",
+  text:"Perkembangan teknologi digital dan internet yang sangat pesat dalam beberapa dekade terakhir menjadi salah satu pendorong utama perubahan sosial budaya karena&hellip;",
+  options:[
+    "Mengubah cara masyarakat berkomunikasi, mengakses informasi, dan berinteraksi sosial secara mendasar dalam waktu yang relatif singkat.",
+    "Tidak memberikan pengaruh apa pun terhadap pola interaksi sosial masyarakat.",
+    "Hanya berdampak pada masyarakat di negara maju, tidak berdampak pada masyarakat di negara berkembang.",
+    "Hanya memengaruhi aspek ekonomi tanpa memengaruhi aspek sosial dan budaya masyarakat.",
+    "Berkembang secara sangat lambat sehingga tidak tergolong sebagai perubahan sosial budaya yang signifikan."
+  ],
+  answer:0,
+  explanation:"Perkembangan teknologi digital dan internet menjadi salah satu pendorong utama perubahan sosial budaya karena mengubah cara masyarakat berkomunikasi, mengakses informasi, dan berinteraksi sosial secara mendasar dalam waktu yang relatif singkat, sehingga berdampak luas pada hampir seluruh lapisan masyarakat di berbagai belahan dunia."
+},
+{
+  type:"single", topic:"Perubahan Sosial Budaya",
+  text:"Salah satu dampak media sosial terhadap kebudayaan global adalah munculnya kecenderungan homogenisasi budaya, yaitu&hellip;",
+  options:[
+    "Kecenderungan tren gaya hidup, mode, atau hiburan tertentu menyebar secara luas dan diadopsi oleh masyarakat di berbagai belahan dunia secara serupa.",
+    "Kecenderungan setiap daerah semakin memperkuat keunikan budaya lokalnya tanpa pengaruh budaya luar sama sekali.",
+    "Kecenderungan seluruh masyarakat menolak sepenuhnya penggunaan media sosial dalam kehidupan sehari-hari.",
+    "Kecenderungan hilangnya seluruh bentuk komunikasi antarbudaya akibat media sosial.",
+    "Kecenderungan yang hanya terjadi pada masyarakat pedesaan, tidak pada masyarakat perkotaan."
+  ],
+  answer:0,
+  explanation:"Homogenisasi budaya akibat media sosial merujuk pada kecenderungan tren gaya hidup, mode, atau hiburan tertentu menyebar secara luas dan diadopsi oleh masyarakat di berbagai belahan dunia secara serupa, sehingga berpotensi mengikis keunikan budaya lokal apabila tidak diimbangi dengan upaya pelestarian identitas budaya setempat."
+},
+{
+  type:"single", topic:"Perubahan Sosial Budaya",
+  text:"Proses industrialisasi yang berkembang pesat sejak Revolusi Industri turut mengubah struktur mata pencaharian masyarakat, yaitu&hellip;",
+  options:[
+    "Pergeseran dari masyarakat yang mayoritas bekerja di sektor pertanian menuju masyarakat yang semakin banyak bekerja di sektor industri dan jasa.",
+    "Seluruh masyarakat kembali bekerja di sektor pertanian tradisional setelah industrialisasi berkembang.",
+    "Industrialisasi tidak memberikan pengaruh apa pun terhadap struktur mata pencaharian masyarakat.",
+    "Industrialisasi hanya berlaku bagi masyarakat di negara-negara Asia Tenggara.",
+    "Industrialisasi menyebabkan seluruh sektor pertanian dihapuskan sepenuhnya dari perekonomian dunia."
+  ],
+  answer:0,
+  explanation:"Proses industrialisasi mengubah struktur mata pencaharian masyarakat melalui pergeseran dari masyarakat yang mayoritas bekerja di sektor pertanian menuju masyarakat yang semakin banyak bekerja di sektor industri dan jasa, sebagai salah satu dampak besar perubahan sosial budaya akibat modernisasi ekonomi."
+},
+{
+  type:"category", topic:"Perubahan Sosial Budaya",
+  text:"Era digital membawa tantangan tersendiri bagi upaya pelestarian budaya lokal di tengah derasnya arus informasi global. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai tantangan tersebut!",
+  statements:[
+    {text:"Derasnya konten hiburan global di media sosial dapat menggeser minat generasi muda terhadap kesenian dan tradisi lokal.", correct:true},
+    {text:"Minimnya konten digital berbahasa daerah dapat mempercepat berkurangnya penutur bahasa daerah, terutama di kalangan generasi muda perkotaan.", correct:true},
+    {text:"Era digital sama sekali tidak membawa tantangan apa pun bagi pelestarian budaya lokal karena seluruh budaya lokal pasti bertahan dengan sendirinya.", correct:false}
+  ],
+  explanation:"Derasnya konten hiburan global memang dapat menggeser minat generasi muda terhadap budaya lokal (Tepat). Minimnya konten digital berbahasa daerah memang dapat mempercepat berkurangnya penutur bahasa daerah (Tepat). Era digital JUSTRU MEMBAWA TANTANGAN NYATA bagi pelestarian budaya lokal, bukan budaya lokal otomatis bertahan tanpa upaya pelestarian (Tidak Tepat)."
+},
+{
+  type:"single", topic:"Antropologi Sosial dan Antropologi Budaya",
+  text:"Antropologi gender sebagai salah satu cabang kajian antropologi berfokus pada&hellip;",
+  options:[
+    "Peran, relasi, dan konstruksi sosial mengenai gender yang berbeda-beda pada berbagai kebudayaan di dunia.",
+    "Sistem produksi dan distribusi barang dalam suatu masyarakat.",
+    "Peninggalan benda-benda purbakala hasil penggalian arkeologis.",
+    "Evolusi biologis manusia dari masa praaksara hingga masa kini.",
+    "Struktur tata bahasa yang digunakan oleh suatu kelompok masyarakat."
+  ],
+  answer:0,
+  explanation:"Antropologi gender berfokus pada peran, relasi, dan konstruksi sosial mengenai gender yang berbeda-beda pada berbagai kebudayaan di dunia, menunjukkan bahwa pemahaman mengenai peran gender tidak bersifat universal, melainkan dibentuk oleh konteks sosial-budaya masing-masing masyarakat."
+},
+{
+  type:"single", topic:"Antropologi Sosial dan Antropologi Budaya",
+  text:"Antropologi visual memanfaatkan foto dan film sebagai&hellip;",
+  options:[
+    "Sumber data sekaligus media untuk menyampaikan hasil penelitian budaya kepada khalayak yang lebih luas secara visual.",
+    "Satu-satunya metode penelitian yang dapat digunakan dalam kajian antropologi tanpa memerlukan metode lainnya.",
+    "Alat yang hanya digunakan untuk kepentingan dokumentasi pribadi peneliti tanpa nilai ilmiah apa pun.",
+    "Pengganti sepenuhnya kebutuhan wawancara dan observasi partisipan dalam penelitian antropologi.",
+    "Media yang hanya digunakan dalam penelitian antropologi fisik, bukan antropologi budaya."
+  ],
+  answer:0,
+  explanation:"Antropologi visual memanfaatkan foto dan film sebagai sumber data sekaligus media untuk menyampaikan hasil penelitian budaya kepada khalayak yang lebih luas secara visual, sehingga dapat memperkaya pemahaman mengenai suatu kebudayaan melalui gambar bergerak maupun still image, di samping metode penelitian lainnya."
+},
+{
+  type:"single", topic:"Antropologi Sosial dan Antropologi Budaya",
+  text:"Upacara adat yang melibatkan seluruh anggota masyarakat dalam suatu komunitas memiliki fungsi penting dari sudut pandang antropologi sosial, yaitu&hellip;",
+  options:[
+    "Memperkuat kohesi sosial dan solidaritas antaranggota masyarakat melalui partisipasi bersama dalam kegiatan yang bermakna.",
+    "Hanya menjadi tontonan hiburan tanpa fungsi sosial apa pun bagi masyarakat yang melaksanakannya.",
+    "Selalu menimbulkan perpecahan di antara anggota masyarakat yang terlibat di dalamnya.",
+    "Tidak memiliki kaitan apa pun dengan struktur sosial maupun hubungan antaranggota masyarakat.",
+    "Hanya dilakukan oleh kalangan tertentu tanpa keterlibatan masyarakat secara luas."
+  ],
+  answer:0,
+  explanation:"Upacara adat yang melibatkan seluruh anggota masyarakat berfungsi memperkuat kohesi sosial dan solidaritas antaranggota masyarakat melalui partisipasi bersama dalam kegiatan yang bermakna, sehingga menjadi salah satu mekanisme penting dalam menjaga keutuhan struktur sosial suatu komunitas dari sudut pandang antropologi sosial."
+},
+{
+  type:"mcma", topic:"Antropologi Sosial dan Antropologi Budaya",
+  text:"Pemahaman antropologi budaya juga dapat diaplikasikan secara praktis dalam bidang bisnis dan pemasaran. Manakah pernyataan berikut yang tepat mengenai aplikasi tersebut? Jawaban benar lebih dari satu.",
+  hint:"Petunjuk: pertimbangkan bagaimana pemahaman budaya konsumen dapat membantu strategi bisnis suatu perusahaan.",
+  options:[
+    "Memahami nilai dan preferensi budaya konsumen dapat membantu perusahaan merancang produk dan strategi pemasaran yang lebih sesuai dengan target pasar.",
+    "Pemahaman antropologi budaya dapat membantu perusahaan menghindari kesalahan budaya (cultural blunder) dalam kampanye pemasaran di suatu wilayah.",
+    "Pemahaman budaya konsumen sama sekali tidak relevan bagi keberhasilan strategi bisnis suatu perusahaan.",
+    "Riset etnografi konsumen dapat membantu perusahaan memahami kebiasaan dan kebutuhan nyata pelanggan di lapangan.",
+    "Antropologi budaya hanya relevan bagi penelitian akademik dan tidak memiliki aplikasi praktis apa pun di dunia bisnis."
+  ],
+  answer:[0,1,3],
+  explanation:"Memahami nilai dan preferensi budaya konsumen memang membantu strategi pemasaran yang sesuai (tepat). Pemahaman antropologi budaya memang membantu menghindari kesalahan budaya dalam kampanye pemasaran (tepat). Pemahaman budaya konsumen JUSTRU SANGAT RELEVAN bagi keberhasilan strategi bisnis, bukan tidak relevan sama sekali (tidak tepat). Riset etnografi konsumen memang membantu memahami kebiasaan dan kebutuhan nyata pelanggan (tepat). Antropologi budaya JUSTRU MEMILIKI APLIKASI PRAKTIS LUAS, termasuk di dunia bisnis, bukan hanya relevan bagi penelitian akademik semata (tidak tepat)."
+},
+{
+  type:"single", topic:"Kearifan Lokal dan Tradisi Lisan",
+  text:"Gotong royong sebagai salah satu bentuk kearifan lokal yang dikenal luas di Indonesia mencerminkan nilai&hellip;",
+  options:[
+    "Solidaritas dan kerja sama antarwarga dalam menyelesaikan suatu pekerjaan atau menghadapi permasalahan bersama tanpa mengharapkan imbalan materi.",
+    "Individualisme yang mengutamakan kepentingan pribadi di atas kepentingan bersama.",
+    "Persaingan antarwarga dalam memperebutkan sumber daya yang terbatas.",
+    "Sistem hukum formal yang diberlakukan oleh pemerintah pusat kepada seluruh warga negara.",
+    "Kebijakan ekonomi modern yang baru diperkenalkan pada era globalisasi."
+  ],
+  answer:0,
+  explanation:"Gotong royong mencerminkan nilai solidaritas dan kerja sama antarwarga dalam menyelesaikan suatu pekerjaan atau menghadapi permasalahan bersama tanpa mengharapkan imbalan materi, menjadikannya salah satu bentuk kearifan lokal yang dikenal luas dan menjadi ciri khas kehidupan sosial masyarakat Indonesia."
+},
+{
+  type:"single", topic:"Kearifan Lokal dan Tradisi Lisan",
+  text:"Peribahasa yang diwariskan secara turun-temurun dalam suatu masyarakat pada umumnya memuat&hellip;",
+  options:[
+    "Nasihat dan pandangan hidup yang disampaikan secara ringkas melalui ungkapan kiasan yang sarat makna.",
+    "Data statistik mengenai jumlah penduduk suatu wilayah pada masa tertentu.",
+    "Peraturan hukum formal yang mengikat secara resmi seluruh warga masyarakat.",
+    "Catatan sejarah resmi mengenai suatu kerajaan yang pernah berkuasa di suatu wilayah.",
+    "Teknologi pertanian modern yang dikembangkan pada era globalisasi."
+  ],
+  answer:0,
+  explanation:"Peribahasa yang diwariskan secara turun-temurun dalam suatu masyarakat pada umumnya memuat nasihat dan pandangan hidup yang disampaikan secara ringkas melalui ungkapan kiasan yang sarat makna, sehingga menjadi salah satu bentuk kearifan lokal yang membantu menanamkan nilai moral kepada masyarakat pendukungnya."
+},
+{
+  type:"single", topic:"Kearifan Lokal dan Tradisi Lisan",
+  text:"Sasi, yaitu tradisi larangan sementara untuk mengambil hasil laut atau hasil hutan tertentu pada masyarakat di Maluku, merupakan salah satu contoh kearifan lokal yang bertujuan&hellip;",
+  options:[
+    "Menjaga kelestarian dan keberlanjutan sumber daya alam agar tidak habis akibat eksploitasi berlebihan, sehingga hasil alam tetap dapat dinikmati generasi berikutnya.",
+    "Melarang seluruh warga masyarakat memanfaatkan sumber daya laut dan hutan secara permanen tanpa batas waktu.",
+    "Menghapuskan seluruh aktivitas ekonomi masyarakat yang berkaitan dengan hasil laut dan hutan.",
+    "Membatasi akses warga dari luar daerah untuk berkunjung ke wilayah tersebut.",
+    "Menggantikan sepenuhnya peraturan pemerintah mengenai pengelolaan sumber daya alam."
+  ],
+  answer:0,
+  explanation:"Sasi merupakan kearifan lokal masyarakat Maluku yang bertujuan menjaga kelestarian dan keberlanjutan sumber daya alam agar tidak habis akibat eksploitasi berlebihan, melalui larangan sementara untuk mengambil hasil laut atau hutan tertentu pada periode waktu tertentu, sehingga hasil alam tetap dapat dinikmati generasi berikutnya."
+},
+{
+  type:"category", topic:"Kearifan Lokal dan Tradisi Lisan",
+  text:"Generasi muda memiliki peran penting dalam keberlangsungan pewarisan kearifan lokal di tengah perubahan zaman. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai peran generasi muda tersebut!",
+  statements:[
+    {text:"Generasi muda dapat berperan aktif dengan mempelajari dan mempraktikkan kembali tradisi serta kesenian lokal yang mulai jarang dilakukan.", correct:true},
+    {text:"Generasi muda dapat memanfaatkan platform digital untuk memperkenalkan kearifan lokal daerahnya kepada khalayak yang lebih luas.", correct:true},
+    {text:"Pewarisan kearifan lokal sepenuhnya menjadi tanggung jawab pemerintah dan sama sekali tidak memerlukan keterlibatan generasi muda.", correct:false}
+  ],
+  explanation:"Generasi muda memang dapat berperan aktif mempelajari dan mempraktikkan kembali tradisi lokal (Tepat). Generasi muda memang dapat memanfaatkan platform digital untuk memperkenalkan kearifan lokal (Tepat). Pewarisan kearifan lokal JUSTRU MEMERLUKAN KETERLIBATAN AKTIF generasi muda, bukan sepenuhnya tanggung jawab pemerintah semata (Tidak Tepat)."
+},
+{
+  type:"category", topic:"Kearifan Lokal dan Tradisi Lisan",
+  text:"Kearifan lokal di berbagai daerah memiliki keterkaitan dengan prinsip-prinsip pembangunan berkelanjutan yang saat ini menjadi perhatian global. Tentukan Tepat atau Tidak Tepat untuk setiap pernyataan berikut mengenai keterkaitan tersebut!",
+  statements:[
+    {text:"Tradisi sasi di Maluku yang membatasi eksploitasi sumber daya laut sejalan dengan prinsip pemanfaatan sumber daya alam secara berkelanjutan.", correct:true},
+    {text:"Sistem pertanian tradisional berbasis kearifan lokal dapat mendukung upaya menjaga keseimbangan ekosistem sekaligus memenuhi kebutuhan pangan masyarakat.", correct:true},
+    {text:"Kearifan lokal sama sekali tidak memiliki relevansi dengan prinsip-prinsip pembangunan berkelanjutan yang berkembang di dunia modern saat ini.", correct:false}
+  ],
+  explanation:"Tradisi sasi memang sejalan dengan prinsip pemanfaatan sumber daya alam secara berkelanjutan (Tepat). Sistem pertanian tradisional berbasis kearifan lokal memang dapat mendukung keseimbangan ekosistem sekaligus pangan (Tepat). Kearifan lokal JUSTRU SEMAKIN DIANGGAP RELEVAN dengan prinsip pembangunan berkelanjutan modern, bukan tidak relevan sama sekali (Tidak Tepat)."
+}
+];
+
+
+var LETTERS = ["A","B","C","D","E"];
+var DURATION_SECONDS = 75*60;
+var STORAGE_KEY = "tka_antropologi_paket6_v1";
+var TYPE_LABELS = {single:"Pilihan Ganda", mcma:"PGK &middot; Pilih Lebih dari Satu", category:"PGK &middot; Benar/Salah"};
+
+/* ============ STATE ============ */
+var state = {
+  currentIndex:0,
+  answers:{},          // single: index | mcma: [indices] | category: {stmtIdx: true/false}
+  endTimestamp:null,
+  finished:false,
+  timeTakenSeconds:null
+};
+var timerInterval = null;
+
+/* ============ STORAGE ============ */
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+/* ============ SCREEN HELPERS ============ */
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
+  document.getElementById(id).classList.add("active");
+}
+
+/* ============ ANSWER HELPERS (type-aware) ============ */
+function isAnswered(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(a===undefined || a===null) return false;
+  if(q.type==="category"){
+    if(typeof a !== "object") return false;
+    for(var k=0;k<q.statements.length;k++){ if(a[k]===undefined) return false; }
+    return true;
+  }
+  if(q.type==="mcma"){
+    return Array.isArray(a) && a.length>0;
+  }
+  return true; // single: any stored value (including 0) counts as answered
+}
+function evaluateQuestion(i){
+  var q = QUESTIONS[i], a = state.answers[i];
+  if(!isAnswered(i)) return "empty";
+  if(q.type==="category"){
+    for(var k=0;k<q.statements.length;k++){
+      if(!!a[k] !== !!q.statements[k].correct) return "wrong";
+    }
+    return "correct";
+  }
+  if(q.type==="mcma"){
+    var correctSet = q.answer.slice().sort(function(x,y){return x-y;});
+    var pickedSet = a.slice().sort(function(x,y){return x-y;});
+    if(correctSet.length !== pickedSet.length) return "wrong";
+    for(var j=0;j<correctSet.length;j++){ if(correctSet[j]!==pickedSet[j]) return "wrong"; }
+    return "correct";
+  }
+  return (a===q.answer) ? "correct":"wrong";
+}
+
+/* ============ TIMER ============ */
+function formatTime(totalSeconds){
+  totalSeconds = Math.max(0, Math.round(totalSeconds));
+  var m = Math.floor(totalSeconds/60);
+  var s = totalSeconds%60;
+  return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+}
+function startTimerLoop(){
+  var display = document.getElementById("timerDisplay");
+  display.style.display = "flex";
+  clearInterval(timerInterval);
+  timerInterval = setInterval(tickTimer, 250);
+  tickTimer();
+}
+function tickTimer(){
+  var remaining = (state.endTimestamp - Date.now())/1000;
+  var textEl = document.getElementById("timerText");
+  var wrap = document.getElementById("timerDisplay");
+  if(remaining <= 0){
+    textEl.textContent = "00:00";
+    clearInterval(timerInterval);
+    finishQuiz(true);
+    return;
+  }
+  textEl.textContent = formatTime(remaining);
+  if(remaining <= 300) wrap.classList.add("low"); else wrap.classList.remove("low");
+}
+function stopTimer(){
+  clearInterval(timerInterval);
+  document.getElementById("timerDisplay").style.display = "none";
+}
+
+/* ============ QUIZ RENDERING ============ */
+function renderNavGrid(){
+  var grid = document.getElementById("navGrid");
+  grid.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var cell = document.createElement("div");
+    cell.className = "nav-cell" + (isAnswered(i)?" answered":"") + (i===state.currentIndex?" current":"");
+    cell.textContent = (i+1);
+    cell.addEventListener("click", function(){
+      state.currentIndex = i;
+      renderQuestion();
+    });
+    grid.appendChild(cell);
+  });
+}
+
+function renderOptionsSingleOrMcma(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var isMcma = q.type==="mcma";
+  var current = state.answers[i];
+  q.options.forEach(function(optText, idx){
+    var picked = isMcma ? (Array.isArray(current) && current.indexOf(idx)!==-1) : (current===idx);
+    var div = document.createElement("div");
+    div.className = "option" + (isMcma?" mcma":"") + (picked ? " selected":"");
+    div.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+    div.addEventListener("click", function(){
+      if(isMcma){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : [];
+        var pos = arr.indexOf(idx);
+        if(pos===-1) arr.push(idx); else arr.splice(pos,1);
+        state.answers[i] = arr;
+      } else {
+        state.answers[i] = idx;
+      }
+      saveState();
+      renderQuestion();
+    });
+    optsWrap.appendChild(div);
+  });
+}
+
+function renderStatements(q, i){
+  var optsWrap = document.getElementById("qOptions");
+  optsWrap.innerHTML = "";
+  var current = (typeof state.answers[i] === "object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+  q.statements.forEach(function(st, k){
+    var row = document.createElement("div");
+    row.className = "statement-row";
+    var textDiv = document.createElement("div");
+    textDiv.className = "statement-text";
+    textDiv.innerHTML = (k+1)+". "+st.text;
+    row.appendChild(textDiv);
+    var choices = document.createElement("div");
+    choices.className = "statement-choices";
+    [["Benar",true], ["Salah",false]].forEach(function(pair){
+      var btn = document.createElement("div");
+      btn.className = "choice-btn" + (current[k]===pair[1] ? " selected":"");
+      btn.textContent = pair[0];
+      btn.addEventListener("click", function(){
+        var obj = (typeof state.answers[i]==="object" && state.answers[i]!==null && !Array.isArray(state.answers[i])) ? state.answers[i] : {};
+        obj[k] = pair[1];
+        state.answers[i] = obj;
+        saveState();
+        renderQuestion();
+      });
+      choices.appendChild(btn);
+    });
+    row.appendChild(choices);
+    optsWrap.appendChild(row);
+  });
+}
+
+function renderQuestion(){
+  var i = state.currentIndex;
+  var q = QUESTIONS[i];
+  document.getElementById("qIndexLabel").textContent = "Soal "+(i+1)+" dari "+QUESTIONS.length;
+  document.getElementById("qTopicLabel").textContent = q.topic;
+  document.getElementById("qTypeBadge").innerHTML = TYPE_LABELS[q.type] || TYPE_LABELS.single;
+  document.getElementById("qText").innerHTML = q.text;
+
+  var hintEl = document.getElementById("qHint");
+  if(q.hint){ hintEl.style.display="block"; hintEl.textContent = q.hint; }
+  else if(q.type==="category"){ hintEl.style.display="block"; hintEl.textContent = "Beri respons Benar atau Salah untuk setiap pernyataan."; }
+  else { hintEl.style.display="none"; }
+
+  if(q.type==="category") renderStatements(q, i);
+  else renderOptionsSingleOrMcma(q, i);
+
+  document.getElementById("btnPrev").disabled = (i===0);
+  document.getElementById("btnPrev").style.opacity = (i===0)?"0.5":"1";
+  document.getElementById("btnNext").textContent = (i===QUESTIONS.length-1) ? "Selesai →" : "Berikutnya →";
+  document.getElementById("progressFill").style.width = Math.round(((i+1)/QUESTIONS.length)*100)+"%";
+  renderNavGrid();
+}
+
+/* ============ NAVIGATION BUTTONS ============ */
+document.getElementById("btnPrev").addEventListener("click", function(){
+  if(state.currentIndex>0){ state.currentIndex--; renderQuestion(); }
+});
+document.getElementById("btnNext").addEventListener("click", function(){
+  if(state.currentIndex < QUESTIONS.length-1){
+    state.currentIndex++;
+    renderQuestion();
+  } else {
+    confirmFinish();
+  }
+});
+document.getElementById("btnFinish").addEventListener("click", confirmFinish);
+
+function confirmFinish(){
+  var answeredCount = 0;
+  QUESTIONS.forEach(function(q,i){ if(isAnswered(i)) answeredCount++; });
+  var msg = "Kamu telah menjawab "+answeredCount+" dari "+QUESTIONS.length+" soal.\nSelesaikan tryout dan lihat hasil sekarang?";
+  if(window.confirm(msg)){
+    finishQuiz(false);
+  }
+}
+
+/* ============ START / RESUME / RESTART ============ */
+function beginFreshQuiz(){
+  state = {
+    currentIndex:0,
+    answers:{},
+    endTimestamp: Date.now() + DURATION_SECONDS*1000,
+    finished:false,
+    timeTakenSeconds:null
+  };
+  saveState();
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+function resumeQuiz(saved){
+  state = saved;
+  showScreen("screen-quiz");
+  startTimerLoop();
+  renderQuestion();
+}
+
+document.getElementById("btnStart").addEventListener("click", beginFreshQuiz);
+document.getElementById("btnResume").addEventListener("click", function(){
+  var saved = loadState();
+  if(saved && !saved.finished) resumeQuiz(saved); else beginFreshQuiz();
+});
+document.getElementById("btnRestartFresh").addEventListener("click", function(){
+  clearState();
+  document.getElementById("resumeBanner").style.display = "none";
+  beginFreshQuiz();
+});
+document.getElementById("btnRetry").addEventListener("click", function(){
+  clearState();
+  stopTimer();
+  showScreen("screen-start");
+  document.getElementById("resumeBanner").style.display = "none";
+});
+
+/* ============ FINISH & SCORING ============ */
+function finishQuiz(autoSubmitted){
+  stopTimer();
+  state.finished = true;
+  var elapsed = DURATION_SECONDS - Math.max(0, (state.endTimestamp - Date.now())/1000);
+  state.timeTakenSeconds = Math.min(DURATION_SECONDS, Math.round(elapsed));
+  saveState();
+  renderResult(autoSubmitted);
+  showScreen("screen-result");
+  window.scrollTo(0,0);
+}
+
+function renderResult(autoSubmitted){
+  var correct=0, wrong=0, empty=0, score=0;
+  var topicStats = {};
+  QUESTIONS.forEach(function(q, i){
+    if(!topicStats[q.topic]) topicStats[q.topic] = {correct:0,total:0};
+    topicStats[q.topic].total++;
+    var status = evaluateQuestion(i);
+    if(status==="empty"){ empty++; }
+    else if(status==="correct"){ correct++; score+=4; topicStats[q.topic].correct++; }
+    else { wrong++; score-=1; }
+  });
+
+  document.getElementById("resultSubtitle").textContent = autoSubmitted
+    ? "Waktu habis — tryout otomatis diselesaikan. Berikut rekap skor dan pembahasan lengkap setiap soal."
+    : "Berikut rekap skor dan pembahasan lengkap setiap soal.";
+
+  document.getElementById("statScore").textContent = score;
+  document.getElementById("statCorrect").textContent = correct;
+  document.getElementById("statWrong").textContent = wrong;
+  document.getElementById("statEmpty").textContent = empty;
+  document.getElementById("statTime").textContent = formatTime(state.timeTakenSeconds);
+
+  var barsWrap = document.getElementById("topicBars");
+  barsWrap.innerHTML = "";
+  Object.keys(topicStats).forEach(function(topic){
+    var st = topicStats[topic];
+    var pct = Math.round((st.correct/st.total)*100);
+    var row = document.createElement("div");
+    row.className = "topic-bar-row";
+    row.innerHTML =
+      "<div class='top'><span class='name'>"+topic+"</span><span class='frac2'>"+st.correct+"/"+st.total+"</span></div>"+
+      "<div class='bar-track'><div class='bar-fill' style='width:"+pct+"%;'></div></div>";
+    barsWrap.appendChild(row);
+  });
+
+  var reviewList = document.getElementById("reviewList");
+  reviewList.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var status = evaluateQuestion(i);
+    var statusLabel = status==="empty" ? "Kosong" : (status==="correct" ? "Benar":"Salah");
+
+    var details = document.createElement("details");
+    details.className = "review-item";
+    details.open = (status !== "correct");
+
+    var summary = document.createElement("summary");
+    summary.innerHTML =
+      "<span class='badge "+status+"'>"+statusLabel+"</span>"+
+      "<span class='badge typebadge'>"+(TYPE_LABELS[q.type]||TYPE_LABELS.single)+"</span>"+
+      "<span>Soal "+(i+1)+" — "+q.topic+"</span>"+
+      "<span class='chev'>&#9662;</span>";
+    details.appendChild(summary);
+
+    var body = document.createElement("div");
+    body.className = "review-body";
+
+    var qTextDiv = document.createElement("div");
+    qTextDiv.className = "q-text";
+    qTextDiv.innerHTML = q.text;
+    body.appendChild(qTextDiv);
+
+    if(q.type==="category"){
+      var a = (typeof state.answers[i]==="object" && state.answers[i]!==null) ? state.answers[i] : {};
+      q.statements.forEach(function(st, k){
+        var userVal = a[k];
+        var isCorrectStmt = userVal!==undefined && (!!userVal === !!st.correct);
+        var row = document.createElement("div");
+        row.className = "review-statement " + (userVal===undefined ? "" : (isCorrectStmt ? "st-correct":"st-wrong"));
+        var userLabel = userVal===undefined ? "Tidak dijawab" : (userVal ? "Benar":"Salah");
+        var correctLabel = st.correct ? "Benar":"Salah";
+        row.innerHTML =
+          "<span>"+(k+1)+". "+st.text+"</span>"+
+          "<span class='st-answer'>Jawabanmu: "+userLabel+(isCorrectStmt? "" : " &middot; Kunci: "+correctLabel)+"</span>";
+        body.appendChild(row);
+      });
+    } else if(q.type==="mcma"){
+      var picked = Array.isArray(state.answers[i]) ? state.answers[i] : [];
+      var optsDiv = document.createElement("div");
+      optsDiv.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var isCorrectOpt = q.answer.indexOf(idx)!==-1;
+        var wasPicked = picked.indexOf(idx)!==-1;
+        var cls = "review-opt";
+        var tag = "";
+        if(isCorrectOpt){ cls += " is-correct"; tag = wasPicked ? "Dipilih &amp; tepat" : "Terlewat"; }
+        else if(wasPicked){ cls += " is-wrong-pick"; tag = "Dipilih, tidak tepat"; }
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>"+(tag?"<span class='opt-tag'>"+tag+"</span>":"");
+        optsDiv.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv);
+    } else {
+      var picked2 = state.answers[i];
+      var optsDiv2 = document.createElement("div");
+      optsDiv2.className = "review-opts";
+      q.options.forEach(function(optText, idx){
+        var cls = "review-opt";
+        if(idx===q.answer) cls += " is-correct";
+        else if(idx===picked2) cls += " is-wrong-pick";
+        var optDiv = document.createElement("div");
+        optDiv.className = cls;
+        optDiv.innerHTML = "<span class='letter'>"+LETTERS[idx]+"</span><span>"+optText+"</span>";
+        optsDiv2.appendChild(optDiv);
+      });
+      body.appendChild(optsDiv2);
+    }
+
+    var pembahasan = document.createElement("div");
+    pembahasan.className = "pembahasan";
+    pembahasan.style.marginTop = "14px";
+    pembahasan.innerHTML = "<b>Pembahasan:</b><br>"+q.explanation;
+    body.appendChild(pembahasan);
+
+    details.appendChild(body);
+    reviewList.appendChild(details);
+  });
+}
+
+/* ============ INIT ON LOAD ============ */
+(function init(){
+  var saved = loadState();
+  if(saved && !saved.finished && saved.endTimestamp){
+    var remaining = (saved.endTimestamp - Date.now())/1000;
+    if(remaining > 0){
+      document.getElementById("resumeBanner").style.display = "flex";
+    } else {
+      state = saved;
+      finishQuiz(true);
+    }
+  }
+})();
+
+})();
+</script>
+</body>
+</html>
