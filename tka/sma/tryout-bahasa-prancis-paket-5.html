@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tryout Bahasa Prancis — Paket 5 | Siap TKA</title>
+<meta name="description" content="Latihan tryout Bahasa Prancis Paket 5 untuk persiapan TKA SMA/MA — soal pemahaman teks berbahasa Prancis (compr&eacute;hension &eacute;crite setara A2), timer, skor otomatis, dan pembahasan lengkap.">
+<style>
+  :root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-light:#eef2ff;
+    --bg:#f8fafc;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --correct:#16a34a;
+    --correct-bg:#f0fdf4;
+    --wrong:#dc2626;
+    --wrong-bg:#fef2f2;
+    --empty:#b45309;
+    --empty-bg:#fffbeb;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.12);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  #app{max-width:900px;margin:0 auto;padding:0 20px 64px;}
+
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(248,250,252,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;flex-wrap:wrap;
+    margin:0 -20px 28px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);text-decoration:none;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex:none;}
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:.78rem;}
+  .nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+  .nav-links a{color:var(--text);text-decoration:none;font-size:.9rem;font-weight:600;}
+  .nav-links a:hover{color:var(--primary);}
+  .nav-links a.active{color:var(--primary-dark);}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px;
+  }
+  .section-card{margin-top:18px;}
+  .section-title{font-size:1.05rem;margin:0 0 14px;font-weight:700;color:var(--text);}
+
+  .screen{display:none;}
+  .screen.active{display:block;}
+
+  .hero h1{font-size:1.6rem;margin:0 0 8px;}
+  .hero p.lead{color:var(--muted);margin:0;font-size:.96rem;max-width:640px;}
+
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .pill-gratis{background:#f0fdf4;color:#16a34a;}
+  .pill-premium{background:#fef3c7;color:#92400e;}
+
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:18px 0;}
+  .info-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .info-item .num{font-size:1.3rem;font-weight:800;color:var(--primary-dark);}
+  .info-item .lbl{font-size:.76rem;color:var(--muted);margin-top:2px;}
+
+  .rules{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:16px 18px;font-size:.86rem;color:var(--muted);margin:18px 0;}
+  .rules b{color:var(--text);}
+  .rules ul{margin:8px 0 0;padding-left:20px;}
+  .rules li{margin-bottom:4px;}
+
+  .topics-list{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;}
+  .topic-chip{background:var(--primary-light);color:var(--primary-dark);font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:999px;}
+
+  .resume-banner{background:var(--empty-bg);border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:12px 16px;font-size:.86rem;margin:16px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:10px;cursor:pointer;text-decoration:none;font-size:.95rem;font-weight:600;padding:13px 22px;}
+  .btn-primary{background:var(--primary);color:#fff;}
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-ghost{background:var(--surface);color:var(--primary-dark);border:1px solid var(--border);}
+  .btn-ghost:hover{background:var(--primary-light);}
+  .btn-block{width:100%;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
+
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .timer{font-weight:800;font-size:1.05rem;background:var(--primary-light);color:var(--primary-dark);padding:8px 16px;border-radius:10px;}
+  .timer.low{background:var(--wrong-bg);color:var(--wrong);}
+  .progress-bar{background:var(--border);border-radius:999px;height:8px;overflow:hidden;margin-bottom:18px;}
+  .progress-bar .fill{background:var(--primary);height:100%;transition:width .2s ease;}
+
+  .quiz-layout{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media(min-width:760px){.quiz-layout{grid-template-columns:2.4fr 1fr;}}
+
+  .q-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;}
+  .q-index{font-weight:800;color:var(--primary-dark);}
+  .q-topic{background:var(--primary-light);color:var(--primary-dark);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;}
+  .q-type-badge{background:var(--bg);border:1px solid var(--border);font-size:.72rem;font-weight:600;color:var(--muted);padding:3px 10px;border-radius:999px;}
+  .q-hint{font-size:.78rem;color:var(--muted);margin:2px 0 12px;}
+  .q-text{font-size:.98rem;margin:0 0 14px;font-weight:600;}
+
+  .stimulus-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:16px;font-size:.9rem;color:var(--text);}
+  .stimulus-box .st-label{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;}
+  .stimulus-box p{margin:0 0 10px;}
+  .stimulus-box p:last-child{margin-bottom:0;}
+
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .option{border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:.9rem;cursor:pointer;display:flex;gap:10px;align-items:flex-start;background:var(--surface);}
+  .option:hover{border-color:var(--primary);}
+  .option .opt-mark{flex:none;width:22px;height:22px;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--muted);}
+  .option.mcma .opt-mark{border-radius:6px;}
+  .option.selected{border-color:var(--primary);background:var(--primary-light);}
+  .option.selected .opt-mark{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+  .pernyataan-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+  .statement-row{border-bottom:1px solid var(--border);}
+  .statement-row:last-child{border-bottom:none;}
+  .statement-text{padding:12px 8px 12px 0;text-align:left;vertical-align:middle;}
+  .statement-choices{padding:12px 0;white-space:nowrap;text-align:right;}
+  .choice-btn{border:1px solid var(--border);background:var(--surface);border-radius:8px;padding:6px 14px;font-size:.8rem;font-weight:700;cursor:pointer;margin-left:6px;color:var(--muted);}
+  .choice-btn.active-true{background:var(--correct-bg);border-color:var(--correct);color:var(--correct);}
+  .choice-btn.active-false{background:var(--wrong-bg);border-color:var(--wrong);color:var(--wrong);}
+
+  .nav-panel{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;align-self:start;}
+  .nav-panel h4{margin:0 0 10px;font-size:.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px;}
+  .nav-cell{aspect-ratio:1;border:1px solid var(--border);border-radius:7px;background:var(--surface);font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .nav-cell.answered{background:var(--correct-bg);border-color:var(--correct);color:var(--correct);}
+  .nav-cell.current{outline:2px solid var(--primary);outline-offset:1px;}
+
+  .quiz-nav-btns{display:flex;justify-content:space-between;gap:10px;margin-top:16px;}
+
+  .result-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:18px 0;}
+  .stat{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+  .stat .num{font-size:1.4rem;font-weight:800;color:var(--primary-dark);}
+  .stat .lbl{font-size:.74rem;color:var(--muted);margin-top:2px;}
+
+  .topic-bars{margin:18px 0;}
+  .topic-bar-row{margin-bottom:12px;}
+  .topic-bar-row .tb-label{display:flex;justify-content:space-between;font-size:.84rem;margin-bottom:4px;}
+  .bar-track{background:var(--border);border-radius:999px;height:8px;overflow:hidden;}
+  .bar-fill{background:var(--primary);height:100%;}
+
+  .review-item{border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;}
+  .review-item summary{padding:12px 14px;cursor:pointer;font-size:.88rem;font-weight:600;display:flex;gap:10px;align-items:center;list-style:none;}
+  .review-item summary::-webkit-details-marker{display:none;}
+  .review-body{padding:0 16px 16px;font-size:.88rem;}
+  .badge{font-size:.7rem;font-weight:800;padding:3px 9px;border-radius:999px;}
+  .badge.correct{background:var(--correct-bg);color:var(--correct);}
+  .badge.wrong{background:var(--wrong-bg);color:var(--wrong);}
+  .badge.empty{background:var(--empty-bg);color:var(--empty);}
+  .badge.typebadge{background:var(--bg);color:var(--muted);border:1px solid var(--border);}
+
+  .review-opts{display:flex;flex-direction:column;gap:6px;margin:10px 0;}
+  .review-opt{border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:.86rem;}
+  .review-opt.is-correct{border-color:var(--correct);background:var(--correct-bg);}
+  .review-opt.is-wrong-pick{border-color:var(--wrong);background:var(--wrong-bg);}
+
+  .review-statement{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--border);padding:8px 0;font-size:.86rem;}
+  .review-statement:last-child{border-bottom:none;}
+  .st-correct{color:var(--correct);font-weight:700;}
+  .st-wrong{color:var(--wrong);font-weight:700;}
+
+  .pembahasan{background:var(--primary-light);border-radius:8px;padding:10px 12px;margin-top:10px;font-size:.85rem;color:var(--primary-dark);}
+  .pembahasan b{display:block;margin-bottom:3px;}
+
+  .note-box{background:var(--bg);border:1px dashed var(--border);border-radius:10px;padding:14px 16px;margin-top:20px;font-size:.86rem;color:var(--muted);}
+  .note-box a{color:var(--primary-dark);font-weight:700;}
+
+  footer.note{text-align:center;color:var(--muted);font-size:.78rem;margin-top:40px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <a class="brand" href="index.html">
+      <span class="dot"></span>
+      <div>
+        Siap TKA
+        <small>Persiapan Tes Kemampuan Akademik SMA/MA</small>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="tentang-tka.html">Tentang TKA</a>
+      <a href="mata-pelajaran.html">Mata Pelajaran</a>
+      <a href="tryout.html" class="active">Tryout</a>
+      <a href="pilih-mapel.html">Pilih Mapel</a>
+      <a href="harga.html">Harga</a>
+    </nav>
+  </div>
+
+  <!-- SCREEN: INTRO -->
+  <section class="screen active" id="screen-intro">
+    <div class="card hero">
+      <span class="pill pill-premium">Premium</span>
+      <h1>Tryout Bahasa Prancis — Paket 5</h1>
+      <p class="lead">Latihan soal pemahaman teks berbahasa Prancis bergaya TKA setara level A2 CECRL: dialog, teks informatif pendek, panneaux/pemberitahuan, dan pesan singkat, dengan tiga bentuk soal (Pilihan Ganda, Pilihan Ganda Kompleks Pilih Lebih dari Satu, dan Pilihan Ganda Kompleks Kategori Benar/Salah).</p>
+
+      <div class="info-grid">
+        <div class="info-item"><div class="num">15</div><div class="lbl">Soal</div></div>
+        <div class="info-item"><div class="num">45:00</div><div class="lbl">Menit</div></div>
+        <div class="info-item"><div class="num">3</div><div class="lbl">Teks Bacaan</div></div>
+        <div class="info-item"><div class="num">5/6</div><div class="lbl">Paket</div></div>
+      </div>
+
+      <div class="topics-list" id="topics-list"></div>
+
+      <div class="rules">
+        <b>Sebelum mulai:</b>
+        <ul>
+          <li>Kerjakan dalam satu sesi tanpa jeda — timer berjalan mundur otomatis dan berhenti sendiri saat waktu habis.</li>
+          <li>Bacalah teks berbahasa Prancis pada setiap kelompok soal dengan saksama sebelum menjawab.</li>
+          <li>Skor menggunakan konvensi latihan mandiri (benar +4, salah &minus;1, tidak dijawab 0, skor maksimum 100) &mdash; <b>bukan</b> rumus penilaian resmi Kemendikdasmen.</li>
+          <li>Progres tersimpan otomatis di perangkat ini (localStorage). Kamu bisa melanjutkan jika sesi tertutup sebelum selesai.</li>
+        </ul>
+      </div>
+
+      <div class="resume-banner" id="resume-banner" style="display:none;">
+        <span>Ada sesi yang belum selesai. Lanjutkan dari soal terakhir?</span>
+        <span style="display:flex;gap:8px;">
+          <button class="btn btn-ghost" onclick="resetQuiz()">Mulai Ulang</button>
+          <button class="btn btn-primary" onclick="resumeQuiz()">Lanjutkan</button>
+        </span>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="start-btn" onclick="startQuiz()">Mulai Tryout</button>
+    </div>
+  </section>
+
+  <!-- SCREEN: QUIZ -->
+  <section class="screen" id="screen-quiz">
+    <div class="card">
+      <div class="quiz-top">
+        <div id="q-position" style="font-weight:700;color:var(--muted);font-size:.86rem;"></div>
+        <div class="timer" id="timer">--:--</div>
+      </div>
+      <div class="progress-bar"><div class="fill" id="progress-fill" style="width:0%;"></div></div>
+
+      <div class="quiz-layout">
+        <div id="question-host"></div>
+        <div class="nav-panel">
+          <h4>Navigasi Soal</h4>
+          <div class="nav-grid" id="nav-grid"></div>
+          <button class="btn btn-ghost btn-block" onclick="finishQuiz()">Selesai &amp; Lihat Skor</button>
+        </div>
+      </div>
+
+      <div class="quiz-nav-btns">
+        <button class="btn btn-ghost" id="prev-btn" onclick="goPrev()">&larr; Sebelumnya</button>
+        <button class="btn btn-primary" id="next-btn" onclick="goNext()">Selanjutnya &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN: RESULT -->
+  <section class="screen" id="screen-result">
+    <div class="card">
+      <div class="section-title">Hasil Tryout — Paket 5</div>
+      <div class="result-summary" id="result-summary"></div>
+      <div class="topic-bars" id="topic-bars"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-ghost" onclick="resetQuiz()">Ulangi Paket Ini</button>
+        <a class="btn btn-primary" href="tryout.html">Kembali ke Daftar Tryout</a>
+      </div>
+    </div>
+    <div class="card section-card">
+      <div class="section-title">Pembahasan Tiap Soal</div>
+      <div id="review-host"></div>
+    </div>
+  </section>
+
+  <div class="note-box">
+    Skor pada tryout ini adalah alat bantu latihan mandiri dan tidak merepresentasikan nilai resmi TKA. Materi mata pelajaran lengkap tersedia di halaman <a href="mata-pelajaran-bahasa-prancis.html">Bahasa Prancis</a>.
+  </div>
+
+  <footer class="note">
+    <p>&copy; <span id="tahun"></span> Siap TKA</p>
+  </footer>
+
+</div>
+
+<script>
+document.getElementById("tahun").textContent = new Date().getFullYear();
+
+var STORAGE_KEY = "tka_bpr_paket5_v1";
+var DURATION_SECONDS = 2700;
+var TOPICS = ["Pemahaman Literal", "Reorganisasi", "Pemahaman Inferensial"];
+
+var QUESTIONS = [
+  {
+    "topic": "Pemahaman Literal",
+    "type": "single",
+    "stimulus": "Touriste : Excusez-moi, madame. Où se trouve la piscine municipale ?\n\nMadame Blanc : Bonjour ! C'est facile. Vous continuez tout droit jusqu'au feu rouge, puis vous tournez à gauche.\n\nTouriste : D'accord, tout droit puis à gauche.\n\nMadame Blanc : Ensuite, la piscine est juste après la boulangerie, sur votre droite.\n\nTouriste : Merci beaucoup ! C'est loin d'ici ?\n\nMadame Blanc : Non, c'est à environ dix minutes à pied.",
+    "text": "D'après le dialogue, où doit tourner le touriste ?",
+    "options": [
+      "À droite, avant le feu rouge.",
+      "À gauche, au feu rouge.",
+      "Tout droit, sans tourner.",
+      "À droite, après la boulangerie.",
+      "À gauche, avant la boulangerie."
+    ],
+    "answer": 1,
+    "pembahasan": "Madame Blanc dit : « Vous continuez tout droit jusqu'au feu rouge, puis vous tournez à gauche »."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "single",
+    "stimulus": null,
+    "text": "Que peut-on déduire de la distance jusqu'à la piscine ?",
+    "options": [
+      "Elle est très loin, à plus d'une heure à pied.",
+      "Elle est relativement proche, à environ dix minutes à pied.",
+      "Elle n'est accessible qu'en voiture.",
+      "Elle est à côté du feu rouge directement.",
+      "Elle est impossible à atteindre à pied."
+    ],
+    "answer": 1,
+    "pembahasan": "Madame Blanc répond : « c'est à environ dix minutes à pied », ce qui montre que la piscine est relativement proche."
+  },
+  {
+    "topic": "Pemahaman Literal",
+    "type": "mcma",
+    "stimulus": null,
+    "text": "D'après le dialogue, quelles affirmations sont vraies ? Cliquez sur chaque bonne réponse !",
+    "options": [
+      "La piscine est près d'une boulangerie.",
+      "Il faut tourner à droite au feu rouge.",
+      "La piscine se trouve à environ dix minutes à pied.",
+      "Le touriste connaît déjà le chemin.",
+      "La piscine est sur la droite après la boulangerie."
+    ],
+    "answer": [
+      0,
+      2,
+      4
+    ],
+    "pembahasan": "La piscine est près d'une boulangerie, elle se trouve à environ dix minutes à pied, et elle est sur la droite après la boulangerie. Il faut tourner à gauche (pas à droite), et le touriste demande son chemin, donc il ne le connaît pas déjà."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "category",
+    "stimulus": null,
+    "text": "Déterminez si chaque affirmation est Vraie ou Fausse d'après le dialogue !",
+    "statements": [
+      {
+        "text": "Le touriste connaît bien la ville.",
+        "correct": false
+      },
+      {
+        "text": "Madame Blanc explique le chemin de façon claire et détaillée.",
+        "correct": true
+      },
+      {
+        "text": "La piscine est accessible à pied depuis cet endroit.",
+        "correct": true
+      }
+    ],
+    "pembahasan": "Le touriste demande son chemin à une inconnue, ce qui montre qu'il ne connaît pas bien la ville (affirmation 1 fausse) ; Madame Blanc donne des indications précises étape par étape (affirmation 2 vraie) ; elle précise que c'est à dix minutes à pied (affirmation 3 vraie)."
+  },
+  {
+    "topic": "Reorganisasi",
+    "type": "single",
+    "stimulus": null,
+    "text": "Remettez ces phrases dans le bon ordre pour décrire le chemin vers la piscine. (1) Il arrive devant la piscine municipale. (2) Le touriste marche tout droit jusqu'au feu rouge. (3) Il tourne à gauche au feu rouge. (4) Le touriste demande son chemin à Madame Blanc. (5) Il passe devant la boulangerie. Quel est l'ordre correct ?",
+    "options": [
+      "4 - 2 - 3 - 5 - 1",
+      "2 - 4 - 3 - 5 - 1",
+      "4 - 3 - 2 - 5 - 1",
+      "4 - 2 - 5 - 3 - 1",
+      "4 - 2 - 3 - 1 - 5"
+    ],
+    "answer": 0,
+    "pembahasan": "L'ordre logique est : le touriste demande son chemin (4), il marche tout droit jusqu'au feu rouge (2), il tourne à gauche (3), il passe devant la boulangerie (5), puis il arrive à la piscine (1)."
+  },
+  {
+    "topic": "Pemahaman Literal",
+    "type": "single",
+    "stimulus": "La piscine municipale de la ville accueille les visiteurs du lundi au dimanche, sauf le jeudi, jour de nettoyage. Elle possède deux bassins : un grand bassin pour nager et un petit bassin pour les enfants. Les maîtres-nageurs surveillent la piscine en permanence pour la sécurité de tous. Le tarif d'entrée est de trois euros pour les adultes et gratuit pour les enfants de moins de six ans. Des cours de natation sont proposés le samedi matin pour les débutants.",
+    "text": "Quel jour la piscine municipale est-elle fermée ?",
+    "options": [
+      "Le lundi.",
+      "Le mercredi.",
+      "Le jeudi.",
+      "Le samedi.",
+      "Le dimanche."
+    ],
+    "answer": 2,
+    "pembahasan": "Le texte indique : « du lundi au dimanche, sauf le jeudi, jour de nettoyage »."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "single",
+    "stimulus": null,
+    "text": "Pourquoi la piscine est-elle fermée le jeudi, d'après le texte ?",
+    "options": [
+      "Parce que c'est un jour férié.",
+      "Parce que c'est le jour de nettoyage.",
+      "Parce que les maîtres-nageurs sont en vacances.",
+      "Parce qu'il n'y a pas assez de visiteurs.",
+      "Parce que le petit bassin est réparé."
+    ],
+    "answer": 1,
+    "pembahasan": "Le texte précise que le jeudi est « jour de nettoyage », c'est pourquoi la piscine est fermée ce jour-là."
+  },
+  {
+    "topic": "Pemahaman Literal",
+    "type": "mcma",
+    "stimulus": null,
+    "text": "D'après le texte, quelles affirmations sont vraies ? Cliquez sur chaque bonne réponse !",
+    "options": [
+      "La piscine possède un grand bassin et un petit bassin.",
+      "L'entrée est payante pour tous, sans exception.",
+      "Des cours de natation sont proposés le samedi matin.",
+      "Les maîtres-nageurs surveillent la piscine en permanence.",
+      "L'entrée coûte dix euros pour les adultes."
+    ],
+    "answer": [
+      0,
+      2,
+      3
+    ],
+    "pembahasan": "La piscine possède un grand bassin et un petit bassin, des cours de natation sont proposés le samedi matin, et les maîtres-nageurs surveillent en permanence. L'entrée est gratuite pour les enfants de moins de six ans (pas payante pour tous), et elle coûte trois euros pour les adultes (pas dix euros)."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "category",
+    "stimulus": null,
+    "text": "Déterminez si chaque affirmation est Vraie ou Fausse d'après le texte !",
+    "statements": [
+      {
+        "text": "L'entrée est gratuite pour les enfants de moins de six ans.",
+        "correct": true
+      },
+      {
+        "text": "Le petit bassin est réservé aux adultes uniquement.",
+        "correct": false
+      },
+      {
+        "text": "Des cours de natation sont proposés pour les débutants.",
+        "correct": true
+      }
+    ],
+    "pembahasan": "L'entrée est bien gratuite pour les enfants de moins de six ans (affirmation 1 vraie) ; le petit bassin est réservé aux enfants, pas aux adultes (affirmation 2 fausse) ; des cours de natation sont proposés pour les débutants le samedi matin (affirmation 3 vraie)."
+  },
+  {
+    "topic": "Reorganisasi",
+    "type": "single",
+    "stimulus": null,
+    "text": "Remettez ces phrases dans le bon ordre pour décrire une matinée à la piscine. (1) Elle nage dans le grand bassin pendant une heure. (2) Léa achète son billet d'entrée à trois euros. (3) Léa arrive à la piscine à 9h. (4) Elle se douche avant de sortir. (5) Elle se change dans les vestiaires. Quel est l'ordre correct ?",
+    "options": [
+      "3 - 2 - 5 - 1 - 4",
+      "3 - 5 - 2 - 1 - 4",
+      "2 - 3 - 5 - 1 - 4",
+      "3 - 2 - 1 - 5 - 4",
+      "5 - 3 - 2 - 1 - 4"
+    ],
+    "answer": 0,
+    "pembahasan": "L'ordre logique est : Léa arrive à la piscine (3), elle achète son billet (2), elle se change dans les vestiaires (5), elle nage dans le grand bassin (1), puis elle se douche avant de sortir (4)."
+  },
+  {
+    "topic": "Pemahaman Literal",
+    "type": "single",
+    "stimulus": "Inscriptions ouvertes : le club de basket du lycée recherche de nouveaux joueurs pour la saison prochaine. Les entraînements ont lieu le lundi et le jeudi, de 17h à 18h30, dans le gymnase principal. Aucune expérience n'est nécessaire pour débuter. Les personnes intéressées peuvent s'inscrire auprès de Monsieur Dubois, professeur de sport, avant le 30 septembre. — Association sportive du lycée.",
+    "text": "Quels jours ont lieu les entraînements de basket ?",
+    "options": [
+      "Le lundi et le jeudi.",
+      "Le mardi et le vendredi.",
+      "Le mercredi et le samedi.",
+      "Tous les jours.",
+      "Seulement le dimanche."
+    ],
+    "answer": 0,
+    "pembahasan": "Le texte précise : « Les entraînements ont lieu le lundi et le jeudi, de 17h à 18h30 »."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "single",
+    "stimulus": null,
+    "text": "Que peut-on déduire des personnes qui peuvent s'inscrire au club de basket ?",
+    "options": [
+      "Seuls les joueurs expérimentés peuvent s'inscrire.",
+      "Les débutants peuvent aussi s'inscrire, car aucune expérience n'est nécessaire.",
+      "Seuls les élèves de terminale peuvent s'inscrire.",
+      "Il faut déjà être dans une autre équipe pour s'inscrire.",
+      "Les inscriptions sont réservées aux filles uniquement."
+    ],
+    "answer": 1,
+    "pembahasan": "Le texte indique : « Aucune expérience n'est nécessaire pour débuter », ce qui montre que les débutants sont aussi les bienvenus."
+  },
+  {
+    "topic": "Pemahaman Literal",
+    "type": "mcma",
+    "stimulus": null,
+    "text": "D'après l'annonce, quelles affirmations sont vraies ? Cliquez sur chaque bonne réponse !",
+    "options": [
+      "Les entraînements ont lieu dans le gymnase principal.",
+      "Il faut avoir déjà joué au basket pour s'inscrire.",
+      "Les inscriptions se font auprès de Monsieur Dubois.",
+      "La date limite d'inscription est le 30 septembre.",
+      "Les entraînements durent trois heures."
+    ],
+    "answer": [
+      0,
+      2,
+      3
+    ],
+    "pembahasan": "Les entraînements ont lieu dans le gymnase principal, les inscriptions se font auprès de Monsieur Dubois, et la date limite est le 30 septembre. Aucune expérience préalable n'est requise, et les entraînements durent une heure et demie (17h à 18h30), pas trois heures."
+  },
+  {
+    "topic": "Pemahaman Inferensial",
+    "type": "category",
+    "stimulus": null,
+    "text": "Déterminez si chaque affirmation est Vraie ou Fausse d'après l'annonce !",
+    "statements": [
+      {
+        "text": "Monsieur Dubois est professeur de sport.",
+        "correct": true
+      },
+      {
+        "text": "Le club de basket n'accepte que les élèves déjà expérimentés.",
+        "correct": false
+      },
+      {
+        "text": "Les inscriptions doivent se faire avant le 30 septembre.",
+        "correct": true
+      }
+    ],
+    "pembahasan": "Monsieur Dubois est bien présenté comme professeur de sport (affirmation 1 vraie) ; l'annonce dit qu'aucune expérience n'est nécessaire pour débuter (affirmation 2 fausse) ; les inscriptions doivent se faire avant le 30 septembre (affirmation 3 vraie)."
+  },
+  {
+    "topic": "Reorganisasi",
+    "type": "single",
+    "stimulus": null,
+    "text": "Remettez ces phrases dans le bon ordre pour décrire l'inscription d'un élève au club de basket. (1) Il assiste à son premier entraînement le lundi. (2) L'élève lit l'annonce affichée dans le lycée. (3) Il s'inscrit auprès de Monsieur Dubois. (4) Il décide de rejoindre le club de basket. (5) Il apporte ses affaires de sport. Quel est l'ordre correct ?",
+    "options": [
+      "2 - 4 - 3 - 5 - 1",
+      "2 - 3 - 4 - 5 - 1",
+      "4 - 2 - 3 - 5 - 1",
+      "2 - 4 - 5 - 3 - 1",
+      "2 - 4 - 3 - 1 - 5"
+    ],
+    "answer": 0,
+    "pembahasan": "L'ordre logique est : l'élève lit l'annonce (2), il décide de rejoindre le club (4), il s'inscrit auprès de Monsieur Dubois (3), il apporte ses affaires de sport (5), puis il assiste à son premier entraînement (1)."
+  }
+];
+
+var state = {
+  current: 0,
+  answers: {},
+  endTimestamp: null,
+  finished: false
+};
+var timerInterval = null;
+
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){}
+}
+function clearState(){
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+}
+
+function renderTopicsList(){
+  var host = document.getElementById("topics-list");
+  host.innerHTML = "";
+  TOPICS.forEach(function(t){
+    var span = document.createElement("span");
+    span.className = "topic-chip";
+    span.textContent = t;
+    host.appendChild(span);
+  });
+}
+renderTopicsList();
+
+(function init(){
+  var saved = loadState();
+  if(saved && !saved.finished && saved.endTimestamp && saved.endTimestamp > Date.now()){
+    document.getElementById("resume-banner").style.display = "flex";
+  } else if(saved){
+    clearState();
+  }
+})();
+
+function startQuiz(){
+  state = {
+    current: 0,
+    answers: {},
+    endTimestamp: Date.now() + DURATION_SECONDS * 1000,
+    finished: false
+  };
+  saveState();
+  showScreen("quiz");
+  buildNavGrid();
+  renderQuestion(0);
+  startTimer();
+}
+
+function resumeQuiz(){
+  var saved = loadState();
+  if(!saved){ startQuiz(); return; }
+  state = saved;
+  showScreen("quiz");
+  buildNavGrid();
+  renderQuestion(state.current);
+  startTimer();
+}
+
+function resetQuiz(){
+  clearState();
+  document.getElementById("resume-banner").style.display = "none";
+  if(timerInterval) clearInterval(timerInterval);
+  showScreen("intro");
+}
+
+function showScreen(name){
+  ["intro","quiz","result"].forEach(function(s){
+    document.getElementById("screen-"+s).classList.toggle("active", s===name);
+  });
+}
+
+function startTimer(){
+  if(timerInterval) clearInterval(timerInterval);
+  tick();
+  timerInterval = setInterval(tick, 1000);
+}
+function tick(){
+  var remain = Math.max(0, Math.round((state.endTimestamp - Date.now())/1000));
+  var m = Math.floor(remain/60), s = remain%60;
+  var el = document.getElementById("timer");
+  el.textContent = (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+  el.classList.toggle("low", remain <= 120);
+  if(remain <= 0){
+    clearInterval(timerInterval);
+    finishQuiz();
+  }
+}
+
+function buildNavGrid(){
+  var grid = document.getElementById("nav-grid");
+  grid.innerHTML = "";
+  QUESTIONS.forEach(function(q, i){
+    var cell = document.createElement("div");
+    cell.className = "nav-cell";
+    cell.textContent = (i+1);
+    cell.onclick = function(){ renderQuestion(i); };
+    grid.appendChild(cell);
+  });
+  refreshNavGrid();
+}
+function refreshNavGrid(){
+  var cells = document.querySelectorAll("#nav-grid .nav-cell");
+  cells.forEach(function(cell, i){
+    cell.classList.toggle("answered", isAnswered(i));
+    cell.classList.toggle("current", i === state.current);
+  });
+}
+function isAnswered(i){
+  var a = state.answers[i];
+  if(a === undefined || a === null) return false;
+  var q = QUESTIONS[i];
+  if(q.type === "single") return a !== null && a !== undefined;
+  if(q.type === "mcma") return Array.isArray(a) && a.length > 0;
+  if(q.type === "category") return Array.isArray(a) && a.some(function(v){ return v !== null && v !== undefined; });
+  return false;
+}
+
+function renderQuestion(i){
+  state.current = i;
+  saveState();
+  var q = QUESTIONS[i];
+  var host = document.getElementById("question-host");
+  document.getElementById("q-position").textContent = "Soal " + (i+1) + " dari " + QUESTIONS.length;
+  document.getElementById("progress-fill").style.width = Math.round(((i+1)/QUESTIONS.length)*100) + "%";
+
+  var typeLabel = q.type === "single" ? "Pilihan Ganda" : (q.type === "mcma" ? "PGK &mdash; Pilih Lebih dari Satu" : "PGK &mdash; Kategori Benar/Salah");
+
+  var html = "";
+  html += '<div class="q-meta"><span class="q-index">Soal ' + (i+1) + '</span><span class="q-topic">' + q.topic + '</span><span class="q-type-badge">' + typeLabel + '</span></div>';
+  if(q.hint){ html += '<div class="q-hint">' + q.hint + '</div>'; }
+  if(q.stimulus){
+    html += '<div class="stimulus-box"><div class="st-label">Texte</div>';
+    q.stimulus.split("\n\n").forEach(function(p){ html += "<p>" + p + "</p>"; });
+    html += '</div>';
+  }
+  html += '<div class="q-text">' + q.text + '</div>';
+
+  if(q.type === "single"){
+    html += '<div class="options" id="opts-host"></div>';
+  } else if(q.type === "mcma"){
+    html += '<div class="options" id="opts-host"></div>';
+  } else if(q.type === "category"){
+    html += '<table class="pernyataan-table"><tbody id="opts-host"></tbody></table>';
+  }
+
+  host.innerHTML = html;
+
+  var optsHost = document.getElementById("opts-host");
+  var marks = ["A","B","C","D","E"];
+
+  if(q.type === "single"){
+    q.options.forEach(function(opt, oi){
+      var div = document.createElement("div");
+      div.className = "option" + (state.answers[i] === oi ? " selected" : "");
+      div.innerHTML = '<span class="opt-mark">' + marks[oi] + '</span><span>' + opt + '</span>';
+      div.onclick = function(){
+        state.answers[i] = oi;
+        saveState();
+        renderQuestion(i);
+        refreshNavGrid();
+      };
+      optsHost.appendChild(div);
+    });
+  } else if(q.type === "mcma"){
+    var current = Array.isArray(state.answers[i]) ? state.answers[i] : [];
+    q.options.forEach(function(opt, oi){
+      var div = document.createElement("div");
+      div.className = "option mcma" + (current.indexOf(oi) > -1 ? " selected" : "");
+      div.innerHTML = '<span class="opt-mark">' + marks[oi] + '</span><span>' + opt + '</span>';
+      div.onclick = function(){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : [];
+        var idx = arr.indexOf(oi);
+        if(idx > -1){ arr.splice(idx,1); } else { arr.push(oi); }
+        state.answers[i] = arr;
+        saveState();
+        renderQuestion(i);
+        refreshNavGrid();
+      };
+      optsHost.appendChild(div);
+    });
+  } else if(q.type === "category"){
+    var cur = Array.isArray(state.answers[i]) ? state.answers[i] : q.statements.map(function(){ return null; });
+    q.statements.forEach(function(st, si){
+      var tr = document.createElement("tr");
+      tr.className = "statement-row";
+      var td1 = document.createElement("td");
+      td1.className = "statement-text";
+      td1.textContent = st.text;
+      var td2 = document.createElement("td");
+      td2.className = "statement-choices";
+      var btnTrue = document.createElement("button");
+      btnTrue.className = "choice-btn" + (cur[si] === true ? " active-true" : "");
+      btnTrue.textContent = "Benar";
+      btnTrue.onclick = function(){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : q.statements.map(function(){ return null; });
+        arr[si] = true;
+        state.answers[i] = arr;
+        saveState();
+        renderQuestion(i);
+        refreshNavGrid();
+      };
+      var btnFalse = document.createElement("button");
+      btnFalse.className = "choice-btn" + (cur[si] === false ? " active-false" : "");
+      btnFalse.textContent = "Salah";
+      btnFalse.onclick = function(){
+        var arr = Array.isArray(state.answers[i]) ? state.answers[i].slice() : q.statements.map(function(){ return null; });
+        arr[si] = false;
+        state.answers[i] = arr;
+        saveState();
+        renderQuestion(i);
+        refreshNavGrid();
+      };
+      td2.appendChild(btnTrue);
+      td2.appendChild(btnFalse);
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      optsHost.appendChild(tr);
+    });
+  }
+
+  document.getElementById("prev-btn").disabled = (i === 0);
+  document.getElementById("next-btn").textContent = (i === QUESTIONS.length - 1) ? "Selesai →" : "Selanjutnya →";
+  document.getElementById("next-btn").onclick = (i === QUESTIONS.length - 1) ? finishQuiz : goNext;
+
+  refreshNavGrid();
+}
+
+function goNext(){
+  if(state.current < QUESTIONS.length - 1){ renderQuestion(state.current + 1); }
+}
+function goPrev(){
+  if(state.current > 0){ renderQuestion(state.current - 1); }
+}
+
+function isSingleCorrect(q, a){ return a === q.answer; }
+function isMcmaCorrect(q, a){
+  if(!Array.isArray(a)) return false;
+  var sortedA = a.slice().sort();
+  var sortedB = q.answer.slice().sort();
+  if(sortedA.length !== sortedB.length) return false;
+  for(var k=0;k<sortedA.length;k++){ if(sortedA[k] !== sortedB[k]) return false; }
+  return true;
+}
+function isCategoryCorrect(q, a){
+  if(!Array.isArray(a)) return false;
+  for(var k=0;k<q.statements.length;k++){
+    if(a[k] !== q.statements[k].correct) return false;
+  }
+  return true;
+}
+
+function scoreQuestion(i){
+  var q = QUESTIONS[i];
+  var a = state.answers[i];
+  if(!isAnswered(i)) return 0;
+  var correct = false;
+  if(q.type === "single") correct = isSingleCorrect(q, a);
+  else if(q.type === "mcma") correct = isMcmaCorrect(q, a);
+  else if(q.type === "category") correct = isCategoryCorrect(q, a);
+  return correct ? 4 : -1;
+}
+
+function finishQuiz(){
+  if(timerInterval) clearInterval(timerInterval);
+  state.finished = true;
+  saveState();
+  showScreen("result");
+  renderResult();
+}
+
+function renderResult(){
+  var totalRaw = 0, maxRaw = QUESTIONS.length * 4;
+  var nCorrect = 0, nWrong = 0, nEmpty = 0;
+  var topicStats = {};
+  TOPICS.forEach(function(t){ topicStats[t] = {correct:0, total:0}; });
+
+  QUESTIONS.forEach(function(q, i){
+    var s = scoreQuestion(i);
+    totalRaw += s;
+    if(!isAnswered(i)){ nEmpty++; }
+    else if(s > 0){ nCorrect++; }
+    else { nWrong++; }
+    topicStats[q.topic].total++;
+    if(isAnswered(i) && s > 0){ topicStats[q.topic].correct++; }
+  });
+
+  var scoreNorm = Math.max(0, Math.round((totalRaw / maxRaw) * 100));
+
+  var summary = document.getElementById("result-summary");
+  summary.innerHTML =
+    '<div class="stat"><div class="num">' + scoreNorm + '</div><div class="lbl">Skor (0&ndash;100)</div></div>' +
+    '<div class="stat"><div class="num">' + nCorrect + '</div><div class="lbl">Benar</div></div>' +
+    '<div class="stat"><div class="num">' + nWrong + '</div><div class="lbl">Salah</div></div>' +
+    '<div class="stat"><div class="num">' + nEmpty + '</div><div class="lbl">Kosong</div></div>';
+
+  var bars = document.getElementById("topic-bars");
+  bars.innerHTML = "";
+  TOPICS.forEach(function(t){
+    var st = topicStats[t];
+    var pct = st.total ? Math.round((st.correct/st.total)*100) : 0;
+    var row = document.createElement("div");
+    row.className = "topic-bar-row";
+    row.innerHTML = '<div class="tb-label"><span>' + t + '</span><span>' + st.correct + '/' + st.total + '</span></div><div class="bar-track"><div class="bar-fill" style="width:' + pct + '%;"></div></div>';
+    bars.appendChild(row);
+  });
+
+  renderReview();
+}
+
+function renderReview(){
+  var host = document.getElementById("review-host");
+  host.innerHTML = "";
+  var marks = ["A","B","C","D","E"];
+  QUESTIONS.forEach(function(q, i){
+    var a = state.answers[i];
+    var answered = isAnswered(i);
+    var s = scoreQuestion(i);
+    var badgeClass = !answered ? "empty" : (s > 0 ? "correct" : "wrong");
+    var badgeLabel = !answered ? "Kosong" : (s > 0 ? "Benar" : "Salah");
+
+    var det = document.createElement("details");
+    det.className = "review-item";
+    var summaryHtml = '<summary><span class="badge ' + badgeClass + '">' + badgeLabel + '</span><span class="badge typebadge">' + q.topic + '</span><span>Soal ' + (i+1) + '</span></summary>';
+
+    var bodyHtml = '<div class="review-body">';
+    if(q.stimulus){
+      bodyHtml += '<div class="stimulus-box"><div class="st-label">Texte</div>';
+      q.stimulus.split("\n\n").forEach(function(p){ bodyHtml += "<p>" + p + "</p>"; });
+      bodyHtml += '</div>';
+    }
+    bodyHtml += '<div class="q-text">' + q.text + '</div>';
+
+    if(q.type === "single"){
+      bodyHtml += '<div class="review-opts">';
+      q.options.forEach(function(opt, oi){
+        var cls = "review-opt";
+        if(oi === q.answer) cls += " is-correct";
+        else if(a === oi) cls += " is-wrong-pick";
+        bodyHtml += '<div class="' + cls + '">' + marks[oi] + '. ' + opt + '</div>';
+      });
+      bodyHtml += '</div>';
+    } else if(q.type === "mcma"){
+      bodyHtml += '<div class="review-opts">';
+      q.options.forEach(function(opt, oi){
+        var cls = "review-opt";
+        var isCorrectOpt = q.answer.indexOf(oi) > -1;
+        var wasPicked = Array.isArray(a) && a.indexOf(oi) > -1;
+        if(isCorrectOpt) cls += " is-correct";
+        else if(wasPicked) cls += " is-wrong-pick";
+        bodyHtml += '<div class="' + cls + '">' + marks[oi] + '. ' + opt + '</div>';
+      });
+      bodyHtml += '</div>';
+    } else if(q.type === "category"){
+      bodyHtml += '<div>';
+      q.statements.forEach(function(st, si){
+        var picked = Array.isArray(a) ? a[si] : null;
+        var pickedLabel = picked === true ? "Benar" : (picked === false ? "Salah" : "Tidak dijawab");
+        var correctLabel = st.correct ? "Benar" : "Salah";
+        var ok = picked === st.correct;
+        bodyHtml += '<div class="review-statement"><span>' + st.text + '</span><span class="' + (ok ? "st-correct" : "st-wrong") + '">Jawabanmu: ' + pickedLabel + ' &middot; Kunci: ' + correctLabel + '</span></div>';
+      });
+      bodyHtml += '</div>';
+    }
+
+    bodyHtml += '<div class="pembahasan"><b>Pembahasan</b>' + q.pembahasan + '</div>';
+    bodyHtml += '</div>';
+
+    det.innerHTML = summaryHtml + bodyHtml;
+    host.appendChild(det);
+  });
+}
+</script>
+</body>
+</html>
