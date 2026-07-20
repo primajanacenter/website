@@ -122,6 +122,23 @@
   .btn-block{width:100%;}
   .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
 
+  .btn-cta{
+    background:linear-gradient(135deg,#f97316,#ea580c);
+    color:#fff;
+    box-shadow:0 4px 14px -2px rgba(234,88,12,.55);
+    animation:cta-pulse 1.8s ease-in-out infinite;
+    position:relative;
+  }
+  .btn-cta:hover{
+    background:linear-gradient(135deg,#fb923c,#f97316);
+    transform:translateY(-1px);
+    box-shadow:0 8px 20px -3px rgba(234,88,12,.65);
+  }
+  @keyframes cta-pulse{
+    0%,100%{box-shadow:0 4px 14px -2px rgba(234,88,12,.55);}
+    50%{box-shadow:0 4px 22px 2px rgba(234,88,12,.85);}
+  }
+
   .resume-banner{background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
 
   /* QUIZ SCREEN */
@@ -355,6 +372,7 @@
       <div class="btn-row">
         <button class="btn btn-primary" id="btnRetry">&#8635; Ulangi Paket Ini</button>
         <a class="btn btn-ghost" href="tryout.html">Kembali ke Daftar Tryout</a>
+        <a class="btn btn-cta" href="https://mayar.id/PLACEHOLDER-LINK-PRODUK" target="_blank" rel="noopener">🔥 Coba Tryout Lainnya</a>
       </div>
     </div>
 
