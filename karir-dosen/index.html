@@ -1,1 +1,410 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tangga Karier Dosen — Kalkulator & Perencana Jenjang Akademik</title>
+<meta name="description" content="Cek kesiapan dan rencanakan jenjang karier akademik Anda — dari Asisten Ahli hingga Profesor — berdasarkan Kepmen No. 39/M/KEP/2026.">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<style>
+:root{
+  --navy-950:#0a1a2e;
+  --navy-900:#0f2a4a;
+  --navy-800:#173a63;
+  --navy-700:#234d7d;
+  --navy-100:#e4ebf3;
+  --paper:#eef1f5;
+  --paper-card:#ffffff;
+  --gold:#c9962c;
+  --gold-dark:#9c7420;
+  --gold-light:#f2dfae;
+  --ink:#152238;
+  --ink-soft:#4a5a72;
+  --line:#d7dee8;
+  --ok:#1e7a4c;
+  --ok-bg:#e5f4ec;
+  --radius:10px;
+  --serif:'Source Serif 4','Georgia',serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.6;
+}
+@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+a{color:inherit;}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px;}
+h1,h2,h3{font-family:var(--serif);color:var(--navy-900);margin:0;}
 
+/* ===== Nav ===== */
+nav.topnav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(238,241,245,0.92);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);
+}
+nav.topnav .wrap{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;
+}
+.brand{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:700;font-size:17px;color:var(--navy-900);text-decoration:none;}
+.brand-mark{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.brand-mark svg{width:14px;height:14px;}
+.nav-cta{display:flex;gap:8px;}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:11px 20px;border-radius:8px;font-size:13.5px;font-weight:600;
+  border:1px solid transparent;cursor:pointer;font-family:var(--sans);
+  text-decoration:none;transition:transform .12s, box-shadow .15s, background .15s;
+}
+.btn:active{transform:scale(0.97);}
+.btn-primary{background:var(--navy-900);color:#fff;}
+.btn-primary:hover{background:var(--navy-800);}
+.btn-gold{background:var(--gold);color:var(--navy-950);}
+.btn-gold:hover{background:var(--gold-dark);color:#fff;}
+.btn-ghost{background:transparent;color:var(--navy-800);border-color:var(--line);}
+.btn-ghost:hover{background:var(--navy-100);}
+.btn-sm{padding:8px 14px;font-size:12.5px;}
+
+/* ===== Hero ===== */
+.hero{
+  background:linear-gradient(160deg,var(--navy-950) 0%, var(--navy-900) 55%, var(--navy-800) 100%);
+  color:#fff;position:relative;overflow:hidden;
+  padding:64px 0 90px;
+}
+.hero::after{content:"";position:absolute;right:-80px;top:-80px;width:280px;height:280px;border:1px solid rgba(201,150,44,0.2);border-radius:50%;}
+.hero::before{content:"";position:absolute;left:-100px;bottom:-140px;width:280px;height:280px;border:1px solid rgba(201,150,44,0.14);border-radius:50%;}
+.hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:center;position:relative;z-index:2;}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:36px;}}
+.eyebrow{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-light);font-weight:700;margin:0 0 14px;}
+.hero h1{font-size:clamp(30px,5vw,46px);font-weight:600;line-height:1.15;letter-spacing:-0.01em;color:#fff;margin-bottom:16px;}
+.hero h1 em{font-style:normal;color:var(--gold-light);}
+.hero p.lead{font-size:16px;color:var(--navy-100);max-width:480px;margin:0 0 26px;}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;}
+.hero-note{font-size:12px;color:rgba(255,255,255,0.55);}
+
+/* Signature: climbing ladder visual */
+.ladder-hero{position:relative;height:320px;}
+.ladder-track{display:flex;align-items:flex-end;gap:10px;height:100%;padding:0 10px;}
+.ladder-step{
+  flex:1;border-radius:6px 6px 0 0;position:relative;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(201,150,44,0.35);border-bottom:none;
+  display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:10px;
+  opacity:0;transform:translateY(16px);
+  animation:stepIn .6s ease forwards;
+}
+.ladder-step:nth-child(1){height:32%;animation-delay:.1s;}
+.ladder-step:nth-child(2){height:54%;animation-delay:.28s;}
+.ladder-step:nth-child(3){height:76%;animation-delay:.46s;}
+.ladder-step:nth-child(4){height:100%;animation-delay:.64s;background:linear-gradient(180deg,var(--gold-light),var(--gold));}
+.ladder-step:nth-child(4) .step-label{color:var(--navy-950);}
+.ladder-step .step-label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.85);text-align:center;padding:0 4px;}
+@keyframes stepIn{to{opacity:1;transform:translateY(0);}}
+.ladder-pin{
+  position:absolute;left:50%;transform:translateX(-50%);
+  font-size:22px;opacity:0;animation:pinIn .5s ease forwards;animation-delay:1s;
+  bottom:calc(32% + 10px);
+}
+@keyframes pinIn{to{opacity:1;}}
+
+/* ===== Sections ===== */
+section{padding:64px 0;}
+.section-head{max-width:600px;margin:0 auto 40px;text-align:center;}
+.section-head .eyebrow{color:var(--gold-dark);}
+.section-head h2{font-size:clamp(24px,4vw,32px);margin-bottom:10px;}
+.section-head p{color:var(--ink-soft);font-size:15px;margin:0;}
+
+/* Masalah */
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+@media(max-width:760px){.problem-grid{grid-template-columns:1fr;}}
+.problem-card{
+  background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px;
+}
+.problem-card .ic{font-size:22px;margin-bottom:10px;display:block;}
+.problem-card h3{font-size:16px;margin-bottom:8px;}
+.problem-card p{font-size:13.5px;color:var(--ink-soft);margin:0;}
+
+/* Cara kerja - real sequence, numbered legitimately */
+.steps{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  position:relative;
+}
+@media(max-width:760px){.steps{grid-template-columns:1fr;}}
+.step{position:relative;padding:0 16px;}
+.step-num{
+  font-family:var(--serif);font-size:13px;font-weight:700;color:var(--gold-dark);
+  width:30px;height:30px;border-radius:50%;border:1.5px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;margin-bottom:14px;
+  background:var(--paper);position:relative;z-index:2;
+}
+.steps::before{
+  content:"";position:absolute;top:15px;left:16px;right:16px;height:1px;
+  background:var(--line);z-index:1;
+}
+@media(max-width:760px){.steps::before{display:none;}}
+.step h3{font-size:15px;margin-bottom:6px;}
+.step p{font-size:13px;color:var(--ink-soft);margin:0;}
+
+/* Comparison table */
+.compare-table{
+  background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;
+}
+.compare-row{
+  display:grid;grid-template-columns:1.6fr 0.7fr 0.7fr;
+  border-bottom:1px solid var(--line);
+  font-size:13.5px;
+}
+.compare-row:last-child{border-bottom:none;}
+.compare-row.head{background:var(--navy-900);color:#fff;font-weight:700;font-size:12.5px;}
+.compare-row > div{padding:12px 16px;display:flex;align-items:center;}
+.compare-row > div:not(:first-child){justify-content:center;text-align:center;}
+.compare-row.head > div:nth-child(3){color:var(--gold-light);}
+.compare-feat{color:var(--ink);}
+.yes{color:var(--ok);font-weight:700;}
+.no{color:var(--ink-soft);opacity:0.4;}
+.gold-yes{color:var(--gold-dark);font-weight:700;}
+
+/* Mockup preview (CSS-recreated UI, not a fake screenshot) */
+.mockup{
+  background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px;box-shadow:0 8px 24px -12px rgba(15,42,74,0.18);
+}
+.mockup-dial{
+  width:90px;height:90px;border-radius:50%;flex-shrink:0;
+  background:conic-gradient(var(--gold) 78%, var(--navy-100) 0);
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.mockup-dial::after{content:"";position:absolute;inset:8px;border-radius:50%;background:#fff;}
+.mockup-dial span{position:relative;z-index:2;font-family:var(--serif);font-weight:700;font-size:20px;color:var(--navy-900);}
+.mockup-row{display:flex;gap:16px;align-items:center;margin-bottom:18px;flex-wrap:wrap;}
+.mockup-check{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:6px;font-size:12.5px;margin-bottom:6px;}
+.mockup-check.met{background:var(--ok-bg);color:var(--ok);}
+.mockup-check.unmet{background:#faeaec;color:#a3222c;}
+
+/* Pricing */
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:760px){.pricing-grid{grid-template-columns:1fr;}}
+.price-card{
+  background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:28px;position:relative;
+}
+.price-card.premium{
+  border:2px solid var(--gold);
+  background:linear-gradient(180deg,#fff, var(--gold-light) 400%);
+}
+.price-card .plan-name{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;color:var(--navy-700);margin-bottom:8px;}
+.price-card .price{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--navy-900);margin-bottom:4px;}
+.price-card .price small{font-size:14px;font-weight:400;color:var(--ink-soft);}
+.price-card ul{list-style:none;padding:0;margin:18px 0 22px;}
+.price-card li{font-size:13.5px;padding:7px 0;border-bottom:1px solid var(--line);display:flex;gap:8px;}
+.price-card li:last-child{border-bottom:none;}
+.price-card li::before{content:"✓";color:var(--ok);font-weight:700;flex-shrink:0;}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--line);padding:18px 0;}
+.faq-item summary{font-weight:600;font-size:14.5px;cursor:pointer;color:var(--navy-900);list-style:none;display:flex;justify-content:space-between;align-items:center;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:"+";font-size:18px;color:var(--gold-dark);transition:transform .2s;}
+.faq-item[open] summary::after{transform:rotate(45deg);}
+.faq-item p{font-size:13.5px;color:var(--ink-soft);margin:10px 0 0;}
+
+/* Footer */
+footer{background:var(--navy-950);color:rgba(255,255,255,0.6);padding:36px 0;font-size:12.5px;}
+footer a{color:var(--gold-light);text-decoration:none;}
+footer .foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+
+.pill{display:inline-block;background:var(--gold);color:var(--navy-950);font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;position:absolute;top:-11px;left:50%;transform:translateX(-50%);}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20V14M9 20V10M14 20V6M19 20V3" stroke="#c9962c" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+      Tangga Karier
+    </a>
+    <div class="nav-cta">
+      <a href="Tangga-Karier-Dosen-FREE.html" class="btn btn-ghost btn-sm">Coba Gratis</a>
+      <a href="#harga" class="btn btn-primary btn-sm">Lihat Harga</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Berbasis Kepmen No. 39/M/KEP/2026</p>
+      <h1>Tahu persis apa yang <em>masih kurang</em> sebelum mengajukan kenaikan jabatan.</h1>
+      <p class="lead">Isi profil Anda sekali, dapatkan skor kesiapan, daftar dokumen, dan tips percepatan — untuk jenjang Asisten Ahli sampai Profesor. Semua berjalan di browser Anda, tanpa data terkirim ke server manapun.</p>
+      <div class="hero-ctas">
+        <a href="Tangga-Karier-Dosen-FREE.html" class="btn btn-gold">Coba Gratis Sekarang →</a>
+        <a href="premium-landing.html" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,0.3);">Lihat Premium</a>
+      </div>
+      <p class="hero-note">Tidak perlu instal apa pun. Langsung berjalan di browser HP atau laptop.</p>
+    </div>
+    <div class="ladder-hero">
+      <div class="ladder-track">
+        <div class="ladder-step"><span class="ladder-pin">📍</span><span class="step-label">Asisten Ahli</span></div>
+        <div class="ladder-step"><span class="step-label">Lektor</span></div>
+        <div class="ladder-step"><span class="step-label">Lektor Kepala</span></div>
+        <div class="ladder-step"><span class="step-label">Profesor</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="masalah">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Masalahnya</p>
+      <h2>Aturan kenaikan jabatan itu tebal. Kesiapan Anda? Tidak jelas.</h2>
+      <p>Kepmen baru mengatur ulang syarat administratif, syarat khusus, dan syarat tambahan untuk tiap jenjang — mudah terlewat satu dua poin penting.</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="ic">📄</span>
+        <h3>Dokumennya banyak</h3>
+        <p>13+ jenis dokumen berbeda tergantung jenjang tujuan, dan gampang lupa mana yang sudah siap.</p>
+      </div>
+      <div class="problem-card">
+        <span class="ic">🧮</span>
+        <h3>Angka publikasi rumit</h3>
+        <p>SJR, IF, kuartil, status penulis pertama vs korespondensi — kombinasinya berbeda tiap jenjang.</p>
+      </div>
+      <div class="problem-card">
+        <span class="ic">❓</span>
+        <h3>Tidak tahu mana yang terdekat</h3>
+        <p>Reguler atau loncat jenjang? Tanpa menghitung, sulit tahu jalur mana yang realistis dikejar duluan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cara-kerja" style="background:var(--paper-card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Cara Kerja</p>
+      <h2>Empat langkah, beberapa menit</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h3>Isi profil</h3><p>Jenjang saat ini, TMT, gelar, dan data kinerja dasar.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Tempel data publikasi</h3><p>Salin dari SINTA/Scholar/PDDikti — dibaca lokal di browser Anda.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Pilih target</h3><p>Dari Asisten Ahli sampai Profesor, termasuk jalur loncat jenjang.</p></div>
+      <div class="step"><div class="step-num">4</div><h3>Lihat skor & tips</h3><p>Skor kesiapan, rincian syarat, dan langkah yang masih kurang.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="preview">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Tampilan</p>
+      <h2>Langsung terlihat mana yang sudah dan belum</h2>
+    </div>
+    <div class="mockup">
+      <div class="mockup-row">
+        <div class="mockup-dial"><span>78</span></div>
+        <div>
+          <h3 style="font-size:16px;margin-bottom:4px;">Kenaikan ke Lektor Kepala</h3>
+          <p style="font-size:13px;color:var(--ink-soft);margin:0;">7 dari 9 syarat terpenuhi</p>
+        </div>
+      </div>
+      <div class="mockup-check met">✓ BKD 4 semester berturut-turut di PT yang sama</div>
+      <div class="mockup-check met">✓ Proporsi AK Penelitian minimal 40% — saat ini 44%</div>
+      <div class="mockup-check unmet">✕ 1 artikel JIB min. Q3 (SJR&gt;0,2, penulis pertama &amp; korespondensi)</div>
+    </div>
+  </div>
+</section>
+
+<section id="harga" style="background:var(--paper-card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Harga</p>
+      <h2>Mulai gratis. Upgrade kapan pun.</h2>
+      <p>Sekali beli untuk Premium — bukan langganan, tidak ada biaya berulang.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <p class="plan-name">Free</p>
+        <p class="price">Rp 0</p>
+        <ul>
+          <li>Skor kesiapan untuk 8 target jenjang</li>
+          <li>Rincian syarat terpenuhi/belum</li>
+          <li>Checklist dokumen per target</li>
+          <li>Tempel data dari SINTA/Scholar/PDDikti</li>
+          <li>Data tersimpan otomatis di perangkat Anda</li>
+        </ul>
+        <a href="Tangga-Karier-Dosen-FREE.html" class="btn btn-ghost" style="width:100%;">Coba Gratis</a>
+      </div>
+      <div class="price-card premium">
+        <span class="pill">PALING LENGKAP</span>
+        <p class="plan-name">Premium</p>
+        <p class="price">Rp 50.000 <small>sekali beli</small></p>
+        <ul>
+          <li>Semua fitur Free, plus:</li>
+          <li>Simulasi "bagaimana jika" & rencana publikasi tahunan</li>
+          <li>Proyeksi tahun tercapai & rekomendasi jalur tercepat</li>
+          <li>Kalkulator AK Prestasi &amp; AK Konversi</li>
+          <li>Threshold kustom sesuai kebijakan PT Anda</li>
+          <li>Mode multi-profil (mis. untuk Kaprodi)</li>
+          <li>Riwayat & tren skor, generator draf dokumen</li>
+          <li>Badge siap-bagi, plus dukungan install-app kalau Anda hosting sendiri</li>
+        </ul>
+        <a href="premium-landing.html" class="btn btn-gold" style="width:100%;">Beli Premium — Rp 50.000</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap" style="max-width:700px;">
+    <div class="section-head">
+      <p class="eyebrow">Pertanyaan Umum</p>
+      <h2>FAQ</h2>
+    </div>
+    <details class="faq-item">
+      <summary>Apakah data saya dikirim ke server?</summary>
+      <p>Tidak. Seluruh perhitungan berjalan di browser Anda sendiri, dan data tersimpan lokal di perangkat (localStorage). Tidak ada data yang dikirim ke server kami atau pihak lain.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Apakah ini alat resmi dari Kemdiktisaintek/Ditjen Dikti?</summary>
+      <p>Bukan. Ini alat bantu simulasi independen berdasarkan Kepmen No. 39/M/KEP/2026. Keputusan resmi kenaikan jabatan tetap melalui SISTER dan unit SDM perguruan tinggi Anda.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Setelah beli Premium, bagaimana saya menerima filenya?</summary>
+      <p>Setelah pembayaran melalui Mayar berhasil, Anda akan menerima file aplikasi Premium untuk diunduh langsung — tidak perlu instalasi, cukup buka filenya di browser.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Apakah perhitungan AK ini menggantikan penilaian asesor?</summary>
+      <p>Tidak. Kalkulator AK memakai nilai maksimal per kategori sebagai estimasi batas atas — nilai final tetap ditentukan asesor/reviewer PT berdasarkan kualitas dan kelengkapan bukti kinerja Anda.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Bisa dipakai di HP?</summary>
+      <p>Bisa. Tampilan menyesuaikan otomatis ke layar HP. Fitur "install sebagai aplikasi" tersedia untuk versi Premium, tapi hanya aktif jika file dibuka lewat situs web (https://) — kalau Anda hanya membuka file hasil unduhan langsung dari folder, aplikasi tetap berfungsi penuh, hanya saja tanpa opsi install tersebut.</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <strong style="color:#fff;">Tangga Karier Dosen</strong><br>
+      Alat bantu simulasi mandiri, bukan sistem resmi. Bukan produk Kementerian Pendidikan Tinggi, Sains, dan Teknologi.
+    </div>
+    <div>
+      <a href="Tangga-Karier-Dosen-FREE.html">Coba Gratis</a> ·
+      <a href="premium-landing.html">Beli Premium</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

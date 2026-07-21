@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tangga Karier — Kalkulator Jenjang Akademik Dosen</title>
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<style>
+:root{
+  --navy-950:#0a1a2e;
+  --navy-900:#0f2a4a;
+  --navy-800:#173a63;
+  --navy-700:#234d7d;
+  --navy-100:#e4ebf3;
+  --paper:#eef1f5;
+  --paper-card:#ffffff;
+  --gold:#c9962c;
+  --gold-dark:#9c7420;
+  --gold-light:#f2dfae;
+  --ink:#152238;
+  --ink-soft:#4a5a72;
+  --line:#d7dee8;
+  --ok:#1e7a4c;
+  --ok-bg:#e5f4ec;
+  --warn:#a34b16;
+  --warn-bg:#fbeade;
+  --bad:#a3222c;
+  --bad-bg:#faeaec;
+  --radius:10px;
+  --serif:'Source Serif 4','Georgia',serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.5;
+  padding-bottom:80px;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+}
+
+/* ===== Header ===== */
+header.app-head{
+  background:linear-gradient(160deg,var(--navy-950) 0%, var(--navy-900) 55%, var(--navy-800) 100%);
+  color:#fff;
+  padding:28px 18px 56px;
+  position:relative;
+  overflow:hidden;
+}
+header.app-head::after{
+  content:"";
+  position:absolute;
+  right:-60px;top:-60px;
+  width:220px;height:220px;
+  border:1px solid rgba(201,150,44,0.25);
+  border-radius:50%;
+}
+header.app-head::before{
+  content:"";
+  position:absolute;
+  right:20px;bottom:-90px;
+  width:180px;height:180px;
+  border:1px solid rgba(201,150,44,0.18);
+  border-radius:50%;
+}
+.home-link{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  color:rgba(255,255,255,0.65);
+  font-size:12px;
+  text-decoration:none;
+  margin-bottom:14px;
+  position:relative;
+  z-index:2;
+}
+.home-link:hover{color:var(--gold-light);}
+.eyebrow{
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--gold-light);
+  font-weight:600;
+  margin:0 0 10px;
+}
+h1.title{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(26px,7vw,34px);
+  margin:0 0 8px;
+  letter-spacing:-0.01em;
+  max-width:560px;
+}
+.subtitle{
+  color:var(--navy-100);
+  font-size:14.5px;
+  max-width:520px;
+  margin:0;
+}
+.legal-note{
+  margin-top:16px;
+  font-size:11.5px;
+  color:rgba(255,255,255,0.55);
+  border-left:2px solid var(--gold);
+  padding-left:10px;
+  max-width:520px;
+}
+
+/* ===== Layout ===== */
+main{
+  max-width:760px;
+  margin:-32px auto 0;
+  padding:0 14px;
+  position:relative;
+  z-index:2;
+}
+.card{
+  background:var(--paper-card);
+  border-radius:var(--radius);
+  box-shadow:0 1px 3px rgba(15,42,74,0.08), 0 8px 24px -12px rgba(15,42,74,0.18);
+  margin-bottom:16px;
+  overflow:hidden;
+  border:1px solid var(--line);
+}
+.card-head{
+  padding:18px 20px 6px;
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+}
+.card-num{
+  font-family:var(--serif);
+  font-size:13px;
+  color:var(--gold-dark);
+  font-weight:700;
+  border:1px solid var(--gold);
+  width:22px;height:22px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.card-head h2{
+  font-family:var(--serif);
+  font-size:18px;
+  margin:0;
+  color:var(--navy-900);
+  font-weight:600;
+}
+.card-body{padding:6px 20px 20px;}
+.card-desc{
+  font-size:13px;
+  color:var(--ink-soft);
+  margin:0 0 14px;
+}
+
+/* ===== Form elements ===== */
+.field{margin-bottom:14px;}
+.field label{
+  display:block;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--navy-800);
+  margin-bottom:5px;
+}
+.field .hint{
+  font-size:11px;
+  color:var(--ink-soft);
+  font-weight:400;
+  margin-top:3px;
+}
+input[type=text],input[type=url],input[type=number],input[type=date],select{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  font-size:14px;
+  font-family:var(--sans);
+  color:var(--ink);
+  background:#fbfcfd;
+  transition:border-color .15s;
+}
+input:focus,select:focus{
+  outline:2px solid var(--navy-700);
+  outline-offset:1px;
+  border-color:var(--navy-700);
+}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:520px){.grid2{grid-template-columns:1fr;}}
+.checkbox-row{
+  display:flex;align-items:flex-start;gap:9px;
+  padding:9px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+.checkbox-row:last-child{border-bottom:none;}
+.checkbox-row input{margin-top:2px;flex-shrink:0;width:16px;height:16px;accent-color:var(--navy-800);}
+.checkbox-row .cb-label{color:var(--ink);}
+.checkbox-row .cb-sub{display:block;font-size:11px;color:var(--ink-soft);margin-top:2px;}
+
+/* ===== Buttons ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:10px 16px;
+  border-radius:7px;
+  font-size:13.5px;
+  font-weight:600;
+  border:1px solid transparent;
+  cursor:pointer;
+  font-family:var(--sans);
+  transition:transform .1s, box-shadow .15s;
+}
+.btn:active{transform:scale(0.98);}
+.btn-primary{background:var(--navy-900);color:#fff;}
+.btn-primary:hover{background:var(--navy-800);}
+.btn-gold{background:var(--gold);color:var(--navy-950);}
+.btn-gold:hover{background:var(--gold-dark);color:#fff;}
+.btn-ghost{background:transparent;color:var(--navy-800);border-color:var(--line);}
+.btn-ghost:hover{background:var(--navy-100);}
+.btn-sm{padding:7px 12px;font-size:12.5px;}
+.btn[disabled]{opacity:0.5;cursor:not-allowed;}
+
+/* ===== Link fetch section ===== */
+.link-row{
+  display:flex;gap:8px;margin-bottom:10px;
+  align-items:center;
+}
+.link-row input{flex:1;}
+.fetch-status{
+  font-size:11.5px;
+  padding:8px 10px;
+  border-radius:6px;
+  margin-top:-2px;
+  margin-bottom:12px;
+  display:none;
+}
+.fetch-status.show{display:block;}
+.fetch-status.pending{background:var(--navy-100);color:var(--navy-800);}
+.fetch-status.fail{background:var(--warn-bg);color:var(--warn);}
+.fetch-status.ok{background:var(--ok-bg);color:var(--ok);}
+
+/* ===== Ladder / staircase signature element ===== */
+.ladder-wrap{
+  padding:22px 20px 26px;
+  background:linear-gradient(180deg,var(--navy-950),var(--navy-900));
+  border-radius:var(--radius);
+  margin-bottom:16px;
+  position:relative;
+}
+.ladder{
+  display:flex;
+  align-items:flex-end;
+  gap:6px;
+  height:150px;
+  position:relative;
+}
+.ladder-step{
+  flex:1;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(201,150,44,0.3);
+  border-bottom:none;
+  border-radius:5px 5px 0 0;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  padding-bottom:8px;
+  transition:background .3s;
+}
+.ladder-step.filled{background:linear-gradient(180deg,var(--gold-light),var(--gold));}
+.ladder-step.current{box-shadow:0 0 0 2px var(--gold) inset;}
+.ladder-step .step-label{
+  font-size:10px;
+  font-weight:700;
+  color:rgba(255,255,255,0.8);
+  writing-mode:horizontal-tb;
+  text-align:center;
+  padding:0 2px;
+}
+.ladder-step.filled .step-label{color:var(--navy-950);}
+.ladder-step:nth-child(1){height:40%;}
+.ladder-step:nth-child(2){height:60%;}
+.ladder-step:nth-child(3){height:80%;}
+.ladder-step:nth-child(4){height:100%;}
+.ladder-pin{
+  position:absolute;
+  top:-22px;left:50%;
+  transform:translateX(-50%);
+  font-size:16px;
+}
+
+/* ===== Score dial ===== */
+.score-panel{
+  display:flex;align-items:center;gap:18px;
+  padding:20px;
+  flex-wrap:wrap;
+}
+.dial{
+  width:104px;height:104px;
+  border-radius:50%;
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  background:conic-gradient(var(--gold) calc(var(--pct,0)*1%), var(--navy-100) 0);
+  position:relative;
+}
+.dial::after{
+  content:"";
+  position:absolute;
+  inset:9px;
+  border-radius:50%;
+  background:#fff;
+}
+.dial-value{
+  position:relative;z-index:2;
+  font-family:var(--serif);
+  font-size:24px;
+  font-weight:700;
+  color:var(--navy-900);
+}
+.dial-value span{font-size:12px;display:block;color:var(--ink-soft);font-weight:400;font-family:var(--sans);}
+.score-text h3{
+  font-family:var(--serif);
+  margin:0 0 4px;
+  font-size:16px;
+  color:var(--navy-900);
+}
+.score-text p{margin:0;font-size:13px;color:var(--ink-soft);max-width:340px;}
+
+/* ===== Checklist ===== */
+.check-group{margin-bottom:18px;}
+.check-group-title{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  font-weight:700;
+  color:var(--navy-700);
+  margin:0 0 8px;
+}
+.check-item{
+  display:flex;gap:10px;
+  padding:10px 12px;
+  border-radius:7px;
+  margin-bottom:6px;
+  font-size:13px;
+  align-items:flex-start;
+}
+.check-item.met{background:var(--ok-bg);}
+.check-item.unmet{background:var(--bad-bg);}
+.check-item .ic{font-size:15px;line-height:1.4;flex-shrink:0;}
+.check-item .ci-label{color:var(--ink);}
+.check-item.met .ci-label{color:var(--ok);}
+.check-item.unmet .ci-label{color:var(--bad);}
+.check-item .ci-note{display:block;font-size:11.5px;color:var(--ink-soft);margin-top:2px;}
+
+/* ===== Tips ===== */
+.tip{
+  background:var(--warn-bg);
+  border-left:3px solid var(--warn);
+  padding:10px 12px;
+  border-radius:6px;
+  font-size:13px;
+  color:#5c3410;
+  margin-bottom:8px;
+}
+.tip strong{color:var(--warn);}
+
+/* ===== Doc checklist ===== */
+.doc-list{list-style:none;padding:0;margin:0;}
+.doc-list li{
+  display:flex;gap:10px;align-items:flex-start;
+  padding:9px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+.doc-list li:last-child{border-bottom:none;}
+.doc-list input{margin-top:3px;accent-color:var(--navy-800);flex-shrink:0;}
+.doc-list li.checked span{text-decoration:line-through;color:var(--ink-soft);}
+
+/* ===== Section nav ===== */
+.tab-nav{
+  display:flex;gap:6px;
+  overflow-x:auto;
+  padding:14px 14px 0;
+  max-width:760px;
+  margin:0 auto;
+  scrollbar-width:none;
+}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{
+  flex-shrink:0;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:12.5px;
+  font-weight:600;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink-soft);
+  cursor:pointer;
+}
+.tab-btn.active{background:var(--navy-900);color:#fff;border-color:var(--navy-900);}
+
+.section{display:none;}
+.section.active{display:block;animation:fadein .25s ease;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+.footer-actions{
+  position:sticky;bottom:0;
+  background:linear-gradient(0deg,var(--paper) 60%, rgba(238,241,245,0));
+  padding:16px 14px 4px;
+  max-width:760px;margin:0 auto;
+  display:flex;gap:10px;
+  z-index:5;
+}
+.footer-actions .btn{flex:1;justify-content:center;}
+
+.badge{
+  display:inline-block;
+  font-size:10.5px;
+  font-weight:700;
+  padding:2px 8px;
+  border-radius:20px;
+  background:var(--gold-light);
+  color:var(--gold-dark);
+  margin-left:6px;
+}
+.small-muted{font-size:11.5px;color:var(--ink-soft);}
+.divider{height:1px;background:var(--line);margin:16px 0;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.two-col{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header class="app-head">
+  <a href="index.html" class="home-link">← Beranda</a>
+  <p class="eyebrow">Simulasi Berbasis Kepmen No. 39/M/KEP/2026</p>
+  <h1 class="title">Tangga Karier Dosen</h1>
+  <p class="subtitle">Cek kesiapan &amp; rencanakan langkah menuju jenjang akademik berikutnya — dari Asisten Ahli hingga Profesor Emeritus.</p>
+  <p class="legal-note">Alat bantu simulasi mandiri, bukan sistem resmi. Perhitungan AK final &amp; keputusan tetap mengacu pada SISTER dan unit SDM perguruan tinggi Anda.</p>
+</header>
+
+<nav class="tab-nav" id="tabNav">
+  <button class="tab-btn active" data-tab="profil">1. Profil</button>
+  <button class="tab-btn" data-tab="tautan">2. Tautan Publik</button>
+  <button class="tab-btn" data-tab="kinerja">3. Kinerja &amp; Karya</button>
+  <button class="tab-btn" data-tab="target">4. Target</button>
+  <button class="tab-btn" data-tab="hasil">5. Hasil</button>
+</nav>
+
+<main>
+
+<!-- ============ SECTION 1: PROFIL ============ -->
+<section class="section active" id="sec-profil">
+  <div class="card">
+    <div class="card-head"><div class="card-num">1</div><h2>Profil &amp; Status Kepegawaian</h2></div>
+    <div class="card-body">
+      <p class="card-desc">Data dasar ini menentukan skema aturan yang berlaku (kewenangan penetapan, jalur karier).</p>
+      <div class="field">
+        <label for="f-nama">Nama (opsional, hanya tersimpan di perangkat ini)</label>
+        <input type="text" id="f-nama" placeholder="Nama lengkap tanpa gelar">
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="f-status">Status Dosen</label>
+          <select id="f-status">
+            <option value="PNS">Dosen PNS</option>
+            <option value="PTNBH">Dosen tetap PTN BH</option>
+            <option value="PTS">Dosen tetap PTS/PTS Keagamaan</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-jenjang">Jenjang Akademik Saat Ini</label>
+          <select id="f-jenjang">
+            <option value="NONE">Belum Menjabat / CPNS</option>
+            <option value="AA">Asisten Ahli</option>
+            <option value="L">Lektor</option>
+            <option value="LK">Lektor Kepala</option>
+            <option value="PROF">Profesor</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="f-tmt">TMT Jabatan Terakhir</label>
+          <input type="date" id="f-tmt">
+        </div>
+        <div class="field">
+          <label for="f-tmtdosen">TMT Dosen Tetap (mulai kerja)</label>
+          <input type="date" id="f-tmtdosen">
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="f-gelar">Gelar Tertinggi</label>
+          <select id="f-gelar">
+            <option value="S2">Magister / Magister Terapan</option>
+            <option value="S3">Doktor / Doktor Terapan / Subspesialis</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-bidang">Rumpun / Bidang Ilmu</label>
+          <input type="text" id="f-bidang" placeholder="mis. Ilmu Komputer">
+        </div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="f-sertifikat">
+        <div><span class="cb-label">Sudah memiliki Sertifikat Pendidik</span>
+        <span class="cb-sub">Wajib untuk usul ke jenjang Profesor</span></div>
+      </div>
+      <div class="checkbox-row">
+        <input type="checkbox" id="f-dosenseni">
+        <div><span class="cb-label">Saya Dosen bidang seni</span>
+        <span class="cb-sub">Mengaktifkan jalur syarat khusus karya seni sebagai alternatif karya ilmiah</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 2: TAUTAN PUBLIK ============ -->
+<section class="section" id="sec-tautan">
+  <div class="card">
+    <div class="card-head"><div class="card-num">2</div><h2>Tautan Profil Publik</h2></div>
+    <div class="card-body">
+      <p class="card-desc">Aplikasi <strong>mencoba</strong> menarik langsung dari tautan lebih dulu — biasanya gagal karena kebijakan keamanan browser/situs sumber (lihat catatan di bawah). Cara yang benar-benar berhasil: buka profil Anda di tab baru, salin seluruh teks halaman (Ctrl+A lalu Ctrl+C), lalu tempel di kotak yang sesuai. Semua pemrosesan tempelan ini terjadi <strong>di perangkat Anda saja</strong>, tidak dikirim ke server manapun.</p>
+
+      <div class="field">
+        <label for="url-scholar">Google Scholar — tautan (opsional, untuk referensi)</label>
+        <div class="link-row">
+          <input type="url" id="url-scholar" placeholder="https://scholar.google.com/citations?user=...">
+          <button class="btn btn-ghost btn-sm" data-fetch="scholar">Coba Tarik</button>
+        </div>
+        <div class="fetch-status" id="status-scholar"></div>
+        <label for="paste-scholar" style="margin-top:8px;">Tempel teks halaman Scholar di sini</label>
+        <textarea id="paste-scholar" rows="4" placeholder="Buka profil Scholar Anda → Ctrl+A → Ctrl+C → tempel di sini" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:7px;font-size:13px;font-family:var(--sans);resize:vertical;"></textarea>
+        <button class="btn btn-gold btn-sm" data-parse="scholar" style="margin-top:8px;">Proses Teks Scholar</button>
+        <div class="fetch-status" id="parse-status-scholar"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field">
+        <label for="url-sinta">SINTA (Kemdiktisaintek) — tautan (opsional, untuk referensi)</label>
+        <div class="link-row">
+          <input type="url" id="url-sinta" placeholder="https://sinta.kemdiktisaintek.go.id/authors/profile/...">
+          <button class="btn btn-ghost btn-sm" data-fetch="sinta">Coba Tarik</button>
+        </div>
+        <div class="fetch-status" id="status-sinta"></div>
+        <label for="paste-sinta" style="margin-top:8px;">Tempel teks halaman SINTA di sini</label>
+        <textarea id="paste-sinta" rows="4" placeholder="Buka profil SINTA Anda (tab Articles) → Ctrl+A → Ctrl+C → tempel di sini" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:7px;font-size:13px;font-family:var(--sans);resize:vertical;"></textarea>
+        <button class="btn btn-gold btn-sm" data-parse="sinta" style="margin-top:8px;">Proses Teks SINTA</button>
+        <div class="fetch-status" id="parse-status-sinta"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field">
+        <label for="url-pddikti">PDDikti — tautan (opsional, untuk referensi)</label>
+        <div class="link-row">
+          <input type="url" id="url-pddikti" placeholder="https://pddikti.kemdiktisaintek.go.id/detail-dosen/...">
+          <button class="btn btn-ghost btn-sm" data-fetch="pddikti">Coba Tarik</button>
+        </div>
+        <div class="fetch-status" id="status-pddikti"></div>
+        <label for="paste-pddikti" style="margin-top:8px;">Tempel teks halaman PDDikti di sini</label>
+        <textarea id="paste-pddikti" rows="4" placeholder="Buka profil PDDikti Anda → Ctrl+A → Ctrl+C → tempel di sini" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:7px;font-size:13px;font-family:var(--sans);resize:vertical;"></textarea>
+        <button class="btn btn-gold btn-sm" data-parse="pddikti" style="margin-top:8px;">Proses Teks PDDikti</button>
+        <div class="fetch-status" id="parse-status-pddikti"></div>
+      </div>
+
+      <div class="divider"></div>
+      <p class="small-muted"><strong>Kenapa tarik-otomatis-dari-tautan tidak berhasil:</strong></p>
+      <ul class="small-muted" style="margin:4px 0 0;padding-left:18px;">
+        <li>SINTA: data publik dan bisa diakses server, tapi browser Anda memblokirnya sendiri (kebijakan CORS) — bukan hal yang bisa "diperbaiki" dari sisi aplikasi ini tanpa server/proxy sendiri.</li>
+        <li>Google Scholar: <code>robots.txt</code> Google melarang akses otomatis ke halaman ini. Kami mematuhi larangan itu, sehingga tidak akan membangun cara untuk melewatinya — termasuk lewat proxy.</li>
+        <li>PDDikti: halaman dirender oleh JavaScript dan memiliki proteksi anti-bot, sehingga permintaan otomatis ditolak.</li>
+      </ul>
+      <p class="small-muted" style="margin-top:6px;">Tempel-teks di atas menghindari semua kendala ini karena tidak melakukan permintaan jaringan ke situs manapun — hanya membaca teks yang sudah Anda salin sendiri.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 3: KINERJA & KARYA ============ -->
+<section class="section" id="sec-kinerja">
+  <div class="card">
+    <div class="card-head"><div class="card-num">3</div><h2>Beban Kerja &amp; Predikat Kinerja</h2></div>
+    <div class="card-body">
+      <div class="checkbox-row">
+        <input type="checkbox" id="f-bkd4">
+        <div><span class="cb-label">Memenuhi BKD 4 semester berturut-turut di PT yang sama</span></div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="f-predikat1">Predikat Kinerja SKP Tahun Terakhir</label>
+          <select id="f-predikat1">
+            <option value="kurang">Kurang</option>
+            <option value="baik" selected>Baik</option>
+            <option value="sangatbaik">Sangat Baik</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-predikat2">Predikat Kinerja SKP Tahun Sebelumnya</label>
+          <select id="f-predikat2">
+            <option value="kurang">Kurang</option>
+            <option value="baik" selected>Baik</option>
+            <option value="sangatbaik">Sangat Baik</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-akpenelitian">Proporsi AK Penelitian saat ini (%)</label>
+        <input type="number" id="f-akpenelitian" min="0" max="100" placeholder="mis. 42">
+        <p class="hint">Target minimal: Lektor 35% · Lektor Kepala 40% · Profesor 45%.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-num">3a</div><h2>Karya Ilmiah &amp; Karya Seni</h2></div>
+    <div class="card-body">
+      <p class="card-desc">Isi jumlah karya yang <strong>sudah terbit &amp; belum dibatalkan/discontinued</strong> saat ini, dipilah menurut peran penulis. Data ini dipakai untuk mengukur syarat khusus tiap jenjang.</p>
+
+      <div class="check-group-title">Jurnal Internasional Bereputasi (JIB)</div>
+      <div class="two-col">
+        <div class="field"><label>Q1 — penulis pertama &amp; korespondensi</label><input type="number" min="0" id="f-q1pk" value="0"></div>
+        <div class="field"><label>Q1 — Impact Factor tertinggi</label><input type="number" step="0.1" min="0" id="f-q1if" value="0"></div>
+        <div class="field"><label>Q1 — penulis pertama <em>atau</em> korespondensi (bukan keduanya)</label><input type="number" min="0" id="f-q1p" value="0"></div>
+        <div class="field"><label>Q2 — penulis pertama &amp; korespondensi</label><input type="number" min="0" id="f-q2pk" value="0"></div>
+        <div class="field"><label>Q2 — penulis pertama saja</label><input type="number" min="0" id="f-q2p" value="0"></div>
+        <div class="field"><label>Q3 — penulis pertama &amp; korespondensi</label><input type="number" min="0" id="f-q3pk" value="0"></div>
+        <div class="field"><label>Q3 — penulis pertama <em>atau</em> korespondensi</label><input type="number" min="0" id="f-q3p" value="0"></div>
+        <div class="field"><label>Q4 — penulis pertama, SJR&gt;0,1/IF&gt;0,05</label><input type="number" min="0" id="f-q4p" value="0"></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="check-group-title">Jurnal Nasional Terakreditasi</div>
+      <div class="two-col">
+        <div class="field"><label>Peringkat 1 — penulis pertama &amp; korespondensi</label><input type="number" min="0" id="f-jn1pk" value="0"></div>
+        <div class="field"><label>Peringkat 2 — penulis pertama &amp; korespondensi</label><input type="number" min="0" id="f-jn2pk" value="0"></div>
+        <div class="field"><label>Peringkat 4 — penulis pertama</label><input type="number" min="0" id="f-jn4p" value="0"></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="check-group-title">Karya Seni (jika Dosen seni)</div>
+      <div class="two-col">
+        <div class="field"><label>Diakui &amp; bereputasi nasional/internasional</label><input type="number" min="0" id="f-seni1" value="0"></div>
+        <div class="field"><label>Bereputasi internasional (sebagai pencipta)</label><input type="number" min="0" id="f-seni2" value="0"></div>
+        <div class="field"><label>Monumental, diakui &amp; bereputasi internasional</label><input type="number" min="0" id="f-seni3" value="0"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-num">3b</div><h2>Syarat Khusus Tambahan (Profesor)</h2></div>
+    <div class="card-body">
+      <p class="card-desc">Cukup 1 dari 5 poin berikut untuk melengkapi syarat khusus tambahan usul ke Profesor.</p>
+      <div class="checkbox-row"><input type="checkbox" id="f-tambahan-hibah"><span class="cb-label">Ketua hibah penelitian/pengabdian kompetitif tingkat daerah/nasional/internasional</span></div>
+      <div class="checkbox-row"><input type="checkbox" id="f-tambahan-bimbing"><span class="cb-label">Promotor 1 mhs. doktor LN / 2 mhs. DN, atau co-promotor 3 mhs. DN</span></div>
+      <div class="checkbox-row"><input type="checkbox" id="f-tambahan-uji"><span class="cb-label">Penguji min. 3 mahasiswa doktor (min. 1 di luar institusi) pada ujian tertutup</span></div>
+      <div class="checkbox-row"><input type="checkbox" id="f-tambahan-mitra"><span class="cb-label">Mitra bestari (reviewer) di min. 2 jurnal internasional bereputasi min. Q3 di luar institusi</span></div>
+      <div class="checkbox-row"><input type="checkbox" id="f-tambahan-pic"><span class="cb-label">PIC kerja sama penelitian dengan Profesor luar negeri</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><div class="card-num">3c</div><h2>Prestasi &amp; Dedikasi Luar Biasa</h2></div>
+    <div class="card-body">
+      <p class="card-desc">Relevan hanya jika Anda menargetkan kenaikan loncat 2 tingkat.</p>
+      <div class="checkbox-row"><input type="checkbox" id="f-skpsb2"><span class="cb-label">Predikat SKP "Sangat Baik" 2 tahun terakhir berturut-turut (dedikasi luar biasa)</span></div>
+      <div class="check-group-title" style="margin-top:10px;">Prestasi luar biasa (pilih yang sesuai)</div>
+      <div class="checkbox-row"><input type="checkbox" id="f-prestasi-mhs"><span class="cb-label">Menghasilkan mahasiswa berprestasi tingkat internasional</span></div>
+      <div class="checkbox-row"><input type="checkbox" id="f-prestasi-buku"><span class="cb-label">Mengarang/menyusun naskah buku terbitan lembaga resmi</span></div>
+      <div class="checkbox-row"><input type="checkbox" id="f-prestasi-karya"><span class="cb-label">Karya kreatif/inovatif yang diakui internasional</span></div>
+      <div class="checkbox-row"><input type="checkbox" id="f-prestasi-paten"><span class="cb-label">Memperoleh Hak Kekayaan Intelektual berupa Paten</span></div>
+      <div class="checkbox-row"><input type="checkbox" id="f-prestasi-penghargaan"><span class="cb-label">Penghargaan IPTEKS/budaya/olahraga min. tingkat Nasional</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 4: TARGET ============ -->
+<section class="section" id="sec-target">
+  <div class="card">
+    <div class="card-head"><div class="card-num">4</div><h2>Target Pencapaian</h2></div>
+    <div class="card-body">
+      <p class="card-desc">Pilih jenjang atau layanan yang ingin Anda tuju. Skor kesiapan &amp; daftar dokumen di tab Hasil akan menyesuaikan otomatis.</p>
+      <div class="field">
+        <select id="f-target">
+          <option value="AA">Pengangkatan Pertama → Asisten Ahli</option>
+          <option value="L">Kenaikan reguler → Lektor</option>
+          <option value="LK">Kenaikan reguler → Lektor Kepala</option>
+          <option value="PROF">Kenaikan reguler → Profesor</option>
+          <option value="LONCAT_AA_LK">Loncat 2 tingkat: Asisten Ahli → Lektor Kepala</option>
+          <option value="LONCAT_L_PROF">Loncat 2 tingkat: Lektor → Profesor</option>
+          <option value="RETENSI_PROF">Retensi Jabatan Profesor (menjaga tunjangan)</option>
+          <option value="EMERITUS">Pengangkatan Profesor Emeritus</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION 5: HASIL ============ -->
+<section class="section" id="sec-hasil">
+
+  <div class="ladder-wrap">
+    <div class="ladder" id="ladder"></div>
+  </div>
+
+  <div class="card">
+    <div class="score-panel">
+      <div class="dial" id="dial" style="--pct:0;"><div class="dial-value" id="dial-value">0<span>skor</span></div></div>
+      <div class="score-text">
+        <h3 id="score-title">Pilih target untuk melihat kesiapan Anda</h3>
+        <p id="score-desc">Lengkapi data di tab 1–4, lalu hasil evaluasi akan tampil di sini secara otomatis.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2 style="margin-left:4px;">Rincian Pemenuhan Syarat</h2></div>
+    <div class="card-body" id="checklist-output"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2 style="margin-left:4px;">Tips Percepatan</h2></div>
+    <div class="card-body" id="tips-output"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2 style="margin-left:4px;">Dokumen yang Perlu Disiapkan</h2></div>
+    <div class="card-body">
+      <p class="card-desc">Centang saat sudah siap — status tersimpan otomatis di alat ini.</p>
+      <ul class="doc-list" id="doc-output"></ul>
+    </div>
+  </div>
+
+  <div class="card" style="background:linear-gradient(160deg,var(--navy-950),var(--navy-800));border:1px solid var(--gold);">
+    <div class="card-body" style="padding-top:20px;">
+      <p class="eyebrow" style="color:var(--gold-light);margin-bottom:8px;">Tangga Karier — Premium</p>
+      <h3 style="font-family:var(--serif);color:#fff;margin:0 0 8px;font-size:18px;">Rencanakan lebih jauh dari sekadar skor</h3>
+      <p style="color:var(--navy-100);font-size:13px;margin:0 0 14px;">Simulasi "bagaimana jika saya tambah publikasi", bandingkan semua target jenjang sekaligus, draf dokumen otomatis, dan laporan siap cetak untuk didiskusikan dengan SDM PT.</p>
+      <a href="https://mayar.id/GANTI-DENGAN-LINK-PRODUK-ANDA" target="_blank" rel="noopener" class="btn btn-gold btn-sm" style="text-decoration:none;">Lihat Versi Premium →</a>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<div class="footer-actions">
+  <button class="btn btn-ghost" id="btn-prev">← Kembali</button>
+  <button class="btn btn-gold" id="btn-next">Lanjut →</button>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   STORAGE LAYER — localStorage (for GitHub Pages / localhost)
+   This build targets self-hosted deployment, so we use real
+   localStorage. Note: this will NOT work if this file is previewed
+   inside a Claude.ai artifact sandbox (localStorage is disabled
+   there) — it is designed to run on GitHub Pages or opened directly
+   from disk. If localStorage is unavailable for any reason (e.g.
+   strict private-browsing mode in some browsers), we fall back to
+   an in-memory store so the app still functions for the session,
+   just without persistence.
+============================================================ */
+const MemoryFallback = (function(){
+  const mem = {};
+  return {
+    async get(key){ return key in mem ? {key, value: mem[key]} : null; },
+    async set(key, value){ mem[key] = value; return {key, value}; },
+  };
+})();
+
+function localStorageAvailable(){
+  try{
+    const t = '__ls_test__';
+    window.localStorage.setItem(t, '1');
+    window.localStorage.removeItem(t);
+    return true;
+  }catch(e){ return false; }
+}
+
+const LocalStorageAdapter = {
+  async get(key){
+    const v = window.localStorage.getItem(key);
+    return v === null ? null : {key, value: v};
+  },
+  async set(key, value){
+    window.localStorage.setItem(key, value);
+    return {key, value};
+  },
+};
+
+const Store = localStorageAvailable() ? LocalStorageAdapter : MemoryFallback;
+if(Store === MemoryFallback){
+  console.warn('localStorage tidak tersedia di browser ini — data tidak akan tersimpan permanen (mode sesi saja).');
+}
+const STORAGE_KEY = 'dosen-karier-profile-v1';
+
+/* ============================================================
+   FETCH ATTEMPT (Scholar / SINTA / PDDikti)
+   TODO-PROXY: these public sites do not expose CORS-enabled
+   public APIs, so client-side fetch() will typically be blocked
+   by the browser. This function attempts it honestly, times out
+   fast, and reports failure so the UI can fall back to manual
+   entry rather than silently pretending it worked. If you deploy
+   this app with your own backend, replace this with a call to
+   your proxy endpoint that fetches server-side and returns JSON.
+============================================================ */
+async function attemptFetch(url){
+  if(!url) return {ok:false, reason:'empty'};
+  const controller = new AbortController();
+  const t = setTimeout(()=>controller.abort(), 6000);
+  try{
+    const res = await fetch(url, {mode:'cors', signal: controller.signal});
+    clearTimeout(t);
+    if(!res.ok) return {ok:false, reason:'http-'+res.status};
+    const text = await res.text();
+    return {ok:true, text};
+  }catch(err){
+    clearTimeout(t);
+    return {ok:false, reason: (err && err.name==='AbortError') ? 'timeout' : 'blocked'};
+  }
+}
+
+function setFetchStatus(key, state, msg){
+  const el = document.getElementById('status-'+key);
+  if(!el) return;
+  el.className = 'fetch-status show ' + state;
+  el.textContent = msg;
+}
+
+async function runFetch(key){
+  const urlEl = document.getElementById('url-'+key);
+  const url = urlEl.value.trim();
+  if(!url){ setFetchStatus(key,'fail','Tempelkan tautan terlebih dahulu.'); return; }
+  setFetchStatus(key,'pending','Mencoba mengambil data otomatis…');
+  const result = await attemptFetch(url);
+  if(result.ok){
+    setFetchStatus(key,'ok','Berhasil diakses. Silakan cek kembali angka pada tab "Kinerja & Karya" dan sesuaikan bila perlu — ekstraksi otomatis bersifat kasar.');
+  }else{
+    const reasonText = {
+      'blocked':'diblokir oleh kebijakan keamanan browser (CORS) — situs sumber tidak mengizinkan akses lintas-domain',
+      'timeout':'tidak merespons dalam waktu wajar',
+      'http-404':'tautan tidak ditemukan (404)',
+      'empty':'tautan kosong'
+    }[result.reason] || 'gagal diakses ('+result.reason+')';
+    setFetchStatus(key,'fail','Tidak bisa ditarik otomatis: '+reasonText+'. Buka tautan ini di tab baru, salin datanya, lalu isi manual di tab "Kinerja & Karya".');
+  }
+}
+
+document.querySelectorAll('[data-fetch]').forEach(btn=>{
+  btn.addEventListener('click', ()=> runFetch(btn.getAttribute('data-fetch')));
+});
+
+/* ============================================================
+   PASTE & PARSE (client-side only, no network request at all)
+   User copies the rendered page text from their own browser tab
+   and pastes it here. We regex-scan it locally. This sidesteps
+   CORS entirely (no fetch involved) and never sends data anywhere.
+============================================================ */
+function setParseStatus(key, state, msg){
+  const el = document.getElementById('parse-status-'+key);
+  if(!el) return;
+  el.className = 'fetch-status show ' + state;
+  el.textContent = msg;
+}
+
+function setFieldIfEmpty(id, value){
+  const el = document.getElementById(id);
+  if(!el) return false;
+  const current = el.type==='checkbox' ? el.checked : (el.value||'').trim();
+  const isEmpty = el.type==='checkbox' ? (current===false) : (current==='' || current==='0');
+  if(!isEmpty) return false; // don't clobber data the user already entered
+  if(el.type==='checkbox') el.checked = true; else el.value = value;
+  el.dispatchEvent(new Event('change', {bubbles:true}));
+  return true;
+}
+
+// For <select> fields, the first option (e.g. "NONE"/"S2") is a real value,
+// not an empty placeholder, so setFieldIfEmpty would wrongly refuse to fill
+// it. Dropdowns parsed from a pasted profile are safe to set directly, since
+// the user explicitly asked this parser to populate them.
+function setSelectValue(id, value){
+  const el = document.getElementById(id);
+  if(!el || el.tagName!=='SELECT') return false;
+  const hasOption = Array.from(el.options).some(o=>o.value===value);
+  if(!hasOption) return false;
+  el.value = value;
+  el.dispatchEvent(new Event('change', {bubbles:true}));
+  return true;
+}
+
+function parseSinta(text){
+  // SINTA article blocks contain "<Qn> as Journal" followed shortly by
+  // "Author Order : N of M". We tally quartile counts and how many were
+  // first-author (order 1). SINTA does not expose corresponding-author
+  // status, so we only fill the "penulis pertama" style fields, never
+  // the "pertama & korespondensi" ones — those need manual confirmation.
+  const counts = {q1:0,q2:0,q3:0,q4:0, q1First:0,q2First:0,q3First:0,q4First:0};
+  const re = /Q([1-4])\s*as Journal[\s\S]{0,300}?Author Order\s*:\s*(\d+)\s*of\s*(\d+)/gi;
+  let m, total=0;
+  while((m = re.exec(text))){
+    total++;
+    const q = 'q'+m[1];
+    const order = parseInt(m[2],10);
+    counts[q]++;
+    if(order===1) counts[q+'First']++;
+  }
+  const hMatch = text.match(/H-Index[\s\S]{0,60}?(\d+)/i);
+  const nasionalMatch = /peringkat\s*1|Jurnal Nasional[\s\S]{0,20}Terakreditasi\s*1/i.test(text);
+  return {
+    total, counts,
+    hIndex: hMatch ? parseInt(hMatch[1],10) : null,
+  };
+}
+
+function parseScholar(text){
+  // Google Scholar's UI language follows the visitor's Google account
+  // locale, so the pasted text may be English ("h-index", "Citations")
+  // or Indonesian ("indeks-h", "Kutipan") — support both. The number
+  // sits right after the label in both locales.
+  const hMatch = text.match(/(?:h-index|indeks-h)\s+(\d+)/i);
+  const i10Match = text.match(/(?:i10-index|indeks-i10)\s+(\d+)/i);
+  const citMatch = text.match(/(?:Citations?|Kutipan)\s+(\d+)/i);
+  return {
+    hIndex: hMatch ? parseInt(hMatch[1],10) : null,
+    i10Index: i10Match ? parseInt(i10Match[1],10) : null,
+    citations: citMatch ? parseInt(citMatch[1],10) : null,
+  };
+}
+
+function parsePddikti(text){
+  const out = {};
+  const jabatanMatch = text.match(/Jabatan\s*(Fungsional|Akademik)?\s*[:\-]?\s*\n*\s*(Lektor Kepala|Asisten Ahli|Lektor|Profesor|Guru Besar)/i);
+  if(jabatanMatch){
+    const j = jabatanMatch[2].toLowerCase();
+    if(j.includes('lektor kepala')) out.jenjang='LK';
+    else if(j.includes('asisten ahli')) out.jenjang='AA';
+    else if(j.includes('profesor')||j.includes('guru besar')) out.jenjang='PROF';
+    else if(j.includes('lektor')) out.jenjang='L';
+  }
+  const prodiMatch = text.match(/Program\s*Studi\s*[:\-]?\s*\n*\s*([^\n]{3,80})/i);
+  if(prodiMatch) out.bidang = prodiMatch[1].trim();
+  // PDDikti labels this field "Pendidikan Terakhir" on the biodata page,
+  // but some views/exports call it "Jenjang Pendidikan" — match either.
+  const gelarMatch = text.match(/(?:Pendidikan\s*Terakhir|Jenjang\s*Pendidikan)\s*[:\-]?\s*\n*\s*(S3|S2|Doktor Terapan|Doktor|Magister Terapan|Magister)/i);
+  if(gelarMatch){
+    const g = gelarMatch[1].toUpperCase();
+    out.gelar = (g.includes('S3')||g.includes('DOKTOR')) ? 'S3' : 'S2';
+  }
+  const statusMatch = text.match(/Status\s*Ikatan\s*Kerja\s*[:\-]?\s*\n*\s*([^\n]{3,40})/i);
+  if(statusMatch) out.statusIkatan = statusMatch[1].trim();
+  const ptMatch = text.match(/Perguruan\s*Tinggi\s*[:\-]?\s*\n*\s*([^\n]{3,80})/i);
+  if(ptMatch) out.perguruanTinggi = ptMatch[1].trim();
+  const namaMatch = text.match(/^Nama\s*\n+\s*([^\n]{3,80})/im);
+  if(namaMatch) out.nama = namaMatch[1].trim();
+  return out;
+}
+
+async function handleParse(key){
+  const textEl = document.getElementById('paste-'+key);
+  const text = (textEl.value || '').trim();
+  if(!text || text.length < 40){
+    setParseStatus(key,'fail','Teks terlalu pendek atau kosong. Pastikan Anda menyalin seluruh isi halaman (Ctrl+A, Ctrl+C) sebelum menempel.');
+    return;
+  }
+  if(key==='sinta'){
+    const r = parseSinta(text);
+    if(r.total===0){
+      setParseStatus(key,'fail','Tidak menemukan pola artikel bertanda kuartil (Q1–Q4) pada teks ini. Pastikan Anda berada di tab "Articles" pada profil SINTA saat menyalin.');
+      return;
+    }
+    let filled = [];
+    if(setFieldIfEmpty('f-q1p', r.counts.q1First)) filled.push('Q1 penulis pertama: '+r.counts.q1First);
+    if(setFieldIfEmpty('f-q2p', r.counts.q2First)) filled.push('Q2 penulis pertama: '+r.counts.q2First);
+    if(setFieldIfEmpty('f-q3p', r.counts.q3First)) filled.push('Q3 penulis pertama: '+r.counts.q3First);
+    if(setFieldIfEmpty('f-q4p', r.counts.q4First)) filled.push('Q4 penulis pertama: '+r.counts.q4First);
+    setParseStatus(key,'ok', `Ditemukan ${r.total} artikel berkuartil (Q1:${r.counts.q1}, Q2:${r.counts.q2}, Q3:${r.counts.q3}, Q4:${r.counts.q4}). Terisi otomatis ke tab "Kinerja & Karya": ${filled.length?filled.join(' · '):'tidak ada field kosong yang bisa diisi'}. SINTA tidak mencantumkan status "korespondensi", jadi field "penulis pertama & korespondensi" tetap harus Anda cek manual dari artikel aslinya.`);
+    saveProfileForm();
+  } else if(key==='scholar'){
+    const r = parseScholar(text);
+    if(r.hIndex===null && r.citations===null){
+      setParseStatus(key,'fail','Tidak menemukan angka h-index/sitasi pada teks ini. Pastikan menyalin dari halaman profil utama (bukan halaman artikel tunggal).');
+      return;
+    }
+    setParseStatus(key,'ok', `Terbaca: h-index ${r.hIndex??'-'}, i10-index ${r.i10Index??'-'}, total sitasi ${r.citations??'-'}. Scholar tidak mencantumkan kuartil jurnal, jadi angka ini bersifat informasi pendukung saja — isi jumlah artikel per kuartil secara manual di tab "Kinerja & Karya" (gunakan SINTA/Scopus sebagai acuan kuartil).`);
+  } else if(key==='pddikti'){
+    const r = parsePddikti(text);
+    let filled = [];
+    let missing = [];
+    if(r.jenjang && setSelectValue('f-jenjang', r.jenjang)) filled.push('Jenjang akademik: '+r.jenjang); else if(!r.jenjang) missing.push('Jabatan Fungsional');
+    if(r.bidang && setFieldIfEmpty('f-bidang', r.bidang)) filled.push('Bidang: '+r.bidang); else if(!r.bidang) missing.push('Program Studi');
+    if(r.gelar && setSelectValue('f-gelar', r.gelar)) filled.push('Gelar: '+r.gelar); else if(!r.gelar) missing.push('Pendidikan Terakhir');
+    if(!r.jenjang && !r.bidang && !r.gelar){
+      setParseStatus(key,'fail','Tidak menemukan pola data yang dikenali (Jabatan Fungsional/Program Studi/Pendidikan Terakhir). Struktur halaman PDDikti mungkin berbeda dari yang diperkirakan — isi manual di tab "Profil".');
+      return;
+    }
+    let msg = 'Terisi otomatis ke tab "Profil": '+(filled.length?filled.join(' · '):'tidak ada field kosong yang cocok')+'.';
+    if(missing.length) msg += ' Tidak ditemukan di teks (isi manual): '+missing.join(', ')+'.';
+    msg += ' TMT, NIDN, dan status kepegawaian tetap perlu diisi manual — PDDikti tidak selalu menampilkannya di halaman biodata.';
+    setParseStatus(key,'ok', msg);
+    saveProfileForm();
+  }
+}
+
+document.querySelectorAll('[data-parse]').forEach(btn=>{
+  btn.addEventListener('click', ()=> handleParse(btn.getAttribute('data-parse')));
+});
+
+/* ============================================================
+   TAB NAVIGATION
+============================================================ */
+const tabs = ['profil','tautan','kinerja','target','hasil'];
+let currentTab = 0;
+
+function showTab(idx){
+  currentTab = Math.max(0, Math.min(tabs.length-1, idx));
+  tabs.forEach((t,i)=>{
+    document.getElementById('sec-'+t).classList.toggle('active', i===currentTab);
+  });
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active', i===currentTab));
+  document.getElementById('btn-prev').disabled = currentTab===0;
+  document.getElementById('btn-next').textContent = currentTab===tabs.length-1 ? 'Hitung Ulang ↻' : 'Lanjut →';
+  if(currentTab===tabs.length-1) evaluate();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+document.querySelectorAll('.tab-btn').forEach((b,i)=>b.addEventListener('click', ()=>showTab(i)));
+document.getElementById('btn-prev').addEventListener('click', ()=>showTab(currentTab-1));
+document.getElementById('btn-next').addEventListener('click', ()=>{
+  if(currentTab===tabs.length-1){ evaluate(); } else { showTab(currentTab+1); }
+});
+
+/* ============================================================
+   PROFILE COLLECTION
+============================================================ */
+function getVal(id){ const el = document.getElementById(id); return el ? el.value : ''; }
+function getNum(id){ const v = parseFloat(getVal(id)); return isNaN(v) ? 0 : v; }
+function getChk(id){ const el = document.getElementById(id); return el ? el.checked : false; }
+
+function collectProfile(){
+  return {
+    nama: getVal('f-nama'),
+    status: getVal('f-status'),
+    jenjang: getVal('f-jenjang'),
+    tmt: getVal('f-tmt'),
+    tmtDosen: getVal('f-tmtdosen'),
+    gelar: getVal('f-gelar'),
+    bidang: getVal('f-bidang'),
+    sertifikat: getChk('f-sertifikat'),
+    dosenSeni: getChk('f-dosenseni'),
+    bkd4: getChk('f-bkd4'),
+    predikat1: getVal('f-predikat1'),
+    predikat2: getVal('f-predikat2'),
+    akPenelitian: getNum('f-akpenelitian'),
+    q1pk: getNum('f-q1pk'), q1if: getNum('f-q1if'), q1p: getNum('f-q1p'),
+    q2pk: getNum('f-q2pk'), q2p: getNum('f-q2p'),
+    q3pk: getNum('f-q3pk'), q3p: getNum('f-q3p'),
+    q4p: getNum('f-q4p'),
+    jn1pk: getNum('f-jn1pk'), jn2pk: getNum('f-jn2pk'), jn4p: getNum('f-jn4p'),
+    seni1: getNum('f-seni1'), seni2: getNum('f-seni2'), seni3: getNum('f-seni3'),
+    tambahanHibah: getChk('f-tambahan-hibah'),
+    tambahanBimbing: getChk('f-tambahan-bimbing'),
+    tambahanUji: getChk('f-tambahan-uji'),
+    tambahanMitra: getChk('f-tambahan-mitra'),
+    tambahanPic: getChk('f-tambahan-pic'),
+    skpSb2: getChk('f-skpsb2'),
+    prestasiMhs: getChk('f-prestasi-mhs'),
+    prestasiBuku: getChk('f-prestasi-buku'),
+    prestasiKarya: getChk('f-prestasi-karya'),
+    prestasiPaten: getChk('f-prestasi-paten'),
+    prestasiPenghargaan: getChk('f-prestasi-penghargaan'),
+    target: getVal('f-target'),
+    tahunJabatan: yearsSince(getVal('f-tmt')),
+    tahunDosen: yearsSince(getVal('f-tmtdosen')),
+  };
+}
+
+function yearsSince(dateStr){
+  if(!dateStr) return 0;
+  const d = new Date(dateStr);
+  if(isNaN(d)) return 0;
+  const diffMs = Date.now() - d.getTime();
+  return diffMs / (1000*60*60*24*365.25);
+}
+
+function anyTambahan(p){
+  return p.tambahanHibah || p.tambahanBimbing || p.tambahanUji || p.tambahanMitra || p.tambahanPic;
+}
+function anyPrestasi(p){
+  return p.prestasiMhs || p.prestasiBuku || p.prestasiKarya || p.prestasiPaten || p.prestasiPenghargaan;
+}
+
+/* ============================================================
+   RULES ENGINE
+   Each requirement: {label, met(profile)->bool, note(profile)->string}
+============================================================ */
+const RULES = {
+
+  AA: {
+    label: 'Pengangkatan Pertama — Asisten Ahli',
+    ladderStep: 1,
+    requirements: [
+      { cat:'Administratif', label:'Ijazah sesuai jenjang program studi penugasan',
+        met:p=>true, note:p=>'Sesuaikan dengan Pasal pengadaan dosen (magister untuk sarjana, dst).' },
+      { cat:'Administratif', label:'Status kepegawaian tercatat (CPNS/Dosen tetap PTN BH/PTS)',
+        met:p=>p.status!=='' , note:p=>'Terisi: '+p.status },
+      { cat:'Administratif', label:'Predikat kinerja minimal "baik" selama masa CPNS/percobaan',
+        met:p=>p.predikat1!=='kurang', note:p=>'Predikat tahun terakhir: '+p.predikat1 },
+    ],
+    docs: [
+      'Ijazah & transkrip terlegalisasi',
+      'SK CPNS / SK pengangkatan Dosen tetap',
+      'Hasil penilaian kinerja masa percobaan',
+      'Format PAK Kumulatif (dihitung unit SDM)'
+    ],
+    tips: p=>{
+      const t=[];
+      if(p.predikat1==='kurang') t.push('Perbaiki predikat kinerja semester berjalan sebelum pengajuan — predikat minimal "baik" disyaratkan.');
+      return t;
+    }
+  },
+
+  L: {
+    label:'Kenaikan ke Lektor',
+    ladderStep: 2,
+    requirements: [
+      { cat:'Administratif', label:'BKD 4 semester berturut-turut di PT yang sama', met:p=>p.bkd4, note:p=>p.bkd4?'Terpenuhi':'Belum tercentang di tab Kinerja' },
+      { cat:'Administratif', label:'Proporsi AK Penelitian minimal 35%', met:p=>p.akPenelitian>=35, note:p=>'Saat ini: '+p.akPenelitian+'%' },
+      { cat:'Administratif', label:'Predikat kinerja minimal "baik" 2 tahun berturut-turut', met:p=>p.predikat1!=='kurang'&&p.predikat2!=='kurang', note:p=>'Th. terakhir: '+p.predikat1+', th. sebelumnya: '+p.predikat2 },
+      { cat:'Administratif', label:'Lulus uji kompetensi jenjang Lektor', met:p=>false, note:p=>'Dijadwalkan terpisah — tidak dapat dicek dari data profil (lihat kewenangan penyelenggara sesuai jenis PT Anda)' },
+      { cat:'Syarat Khusus', label:'1 artikel Jurnal Nasional terakreditasi min. peringkat 4 (penulis pertama), ATAU 1 artikel JIB min. Q4 (SJR>0,1/IF>0,05, penulis pertama), ATAU 1 karya seni bereputasi nasional/internasional',
+        met:p=> p.jn4p>=1 || p.q4p>=1 || p.seni1>=1,
+        note:p=>`JN-4: ${p.jn4p} · JIB-Q4: ${p.q4p} · Karya seni: ${p.seni1}` },
+    ],
+    docs: [
+      'Surat pengantar dari PTN/LLDIKTI/KL',
+      'Surat pernyataan pimpinan PT',
+      'Berita acara persetujuan senat + daftar hadir',
+      'Berita acara komite integritas akademik + daftar hadir',
+      'Surat pernyataan pakta integritas keabsahan karya ilmiah',
+      'Laporan Kinerja Dosen (BKD) yang disetujui pimpinan',
+      'Dokumen AK Kumulatif (Integrasi/Penyetaraan/Konversi/Pendidikan Formal/Prestasi)',
+      'Bukti korespondensi karya ilmiah',
+      'Dokumen uji kemiripan (similarity check)',
+      'Berkas rekognisi karya seni (jika jalur seni)'
+    ],
+    tips: p=>{
+      const t=[];
+      if(p.akPenelitian<35) t.push(`Proporsi AK Penelitian Anda ${p.akPenelitian}%, masih kurang ${(35-p.akPenelitian).toFixed(1)} poin dari syarat 35%.`);
+      if(!(p.jn4p>=1||p.q4p>=1||p.seni1>=1)) t.push('Kejar minimal 1 artikel di jurnal nasional terakreditasi peringkat 4 (atau Q4 internasional) sebagai penulis pertama.');
+      if(!p.bkd4) t.push('Pastikan BKD 4 semester berturut-turut di PT yang sama sudah tercatat rapi di SISTER.');
+      return t;
+    }
+  },
+
+  LK: {
+    label:'Kenaikan ke Lektor Kepala',
+    ladderStep: 3,
+    requirements: [
+      { cat:'Administratif', label:'BKD 4 semester berturut-turut di PT yang sama', met:p=>p.bkd4, note:p=>p.bkd4?'Terpenuhi':'Belum tercentang' },
+      { cat:'Administratif', label:'Proporsi AK Penelitian minimal 40%', met:p=>p.akPenelitian>=40, note:p=>'Saat ini: '+p.akPenelitian+'%' },
+      { cat:'Administratif', label:'Predikat kinerja minimal "baik" 2 tahun berturut-turut', met:p=>p.predikat1!=='kurang'&&p.predikat2!=='kurang', note:p=>'Th. terakhir: '+p.predikat1+', th. sebelumnya: '+p.predikat2 },
+      { cat:'Administratif', label:'Lulus uji kompetensi jenjang Lektor Kepala', met:p=>false, note:p=>'Dijadwalkan terpisah, cek kewenangan penyelenggara sesuai jenis PT' },
+      { cat:'Syarat Khusus', label:'1 artikel JIB min. Q3 (SJR>0,2/IF>0,05, penulis pertama & korespondensi), ATAU 1 artikel Jurnal Nasional peringkat 2 (penulis pertama & korespondensi), ATAU 1 karya seni bereputasi internasional (pencipta)',
+        met:p=> p.q3pk>=1 || p.jn2pk>=1 || p.seni2>=1,
+        note:p=>`JIB-Q3 (P&K): ${p.q3pk} · JN-2 (P&K): ${p.jn2pk} · Karya seni intl: ${p.seni2}` },
+    ],
+    docs: [
+      'Surat pengantar dari PTN/LLDIKTI/KL',
+      'Surat pernyataan pimpinan PT',
+      'Berita acara persetujuan senat + daftar hadir',
+      'Berita acara komite integritas akademik + daftar hadir',
+      'Surat pernyataan pakta integritas keabsahan karya ilmiah',
+      'Laporan Kinerja Dosen (BKD) yang disetujui pimpinan',
+      'Dokumen AK Kumulatif',
+      'Tesis atau disertasi',
+      'Bukti korespondensi karya ilmiah',
+      'Dokumen uji kemiripan (similarity check)',
+      'Berkas rekognisi karya seni (jika jalur seni)'
+    ],
+    tips: p=>{
+      const t=[];
+      if(p.akPenelitian<40) t.push(`Proporsi AK Penelitian ${p.akPenelitian}%, kurang ${(40-p.akPenelitian).toFixed(1)} poin dari syarat 40%.`);
+      if(!(p.q3pk>=1||p.jn2pk>=1||p.seni2>=1)) t.push('Prioritaskan 1 artikel Q3 (SJR>0,2) sebagai penulis pertama sekaligus korespondensi — ini opsi paling umum ditempuh.');
+      return t;
+    }
+  },
+
+  PROF: {
+    label:'Kenaikan ke Profesor',
+    ladderStep: 4,
+    requirements: [
+      { cat:'Administratif', label:'Pengalaman 10 tahun sebagai Dosen tetap', met:p=>p.tahunDosen>=10, note:p=>`Terhitung ~${p.tahunDosen.toFixed(1)} tahun dari TMT Dosen tetap` },
+      { cat:'Administratif', label:'BKD 4 semester berturut-turut di PT yang sama', met:p=>p.bkd4, note:p=>p.bkd4?'Terpenuhi':'Belum tercentang' },
+      { cat:'Administratif', label:'Gelar Doktor/Doktor Terapan/Subspesialis', met:p=>p.gelar==='S3', note:p=>'Gelar tercatat: '+(p.gelar==='S3'?'Doktor/setara':'Magister') },
+      { cat:'Administratif', label:'Proporsi AK Penelitian minimal 45%', met:p=>p.akPenelitian>=45, note:p=>'Saat ini: '+p.akPenelitian+'%' },
+      { cat:'Administratif', label:'Predikat kinerja minimal "baik" 2 tahun berturut-turut', met:p=>p.predikat1!=='kurang'&&p.predikat2!=='kurang', note:p=>'Th. terakhir: '+p.predikat1+', th. sebelumnya: '+p.predikat2 },
+      { cat:'Administratif', label:'Memiliki Sertifikat Pendidik', met:p=>p.sertifikat, note:p=>p.sertifikat?'Terpenuhi':'Belum dimiliki' },
+      { cat:'Administratif', label:'Lulus uji kompetensi jenjang Profesor', met:p=>false, note:p=>'Kewenangan hanya di Ditjen Dikti / Kemenag (khusus rumpun ilmu agama)' },
+      { cat:'Syarat Khusus', label:'1 artikel JIB min. Q2 (SJR>0,25/IF>0,05, penulis pertama & korespondensi), ATAU 2 karya seni bereputasi internasional (Dosen seni)',
+        met:p=> p.q2pk>=1 || (p.dosenSeni && p.seni2>=2),
+        note:p=>`JIB-Q2 (P&K): ${p.q2pk} · Karya seni intl (Dosen seni): ${p.seni2}` },
+      { cat:'Syarat Khusus', label:'1 artikel JIB min. Q3 (penulis pertama/korespondensi), ATAU Jurnal Nasional peringkat 1 (penulis pertama/korespondensi)',
+        met:p=> p.q3p>=1 || p.q3pk>=1 || p.jn1pk>=1,
+        note:p=>`JIB-Q3: ${p.q3p+p.q3pk} · JN-1: ${p.jn1pk}` },
+      { cat:'Syarat Tambahan', label:'Memenuhi min. 1 dari 5 syarat khusus tambahan (hibah/bimbing doktor/uji doktor/mitra bestari/PIC kerja sama)',
+        met:p=> anyTambahan(p), note:p=> anyTambahan(p) ? 'Terpenuhi' : 'Belum ada yang tercentang di tab Kinerja' },
+    ],
+    docs: [
+      'Surat pengantar dari PTN/LLDIKTI/KL',
+      'Surat pernyataan pimpinan PT',
+      'Berita acara persetujuan senat + daftar hadir',
+      'Berita acara komite integritas akademik + daftar hadir',
+      'Surat pernyataan pakta integritas keabsahan karya ilmiah',
+      'Laporan Kinerja Dosen (BKD) yang disetujui pimpinan',
+      'Dokumen AK Kumulatif',
+      'Sertifikat pendidik',
+      'Disertasi',
+      'Bukti korespondensi karya ilmiah',
+      'Dokumen uji kemiripan (similarity check)',
+      'Berkas rekognisi karya seni (jika jalur seni)',
+      'Berkas syarat khusus tambahan'
+    ],
+    tips: p=>{
+      const t=[];
+      if(p.tahunDosen<10) t.push(`Pengalaman dosen tetap Anda baru ~${p.tahunDosen.toFixed(1)} tahun, syarat minimal 10 tahun.`);
+      if(p.akPenelitian<45) t.push(`Proporsi AK Penelitian ${p.akPenelitian}%, kurang ${(45-p.akPenelitian).toFixed(1)} poin dari syarat 45%.`);
+      if(!p.sertifikat) t.push('Segera proses Sertifikat Pendidik — ini syarat wajib administratif ke Profesor.');
+      if(!(p.q2pk>=1)) t.push('Fokuskan 1 publikasi ke jurnal Q2 (SJR>0,25) sebagai penulis pertama sekaligus korespondensi untuk syarat khusus pertama.');
+      if(!anyTambahan(p)) t.push('Pilih salah satu syarat tambahan yang paling realistis — menjadi mitra bestari (reviewer) di 2 jurnal Q3 ke atas biasanya paling cepat ditempuh dibanding membimbing doktor.');
+      return t;
+    }
+  },
+
+  LONCAT_AA_LK: {
+    label:'Loncat 2 Tingkat: Asisten Ahli → Lektor Kepala',
+    ladderStep: 3,
+    requirements: [
+      { cat:'Administratif', label:'Minimal 2 tahun menduduki jabatan Asisten Ahli', met:p=>p.jenjang==='AA' && p.tahunJabatan>=2, note:p=>p.jenjang==='AA'?`~${p.tahunJabatan.toFixed(1)} tahun di Asisten Ahli`:'Jenjang saat ini bukan Asisten Ahli' },
+      { cat:'Administratif', label:'Gelar Doktor/Doktor Terapan/Subspesialis', met:p=>p.gelar==='S3', note:p=>p.gelar==='S3'?'Terpenuhi':'Belum' },
+      { cat:'Dedikasi', label:'Predikat SKP "Sangat Baik" 2 tahun terakhir berturut-turut', met:p=>p.skpSb2, note:p=>p.skpSb2?'Terpenuhi':'Belum tercentang' },
+      { cat:'Prestasi', label:'Memenuhi min. 1 bukti prestasi luar biasa', met:p=>anyPrestasi(p), note:p=>anyPrestasi(p)?'Terpenuhi':'Belum ada yang tercentang' },
+      { cat:'Syarat Khusus', label:'4 artikel JIB min. Q2 (2 sebagai penulis pertama & korespondensi + 2 sebagai penulis pertama), ATAU 4 karya seni monumental bereputasi internasional',
+        met:p=> (p.q2pk>=2 && (p.q2pk+p.q2p)>=4) || p.seni3>=4,
+        note:p=>`JIB-Q2 (P&K): ${p.q2pk}, total Q2: ${p.q2pk+p.q2p} · Karya seni monumental: ${p.seni3}` },
+      { cat:'Umum', label:'Memenuhi seluruh syarat kenaikan reguler ke Lektor Kepala', met:p=> evalScore('LK',p).pct===100, note:p=>'Lihat detail di target "Kenaikan ke Lektor Kepala"' },
+    ],
+    docs: [
+      'Seluruh dokumen kenaikan jabatan reguler (lihat daftar Lektor Kepala)',
+      'Bukti dedikasi luar biasa (rekap predikat SKP "Sangat Baik" 2 tahun)',
+      'Bukti capaian kinerja melampaui target satuan pendidikan tinggi',
+      'Bukti prestasi luar biasa (sertifikat/SK penghargaan/paten/dsb.)',
+      '4 dokumen karya ilmiah/karya seni sesuai Tabel Syarat Khusus Loncat Jenjang'
+    ],
+    tips: p=>{
+      const t=[];
+      if(p.jenjang!=='AA') t.push('Jalur ini berlaku untuk dosen dengan jabatan Asisten Ahli saat ini.');
+      if(!p.skpSb2) t.push('Kumpulkan bukti predikat SKP "Sangat Baik" dua tahun berturut-turut — ini pembeda utama dari jalur reguler.');
+      if(!anyPrestasi(p)) t.push('Cari salah satu bentuk prestasi luar biasa yang paling dekat dicapai, mis. paten atau penghargaan tingkat nasional.');
+      return t;
+    }
+  },
+
+  LONCAT_L_PROF: {
+    label:'Loncat 2 Tingkat: Lektor → Profesor',
+    ladderStep: 4,
+    requirements: [
+      { cat:'Administratif', label:'Pengalaman 10 tahun sebagai Dosen tetap', met:p=>p.tahunDosen>=10, note:p=>`~${p.tahunDosen.toFixed(1)} tahun` },
+      { cat:'Administratif', label:'Minimal 2 tahun menduduki jabatan Lektor', met:p=>p.jenjang==='L' && p.tahunJabatan>=2, note:p=>p.jenjang==='L'?`~${p.tahunJabatan.toFixed(1)} tahun di Lektor`:'Jenjang saat ini bukan Lektor' },
+      { cat:'Administratif', label:'Gelar Doktor/Doktor Terapan/Subspesialis', met:p=>p.gelar==='S3', note:p=>p.gelar==='S3'?'Terpenuhi':'Belum' },
+      { cat:'Dedikasi', label:'Predikat SKP "Sangat Baik" 2 tahun terakhir berturut-turut', met:p=>p.skpSb2, note:p=>p.skpSb2?'Terpenuhi':'Belum tercentang' },
+      { cat:'Prestasi', label:'Memenuhi min. 1 bukti prestasi luar biasa', met:p=>anyPrestasi(p), note:p=>anyPrestasi(p)?'Terpenuhi':'Belum ada yang tercentang' },
+      { cat:'Syarat Khusus', label:'4 artikel JIB min. Q1 (2 sebagai penulis pertama & korespondensi + 2 lainnya min. Q2 sebagai penulis pertama), salah satu Q1 dengan IF≥7, ATAU 4 karya seni monumental internasional',
+        met:p=> (p.q1pk>=2 && p.q1if>=7 && (p.q2pk+p.q2p)>=2) || p.seni3>=4,
+        note:p=>`JIB-Q1 (P&K): ${p.q1pk}, IF tertinggi: ${p.q1if} · Q2 lain: ${p.q2pk+p.q2p} · Karya seni monumental: ${p.seni3}` },
+      { cat:'Syarat Khusus', label:'Salah satu karya ilmiah merupakan jurnal Q1 dengan IF paling sedikit 5 (ketentuan loncat jenjang)',
+        met:p=> p.q1if>=5, note:p=>'IF tertinggi tercatat: '+p.q1if },
+      { cat:'Umum', label:'Memenuhi seluruh syarat kenaikan reguler ke Profesor (termasuk sertifikat pendidik & syarat tambahan)', met:p=> evalScore('PROF',p).pct===100, note:p=>'Lihat detail di target "Kenaikan ke Profesor"' },
+    ],
+    docs: [
+      'Seluruh dokumen kenaikan jabatan reguler ke Profesor',
+      'Bukti dedikasi luar biasa (rekap predikat SKP "Sangat Baik" 2 tahun)',
+      'Bukti capaian kinerja melampaui target satuan pendidikan tinggi',
+      'Bukti prestasi luar biasa',
+      '4 dokumen karya ilmiah/karya seni sesuai Tabel Syarat Khusus Loncat Jenjang',
+      'Bukti Impact Factor jurnal Q1 (halaman metrik jurnal/Scimago/JCR)'
+    ],
+    tips: p=>{
+      const t=[];
+      if(p.q1if<7) t.push(`IF tertinggi Anda saat ini ${p.q1if}. Untuk jalur loncat perlu salah satu Q1 dengan IF≥7 (syarat khusus penuh) — minimal IF≥5 untuk syarat loncat jenjang itu sendiri.`);
+      if(!p.skpSb2) t.push('Kumpulkan bukti predikat SKP "Sangat Baik" dua tahun berturut-turut.');
+      return t;
+    }
+  },
+
+  RETENSI_PROF: {
+    label:'Retensi Jabatan Profesor',
+    ladderStep: 4,
+    requirements: [
+      { cat:'Administratif', label:'Jabatan akademik saat ini adalah Profesor', met:p=>p.jenjang==='PROF', note:p=>p.jenjang==='PROF'?'Terpenuhi':'Jenjang saat ini bukan Profesor' },
+      { cat:'Kinerja', label:'Memenuhi Beban Kerja Dosen (BKD) sesuai jenjang Profesor', met:p=>p.bkd4, note:p=>p.bkd4?'Terpenuhi':'Belum tercentang' },
+      { cat:'Kinerja', label:'Memenuhi indikator kinerja dosen (IKD) jenjang Profesor', met:p=>p.predikat1!=='kurang', note:p=>'Predikat tahun terakhir: '+p.predikat1 },
+      { cat:'Kinerja', label:'Terus melaksanakan pengembangan & penyebarluasan ilmu (Tridharma)', met:p=>p.akPenelitian>0, note:p=>'Aktivitas Tridharma tercatat' },
+    ],
+    docs: [
+      'Laporan Kinerja Dosen (BKD) semester berjalan',
+      'Bukti pemenuhan IKD jenjang Profesor',
+      'Rekap predikat kinerja terbaru dari SISTER'
+    ],
+    tips: p=>{
+      const t=[];
+      if(!p.bkd4 || p.predikat1==='kurang') t.push('Jika BKD/IKD jenjang Profesor tidak terpenuhi 1 semester, tunjangan profesi & kehormatan diberhentikan sementara sampai terpenuhi kembali pada semester berikutnya — segera lengkapi laporan kinerja Anda.');
+      return t;
+    }
+  },
+
+  EMERITUS: {
+    label:'Pengangkatan Profesor Emeritus',
+    ladderStep: 4,
+    requirements: [
+      { cat:'Administratif', label:'Jabatan akademik Profesor sebelum pensiun', met:p=>p.jenjang==='PROF', note:p=>p.jenjang==='PROF'?'Terpenuhi':'Jenjang saat ini bukan Profesor' },
+      { cat:'Administratif', label:'Telah diberhentikan karena mencapai batas usia pensiun', met:p=>false, note:p=>'Tidak dapat diverifikasi dari data profil — pastikan status pemberhentian pensiun tercatat resmi' },
+      { cat:'Administratif', label:'Diusulkan di lingkungan PTS (bukan PTN)', met:p=>p.status==='PTS', note:p=>p.status==='PTS'?'Terpenuhi':'Skema emeritus pada Juknis ini berlaku di lingkungan PTS' },
+      { cat:'Prestasi', label:'Memiliki prestasi tertentu yang relevan', met:p=>anyPrestasi(p), note:p=>anyPrestasi(p)?'Terpenuhi':'Belum ada yang tercentang' },
+    ],
+    docs: [
+      'SK pemberhentian karena batas usia pensiun',
+      'Persetujuan Senat Perguruan Tinggi',
+      'SK pengangkatan Profesor Emeritus oleh pemimpin PTS',
+      'Rencana kegiatan penelitian/pengabdian & sumber pendanaan',
+      'Laporan berkala kepada Ditjen Dikti melalui SISTER (setelah diangkat)'
+    ],
+    tips: p=>{
+      const t=[];
+      t.push('Batas usia maksimal penugasan Profesor Emeritus adalah 75 tahun, dan wajib dilaporkan ke Pangkalan Pendidikan Tinggi.');
+      return t;
+    }
+  }
+};
+
+/* ============================================================
+   SCORING
+============================================================ */
+function evalScore(targetKey, profile){
+  const rule = RULES[targetKey];
+  if(!rule) return {pct:0, items:[]};
+  const items = rule.requirements.map(r=>({
+    cat: r.cat, label: r.label, met: !!r.met(profile), note: r.note(profile)
+  }));
+  const metCount = items.filter(i=>i.met).length;
+  const pct = items.length ? Math.round((metCount/items.length)*100) : 0;
+  return {pct, items};
+}
+
+/* ============================================================
+   RENDER
+============================================================ */
+function renderLadder(targetKey, profile){
+  const steps = [
+    {code:'AA', label:'Asisten\nAhli'},
+    {code:'L', label:'Lektor'},
+    {code:'LK', label:'Lektor\nKepala'},
+    {code:'PROF', label:'Profesor'}
+  ];
+  const currentIdx = {NONE:-1, AA:0, L:1, LK:2, PROF:3}[profile.jenjang] ?? -1;
+  const rule = RULES[targetKey];
+  const targetStep = rule ? rule.ladderStep - 1 : -1;
+  const wrap = document.getElementById('ladder');
+  wrap.innerHTML = '';
+  steps.forEach((s,i)=>{
+    const div = document.createElement('div');
+    div.className = 'ladder-step';
+    if(i<=currentIdx) div.classList.add('filled');
+    if(i===targetStep) div.classList.add('current');
+    const lbl = document.createElement('div');
+    lbl.className='step-label';
+    lbl.textContent = s.label.replace('\n',' ');
+    if(i===currentIdx){
+      const pin = document.createElement('div');
+      pin.className='ladder-pin';
+      pin.textContent='📍';
+      div.appendChild(pin);
+    }
+    div.appendChild(lbl);
+    wrap.appendChild(div);
+  });
+}
+
+function renderResult(){
+  const profile = collectProfile();
+  const targetKey = profile.target;
+  const rule = RULES[targetKey];
+  renderLadder(targetKey, profile);
+
+  if(!rule){
+    document.getElementById('score-title').textContent = 'Pilih target di tab 4';
+    return;
+  }
+
+  const {pct, items} = evalScore(targetKey, profile);
+  document.getElementById('dial').style.setProperty('--pct', pct);
+  document.getElementById('dial-value').innerHTML = pct + '<span>skor</span>';
+  document.getElementById('score-title').textContent = rule.label;
+  const metCount = items.filter(i=>i.met).length;
+  document.getElementById('score-desc').textContent =
+    pct===100
+      ? 'Seluruh syarat yang dapat diverifikasi dari data Anda sudah terpenuhi. Siapkan berkas dan ajukan melalui unit SDM PT Anda.'
+      : `${metCount} dari ${items.length} syarat terpenuhi. Lihat rincian dan tips di bawah untuk melengkapi sisanya.`;
+
+  // checklist grouped by category
+  const grouped = {};
+  items.forEach(i=>{ (grouped[i.cat] = grouped[i.cat]||[]).push(i); });
+  let html = '';
+  Object.keys(grouped).forEach(cat=>{
+    html += `<div class="check-group"><p class="check-group-title">${cat}</p>`;
+    grouped[cat].forEach(i=>{
+      html += `<div class="check-item ${i.met?'met':'unmet'}">
+        <span class="ic">${i.met?'✓':'✕'}</span>
+        <div><span class="ci-label">${i.label}</span><span class="ci-note">${i.note}</span></div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('checklist-output').innerHTML = html;
+
+  // tips
+  const tips = rule.tips ? rule.tips(profile) : [];
+  document.getElementById('tips-output').innerHTML = tips.length
+    ? tips.map(t=>`<div class="tip">${t}</div>`).join('')
+    : `<p class="small-muted">Tidak ada catatan tambahan — profil Anda sudah selaras dengan syarat yang terukur.</p>`;
+
+  // docs checklist (persisted)
+  renderDocs(targetKey, rule.docs);
+}
+
+async function renderDocs(targetKey, docs){
+  const stored = await loadDocState();
+  const doneSet = new Set(stored[targetKey] || []);
+  const list = document.getElementById('doc-output');
+  list.innerHTML = '';
+  docs.forEach((docLabel, idx)=>{
+    const li = document.createElement('li');
+    const checked = doneSet.has(idx);
+    if(checked) li.classList.add('checked');
+    li.innerHTML = `<input type="checkbox" data-doc-idx="${idx}" ${checked?'checked':''}><span>${docLabel}</span>`;
+    list.appendChild(li);
+  });
+  list.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change', async ()=>{
+      const idx = parseInt(cb.getAttribute('data-doc-idx'),10);
+      const state = await loadDocState();
+      const set = new Set(state[targetKey] || []);
+      if(cb.checked) set.add(idx); else set.delete(idx);
+      state[targetKey] = Array.from(set);
+      cb.closest('li').classList.toggle('checked', cb.checked);
+      await saveDocState(state);
+    });
+  });
+}
+
+async function loadDocState(){
+  try{
+    const res = await Store.get('doc-progress');
+    return res && res.value ? JSON.parse(res.value) : {};
+  }catch(e){ return {}; }
+}
+async function saveDocState(state){
+  try{ await Store.set('doc-progress', JSON.stringify(state)); }catch(e){/* ignore */}
+}
+
+function evaluate(){ renderResult(); }
+
+/* ============================================================
+   PERSIST PROFILE FORM STATE
+============================================================ */
+const FIELD_IDS = ['f-nama','f-status','f-jenjang','f-tmt','f-tmtdosen','f-gelar','f-bidang',
+  'f-sertifikat','f-dosenseni','f-bkd4','f-predikat1','f-predikat2','f-akpenelitian',
+  'f-q1pk','f-q1if','f-q1p','f-q2pk','f-q2p','f-q3pk','f-q3p','f-q4p',
+  'f-jn1pk','f-jn2pk','f-jn4p','f-seni1','f-seni2','f-seni3',
+  'f-tambahan-hibah','f-tambahan-bimbing','f-tambahan-uji','f-tambahan-mitra','f-tambahan-pic',
+  'f-skpsb2','f-prestasi-mhs','f-prestasi-buku','f-prestasi-karya','f-prestasi-paten','f-prestasi-penghargaan',
+  'f-target'];
+
+async function saveProfileForm(){
+  const data = {};
+  FIELD_IDS.forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    data[id] = el.type==='checkbox' ? el.checked : el.value;
+  });
+  try{ await Store.set(STORAGE_KEY, JSON.stringify(data)); }catch(e){/* ignore */}
+}
+
+async function loadProfileForm(){
+  try{
+    const res = await Store.get(STORAGE_KEY);
+    if(!res || !res.value) return;
+    const data = JSON.parse(res.value);
+    FIELD_IDS.forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el || !(id in data)) return;
+      if(el.type==='checkbox') el.checked = !!data[id]; else el.value = data[id];
+    });
+  }catch(e){/* ignore, start fresh */}
+}
+
+// autosave on any change
+document.addEventListener('change', (e)=>{
+  if(FIELD_IDS.includes(e.target.id)) saveProfileForm();
+});
+
+/* ============================================================
+   INIT
+============================================================ */
+(async function init(){
+  await loadProfileForm();
+  showTab(0);
+})();
+
+})();
+</script>
+</body>
+</html>

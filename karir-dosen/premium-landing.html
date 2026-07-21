@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tangga Karier Dosen Premium — Rencanakan Karier Akademik Anda Secara Presisi</title>
+<meta name="description" content="Simulasi, proyeksi, kalkulator AK, dan rencana karier personal untuk kenaikan jabatan akademik dosen. Sekali beli, Rp 50.000.">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<style>
+:root{
+  --navy-950:#0a1a2e;
+  --navy-900:#0f2a4a;
+  --navy-800:#173a63;
+  --navy-700:#234d7d;
+  --navy-100:#e4ebf3;
+  --paper:#eef1f5;
+  --paper-card:#ffffff;
+  --gold:#c9962c;
+  --gold-dark:#9c7420;
+  --gold-light:#f2dfae;
+  --ink:#152238;
+  --ink-soft:#4a5a72;
+  --line:#d7dee8;
+  --ok:#1e7a4c;
+  --ok-bg:#e5f4ec;
+  --bad:#a3222c;
+  --bad-bg:#faeaec;
+  --radius:10px;
+  --serif:'Source Serif 4','Georgia',serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;}
+@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+a{color:inherit;}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px;}
+h1,h2,h3{font-family:var(--serif);color:var(--navy-900);margin:0;}
+
+nav.topnav{position:sticky;top:0;z-index:50;background:rgba(238,241,245,0.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+nav.topnav .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
+.brand{display:flex;align-items:center;gap:8px;font-family:var(--serif);font-weight:700;font-size:16px;color:var(--navy-900);text-decoration:none;}
+.brand-mark{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.brand-mark svg{width:13px;height:13px;}
+.back-link{font-size:12.5px;color:var(--ink-soft);text-decoration:none;}
+.back-link:hover{color:var(--navy-800);}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:12px 22px;border-radius:8px;font-size:14px;font-weight:700;border:1px solid transparent;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:transform .12s, background .15s;}
+.btn:active{transform:scale(0.97);}
+.btn-gold{background:var(--gold);color:var(--navy-950);}
+.btn-gold:hover{background:var(--gold-dark);color:#fff;}
+.btn-ghost{background:transparent;color:var(--navy-800);border-color:var(--line);}
+.btn-ghost:hover{background:var(--navy-100);}
+.btn-sm{padding:9px 16px;font-size:12.5px;}
+.btn-lg{padding:16px 32px;font-size:16px;}
+
+/* Hero */
+.hero{background:linear-gradient(160deg,var(--navy-950) 0%, var(--navy-900) 55%, var(--navy-800) 100%);color:#fff;position:relative;overflow:hidden;padding:56px 0 64px;text-align:center;}
+.hero::after{content:"";position:absolute;right:-90px;top:-90px;width:300px;height:300px;border:1px solid rgba(201,150,44,0.2);border-radius:50%;}
+.hero::before{content:"";position:absolute;left:-100px;bottom:-140px;width:280px;height:280px;border:1px solid rgba(201,150,44,0.14);border-radius:50%;}
+.hero .inner{position:relative;z-index:2;max-width:680px;margin:0 auto;}
+.badge-premium{display:inline-flex;align-items:center;gap:6px;background:rgba(201,150,44,0.15);border:1px solid var(--gold);color:var(--gold-light);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:6px 14px;border-radius:20px;margin-bottom:20px;}
+.hero h1{font-size:clamp(28px,5vw,42px);font-weight:600;line-height:1.18;color:#fff;margin-bottom:16px;}
+.hero h1 em{font-style:normal;color:var(--gold-light);}
+.hero p.lead{font-size:16px;color:var(--navy-100);margin:0 auto 28px;max-width:520px;}
+.hero-price-tag{display:inline-flex;align-items:baseline;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(201,150,44,0.3);border-radius:10px;padding:10px 20px;margin-bottom:22px;}
+.hero-price-tag .amount{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-light);}
+.hero-price-tag .label{font-size:12px;color:rgba(255,255,255,0.6);}
+.hero-note{font-size:12px;color:rgba(255,255,255,0.5);margin-top:14px;}
+
+/* Sections generic */
+section{padding:60px 0;}
+.section-head{max-width:600px;margin:0 auto 36px;text-align:center;}
+.section-head .eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--gold-dark);margin:0 0 12px;}
+.section-head h2{font-size:clamp(22px,4vw,30px);margin-bottom:10px;}
+.section-head p{color:var(--ink-soft);font-size:14.5px;margin:0;}
+
+/* Untuk siapa */
+.qualify-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:760px){.qualify-grid{grid-template-columns:1fr;}}
+.qualify-card{background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;font-size:13.5px;}
+.qualify-card .ic{font-size:20px;margin-bottom:8px;display:block;}
+
+/* Keuntungan */
+.benefit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+@media(max-width:760px){.benefit-grid{grid-template-columns:1fr;}}
+.benefit-card{background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:flex;gap:16px;}
+.benefit-card .num{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--gold);flex-shrink:0;line-height:1;}
+.benefit-card h3{font-size:16px;margin-bottom:6px;}
+.benefit-card p{font-size:13.5px;color:var(--ink-soft);margin:0;}
+
+/* Fitur unggulan */
+.feature-cat{margin-bottom:36px;}
+.feature-cat-title{font-size:12px;text-transform:uppercase;letter-spacing:0.08em;font-weight:700;color:var(--navy-700);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--line);}
+.feature-list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:700px){.feature-list{grid-template-columns:1fr;}}
+.feature-item{display:flex;gap:12px;align-items:flex-start;}
+.feature-item .ic{width:34px;height:34px;border-radius:8px;background:var(--navy-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;}
+.feature-item h4{font-size:14px;margin:0 0 3px;color:var(--navy-900);font-family:var(--sans);font-weight:700;}
+.feature-item p{font-size:12.5px;color:var(--ink-soft);margin:0;}
+
+/* Contoh output */
+.output-block{background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:0 6px 20px -14px rgba(15,42,74,0.2);}
+.output-label{display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+.output-label .tag{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;background:var(--gold-light);color:var(--gold-dark);padding:3px 10px;border-radius:20px;}
+.output-label h3{font-size:15px;}
+/* mini reusable mockup pieces */
+.mock-dial{width:70px;height:70px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;}
+.mock-dial::after{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff;}
+.mock-dial span{position:relative;z-index:2;font-family:var(--serif);font-weight:700;font-size:16px;color:var(--navy-900);}
+.mock-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;}
+.mock-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px;}
+.mock-table th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);font-size:11px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.04em;}
+.mock-table td{padding:7px 8px;border-bottom:1px solid var(--line);}
+.mock-table tr:last-child td{border-bottom:none;}
+.mock-check{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:6px;font-size:12.5px;margin-bottom:6px;}
+.mock-check.met{background:var(--ok-bg);color:var(--ok);}
+.mock-check.unmet{background:var(--bad-bg);color:var(--bad);}
+.mock-pill{display:inline-block;background:var(--ok-bg);color:var(--ok);font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;}
+.mock-doc{background:#fbfbf9;border:1px solid var(--line);border-radius:8px;padding:16px;font-family:Georgia,serif;font-size:12px;line-height:1.7;color:var(--ink);white-space:pre-wrap;}
+.mock-badge-canvas{width:120px;height:120px;border-radius:12px;background:linear-gradient(160deg,#0a1a2e,#173a63);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(15,42,74,0.2);}
+.mock-badge-canvas .ring{width:50px;height:50px;border:4px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px;margin-bottom:6px;}
+.mock-badge-canvas .txt{color:#fff;font-size:9px;font-weight:700;text-align:center;padding:0 8px;}
+.mock-chart-svg{width:100%;height:auto;}
+
+/* Compare table */
+.compare-table{background:var(--paper-card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+.compare-row{display:grid;grid-template-columns:1.6fr 0.6fr 0.6fr;border-bottom:1px solid var(--line);font-size:13px;}
+.compare-row:last-child{border-bottom:none;}
+.compare-row.head{background:var(--navy-900);color:#fff;font-weight:700;font-size:12px;}
+.compare-row > div{padding:11px 14px;display:flex;align-items:center;}
+.compare-row > div:not(:first-child){justify-content:center;text-align:center;}
+.compare-row.head > div:nth-child(3){color:var(--gold-light);}
+.cmp-yes{color:var(--ok);font-weight:700;}
+.cmp-no{color:var(--ink-soft);opacity:0.35;}
+.cmp-gold{color:var(--gold-dark);font-weight:700;}
+
+/* Pricing CTA block */
+.price-block{background:linear-gradient(160deg,var(--navy-950),var(--navy-800));border-radius:16px;padding:44px 32px;text-align:center;color:#fff;position:relative;overflow:hidden;}
+.price-block::after{content:"";position:absolute;right:-60px;bottom:-60px;width:200px;height:200px;border:1px solid rgba(201,150,44,0.2);border-radius:50%;}
+.price-block .amount{font-family:var(--serif);font-size:44px;font-weight:700;color:var(--gold-light);margin-bottom:4px;position:relative;z-index:2;}
+.price-block .amount small{font-size:15px;font-weight:400;color:rgba(255,255,255,0.6);}
+.price-block .guarantee{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:rgba(255,255,255,0.7);margin-top:18px;position:relative;z-index:2;}
+.trust-row{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;margin-top:22px;font-size:12px;color:rgba(255,255,255,0.55);position:relative;z-index:2;}
+.trust-row div{display:flex;align-items:center;gap:6px;}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--line);padding:16px 0;}
+.faq-item summary{font-weight:600;font-size:14px;cursor:pointer;color:var(--navy-900);list-style:none;display:flex;justify-content:space-between;align-items:center;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:"+";font-size:18px;color:var(--gold-dark);transition:transform .2s;}
+.faq-item[open] summary::after{transform:rotate(45deg);}
+.faq-item p{font-size:13px;color:var(--ink-soft);margin:8px 0 0;}
+
+/* Sticky bottom CTA (mobile-friendly) */
+.sticky-cta{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 16px;display:none;z-index:40;box-shadow:0 -4px 16px rgba(15,42,74,0.08);}
+.sticky-cta .wrap{display:flex;align-items:center;justify-content:space-between;padding:0;max-width:1040px;}
+@media(max-width:680px){.sticky-cta{display:block;}}
+
+footer{background:var(--navy-950);color:rgba(255,255,255,0.55);padding:32px 0;font-size:12px;text-align:center;}
+footer a{color:var(--gold-light);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20V14M9 20V10M14 20V6M19 20V3" stroke="#c9962c" stroke-width="2.4" stroke-linecap="round"/></svg></span>
+      Tangga Karier
+    </a>
+    <a href="index.html" class="back-link">← Kembali ke Beranda</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap inner">
+    <span class="badge-premium">✦ Tangga Karier Premium</span>
+    <h1>Bukan cuma skor — <em>rencana karier</em> yang bisa Anda ikuti.</h1>
+    <p class="lead">Simulasi, proyeksi tahun tercapai, kalkulator AK, dan rencana publikasi personal — semua dari data Anda sendiri, berjalan di browser Anda sendiri.</p>
+    <div class="hero-price-tag">
+      <span class="amount">Rp 50.000</span>
+      <span class="label">sekali beli<br>bukan langganan</span>
+    </div>
+    <div>
+      <a href="https://mayar.id/GANTI-DENGAN-LINK-PRODUK-ANDA" target="_blank" rel="noopener" class="btn btn-gold btn-lg">Beli Sekarang — Rp 50.000</a>
+    </div>
+    <p class="hero-note">Langsung dapat file setelah pembayaran. Tidak perlu instal apa pun.</p>
+  </div>
+</header>
+
+<section id="untuk-siapa">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Untuk Siapa</p>
+      <h2>Cocok untuk Anda kalau...</h2>
+    </div>
+    <div class="qualify-grid">
+      <div class="qualify-card"><span class="ic">🎯</span>Anda sudah tahu target jenjang, tapi belum tahu <strong>berapa lama lagi</strong> realistisnya tercapai.</div>
+      <div class="qualify-card"><span class="ic">📊</span>Anda sering bingung menghitung AK sendiri sebelum konsultasi ke bagian SDM PT.</div>
+      <div class="qualify-card"><span class="ic">🧭</span>Anda Kaprodi/Kajur yang perlu memantau kesiapan <strong>beberapa dosen sekaligus</strong>.</div>
+    </div>
+  </div>
+</section>
+
+<section id="keuntungan" style="background:var(--paper-card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Keuntungan</p>
+      <h2>Apa yang benar-benar berubah setelah upgrade</h2>
+    </div>
+    <div class="benefit-grid">
+      <div class="benefit-card">
+        <span class="num">01</span>
+        <div><h3>Tahu kapan, bukan cuma "belum siap"</h3><p>Proyeksi tahun tercapai berdasarkan kecepatan publikasi Anda sendiri — bukan tebakan.</p></div>
+      </div>
+      <div class="benefit-card">
+        <span class="num">02</span>
+        <div><h3>Tidak perlu hitung AK manual dari tabel Kepmen</h3><p>Dua kalkulator (AK Prestasi & AK Konversi) langsung memakai angka resmi dari peraturan.</p></div>
+      </div>
+      <div class="benefit-card">
+        <span class="num">03</span>
+        <div><h3>Sesuai kebijakan kampus Anda sendiri</h3><p>Banyak PT punya syarat internal lebih ketat dari Kepmen — threshold-nya bisa Anda sesuaikan.</p></div>
+      </div>
+      <div class="benefit-card">
+        <span class="num">04</span>
+        <div><h3>Satu alat untuk banyak dosen</h3><p>Kaprodi/Kajur bisa memantau kesiapan seluruh anggota prodinya dari satu tempat.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fitur">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Fitur Unggulan</p>
+      <h2>Semua yang ada di Free, plus 10 alat perencanaan</h2>
+    </div>
+
+    <div class="feature-cat">
+      <p class="feature-cat-title">Perencanaan Waktu</p>
+      <div class="feature-list">
+        <div class="feature-item"><span class="ic">📅</span><div><h4>Proyeksi Waktu Pencapaian</h4><p>Isi kecepatan publikasi rata-rata, dapatkan estimasi tahun syarat terpenuhi.</p></div></div>
+        <div class="feature-item"><span class="ic">🗓️</span><div><h4>Rencana Publikasi Tahunan</h4><p>Rencanakan target spesifik per tahun, lihat skor kumulatif tiap tahun.</p></div></div>
+        <div class="feature-item"><span class="ic">🔀</span><div><h4>Simulasi "Bagaimana Jika"</h4><p>Lihat perubahan skor instan sebelum benar-benar menambah publikasi.</p></div></div>
+        <div class="feature-item"><span class="ic">🧭</span><div><h4>Rekomendasi Jalur Tercepat</h4><p>Otomatis bandingkan 8 target, sarankan mana yang paling dekat dicapai.</p></div></div>
+      </div>
+    </div>
+
+    <div class="feature-cat">
+      <p class="feature-cat-title">Kalkulasi Angka Kredit</p>
+      <div class="feature-list">
+        <div class="feature-item"><span class="ic">🧮</span><div><h4>Kalkulator AK Prestasi</h4><p>Poin per kategori karya ilmiah, langsung dari Tabel 2 Kepmen.</p></div></div>
+        <div class="feature-item"><span class="ic">📐</span><div><h4>Kalkulator AK Konversi</h4><p>AK dari predikat kinerja SKP tahunan, sesuai Tabel 28.</p></div></div>
+      </div>
+    </div>
+
+    <div class="feature-cat">
+      <p class="feature-cat-title">Personalisasi</p>
+      <div class="feature-list">
+        <div class="feature-item"><span class="ic">⚙️</span><div><h4>Threshold Kustom PT</h4><p>Sesuaikan angka minimum kalau kampus Anda punya syarat lebih ketat.</p></div></div>
+        <div class="feature-item"><span class="ic">👥</span><div><h4>Mode Multi-Profil</h4><p>Kelola data beberapa dosen sekaligus dari satu perangkat.</p></div></div>
+      </div>
+    </div>
+
+    <div class="feature-cat">
+      <p class="feature-cat-title">Dokumentasi & Progres</p>
+      <div class="feature-list">
+        <div class="feature-item"><span class="ic">📈</span><div><h4>Riwayat & Tren Skor</h4><p>Grafik perkembangan skor kesiapan dari waktu ke waktu.</p></div></div>
+        <div class="feature-item"><span class="ic">📝</span><div><h4>Generator Draf Dokumen</h4><p>Draf surat pengantar otomatis terisi dari profil Anda.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contoh-output" style="background:var(--paper-card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Contoh Output</p>
+      <h2>Bukan janji kosong — ini yang benar-benar Anda dapatkan</h2>
+      <p>Tampilan di bawah ini mereplikasi persis komponen di dalam aplikasi.</p>
+    </div>
+
+    <div class="output-block">
+      <div class="output-label"><span class="tag">Simulasi</span><h3>"Bagaimana jika saya tambah 1 artikel Q3 dan naikkan AK 5%?"</h3></div>
+      <div class="mock-row" style="justify-content:space-between;">
+        <div style="text-align:center;"><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">Sekarang</div><div style="font-family:var(--serif);font-size:26px;font-weight:700;color:var(--navy-900);">60</div></div>
+        <div style="font-size:20px;color:var(--gold-dark);">→</div>
+        <div style="text-align:center;"><div style="font-size:11px;color:var(--ink-soft);margin-bottom:4px;">Dengan tambahan</div><div style="font-family:var(--serif);font-size:26px;font-weight:700;color:var(--navy-900);">100</div></div>
+        <div style="font-weight:700;color:var(--ok);font-size:14px;">+40 poin</div>
+      </div>
+    </div>
+
+    <div class="output-block">
+      <div class="output-label"><span class="tag">Proyeksi</span><h3>Estimasi tahun syarat terukur terpenuhi</h3></div>
+      <table class="mock-table">
+        <tr><th>Tahun</th><th>Skor Kumulatif</th></tr>
+        <tr><td>2027</td><td>52%</td></tr>
+        <tr><td>2028</td><td>78%</td></tr>
+        <tr><td>2029</td><td style="color:var(--ok);font-weight:700;">100% ✓</td></tr>
+      </table>
+      <p style="font-size:12px;color:var(--ink-soft);margin-top:8px;">Dengan kecepatan 1 artikel Q3/tahun dan kenaikan AK 5%/tahun.</p>
+    </div>
+
+    <div class="output-block">
+      <div class="output-label"><span class="tag">Kalkulator AK</span><h3>Rincian poin AK Prestasi per kategori</h3></div>
+      <table class="mock-table">
+        <tr><th>Kategori</th><th>Jumlah</th><th>AK</th></tr>
+        <tr><td>JIB Q2</td><td>1</td><td>38.0</td></tr>
+        <tr><td>Jurnal Nasional Peringkat 3–4</td><td>1</td><td>20.0</td></tr>
+        <tr><td>Prosiding Nasional</td><td>2</td><td>15.0</td></tr>
+        <tr><td><strong>Total</strong></td><td></td><td><strong>73.0</strong></td></tr>
+      </table>
+    </div>
+
+    <div class="output-block">
+      <div class="output-label"><span class="tag">Rincian Syarat</span><h3>Checklist otomatis per target jenjang</h3></div>
+      <div class="mock-check met">✓ Proporsi AK Penelitian minimal 40% — saat ini 44%</div>
+      <div class="mock-check met">✓ Predikat kinerja "baik" 2 tahun berturut-turut</div>
+      <div class="mock-check unmet">✕ 1 artikel JIB min. Q3 (penulis pertama & korespondensi)</div>
+    </div>
+
+    <div class="output-block">
+      <div class="output-label"><span class="tag">Tren</span><h3>Riwayat skor dari waktu ke waktu</h3></div>
+      <svg class="mock-chart-svg" viewBox="0 0 600 130">
+        <line x1="20" y1="108" x2="580" y2="108" stroke="#d7dee8" stroke-width="1"/>
+        <path d="M20,88 L200,68 L380,40 L560,18 L560,108 L20,108 Z" fill="rgba(201,150,44,0.12)" stroke="none"/>
+        <path d="M20,88 L200,68 L380,40 L560,18" fill="none" stroke="#c9962c" stroke-width="2.5"/>
+        <circle cx="20" cy="88" r="3" fill="#c9962c"/><circle cx="200" cy="68" r="3" fill="#c9962c"/><circle cx="380" cy="40" r="3" fill="#c9962c"/><circle cx="560" cy="18" r="3" fill="#c9962c"/>
+        <text x="20" y="124" font-size="10" fill="#4a5a72">Jan 2026</text>
+        <text x="560" y="124" font-size="10" fill="#4a5a72" text-anchor="end">Jul 2026</text>
+      </svg>
+      <p style="font-size:12px;color:var(--ink-soft);margin-top:4px;">4 catatan · sejak Januari: naik 32 poin.</p>
+    </div>
+
+    <div class="output-block">
+      <div class="output-label"><span class="tag">Badge</span><h3>Saat skor mencapai 100%</h3></div>
+      <div class="mock-row">
+        <div class="mock-badge-canvas">
+          <div class="ring">✓</div>
+          <div class="txt">100% SIAP DIAJUKAN</div>
+        </div>
+        <div style="font-size:13px;color:var(--ink-soft);max-width:340px;">Badge otomatis bisa diunduh sebagai PNG dan dibagikan — dokumentasi pencapaian yang bisa Anda simpan atau bagikan ke rekan sejawat.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="perbandingan">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Perbandingan</p>
+      <h2>Apa bedanya dengan Free?</h2>
+    </div>
+    <div class="compare-table">
+      <div class="compare-row head"><div>Fitur</div><div>Free</div><div>Premium</div></div>
+      <div class="compare-row"><div>Skor kesiapan & checklist dokumen</div><div class="cmp-yes">✓</div><div class="cmp-yes">✓</div></div>
+      <div class="compare-row"><div>Tempel data SINTA/Scholar/PDDikti</div><div class="cmp-yes">✓</div><div class="cmp-yes">✓</div></div>
+      <div class="compare-row"><div>Simulasi & proyeksi waktu</div><div class="cmp-no">—</div><div class="cmp-gold">✓</div></div>
+      <div class="compare-row"><div>Rencana publikasi tahunan</div><div class="cmp-no">—</div><div class="cmp-gold">✓</div></div>
+      <div class="compare-row"><div>Kalkulator AK Prestasi & Konversi</div><div class="cmp-no">—</div><div class="cmp-gold">✓</div></div>
+      <div class="compare-row"><div>Threshold kustom PT</div><div class="cmp-no">—</div><div class="cmp-gold">✓</div></div>
+      <div class="compare-row"><div>Mode multi-profil</div><div class="cmp-no">—</div><div class="cmp-gold">✓</div></div>
+      <div class="compare-row"><div>Riwayat & tren skor</div><div class="cmp-no">—</div><div class="cmp-gold">✓</div></div>
+      <div class="compare-row"><div>Generator draf dokumen</div><div class="cmp-no">—</div><div class="cmp-gold">✓</div></div>
+      <div class="compare-row"><div>Bisa dipasang sebagai aplikasi (PWA)</div><div class="cmp-no">—</div><div class="cmp-gold">✓</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="harga" style="background:var(--paper-card);border-top:1px solid var(--line);">
+  <div class="wrap">
+    <div class="price-block">
+      <p class="eyebrow" style="color:var(--gold-light);">Investasi Satu Kali</p>
+      <div class="amount">Rp 50.000 <small>sekali beli, bukan langganan</small></div>
+      <div style="margin-top:22px;">
+        <a href="https://mayar.id/GANTI-DENGAN-LINK-PRODUK-ANDA" target="_blank" rel="noopener" class="btn btn-gold btn-lg">Beli Premium Sekarang →</a>
+      </div>
+      <p class="guarantee">🔒 Pembayaran aman lewat Mayar.id · File langsung dikirim setelah pembayaran</p>
+      <div class="trust-row">
+        <div>📶 Berjalan offline setelah instal</div>
+        <div>🔐 Data tidak pernah dikirim ke server</div>
+        <div>♾️ Milik Anda selamanya</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap" style="max-width:700px;">
+    <div class="section-head">
+      <p class="eyebrow">Pertanyaan Umum</p>
+      <h2>FAQ</h2>
+    </div>
+    <details class="faq-item">
+      <summary>Bagaimana cara saya menerima aplikasinya setelah bayar?</summary>
+      <p>Setelah pembayaran melalui Mayar berhasil, Anda mendapat akses unduh file aplikasi Premium (1 file HTML). Cukup buka filenya di browser — tidak perlu instalasi khusus.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Apakah ini langganan? Apa saya perlu bayar lagi tahun depan?</summary>
+      <p>Tidak. Ini pembelian sekali bayar. File yang Anda unduh menjadi milik Anda dan bisa dipakai selamanya, tanpa biaya berulang.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Apakah kalkulator AK ini akurat 100%?</summary>
+      <p>Kalkulator memakai nilai AK Maksimal per kategori sesuai Kepmen No. 39/M/KEP/2026 — ini estimasi batas atas yang membantu perencanaan, bukan pengganti penilaian resmi asesor/reviewer PT Anda.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Data saya aman?</summary>
+      <p>Ya. Semua data (profil, publikasi, riwayat skor) tersimpan di browser Anda sendiri (localStorage) dan tidak pernah dikirim ke server kami atau pihak lain.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Bisa dicoba dulu sebelum beli?</summary>
+      <p>Bisa — coba versi Free terlebih dahulu untuk melihat cara kerja dasarnya, lalu upgrade kapan saja saat butuh fitur perencanaan yang lebih dalam.</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Tangga Karier Dosen Premium — alat bantu simulasi mandiri, bukan sistem resmi Kementerian Pendidikan Tinggi, Sains, dan Teknologi.<br>
+    <a href="index.html">← Kembali ke Beranda</a> · <a href="Tangga-Karier-Dosen-FREE.html">Coba Versi Gratis</a>
+  </div>
+</footer>
+
+<div class="sticky-cta">
+  <div class="wrap">
+    <div>
+      <div style="font-family:var(--serif);font-weight:700;font-size:16px;color:var(--navy-900);">Rp 50.000</div>
+      <div style="font-size:11px;color:var(--ink-soft);">sekali beli</div>
+    </div>
+    <a href="https://mayar.id/GANTI-DENGAN-LINK-PRODUK-ANDA" target="_blank" rel="noopener" class="btn btn-gold">Beli Sekarang</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "Tangga Karier Dosen — Premium",
+  "short_name": "Tangga Karier",
+  "description": "Kalkulator & perencana jenjang karier akademik dosen, berbasis Kepmen No. 39/M/KEP/2026.",
+  "start_url": "./Tangga-Karier-Dosen-PREMIUM.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#eef1f5",
+  "theme_color": "#0f2a4a",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
