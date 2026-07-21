@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Primajana Tools</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+GLOBAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    background:
+    radial-gradient(
+    circle at top left,
+    #0d53ff 0%,
+    #00145a 45%,
+    #000f47 100%
+    );
+
+    color:white;
+
+    overflow-x:hidden;
+
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.container{
+    width:92%;
+    max-width:1280px;
+    margin:auto;
+}
+
+/* =========================
+BACKGROUND LIGHT
+========================= */
+
+.bg-light{
+
+    position:fixed;
+
+    width:900px;
+    height:900px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(0,162,255,.14),
+    transparent 70%
+    );
+
+    top:-420px;
+    right:-250px;
+
+    z-index:-1;
+
+    pointer-events:none;
+
+}
+
+/* =========================
+NAVBAR
+========================= */
+
+nav{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:28px 0;
+
+}
+
+.logo-wrapper{
+
+    display:flex;
+    align-items:center;
+    gap:16px;
+
+}
+
+.logo-box{
+
+    width:46px;
+    height:46px;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+    145deg,
+    #4ca2ff,
+    #003bdb
+    );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+    0 0 25px rgba(0,132,255,.45);
+
+}
+
+.logo-box svg{
+    width:26px;
+    height:26px;
+}
+
+.contact-btn svg{
+    width:18px;
+    height:18px;
+    flex-shrink:0;
+}
+
+.eyebrow svg{
+    width:16px;
+    height:16px;
+    flex-shrink:0;
+}
+
+.arrow svg{
+    width:20px;
+    height:20px;
+}
+
+.logo-text h1{
+
+    font-size:20px;
+    font-weight:800;
+    line-height:1;
+
+}
+
+.logo-text span{
+
+    font-size:12px;
+    opacity:.85;
+
+}
+
+/* =========================
+GREEN CTA BUTTON
+========================= */
+
+.contact-btn{
+
+    position:relative;
+
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    padding:14px 24px;
+
+    border-radius:16px;
+
+    text-decoration:none;
+
+    color:white;
+    font-weight:600;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+    145deg,
+    #00d26a,
+    #00a94f
+    );
+
+    border:
+    1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+
+    0 0 12px rgba(0,255,128,.35),
+
+    0 0 28px rgba(0,255,128,.18),
+
+    0 10px 25px rgba(0,0,0,.22);
+
+    transition:
+    transform .35s ease,
+    box-shadow .35s ease;
+
+    animation:
+    greenPulse 2.5s ease-in-out infinite,
+    blinkGlow 3s linear infinite;
+
+}
+
+.contact-btn:hover{
+
+    transform:
+    translateY(-3px)
+    scale(1.03);
+
+    box-shadow:
+
+    0 0 20px rgba(0,255,140,.65),
+
+    0 0 45px rgba(0,255,140,.35),
+
+    0 18px 35px rgba(0,0,0,.28);
+
+}
+
+.contact-btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-140%;
+
+    width:80%;
+    height:100%;
+
+    background:
+    linear-gradient(
+    115deg,
+    transparent,
+    rgba(255,255,255,.35),
+    transparent
+    );
+
+    transform:skewX(-20deg);
+
+    transition:1s ease;
+
+}
+
+.contact-btn:hover::before{
+    left:160%;
+}
+
+@keyframes greenPulse{
+
+    0%,100%{
+
+        box-shadow:
+
+        0 0 12px rgba(0,255,128,.35),
+
+        0 0 24px rgba(0,255,128,.12);
+
+    }
+
+    50%{
+
+        box-shadow:
+
+        0 0 22px rgba(0,255,128,.75),
+
+        0 0 55px rgba(0,255,128,.35);
+
+    }
+
+}
+
+@keyframes blinkGlow{
+
+    0%,100%{
+        filter:brightness(1);
+    }
+
+    50%{
+        filter:brightness(1.08);
+    }
+
+}
+
+/* =========================
+PAGE HERO
+========================= */
+
+.page-hero{
+
+    margin:20px 0 50px;
+    text-align:center;
+
+}
+
+.page-hero .eyebrow{
+
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:8px 18px;
+
+    border-radius:999px;
+
+    background:rgba(0,140,255,.16);
+    border:1px solid rgba(120,190,255,.3);
+
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:#7ec8ff;
+
+    margin-bottom:22px;
+
+}
+
+.page-hero h1{
+
+    font-size:44px;
+    font-weight:800;
+    line-height:1.2;
+
+    margin-bottom:16px;
+
+}
+
+.page-hero p{
+
+    max-width:640px;
+    margin:0 auto;
+
+    font-size:16px;
+    line-height:1.8;
+    opacity:.85;
+
+}
+
+/* =========================
+SERVICES GRID
+========================= */
+
+.services{
+
+    margin-top:20px;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    gap:22px;
+
+}
+
+/* =========================
+SERVICE CARD
+========================= */
+
+.service-card{
+
+    position:relative;
+
+    display:flex;
+    flex-direction:column;
+
+    padding:26px 24px 24px;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(8,66,255,.35),
+    rgba(0,25,112,.82)
+    );
+
+    border:
+    1px solid rgba(100,180,255,.18);
+
+    backdrop-filter:blur(14px);
+
+    min-height:480px;
+
+    isolation:isolate;
+
+    transition:
+    transform .45s ease,
+    box-shadow .45s ease,
+    border-color .45s ease;
+
+    animation:
+    cardReveal .8s ease forwards;
+
+}
+
+/* GLOW */
+
+.service-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-2px;
+
+    border-radius:inherit;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(0,140,255,.28),
+    transparent 70%
+    );
+
+    z-index:-1;
+
+    opacity:.6;
+
+    filter:blur(18px);
+
+    animation:
+    glowPulse 4s ease-in-out infinite;
+
+}
+
+.service-card:hover{
+
+    transform:
+    translateY(-12px)
+    scale(1.02);
+
+    border-color:
+    rgba(120,190,255,.55);
+
+    box-shadow:
+
+    0 0 22px rgba(0,140,255,.25),
+
+    0 25px 50px rgba(0,80,255,.25);
+
+}
+
+.service-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-140%;
+
+    width:80%;
+    height:100%;
+
+    background:
+    linear-gradient(
+    115deg,
+    transparent,
+    rgba(255,255,255,.14),
+    transparent
+    );
+
+    transform:skewX(-20deg);
+
+    transition:1s ease;
+
+}
+
+.service-card:hover::after{
+    left:160%;
+}
+
+/* =========================
+CARD NUMBER
+========================= */
+
+.number{
+
+    position:absolute;
+
+    top:18px;
+    left:18px;
+
+    width:38px;
+    height:38px;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    linear-gradient(
+    145deg,
+    rgba(37,99,235,.95),
+    rgba(29,78,216,.95)
+    );
+
+    font-size:15px;
+    font-weight:700;
+
+    box-shadow:
+    0 8px 18px rgba(0,0,0,.18);
+
+    z-index:5;
+
+}
+
+/* =========================
+ICON (native lucide, replaces external image icon)
+========================= */
+
+.service-icon{
+
+    position:relative;
+
+    width:100%;
+    height:220px;
+
+    margin:
+    40px 0 24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    background:
+    radial-gradient(
+    circle at top,
+    rgba(255,255,255,.10),
+    transparent 70%
+    );
+
+}
+
+.service-icon::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:180%;
+    height:180%;
+
+    background:
+    radial-gradient(
+    circle,
+    rgba(255,255,255,.14),
+    transparent 65%
+    );
+
+    top:-40%;
+    left:-40%;
+
+}
+
+.service-icon .icon-wrap{
+
+    position:relative;
+
+    z-index:2;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    width:96px;
+    height:96px;
+
+    border-radius:26px;
+
+    background:
+    linear-gradient(
+    145deg,
+    #1663ff,
+    #002db5
+    );
+
+    box-shadow:
+    0 18px 30px rgba(0,0,0,.28);
+
+    transition:
+    transform .45s ease;
+
+    animation:
+    floatIcon 4s ease-in-out infinite;
+
+}
+
+.service-icon .icon-wrap svg{
+
+    width:44px;
+    height:44px;
+    color:white;
+
+}
+
+.service-card:hover .service-icon .icon-wrap{
+
+    transform:
+    scale(1.08)
+    translateY(-6px);
+
+}
+
+/* =========================
+TEXT
+========================= */
+
+.service-title{
+
+    position:relative;
+    z-index:3;
+
+    font-size:22px;
+    line-height:1.35;
+    font-weight:700;
+
+    margin-bottom:14px;
+
+}
+
+.service-desc{
+
+    position:relative;
+    z-index:3;
+
+    flex-grow:1;
+
+    font-size:14px;
+    line-height:1.8;
+
+    opacity:.88;
+
+}
+
+/* =========================
+LINK
+========================= */
+
+.service-link{
+
+    position:relative;
+    z-index:3;
+
+    margin-top:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    text-decoration:none;
+
+    color:#7ec8ff;
+
+    font-weight:500;
+
+}
+
+.arrow{
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    border:
+    1px solid rgba(255,255,255,.25);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:.35s ease;
+
+}
+
+.service-card:hover .arrow{
+
+    transform:translateX(4px);
+
+    background:
+    linear-gradient(
+    145deg,
+    #1b74ff,
+    #0050ff
+    );
+
+    box-shadow:
+    0 0 18px rgba(0,132,255,.35);
+
+}
+
+/* =========================
+FOOTER
+========================= */
+
+footer{
+
+    text-align:center;
+
+    padding:28px;
+
+    border-top:
+    1px solid rgba(255,255,255,.08);
+
+    background:
+    rgba(0,0,0,.15);
+
+    font-size:14px;
+
+    opacity:.8;
+
+}
+
+/* =========================
+ANIMATIONS
+========================= */
+
+@keyframes floatIcon{
+
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+
+}
+
+@keyframes glowPulse{
+
+    0%,100%{
+        opacity:.45;
+        transform:scale(1);
+    }
+
+    50%{
+        opacity:.9;
+        transform:scale(1.015);
+    }
+
+}
+
+@keyframes cardReveal{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(40px)
+        scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+    }
+
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1200px){
+
+    .services{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:768px){
+
+    .services{
+        grid-template-columns:1fr;
+    }
+
+    .service-card{
+        min-height:auto;
+    }
+
+    .service-icon{
+        height:180px;
+    }
+
+    .service-title{
+        font-size:20px;
+    }
+
+    .page-hero h1{
+        font-size:32px;
+    }
+
+    .page-hero p{
+        font-size:15px;
+    }
+
+}
+
+@media(max-width:480px){
+
+    nav{
+        flex-direction:row;
+        gap:12px;
+    }
+
+    .logo-wrapper{
+        gap:10px;
+    }
+
+    .logo-box{
+        width:40px;
+        height:40px;
+    }
+
+    .logo-text h1{
+        font-size:16px;
+    }
+
+    .logo-text span{
+        font-size:10px;
+    }
+
+    .contact-btn{
+        padding:10px 14px;
+        font-size:12px;
+        border-radius:12px;
+    }
+
+    .service-icon{
+        height:160px;
+    }
+
+    .service-title{
+        font-size:19px;
+    }
+
+    .page-hero h1{
+        font-size:26px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-light"></div>
+
+<div class="container">
+
+<!-- NAVBAR -->
+<nav>
+
+<div class="logo-wrapper">
+
+<div class="logo-box">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73Z"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/></svg>
+</div>
+
+<div class="logo-text">
+<h1>PRIMAJANA</h1>
+<span>Solusi Cerdas, Hasil Nyata</span>
+</div>
+
+</div>
+
+<a href="https://wa.me/+6285935201571" class="contact-btn">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+Hubungi Kami
+</a>
+
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+
+<div class="eyebrow">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+Primajana Tools
+</div>
+
+<h1>
+Kumpulan Tools Cerdas untuk Belajar &amp; Berkarir
+</h1>
+
+<p>
+Berbagai alat dan paket latihan yang dirancang untuk membantumu menganalisis data, lolos seleksi, dan naik jenjang karir dengan lebih percaya diri.
+</p>
+
+</section>
+
+<!-- =========================
+TOOLS
+========================= -->
+
+<section class="services">
+
+<!-- 01 -->
+<div class="service-card">
+
+<div class="number">01</div>
+
+<div class="service-icon">
+<div class="icon-wrap">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+</div>
+</div>
+
+<div class="service-title">
+Alat Analisis Data
+</div>
+
+<div class="service-desc">
+Platform analisis data interaktif untuk mengolah, memvisualisasikan, dan menarik insight dari data penelitian maupun bisnis secara cepat dan akurat.
+</div>
+
+<a href="/trial/index.html" class="service-link">
+
+<span>Coba Sekarang</span>
+
+<div class="arrow">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+</div>
+
+</a>
+
+</div>
+
+<!-- 02 -->
+<div class="service-card">
+
+<div class="number">02</div>
+
+<div class="service-icon">
+<div class="icon-wrap">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A3.5 3.5 0 0 0 6 5.5c0 .35.05.68.14 1A3.5 3.5 0 0 0 4 9.5c0 .93.4 1.76 1.02 2.35A3.5 3.5 0 0 0 4 14.5 3.5 3.5 0 0 0 7.5 18h.09A3.5 3.5 0 0 0 11 21.5V4A2 2 0 0 0 9.5 2Z"/><path d="M14.5 2A3.5 3.5 0 0 1 18 5.5c0 .35-.05.68-.14 1A3.5 3.5 0 0 1 20 9.5c0 .93-.4 1.76-1.02 2.35A3.5 3.5 0 0 1 20 14.5 3.5 3.5 0 0 1 16.5 18h-.09A3.5 3.5 0 0 1 13 21.5V4a2 2 0 0 1 1.5-2Z"/></svg>
+</div>
+</div>
+
+<div class="service-title">
+Paket Latihan Tes Bakat Skolastik LPDP
+</div>
+
+<div class="service-desc">
+Paket latihan soal Tes Bakat Skolastik (TBS) LPDP lengkap dengan pembahasan, dirancang untuk membantumu meraih beasiswa impian.
+</div>
+
+<a href="https://primajana.myr.id/course/lpdp-tbs/?" class="service-link">
+
+<span>Mulai Latihan</span>
+
+<div class="arrow">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+</div>
+
+</a>
+
+</div>
+
+<!-- 03 -->
+<div class="service-card">
+
+<div class="number">03</div>
+
+<div class="service-icon">
+<div class="icon-wrap">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
+</div>
+</div>
+
+<div class="service-title">
+Paket Latihan SKD CPNS
+</div>
+
+<div class="service-desc">
+Latihan soal SKD CPNS terbaru (TWK, TIU, TKP) berbasis sistem CAT dengan pembahasan mendalam untuk memaksimalkan peluang lolos seleksi.
+</div>
+
+<a href="https://primajana.myr.id/course/skd-cpns/?" class="service-link">
+
+<span>Mulai Latihan</span>
+
+<div class="arrow">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+</div>
+
+</a>
+
+</div>
+
+<!-- 04 -->
+<div class="service-card">
+
+<div class="number">04</div>
+
+<div class="service-icon">
+<div class="icon-wrap">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+</div>
+</div>
+
+<div class="service-title">
+Kenaikan Pangkat Karir Dosen
+</div>
+
+<div class="service-desc">
+Pendampingan dan panduan lengkap proses kenaikan pangkat/jabatan fungsional dosen, mulai dari penyusunan berkas hingga strategi lolos penilaian.
+</div>
+
+<a href="/karir-dosen/index.html" class="service-link">
+
+<span>Lihat Detail</span>
+
+<div class="arrow">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+</div>
+
+</a>
+
+</div>
+
+<!-- 05 -->
+<div class="service-card">
+
+<div class="number">05</div>
+
+<div class="service-icon">
+<div class="icon-wrap">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+</div>
+</div>
+
+<div class="service-title">
+Tes Kemampuan Akademik (TKA) Jenjang SMA/MA
+</div>
+
+<div class="service-desc">
+Simulasi dan latihan soal Tes Kemampuan Akademik (TKA) untuk jenjang SMA/MA, membantu siswa mempersiapkan diri menghadapi seleksi masuk perguruan tinggi.
+</div>
+
+<a href="/tka/sma/index.html" class="service-link">
+
+<span>Mulai Latihan</span>
+
+<div class="arrow">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+</div>
+
+</a>
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+© 2026 PT Primajana Bagia Mesari. All rights reserved.
+</footer>
+
+</body>
+</html>
