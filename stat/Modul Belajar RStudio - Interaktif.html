@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Belajar RStudio — Modul Interaktif</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --bg:#EEF1F5; --surface:#FFFFFF; --ink:#1B2430; --ink-soft:#5B6472; --ink-faint:#8A93A3;
+    --primary:#234E70; --primary-dark:#15324A; --primary-tint:#E6EDF3;
+    --accent:#1E8F73; --accent-tint:#E3F3EE; --warm:#C97B3F; --warm-tint:#FBEEE2;
+    --line:#DDE2E9; --line-soft:#EBEEF2; --radius:10px;
+    --serif:'Source Serif 4', Georgia, 'Iowan Old Style', serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
+    --mono:'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    --shadow: 0 1px 2px rgba(21,50,74,0.06), 0 6px 20px rgba(21,50,74,0.06);
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;}
+  button{font-family:inherit;}
+  ::selection{background:var(--accent-tint);color:var(--primary-dark);}
+  a{color:var(--primary);}
+  code{font-family:var(--mono);background:var(--primary-tint);padding:1px 4px;border-radius:3px;font-size:.93em;}
+
+  .app-shell{display:flex;min-height:100vh;align-items:stretch;}
+
+  .sidebar{width:284px;flex:0 0 284px;background:var(--primary-dark);color:#EAF0F5;display:flex;flex-direction:column;padding:24px 18px 18px;}
+  .brand{margin-bottom:18px;}
+  .brand .eyebrow{font-size:11px;letter-spacing:.02em;color:#8FB0C6;margin:0 0 6px;}
+  .brand h1{font-family:var(--serif);font-size:21px;line-height:1.25;font-weight:700;margin:0 0 4px;color:#fff;}
+  .brand p{margin:0;font-size:12px;color:#9DB6C7;line-height:1.5;}
+
+  .nav-list{list-style:none;margin:4px 0 0;padding:0;flex:1;overflow-y:auto;}
+  .nav-item{display:flex;align-items:flex-start;gap:9px;width:100%;text-align:left;background:none;border:none;color:#C7D6E0;padding:7px 7px;border-radius:7px;cursor:pointer;margin-bottom:1px;transition:background .15s ease,color .15s ease;}
+  .nav-item:hover{background:rgba(255,255,255,.06);}
+  .nav-item.active{background:rgba(255,255,255,.12);color:#fff;}
+  .nav-item .ic{flex:0 0 19px;width:19px;height:19px;margin-top:1px;opacity:.9;}
+  .nav-item .tx{flex:1;min-width:0;}
+  .nav-item .tx .t{font-size:12px;font-weight:600;line-height:1.28;display:block;}
+  .nav-item .tx .m{font-size:10px;color:#7E9AAC;display:block;margin-top:1px;}
+  .nav-item.active .tx .m{color:#B9D3E1;}
+  .nav-item .no{flex:0 0 auto;font-family:var(--serif);font-size:10px;color:#5F7D90;margin-top:2px;}
+  .nav-item.active .no{color:#8FB0C6;}
+
+  .sidebar-foot{border-top:1px solid rgba(255,255,255,.12);padding-top:12px;margin-top:8px;}
+  .progress-wrap{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .progress-track{flex:1;height:4px;background:rgba(255,255,255,.14);border-radius:2px;overflow:hidden;}
+  .progress-bar{height:100%;width:0%;background:var(--accent);transition:width .25s ease;}
+  .progress-label{font-size:10.5px;color:#8FB0C6;white-space:nowrap;}
+  .author-credit{font-size:10.5px;line-height:1.5;color:#7E9AAC;}
+  .author-credit strong{color:#C7D6E0;font-weight:600;}
+
+  .main{flex:1;display:flex;flex-direction:column;align-items:center;padding:26px 24px 20px;min-width:0;}
+  .stage-wrap{width:100%;max-width:1040px;display:flex;flex-direction:column;flex:1;}
+  .stage-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;flex-wrap:wrap;gap:6px 10px;}
+  .stage-topbar .counter{font-size:12px;color:var(--ink-faint);font-variant-numeric:tabular-nums;}
+  .stage-topbar .duration-chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--primary);background:var(--primary-tint);padding:4px 10px;border-radius:20px;font-weight:600;}
+
+  .stage{position:relative;width:100%;aspect-ratio:4/3;background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden;}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;padding:24px 28px 14px;overflow-y:auto;}
+  .slide.active{display:flex;}
+
+  .slide-head{margin-bottom:10px;flex:0 0 auto;}
+  .slide-head .kicker{font-size:11px;color:var(--accent);font-weight:600;margin:0 0 4px;}
+  .slide-head h2{font-family:var(--serif);font-size:21px;font-weight:700;margin:0;color:var(--primary-dark);line-height:1.25;}
+  .slide-head .lede{font-size:12.3px;color:var(--ink-soft);margin:5px 0 0;line-height:1.5;max-width:78ch;}
+
+  .slide-body{flex:1;display:flex;flex-direction:column;gap:12px;min-height:0;}
+  .slide-body.two{display:grid;grid-template-columns:0.85fr 1.15fr;gap:20px;align-items:start;}
+
+  sup.fn{cursor:default;color:var(--accent);font-weight:700;font-size:9.5px;margin-left:1px;}
+
+  .slide-foot{flex:0 0 auto;border-top:1px solid var(--line-soft);margin-top:8px;padding-top:6px;font-size:10px;color:var(--ink-faint);line-height:1.45;}
+  .slide-foot .copy{display:block;margin-top:2px;color:#B7BFC9;}
+
+  .stage-controls{display:flex;align-items:center;justify-content:space-between;margin-top:12px;}
+  .nav-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);color:var(--primary-dark);font-weight:600;font-size:13px;padding:8px 15px;border-radius:8px;cursor:pointer;transition:background .15s ease,border-color .15s ease;}
+  .nav-btn:hover{background:var(--primary-tint);border-color:var(--primary);}
+  .nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+  .nav-btn.primary{background:var(--primary);color:#fff;border-color:var(--primary);}
+  .nav-btn.primary:hover{background:var(--primary-dark);}
+  .dot-track{display:flex;gap:4px;flex-wrap:wrap;max-width:260px;justify-content:center;}
+  .dot-track .d{width:5px;height:5px;border-radius:50%;background:var(--line);}
+  .dot-track .d.on{background:var(--accent);}
+
+  /* cover */
+  .cover-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:8px;}
+  .cover-wrap .cap{width:52px;height:52px;color:var(--primary);margin-bottom:5px;}
+  .cover-wrap h1{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--primary-dark);margin:0;line-height:1.2;max-width:22ch;}
+  .cover-wrap .sub{font-size:13px;color:var(--ink-soft);max-width:56ch;margin:0;}
+  .cover-agenda{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px;max-width:700px;}
+  .cover-agenda .chip{font-size:10px;font-weight:600;color:var(--primary);background:var(--primary-tint);padding:5px 10px;border-radius:20px;}
+  .cover-credit{margin-top:16px;font-size:10.5px;color:var(--ink-faint);}
+  .cover-start{margin-top:14px;}
+
+  /* text blocks */
+  .txt p{font-size:12.3px;line-height:1.55;color:var(--ink);margin:0 0 8px;}
+  .txt ul,.txt ol{margin:0 0 8px;padding-left:17px;}
+  .txt li{font-size:12.3px;line-height:1.5;margin-bottom:3px;color:var(--ink);}
+  .txt strong{color:var(--primary-dark);}
+
+  /* data dictionary table */
+  .dict-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px;}
+  .dict-table th{background:var(--primary-tint);color:var(--primary-dark);text-align:left;padding:5px 7px;font-weight:700;}
+  .dict-table td{padding:5px 7px;border-bottom:1px solid var(--line-soft);color:var(--ink);}
+  .dict-table td code{background:none;padding:0;color:var(--primary-dark);}
+
+  /* concept cards */
+  .concept-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .concept-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 11px;}
+  .concept-card .cc-label{font-size:9.5px;font-weight:700;color:var(--accent);letter-spacing:.02em;margin:0 0 4px;}
+  .concept-card p{font-size:11.3px;line-height:1.48;color:var(--ink);margin:0;}
+  .concept-card ol{margin:0;padding-left:15px;font-size:11.3px;line-height:1.48;color:var(--ink);}
+  .concept-card li{margin-bottom:2px;}
+
+  /* references */
+  .ref-list{list-style:none;margin:0;padding:0;counter-reset:ref;}
+  .ref-list li{counter-increment:ref;font-size:11px;line-height:1.5;color:var(--ink-soft);padding-left:20px;position:relative;margin-bottom:5px;}
+  .ref-list li::before{content:"["counter(ref)"]";position:absolute;left:0;top:0;color:var(--accent);font-weight:700;font-size:10.5px;}
+
+  /* ===================== RSTUDIO WINDOW MOCKUP ===================== */
+  .rstudio-window{border:1px solid #C9CDD3;border-radius:8px;overflow:hidden;background:#fff;box-shadow:var(--shadow);width:100%;}
+  .rw-titlebar{display:flex;align-items:center;gap:6px;background:#E8E9EB;padding:6px 10px;border-bottom:1px solid #D3D6DA;}
+  .rw-dot{width:8px;height:8px;border-radius:50%;}
+  .rw-dot.r{background:#E0685F;} .rw-dot.y{background:#E0B15F;} .rw-dot.g{background:#5FBF7F;}
+  .rw-title{margin-left:6px;font-size:10px;color:#5B6472;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .rw-menubar{background:#F6F6F7;border-bottom:1px solid #E1E3E6;padding:3px 12px;font-size:9.5px;color:#9098A5;display:flex;gap:11px;overflow-x:auto;white-space:nowrap;}
+  .rw-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:200px 200px;}
+  .rw-pane{border-right:1px solid #E1E3E6;border-bottom:1px solid #E1E3E6;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;background:#fff;}
+  .rw-pane-tabs{display:flex;background:#F0F1F2;border-bottom:1px solid #E1E3E6;}
+  .rw-tab{padding:5px 11px;font-size:10px;color:#8A93A3;cursor:default;border-right:1px solid #E1E3E6;font-weight:600;}
+  .rw-tab.on{background:#fff;color:var(--primary-dark);}
+  .rw-tab[data-tab]{cursor:pointer;}
+  .rw-pane-toolbar{display:flex;align-items:center;gap:7px;padding:4px 8px;background:#FAFAFB;border-bottom:1px solid #EEEFF1;flex-wrap:wrap;row-gap:2px;}
+  .rw-runall{background:var(--accent);color:#fff;border:none;font-size:9.5px;font-weight:700;padding:4px 8px;border-radius:4px;cursor:pointer;}
+  .rw-runall:hover{background:#187a61;}
+  .rw-hint{font-size:9px;color:var(--ink-faint);}
+  .rw-source-body{flex:1;min-height:0;overflow-y:auto;background:#fff;font-family:var(--mono);font-size:10.3px;line-height:1.6;}
+  .rw-line{display:flex;padding:0 8px;cursor:pointer;}
+  .rw-line:hover{background:#F0F6F4;}
+  .rw-lineno{flex:0 0 20px;color:#B7BFC9;text-align:right;padding-right:7px;user-select:none;}
+  .rw-code{white-space:pre-wrap;word-break:break-word;color:#1B2430;}
+  .rw-cm{color:#8A93A3;} .rw-str{color:#1E8F73;} .rw-num{color:#C97B3F;} .rw-op{color:#234E70;font-weight:700;} .rw-fn{color:#234E70;font-weight:700;}
+  .rw-env-body{flex:1;min-height:0;overflow-y:auto;padding:5px 9px;font-family:var(--mono);font-size:9.7px;color:var(--ink);}
+  .rw-env-item{padding:3px 0;border-bottom:1px solid #F1F2F4;}
+  .rw-env-name{color:var(--primary-dark);font-weight:700;}
+  .rw-env-meta{color:var(--ink-faint);font-size:9px;display:block;}
+  .rw-env-empty{color:var(--ink-faint);font-style:italic;padding:6px 0;}
+  .rw-console-output{flex:1;min-height:0;overflow-y:auto;background:#fff;padding:7px 9px;font-family:var(--mono);font-size:10.3px;line-height:1.48;color:#1B2430;white-space:pre-wrap;}
+  .rw-cmd-line{color:#15324A;}
+  .rw-cmd-line:before{content:"> ";color:#8A93A3;}
+  .rw-out-line{color:#1B2430;white-space:pre-wrap;}
+  .rw-err-line{color:#C0392B;white-space:pre-wrap;}
+  .rw-console-input-row{display:flex;align-items:center;gap:6px;padding:5px 8px;border-top:1px solid #EEEFF1;background:#FAFAFB;}
+  .rw-prompt{font-family:var(--mono);font-size:10.5px;color:#8A93A3;}
+  .rw-console-input{flex:1;border:1px solid #D7DADE;background:#fff;font-family:var(--mono);font-size:10.3px;padding:5px 7px;border-radius:4px;color:var(--ink);min-width:0;}
+  .rw-console-input:focus{outline:none;border-color:var(--accent);}
+  .rw-viewer-body{flex:1;min-height:0;overflow:auto;background:#fff;}
+  .rw-view{height:100%;}
+  .rw-plot-wrap{display:flex;align-items:center;justify-content:center;padding:5px;height:100%;}
+  .rw-viewer-table{width:100%;border-collapse:collapse;font-size:9px;font-family:var(--mono);}
+  .rw-viewer-table th{background:#F0F1F2;color:var(--primary-dark);padding:3px 6px;text-align:left;border-bottom:1px solid #E1E3E6;position:sticky;top:0;}
+  .rw-viewer-table td{padding:2.5px 6px;border-bottom:1px solid #F1F2F4;color:var(--ink);white-space:nowrap;}
+  .rw-viewer-table tr:nth-child(even){background:#FAFBFC;}
+  .rw-help-body{padding:9px;font-size:10.3px;color:var(--ink-soft);line-height:1.55;}
+  .rw-caption{padding:4px 9px;font-size:9px;color:var(--ink-faint);border-top:1px solid #EEEFF1;background:#FAFAFB;min-height:14px;}
+  .rw-explain{background:var(--accent-tint);border-radius:6px;padding:7px 10px;font-size:10.7px;color:#155C46;margin-top:7px;line-height:1.48;min-height:14px;}
+  .rw-explain:empty{padding:0;}
+  .rw-explain b{color:var(--accent);}
+
+  /* intro static mockup (slide 1) */
+  .rw-intro-pane{cursor:pointer;transition:box-shadow .15s;}
+  .rw-intro-pane.active{box-shadow:inset 0 0 0 2px var(--accent);}
+  .pane-desc{background:#fff;border:1px solid var(--line);border-radius:7px;padding:8px 11px;margin-top:9px;font-size:11px;line-height:1.5;color:var(--ink-soft);min-height:40px;}
+  .pane-desc b{color:var(--primary-dark);}
+
+  /* ===================== COMMAND LEGEND (glossary) ===================== */
+  .cmd-legend{margin-top:8px;}
+  .cmd-legend-toggle{background:#fff;border:1px solid var(--line);color:var(--primary-dark);font-size:10.3px;font-weight:700;padding:7px 10px;border-radius:6px 6px 0 0;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;}
+  .cmd-legend-toggle:not(.open){border-radius:6px;}
+  .cmd-legend-toggle:hover{border-color:var(--accent);}
+  .cmd-legend-toggle .chev{transition:transform .2s;font-size:9px;color:var(--ink-faint);}
+  .cmd-legend-toggle.open .chev{transform:rotate(180deg);}
+  .cmd-legend-body{border:1px solid var(--line);border-top:none;border-radius:0 0 6px 6px;padding:7px 10px;display:none;max-height:150px;overflow-y:auto;background:#FAFBFC;}
+  .cmd-legend-body.show{display:block;}
+  .cmd-legend-row{display:flex;gap:7px;align-items:baseline;padding:3px 0;border-bottom:1px solid #F1F2F4;flex-wrap:wrap;}
+  .cmd-legend-row:last-child{border-bottom:none;}
+  .cmd-legend-row code{flex:0 0 auto;white-space:nowrap;font-size:10px;}
+  .cmd-legend-row .tok-fn{color:var(--primary);background:var(--primary-tint);}
+  .cmd-legend-row .tok-op{color:var(--accent);background:var(--accent-tint);}
+  .cmd-legend-row span.d{flex:1 1 160px;min-width:0;color:var(--ink-soft);line-height:1.42;font-size:10.5px;word-break:break-word;}
+
+  /* ===================== OUTPUT NUMBER HIGHLIGHTS ===================== */
+  .out-hl-stat{background:var(--accent-tint);color:#0F6B54;font-weight:700;border-radius:3px;padding:0 2px;}
+  .out-hl-sig{background:var(--warm-tint);color:#96501C;font-weight:700;border-radius:3px;padding:0 2px;}
+  .legend-mini{display:inline-flex;align-items:center;gap:10px;font-size:10px;color:var(--ink-faint);}
+  .legend-mini span{display:inline-flex;align-items:center;gap:4px;}
+  .legend-mini i{width:8px;height:8px;border-radius:2px;display:inline-block;}
+
+  /* ===================== PULSE / HINT EFFECTS ===================== */
+  @keyframes pulseGlowBtn{0%,100%{box-shadow:0 0 0 0 rgba(30,143,115,.45);}50%{box-shadow:0 0 0 6px rgba(30,143,115,0);}}
+  .pulse-btn{animation:pulseGlowBtn 1.7s ease-in-out infinite;}
+  @keyframes pulseLineBg{0%,100%{background:rgba(30,143,115,.05);}50%{background:rgba(30,143,115,.22);}}
+  .pulse-line{animation:pulseLineBg 1.5s ease-in-out infinite;border-radius:3px;}
+  @keyframes pulseDot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(1.7);}}
+  .hint-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulseDot 1.3s ease-in-out infinite;margin-right:4px;flex:0 0 auto;}
+  @media (prefers-reduced-motion: reduce){ .pulse-btn,.pulse-line,.hint-dot{animation:none;} }
+
+  /* ===================== MOBILE TOPBAR + DRAWER ===================== */
+  .mobile-topbar{display:none;}
+  .sidebar-overlay{display:none;}
+
+  @media (max-width:980px){
+    .mobile-topbar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--primary-dark);color:#fff;position:sticky;top:0;z-index:40;}
+    .mobile-topbar button{background:rgba(255,255,255,.14);border:none;color:#fff;font-size:15px;padding:6px 11px;border-radius:6px;cursor:pointer;line-height:1;}
+    .mobile-topbar .mt-title{font-size:12.5px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .sidebar{position:fixed;top:0;left:-300px;height:100vh;z-index:50;transition:left .25s ease;box-shadow:4px 0 18px rgba(0,0,0,.28);}
+    .sidebar.open{left:0;}
+    .sidebar-overlay{display:block;position:fixed;inset:0;background:rgba(10,15,20,.45);opacity:0;pointer-events:none;transition:opacity .25s;z-index:45;}
+    .sidebar-overlay.show{opacity:1;pointer-events:auto;}
+    .main{padding:14px 10px 16px;}
+    .concept-grid{grid-template-columns:1fr;}
+    .slide-body.two{grid-template-columns:1fr;}
+    .stage{aspect-ratio:auto;min-height:82vh;}
+    .rw-grid{grid-template-columns:1fr;grid-template-rows:repeat(4,190px);}
+    .nav-btn{padding:10px 16px;}
+    .stage-topbar{flex-wrap:wrap;gap:6px;}
+  }
+  @media (max-width:640px){
+    .rw-grid{grid-template-rows:repeat(4,168px);}
+    .rw-source-body,.rw-env-body,.rw-console-output,.rw-viewer-body{font-size:10.8px;}
+    .slide{padding:16px 14px 10px;}
+    .cover-wrap h1{font-size:21px;}
+    .cover-wrap .sub{font-size:12.3px;}
+    .slide-head h2{font-size:18px;}
+    .rw-menubar{display:none;}
+    .legend-mini{display:none;}
+    .rw-line,.rw-console-input-row{font-size:10.8px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="mobile-topbar">
+  <button onclick="toggleSidebar()" aria-label="Buka daftar isi">☰</button>
+  <span class="mt-title" id="mobileTitle">Pembukaan</span>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebarEl">
+    <div class="brand">
+      <p class="eyebrow">MODUL INTERAKTIF · ± 80 MENIT</p>
+      <h1>Belajar RStudio</h1>
+      <p>Dari input data sampai analisis multivariat — tampilan, command, dan output sama seperti RStudio asli.</p>
+    </div>
+    <ol class="nav-list" id="navList"></ol>
+    <div class="sidebar-foot">
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+        <span class="progress-label" id="progressLabel">0%</span>
+      </div>
+      <p class="author-credit">
+        <strong>Ngakan Putu Anom Harjana, S.KM., M.A.</strong><br>
+        anomharjana@unud.ac.id<br>
+        © Hak cipta dilindungi
+      </p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="stage-wrap">
+      <div class="stage-topbar">
+        <span class="counter" id="stageCounter">Bagian 1 / 15</span>
+        <span class="duration-chip" id="stageDuration">⏱ 2 menit</span>
+        <span class="legend-mini"><span><i style="background:#1E8F73"></i>nilai utama</span><span><i style="background:#C97B3F"></i>perlu perhatian</span></span>
+      </div>
+      <div class="stage" id="stage">
+
+        <!-- 0 COVER -->
+        <section class="slide active" data-slide="0" data-title="Pembukaan" data-time="2">
+          <div class="cover-wrap">
+            <svg class="cap" viewBox="0 0 48 48" fill="none">
+              <rect x="4" y="6" width="40" height="30" rx="3" fill="#E6EDF3" stroke="#234E70" stroke-width="2"/>
+              <line x1="4" y1="16" x2="44" y2="16" stroke="#234E70" stroke-width="2"/>
+              <circle cx="9" cy="11" r="1.6" fill="#C97B3F"/><circle cx="14" cy="11" r="1.6" fill="#1E8F73"/>
+              <text x="24" y="30" font-size="13" text-anchor="middle" fill="#234E70" font-family="Georgia" font-weight="700">R</text>
+              <rect x="14" y="39" width="20" height="4" rx="2" fill="#1E8F73"/>
+            </svg>
+            <h1>Belajar RStudio untuk Analisis Data</h1>
+            <p class="sub">Modul interaktif dengan tampilan RStudio asli — mulai dari input dan pembersihan data, statistik deskriptif, bivariat, hingga analisis multivariat, semuanya bisa Anda coba langsung.</p>
+            <div class="cover-agenda" id="coverAgenda"></div>
+            <div class="cover-start"><button class="nav-btn primary pulse-btn" onclick="goTo(1)">Mulai Belajar →</button></div>
+            <p class="cover-credit">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. — anomharjana@unud.ac.id</p>
+          </div>
+        </section>
+
+        <!-- 1 ANTARMUKA -->
+        <section class="slide" data-slide="1" data-title="Antarmuka RStudio" data-time="5">
+          <div class="slide-head">
+            <p class="kicker">PENGENALAN</p>
+            <h2>Mengenal Antarmuka RStudio</h2>
+            <p class="lede">Seluruh modul ini memakai tampilan yang sama persis dengan RStudio: 4 panel dalam satu jendela. Klik tiap panel untuk mengenalnya.</p>
+          </div>
+          <div class="slide-body two">
+            <div class="txt">
+              <p><strong>R</strong> adalah bahasa pemrograman open-source untuk analisis statistik.<sup class="fn">[1]</sup> <strong>RStudio</strong> adalah aplikasi (IDE) yang membungkusnya dengan tampilan yang nyaman.<sup class="fn">[2]</sup></p>
+              <p>Empat panel yang akan terus Anda lihat sepanjang modul ini:</p>
+              <ol>
+                <li><strong>Source</strong> (kiri atas) — tempat menulis skrip .R</li>
+                <li><strong>Environment</strong> (kanan atas) — daftar objek yang aktif</li>
+                <li><strong>Console</strong> (kiri bawah) — tempat perintah dijalankan</li>
+                <li><strong>Plots/Viewer/Help</strong> (kanan bawah) — hasil grafik dan tabel data</li>
+              </ol>
+            </div>
+            <div>
+              <div class="rstudio-window">
+                <div class="rw-titlebar"><span class="rw-dot r"></span><span class="rw-dot y"></span><span class="rw-dot g"></span><span class="rw-title">RStudio</span></div>
+                <div class="rw-menubar"><span>File</span><span>Edit</span><span>Code</span><span>View</span><span>Plots</span><span>Session</span><span>Build</span><span>Tools</span><span>Help</span></div>
+                <div class="rw-grid" id="introGrid">
+                  <div class="rw-pane rw-intro-pane" data-key="script">
+                    <div class="rw-pane-tabs"><span class="rw-tab on">📄 Source</span></div>
+                    <div style="flex:1;display:flex;align-items:center;justify-content:center;height:116px;color:#B7BFC9;font-family:var(--mono);font-size:10px;">1  siswa &lt;- data.frame(...)</div>
+                  </div>
+                  <div class="rw-pane rw-intro-pane" data-key="env">
+                    <div class="rw-pane-tabs"><span class="rw-tab on">Environment</span></div>
+                    <div style="flex:1;display:flex;align-items:center;justify-content:center;height:116px;color:#B7BFC9;font-family:var(--mono);font-size:10px;">siswa · model · pca</div>
+                  </div>
+                  <div class="rw-pane rw-intro-pane active" data-key="console">
+                    <div class="rw-pane-tabs"><span class="rw-tab on">Console</span></div>
+                    <div style="flex:1;display:flex;align-items:center;justify-content:center;height:90px;color:#B7BFC9;font-family:var(--mono);font-size:10px;">&gt; mean(siswa$nilai)</div>
+                  </div>
+                  <div class="rw-pane rw-intro-pane" data-key="files">
+                    <div class="rw-pane-tabs"><span class="rw-tab on">Plots / Viewer / Help</span></div>
+                    <div style="flex:1;display:flex;align-items:center;justify-content:center;height:90px;color:#B7BFC9;font-family:var(--mono);font-size:10px;">📊 grafik &amp; tabel</div>
+                  </div>
+                </div>
+              </div>
+              <div class="pane-desc" id="paneDesc"></div>
+            </div>
+          </div>
+          <div class="slide-foot">
+            RStudio adalah salah satu IDE R paling banyak dipakai di dunia akademik dan industri.<sup class="fn">[1][2]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 2 TENTANG DATASET -->
+        <section class="slide" data-slide="2" data-title="Tentang Dataset" data-time="4">
+          <div class="slide-head">
+            <p class="kicker">MANAJEMEN DATA</p>
+            <h2>Mengenal Data yang Akan Kita Pakai</h2>
+            <p class="lede">Satu dataset latihan yang sama dipakai di sepanjang modul ini: data 10 mahasiswa.</p>
+          </div>
+          <div class="slide-body two">
+            <div class="txt">
+              <p>Data <code>siswa</code> berisi 10 baris (mahasiswa) dan 5 kolom (variabel):</p>
+              <table class="dict-table">
+                <tr><th>Variabel</th><th>Tipe</th><th>Deskripsi</th></tr>
+                <tr><td><code>nama</code></td><td>Karakter</td><td>Nama mahasiswa</td></tr>
+                <tr><td><code>jam_belajar</code></td><td>Numerik</td><td>Rata-rata jam belajar per hari</td></tr>
+                <tr><td><code>jam_tidur</code></td><td>Numerik</td><td>Rata-rata jam tidur per hari</td></tr>
+                <tr><td><code>kehadiran</code></td><td>Numerik (%)</td><td>Persentase kehadiran kuliah</td></tr>
+                <tr><td><code>nilai</code></td><td>Numerik</td><td>Nilai ujian akhir (skala 0–100)</td></tr>
+              </table>
+            </div>
+            <div id="rw-intro2"></div>
+          </div>
+          <div class="slide-foot">
+            Dataset ini bersifat ilustratif, dipakai konsisten dari input data hingga analisis multivariat.
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 3 INPUT DATA MANUAL -->
+        <section class="slide" data-slide="3" data-title="Input Data Manual" data-time="5">
+          <div class="slide-head">
+            <p class="kicker">MANAJEMEN DATA</p>
+            <h2>Input Data secara Manual</h2>
+          </div>
+          <div class="slide-body">
+            <div class="concept-grid">
+              <div class="concept-card"><p class="cc-label">KONSEP DASAR</p><p>Input manual cocok untuk data kecil atau latihan. Asumsi: tiap vektor harus punya panjang yang sama agar bisa digabung jadi data frame.<sup class="fn">[1][3]</sup></p></div>
+              <div class="concept-card"><p class="cc-label">CONTOH KASUS</p><p>Kita punya catatan 10 mahasiswa di kertas dan ingin menyusunnya jadi tabel data di R.</p></div>
+              <div class="concept-card"><p class="cc-label">LANGKAH-LANGKAH</p><ol><li>Buat tiap variabel dengan <code>c()</code></li><li>Gabungkan dengan <code>data.frame()</code></li><li>Periksa dengan <code>View()</code></li></ol></div>
+              <div class="concept-card"><p class="cc-label">INTERPRETASI</p><p>Jika <code>View()</code> menampilkan 10 baris × 5 kolom yang rapi, data frame berhasil dibuat dengan benar.</p></div>
+            </div>
+            <div id="rw-input"></div>
+          </div>
+          <div class="slide-foot">
+            Data frame adalah struktur inti untuk hampir seluruh analisis di R.<sup class="fn">[1][3]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 4 IMPORT DATA -->
+        <section class="slide" data-slide="4" data-title="Import Data" data-time="5">
+          <div class="slide-head">
+            <p class="kicker">MANAJEMEN DATA</p>
+            <h2>Mengimpor Data dari File</h2>
+          </div>
+          <div class="slide-body">
+            <div class="concept-grid">
+              <div class="concept-card"><p class="cc-label">KONSEP DASAR</p><p>Pada praktiknya data berasal dari file CSV/Excel, bukan diketik manual. Asumsi: file berada di folder kerja yang benar dan format kolomnya sesuai.<sup class="fn">[1][3]</sup></p></div>
+              <div class="concept-card"><p class="cc-label">CONTOH KASUS</p><p>File <code>data_siswa.csv</code> berisi data yang sama — kali ini kita impor langsung dari file.</p></div>
+              <div class="concept-card"><p class="cc-label">LANGKAH-LANGKAH</p><ol><li>Pastikan file ada di working directory</li><li>Baca dengan <code>read.csv()</code></li><li>Periksa dengan <code>dim()</code>, <code>head()</code>, <code>str()</code></li></ol></div>
+              <div class="concept-card"><p class="cc-label">INTERPRETASI</p><p><code>dim()</code> harus sesuai harapan (10 baris, 5 kolom). Jika kolom jauh lebih banyak dari harapan, kemungkinan pemisah (separator) file belum sesuai.</p></div>
+            </div>
+            <div id="rw-import"></div>
+          </div>
+          <div class="slide-foot">
+            <code>read_excel()</code> dari paket <code>readxl</code> dipakai dengan cara serupa untuk file Excel.<sup class="fn">[1][3]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 5 DATA CLEANING -->
+        <section class="slide" data-slide="5" data-title="Data Cleaning" data-time="6">
+          <div class="slide-head">
+            <p class="kicker">MANAJEMEN DATA</p>
+            <h2>Membersihkan Data (Data Cleaning)</h2>
+          </div>
+          <div class="slide-body">
+            <div class="concept-grid">
+              <div class="concept-card"><p class="cc-label">KONSEP DASAR</p><p>Data mentah sering memiliki nilai kosong (NA) atau baris duplikat. Asumsi: kita perlu strategi menangani NA (dihapus/diisi) sesuai konteks.<sup class="fn">[3][9]</sup></p></div>
+              <div class="concept-card"><p class="cc-label">CONTOH KASUS</p><p>Data mentah kita (<code>siswa_kotor</code>) ternyata punya 1 baris duplikat dan 1 nilai ujian kosong.</p></div>
+              <div class="concept-card"><p class="cc-label">LANGKAH-LANGKAH</p><ol><li>Cek nilai kosong dengan <code>is.na()</code></li><li>Cek duplikat dengan <code>duplicated()</code></li><li>Hapus duplikat, lalu hapus NA dengan <code>na.omit()</code></li></ol></div>
+              <div class="concept-card"><p class="cc-label">INTERPRETASI</p><p>Jumlah baris akhir harus berkurang sesuai jumlah baris bermasalah yang ditemukan — bukan berkurang drastis tanpa alasan jelas.</p></div>
+            </div>
+            <div id="rw-clean"></div>
+          </div>
+          <div class="slide-foot">
+            Data yang tidak dibersihkan bisa membuat hasil analisis bias atau bahkan gagal dihitung.<sup class="fn">[3][9]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 6 RECODING -->
+        <section class="slide" data-slide="6" data-title="Recoding &amp; Transformasi" data-time="6">
+          <div class="slide-head">
+            <p class="kicker">MANAJEMEN DATA</p>
+            <h2>Recoding dan Transformasi Variabel</h2>
+          </div>
+          <div class="slide-body">
+            <div class="concept-grid">
+              <div class="concept-card"><p class="cc-label">KONSEP DASAR</p><p>Recoding mengubah variabel numerik menjadi kategori. Asumsi: batas kategori (cut-off) ditentukan berdasarkan teori/konvensi yang masuk akal.<sup class="fn">[3][9]</sup></p></div>
+              <div class="concept-card"><p class="cc-label">CONTOH KASUS</p><p>Kita ingin mengelompokkan mahasiswa berdasar kehadiran (Tinggi/Rendah) dan nilai (Kurang/Cukup/Baik).</p></div>
+              <div class="concept-card"><p class="cc-label">LANGKAH-LANGKAH</p><ol><li>Buat kategori dengan <code>ifelse()</code>/<code>cut()</code></li><li>Ubah jadi <code>factor()</code></li><li>Cek hasilnya dengan <code>table()</code></li></ol></div>
+              <div class="concept-card"><p class="cc-label">INTERPRETASI</p><p>Pastikan jumlah tiap kategori pada <code>table()</code> masuk akal dan totalnya sama dengan jumlah baris data.</p></div>
+            </div>
+            <div id="rw-recode"></div>
+          </div>
+          <div class="slide-foot">
+            Variabel <code>kelompok</code> hasil recoding ini akan dipakai lagi di bagian uji-t nanti.<sup class="fn">[3][9]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 7 DESKRIPTIF -->
+        <section class="slide" data-slide="7" data-title="Statistik Deskriptif" data-time="7">
+          <div class="slide-head">
+            <p class="kicker">ANALISIS DESKRIPTIF</p>
+            <h2>Statistik Deskriptif di R</h2>
+          </div>
+          <div class="slide-body">
+            <div class="concept-grid">
+              <div class="concept-card"><p class="cc-label">KONSEP DASAR</p><p>Dipakai di awal hampir semua analisis untuk memahami "bentuk" data. Asumsi: variabel numerik untuk <code>summary()</code>/<code>mean()</code>/<code>sd()</code>.<sup class="fn">[3][5]</sup></p></div>
+              <div class="concept-card"><p class="cc-label">CONTOH KASUS</p><p>Seberapa tinggi dan seberapa beragam nilai ujian mahasiswa kita?</p></div>
+              <div class="concept-card"><p class="cc-label">LANGKAH-LANGKAH</p><ol><li>Ringkas dengan <code>summary()</code></li><li>Hitung rata-rata &amp; standar deviasi</li><li>Tabulasi kelompok dengan <code>table()</code></li></ol></div>
+              <div class="concept-card"><p class="cc-label">INTERPRETASI</p><p>Bandingkan mean vs median untuk melihat kemencengan; standar deviasi besar berarti nilai lebih beragam.</p></div>
+            </div>
+            <div id="rw-desc"></div>
+          </div>
+          <div class="slide-foot">
+            Fungsi ringkasan dasar untuk statistik deskriptif di R.<sup class="fn">[3][5]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 8 VISUALISASI -->
+        <section class="slide" data-slide="8" data-title="Visualisasi Data" data-time="7">
+          <div class="slide-head">
+            <p class="kicker">VISUALISASI</p>
+            <h2>Visualisasi Data di R</h2>
+          </div>
+          <div class="slide-body">
+            <div class="concept-grid">
+              <div class="concept-card"><p class="cc-label">KONSEP DASAR</p><p>Dipakai melihat pola yang sulit ditangkap dari angka saja. Asumsi: pilih grafik sesuai tipe data (numerik/kategorik, satu/dua variabel).<sup class="fn">[4]</sup></p></div>
+              <div class="concept-card"><p class="cc-label">CONTOH KASUS</p><p>Melihat sebaran nilai, perbandingan antar kelompok, dan hubungan jam belajar dengan nilai.</p></div>
+              <div class="concept-card"><p class="cc-label">LANGKAH-LANGKAH</p><ol><li><code>hist()</code> sebaran 1 variabel</li><li><code>boxplot()</code> bandingkan kelompok</li><li><code>plot()+abline()</code> hubungan 2 variabel</li><li><code>barplot()</code> rata-rata per kelompok</li></ol></div>
+              <div class="concept-card"><p class="cc-label">INTERPRETASI</p><p>Boxplot yang tumpang tindih berarti kelompok mirip; titik scatter yang rapat pada garis berarti hubungan kuat.</p></div>
+            </div>
+            <div id="rw-viz"></div>
+          </div>
+          <div class="slide-foot">
+            Grafik dasar (base R) yang paling sering dipakai untuk eksplorasi awal data.<sup class="fn">[4]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 9 KORELASI -->
+        <section class="slide" data-slide="9" data-title="Bivariat: Korelasi" data-time="6">
+          <div class="slide-head">
+            <p class="kicker">ANALISIS BIVARIAT</p>
+            <h2>Korelasi Antar Dua Variabel</h2>
+          </div>
+          <div class="slide-body">
+            <div class="concept-grid">
+              <div class="concept-card"><p class="cc-label">KONSEP DASAR</p><p>Dipakai saat kedua variabel numerik dan ingin tahu kekuatan hubungan liniernya. Asumsi: hubungan linear, pencilan tidak berlebihan.<sup class="fn">[5]</sup></p></div>
+              <div class="concept-card"><p class="cc-label">CONTOH KASUS</p><p>Apakah jam belajar, jam tidur, dan kehadiran berhubungan dengan nilai ujian?</p></div>
+              <div class="concept-card"><p class="cc-label">LANGKAH-LANGKAH</p><ol><li>Hitung koefisien dengan <code>cor()</code></li><li>Uji signifikansi dengan <code>cor.test()</code></li></ol></div>
+              <div class="concept-card"><p class="cc-label">INTERPRETASI</p><p>r mendekati ±1 berarti hubungan kuat; nilai-p &lt; 0.05 berarti korelasi kemungkinan bukan kebetulan.</p></div>
+            </div>
+            <div id="rw-cor"></div>
+          </div>
+          <div class="slide-foot">
+            Korelasi Pearson mengasumsikan hubungan bersifat linear.<sup class="fn">[5]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 10 UJI-T & REGRESI SEDERHANA -->
+        <section class="slide" data-slide="10" data-title="Uji-t &amp; Regresi Sederhana" data-time="7">
+          <div class="slide-head">
+            <p class="kicker">ANALISIS BIVARIAT</p>
+            <h2>Uji-t dan Regresi Sederhana</h2>
+          </div>
+          <div class="slide-body">
+            <div class="concept-grid">
+              <div class="concept-card"><p class="cc-label">KONSEP DASAR</p><p>Uji-t membandingkan rata-rata dua kelompok; regresi sederhana memprediksi dari satu prediktor. Asumsi: data mendekati normal, varians relatif homogen.<sup class="fn">[5][6]</sup></p></div>
+              <div class="concept-card"><p class="cc-label">CONTOH KASUS</p><p>Apakah nilai berbeda antara kehadiran tinggi vs rendah? Seberapa besar jam belajar memprediksi nilai?</p></div>
+              <div class="concept-card"><p class="cc-label">LANGKAH-LANGKAH</p><ol><li>Bandingkan kelompok dengan <code>t.test()</code></li><li>Buat model dengan <code>lm()</code></li><li>Ringkas dengan <code>summary()</code></li></ol></div>
+              <div class="concept-card"><p class="cc-label">INTERPRETASI</p><p>Nilai-p &lt; 0.05 pada uji-t berarti perbedaan signifikan. R-squared menunjukkan persentase variasi nilai yang terjelaskan.</p></div>
+            </div>
+            <div id="rw-ttest"></div>
+          </div>
+          <div class="slide-foot">
+            Uji-t di sini memakai versi Welch, yang tidak mengasumsikan varians kedua kelompok sama.<sup class="fn">[5][6]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 11 REGRESI BERGANDA -->
+        <section class="slide" data-slide="11" data-title="Regresi Berganda" data-time="7">
+          <div class="slide-head">
+            <p class="kicker">ANALISIS MULTIVARIAT</p>
+            <h2>Regresi Berganda (Multiple Regression)</h2>
+          </div>
+          <div class="slide-body">
+            <div class="concept-grid">
+              <div class="concept-card"><p class="cc-label">KONSEP DASAR</p><p>Dipakai saat satu hasil dipengaruhi banyak variabel sekaligus. Asumsi: hubungan linear, tidak ada multikolinearitas parah.<sup class="fn">[6][7]</sup></p></div>
+              <div class="concept-card"><p class="cc-label">CONTOH KASUS</p><p>Memprediksi nilai ujian dari jam belajar, jam tidur, dan kehadiran secara bersamaan.</p></div>
+              <div class="concept-card"><p class="cc-label">LANGKAH-LANGKAH</p><ol><li>Buat model dengan <code>lm(y~x1+x2+x3)</code></li><li>Ringkas dengan <code>summary()</code></li></ol></div>
+              <div class="concept-card"><p class="cc-label">INTERPRETASI</p><p>Koefisien tak signifikan padahal berkorelasi kuat sendiri-sendiri sering menandakan multikolinearitas.</p></div>
+            </div>
+            <div id="rw-mreg"></div>
+          </div>
+          <div class="slide-foot">
+            Tanda "*" menandai perkiraan koefisien signifikan (|t| &gt; 2), bukan nilai-p pasti.<sup class="fn">[6][7]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 12 PCA -->
+        <section class="slide" data-slide="12" data-title="Analisis Komponen Utama" data-time="6">
+          <div class="slide-head">
+            <p class="kicker">ANALISIS MULTIVARIAT</p>
+            <h2>Analisis Komponen Utama (PCA)</h2>
+          </div>
+          <div class="slide-body">
+            <div class="concept-grid">
+              <div class="concept-card"><p class="cc-label">KONSEP DASAR</p><p>Meringkas variabel yang saling berkorelasi jadi beberapa komponen utama. Asumsi: variabel numerik, idealnya distandardisasi.<sup class="fn">[7][8]</sup></p></div>
+              <div class="concept-card"><p class="cc-label">CONTOH KASUS</p><p>Jam belajar, jam tidur, dan kehadiran saling berkorelasi tinggi — bisakah diringkas jadi satu skor saja?</p></div>
+              <div class="concept-card"><p class="cc-label">LANGKAH-LANGKAH</p><ol><li>Hitung dengan <code>prcomp()</code></li><li>Lihat proporsi variasi dengan <code>summary()</code></li><li>Lihat bobot variabel dengan <code>$rotation</code></li></ol></div>
+              <div class="concept-card"><p class="cc-label">INTERPRETASI</p><p>Proportion of Variance PC1 yang tinggi berarti satu komponen sudah mewakili sebagian besar informasi.</p></div>
+            </div>
+            <div id="rw-pca"></div>
+          </div>
+          <div class="slide-foot">
+            PCA dihitung dari matriks korelasi terstandardisasi (scale.=TRUE).<sup class="fn">[7][8]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 13 COBA SENDIRI -->
+        <section class="slide" data-slide="13" data-title="Coba Sendiri" data-time="6">
+          <div class="slide-head">
+            <p class="kicker">PRAKTIK MANDIRI</p>
+            <h2>Coba Sendiri di Console</h2>
+            <p class="lede">Klik salah satu perintah di daftar, atau ketik sendiri di console lalu tekan Enter.</p>
+          </div>
+          <div class="slide-body two" style="grid-template-columns:0.62fr 1.38fr;">
+            <div style="max-height:100%;overflow-y:auto;">
+              <p style="font-size:11px;font-weight:700;color:var(--primary-dark);margin:0 0 8px;display:flex;align-items:center;"><span class="hint-dot"></span>Daftar Perintah — klik untuk mencoba</p>
+              <div id="cheatSheet"></div>
+            </div>
+            <div id="rw-free"></div>
+          </div>
+          <div class="slide-foot">
+            Semua perintah dari bagian sebelumnya bisa dijalankan ulang di sini.
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- 14 RANGKUMAN -->
+        <section class="slide" data-slide="14" data-title="Rangkuman &amp; Referensi" data-time="3">
+          <div class="slide-head"><p class="kicker">PENUTUP</p><h2>Rangkuman dan Referensi</h2></div>
+          <div class="slide-body two">
+            <div class="txt">
+              <ul>
+                <li><strong>Manajemen data</strong> — input manual, impor CSV, pembersihan, dan recoding.</li>
+                <li><strong>Statistik deskriptif</strong> — <code>summary()</code>, <code>mean()</code>, <code>sd()</code>.</li>
+                <li><strong>Visualisasi</strong> — histogram, boxplot, scatter plot, bar chart.</li>
+                <li><strong>Bivariat</strong> — korelasi, uji-t, regresi sederhana.</li>
+                <li><strong>Multivariat</strong> — regresi berganda dan PCA.</li>
+              </ul>
+              <p>Terima kasih telah menyelesaikan modul ini. Cara terbaik menguasai R adalah sering mengetik perintahnya sendiri di RStudio.</p>
+            </div>
+            <div class="txt">
+              <p style="font-size:11px;font-weight:700;color:var(--primary-dark);margin-bottom:6px;">Daftar Pustaka</p>
+              <ol class="ref-list">
+                <li>R Core Team. (2024). <em>R: A Language and Environment for Statistical Computing</em>. r-project.org</li>
+                <li>Posit Team. (2024). <em>RStudio: Integrated Development Environment for R</em>. posit.co</li>
+                <li>Wickham, H., &amp; Grolemund, G. (2017). <em>R for Data Science</em>. O'Reilly Media.</li>
+                <li>Wickham, H. (2016). <em>ggplot2: Elegant Graphics for Data Analysis</em> (2nd ed.). Springer.</li>
+                <li>Field, A., Miles, J., &amp; Field, Z. (2012). <em>Discovering Statistics Using R</em>. Sage.</li>
+                <li>Dalgaard, P. (2008). <em>Introductory Statistics with R</em> (2nd ed.). Springer.</li>
+                <li>Hair, J. F., Black, W. C., Babin, B. J., &amp; Anderson, R. E. (2019). <em>Multivariate Data Analysis</em> (8th ed.). Cengage.</li>
+                <li>Kassambara, A. (2017). <em>Practical Guide to Principal Component Methods in R</em>. STHDA.</li>
+                <li>Wickham, H. (2014). Tidy Data. <em>Journal of Statistical Software</em>, 59(10), 1–23.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="slide-foot"><span class="copy" style="font-size:10.5px;color:var(--ink-faint);">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. — anomharjana@unud.ac.id. Modul ini dibuat untuk keperluan pembelajaran.</span></div>
+        </section>
+
+      </div>
+      <div class="stage-controls">
+        <button class="nav-btn" id="prevBtn" onclick="goTo(current-1)">← Sebelumnya</button>
+        <div class="dot-track" id="dotTrack"></div>
+        <button class="nav-btn primary" id="nextBtn" onclick="goTo(current+1)">Berikutnya →</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* =========================================================
+   NAVIGATION
+========================================================= */
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total = slides.length;
+let current = 0;
+const icons = [
+ '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" fill="currentColor" opacity=".25"/><rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M9 20h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><rect x="2.5" y="4" width="9" height="8" rx="1.4" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="12.5" y="4" width="9" height="8" rx="1.4" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="2.5" y="13" width="9" height="7" rx="1.4" stroke="currentColor" stroke-width="1.5" fill="none"/><rect x="12.5" y="13" width="9" height="7" rx="1.4" fill="currentColor"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="1.3"/><line x1="9" y1="4" x2="9" y2="20" stroke="currentColor" stroke-width="1.3"/><line x1="15" y1="4" x2="15" y2="20" stroke="currentColor" stroke-width="1.3"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13M12 16l-4-4M12 16l4-4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M4 12l4-4M4 12l4 4" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 6v12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h10M4 18h13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="19" cy="12" r="2" fill="currentColor"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><path d="M6 16a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a2 2 0 0 1 2-2h4M6 16h9a2 2 0 0 0 2-2V9" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="17" cy="9" r="2" fill="currentColor"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="12" width="3.4" height="8" fill="currentColor"/><rect x="10.3" y="7" width="3.4" height="13" fill="currentColor"/><rect x="16.6" y="3" width="3.4" height="17" fill="currentColor"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><path d="M3 18 8 10l4 5 4-8 5 11" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="10" r="1.4" fill="currentColor"/><circle cx="12" cy="15" r="1.4" fill="currentColor"/><circle cx="16" cy="7" r="1.4" fill="currentColor"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="15" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><line x1="3" y1="20" x2="21" y2="4" stroke="currentColor" stroke-width="1.6"/><circle cx="6" cy="17" r="1.6" fill="currentColor"/><circle cx="11" cy="12" r="1.6" fill="currentColor"/><circle cx="16" cy="9" r="1.6" fill="currentColor"/><circle cx="19" cy="6" r="1.6" fill="currentColor"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="6" r="1.8" fill="currentColor"/><circle cx="5" cy="12" r="1.8" fill="currentColor"/><circle cx="5" cy="18" r="1.8" fill="currentColor"/><circle cx="18" cy="12" r="2.2" fill="currentColor"/><path d="M7 6h9M7 12h9M7 18h9" stroke="currentColor" stroke-width="1.3"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><path d="M12 4 3 8l9 4 9-4-9-4Z" fill="currentColor"/><path d="M3 12l9 4 9-4" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M3 16l9 4 9-4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><rect x="2.5" y="4" width="19" height="16" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M6 9l3.5 3L6 15" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="12" y1="15" x2="17" y2="15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+ '<svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5 9.5 18 20 6" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+];
+const navList = document.getElementById('navList');
+const dotTrack = document.getElementById('dotTrack');
+const coverAgenda = document.getElementById('coverAgenda');
+slides.forEach((s,i)=>{
+  const title=s.dataset.title, time=s.dataset.time;
+  const li=document.createElement('li');
+  li.innerHTML = `<button class="nav-item" data-i="${i}" onclick="goTo(${i})">
+    <span class="ic">${icons[i]}</span>
+    <span class="tx"><span class="t">${title}</span><span class="m">${time} menit</span></span>
+    <span class="no">${(i+1).toString().padStart(2,'0')}</span></button>`;
+  navList.appendChild(li);
+  const d=document.createElement('span'); d.className='d'; dotTrack.appendChild(d);
+  if(i>0){ const chip=document.createElement('span'); chip.className='chip'; chip.textContent=title; coverAgenda.appendChild(chip); }
+});
+function goTo(i){
+  if(i<0||i>=total) return;
+  slides[current].classList.remove('active'); current=i; slides[current].classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.nav-item[data-i="${i}"]`).classList.add('active');
+  document.querySelectorAll('.dot-track .d').forEach((d,idx)=>d.classList.toggle('on', idx===i));
+  document.getElementById('stageCounter').textContent = `Bagian ${i+1} / ${total}`;
+  document.getElementById('stageDuration').textContent = `⏱ ${slides[i].dataset.time} menit`;
+  document.getElementById('prevBtn').disabled = (i===0);
+  document.getElementById('nextBtn').textContent = (i===total-1)?'Selesai ✓':'Berikutnya →';
+  document.getElementById('nextBtn').disabled = (i===total-1);
+  const pct=Math.round(((i+1)/total)*100);
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('progressLabel').textContent=pct+'%';
+  const mt = document.getElementById('mobileTitle'); if(mt) mt.textContent = slides[i].dataset.title;
+  closeSidebar();
+  window.scrollTo(0,0);
+}
+function toggleSidebar(){
+  document.getElementById('sidebarEl').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('show');
+}
+function closeSidebar(){
+  const sb=document.getElementById('sidebarEl'), ov=document.getElementById('sidebarOverlay');
+  if(sb) sb.classList.remove('open');
+  if(ov) ov.classList.remove('show');
+}
+goTo(0);
+document.addEventListener('keydown', e=>{ if(e.key==='ArrowRight') goTo(current+1); if(e.key==='ArrowLeft') goTo(current-1); });
+
+/* =========================================================
+   MATH UTILITIES
+========================================================= */
+function mean(a){return a.reduce((x,y)=>x+y,0)/a.length;}
+function sd(a){const m=mean(a); return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-1));}
+function variance(a){return sd(a)**2;}
+function pearson(x,y){
+  const mx=mean(x), my=mean(y); let num=0,dx2=0,dy2=0;
+  for(let i=0;i<x.length;i++){num+=(x[i]-mx)*(y[i]-my); dx2+=(x[i]-mx)**2; dy2+=(y[i]-my)**2;}
+  return num/Math.sqrt(dx2*dy2);
+}
+function quantile7(sortedArr,p){ const n=sortedArr.length,h=(n-1)*p,lo=Math.floor(h),hi=Math.ceil(h); return sortedArr[lo]+(h-lo)*(sortedArr[hi]-sortedArr[lo]); }
+function logGamma(x){
+  const g=7; const c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+  if(x<0.5) return Math.log(Math.PI/Math.sin(Math.PI*x)) - logGamma(1-x);
+  x-=1; let a=c[0]; const t=x+g+0.5;
+  for(let i=1;i<g+2;i++) a+=c[i]/(x+i);
+  return 0.5*Math.log(2*Math.PI)+(x+0.5)*Math.log(t)-t+Math.log(a);
+}
+function betacf(x,a,b){
+  const MAXIT=200,EPS=3e-9,FPMIN=1e-30; const qab=a+b,qap=a+1,qam=a-1;
+  let c=1,d=1-qab*x/qap; if(Math.abs(d)<FPMIN)d=FPMIN; d=1/d; let h=d;
+  for(let m=1;m<=MAXIT;m++){
+    const m2=2*m; let aa=m*(b-m)*x/((qam+m2)*(a+m2));
+    d=1+aa*d; if(Math.abs(d)<FPMIN)d=FPMIN; c=1+aa/c; if(Math.abs(c)<FPMIN)c=FPMIN; d=1/d; h*=d*c;
+    aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
+    d=1+aa*d; if(Math.abs(d)<FPMIN)d=FPMIN; c=1+aa/c; if(Math.abs(c)<FPMIN)c=FPMIN; d=1/d; const del=d*c; h*=del;
+    if(Math.abs(del-1)<EPS) break;
+  }
+  return h;
+}
+function betai(x,a,b){
+  if(x<=0) return 0; if(x>=1) return 1;
+  const bt=Math.exp(logGamma(a+b)-logGamma(a)-logGamma(b)+a*Math.log(x)+b*Math.log(1-x));
+  if(x<(a+1)/(a+b+2)) return bt*betacf(x,a,b)/a; else return 1-bt*betacf(1-x,b,a)/b;
+}
+function tTwoTailP(t,df){ const x=df/(df+t*t); return betai(x,df/2,0.5); }
+function transpose(M){return M[0].map((_,c)=>M.map(r=>r[c]));}
+function matMul(A,B){ const r=A.length,c=B[0].length,inner=B.length; const out=Array.from({length:r},()=>Array(c).fill(0));
+  for(let i=0;i<r;i++)for(let j=0;j<c;j++){let s=0;for(let k=0;k<inner;k++)s+=A[i][k]*B[k][j];out[i][j]=s;} return out; }
+function matVec(A,v){ return A.map(row=>row.reduce((s,val,j)=>s+val*v[j],0)); }
+function inverse(M){
+  const n=M.length; const A=M.map((row,i)=>row.concat(Array.from({length:n},(_,j)=>i===j?1:0)));
+  for(let i=0;i<n;i++){
+    let pivot=A[i][i];
+    if(Math.abs(pivot)<1e-10){ for(let k=i+1;k<n;k++){ if(Math.abs(A[k][i])>1e-10){ [A[i],A[k]]=[A[k],A[i]]; pivot=A[i][i]; break; } } }
+    for(let j=0;j<2*n;j++) A[i][j]/=pivot;
+    for(let k=0;k<n;k++){ if(k===i) continue; const factor=A[k][i]; for(let j=0;j<2*n;j++) A[k][j]-=factor*A[i][j]; }
+  }
+  return A.map(row=>row.slice(n));
+}
+function lm(X,y){
+  const n=X.length,k=X[0].length; const Xt=transpose(X),XtX=matMul(Xt,X),XtXinv=inverse(XtX),Xty=matVec(Xt,y);
+  const betas=matVec(XtXinv,Xty); const yhat=X.map(row=>row.reduce((s,val,j)=>s+val*betas[j],0));
+  const resid=y.map((v,i)=>v-yhat[i]); const RSS=resid.reduce((s,r)=>s+r*r,0);
+  const my=mean(y), TSS=y.reduce((s,v)=>s+(v-my)**2,0);
+  const df=n-k, sigma2=RSS/df; const se=XtXinv.map((row,i)=>Math.sqrt(sigma2*row[i]));
+  const tval=betas.map((b,i)=>b/se[i]); const pval=tval.map(t=>tTwoTailP(t,df));
+  const Rsq=1-RSS/TSS, adjRsq=1-(1-Rsq)*(n-1)/df;
+  return {betas,se,tval,pval,Rsq,adjRsq,residualSE:Math.sqrt(sigma2),df,n,k};
+}
+function welchT(a,b){
+  const ma=mean(a),mb=mean(b),va=variance(a),vb=variance(b),na=a.length,nb=b.length;
+  const se=Math.sqrt(va/na+vb/nb); const t=(ma-mb)/se;
+  const df=(va/na+vb/nb)**2 / ((va/na)**2/(na-1)+(vb/nb)**2/(nb-1));
+  const p=tTwoTailP(t,df); return {ma,mb,t,df,p};
+}
+function corTest(x,y){ const r=pearson(x,y), n=x.length, df=n-2; const t=r*Math.sqrt(df)/Math.sqrt(1-r*r); const p=tTwoTailP(t,df); return {r,t,df,p}; }
+function jacobiEigen(Ain,maxIter=100,tol=1e-10){
+  const n=Ain.length; let A=Ain.map(r=>r.slice()); let V=Array.from({length:n},(_,i)=>Array.from({length:n},(_,j)=>i===j?1:0));
+  for(let iter=0;iter<maxIter;iter++){
+    let p=0,q=1,max=0;
+    for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){ if(Math.abs(A[i][j])>max){max=Math.abs(A[i][j]);p=i;q=j;} }
+    if(max<tol) break;
+    const app=A[p][p],aqq=A[q][q],apq=A[p][q]; const phi=0.5*Math.atan2(2*apq,aqq-app);
+    const c=Math.cos(phi), s=Math.sin(phi);
+    const App=c*c*app-2*s*c*apq+s*s*aqq, Aqq=s*s*app+2*s*c*apq+c*c*aqq;
+    A[p][p]=App; A[q][q]=Aqq; A[p][q]=0; A[q][p]=0;
+    for(let i=0;i<n;i++){ if(i!==p&&i!==q){ const Aip=A[i][p],Aiq=A[i][q]; A[i][p]=c*Aip-s*Aiq; A[p][i]=A[i][p]; A[i][q]=s*Aip+c*Aiq; A[q][i]=A[i][q]; } }
+    for(let i=0;i<n;i++){ const Vip=V[i][p],Viq=V[i][q]; V[i][p]=c*Vip-s*Viq; V[i][q]=s*Vip+c*Viq; }
+  }
+  const values=A.map((row,i)=>row[i]); const order=values.map((v,i)=>i).sort((a,b)=>values[b]-values[a]);
+  return { values: order.map(i=>values[i]), vectors: order.map(i=>V.map(row=>row[i])) };
+}
+
+/* =========================================================
+   DATASET
+========================================================= */
+const siswa = [
+  {nama:'Ayu',   jam_belajar:5,  jam_tidur:6, kehadiran:80,  nilai:65},
+  {nama:'Budi',  jam_belajar:8,  jam_tidur:7, kehadiran:95,  nilai:80},
+  {nama:'Citra', jam_belajar:3,  jam_tidur:5, kehadiran:70,  nilai:55},
+  {nama:'Dewi',  jam_belajar:10, jam_tidur:8, kehadiran:100, nilai:92},
+  {nama:'Eka',   jam_belajar:6,  jam_tidur:6, kehadiran:85,  nilai:72},
+  {nama:'Fajar', jam_belajar:4,  jam_tidur:5, kehadiran:75,  nilai:60},
+  {nama:'Gita',  jam_belajar:9,  jam_tidur:7, kehadiran:90,  nilai:85},
+  {nama:'Hadi',  jam_belajar:2,  jam_tidur:4, kehadiran:65,  nilai:50},
+  {nama:'Intan', jam_belajar:7,  jam_tidur:6, kehadiran:88,  nilai:78},
+  {nama:'Joko',  jam_belajar:11, jam_tidur:8, kehadiran:98,  nilai:95}
+];
+const V = {
+  jam_belajar: siswa.map(s=>s.jam_belajar), jam_tidur: siswa.map(s=>s.jam_tidur),
+  kehadiran: siswa.map(s=>s.kehadiran), nilai: siswa.map(s=>s.nilai)
+};
+const kelompok = siswa.map(s=> s.kehadiran>=85 ? 'Tinggi' : 'Rendah');
+const siswaKotor = siswa.map(s=>({...s}));
+siswaKotor.push({...siswa[0]});
+siswaKotor.push({nama:'Lina', jam_belajar:6, jam_tidur:6, kehadiran:82, nilai:null});
+
+/* =========================================================
+   FORMAT HELPERS
+========================================================= */
+function fmt(x,d=2){ return Number(x).toFixed(d); }
+function cell(v){ return (v===null||v===undefined||Number.isNaN(v)) ? 'NA' : v; }
+function padTable(rows){
+  const widths = rows[0].map((_,c)=>Math.max(...rows.map(r=>String(r[c]).length)));
+  return rows.map(r=>r.map((v,c)=>String(v).padStart(widths[c])).join('  ')).join('\n');
+}
+function padTableMarked(rows, markMap){
+  const widths = rows[0].map((_,c)=>Math.max(...rows.map(r=>String(r[c]).length)));
+  return rows.map((r,ri)=>r.map((v,ci)=>{
+    const s = String(v); const padded = s.padStart(widths[ci]);
+    const cls = markMap && markMap[ri] && markMap[ri][ci];
+    return cls && s.length ? padded.replace(s, mk(s, cls)) : padded;
+  }).join('  ')).join('\n');
+}
+function formatSummary(arr){
+  const s=[...arr].sort((a,b)=>a-b); const q=p=>quantile7(s,p);
+  const vals=[s[0],q(0.25),q(0.5),mean(arr),q(0.75),s[s.length-1]].map(v=>v.toFixed(2));
+  const labels=['Min.','1st Qu.','Median','Mean','3rd Qu.','Max.'];
+  let l1='',l2=''; labels.forEach((lab,i)=>{ const w=Math.max(lab.length,vals[i].length)+2; l1+=lab.padStart(w); l2+=vals[i].padStart(w); });
+  return l1+'\n'+l2;
+}
+function formatVectorPrint(arr){ return '[1] '+arr.join(' '); }
+function formatCharVectorPrint(arr){
+  const q=arr.map(a=>'"'+a+'"'); const w=Math.max(...q.map(s=>s.length));
+  return '[1] '+q.map(s=>s.padEnd(w)).join(' ').trim();
+}
+function formatLogicalVector(arr){ return '[1] '+arr.map(b=>(b?'TRUE':'FALSE').padStart(5)).join(' '); }
+function formatDFRows(rows, n, highlightNA){
+  const out=[['','nama','jam_belajar','jam_tidur','kehadiran','nilai']];
+  const markMap = {};
+  for(let i=0;i<n;i++){
+    const s=rows[i]; out.push([String(i+1), s.nama, s.jam_belajar, s.jam_tidur, s.kehadiran, cell(s.nilai)]);
+    if(highlightNA && (s.nilai===null||s.nilai===undefined)) markMap[i+1] = {5:'sig'};
+  }
+  return highlightNA ? finalizeOutput(padTableMarked(out, markMap)) : padTable(out);
+}
+function formatStr(){
+  const preview=a=>a.slice(0,4).join(' ')+' ...';
+  return `'data.frame':\t10 obs. of  5 variables:
+ $ nama       : chr  "Ayu" "Budi" "Citra" "Dewi" ...
+ $ jam_belajar: num  ${preview(V.jam_belajar)}
+ $ jam_tidur  : num  ${preview(V.jam_tidur)}
+ $ kehadiran  : num  ${preview(V.kehadiran)}
+ $ nilai      : num  ${preview(V.nilai)}`;
+}
+function sigStar(t){ const at=Math.abs(t); return at>3.5?'***':at>2.5?'**':at>2?'*':''; }
+function isDup(rows,i){
+  for(let j=0;j<i;j++){
+    const a=rows[j], b=rows[i];
+    if(a.nama===b.nama && a.jam_belajar===b.jam_belajar && a.jam_tidur===b.jam_tidur && a.kehadiran===b.kehadiran && a.nilai===b.nilai) return true;
+  }
+  return false;
+}
+function generateCSV(){
+  const header='nama,jam_belajar,jam_tidur,kehadiran,nilai';
+  const rows=siswa.map(s=>[s.nama,s.jam_belajar,s.jam_tidur,s.kehadiran,s.nilai].join(','));
+  return [header,...rows].join('\n');
+}
+function formatTable1D(counts, order, markCls){
+  const keys = order.filter(k=>counts[k]!==undefined);
+  let l1='',l2='';
+  keys.forEach(k=>{
+    const val=String(counts[k]); const w=Math.max(k.length,val.length)+2;
+    const padded = val.padStart(w);
+    l1+=k.padStart(w);
+    l2+= markCls ? padded.replace(val, mk(val, markCls)) : padded;
+  });
+  return '\n'+l1+' \n'+l2+' ';
+}
+
+/* =========================================================
+   SLIDE 1 — INTRO PANE DIAGRAM
+========================================================= */
+const paneInfo = {
+  script:{ label:'Source', desc:'<b>Source</b> — tempat menulis dan menyimpan kode R sebagai file (.R), sehingga bisa dijalankan ulang kapan pun.' },
+  env:{ label:'Environment', desc:'<b>Environment</b> — menampilkan semua objek (variabel, data, model) yang sedang aktif di sesi R Anda.' },
+  console:{ label:'Console', desc:'<b>Console</b> — tempat mengetik perintah R dan langsung melihat hasilnya. Panel inilah yang paling sering kita pakai.' },
+  files:{ label:'Plots/Viewer/Help', desc:'<b>Plots / Viewer / Help</b> — menampilkan grafik, tabel data (Viewer), dan dokumentasi fungsi.' }
+};
+document.querySelectorAll('.rw-intro-pane').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    document.querySelectorAll('.rw-intro-pane').forEach(p=>p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('paneDesc').innerHTML = paneInfo[el.dataset.key].desc;
+  });
+});
+document.getElementById('paneDesc').innerHTML = paneInfo.console.desc;
+
+/* =========================================================
+   GENERIC RSTUDIO WINDOW ENGINE
+========================================================= */
+const RW_STATE = {};
+function norm(s){ return s.replace(/\s+/g,''); }
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function highlightR(raw){
+  let s = escapeHtml(raw);
+  s = s.replace(/#.*/g, m=>'<span class="rw-cm">'+m+'</span>');
+  s = s.replace(/"[^"]*"/g, m=>'<span class="rw-str">'+m+'</span>');
+  s = s.replace(/&lt;-/g, '<span class="rw-op">&lt;-</span>');
+  s = s.replace(/\b\d+\.?\d*\b/g, m=>'<span class="rw-num">'+m+'</span>');
+  const fnList='c|data\\.frame|read\\.csv|read_excel|View|head|str|class|length|dim|nrow|ncol|summary|mean|sd|median|table|is\\.na|sum|na\\.omit|duplicated|ifelse|factor|cut|hist|boxplot|plot|barplot|abline|tapply|cor|cor\\.test|t\\.test|lm|prcomp|library|colnames';
+  const re = new RegExp('\\b('+fnList+')\\b(?=\\()','g');
+  s = s.replace(re, m=>'<span class="rw-fn">'+m+'</span>');
+  return s;
+}
+/* =========================================================
+   COMMAND GLOSSARY (penjelasan tiap fungsi & operator R)
+========================================================= */
+const FUNC_DOCS = {
+  'c':'Menggabungkan beberapa nilai menjadi satu vektor.',
+  'data.frame':'Menggabungkan beberapa vektor sejajar menjadi satu tabel data.',
+  'read.csv':'Membaca file berformat CSV dan menjadikannya data frame.',
+  'read_excel':'Membaca file Excel (paket readxl) dan menjadikannya data frame.',
+  'View':'Membuka data dalam tampilan tabel seperti spreadsheet, di panel Viewer.',
+  'head':'Menampilkan beberapa baris pertama dari data — cek cepat apakah data benar.',
+  'str':'Menampilkan struktur data: jumlah baris/kolom dan tipe data tiap kolom.',
+  'class':'Menunjukkan tipe/kelas sebuah objek (numeric, character, dsb).',
+  'length':'Menghitung banyaknya elemen dalam sebuah vektor.',
+  'dim':'Menunjukkan jumlah baris dan kolom sebuah data frame.',
+  'nrow':'Menghitung jumlah baris data frame.',
+  'ncol':'Menghitung jumlah kolom data frame.',
+  'colnames':'Menampilkan nama-nama kolom data frame.',
+  'summary':'Meringkas nilai minimum, kuartil, median, rata-rata, dan maksimum sekaligus.',
+  'mean':'Menghitung nilai rata-rata (jumlah dibagi banyak data).',
+  'sd':'Menghitung standar deviasi — seberapa jauh data menyebar dari rata-rata.',
+  'median':'Menghitung nilai tengah data setelah diurutkan.',
+  'table':'Menghitung frekuensi (jumlah kemunculan) tiap kategori.',
+  'is.na':'Memeriksa tiap nilai: apakah kosong/hilang (NA) atau tidak.',
+  'sum':'Menjumlahkan seluruh nilai, atau menghitung banyak kondisi yang TRUE.',
+  'na.omit':'Menghapus baris yang mengandung nilai kosong (NA).',
+  'duplicated':'Menandai TRUE pada baris yang identik dengan baris sebelumnya.',
+  'ifelse':'Memberi nilai berbeda tergantung suatu kondisi bernilai benar/salah.',
+  'factor':'Mengubah data kategori agar urutan levelnya konsisten di tiap analisis.',
+  'cut':'Mengelompokkan angka menjadi beberapa kategori berdasar rentang nilai.',
+  'hist':'Menggambar histogram: sebaran satu variabel numerik.',
+  'boxplot':'Menggambar diagram kotak untuk membandingkan sebaran antar kelompok.',
+  'plot':'Menggambar scatter plot: hubungan antara dua variabel numerik.',
+  'barplot':'Menggambar diagram batang, biasanya untuk membandingkan rata-rata antar kelompok.',
+  'abline':'Menambahkan garis (misalnya garis regresi) di atas grafik yang sudah ada.',
+  'tapply':'Menghitung suatu fungsi (misal rata-rata) secara terpisah untuk tiap kelompok.',
+  'cor':'Menghitung koefisien korelasi Pearson (r) antara dua variabel numerik.',
+  'cor.test':'Menguji apakah korelasi antara dua variabel signifikan secara statistik.',
+  't.test':'Membandingkan rata-rata dua kelompok untuk melihat apakah bedanya signifikan.',
+  'lm':'Membuat model regresi linear (sederhana atau berganda).',
+  'prcomp':'Menghitung analisis komponen utama (PCA) dari beberapa variabel numerik.',
+  'library':'Memuat paket tambahan agar fungsi di dalamnya bisa dipakai.'
+};
+const OP_DOCS = {
+  '<-':'Operator "assignment": menyimpan hasil di sebelah kanan ke objek di sebelah kiri.',
+  '$':'Mengakses satu kolom tertentu dari sebuah data frame.',
+  '~':'Tanda formula: dibaca "variabel hasil dijelaskan/dibandingkan oleh variabel di kanan".',
+  '>=':'Operator perbandingan: memeriksa apakah nilai lebih besar atau sama dengan angka tertentu.',
+  '[ , ]':'Mengambil bagian tertentu (baris, kolom) dari sebuah data frame.'
+};
+function buildCommandLegend(containerId, lines){
+  const codeText = lines.map(l=>l.code).join('\n');
+  const fnList='c|data\\.frame|read\\.csv|read_excel|View|head|str|class|length|dim|nrow|ncol|colnames|summary|mean|sd|median|table|is\\.na|sum|na\\.omit|duplicated|ifelse|factor|cut|hist|boxplot|plot|barplot|abline|tapply|cor|cor\\.test|t\\.test|lm|prcomp|library';
+  const re = new RegExp('\\b('+fnList+')\\b(?=\\()','g');
+  const found = new Set(); let m;
+  while((m = re.exec(codeText))){ found.add(m[1]); }
+  const ops = [];
+  if(codeText.indexOf('<-')>-1) ops.push('<-');
+  if(codeText.indexOf('$')>-1) ops.push('$');
+  if(codeText.indexOf('~')>-1) ops.push('~');
+  if(/>=/.test(codeText)) ops.push('>=');
+  if(/\[[^\]]*,[^\]]*\]/.test(codeText)) ops.push('[ , ]');
+  if(found.size===0 && ops.length===0) return '';
+  let rows='';
+  Array.from(found).forEach(fn=>{ rows += `<div class="cmd-legend-row"><code class="tok-fn">${fn}()</code><span class="d">${FUNC_DOCS[fn]||'Fungsi R.'}</span></div>`; });
+  ops.forEach(op=>{ rows += `<div class="cmd-legend-row"><code class="tok-op">${escapeHtml(op)}</code><span class="d">${OP_DOCS[op]||''}</span></div>`; });
+  return `<div class="cmd-legend">
+    <button class="cmd-legend-toggle" id="${containerId}-legend-toggle" onclick="toggleLegend('${containerId}')">📖 Penjelasan tiap command &amp; simbol <span class="chev">▾</span></button>
+    <div class="cmd-legend-body" id="${containerId}-legend-body">${rows}</div>
+  </div>`;
+}
+function toggleLegend(containerId){
+  const body = document.getElementById(containerId+'-legend-body');
+  const btn = document.getElementById(containerId+'-legend-toggle');
+  const isOpen = body.classList.toggle('show');
+  btn.classList.toggle('open', isOpen);
+}
+
+/* =========================================================
+   OUTPUT NUMBER HIGHLIGHT HELPERS
+========================================================= */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function mk(val, cls){ return '\u0001'+cls+'\u0002'+val+'\u0003'; }
+function finalizeOutput(raw){
+  let s = esc(raw);
+  s = s.replace(/\u0001([a-z]+)\u0002([\s\S]*?)\u0003/g, (m,cls,val)=> '<span class="out-hl-'+cls+'">'+val+'</span>');
+  return s;
+}
+
+function buildRStudioWindow(containerId, cfg){
+  const host = document.getElementById(containerId);
+  const lines = cfg.lines || [];
+  const registry = {};
+  lines.forEach(l=>{ registry[norm(l.code)] = l.run; });
+  (cfg.extraCommands||[]).forEach(l=>{ registry[norm(l.code)] = l.run; });
+
+  host.innerHTML = buildCommandLegend(containerId, lines.length?lines:(cfg.extraCommands||[])) + `
+    <div class="rstudio-window">
+      <div class="rw-titlebar"><span class="rw-dot r"></span><span class="rw-dot y"></span><span class="rw-dot g"></span><span class="rw-title">RStudio — ${cfg.scriptTitle||'Untitled'}</span></div>
+      <div class="rw-menubar"><span>File</span><span>Edit</span><span>Code</span><span>View</span><span>Plots</span><span>Session</span><span>Build</span><span>Tools</span><span>Help</span></div>
+      <div class="rw-grid">
+        <div class="rw-pane">
+          <div class="rw-pane-tabs"><span class="rw-tab on">📄 ${cfg.scriptTitle||'script.R'}</span></div>
+          <div class="rw-pane-toolbar"><button class="rw-runall pulse-btn" id="${containerId}-runall">▶ Run All</button><span class="rw-hint"><span class="hint-dot"></span>klik satu baris untuk menjalankannya</span></div>
+          <div class="rw-source-body" id="${containerId}-source"></div>
+        </div>
+        <div class="rw-pane">
+          <div class="rw-pane-tabs"><span class="rw-tab on">Environment</span></div>
+          <div class="rw-env-body" id="${containerId}-env"></div>
+        </div>
+        <div class="rw-pane">
+          <div class="rw-pane-tabs"><span class="rw-tab on">Console</span></div>
+          <div class="rw-console-output" id="${containerId}-output"></div>
+          <div class="rw-console-input-row"><span class="rw-prompt">&gt;</span><input class="rw-console-input" id="${containerId}-input" placeholder="ketik perintah R..."></div>
+        </div>
+        <div class="rw-pane">
+          <div class="rw-pane-tabs">
+            <span class="rw-tab" data-tab="plots">Plots</span>
+            <span class="rw-tab" data-tab="viewer">Viewer</span>
+            <span class="rw-tab" data-tab="help">Help</span>
+          </div>
+          <div class="rw-viewer-body">
+            <div class="rw-view rw-view-plots" id="${containerId}-plots"><div class="rw-plot-wrap"><canvas width="230" height="118"></canvas></div></div>
+            <div class="rw-view rw-view-viewer" id="${containerId}-viewer" style="display:none;"></div>
+            <div class="rw-view rw-view-help" id="${containerId}-help" style="display:none;"><div class="rw-help-body">Ketik <code>?nama_fungsi</code> di console untuk membuka dokumentasi (disimulasikan).</div></div>
+          </div>
+          <div class="rw-caption" id="${containerId}-caption">Belum ada grafik. Jalankan perintah plot untuk melihatnya di sini.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rw-explain" id="${containerId}-explain"></div>`;
+
+  const sourceEl = document.getElementById(containerId+'-source');
+  if(lines.length===0){
+    sourceEl.innerHTML = '<div style="padding:10px;color:#B7BFC9;font-size:10px;">Tidak ada skrip contoh — gunakan console atau daftar perintah di samping.</div>';
+  }
+  lines.forEach((l,idx)=>{
+    const div=document.createElement('div'); div.className='rw-line'+(idx===0?' pulse-line':'');
+    div.innerHTML = `<span class="rw-lineno">${idx+1}</span><span class="rw-code">${highlightR(l.code)}</span>`;
+    div.onclick = ()=> runInWindow(containerId, l.code);
+    sourceEl.appendChild(div);
+  });
+
+  const envEl = document.getElementById(containerId+'-env');
+  const envItems = (cfg.seedEnv||[]).slice();
+  function renderEnv(){
+    envEl.innerHTML='';
+    if(envItems.length===0){ envEl.innerHTML='<div class="rw-env-empty">Belum ada objek.</div>'; return; }
+    envItems.forEach(it=>{
+      const d=document.createElement('div'); d.className='rw-env-item';
+      d.innerHTML = `<span class="rw-env-name">${it.name}</span><span class="rw-env-meta">${it.type}</span>`;
+      envEl.appendChild(d);
+    });
+  }
+  renderEnv();
+
+  const tabButtons = host.querySelectorAll('.rw-tab[data-tab]');
+  function setViewerTab(tab){
+    tabButtons.forEach(b=>b.classList.toggle('on', b.dataset.tab===tab));
+    document.getElementById(containerId+'-plots').style.display = tab==='plots'?'block':'none';
+    document.getElementById(containerId+'-viewer').style.display = tab==='viewer'?'block':'none';
+    document.getElementById(containerId+'-help').style.display = tab==='help'?'block':'none';
+  }
+  tabButtons.forEach(b=> b.onclick = ()=>setViewerTab(b.dataset.tab));
+  setViewerTab(cfg.defaultViewer||'plots');
+
+  RW_STATE[containerId] = { registry, envItems, renderEnv, setViewerTab };
+
+  if(cfg.initialViewer){
+    setViewerTab('viewer');
+    renderViewerTable(containerId, cfg.initialViewer.cols, cfg.initialViewer.rows);
+    document.getElementById(containerId+'-caption').textContent = cfg.initialViewer.caption||'';
+  }
+
+  document.getElementById(containerId+'-runall').onclick = ()=>{ lines.forEach(l=>runInWindow(containerId, l.code)); };
+  document.getElementById(containerId+'-input').addEventListener('keydown', e=>{ if(e.key==='Enter') runInWindow(containerId, e.target.value); });
+}
+function drawPlotIntoCanvas(containerId, type){
+  const canvas = document.querySelector('#'+containerId+'-plots canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(type==='hist') drawHistogram(ctx,canvas);
+  if(type==='box') drawBoxplot(ctx,canvas);
+  if(type==='scatter') drawScatterStatic(ctx,canvas);
+  if(type==='bar') drawBarplot(ctx,canvas);
+}
+function renderViewerTable(containerId, cols, rows){
+  const el = document.getElementById(containerId+'-viewer');
+  let html = '<table class="rw-viewer-table"><thead><tr>';
+  cols.forEach(c=> html+='<th>'+c+'</th>'); html+='</tr></thead><tbody>';
+  rows.forEach(r=>{ html+='<tr>'; cols.forEach(c=> html+='<td>'+cell(r[c])+'</td>'); html+='</tr>'; });
+  html+='</tbody></table>'; el.innerHTML=html;
+}
+function runInWindow(containerId, raw){
+  if(!raw || !raw.trim()) return;
+  const state = RW_STATE[containerId];
+  const outEl = document.getElementById(containerId+'-output');
+  const cmdLine=document.createElement('div'); cmdLine.className='rw-cmd-line'; cmdLine.textContent=raw; outEl.appendChild(cmdLine);
+  const firstLine = document.querySelector('#'+containerId+'-source .pulse-line');
+  if(firstLine) firstLine.classList.remove('pulse-line');
+  const fn = state.registry[norm(raw)];
+  const explainEl = document.getElementById(containerId+'-explain');
+  if(fn){
+    const res = fn();
+    if(res.output){ const o=document.createElement('div'); o.className='rw-out-line'; o.innerHTML=res.output; outEl.appendChild(o); }
+    if(res.creates){
+      res.creates.forEach(c=>{ const ex=state.envItems.find(e=>e.name===c.name); if(ex){ ex.type=c.type; } else { state.envItems.push(c); } });
+      state.renderEnv();
+    }
+    if(res.plot){ state.setViewerTab('plots'); drawPlotIntoCanvas(containerId,res.plot); document.getElementById(containerId+'-caption').textContent = res.caption||''; }
+    if(res.viewerRows){ state.setViewerTab('viewer'); renderViewerTable(containerId,res.viewerCols,res.viewerRows); document.getElementById(containerId+'-caption').textContent = res.caption || ('Menampilkan '+res.viewerRows.length+' baris.'); }
+    explainEl.innerHTML = res.explain ? ('<b>Penjelasan:</b> '+res.explain) : '';
+  } else {
+    const e=document.createElement('div'); e.className='rw-err-line'; e.textContent='Error: perintah tidak dikenali oleh simulator.\nKlik salah satu baris skrip di panel Source, atau ketik ulang persis seperti contoh.'; outEl.appendChild(e);
+    explainEl.innerHTML='';
+  }
+  outEl.scrollTop = outEl.scrollHeight;
+  document.getElementById(containerId+'-input').value='';
+}
+
+/* =========================================================
+   PLOT DRAWERS (generic ctx/canvas)
+========================================================= */
+function axes(ctx,x0,y0,x1,y1){ ctx.strokeStyle='#DDE2E9'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y0); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x0,y1); ctx.stroke(); }
+function drawHistogram(ctx,cv){
+  const W=cv.width,H=cv.height,pad=26; axes(ctx,pad,H-18,W-6,8);
+  const bins=[50,60,70,80,90,100]; const counts=new Array(bins.length-1).fill(0);
+  V.nilai.forEach(v=>{ for(let i=0;i<bins.length-1;i++){ if(v>=bins[i] && v<(i===bins.length-2?bins[i+1]+1:bins[i+1])){ counts[i]++; break; } } });
+  const maxC=Math.max(...counts); const bw=(W-pad-10)/counts.length;
+  counts.forEach((c,i)=>{ const h=(c/maxC)*(H-38); ctx.fillStyle='#234E70'; ctx.fillRect(pad+i*bw+2,H-18-h,bw-4,h); });
+  ctx.fillStyle='#5B6472'; ctx.font='7.5px Inter'; ctx.textAlign='center'; ctx.fillText('Nilai Ujian',(pad+W-6)/2,H-4); ctx.textAlign='start';
+}
+function drawBoxplot(ctx,cv){
+  const W=cv.width,H=cv.height,pad=28; axes(ctx,pad,H-18,W-6,8);
+  const groups=[{label:'Rendah',data:siswa.filter(s=>s.kehadiran<85).map(s=>s.nilai),color:'#C97B3F'},{label:'Tinggi',data:siswa.filter(s=>s.kehadiran>=85).map(s=>s.nilai),color:'#234E70'}];
+  const yMin=40,yMax=100; const y=v=>H-18-((v-yMin)/(yMax-yMin))*(H-34);
+  groups.forEach((g,i)=>{
+    const s=[...g.data].sort((a,b)=>a-b); const q1=quantile7(s,0.25),med=quantile7(s,0.5),q3=quantile7(s,0.75),mn=s[0],mx=s[s.length-1];
+    const cx=pad+35+i*80;
+    ctx.strokeStyle=g.color; ctx.fillStyle=g.color; ctx.lineWidth=1.4;
+    ctx.beginPath(); ctx.moveTo(cx,y(mn)); ctx.lineTo(cx,y(q1)); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx,y(q3)); ctx.lineTo(cx,y(mx)); ctx.stroke();
+    ctx.globalAlpha=0.18; ctx.fillRect(cx-13,y(q3),26,y(q1)-y(q3)); ctx.globalAlpha=1;
+    ctx.strokeRect(cx-13,y(q3),26,y(q1)-y(q3));
+    ctx.beginPath(); ctx.moveTo(cx-13,y(med)); ctx.lineTo(cx+13,y(med)); ctx.stroke();
+    ctx.fillStyle='#5B6472'; ctx.font='7.5px Inter'; ctx.textAlign='center'; ctx.fillText(g.label,cx,H-5);
+  });
+  ctx.textAlign='start';
+}
+function drawScatterStatic(ctx,cv){
+  const W=cv.width,H=cv.height,pad=26; axes(ctx,pad,H-18,W-6,8);
+  const xMax=12,yMin=40,yMax=100; const x=v=>pad+(v/xMax)*(W-pad-10); const y=v=>H-18-((v-yMin)/(yMax-yMin))*(H-34);
+  const {betas}=lm(V.jam_belajar.map(v=>[1,v]), V.nilai);
+  ctx.strokeStyle='#C97B3F'; ctx.lineWidth=1.6;
+  ctx.beginPath(); ctx.moveTo(x(0),y(betas[0])); ctx.lineTo(x(xMax),y(betas[0]+betas[1]*xMax)); ctx.stroke();
+  siswa.forEach(s=>{ ctx.beginPath(); ctx.arc(x(s.jam_belajar),y(s.nilai),3.4,0,Math.PI*2); ctx.fillStyle='#234E70'; ctx.fill(); });
+  ctx.fillStyle='#5B6472'; ctx.font='7.5px Inter'; ctx.textAlign='center'; ctx.fillText('Jam Belajar',(pad+W-6)/2,H-4); ctx.textAlign='start';
+}
+function drawBarplot(ctx,cv){
+  const W=cv.width,H=cv.height,pad=28; axes(ctx,pad,H-18,W-6,8);
+  const groups=[{label:'Rendah', v: mean(siswa.filter(s=>s.kehadiran<85).map(s=>s.nilai)), color:'#C97B3F'},{label:'Tinggi', v: mean(siswa.filter(s=>s.kehadiran>=85).map(s=>s.nilai)), color:'#234E70'}];
+  const maxV=100;
+  groups.forEach((g,i)=>{ const h=(g.v/maxV)*(H-38); const bx=pad+28+i*80;
+    ctx.fillStyle=g.color; ctx.fillRect(bx,H-18-h,40,h);
+    ctx.fillStyle='#5B6472'; ctx.font='7.5px Inter'; ctx.textAlign='center'; ctx.fillText(g.label,bx+20,H-5);
+    ctx.fillStyle='#15324A'; ctx.font='bold 7.5px Inter'; ctx.fillText(fmt(g.v,1),bx+20,H-22-h); });
+  ctx.textAlign='start';
+}
+
+/* =========================================================
+   SLIDE 2: TENTANG DATASET
+========================================================= */
+buildRStudioWindow('rw-intro2', {
+  scriptTitle:'dataset.R',
+  defaultViewer:'viewer',
+  seedEnv:[{name:'siswa', type:'10 obs. of 5 variables'}],
+  initialViewer:{ cols:['nama','jam_belajar','jam_tidur','kehadiran','nilai'], rows:siswa, caption:'Menampilkan 10 baris.' },
+  lines:[
+    { code:'View(siswa)', run:()=>({ viewerRows:siswa, viewerCols:['nama','jam_belajar','jam_tidur','kehadiran','nilai'], caption:'Menampilkan 10 baris.', explain:'<code>View()</code> membuka data dalam tampilan tabel seperti spreadsheet, di panel Viewer — cara paling mudah memeriksa data secara visual sebelum dianalisis.' }) },
+    { code:'dim(siswa)', run:()=>({ output: finalizeOutput('[1] '+mk('10','stat')+'  '+mk('5','stat')), explain:'Dua angka yang disorot adalah <b>jumlah baris</b> (10 mahasiswa) dan <b>jumlah kolom</b> (5 variabel). Selalu cocokkan dua angka ini dengan jumlah data yang Anda harapkan — jika berbeda, kemungkinan ada baris/kolom yang tidak terbaca dengan benar.' }) },
+    { code:'colnames(siswa)', run:()=>({ output: formatCharVectorPrint(['nama','jam_belajar','jam_tidur','kehadiran','nilai']), explain:'<code>colnames()</code> menampilkan nama-nama kolom data frame — berguna untuk memastikan ejaan nama kolom sebelum dipakai dalam kode (misalnya <code>siswa$nilai</code>).' }) }
+  ]
+});
+
+/* =========================================================
+   SLIDE 3: INPUT DATA MANUAL
+========================================================= */
+const linesInput = [
+  { code:'nama <- c("Ayu","Budi","Citra","Dewi","Eka","Fajar","Gita","Hadi","Intan","Joko")',
+    run:()=>({ explain:'Membuat vektor karakter berisi 10 nama mahasiswa. Belum ada output karena hanya disimpan ke objek.', creates:[{name:'nama',type:'chr [1:10]'}] }) },
+  { code:'jam_belajar <- c(5, 8, 3, 10, 6, 4, 9, 2, 7, 11)',
+    run:()=>({ explain:'Vektor numerik jam belajar per hari untuk tiap mahasiswa.', creates:[{name:'jam_belajar',type:'num [1:10]'}] }) },
+  { code:'jam_tidur <- c(6, 7, 5, 8, 6, 5, 7, 4, 6, 8)',
+    run:()=>({ explain:'Vektor numerik jam tidur per hari.', creates:[{name:'jam_tidur',type:'num [1:10]'}] }) },
+  { code:'kehadiran <- c(80, 95, 70, 100, 85, 75, 90, 65, 88, 98)',
+    run:()=>({ explain:'Vektor numerik persentase kehadiran kuliah.', creates:[{name:'kehadiran',type:'num [1:10]'}] }) },
+  { code:'nilai <- c(65, 80, 55, 92, 72, 60, 85, 50, 78, 95)',
+    run:()=>({ explain:'Vektor numerik nilai ujian akhir.', creates:[{name:'nilai',type:'num [1:10]'}] }) },
+  { code:'siswa <- data.frame(nama, jam_belajar, jam_tidur, kehadiran, nilai)',
+    run:()=>({ explain:'Menggabungkan kelima vektor sejajar menjadi satu tabel data frame bernama <code>siswa</code>.', creates:[{name:'siswa',type:'10 obs. of 5 variables'}] }) },
+  { code:'View(siswa)',
+    run:()=>({ viewerRows:siswa, viewerCols:['nama','jam_belajar','jam_tidur','kehadiran','nilai'], caption:'Menampilkan 10 baris × 5 kolom.', explain:'Data frame berhasil dibuat — <b>10 baris</b> (satu per mahasiswa) dan <b>5 kolom</b> (satu per variabel). Jika jumlahnya tidak sesuai, periksa kembali apakah semua vektor tadi punya panjang yang sama.' }) }
+];
+buildRStudioWindow('rw-input', { scriptTitle:'input_manual.R', defaultViewer:'help', lines: linesInput });
+
+/* =========================================================
+   SLIDE 4: IMPORT DATA
+========================================================= */
+const linesImport = [
+  { code:'# Lihat isi file data_siswa.csv',
+    run:()=>({ output: generateCSV(), explain:'Baris pertama berisi nama kolom; tiap baris berikutnya satu mahasiswa, dipisahkan tanda koma.' }) },
+  { code:'siswa <- read.csv("data_siswa.csv")',
+    run:()=>({ explain:'Membaca file CSV dan menyimpannya sebagai data frame <code>siswa</code>. Tidak ada output karena hasilnya disimpan ke objek.', creates:[{name:'siswa',type:'10 obs. of 5 variables (dari CSV)'}] }) },
+  { code:'dim(siswa)', run:()=>({ output: finalizeOutput('[1] '+mk('10','stat')+'  '+mk('5','stat')), explain:'Sesuai harapan: <b>10 baris</b> dan <b>5 kolom</b> — proses impor berhasil. Kalau kolomnya jauh lebih banyak dari 5, biasanya pemisah (separator) file CSV belum sesuai.' }) },
+  { code:'head(siswa)', run:()=>({ output: formatDFRows(siswa,6), explain:'<code>head()</code> menampilkan 6 baris pertama — cara cepat mengecek data sudah terbaca dengan benar, termasuk apakah urutan kolom dan nilainya masuk akal.' }) },
+  { code:'str(siswa)', run:()=>({ output: formatStr(), explain:'<code>str()</code> menampilkan tipe data tiap kolom. Perhatikan label <code>num</code> pada kolom angka — jika sebuah kolom angka malah tertulis <code>chr</code> (karakter), berarti ada kesalahan format saat impor yang perlu diperbaiki sebelum dianalisis.' }) }
+];
+buildRStudioWindow('rw-import', { scriptTitle:'import_data.R', defaultViewer:'help', lines: linesImport });
+
+/* =========================================================
+   SLIDE 5: DATA CLEANING
+========================================================= */
+const linesClean = [
+  { code:'siswa_kotor', run:()=>({ output: formatDFRows(siswaKotor,12,true), explain:'Data mentah berisi 12 baris: baris ke-11 duplikat dari baris pertama, dan sel <b>NA</b> yang disorot oranye pada baris ke-12 (Lina) menandakan nilai ujiannya belum terisi — ini yang perlu dibersihkan sebelum dianalisis.', creates:[{name:'siswa_kotor',type:'12 obs. of 5 variables (data mentah)'}] }) },
+  { code:'sum(is.na(siswa_kotor$nilai))', run:()=>({ output: finalizeOutput('[1] '+mk('1','sig')), explain:'Angka yang disorot oranye menunjukkan ada <b>1 nilai kosong (NA)</b> pada kolom nilai — milik mahasiswa "Lina". Ini sinyal bahwa data perlu ditindaklanjuti sebelum dianalisis, misalnya dengan <code>na.omit()</code>.' }) },
+  { code:'duplicated(siswa_kotor)', run:()=>{
+      const flags = siswaKotor.map((s,i)=>isDup(siswaKotor,i));
+      const raw = '[1] '+flags.map(b=> b? mk('TRUE'.padStart(5),'sig') : 'FALSE'.padStart(5)).join(' ');
+      return { output: finalizeOutput(raw), explain:'Nilai <b>TRUE</b> yang disorot oranye ada di posisi ke-11 — artinya baris ke-11 identik dengan salah satu baris sebelumnya (dalam kasus ini, baris pertama/Ayu). Semua posisi lain bernilai FALSE, artinya unik.' };
+  } },
+  { code:'siswa_tanpa_duplikat <- siswa_kotor[!duplicated(siswa_kotor), ]',
+    run:()=>({ explain:'Tanda <code>!</code> berarti "bukan" — jadi baris yang <b>bukan</b> duplikat (FALSE) yang disimpan. Hasilnya: dari 12 baris menjadi 11 baris.', creates:[{name:'siswa_tanpa_duplikat',type:'11 obs. of 5 variables'}] }) },
+  { code:'siswa_bersih <- na.omit(siswa_tanpa_duplikat)',
+    run:()=>({ explain:'Menghapus baris yang masih mengandung NA — dari 11 baris menjadi 10 baris bersih.', creates:[{name:'siswa_bersih',type:'10 obs. of 5 variables (bersih)'}] }) },
+  { code:'nrow(siswa_bersih)', run:()=>({ output: finalizeOutput('[1] '+mk('10','stat')), explain:'Hasil akhir <b>10 baris</b> — setara dengan data <code>siswa</code> bersih yang kita pakai di bagian-bagian selanjutnya. Ini mengonfirmasi proses cleaning (buang 1 duplikat, buang 1 NA) berjalan sesuai harapan: 12 → 11 → 10.' }) }
+];
+buildRStudioWindow('rw-clean', { scriptTitle:'cleaning.R', defaultViewer:'help', lines: linesClean });
+
+/* =========================================================
+   SLIDE 6: RECODING
+========================================================= */
+const kelompokCounts = kelompok.reduce((o,k)=>{o[k]=(o[k]||0)+1;return o;},{});
+function nilaiKategori(v){ if(v<=60) return 'Kurang'; if(v<=80) return 'Cukup'; return 'Baik'; }
+const kategoriCounts = V.nilai.map(nilaiKategori).reduce((o,k)=>{o[k]=(o[k]||0)+1;return o;},{});
+const linesRecode = [
+  { code:'siswa$kelompok <- ifelse(siswa$kehadiran >= 85, "Tinggi", "Rendah")',
+    run:()=>({ explain:'Membuat kolom baru <code>kelompok</code>: "Tinggi" jika kehadiran ≥85%, selain itu "Rendah".', creates:[{name:'siswa',type:'10 obs. of 6 variables (+kelompok)'}] }) },
+  { code:'siswa$kelompok <- factor(siswa$kelompok, levels = c("Rendah","Tinggi"))',
+    run:()=>({ explain:'Mengubah kolom menjadi <code>factor</code> agar urutan kategori (Rendah, lalu Tinggi) konsisten di setiap analisis.' }) },
+  { code:'table(siswa$kelompok)', run:()=>({ output: finalizeOutput(formatTable1D(kelompokCounts, ['Rendah','Tinggi'], 'stat')), explain:`Dua angka yang disorot adalah frekuensi tiap kategori: <b>${kelompokCounts['Rendah']} mahasiswa</b> di kelompok Rendah dan <b>${kelompokCounts['Tinggi']} mahasiswa</b> di kelompok Tinggi. Jumlah keduanya harus sama dengan total baris data (10) — cara sederhana memastikan tidak ada data yang "hilang" saat recoding.` }) },
+  { code:'siswa$nilai_kategori <- cut(siswa$nilai, breaks = c(0,60,80,100), labels = c("Kurang","Cukup","Baik"))',
+    run:()=>({ explain:'Mengelompokkan nilai ujian menjadi tiga kategori berdasarkan rentang yang ditentukan.', creates:[{name:'siswa',type:'10 obs. of 7 variables (+nilai_kategori)'}] }) },
+  { code:'table(siswa$nilai_kategori)', run:()=>({ output: finalizeOutput(formatTable1D(kategoriCounts, ['Kurang','Cukup','Baik'], 'stat')), explain:`Distribusi kategori nilai yang disorot: <b>${kategoriCounts['Kurang']} Kurang</b>, <b>${kategoriCounts['Cukup']} Cukup</b>, <b>${kategoriCounts['Baik']} Baik</b>. Pola ini membantu melihat sebaran performa kelas secara kualitatif, bukan hanya angka mentah.` }) }
+];
+buildRStudioWindow('rw-recode', { scriptTitle:'recoding.R', defaultViewer:'help', seedEnv:[{name:'siswa',type:'10 obs. of 5 variables'}], lines: linesRecode });
+
+/* =========================================================
+   SLIDE 7: STATISTIK DESKRIPTIF
+========================================================= */
+const linesDesc = [
+  { code:'summary(siswa$nilai)', run:()=>{
+      const s=[...V.nilai].sort((a,b)=>a-b); const med=quantile7(s,0.5); const mn=mean(V.nilai);
+      let raw = formatSummary(V.nilai);
+      raw = raw.replace(med.toFixed(2), mk(med.toFixed(2),'stat')).replace(mn.toFixed(2), mk(mn.toFixed(2),'stat'));
+      return { output: finalizeOutput(raw), explain:`Fokus pada dua angka yang disorot: <b>Median (${fmt(med,2)})</b> dan <b>Mean (${fmt(mn,2)})</b>. Karena keduanya berdekatan, sebaran nilai relatif simetris (tidak terlalu menceng ke satu sisi). Jika Mean jauh lebih besar dari Median, artinya ada beberapa nilai sangat tinggi yang menarik rata-rata ke atas, begitu pula sebaliknya.` };
+  } },
+  { code:'mean(siswa$nilai)', run:()=>({ output: finalizeOutput('[1] '+mk(fmt(mean(V.nilai),1),'stat')), explain:`Rata-rata nilai ujian seluruh mahasiswa adalah <b>${fmt(mean(V.nilai),1)}</b>. Angka ini mudah dihitung tapi sensitif terhadap nilai ekstrem — satu mahasiswa dengan nilai sangat rendah/tinggi bisa menggeser rata-rata cukup jauh.` }) },
+  { code:'sd(siswa$nilai)', run:()=>({ output: finalizeOutput('[1] '+mk(fmt(sd(V.nilai),2),'stat')), explain:`Standar deviasi <b>${fmt(sd(V.nilai),2)}</b> menunjukkan rata-rata jarak tiap nilai dari mean. Semakin besar angka ini, semakin beragam nilai mahasiswa; semakin kecil, semakin seragam kemampuan mereka.` }) },
+  { code:'median(siswa$nilai)', run:()=>({ output: finalizeOutput('[1] '+mk(fmt(quantile7([...V.nilai].sort((a,b)=>a-b),0.5),1),'stat')), explain:`Median <b>${fmt(quantile7([...V.nilai].sort((a,b)=>a-b),0.5),1)}</b> adalah nilai tengah setelah data diurutkan — lebih tahan terhadap nilai ekstrem dibanding mean, sehingga sering jadi pembanding untuk mendeteksi skewness.` }) },
+  { code:'table(siswa$kelompok)', run:()=>({ output: finalizeOutput(formatTable1D(kelompokCounts, ['Rendah','Tinggi'], 'stat')), explain:`Frekuensi mahasiswa pada tiap kelompok kehadiran: <b>${kelompokCounts['Rendah']} Rendah</b> dan <b>${kelompokCounts['Tinggi']} Tinggi</b>, hasil recoding di bagian sebelumnya.` }) }
+];
+buildRStudioWindow('rw-desc', { scriptTitle:'deskriptif.R', defaultViewer:'help', seedEnv:[{name:'siswa',type:'10 obs. of 7 variables'}], lines: linesDesc });
+
+/* =========================================================
+   SLIDE 8: VISUALISASI
+========================================================= */
+const linesViz = [
+  { code:'hist(siswa$nilai, col = "steelblue", main = "Distribusi Nilai Ujian", xlab = "Nilai")',
+    run:()=>({ plot:'hist', caption:'Sebagian besar nilai berkumpul di 55–95, tanpa pencilan mencolok.', explain:'Histogram menunjukkan bentuk sebaran satu variabel numerik.' }) },
+  { code:'boxplot(nilai ~ kelompok, data = siswa, col = c("tomato","steelblue"))',
+    run:()=>({ plot:'box', caption:'Kelompok kehadiran tinggi cenderung bernilai lebih tinggi dan lebih konsisten.', explain:'Boxplot membandingkan sebaran nilai antar dua kelompok kehadiran.' }) },
+  { code:'plot(siswa$jam_belajar, siswa$nilai, pch = 19, col = "steelblue", xlab = "Jam Belajar", ylab = "Nilai")',
+    run:()=>({ plot:'scatter', caption:'Titik-titik membentuk pola naik yang rapi.', explain:'Scatter plot menampilkan hubungan dua variabel numerik.' }) },
+  { code:'abline(lm(nilai ~ jam_belajar, data = siswa), col = "tomato")',
+    run:()=>({ plot:'scatter', caption:'Garis regresi ditambahkan di atas scatter plot sebelumnya.', explain:'<code>abline()</code> menggambar garis regresi dari model <code>lm()</code> di atas plot yang sudah ada.' }) },
+  { code:'barplot(tapply(siswa$nilai, siswa$kelompok, mean), col = "steelblue")',
+    run:()=>({ plot:'bar', caption:'Rata-rata nilai kelompok Tinggi jauh melampaui kelompok Rendah.', explain:'<code>tapply()</code> menghitung rata-rata nilai per kelompok, lalu digambar sebagai bar chart.' }) }
+];
+buildRStudioWindow('rw-viz', { scriptTitle:'visualisasi.R', defaultViewer:'plots', seedEnv:[{name:'siswa',type:'10 obs. of 7 variables'}], lines: linesViz });
+
+/* =========================================================
+   SLIDE 9: KORELASI
+========================================================= */
+const linesCor = [
+  { code:'cor(siswa$jam_belajar, siswa$nilai)', run:()=>{ const r=pearson(V.jam_belajar,V.nilai);
+      return { output: finalizeOutput('[1] '+mk(fmt(r,4),'stat')), explain:`Nilai r = <b>${fmt(r,4)}</b> sangat mendekati +1, artinya hubungan sangat kuat dan positif: makin banyak jam belajar, makin tinggi nilai ujian. Sebagai patokan kasar: |r| &gt; 0.7 = kuat, 0.4–0.7 = sedang, &lt; 0.4 = lemah.` }; } },
+  { code:'cor(siswa$jam_tidur, siswa$nilai)', run:()=>{ const r=pearson(V.jam_tidur,V.nilai);
+      return { output: finalizeOutput('[1] '+mk(fmt(r,4),'stat')), explain:`r = <b>${fmt(r,4)}</b> — jam tidur juga berkorelasi kuat dan positif dengan nilai ujian, meski sedikit lebih lemah dibanding jam belajar.` }; } },
+  { code:'cor(siswa$kehadiran, siswa$nilai)', run:()=>{ const r=pearson(V.kehadiran,V.nilai);
+      return { output: finalizeOutput('[1] '+mk(fmt(r,4),'stat')), explain:`r = <b>${fmt(r,4)}</b> — kehadiran punya korelasi sangat kuat dengan nilai, sejalan dengan keterlibatan belajar mahasiswa di kelas.` }; } },
+  { code:'cor.test(siswa$jam_belajar, siswa$nilai)', run:()=>{
+      const {r,t,df,p}=corTest(V.jam_belajar,V.nilai);
+      const pTxt = p<0.0001?'< 0.0001':fmt(p,4);
+      const raw = `\tPearson's product-moment correlation\n\ndata:  siswa$jam_belajar and siswa$nilai\nt = ${mk(fmt(t,3),'sig')}, df = ${df}, p-value = ${mk(pTxt,'sig')}\ncor\n${mk(fmt(r,7),'stat')} `;
+      return { output: finalizeOutput(raw),
+        explain:`Tiga angka penting: koefisien <b>cor = ${fmt(r,7)}</b> (hijau, kekuatan hubungan), serta <b>t = ${fmt(t,3)}</b> dan <b>p-value ${pTxt}</b> (oranye, uji signifikansi). Karena p-value jauh di bawah 0.05, korelasi ini signifikan secara statistik — kemungkinan besar bukan sekadar kebetulan sampel.` };
+  } }
+];
+buildRStudioWindow('rw-cor', { scriptTitle:'korelasi.R', defaultViewer:'help', seedEnv:[{name:'siswa',type:'10 obs. of 7 variables'}], lines: linesCor });
+
+/* =========================================================
+   SLIDE 10: UJI-T & REGRESI SEDERHANA
+========================================================= */
+const linesTtest = [
+  { code:'t.test(nilai ~ kelompok, data = siswa)', run:()=>{
+      const gRendah=siswa.filter(s=>s.kehadiran<85).map(s=>s.nilai), gTinggi=siswa.filter(s=>s.kehadiran>=85).map(s=>s.nilai);
+      const {t,df,p}=welchT(gTinggi,gRendah); const mR=mean(gRendah), mT=mean(gTinggi);
+      const pTxt = p<0.001?'< 0.001':fmt(p,4);
+      const raw = `\tWelch Two Sample t-test\n\ndata:  nilai by kelompok\nt = ${mk(fmt(t,3),'sig')}, df = ${fmt(df,2)}, p-value = ${mk(pTxt,'sig')}\nsample estimates:\nmean in group Rendah mean in group Tinggi \n             ${mk(fmt(mR,2),'stat')}               ${mk(fmt(mT,2),'stat')} `;
+      return { output: finalizeOutput(raw),
+        explain:`Bandingkan dua rata-rata yang disorot hijau: kelompok Rendah <b>${fmt(mR,2)}</b> vs kelompok Tinggi <b>${fmt(mT,2)}</b> — selisihnya cukup besar. Dua angka oranye, <b>t = ${fmt(t,3)}</b> dan <b>p-value ${pTxt}</b>, adalah hasil ujinya: karena p-value jauh di bawah 0.05, perbedaan rata-rata ini signifikan secara statistik, bukan sekadar variasi acak sampel.` };
+  } },
+  { code:'model <- lm(nilai ~ jam_belajar, data = siswa)', run:()=>({ explain:'Membuat objek model regresi. Belum ada output karena hasilnya baru disimpan — panggil <code>summary()</code> untuk melihat isinya.', creates:[{name:'model',type:'lm object'}] }) },
+  { code:'summary(model)', run:()=>{
+      const {betas,se,tval,pval,Rsq,adjRsq,residualSE,df} = lm(V.jam_belajar.map(v=>[1,v]), V.nilai);
+      const rows=[['','Estimate','Std. Error','t value','Pr(>|t|)',''],
+        ['(Intercept)', fmt(betas[0],3), fmt(se[0],3), fmt(tval[0],2), pval[0]<0.001?'<0.001':fmt(pval[0],3), sigStar(tval[0])],
+        ['jam_belajar', fmt(betas[1],3), fmt(se[1],3), fmt(tval[1],2), pval[1]<0.001?'<0.001':fmt(pval[1],3), sigStar(tval[1])]];
+      const markMap = { 2: { 1:'stat', 4:'sig' } };
+      const rsqTxt = fmt(Rsq,4);
+      const raw = `Coefficients:\n${padTableMarked(rows,markMap)}\n---\nResidual standard error: ${fmt(residualSE,3)} on ${df} degrees of freedom\nMultiple R-squared:  ${mk(rsqTxt,'stat')},\tAdjusted R-squared:  ${fmt(adjRsq,4)}`;
+      return { output: finalizeOutput(raw),
+        explain:`Koefisien <code>jam_belajar</code> (disorot hijau) = <b>${fmt(betas[1],3)}</b>, artinya tiap tambahan 1 jam belajar diperkirakan menaikkan nilai sekitar ${fmt(betas[1],1)} poin. Kolom Pr(&gt;|t|) (disorot oranye) yang sangat kecil menunjukkan hubungan ini signifikan. Multiple R-squared <b>${rsqTxt}</b> berarti jam belajar sendirian menjelaskan sekitar ${fmt(Rsq*100,1)}% variasi nilai ujian.` };
+  } }
+];
+buildRStudioWindow('rw-ttest', { scriptTitle:'uji_regresi.R', defaultViewer:'help', seedEnv:[{name:'siswa',type:'10 obs. of 7 variables'}], lines: linesTtest });
+
+/* =========================================================
+   SLIDE 11: REGRESI BERGANDA
+========================================================= */
+const linesMreg = [
+  { code:'model2 <- lm(nilai ~ jam_belajar + jam_tidur + kehadiran, data = siswa)', run:()=>({ explain:'Membuat model regresi berganda dengan tiga prediktor sekaligus.', creates:[{name:'model2',type:'lm object'}] }) },
+  { code:'summary(model2)', run:()=>{
+      const X = siswa.map(s=>[1,s.jam_belajar,s.jam_tidur,s.kehadiran]);
+      const {betas,se,tval,pval,Rsq,adjRsq,residualSE,df} = lm(X, V.nilai);
+      const names=['(Intercept)','jam_belajar','jam_tidur','kehadiran'];
+      const rows=[['','Estimate','Std. Error','t value','Pr(>|t|)','']];
+      names.forEach((nm,i)=> rows.push([nm, fmt(betas[i],3), fmt(se[i],3), fmt(tval[i],2), pval[i]<0.001?'<0.001':fmt(pval[i],3), sigStar(tval[i])]));
+      const markMap = { 1:{1:'stat',4:'sig'}, 2:{1:'stat',4:'sig'}, 3:{1:'stat',4:'sig'} };
+      const rsqTxt = fmt(Rsq,4);
+      const raw = `Coefficients:\n${padTableMarked(rows,markMap)}\n---\nResidual standard error: ${fmt(residualSE,3)} on ${df} degrees of freedom\nMultiple R-squared:  ${mk(rsqTxt,'stat')},\tAdjusted R-squared:  ${fmt(adjRsq,4)}`;
+      return { output: finalizeOutput(raw),
+        explain:`Bandingkan tiga koefisien (hijau) dan kolom Pr(&gt;|t|)-nya (oranye): <code>jam_belajar</code> = <b>${fmt(betas[1],3)}</b> tetap signifikan, tapi <code>jam_tidur</code> (${fmt(betas[2],3)}) dan <code>kehadiran</code> (${fmt(betas[3],3)}) melemah dan kolom Pr(&gt;|t|)-nya membesar — meski keduanya kuat saat diuji sendiri-sendiri di bagian korelasi. Ini indikasi <b>multikolinearitas</b>: karena ketiga prediktor saling berkorelasi tinggi, model kesulitan memisahkan kontribusi masing-masing. Multiple R-squared <b>${rsqTxt}</b> tetap tinggi, menunjukkan model secara keseluruhan tetap menjelaskan variasi nilai dengan baik.` };
+  } }
+];
+buildRStudioWindow('rw-mreg', { scriptTitle:'regresi_berganda.R', defaultViewer:'help', seedEnv:[{name:'siswa',type:'10 obs. of 7 variables'},{name:'model',type:'lm object'}], lines: linesMreg });
+
+/* =========================================================
+   SLIDE 12: PCA
+========================================================= */
+const linesPca = [
+  { code:'pca <- prcomp(siswa[,c("jam_belajar","jam_tidur","kehadiran")], scale. = TRUE)', run:()=>({ explain:'Menghitung komponen utama dari tiga variabel terstandardisasi.', creates:[{name:'pca',type:'prcomp object'}] }) },
+  { code:'summary(pca)', run:()=>{
+      const keys=['jam_belajar','jam_tidur','kehadiran']; const corMat=keys.map(k1=>keys.map(k2=>pearson(V[k1],V[k2])));
+      const {values}=jacobiEigen(corMat); const sdv=values.map(v=>Math.sqrt(Math.max(v,0))); const total=values.reduce((s,v)=>s+v,0);
+      const prop=values.map(v=>v/total); let cum=0; const cumProp=prop.map(p=>{cum+=p;return cum;});
+      const rows=[['','PC1','PC2','PC3'],['Standard deviation',...sdv.map(v=>fmt(v,4))],['Proportion of Variance',...prop.map(v=>fmt(v,4))],['Cumulative Proportion',...cumProp.map(v=>fmt(v,4))]];
+      const markMap = { 2:{1:'stat'} };
+      const raw = 'Importance of components:\n'+padTableMarked(rows,markMap);
+      return { output: finalizeOutput(raw), explain:`Angka yang disorot, <b>${fmt(prop[0]*100,1)}%</b> pada baris "Proportion of Variance" kolom PC1, berarti komponen utama pertama sendirian sudah menangkap sebagian besar informasi dari ketiga variabel asli. Ini terjadi karena jam_belajar, jam_tidur, dan kehadiran sudah sangat berkorelasi satu sama lain — PCA berhasil meringkasnya jadi (hampir) satu skor saja.` };
+  } },
+  { code:'pca$rotation', run:()=>{
+      const keys=['jam_belajar','jam_tidur','kehadiran']; const corMat=keys.map(k1=>keys.map(k2=>pearson(V[k1],V[k2])));
+      const {vectors}=jacobiEigen(corMat); const rows=[['','PC1','PC2','PC3']];
+      keys.forEach((k,i)=> rows.push([k, ...vectors.map(vec=>fmt(vec[i],3))]));
+      const markMap = { 1:{1:'stat'}, 2:{1:'stat'}, 3:{1:'stat'} };
+      const raw = padTableMarked(rows,markMap);
+      return { output: finalizeOutput(raw), explain:'Kolom PC1 yang disorot hijau berisi "bobot" tiap variabel asli dalam membentuk komponen utama pertama. Bobotnya besar dan hampir sama (sekitar 0.58 untuk ketiganya) — artinya PC1 kurang lebih adalah rata-rata terbobot dari ketiga variabel, mencerminkan pola "makin rajin di satu aspek, makin rajin juga di aspek lainnya".' }
+  } }
+];
+buildRStudioWindow('rw-pca', { scriptTitle:'pca.R', defaultViewer:'help', seedEnv:[{name:'siswa',type:'10 obs. of 7 variables'}], lines: linesPca });
+
+/* =========================================================
+   SLIDE 13: COBA SENDIRI
+========================================================= */
+const ALL_LINES = [].concat(linesInput, linesImport, linesClean, linesRecode, linesDesc, linesViz, linesCor, linesTtest, linesMreg, linesPca);
+buildRStudioWindow('rw-free', { scriptTitle:'latihan.R', defaultViewer:'help', seedEnv:[{name:'siswa',type:'10 obs. of 7 variables'}], lines:[], extraCommands: ALL_LINES });
+
+const cheatCategories = [
+  { cat:'Manajemen Data', cmds:['siswa <- data.frame(nama, jam_belajar, jam_tidur, kehadiran, nilai)','View(siswa)','dim(siswa)','str(siswa)','sum(is.na(siswa_kotor$nilai))','duplicated(siswa_kotor)'] },
+  { cat:'Deskriptif', cmds:['summary(siswa$nilai)','mean(siswa$nilai)','sd(siswa$nilai)','table(siswa$kelompok)'] },
+  { cat:'Visualisasi', cmds:['hist(siswa$nilai, col = "steelblue", main = "Distribusi Nilai Ujian", xlab = "Nilai")','boxplot(nilai ~ kelompok, data = siswa, col = c("tomato","steelblue"))','barplot(tapply(siswa$nilai, siswa$kelompok, mean), col = "steelblue")'] },
+  { cat:'Bivariat', cmds:['cor(siswa$jam_belajar, siswa$nilai)','cor.test(siswa$jam_belajar, siswa$nilai)','t.test(nilai ~ kelompok, data = siswa)','summary(model)'] },
+  { cat:'Multivariat', cmds:['summary(model2)','summary(pca)','pca$rotation'] }
+];
+const cheatHost = document.getElementById('cheatSheet');
+cheatCategories.forEach(group=>{
+  const h=document.createElement('p'); h.style.cssText='font-size:10px;font-weight:700;color:var(--primary-dark);margin:8px 0 4px;';
+  h.textContent=group.cat; cheatHost.appendChild(h);
+  const list=document.createElement('div'); list.style.cssText='display:flex;flex-direction:column;gap:3px;';
+  group.cmds.forEach(cmd=>{
+    const b=document.createElement('button');
+    b.style.cssText='background:#fff;border:1px solid var(--line);color:var(--ink);font-size:9.7px;font-family:var(--mono);padding:5px 7px;border-radius:5px;cursor:pointer;text-align:left;';
+    b.textContent=cmd;
+    b.onclick=()=> runInWindow('rw-free', cmd);
+    b.onmouseenter=()=>{ b.style.borderColor='var(--accent)'; b.style.background='var(--accent-tint)'; };
+    b.onmouseleave=()=>{ b.style.borderColor='var(--line)'; b.style.background='#fff'; };
+    list.appendChild(b);
+  });
+  cheatHost.appendChild(list);
+});
+</script>
+</body>
+</html>

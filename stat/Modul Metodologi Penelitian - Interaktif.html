@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metodologi Penelitian — Modul Interaktif</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg:#EEF1F5;
+    --surface:#FFFFFF;
+    --ink:#1B2430;
+    --ink-soft:#5B6472;
+    --ink-faint:#8A93A3;
+    --primary:#234E70;
+    --primary-dark:#15324A;
+    --primary-tint:#E6EDF3;
+    --accent:#1E8F73;
+    --accent-tint:#E3F3EE;
+    --warm:#C97B3F;
+    --warm-tint:#FBEEE2;
+    --line:#DDE2E9;
+    --line-soft:#EBEEF2;
+    --radius:10px;
+    --serif:'Source Serif 4', Georgia, 'Iowan Old Style', serif;
+    --sans:'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
+    --shadow: 0 1px 2px rgba(21,50,74,0.06), 0 6px 20px rgba(21,50,74,0.06);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--bg);
+    -webkit-font-smoothing:antialiased;
+  }
+  button{font-family:inherit;}
+  ::selection{background:var(--accent-tint);color:var(--primary-dark);}
+
+  a{color:var(--primary);}
+
+  /* ===== App shell ===== */
+  .app-shell{
+    display:flex;
+    min-height:100vh;
+    align-items:stretch;
+  }
+
+  /* ===== Sidebar ===== */
+  .sidebar{
+    width:288px;
+    flex:0 0 288px;
+    background:var(--primary-dark);
+    color:#EAF0F5;
+    display:flex;
+    flex-direction:column;
+    padding:28px 20px 20px;
+  }
+  .brand{
+    margin-bottom:22px;
+  }
+  .brand .eyebrow{
+    font-size:11.5px;
+    letter-spacing:.02em;
+    color:#8FB0C6;
+    margin:0 0 6px;
+  }
+  .brand h1{
+    font-family:var(--serif);
+    font-size:22px;
+    line-height:1.25;
+    font-weight:700;
+    margin:0 0 4px;
+    color:#fff;
+  }
+  .brand p{
+    margin:0;
+    font-size:12.5px;
+    color:#9DB6C7;
+    line-height:1.5;
+  }
+
+  .nav-list{
+    list-style:none;
+    margin:6px 0 0;
+    padding:0;
+    flex:1;
+    overflow-y:auto;
+  }
+  .nav-item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    color:#C7D6E0;
+    padding:9px 8px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-bottom:2px;
+    transition:background .15s ease, color .15s ease;
+  }
+  .nav-item:hover{background:rgba(255,255,255,.06);}
+  .nav-item.active{background:rgba(255,255,255,.12);color:#fff;}
+  .nav-item .ic{
+    flex:0 0 22px;
+    width:22px;height:22px;
+    margin-top:1px;
+    opacity:.9;
+  }
+  .nav-item .tx{flex:1;min-width:0;}
+  .nav-item .tx .t{
+    font-size:13px;
+    font-weight:600;
+    line-height:1.3;
+    display:block;
+  }
+  .nav-item .tx .m{
+    font-size:11px;
+    color:#7E9AAC;
+    display:block;
+    margin-top:1px;
+  }
+  .nav-item.active .tx .m{color:#B9D3E1;}
+  .nav-item .no{
+    flex:0 0 auto;
+    font-family:var(--serif);
+    font-size:11px;
+    color:#5F7D90;
+    margin-top:2px;
+  }
+  .nav-item.active .no{color:#8FB0C6;}
+
+  .sidebar-foot{
+    border-top:1px solid rgba(255,255,255,.12);
+    padding-top:14px;
+    margin-top:10px;
+  }
+  .progress-wrap{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:12px;
+  }
+  .progress-track{
+    flex:1;
+    height:4px;
+    background:rgba(255,255,255,.14);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .progress-bar{
+    height:100%;
+    width:0%;
+    background:var(--accent);
+    transition:width .25s ease;
+  }
+  .progress-label{
+    font-size:11px;
+    color:#8FB0C6;
+    white-space:nowrap;
+  }
+  .author-credit{
+    font-size:11px;
+    line-height:1.55;
+    color:#7E9AAC;
+  }
+  .author-credit strong{color:#C7D6E0;font-weight:600;}
+
+  /* ===== Main ===== */
+  .main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:32px 28px 24px;
+    min-width:0;
+  }
+
+  .stage-wrap{
+    width:100%;
+    max-width:980px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+  }
+
+  .stage-topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .stage-topbar .counter{
+    font-size:12.5px;
+    color:var(--ink-faint);
+    font-variant-numeric:tabular-nums;
+  }
+  .stage-topbar .duration-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:11.5px;
+    color:var(--primary);
+    background:var(--primary-tint);
+    padding:4px 10px;
+    border-radius:20px;
+    font-weight:600;
+  }
+
+  .stage{
+    position:relative;
+    width:100%;
+    aspect-ratio:4/3;
+    background:var(--surface);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    display:none;
+    flex-direction:column;
+    padding:34px 38px 20px;
+    overflow-y:auto;
+  }
+  .slide.active{display:flex;}
+
+  .slide-head{
+    margin-bottom:14px;
+    flex:0 0 auto;
+  }
+  .slide-head .kicker{
+    font-size:11.5px;
+    color:var(--accent);
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .slide-head h2{
+    font-family:var(--serif);
+    font-size:25px;
+    font-weight:700;
+    margin:0;
+    color:var(--primary-dark);
+    line-height:1.25;
+  }
+  .slide-head .lede{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    margin:6px 0 0;
+    line-height:1.5;
+    max-width:64ch;
+  }
+
+  .slide-body{
+    flex:1;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:26px;
+    min-height:0;
+  }
+  .slide-body.single{grid-template-columns:1fr;}
+  .col{min-width:0;}
+  .col-text p{
+    font-size:13.5px;
+    line-height:1.62;
+    color:var(--ink);
+    margin:0 0 10px;
+  }
+  .col-text ul{
+    margin:0 0 10px;
+    padding-left:18px;
+  }
+  .col-text li{
+    font-size:13.5px;
+    line-height:1.6;
+    margin-bottom:5px;
+    color:var(--ink);
+  }
+  .col-text strong{color:var(--primary-dark);}
+
+  .example-box{
+    background:var(--warm-tint);
+    border-left:3px solid var(--warm);
+    border-radius:6px;
+    padding:10px 12px;
+    font-size:12.5px;
+    line-height:1.55;
+    color:#5C4327;
+    margin-top:8px;
+  }
+  .example-box b{display:block;font-size:11px;letter-spacing:.02em;color:var(--warm);margin-bottom:3px;}
+
+  .col-visual{
+    background:var(--primary-tint);
+    border-radius:8px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+    position:relative;
+  }
+
+  sup.fn{
+    cursor:default;
+    color:var(--accent);
+    font-weight:700;
+    font-size:10px;
+    margin-left:1px;
+  }
+
+  .slide-foot{
+    flex:0 0 auto;
+    border-top:1px solid var(--line-soft);
+    margin-top:12px;
+    padding-top:8px;
+    font-size:10.5px;
+    color:var(--ink-faint);
+    line-height:1.5;
+  }
+  .slide-foot .copy{
+    display:block;
+    margin-top:2px;
+    color:#B7BFC9;
+  }
+
+  /* ===== Controls under stage ===== */
+  .stage-controls{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:14px;
+  }
+  .nav-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--primary-dark);
+    font-weight:600;
+    font-size:13px;
+    padding:9px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .nav-btn:hover{background:var(--primary-tint);border-color:var(--primary);}
+  .nav-btn:disabled{opacity:.35;cursor:not-allowed;}
+  .nav-btn.primary{background:var(--primary);color:#fff;border-color:var(--primary);}
+  .nav-btn.primary:hover{background:var(--primary-dark);}
+  .dot-track{display:flex;gap:5px;}
+  .dot-track .d{width:6px;height:6px;border-radius:50%;background:var(--line);}
+  .dot-track .d.on{background:var(--accent);}
+
+  /* ===== flat icon buttons / tabs ===== */
+  .tab-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+  .tab-btn{
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    font-size:12px;
+    font-weight:600;
+    padding:7px 12px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .tab-btn.on{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+  .btn-solid{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    font-size:12.5px;
+    font-weight:600;
+    padding:9px 14px;
+    border-radius:7px;
+    cursor:pointer;
+  }
+  .btn-solid:hover{background:#187a61;}
+  .btn-ghost{
+    background:#fff;
+    color:var(--primary);
+    border:1px solid var(--line);
+    font-size:12.5px;
+    font-weight:600;
+    padding:9px 14px;
+    border-radius:7px;
+    cursor:pointer;
+  }
+  .btn-ghost:hover{border-color:var(--primary);}
+
+  .metric-row{display:flex;gap:8px;width:100%;margin-top:10px;flex-wrap:wrap;}
+  .metric{
+    flex:1;
+    min-width:84px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:8px 10px;
+    text-align:center;
+  }
+  .metric .v{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--primary-dark);}
+  .metric .l{font-size:10px;color:var(--ink-faint);margin-top:2px;}
+
+  .field-row{width:100%;margin-top:6px;}
+  .field-row label{
+    display:flex;justify-content:space-between;
+    font-size:11.5px;color:var(--ink-soft);font-weight:600;margin-bottom:3px;
+  }
+  .field-row label span.val{color:var(--primary);font-variant-numeric:tabular-nums;}
+  input[type=range]{
+    width:100%;
+    accent-color:var(--accent);
+  }
+
+  canvas{max-width:100%;display:block;}
+
+  .legend{display:flex;gap:12px;font-size:11px;color:var(--ink-soft);margin-top:6px;flex-wrap:wrap;justify-content:center;}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .legend i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+
+  /* references slide */
+  .ref-list{list-style:none;margin:0;padding:0;counter-reset:ref;}
+  .ref-list li{
+    counter-increment:ref;
+    font-size:12px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    padding-left:22px;
+    position:relative;
+    margin-bottom:7px;
+  }
+  .ref-list li::before{
+    content:"["counter(ref)"]";
+    position:absolute;left:0;top:0;
+    color:var(--accent);font-weight:700;font-size:11px;
+  }
+  .cover-wrap{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    height:100%;text-align:center;gap:10px;
+  }
+  .cover-wrap .cap{
+    width:56px;height:56px;color:var(--primary);margin-bottom:6px;
+  }
+  .cover-wrap h1{
+    font-family:var(--serif);font-size:32px;font-weight:700;color:var(--primary-dark);
+    margin:0;line-height:1.2;max-width:20ch;
+  }
+  .cover-wrap .sub{font-size:14px;color:var(--ink-soft);max-width:52ch;margin:0;}
+  .cover-agenda{
+    display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;max-width:640px;
+  }
+  .cover-agenda .chip{
+    font-size:11px;font-weight:600;color:var(--primary);background:var(--primary-tint);
+    padding:6px 12px;border-radius:20px;
+  }
+  .cover-credit{margin-top:22px;font-size:11px;color:var(--ink-faint);}
+  .cover-start{margin-top:18px;}
+
+  .decision-box{
+    background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:8px;
+  }
+  .decision-q{font-size:13px;font-weight:700;color:var(--primary-dark);margin:0 0 8px;}
+  .decision-opts{display:flex;gap:8px;flex-wrap:wrap;}
+  .breadcrumb{font-size:11px;color:var(--ink-faint);margin-bottom:8px;min-height:14px;}
+  .result-box{
+    background:var(--accent-tint);border:1px solid #BFE3D6;border-radius:8px;padding:12px 14px;
+    text-align:center;
+  }
+  .result-box .rt{font-size:10.5px;color:var(--accent);font-weight:700;letter-spacing:.02em;}
+  .result-box .rv{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--primary-dark);margin-top:2px;}
+
+  @media (max-width:860px){
+    .sidebar{display:none;}
+    .slide-body{grid-template-columns:1fr;}
+    .stage{aspect-ratio:auto;min-height:70vh;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <p class="eyebrow">MODUL INTERAKTIF · 60 MENIT</p>
+      <h1>Metodologi Penelitian</h1>
+      <p>Dari rancangan sampel hingga analisis multivariat, dengan konsep dasar dan contoh sederhana.</p>
+    </div>
+
+    <ol class="nav-list" id="navList"></ol>
+
+    <div class="sidebar-foot">
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+        <span class="progress-label" id="progressLabel">0%</span>
+      </div>
+      <p class="author-credit">
+        <strong>Ngakan Putu Anom Harjana, S.KM., M.A.</strong><br>
+        anomharjana@unud.ac.id<br>
+        © Hak cipta dilindungi
+      </p>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+    <div class="stage-wrap">
+      <div class="stage-topbar">
+        <span class="counter" id="stageCounter">Bagian 1 / 10</span>
+        <span class="duration-chip" id="stageDuration">⏱ 3 menit</span>
+      </div>
+
+      <div class="stage" id="stage">
+        <!-- Slides injected below (static HTML for readability) -->
+
+        <!-- ===================== SLIDE 1 — COVER ===================== -->
+        <section class="slide active" data-slide="0" data-title="Pendahuluan" data-time="3">
+          <div class="cover-wrap">
+            <svg class="cap" viewBox="0 0 48 48" fill="none"><path d="M24 6 4 15l20 9 20-9-20-9Z" fill="#234E70"/><path d="M12 21v9c0 3.5 5.4 7 12 7s12-3.5 12-7v-9" stroke="#234E70" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M44 15v11" stroke="#1E8F73" stroke-width="2.4" stroke-linecap="round"/></svg>
+            <h1>Metodologi Penelitian untuk Pemula</h1>
+            <p class="sub">Modul interaktif yang mengajak Anda memahami rancangan sampel, statistik deskriptif, hingga analisis multivariat — dengan bahasa sederhana, contoh nyata, dan simulasi yang bisa Anda mainkan sendiri.</p>
+            <div class="cover-agenda" id="coverAgenda"></div>
+            <div class="cover-start">
+              <button class="nav-btn primary" onclick="goTo(1)">Mulai Belajar →</button>
+            </div>
+            <p class="cover-credit">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. — anomharjana@unud.ac.id</p>
+          </div>
+        </section>
+
+        <!-- ===================== SLIDE 2 — POPULASI & SAMPEL ===================== -->
+        <section class="slide" data-slide="1" data-title="Populasi &amp; Sampel" data-time="6">
+          <div class="slide-head">
+            <p class="kicker">01 · RANCANGAN SAMPEL</p>
+            <h2>Populasi dan Sampel</h2>
+            <p class="lede">Titik awal setiap penelitian: siapa yang ingin kita pelajari, dan siapa yang benar-benar akan kita tanyai.</p>
+          </div>
+          <div class="slide-body">
+            <div class="col col-text">
+              <p><strong>Populasi</strong> adalah keseluruhan subjek atau objek yang ingin kita pelajari — misalnya seluruh mahasiswa di sebuah kampus.<sup class="fn">[1]</sup></p>
+              <p><strong>Sampel</strong> adalah sebagian kecil dari populasi itu yang benar-benar kita teliti, karena meneliti semuanya sering kali tidak mungkin — terlalu mahal, terlalu lama, atau terlalu besar.<sup class="fn">[2]</sup></p>
+              <p>Syaratnya, sampel harus <strong>mewakili</strong> populasinya. Jika tidak, kesimpulan penelitian bisa menyesatkan.</p>
+              <div class="example-box">
+                <b>CONTOH SEDERHANA</b>
+                Sebuah universitas punya 4.000 mahasiswa (populasi). Untuk mengetahui tingkat kepuasan terhadap kantin kampus, tim peneliti hanya mewawancarai 120 mahasiswa yang dipilih secara acak (sampel).
+              </div>
+            </div>
+            <div class="col col-visual">
+              <div id="popGrid" style="display:grid;grid-template-columns:repeat(10,1fr);gap:5px;width:100%;max-width:260px;"></div>
+              <div class="metric-row">
+                <div class="metric"><div class="v" id="popSampleCount">0</div><div class="l">TERPILIH JADI SAMPEL</div></div>
+                <div class="metric"><div class="v">60</div><div class="l">TOTAL POPULASI (ILUSTRASI)</div></div>
+              </div>
+              <button class="btn-solid" style="margin-top:10px;" onclick="drawSample()">🎲 Ambil Sampel Acak</button>
+              <div class="legend">
+                <span><i style="background:#C7D3DE"></i>Populasi</span>
+                <span><i style="background:#1E8F73"></i>Terpilih sebagai sampel</span>
+              </div>
+            </div>
+          </div>
+          <div class="slide-foot">
+            Klik tombol untuk mensimulasikan penarikan sampel acak dari 60 "individu" populasi.
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- ===================== SLIDE 3 — TEKNIK SAMPLING ===================== -->
+        <section class="slide" data-slide="2" data-title="Teknik Sampling" data-time="7">
+          <div class="slide-head">
+            <p class="kicker">01 · RANCANGAN SAMPEL</p>
+            <h2>Teknik Pengambilan Sampel</h2>
+            <p class="lede">Cara memilih sampel menentukan seberapa bisa dipercaya hasil penelitian. Coba setiap teknik di bawah ini.</p>
+          </div>
+          <div class="slide-body">
+            <div class="col col-text">
+              <div id="samplingDesc"></div>
+            </div>
+            <div class="col col-visual">
+              <div class="tab-row" id="samplingTabs"></div>
+              <div id="samplingGrid" style="display:grid;grid-template-columns:repeat(10,1fr);gap:5px;width:100%;max-width:260px;"></div>
+              <div class="legend">
+                <span><i style="background:#C7D3DE"></i>Tidak terpilih</span>
+                <span><i style="background:#1E8F73"></i>Terpilih</span>
+              </div>
+            </div>
+          </div>
+          <div class="slide-foot">
+            Empat teknik dasar probability sampling.<sup class="fn">[1][2]</sup> Pilih tab untuk melihat pola pemilihannya.
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- ===================== SLIDE 4 — UKURAN SAMPEL (SLOVIN) ===================== -->
+        <section class="slide" data-slide="3" data-title="Ukuran Sampel" data-time="6">
+          <div class="slide-head">
+            <p class="kicker">01 · RANCANGAN SAMPEL</p>
+            <h2>Menentukan Ukuran Sampel</h2>
+            <p class="lede">Berapa banyak sampel yang cukup? Salah satu rumus paling populer untuk pemula adalah rumus Slovin.</p>
+          </div>
+          <div class="slide-body">
+            <div class="col col-text">
+              <p>Rumus Slovin memperkirakan jumlah sampel minimum berdasarkan ukuran populasi (N) dan batas toleransi kesalahan atau <em>margin of error</em> (e).<sup class="fn">[3]</sup></p>
+              <div class="example-box" style="background:var(--primary-tint);border-left-color:var(--primary);color:var(--primary-dark);">
+                <b>RUMUS</b>
+                n = N ÷ (1 + N·e²)
+              </div>
+              <p>Semakin kecil margin of error yang kita inginkan, semakin besar sampel yang dibutuhkan — karena kita menuntut hasil yang lebih presisi.</p>
+              <p>Geser dua penggeser di samping untuk melihat bagaimana ukuran sampel berubah secara langsung.</p>
+            </div>
+            <div class="col col-visual">
+              <div class="field-row">
+                <label>Ukuran Populasi (N) <span class="val" id="slovinNVal">1000</span></label>
+                <input type="range" id="slovinN" min="100" max="10000" step="50" value="1000" oninput="updateSlovin()">
+              </div>
+              <div class="field-row">
+                <label>Margin of Error (e) <span class="val" id="slovinEVal">5%</span></label>
+                <input type="range" id="slovinE" min="1" max="10" step="0.5" value="5" oninput="updateSlovin()">
+              </div>
+              <div class="metric-row">
+                <div class="metric"><div class="v" id="slovinResult">286</div><div class="l">SAMPEL MINIMUM (n)</div></div>
+                <div class="metric"><div class="v" id="slovinRatio">29%</div><div class="l">RASIO TERHADAP POPULASI</div></div>
+              </div>
+              <div style="width:100%;height:10px;background:#DDE7EE;border-radius:5px;margin-top:12px;overflow:hidden;">
+                <div id="slovinBar" style="height:100%;width:29%;background:var(--accent);"></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-foot">
+            Rumus Slovin cocok untuk populasi yang diketahui jumlahnya secara pasti.<sup class="fn">[1][3]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- ===================== SLIDE 5 — UKURAN PEMUSATAN ===================== -->
+        <section class="slide" data-slide="4" data-title="Ukuran Pemusatan" data-time="7">
+          <div class="slide-head">
+            <p class="kicker">02 · STATISTIK DESKRIPTIF</p>
+            <h2>Mean, Median, dan Modus</h2>
+            <p class="lede">Tiga cara paling umum untuk meringkas "titik tengah" sekumpulan data.</p>
+          </div>
+          <div class="slide-body">
+            <div class="col col-text">
+              <ul>
+                <li><strong>Mean (rata-rata)</strong> — jumlah semua nilai dibagi banyaknya data. Mudah dihitung, tapi sensitif terhadap nilai ekstrem (outlier).</li>
+                <li><strong>Median (nilai tengah)</strong> — nilai di posisi tengah setelah data diurutkan. Lebih tahan terhadap outlier.</li>
+                <li><strong>Modus</strong> — nilai yang paling sering muncul.</li>
+              </ul>
+              <p>Data di samping adalah nilai ujian 9 mahasiswa, ditambah 1 nilai yang bisa Anda ubah sendiri.<sup class="fn">[5]</sup></p>
+              <div class="example-box">
+                <b>COBA INI</b>
+                Geser nilai mahasiswa ke-10 mendekati 0 atau 100, lalu amati: mean bergeser jauh, tapi median relatif tetap stabil.
+              </div>
+            </div>
+            <div class="col col-visual">
+              <canvas id="centerCanvas" width="420" height="150"></canvas>
+              <div class="field-row">
+                <label>Nilai Mahasiswa ke-10 <span class="val" id="outlierVal">90</span></label>
+                <input type="range" id="outlierSlider" min="0" max="100" step="1" value="90" oninput="updateCenter()">
+              </div>
+              <div class="metric-row">
+                <div class="metric"><div class="v" id="meanVal">75.9</div><div class="l">MEAN</div></div>
+                <div class="metric"><div class="v" id="medianVal">75.0</div><div class="l">MEDIAN</div></div>
+                <div class="metric"><div class="v" id="modeVal">—</div><div class="l">MODUS</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-foot">
+            Ukuran pemusatan data (tendency central).<sup class="fn">[5]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- ===================== SLIDE 6 — UKURAN SEBARAN ===================== -->
+        <section class="slide" data-slide="5" data-title="Ukuran Sebaran" data-time="6">
+          <div class="slide-head">
+            <p class="kicker">02 · STATISTIK DESKRIPTIF</p>
+            <h2>Varians dan Standar Deviasi</h2>
+            <p class="lede">Dua kelompok bisa punya rata-rata yang sama, tapi sebaran datanya sangat berbeda.</p>
+          </div>
+          <div class="slide-body">
+            <div class="col col-text">
+              <p><strong>Varians</strong> mengukur seberapa jauh titik-titik data tersebar dari rata-ratanya (dikuadratkan). <strong>Standar deviasi</strong> adalah akar dari varians, sehingga satuannya sama dengan data aslinya — lebih mudah diartikan.<sup class="fn">[5]</sup></p>
+              <p>Semakin besar standar deviasi, semakin "menyebar" datanya; semakin kecil, semakin "rapat" atau seragam.</p>
+              <div class="example-box">
+                <b>CONTOH SEDERHANA</b>
+                Kelas A dan Kelas B sama-sama punya nilai rata-rata 75. Tapi di Kelas A semua nilai berkisar 72–77, sedangkan di Kelas B nilai berkisar 50–95. Kelas B jauh lebih beragam kemampuannya, meskipun rata-ratanya sama.
+              </div>
+            </div>
+            <div class="col col-visual">
+              <div class="tab-row">
+                <button class="tab-btn on" id="btnKelasA" onclick="setSpread('A')">Kelas A (rapat)</button>
+                <button class="tab-btn" id="btnKelasB" onclick="setSpread('B')">Kelas B (menyebar)</button>
+              </div>
+              <canvas id="spreadCanvas" width="420" height="120"></canvas>
+              <div class="metric-row">
+                <div class="metric"><div class="v" id="spreadMean">75.0</div><div class="l">MEAN</div></div>
+                <div class="metric"><div class="v" id="spreadVar">3.1</div><div class="l">VARIANS</div></div>
+                <div class="metric"><div class="v" id="spreadSD">1.8</div><div class="l">STD. DEVIASI</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-foot">
+            Ukuran sebaran (dispersion) data.<sup class="fn">[5]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- ===================== SLIDE 7 — KORELASI & REGRESI ===================== -->
+        <section class="slide" data-slide="6" data-title="Korelasi &amp; Regresi" data-time="8">
+          <div class="slide-head">
+            <p class="kicker">03 · ANALISIS DATA</p>
+            <h2>Korelasi dan Regresi Sederhana</h2>
+            <p class="lede">Menguji apakah dua variabel saling berhubungan, dan bagaimana bentuk hubungannya.</p>
+          </div>
+          <div class="slide-body">
+            <div class="col col-text">
+              <p><strong>Korelasi (r)</strong> mengukur kekuatan dan arah hubungan linear antara dua variabel, dari -1 sampai +1.<sup class="fn">[5]</sup></p>
+              <p><strong>Regresi sederhana</strong> melangkah lebih jauh: membuat garis prediksi, "jika X naik, berapa Y diperkirakan berubah?"</p>
+              <div class="example-box">
+                <b>COBA INI</b>
+                Klik dan geser titik-titik pada grafik di samping (misal: jam belajar vs nilai ujian). Perhatikan nilai r berubah saat titik-titik semakin sejajar atau semakin acak.
+              </div>
+            </div>
+            <div class="col col-visual">
+              <canvas id="scatterCanvas" width="360" height="230" style="cursor:grab;"></canvas>
+              <div class="metric-row">
+                <div class="metric"><div class="v" id="corrR">0.82</div><div class="l">KORELASI (r)</div></div>
+                <div class="metric"><div class="v" id="corrLabel">Kuat, positif</div><div class="l">INTERPRETASI</div></div>
+              </div>
+              <button class="btn-ghost" style="margin-top:8px;" onclick="resetScatter()">↺ Atur Ulang Titik</button>
+            </div>
+          </div>
+          <div class="slide-foot">
+            Sumbu X = jam belajar per minggu, sumbu Y = nilai ujian (ilustrasi).<sup class="fn">[5]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- ===================== SLIDE 8 — MULTIVARIAT ===================== -->
+        <section class="slide" data-slide="7" data-title="Analisis Multivariat" data-time="8">
+          <div class="slide-head">
+            <p class="kicker">03 · ANALISIS DATA</p>
+            <h2>Pengantar Analisis Multivariat</h2>
+            <p class="lede">Ketika satu variabel hasil dipengaruhi oleh banyak variabel sekaligus.</p>
+          </div>
+          <div class="slide-body">
+            <div class="col col-text">
+              <p><strong>Regresi berganda</strong> memperluas regresi sederhana: memprediksi satu variabel (Y) dari dua atau lebih variabel prediktor (X1, X2, X3, ...).<sup class="fn">[6]</sup></p>
+              <p><strong>Analisis faktor / PCA</strong> bekerja sebaliknya: meringkas banyak variabel yang saling berkaitan menjadi beberapa "faktor" utama yang lebih sederhana.<sup class="fn">[7]</sup></p>
+              <div class="example-box">
+                <b>CONTOH SEDERHANA</b>
+                Nilai ujian akhir (Y) diperkirakan dari jam belajar (X1), jam tidur (X2), dan tingkat kehadiran (X3) sekaligus. Geser tiap penggeser bobot di samping untuk melihat bagaimana prediksi berubah.
+              </div>
+            </div>
+            <div class="col col-visual">
+              <svg viewBox="0 0 260 90" style="width:100%;max-width:260px;">
+                <rect x="2" y="4" width="60" height="22" rx="5" fill="#E6EDF3" stroke="#234E70"/>
+                <text x="32" y="18" font-size="9" text-anchor="middle" fill="#234E70" font-family="Inter">X1 belajar</text>
+                <rect x="2" y="34" width="60" height="22" rx="5" fill="#E6EDF3" stroke="#234E70"/>
+                <text x="32" y="48" font-size="9" text-anchor="middle" fill="#234E70" font-family="Inter">X2 tidur</text>
+                <rect x="2" y="64" width="60" height="22" rx="5" fill="#E6EDF3" stroke="#234E70"/>
+                <text x="32" y="78" font-size="9" text-anchor="middle" fill="#234E70" font-family="Inter">X3 hadir</text>
+                <line x1="62" y1="15" x2="188" y2="45" stroke="#B9C6D2" stroke-width="1.3"/>
+                <line x1="62" y1="45" x2="188" y2="45" stroke="#B9C6D2" stroke-width="1.3"/>
+                <line x1="62" y1="75" x2="188" y2="45" stroke="#B9C6D2" stroke-width="1.3"/>
+                <rect x="188" y="30" width="70" height="30" rx="6" fill="#1E8F73"/>
+                <text x="223" y="49" font-size="10" text-anchor="middle" fill="#fff" font-family="Inter" font-weight="700">Y nilai</text>
+              </svg>
+              <div class="field-row"><label>Bobot Belajar (b1) <span class="val" id="mvB1Val">1.2</span></label><input type="range" id="mvB1" min="-2" max="2" step="0.1" value="1.2" oninput="updateMV()"></div>
+              <div class="field-row"><label>Bobot Tidur (b2) <span class="val" id="mvB2Val">0.5</span></label><input type="range" id="mvB2" min="-2" max="2" step="0.1" value="0.5" oninput="updateMV()"></div>
+              <div class="field-row"><label>Bobot Kehadiran (b3) <span class="val" id="mvB3Val">0.8</span></label><input type="range" id="mvB3" min="-2" max="2" step="0.1" value="0.8" oninput="updateMV()"></div>
+              <div class="result-box" style="margin-top:8px;width:100%;">
+                <div class="rt">PREDIKSI NILAI (Y)</div>
+                <div class="rv" id="mvResult">Y = 65.0</div>
+              </div>
+            </div>
+          </div>
+          <div class="slide-foot">
+            Model: Y = b0 + b1·X1 + b2·X2 + b3·X3, dengan b0 = 10, X1=70, X2=40, X3=90 (tetap).<sup class="fn">[6][7]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- ===================== SLIDE 9 — MEMILIH METODE ===================== -->
+        <section class="slide" data-slide="8" data-title="Memilih Metode" data-time="6">
+          <div class="slide-head">
+            <p class="kicker">03 · ANALISIS DATA</p>
+            <h2>Memilih Metode Analisis yang Tepat</h2>
+            <p class="lede">Jawab beberapa pertanyaan berikut untuk menemukan arah analisis yang sesuai dengan data Anda.<sup class="fn">[4]</sup></p>
+          </div>
+          <div class="slide-body single">
+            <div class="col" style="max-width:560px;margin:0 auto;width:100%;">
+              <div class="breadcrumb" id="dtBreadcrumb"></div>
+              <div id="dtStage"></div>
+              <div style="text-align:center;margin-top:10px;">
+                <button class="btn-ghost" onclick="dtReset()">↺ Mulai Ulang</button>
+              </div>
+            </div>
+          </div>
+          <div class="slide-foot">
+            Alur ini adalah penyederhanaan untuk pemula, bukan pengganti konsultasi statistik penuh.<sup class="fn">[4][5]</sup>
+            <span class="copy">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. · anomharjana@unud.ac.id</span>
+          </div>
+        </section>
+
+        <!-- ===================== SLIDE 10 — PENUTUP & REFERENSI ===================== -->
+        <section class="slide" data-slide="9" data-title="Rangkuman &amp; Referensi" data-time="3">
+          <div class="slide-head">
+            <p class="kicker">PENUTUP</p>
+            <h2>Rangkuman dan Referensi</h2>
+          </div>
+          <div class="slide-body">
+            <div class="col col-text">
+              <ul>
+                <li><strong>Rancangan sampel</strong> — populasi, teknik sampling, dan ukuran sampel (Slovin).</li>
+                <li><strong>Statistik deskriptif</strong> — ukuran pemusatan (mean, median, modus) dan sebaran (varians, standar deviasi).</li>
+                <li><strong>Analisis data</strong> — korelasi &amp; regresi sederhana, hingga pengantar analisis multivariat.</li>
+                <li><strong>Memilih metode</strong> — menyesuaikan teknik analisis dengan jenis data dan tujuan penelitian.</li>
+              </ul>
+              <p style="margin-top:14px;">Terima kasih telah menyelesaikan modul ini. Semoga konsep-konsep dasar metodologi penelitian terasa lebih mudah dan lebih nyata.</p>
+            </div>
+            <div class="col col-text">
+              <p style="font-size:11.5px;font-weight:700;color:var(--primary-dark);text-transform:none;margin-bottom:8px;">Daftar Pustaka</p>
+              <ol class="ref-list">
+                <li>Sugiyono. (2019). <em>Metode Penelitian Kuantitatif, Kualitatif, dan R&amp;D</em>. Bandung: Alfabeta.</li>
+                <li>Sekaran, U., &amp; Bougie, R. (2016). <em>Research Methods for Business: A Skill-Building Approach</em> (7th ed.). Wiley.</li>
+                <li>Sevilla, C. G., Ochave, J. A., Punsalan, T. G., Regala, B. P., &amp; Uriarte, G. G. (1992). <em>Research Methods</em>. Manila: Rex Bookstore.</li>
+                <li>Creswell, J. W., &amp; Creswell, J. D. (2018). <em>Research Design: Qualitative, Quantitative, and Mixed Methods Approaches</em> (5th ed.). Sage.</li>
+                <li>Field, A. (2018). <em>Discovering Statistics Using IBM SPSS Statistics</em> (5th ed.). Sage.</li>
+                <li>Hair, J. F., Black, W. C., Babin, B. J., &amp; Anderson, R. E. (2019). <em>Multivariate Data Analysis</em> (8th ed.). Cengage.</li>
+                <li>Tabachnick, B. G., &amp; Fidell, L. S. (2019). <em>Using Multivariate Statistics</em> (7th ed.). Pearson.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="slide-foot">
+            <span class="copy" style="font-size:11px;color:var(--ink-faint);">Copyright by Ngakan Putu Anom Harjana, S.KM., M.A. — anomharjana@unud.ac.id. Modul ini dibuat untuk keperluan pembelajaran.</span>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="stage-controls">
+        <button class="nav-btn" id="prevBtn" onclick="goTo(current-1)">← Sebelumnya</button>
+        <div class="dot-track" id="dotTrack"></div>
+        <button class="nav-btn primary" id="nextBtn" onclick="goTo(current+1)">Berikutnya →</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* =========================================================
+   NAVIGATION
+========================================================= */
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total = slides.length;
+let current = 0;
+
+const icons = [
+  '<svg viewBox="0 0 24 24" fill="none"><path d="M12 3 3 7.5l9 4.5 9-4.5L12 3Z" fill="currentColor"/><path d="M6.5 10v4.2c0 1.8 2.5 3.3 5.5 3.3s5.5-1.5 5.5-3.3V10" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2.2" fill="currentColor"/><circle cx="14" cy="6" r="2.2" fill="currentColor"/><circle cx="10" cy="13" r="2.2" fill="currentColor"/><circle cx="18" cy="13" r="2.2" fill="currentColor"/><circle cx="6" cy="19" r="2.2" fill="currentColor"/><circle cx="14" cy="19" r="2.2" fill="currentColor"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16l-6 8v6l-4 2v-8L4 5Z" fill="currentColor"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="7.5" y="5.5" width="9" height="3" fill="currentColor"/><circle cx="8.5" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="15.5" cy="12" r="1" fill="currentColor"/><circle cx="8.5" cy="16" r="1" fill="currentColor"/><circle cx="12" cy="16" r="1" fill="currentColor"/><circle cx="15.5" cy="16" r="1" fill="currentColor"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="7" r="1.7" fill="currentColor"/><circle cx="15" cy="5" r="1.7" fill="currentColor"/><circle cx="18" cy="14" r="1.7" fill="currentColor"/><circle cx="8" cy="17" r="1.7" fill="currentColor"/><circle cx="12" cy="11" r="1.7" fill="currentColor"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none"><path d="M4 19 9 9l4 5 7-11" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="6" r="2" fill="currentColor"/><circle cx="5" cy="18" r="2" fill="currentColor"/><circle cx="19" cy="12" r="2" fill="currentColor"/><path d="M7 6h6a6 6 0 0 1 6 6M7 18h6a6 6 0 0 0 6-6" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="5" r="1.8" fill="currentColor"/><path d="M6 7v3" stroke="currentColor" stroke-width="1.6"/><path d="M6 10c0 3 3 3 3 6" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="9" cy="19" r="1.8" fill="currentColor"/><path d="M6 10c0 3-3 3-3 6" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="3" cy="19" r="1.8" fill="currentColor"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5 9.5 18 20 6" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+];
+
+const navList = document.getElementById('navList');
+const dotTrack = document.getElementById('dotTrack');
+const coverAgenda = document.getElementById('coverAgenda');
+
+slides.forEach((s, i) => {
+  const title = s.dataset.title;
+  const time = s.dataset.time;
+  const li = document.createElement('li');
+  li.innerHTML = `<button class="nav-item" data-i="${i}" onclick="goTo(${i})">
+      <span class="ic">${icons[i]}</span>
+      <span class="tx"><span class="t">${title}</span><span class="m">${time} menit</span></span>
+      <span class="no">${(i+1).toString().padStart(2,'0')}</span>
+    </button>`;
+  navList.appendChild(li);
+
+  const d = document.createElement('span');
+  d.className = 'd';
+  dotTrack.appendChild(d);
+
+  if(i>0){
+    const chip = document.createElement('span');
+    chip.className='chip';
+    chip.textContent = title;
+    coverAgenda.appendChild(chip);
+  }
+});
+
+function goTo(i){
+  if(i<0 || i>=total) return;
+  slides[current].classList.remove('active');
+  current = i;
+  slides[current].classList.add('active');
+
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.nav-item[data-i="${i}"]`).classList.add('active');
+
+  document.querySelectorAll('.dot-track .d').forEach((d,idx)=>d.classList.toggle('on', idx===i));
+
+  document.getElementById('stageCounter').textContent = `Bagian ${i+1} / ${total}`;
+  document.getElementById('stageDuration').textContent = `⏱ ${slides[i].dataset.time} menit`;
+
+  document.getElementById('prevBtn').disabled = (i===0);
+  document.getElementById('nextBtn').textContent = (i===total-1) ? 'Selesai ✓' : 'Berikutnya →';
+  document.getElementById('nextBtn').disabled = (i===total-1);
+
+  const pct = Math.round(((i+1)/total)*100);
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('progressLabel').textContent = pct+'%';
+
+  window.scrollTo(0,0);
+}
+goTo(0);
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight') goTo(current+1);
+  if(e.key==='ArrowLeft') goTo(current-1);
+});
+
+/* =========================================================
+   SLIDE 2 — POPULASI & SAMPEL
+========================================================= */
+const popGrid = document.getElementById('popGrid');
+const POP_N = 60;
+for(let i=0;i<POP_N;i++){
+  const d = document.createElement('div');
+  d.style.aspectRatio='1';
+  d.style.borderRadius='50%';
+  d.style.background='#C7D3DE';
+  d.style.transition='background .2s ease, transform .2s ease';
+  d.className='pop-dot';
+  popGrid.appendChild(d);
+}
+function drawSample(){
+  const dots = Array.from(popGrid.children);
+  dots.forEach(d=>{d.style.background='#C7D3DE';d.style.transform='scale(1)';});
+  const idx = new Set();
+  while(idx.size<12){ idx.add(Math.floor(Math.random()*POP_N)); }
+  idx.forEach(i=>{dots[i].style.background='#1E8F73'; dots[i].style.transform='scale(1.15)';});
+  document.getElementById('popSampleCount').textContent = idx.size;
+}
+drawSample();
+
+/* =========================================================
+   SLIDE 3 — TEKNIK SAMPLING
+========================================================= */
+const samplingGrid = document.getElementById('samplingGrid');
+const SAMP_N = 60;
+for(let i=0;i<SAMP_N;i++){
+  const d = document.createElement('div');
+  d.style.aspectRatio='1';
+  d.style.borderRadius='3px';
+  d.style.background='#C7D3DE';
+  samplingGrid.appendChild(d);
+}
+const samplingInfo = {
+  simple:{
+    label:'Acak Sederhana',
+    desc:`<p><strong>Sampling acak sederhana</strong> memberi setiap anggota populasi peluang yang sama untuk terpilih, murni berdasarkan undian.</p><p>Cocok saat populasi relatif seragam dan datanya tersedia lengkap.</p>`,
+    fn:()=>{ const set=new Set(); while(set.size<12) set.add(Math.floor(Math.random()*SAMP_N)); return set; }
+  },
+  systematic:{
+    label:'Sistematis',
+    desc:`<p><strong>Sampling sistematis</strong> memilih setiap elemen ke-k dari daftar populasi yang sudah diurutkan, misalnya setiap orang ke-5.</p><p>Lebih praktis daripada acak sederhana saat populasi berupa daftar berurutan.</p>`,
+    fn:()=>{ const set=new Set(); for(let i=2;i<SAMP_N;i+=5) set.add(i); return set; }
+  },
+  stratified:{
+    label:'Stratifikasi',
+    desc:`<p><strong>Sampling stratifikasi</strong> membagi populasi menjadi beberapa kelompok (strata) yang homogen, lalu mengambil sampel dari tiap strata secara proporsional.</p><p>Cocok saat populasi punya sub-kelompok yang berbeda karakteristik, misalnya per angkatan.</p>`,
+    fn:()=>{ const set=new Set();
+      for(let base=0; base<SAMP_N; base+=20){
+        let c=0;
+        while(c<4){ const v = base+Math.floor(Math.random()*20); if(v<SAMP_N){set.add(v); c++;} }
+      }
+      return set; }
+  },
+  cluster:{
+    label:'Klaster',
+    desc:`<p><strong>Sampling klaster</strong> membagi populasi menjadi kelompok-kelompok (klaster), lalu memilih beberapa klaster secara acak dan meneliti semua anggotanya.</p><p>Efisien secara biaya bila populasi tersebar secara geografis.</p>`,
+    fn:()=>{ const set=new Set();
+      const clusters = [0,1,2,3,4,5]; // 6 rows of 10
+      const chosen = clusters.sort(()=>0.5-Math.random()).slice(0,2);
+      chosen.forEach(r=>{ for(let c=0;c<10;c++) set.add(r*10+c); });
+      return set; }
+  }
+};
+const samplingTabs = document.getElementById('samplingTabs');
+Object.keys(samplingInfo).forEach((key,i)=>{
+  const b = document.createElement('button');
+  b.className = 'tab-btn'+(i===0?' on':'');
+  b.textContent = samplingInfo[key].label;
+  b.onclick = ()=>renderSampling(key,b);
+  samplingTabs.appendChild(b);
+});
+function renderSampling(key, btn){
+  document.querySelectorAll('#samplingTabs .tab-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const dots = Array.from(samplingGrid.children);
+  dots.forEach(d=>d.style.background='#C7D3DE');
+  const chosen = samplingInfo[key].fn();
+  chosen.forEach(i=>{ if(dots[i]) dots[i].style.background='#1E8F73'; });
+  document.getElementById('samplingDesc').innerHTML = samplingInfo[key].desc;
+}
+renderSampling('simple', samplingTabs.children[0]);
+
+/* =========================================================
+   SLIDE 4 — SLOVIN
+========================================================= */
+function updateSlovin(){
+  const N = parseFloat(document.getElementById('slovinN').value);
+  const ePct = parseFloat(document.getElementById('slovinE').value);
+  const e = ePct/100;
+  const n = Math.round(N / (1 + N*e*e));
+  document.getElementById('slovinNVal').textContent = N;
+  document.getElementById('slovinEVal').textContent = ePct+'%';
+  document.getElementById('slovinResult').textContent = n;
+  const ratio = Math.round((n/N)*100);
+  document.getElementById('slovinRatio').textContent = ratio+'%';
+  document.getElementById('slovinBar').style.width = Math.min(ratio,100)+'%';
+}
+updateSlovin();
+
+/* =========================================================
+   SLIDE 5 — PEMUSATAN
+========================================================= */
+const baseNine = [60,65,68,70,72,75,78,80,85];
+function computeCenter(){
+  const outlier = parseFloat(document.getElementById('outlierSlider').value);
+  const data = baseNine.concat([outlier]);
+  const sorted = [...data].sort((a,b)=>a-b);
+  const mean = data.reduce((a,b)=>a+b,0)/data.length;
+  const mid = sorted.length/2;
+  const median = sorted.length%2===0 ? (sorted[mid-1]+sorted[mid])/2 : sorted[Math.floor(mid)];
+  // mode
+  const freq = {};
+  data.forEach(v=>freq[v]=(freq[v]||0)+1);
+  let maxF=0, modeVals=[];
+  Object.entries(freq).forEach(([v,f])=>{
+    if(f>maxF){maxF=f;modeVals=[v];} else if(f===maxF){modeVals.push(v);}
+  });
+  const mode = maxF>1 ? modeVals.join(', ') : 'Tidak ada';
+  return {data, mean, median, mode};
+}
+function updateCenter(){
+  const {data, mean, median, mode} = computeCenter();
+  document.getElementById('outlierVal').textContent = document.getElementById('outlierSlider').value;
+  document.getElementById('meanVal').textContent = mean.toFixed(1);
+  document.getElementById('medianVal').textContent = median.toFixed(1);
+  document.getElementById('modeVal').textContent = mode;
+  drawCenterCanvas(data, mean, median);
+}
+function drawCenterCanvas(data, mean, median){
+  const cv = document.getElementById('centerCanvas');
+  const ctx = cv.getContext('2d');
+  const W=cv.width, H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  const pad=20;
+  const x = v => pad + (v/100)*(W-2*pad);
+  // axis
+  ctx.strokeStyle='#DDE2E9'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(pad,H-30); ctx.lineTo(W-pad,H-30); ctx.stroke();
+  for(let t=0;t<=100;t+=25){
+    ctx.fillStyle='#8A93A3'; ctx.font='9px Inter';
+    ctx.fillText(t, x(t)-6, H-16);
+  }
+  // points
+  data.forEach((v,i)=>{
+    ctx.beginPath();
+    ctx.arc(x(v), H-46, 5, 0, Math.PI*2);
+    ctx.fillStyle= i===data.length-1 ? '#C97B3F' : '#234E70';
+    ctx.fill();
+  });
+  // mean marker
+  ctx.beginPath();
+  ctx.moveTo(x(mean), H-58); ctx.lineTo(x(mean)-6, H-70); ctx.lineTo(x(mean)+6, H-70); ctx.closePath();
+  ctx.fillStyle='#1E8F73'; ctx.fill();
+  ctx.fillStyle='#1E8F73'; ctx.font='bold 9px Inter'; ctx.textAlign='center';
+  ctx.fillText('mean', x(mean), H-74);
+  // median marker
+  ctx.beginPath();
+  ctx.moveTo(x(median), H-58); ctx.lineTo(x(median)-6, H-46); ctx.lineTo(x(median)+6, H-46); ctx.closePath();
+  ctx.strokeStyle='#234E70'; ctx.lineWidth=1.6; ctx.stroke();
+  ctx.fillStyle='#234E70'; ctx.font='bold 9px Inter';
+  ctx.fillText('median', x(median), H-96 < 10 ? 10 : H-8+0);
+  ctx.textAlign='start';
+}
+updateCenter();
+
+/* =========================================================
+   SLIDE 6 — SEBARAN
+========================================================= */
+const spreadData = {
+  A:[72,74,75,76,77,75,74,76],
+  B:[50,90,60,95,55,85,65,80]
+};
+let currentSpread='A';
+function setSpread(key){
+  currentSpread=key;
+  document.getElementById('btnKelasA').classList.toggle('on', key==='A');
+  document.getElementById('btnKelasB').classList.toggle('on', key==='B');
+  renderSpread();
+}
+function renderSpread(){
+  const data = spreadData[currentSpread];
+  const mean = data.reduce((a,b)=>a+b,0)/data.length;
+  const variance = data.reduce((a,b)=>a+Math.pow(b-mean,2),0)/data.length;
+  const sd = Math.sqrt(variance);
+  document.getElementById('spreadMean').textContent = mean.toFixed(1);
+  document.getElementById('spreadVar').textContent = variance.toFixed(1);
+  document.getElementById('spreadSD').textContent = sd.toFixed(1);
+
+  const cv = document.getElementById('spreadCanvas');
+  const ctx = cv.getContext('2d');
+  const W=cv.width, H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  const pad=20;
+  const x = v => pad + (v/100)*(W-2*pad);
+  ctx.strokeStyle='#DDE2E9';
+  ctx.beginPath(); ctx.moveTo(pad,H-30); ctx.lineTo(W-pad,H-30); ctx.stroke();
+  for(let t=0;t<=100;t+=25){
+    ctx.fillStyle='#8A93A3'; ctx.font='9px Inter';
+    ctx.fillText(t, x(t)-6, H-16);
+  }
+  data.forEach(v=>{
+    ctx.beginPath();
+    ctx.arc(x(v), H-52, 6, 0, Math.PI*2);
+    ctx.fillStyle='rgba(30,143,115,0.75)';
+    ctx.fill();
+  });
+  ctx.beginPath();
+  ctx.moveTo(x(mean), H-70); ctx.lineTo(x(mean), H-38);
+  ctx.strokeStyle='#234E70'; ctx.lineWidth=1.4; ctx.setLineDash([3,2]); ctx.stroke(); ctx.setLineDash([]);
+}
+renderSpread();
+
+/* =========================================================
+   SLIDE 7 — SCATTER / KORELASI
+========================================================= */
+let scatterPoints = [];
+function defaultScatter(){
+  scatterPoints = [
+    {x:8,y:60},{x:12,y:68},{x:15,y:72},{x:20,y:78},{x:5,y:52},
+    {x:25,y:85},{x:18,y:74},{x:10,y:64},{x:22,y:80},{x:30,y:90}
+  ];
+}
+defaultScatter();
+const scv = document.getElementById('scatterCanvas');
+const sctx = scv.getContext('2d');
+const sPad=30;
+const sxMax=35, syMin=40, syMax=100;
+function sx(v){ return sPad + (v/sxMax)*(scv.width-2*sPad); }
+function sy(v){ return scv.height-sPad - ((v-syMin)/(syMax-syMin))*(scv.height-2*sPad); }
+function sxInv(px){ return ((px-sPad)/(scv.width-2*sPad))*sxMax; }
+function syInv(py){ return syMin + ((scv.height-sPad-py)/(scv.height-2*sPad))*(syMax-syMin); }
+
+function pearson(pts){
+  const n=pts.length;
+  const mx = pts.reduce((a,p)=>a+p.x,0)/n;
+  const my = pts.reduce((a,p)=>a+p.y,0)/n;
+  let num=0, dx2=0, dy2=0;
+  pts.forEach(p=>{ num += (p.x-mx)*(p.y-my); dx2 += (p.x-mx)**2; dy2 += (p.y-my)**2; });
+  const r = num/Math.sqrt(dx2*dy2);
+  const b1 = num/dx2;
+  const b0 = my - b1*mx;
+  return {r, b0, b1, mx, my};
+}
+function drawScatter(){
+  sctx.clearRect(0,0,scv.width,scv.height);
+  sctx.strokeStyle='#DDE2E9'; sctx.lineWidth=1;
+  sctx.beginPath(); sctx.moveTo(sPad,scv.height-sPad); sctx.lineTo(scv.width-sPad,scv.height-sPad); sctx.stroke();
+  sctx.beginPath(); sctx.moveTo(sPad,sPad); sctx.lineTo(sPad,scv.height-sPad); sctx.stroke();
+  sctx.fillStyle='#8A93A3'; sctx.font='9px Inter';
+  sctx.fillText('Jam belajar/minggu →', sPad, scv.height-14);
+  sctx.save();
+  sctx.translate(10, scv.height/2+20);
+  sctx.rotate(-Math.PI/2);
+  sctx.fillText('Nilai ujian →', 0,0);
+  sctx.restore();
+
+  const {r,b0,b1} = pearson(scatterPoints);
+  // regression line
+  const x1=0, x2=sxMax;
+  sctx.beginPath();
+  sctx.moveTo(sx(x1), sy(b0+b1*x1));
+  sctx.lineTo(sx(x2), sy(b0+b1*x2));
+  sctx.strokeStyle='#C97B3F'; sctx.lineWidth=1.8; sctx.stroke();
+
+  scatterPoints.forEach(p=>{
+    sctx.beginPath();
+    sctx.arc(sx(p.x), sy(p.y), 6, 0, Math.PI*2);
+    sctx.fillStyle='#234E70';
+    sctx.fill();
+    sctx.strokeStyle='#fff'; sctx.lineWidth=1.4; sctx.stroke();
+  });
+
+  document.getElementById('corrR').textContent = r.toFixed(2);
+  let label;
+  const ar = Math.abs(r);
+  if(ar>0.7) label='Kuat';
+  else if(ar>0.4) label='Sedang';
+  else if(ar>0.2) label='Lemah';
+  else label='Sangat lemah';
+  label += r>=0 ? ', positif' : ', negatif';
+  document.getElementById('corrLabel').textContent = label;
+}
+drawScatter();
+
+let dragIdx=-1;
+function pointerPos(e){
+  const rect = scv.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  return { x:(clientX-rect.left)*(scv.width/rect.width), y:(clientY-rect.top)*(scv.height/rect.height) };
+}
+function findNearest(px,py){
+  let best=-1, bestD=18;
+  scatterPoints.forEach((p,i)=>{
+    const d = Math.hypot(sx(p.x)-px, sy(p.y)-py);
+    if(d<bestD){bestD=d;best=i;}
+  });
+  return best;
+}
+scv.addEventListener('mousedown', e=>{
+  const pos = pointerPos(e);
+  dragIdx = findNearest(pos.x,pos.y);
+  if(dragIdx>=0) scv.style.cursor='grabbing';
+});
+window.addEventListener('mousemove', e=>{
+  if(dragIdx<0) return;
+  const pos = pointerPos(e);
+  let nx = Math.max(0,Math.min(sxMax, sxInv(pos.x)));
+  let ny = Math.max(syMin,Math.min(syMax, syInv(pos.y)));
+  scatterPoints[dragIdx] = {x:nx,y:ny};
+  drawScatter();
+});
+window.addEventListener('mouseup', ()=>{ dragIdx=-1; scv.style.cursor='grab'; });
+scv.addEventListener('touchstart', e=>{
+  const pos = pointerPos(e);
+  dragIdx = findNearest(pos.x,pos.y);
+}, {passive:true});
+scv.addEventListener('touchmove', e=>{
+  if(dragIdx<0) return;
+  const pos = pointerPos(e);
+  let nx = Math.max(0,Math.min(sxMax, sxInv(pos.x)));
+  let ny = Math.max(syMin,Math.min(syMax, syInv(pos.y)));
+  scatterPoints[dragIdx] = {x:nx,y:ny};
+  drawScatter();
+}, {passive:true});
+function resetScatter(){ defaultScatter(); drawScatter(); }
+
+/* =========================================================
+   SLIDE 8 — MULTIVARIAT
+========================================================= */
+function updateMV(){
+  const b1 = parseFloat(document.getElementById('mvB1').value);
+  const b2 = parseFloat(document.getElementById('mvB2').value);
+  const b3 = parseFloat(document.getElementById('mvB3').value);
+  document.getElementById('mvB1Val').textContent = b1.toFixed(1);
+  document.getElementById('mvB2Val').textContent = b2.toFixed(1);
+  document.getElementById('mvB3Val').textContent = b3.toFixed(1);
+  const b0=10, X1=70, X2=40, X3=90;
+  let y = b0 + b1*X1 + b2*X2 + b3*X3;
+  y = Math.max(0, Math.min(100, y));
+  document.getElementById('mvResult').textContent = 'Y = ' + y.toFixed(1);
+}
+updateMV();
+
+/* =========================================================
+   SLIDE 9 — DECISION TREE
+========================================================= */
+const dtStage = document.getElementById('dtStage');
+const dtBreadcrumb = document.getElementById('dtBreadcrumb');
+let dtPath = [];
+
+const dtTree = {
+  start:{
+    q:'Jenis data yang Anda miliki?',
+    opts:[
+      {label:'Numerik (interval/rasio)', next:'purpose'},
+      {label:'Kategorik (nominal/ordinal)', next:'catCount'}
+    ]
+  },
+  catCount:{
+    q:'Berapa variabel kategorik yang ingin dibandingkan?',
+    opts:[
+      {label:'1 variabel', result:'Distribusi Frekuensi'},
+      {label:'2 variabel atau lebih', result:'Uji Chi-Square'}
+    ]
+  },
+  purpose:{
+    q:'Apa tujuan utama analisis Anda?',
+    opts:[
+      {label:'Melihat hubungan antar variabel', next:'relCount'},
+      {label:'Membandingkan rata-rata antar kelompok', next:'grpCount'},
+      {label:'Memprediksi dari banyak variabel', result:'Regresi Berganda / Analisis Multivariat'}
+    ]
+  },
+  relCount:{
+    q:'Berapa variabel yang ingin dilihat hubungannya?',
+    opts:[
+      {label:'2 variabel', result:'Korelasi Pearson / Regresi Sederhana'},
+      {label:'Lebih dari 2 variabel', result:'Regresi Berganda / Analisis Faktor'}
+    ]
+  },
+  grpCount:{
+    q:'Berapa kelompok yang dibandingkan?',
+    opts:[
+      {label:'2 kelompok', result:'Uji t (t-test)'},
+      {label:'Lebih dari 2 kelompok', result:'ANOVA'}
+    ]
+  }
+};
+
+function dtRender(nodeKey){
+  const node = dtTree[nodeKey];
+  dtBreadcrumb.textContent = dtPath.length ? dtPath.join(' › ') : '';
+  dtStage.innerHTML = '';
+  const box = document.createElement('div');
+  box.className = 'decision-box';
+  const q = document.createElement('p');
+  q.className = 'decision-q';
+  q.textContent = node.q;
+  box.appendChild(q);
+  const optsWrap = document.createElement('div');
+  optsWrap.className = 'decision-opts';
+  node.opts.forEach(o=>{
+    const btn = document.createElement('button');
+    btn.className = 'btn-ghost';
+    btn.textContent = o.label;
+    btn.addEventListener('click', ()=>dtChoose(o));
+    optsWrap.appendChild(btn);
+  });
+  box.appendChild(optsWrap);
+  dtStage.appendChild(box);
+}
+function dtChoose(opt){
+  dtPath.push(opt.label);
+  if(opt.result){
+    dtBreadcrumb.textContent = dtPath.join(' › ');
+    dtStage.innerHTML = '';
+    const box = document.createElement('div');
+    box.className = 'result-box';
+    box.innerHTML = `<div class="rt">METODE YANG DISARANKAN</div><div class="rv"></div>`;
+    box.querySelector('.rv').textContent = opt.result;
+    dtStage.appendChild(box);
+  } else {
+    dtRender(opt.next);
+  }
+}
+function dtReset(){
+  dtPath=[];
+  dtRender('start');
+}
+dtReset();
+</script>
+</body>
+</html>
