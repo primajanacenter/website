@@ -1,838 +1,287 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Primajana Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Form Pemesanan | Primajana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
-body{
-background:#f4f7fb;
-color:#0f172a;
-min-height:100vh;
-overflow-x:hidden;
-padding-bottom:20px;
-}
-.container{
-width:100%;
-padding:20px;
-margin:0;
-}
-.header{
-padding:10px 0 20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-.logo{font-size:28px;font-weight:800}
-.badge{
-background:#2563eb;
-color:white;
-padding:8px 14px;
-border-radius:12px;
-font-size:13px;
-}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:20px 0}
-.card{
-background:white;
-padding:20px;
-border-radius:20px;
-box-shadow:
-0 4px 15px rgba(0,0,0,.06);
-border:1px solid #e5e7eb;
-}
-.card h3{
-font-size:13px;
-color:#64748b;
-font-weight:500;
-}
-.card .v{
-font-size:28px;
-font-weight:700;
-margin-top:8px;
-color:#0f172a;
-}
-.toolbar{display:flex;gap:12px;margin:20px 0}
-input{
-padding:14px 18px;
-border-radius:14px;
-border:1px solid #dbe3f0;
-background:white;
-flex:1;
-font-size:14px;
-}
-.board{
-display:flex;
-gap:18px;
-overflow-x:auto;
-padding-bottom:30px;
-align-items:flex-start;
-}
-.column{
-min-width:320px;
-background:white;
-border-radius:20px;
-padding:16px;
-box-shadow:
-0 4px 15px rgba(0,0,0,.06);
-border:1px solid #e5e7eb;
-}
-.column h2{font-size:18px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
-.column .count{
-font-size:12px;
-font-weight:600;
-color:#64748b;
-background:#f1f5f9;
-padding:2px 9px;
-border-radius:999px;
-}
-.column-body{min-height:20px}
-.order{background:#fff;color:#0f172a;border-radius:18px;padding:14px;margin-bottom:12px;border:1px solid #eef1f6;transition:opacity .15s ease}
-.order.saving{opacity:.55;pointer-events:none}
-.order .id{font-size:12px;color:#64748b}
-.order .title{font-weight:700;margin:6px 0}
-.row{font-size:13px;margin:3px 0}
-.deadline{margin-top:10px;font-size:13px;color:#334155}
-.urgency-overdue{display:inline-block;background:#7f1d1d;color:#fff;padding:4px 8px;border-radius:999px;font-size:11px;margin-top:6px}
-.urgency-critical{display:inline-block;background:#ef4444;color:#fff;padding:4px 8px;border-radius:999px;font-size:11px;margin-top:6px}
-.urgency-soon{display:inline-block;background:#f59e0b;color:#fff;padding:4px 8px;border-radius:999px;font-size:11px;margin-top:6px}
-.urgency-safe{display:inline-block;background:#10b981;color:#fff;padding:4px 8px;border-radius:999px;font-size:11px;margin-top:6px}
+  .page { min-height: 100vh; display: grid; grid-template-columns: minmax(280px, 400px) 1fr; }
+  .intro {
+    background: var(--primary-deep); color: #EAF3F7; padding: 48px 40px;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .intro .brand { color: #fff; }
+  .intro .brand-mark { background: #fff; color: var(--primary-deep); }
+  .intro .brand-mark::after { border-color: var(--primary-deep); }
+  .intro h1 { font-size: 34px; font-weight: 800; margin: 24px 0 0; color: #fff; letter-spacing: -0.03em; }
+  .intro p { margin: 0; color: #C3D6E0; max-width: 34ch; }
+  .steps { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 18px; counter-reset: s; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 32px 1fr; gap: 12px; color: #C3D6E0; font-size: 14px; }
+  .steps li::before {
+    content: counter(s); width: 32px; height: 32px; border-radius: 50%;
+    border: 1.5px solid #4E7C92; display: grid; place-items: center; font-weight: 800; color: #fff;
+  }
+  .steps b { display: block; color: #fff; font-size: 15px; }
+  .intro .link-light { color: #fff; font-weight: 700; margin-top: auto; }
 
-.success{
-display:inline-block;
-background:#10b981;
-color:#fff;
-padding:4px 8px;
-border-radius:999px;
-font-size:11px;
-}
+  .main { padding: 48px 40px; display: flex; justify-content: center; }
+  .sheet { width: 100%; max-width: 560px; }
+  .sheet h2 { font-size: 22px; margin: 0 0 6px; }
+  .sheet .lead { color: var(--muted); margin: 0 0 28px; }
+  .money-preview { font-size: 13px; font-weight: 700; color: var(--primary); margin: 0; min-height: 20px; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
 
-.warning{
-display:inline-block;
-background:#f59e0b;
-color:#fff;
-padding:4px 8px;
-border-radius:999px;
-font-size:11px;
-}
+  .review { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-m); margin: 0 0 20px; }
+  .review div { display: grid; grid-template-columns: 160px 1fr; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .review div:last-child { border-bottom: 0; }
+  .review dt { color: var(--muted); font-size: 14px; }
+  .review dd { margin: 0; font-weight: 600; white-space: pre-wrap; word-break: break-word; }
 
-.danger{
-display:inline-block;
-background:#ef4444;
-color:#fff;
-padding:4px 8px;
-border-radius:999px;
-font-size:11px;
-}
-.loading{text-align:center;padding:50px}
+  .done-id {
+    font-size: clamp(34px, 7vw, 52px); font-weight: 800; letter-spacing: -0.03em;
+    color: var(--primary); margin: 4px 0 8px; font-variant-numeric: tabular-nums; word-break: break-all;
+  }
+  .done-label { font-weight: 700; color: var(--muted); margin: 24px 0 0; }
+  .done-actions { display: grid; gap: 10px; margin-top: 28px; }
+  .hp { position: absolute; left: -9999px; }
 
-/* Status dropdown (Notion/Trello-style status chip) */
-.status-select-wrap{position:relative;margin:8px 0}
-.status-select{
-appearance:none;
--webkit-appearance:none;
--moz-appearance:none;
-width:100%;
-border:none;
-cursor:pointer;
-padding:8px 30px 8px 12px;
-border-radius:10px;
-font-size:12px;
-font-weight:600;
-color:#fff;
-background-repeat:no-repeat;
-background-position:right 10px center;
-background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='white' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
-}
-.status-select option{color:#0f172a;background:#fff;font-weight:500}
-.status-Order_Masuk{background-color:#64748b}
-.status-Menunggu_Pembayaran{background-color:#f59e0b}
-.status-DP{background-color:#3b82f6}
-.status-Dikerjakan{background-color:#6366f1}
-.status-Revisi{background-color:#ec4899}
-.status-Pelunasan{background-color:#14b8a6}
-.status-Selesai{background-color:#10b981}
-
-.toast{
-position:fixed;
-bottom:20px;
-left:50%;
-transform:translateX(-50%);
-background:#0f172a;
-color:#fff;
-padding:12px 20px;
-border-radius:12px;
-font-size:13px;
-box-shadow:0 8px 20px rgba(0,0,0,.2);
-z-index:999;
-opacity:0;
-pointer-events:none;
-transition:opacity .2s ease;
-}
-.toast.show{opacity:1}
-.toast.error{background:#7f1d1d}
-
-/* =====================================
-MOBILE RESPONSIVE
-===================================== */
-
-@media screen and (max-width: 768px){
-
-.container{
-padding:12px;
-}
-
-/* Header */
-
-.header{
-flex-direction:column;
-align-items:flex-start;
-gap:10px;
-padding:0 0 15px;
-}
-
-.logo{
-font-size:24px;
-}
-
-.badge{
-font-size:12px;
-padding:6px 10px;
-}
-
-/* KPI */
-
-.kpis{
-grid-template-columns:
-repeat(2,1fr);
-gap:10px;
-}
-
-.card{
-padding:14px;
-border-radius:16px;
-}
-
-.card h3{
-font-size:12px;
-}
-
-.card .v{
-font-size:22px;
-}
-
-/* Search */
-
-.toolbar{
-margin:15px 0;
-}
-
-input{
-padding:12px;
-font-size:14px;
-}
-
-/* Trello Board */
-
-.board{
-gap:12px;
-padding-bottom:20px;
-scroll-snap-type:x mandatory;
-}
-
-.column{
-min-width:280px;
-max-width:280px;
-padding:12px;
-scroll-snap-align:start;
-}
-
-.column h2{
-font-size:16px;
-margin-bottom:10px;
-}
-
-.order{
-padding:12px;
-border-radius:14px;
-}
-
-.order .title{
-font-size:14px;
-}
-
-.row{
-font-size:12px;
-}
-
-.deadline{
-font-size:12px;
-}
-
-/* Badge */
-
-.success,
-.warning,
-.danger,
-.urgency-overdue,
-.urgency-critical,
-.urgency-soon,
-.urgency-safe{
-font-size:10px;
-padding:4px 7px;
-}
-
-/* Loading */
-
-.loading{
-padding:30px 10px;
-font-size:14px;
-}
-
-}
-
-/* =====================================
-SMALL PHONE
-===================================== */
-
-@media screen and (max-width:480px){
-
-.kpis{
-grid-template-columns:1fr 1fr;
-gap:8px;
-}
-
-.card{
-padding:12px;
-}
-
-.card .v{
-font-size:18px;
-}
-
-.logo{
-font-size:20px;
-}
-
-.column{
-min-width:250px;
-max-width:250px;
-}
-
-}
-
+  @media (max-width: 820px) {
+    .page { grid-template-columns: 1fr; }
+    .intro { padding: 28px 20px; gap: 16px; }
+    .intro h1 { font-size: 26px; margin-top: 8px; }
+    .steps { display: none; }
+    .main { padding: 28px 20px 48px; }
+    .review div { grid-template-columns: 1fr; gap: 2px; }
+  }
 </style>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<div>
-<div class="logo">PRIMAJANA</div>
-<div>Work Management Dashboard</div>
-</div>
-<div class="badge">Live Dashboard</div>
-</div>
+<div class="page">
+  <aside class="intro">
+    <span class="brand"><span class="brand-mark">P</span>Primajana</span>
+    <h1>Form pemesanan layanan</h1>
+    <p>Isi form ini setelah Anda menyepakati harga dengan admin. Pesanan langsung diteruskan ke tim Primajana.</p>
+    <ol class="steps">
+      <li><span><b>Sepakati harga</b>Diskusikan kebutuhan dan biaya dengan admin lewat WhatsApp.</span></li>
+      <li><span><b>Isi dan periksa form</b>Pastikan deadline dan biaya sudah sesuai.</span></li>
+      <li><span><b>Simpan ID order</b>Gunakan untuk mengecek progres pesanan kapan saja.</span></li>
+    </ol>
+    <a class="link-light" href="status.html">Sudah memesan? Cek status order</a>
+  </aside>
 
-<div class="kpis">
-<div class="card"><h3>Total Order</h3><div class="v" id="totalOrder">0</div></div>
-<div class="card"><h3>Order Aktif</h3><div class="v" id="aktif">0</div></div>
-<div class="card"><h3>Selesai</h3><div class="v" id="selesai">0</div></div>
-<div class="card"><h3>Revenue</h3><div class="v" id="revenue">Rp0</div></div>
-<div class="card"><h3>Belum Lunas</h3><div class="v" id="belum">0</div></div>
-<div class="card"><h3>DP Berjalan</h3><div class="v" id="dp">0</div></div>
-<div class="card"><h3>Deadline Hari Ini</h3><div class="v" id="today">0</div></div>
-<div class="card"><h3>Terlambat</h3><div class="v" id="late">0</div></div>
-</div>
+  <main class="main">
+    <div class="sheet">
+      <!-- Langkah 1: isi form -->
+      <section id="step-form">
+        <h2>Detail pesanan</h2>
+        <p class="lead">Semua kolom wajib diisi, kecuali catatan tambahan.</p>
+        <form id="order-form" novalidate>
+          <div class="field">
+            <label for="whatsapp">Nomor WhatsApp</label>
+            <input id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="081234567890" aria-describedby="wa-hint wa-err">
+            <p class="hint" id="wa-hint">Nomor yang bisa dihubungi tim selama pengerjaan.</p>
+            <p class="field-error" id="wa-err" hidden></p>
+          </div>
 
-<div class="toolbar">
-<input id="search" placeholder="Cari nomor WA atau jenis order...">
-</div>
+          <div class="field">
+            <label for="jenis">Jenis orderan</label>
+            <select id="jenis" name="jenis" aria-describedby="jenis-err">
+              <option value="">Pilih layanan</option>
+            </select>
+            <input id="jenis-lain" name="jenisLain" type="text" placeholder="Tulis jenis orderan" maxlength="100" hidden aria-label="Jenis orderan lainnya">
+            <p class="field-error" id="jenis-err" hidden></p>
+          </div>
 
-<div id="loading" class="loading">Memuat data...</div>
+          <div class="field">
+            <label for="deadline">Deadline</label>
+            <input id="deadline" name="deadline" type="date" aria-describedby="dl-err">
+            <p class="field-error" id="dl-err" hidden></p>
+          </div>
 
-<div class="board" id="board" style="display:none">
-</div>
-</div>
+          <div class="field">
+            <label for="biaya">Estimasi biaya yang disepakati</label>
+            <input id="biaya" name="biaya" type="text" inputmode="numeric" placeholder="250000" aria-describedby="biaya-hint biaya-prev biaya-err">
+            <p class="hint" id="biaya-hint">Masukkan biaya yang telah disepakati bersama admin Primajana. Contoh: 250000 (tanpa Rp.)</p>
+            <p class="money-preview" id="biaya-prev" aria-live="polite"></p>
+            <p class="field-error" id="biaya-err" hidden></p>
+          </div>
 
-<div class="toast" id="toast"></div>
+          <div class="field">
+            <label for="catatan">Catatan tambahan <span class="optional">(opsional)</span></label>
+            <textarea id="catatan" name="catatan" maxlength="3000" placeholder="Contoh: 15 slide, tema biru, referensi desain menyusul via WhatsApp."></textarea>
+          </div>
 
-<script>
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-const API_URL = "https://script.google.com/macros/s/AKfycby4tiyVFk_bOgCzhWBoD-V5GCznbUKXfa5BEzbRK1f9rm9toYMBeBuVEL5Xtb2NtmRt/exec";
+          <button class="btn btn-primary btn-block" type="submit">Periksa pesanan</button>
+        </form>
+      </section>
 
-const statuses = [
-  "Order Masuk",
-  "Menunggu Pembayaran",
-  "DP",
-  "Dikerjakan",
-  "Revisi",
-  "Pelunasan",
-  "Selesai"
-];
+      <!-- Langkah 2: periksa -->
+      <section id="step-review" hidden>
+        <h2>Periksa kembali pesanan Anda</h2>
+        <p class="lead">Jika semua sudah benar, kirim pesanan. Anda masih bisa mengubahnya sebelum dikirim.</p>
+        <p class="alert" id="send-error" role="alert" hidden></p>
+        <dl class="review" id="review-list"></dl>
+        <div class="actions">
+          <button class="btn btn-ghost" type="button" id="btn-edit">Ubah data</button>
+          <button class="btn btn-primary" type="button" id="btn-send">Kirim pesanan</button>
+        </div>
+      </section>
 
-const board = document.getElementById("board");
-const toastEl = document.getElementById("toast");
-
-let allData = [];
-let searchTerm = "";
-let refreshTimer = null;
-
-board.innerHTML = "";
-
-statuses.forEach(status => {
-
-  const col = document.createElement("div");
-
-  col.className = "column";
-
-  col.innerHTML = `
-    <h2>${status} <span class="count" id="count_${status.replace(/\s/g,'_')}">0</span></h2>
-    <div class="column-body" id="${status.replace(/\s/g,'_')}"></div>
-  `;
-
-  board.appendChild(col);
-
-});
-
-function slug(status){
-  return status.replace(/\s/g,'_');
-}
-
-function showToast(msg, isError){
-  toastEl.textContent = msg;
-  toastEl.className = "toast show" + (isError ? " error" : "");
-  clearTimeout(showToast._t);
-  showToast._t = setTimeout(()=>{
-    toastEl.className = "toast";
-  }, 3000);
-}
-
-function money(value){
-
-  return "Rp " +
-    Number(value || 0)
-      .toLocaleString("id-ID");
-
-}
-
-// Badge Urgency: menggantikan badge "Terlambat" lama.
-// Kategori:
-//   Terlambat  -> sudah lewat deadline
-//   Kritis     -> hari ini / besok (0-1 hari lagi)
-//   Segera     -> 2-3 hari lagi
-//   Aman       -> lebih dari 3 hari lagi
-// Order dengan status "Selesai" tidak diberi badge urgency.
-function urgencyBadge(deadline, status){
-
-  if(status === "Selesai") return "";
-
-  if(!deadline) return "";
-
-  const d = new Date(deadline);
-
-  if(isNaN(d.getTime())) return "";
-
-  const now = new Date();
-
-  const diff = Math.floor(
-    (now - d) /
-    (1000 * 60 * 60 * 24)
-  );
-
-  if(diff > 0){
-    return `<span class="urgency-overdue">TERLAMBAT ${diff} HARI</span>`;
-  }
-
-  const daysLeft = -diff;
-
-  if(daysLeft <= 1){
-    return `<span class="urgency-critical">KRITIS ${daysLeft === 0 ? "· HARI INI" : "· BESOK"}</span>`;
-  }
-
-  if(daysLeft <= 3){
-    return `<span class="urgency-soon">SEGERA · ${daysLeft} HARI LAGI</span>`;
-  }
-
-  return `<span class="urgency-safe">AMAN · ${daysLeft} HARI LAGI</span>`;
-
-}
-
-function paymentBadge(status){
-
-  if(status === "Lunas"){
-
-    return `
-      <span class="success">
-        Lunas
-      </span>
-    `;
-
-  }
-
-  if(status === "DP"){
-
-    return `
-      <span class="warning">
-        DP
-      </span>
-    `;
-
-  }
-
-  return `
-    <span class="danger">
-      Belum Bayar
-    </span>
-  `;
-
-}
-
-function statusSelect(item){
-
-  const options = statuses.map(s => `
-    <option value="${s}" ${s === item.status ? "selected" : ""}>${s}</option>
-  `).join("");
-
-  return `
-    <div class="status-select-wrap">
-      <select class="status-select status-${slug(item.status)}" data-id="${item.id}">
-        ${options}
-      </select>
+      <!-- Langkah 3: berhasil -->
+      <section id="step-done" hidden>
+        <h2>Pesanan diterima</h2>
+        <p class="lead">Tim Primajana akan segera memproses pesanan Anda.</p>
+        <p class="done-label">ID order Anda</p>
+        <p class="done-id" id="done-id"></p>
+        <p class="hint">Simpan ID ini. Anda membutuhkannya bersama nomor WhatsApp untuk mengecek status pesanan.</p>
+        <div class="done-actions">
+          <a class="btn btn-primary" id="btn-wa" target="_blank" rel="noopener">Konfirmasi ke admin via WhatsApp</a>
+          <button class="btn btn-ghost" type="button" id="btn-copy">Salin ID order</button>
+          <a class="btn btn-ghost" id="btn-status" href="status.html">Cek status pesanan</a>
+          <button class="btn btn-ghost" type="button" id="btn-new">Buat pesanan lain</button>
+        </div>
+      </section>
     </div>
-  `;
+  </main>
+</div>
 
-}
+<script src="config.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const form = $('order-form');
+  let data = null;
+  let lastId = '';
 
-async function loadData(){
+  // Isi pilihan jenis orderan
+  PRIMAJANA.JENIS_ORDER.concat(['Lainnya']).forEach((j) => {
+    const o = document.createElement('option');
+    o.value = j; o.textContent = j;
+    $('jenis').appendChild(o);
+  });
+  $('deadline').min = todayStr();
 
-  try{
+  $('jenis').addEventListener('change', () => {
+    const other = $('jenis').value === 'Lainnya';
+    $('jenis-lain').hidden = !other;
+    if (other) $('jenis-lain').focus();
+  });
 
-    const res = await fetch(API_URL);
+  $('biaya').addEventListener('input', () => {
+    const d = digitsOnly($('biaya').value);
+    if ($('biaya').value !== d) $('biaya').value = d;
+    $('biaya-prev').textContent = d ? 'Terbaca: ' + rupiah(d) : '';
+  });
 
-    const data = await res.json();
-
-    allData = data;
-
-    render(allData);
-
-  }catch(err){
-
-    console.error(err);
-
-    document.getElementById("loading").innerHTML =
-      "Gagal memuat data";
-
+  function setErr(inputId, errId, msg) {
+    const el = $(errId);
+    el.textContent = msg || '';
+    el.hidden = !msg;
+    $(inputId).setAttribute('aria-invalid', msg ? 'true' : 'false');
+    return !msg;
   }
 
-}
+  function validate() {
+    const wa = digitsOnly($('whatsapp').value);
+    const jenisSel = $('jenis').value;
+    const jenis = jenisSel === 'Lainnya' ? $('jenis-lain').value.trim() : jenisSel;
+    const deadline = $('deadline').value;
+    const biaya = digitsOnly($('biaya').value);
 
-function render(data){
-
-  document.getElementById("loading").style.display = "none";
-
-  board.style.display = "flex";
-
-  const counts = {};
-
-  statuses.forEach(status => {
-
-    const container =
-      document.getElementById(
-        slug(status)
-      );
-
-    if(container){
-
-      container.innerHTML = "";
-
+    const checks = [
+      setErr('whatsapp', 'wa-err', /^(0|62|8)\d{8,13}$/.test(wa) ? '' : 'Masukkan nomor WhatsApp yang valid, contoh 081234567890.'),
+      setErr('jenis', 'jenis-err', jenis ? '' : (jenisSel === 'Lainnya' ? 'Tulis jenis orderan Anda.' : 'Pilih jenis orderan.')),
+      setErr('deadline', 'dl-err', !deadline ? 'Pilih tanggal deadline.' : (deadline < todayStr() ? 'Deadline tidak boleh sebelum hari ini.' : '')),
+      setErr('biaya', 'biaya-err', Number(biaya) >= 1000 ? '' : 'Masukkan biaya yang disepakati dalam angka, minimal 1000.')
+    ];
+    if (checks.includes(false)) {
+      const first = form.querySelector('[aria-invalid="true"]');
+      if (first) first.focus();
+      return null;
     }
+    return {
+      whatsapp: wa, jenis: jenis, deadline: deadline, biaya: biaya,
+      catatan: $('catatan').value.trim(), website: form.website.value
+    };
+  }
 
-    counts[status] = 0;
+  function show(step) {
+    ['step-form', 'step-review', 'step-done'].forEach((s) => { $(s).hidden = s !== step; });
+    window.scrollTo({ top: 0 });
+    const h = $(step).querySelector('h2');
+    if (h) { h.tabIndex = -1; h.focus(); }
+  }
 
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    data = validate();
+    if (!data) return;
+    const rows = [
+      ['Nomor WhatsApp', data.whatsapp],
+      ['Jenis orderan', data.jenis],
+      ['Deadline', formatTanggal(data.deadline)],
+      ['Biaya disepakati', rupiah(data.biaya)],
+      ['Catatan tambahan', data.catatan || '-']
+    ];
+    $('review-list').innerHTML = rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
+    $('send-error').hidden = true;
+    show('step-review');
   });
 
-  document.getElementById("totalOrder").textContent =
-    data.length;
+  $('btn-edit').addEventListener('click', () => show('step-form'));
 
-  document.getElementById("aktif").textContent =
-    data.filter(
-      item => item.status !== "Selesai"
-    ).length;
-
-  document.getElementById("selesai").textContent =
-    data.filter(
-      item => item.status === "Selesai"
-    ).length;
-
-  document.getElementById("revenue").textContent =
-    money(
-      data.reduce(
-        (a,b)=>
-          a + Number(b.biaya || 0),
-        0
-      )
-    );
-
-  document.getElementById("belum").textContent =
-    data.filter(
-      item =>
-      item.pembayaran === "Belum Bayar"
-    ).length;
-
-  document.getElementById("dp").textContent =
-    data.filter(
-      item =>
-      item.pembayaran === "DP"
-    ).length;
-
-  const todayDate = new Date();
-
-  let todayCount = 0;
-
-  let lateCount = 0;
-
-  data.forEach(item=>{
-
-    if(!item.deadline) return;
-
-    const deadlineDate =
-      new Date(item.deadline);
-
-    const diff =
-      Math.floor(
-        (todayDate - deadlineDate) /
-        (1000*60*60*24)
-      );
-
-    if(diff === 0){
-
-      todayCount++;
-
+  $('btn-send').addEventListener('click', async () => {
+    const btn = $('btn-send');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" aria-hidden="true"></span> Mengirim…';
+    $('send-error').hidden = true;
+    try {
+      const r = await callApi('createOrder', data);
+      lastId = r.id;
+      $('done-id').textContent = r.id;
+      const msg = [
+        'Halo Admin Primajana, saya sudah mengisi form pemesanan.',
+        'ID order: ' + r.id,
+        'Jenis: ' + data.jenis,
+        'Deadline: ' + formatTanggal(data.deadline),
+        'Biaya: ' + rupiah(data.biaya)
+      ].join('\n');
+      $('btn-wa').href = 'https://wa.me/' + PRIMAJANA.ADMIN_WHATSAPP + '?text=' + encodeURIComponent(msg);
+      $('btn-status').href = 'status.html?id=' + encodeURIComponent(r.id);
+      show('step-done');
+    } catch (err) {
+      $('send-error').textContent = err.message;
+      $('send-error').hidden = false;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Kirim pesanan';
     }
+  });
 
-    if(
-      diff > 0 &&
-      item.status !== "Selesai"
-    ){
-
-      lateCount++;
-
+  $('btn-copy').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(lastId);
+      $('btn-copy').textContent = 'ID order disalin';
+    } catch (e) {
+      $('btn-copy').textContent = 'Salin manual: ' + lastId;
     }
-
+    setTimeout(() => { $('btn-copy').textContent = 'Salin ID order'; }, 2500);
   });
 
-  document.getElementById("today").textContent =
-    todayCount;
-
-  document.getElementById("late").textContent =
-    lateCount;
-
-  data.sort((a,b)=>{
-
-    if(!a.deadline) return 1;
-
-    if(!b.deadline) return -1;
-
-    return (
-      new Date(a.deadline)
-      - new Date(b.deadline)
-    );
-
+  $('btn-new').addEventListener('click', () => {
+    form.reset();
+    $('jenis-lain').hidden = true;
+    $('biaya-prev').textContent = '';
+    data = null;
+    show('step-form');
   });
-
-  data.forEach(item => {
-
-    const target =
-      document.getElementById(
-        slug(item.status)
-      );
-
-    if(!target) return;
-
-    counts[item.status] = (counts[item.status] || 0) + 1;
-
-    const card =
-      document.createElement("div");
-
-    card.className = "order";
-    card.dataset.id = item.id;
-
-    card.dataset.search = `
-      ${item.id || ""}
-      ${item.wa || ""}
-      ${item.jenis || ""}
-    `.toLowerCase();
-
-    card.innerHTML = `
-
-      <div class="id">
-        ${item.id || "-"}
-      </div>
-
-      <div class="title">
-        ${item.jenis || "-"}
-      </div>
-
-      ${statusSelect(item)}
-
-      <div class="row">
-        📱 ${item.wa || "-"}
-      </div>
-
-      <div class="row">
-        💰 ${money(item.biaya)}
-      </div>
-
-      <div class="row">
-        ${paymentBadge(item.pembayaran)}
-      </div>
-
-      <div class="deadline">
-        Deadline:
-        ${item.deadline || "-"}
-      </div>
-
-      ${urgencyBadge(item.deadline, item.status)}
-
-    `;
-
-    if(searchTerm && !card.dataset.search.includes(searchTerm)){
-      card.style.display = "none";
-    }
-
-    target.appendChild(card);
-
-  });
-
-  statuses.forEach(status => {
-    const countEl = document.getElementById("count_" + slug(status));
-    if(countEl) countEl.textContent = counts[status] || 0;
-  });
-
-  board.querySelectorAll(".status-select").forEach(sel => {
-    sel.addEventListener("change", onStatusChange);
-  });
-
-}
-
-async function onStatusChange(e){
-
-  const select = e.target;
-  const id = select.dataset.id;
-  const newStatus = select.value;
-
-  const item = allData.find(d => String(d.id) === String(id));
-
-  if(!item) return;
-
-  const oldStatus = item.status;
-
-  if(oldStatus === newStatus) return;
-
-  const card = select.closest(".order");
-  if(card) card.classList.add("saving");
-
-  item.status = newStatus;
-
-  render(allData);
-
-  try{
-
-    await updateStatusRemote(id, newStatus);
-
-    showToast(`Status "${item.jenis || id}" diubah ke "${newStatus}"`);
-
-  }catch(err){
-
-    console.error(err);
-
-    item.status = oldStatus;
-
-    render(allData);
-
-    showToast("Gagal menyimpan: " + (err.message || "tidak diketahui") + " (cek Console/F12 untuk detail)", true);
-
-  }
-
-}
-
-async function updateStatusRemote(id, status){
-
-  // Dikirim sebagai GET (bukan POST) karena Apps Script Web App melakukan
-  // redirect ke googleusercontent.com, dan browser memblokir redirect itu
-  // untuk request POST lintas-domain (CORS). GET tidak kena masalah ini,
-  // makanya doGet() untuk load data selama ini selalu lancar.
-  const url =
-    API_URL +
-    "?action=updateStatus" +
-    "&id=" + encodeURIComponent(id) +
-    "&status=" + encodeURIComponent(status);
-
-  let res;
-
-  try{
-    res = await fetch(url);
-  }catch(networkErr){
-    console.error("Network/CORS error saat menghubungi Apps Script:", networkErr);
-    throw new Error("Tidak bisa menghubungi server (cek koneksi atau URL Apps Script)");
-  }
-
-  const rawText = await res.text();
-
-  console.log("Response mentah dari Apps Script (status " + res.status + "):", rawText);
-
-  if(!res.ok){
-    throw new Error("HTTP " + res.status + " dari server");
-  }
-
-  let result = null;
-
-  try{
-    result = JSON.parse(rawText);
-  }catch(e){
-    throw new Error("Server tidak mengembalikan JSON valid (pastikan Code.gs sudah versi terbaru & sudah di-deploy ulang)");
-  }
-
-  if(result && result.ok === false){
-    throw new Error(result.error || "Update gagal di server");
-  }
-
-  return result;
-
-}
-
-document
-.getElementById("search")
-.addEventListener("keyup",e=>{
-
-  searchTerm = e.target.value.toLowerCase();
-
-  document
-  .querySelectorAll(".order")
-  .forEach(card=>{
-
-    card.style.display =
-      card.dataset.search.includes(searchTerm)
-      ? "block"
-      : "none";
-
-  });
-
-});
-
-loadData();
-
-refreshTimer = setInterval(
-  loadData,
-  60000
-);
-
-lucide.createIcons();
-
+})();
 </script>
-
-
 </body>
 </html>

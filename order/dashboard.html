@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Dashboard Order | Primajana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  body { min-height: 100vh; }
+
+  /* Login */
+  .login-wrap { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+  .login-card { width: 100%; max-width: 380px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-l); padding: 28px; }
+  .login-card h1 { font-size: 22px; margin: 24px 0 4px; }
+  .login-card .hint { margin-bottom: 20px; }
+
+  /* Topbar */
+  .topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 20px; padding: 10px 20px; background: var(--surface); border-bottom: 1px solid var(--line); }
+  .tabs { display: flex; gap: 4px; overflow-x: auto; }
+  .tab { background: none; border: 0; font: inherit; font-weight: 700; font-size: 14px; color: var(--muted); padding: 8px 12px; border-radius: var(--radius-s); cursor: pointer; white-space: nowrap; }
+  .tab:hover { color: var(--text); }
+  .tab[aria-selected="true"] { color: var(--primary); background: var(--primary-soft); }
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .sync { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .menu { position: relative; }
+  .menu summary { list-style: none; }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu-list { position: absolute; right: 0; top: calc(100% + 6px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 6px; min-width: 190px; z-index: 30; box-shadow: 0 8px 24px rgba(8, 20, 40, .14); }
+  .menu-list button { display: block; width: 100%; text-align: left; background: none; border: 0; font: inherit; font-size: 14px; padding: 9px 10px; border-radius: var(--radius-s); color: var(--text); cursor: pointer; }
+  .menu-list button:hover { background: var(--surface-2); }
+  .menu-list .role { font-size: 12px; color: var(--muted); padding: 6px 10px 8px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+
+  main { padding: 20px; }
+  .page-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .page-head h1 { font-size: 22px; margin: 0; }
+  .page-head p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+
+  /* Ringkasan */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .stat { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 12px 14px; cursor: pointer; font: inherit; color: inherit; }
+  .stat:hover { border-color: var(--muted); }
+  .stat b { display: block; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 13px; color: var(--muted); font-weight: 600; }
+  .stat.warn b { color: var(--warn); }
+  .stat.danger b { color: var(--danger); }
+  .stat.ok b { color: var(--ok); }
+  .stat[aria-pressed="true"] { border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+  .toolbar input[type="search"] { max-width: 280px; }
+  .toolbar select { width: auto; }
+  .toolbar .spacer { flex: 1; }
+
+  /* Papan Kanban */
+  .board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(272px, 1fr); gap: 14px; overflow-x: auto; padding-bottom: 12px; align-items: start; }
+  .col { background: var(--surface-2); border-radius: var(--radius-m); border-top: 4px solid var(--col, var(--muted)); min-height: 220px; display: flex; flex-direction: column; }
+  .col.drop { outline: 2px dashed var(--primary); outline-offset: -2px; }
+  .col-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 12px 14px 10px; }
+  .col-head h2 { font-size: 15px; margin: 0; }
+  .col-head h2 small { color: var(--muted); font-weight: 700; margin-left: 4px; }
+  .col-head > small { color: var(--muted); font-size: 12px; font-weight: 600; }
+  .col-list { display: flex; flex-direction: column; gap: 8px; padding: 0 10px 12px; flex: 1; }
+  .col-empty { color: var(--muted); font-size: 13px; padding: 6px 4px; margin: 0; }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-s); padding: 12px; cursor: pointer; }
+  .card:hover { border-color: var(--primary); }
+  .card.dragging { opacity: .45; }
+  .card.late { border-left: 3px solid var(--danger); }
+  .card.near { border-left: 3px solid var(--signal); }
+  .card-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; margin-bottom: 6px; }
+  .card-id { font-size: 12px; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .card h3 { margin: 0 0 4px; font-size: 15px; }
+  .card-note { margin: 0 0 10px; font-size: 13px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .card-foot { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .card-foot .amount { margin-left: auto; font-weight: 800; font-size: 13px; font-variant-numeric: tabular-nums; }
+  .card .card-archive { margin-top: 10px; width: 100%; }
+  .avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--primary); color: var(--primary-ink); display: inline-grid; place-items: center; font-size: 11px; font-weight: 800; flex: none; }
+  .avatar.none { background: transparent; color: var(--muted); border: 1.5px dashed var(--line); }
+
+  /* Tabel */
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-m); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { font-size: 13px; color: var(--muted); font-weight: 700; background: var(--surface-2); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.wrap { white-space: normal; min-width: 160px; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.empty { text-align: center; color: var(--muted); padding: 28px; white-space: normal; }
+  .row-actions { display: flex; gap: 6px; justify-content: flex-end; }
+
+  /* Keuangan */
+  .fin-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-bottom: 16px; }
+  .fin-controls .field { margin: 0; }
+  .fin-controls select, .fin-controls input { width: auto; }
+  .fin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 12px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-m); padding: 16px; min-width: 0; }
+  .panel h2 { font-size: 15px; margin: 0 0 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .panel .big { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; margin: 0; line-height: 1.15; }
+  .panel .sub { color: var(--muted); font-size: 13px; margin: 4px 0 0; }
+  .panel.feature { background: var(--primary-deep); border-color: var(--primary-deep); color: #fff; }
+  .panel.feature .sub { color: #B9D2DE; }
+  .panels-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; margin-bottom: 12px; }
+  .panel .table-wrap { border: 0; border-radius: 0; margin: 0 -16px -16px; }
+  .chart { display: flex; align-items: stretch; gap: 4px; height: 220px; }
+  .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+  .bar-track { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+  .bar { width: 100%; max-width: 44px; background: var(--primary); border-radius: 4px 4px 0 0; min-height: 2px; }
+  .bar-wrap:hover .bar { background: var(--signal); }
+  .bar-label { font-size: 11px; color: var(--muted); margin-top: 6px; white-space: nowrap; height: 16px; }
+
+  /* Tim */
+  .team-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); gap: 12px; align-items: start; }
+  @media (max-width: 860px) { .team-grid { grid-template-columns: 1fr; } }
+
+  /* Dialog */
+  dialog { border: 0; border-radius: var(--radius-l); padding: 0; width: min(680px, calc(100vw - 24px)); max-height: calc(100vh - 32px); background: var(--surface); color: var(--text); }
+  dialog.small { width: min(420px, calc(100vw - 24px)); }
+  dialog[open] { display: flex; flex-direction: column; }
+  dialog::backdrop { background: rgba(8, 16, 30, .55); }
+  dialog form { display: flex; flex-direction: column; min-height: 0; }
+  .dlg-head { padding: 18px 22px 14px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+  .dlg-head h2 { margin: 0; font-size: 19px; }
+  .dlg-head p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .dlg-body { padding: 18px 22px 4px; overflow: auto; }
+  .dlg-foot { padding: 14px 22px; border-top: 1px solid var(--line); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .dlg-foot .spacer { flex: 1; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+  @media (max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
+  .section-title { font-size: 14px; font-weight: 800; margin: 4px 0 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .pay-box { background: var(--surface-2); border-radius: var(--radius-m); padding: 14px 14px 0; margin-bottom: 18px; }
+  .pay-box .field { margin-bottom: 14px; }
+  .pay-sum { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; padding: 0 0 14px; align-items: center; }
+  .pay-sum b { font-variant-numeric: tabular-nums; }
+  .meta-line { font-size: 12px; color: var(--muted); margin: 0 0 14px; }
+  .check { display: flex; gap: 8px; align-items: center; font-weight: 600; margin-bottom: 18px; }
+  .check input { width: 18px; height: 18px; min-height: 0; }
+
+  /* Toast */
+  #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: var(--radius-s); font-size: 14px; font-weight: 700; opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 100; max-width: calc(100vw - 32px); }
+  #toast.show { opacity: 1; }
+  #toast.error { background: var(--danger); color: #fff; }
+
+  .loading-screen { min-height: 100vh; display: grid; place-items: center; color: var(--muted); gap: 10px; }
+
+  @media (max-width: 700px) {
+    .topbar { flex-wrap: wrap; gap: 8px; padding: 10px 14px; }
+    .tabs { order: 3; width: 100%; }
+    .sync { display: none; }
+    main { padding: 14px; }
+    .toolbar input[type="search"] { max-width: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="boot"><span><span class="spinner" aria-hidden="true"></span> Memuat dashboard…</span></div>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="login-view" hidden>
+  <form class="login-card" id="login-form" novalidate>
+    <span class="brand"><span class="brand-mark">P</span>Primajana</span>
+    <h1>Masuk ke dashboard</h1>
+    <p class="hint">Khusus tim Primajana.</p>
+    <p class="alert" id="login-error" role="alert" hidden></p>
+    <div class="field">
+      <label for="lg-user">Username</label>
+      <input id="lg-user" autocomplete="username" autocapitalize="none" required>
+    </div>
+    <div class="field">
+      <label for="lg-pass">Password</label>
+      <input id="lg-pass" type="password" autocomplete="current-password" required>
+    </div>
+    <button class="btn btn-primary btn-block" type="submit" id="login-btn">Masuk</button>
+  </form>
+</div>
+
+<!-- APLIKASI -->
+<div id="app" hidden>
+  <header class="topbar">
+    <span class="brand"><span class="brand-mark">P</span>Primajana</span>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="board" aria-selected="true">Papan order</button>
+      <button class="tab" role="tab" data-tab="archive" aria-selected="false">Arsip</button>
+      <button class="tab" role="tab" data-tab="finance" aria-selected="false">Keuangan</button>
+      <button class="tab" role="tab" data-tab="team" aria-selected="false" id="tab-team-btn" hidden>Tim</button>
+    </nav>
+    <div class="topbar-right">
+      <span class="sync" id="sync-time"></span>
+      <button class="btn btn-ghost btn-sm" id="btn-refresh" type="button">Muat ulang</button>
+      <details class="menu" id="user-menu">
+        <summary class="btn btn-ghost btn-sm" id="me-name">Akun</summary>
+        <div class="menu-list">
+          <div class="role" id="me-role"></div>
+          <button type="button" id="btn-pw">Ganti password</button>
+          <button type="button" id="btn-logout">Keluar</button>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main>
+    <!-- PAPAN -->
+    <section data-panel="board">
+      <div class="stats" id="stats"></div>
+      <div class="toolbar">
+        <input type="search" id="f-q" placeholder="Cari ID, jenis, nomor WA…" aria-label="Cari order">
+        <select id="f-assignee" aria-label="Filter anggota tim"></select>
+        <select id="f-pay" aria-label="Filter status pembayaran">
+          <option value="all">Semua pembayaran</option>
+          <option value="Belum Bayar">Belum bayar</option>
+          <option value="DP">Sudah DP</option>
+          <option value="Lunas">Lunas</option>
+        </select>
+        <span class="spacer"></span>
+        <a class="btn btn-ghost btn-sm" href="index.html" target="_blank" rel="noopener">Buka form order</a>
+      </div>
+      <div class="board" id="board"></div>
+    </section>
+
+    <!-- ARSIP -->
+    <section data-panel="archive" hidden>
+      <div class="page-head">
+        <div><h1>Arsip</h1><p id="archive-count"></p></div>
+        <input type="search" id="a-q" placeholder="Cari di arsip…" aria-label="Cari di arsip" style="max-width:280px">
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Jenis</th><th>WhatsApp</th><th>Diarsipkan</th><th>Ditugaskan</th><th class="num">Biaya</th><th>Pembayaran</th><th></th></tr></thead>
+          <tbody id="archive-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- KEUANGAN -->
+    <section data-panel="finance" hidden>
+      <div class="page-head"><div><h1>Keuangan</h1><p>Pemasukan dihitung dari tanggal DP dan pelunasan yang dicatat.</p></div></div>
+      <div class="fin-controls">
+        <div class="field">
+          <label for="fin-preset" class="field-label">Periode</label>
+          <select id="fin-preset">
+            <option value="month">Bulan ini</option>
+            <option value="lastmonth">Bulan lalu</option>
+            <option value="3m">3 bulan terakhir</option>
+            <option value="year">Tahun ini</option>
+            <option value="all">Semua waktu</option>
+            <option value="custom">Pilih tanggal</option>
+          </select>
+        </div>
+        <div class="field"><label for="fin-from" class="field-label">Dari</label><input type="date" id="fin-from"></div>
+        <div class="field"><label for="fin-to" class="field-label">Sampai</label><input type="date" id="fin-to"></div>
+        <button class="btn btn-ghost" type="button" id="btn-csv">Unduh transaksi (CSV)</button>
+      </div>
+      <div class="fin-grid" id="fin-cards"></div>
+      <div class="panel" style="margin-bottom:12px">
+        <h2>Pemasukan per periode <span class="hint" id="chart-unit"></span></h2>
+        <div class="chart" id="chart" role="img"></div>
+      </div>
+      <div class="panels-2">
+        <div class="panel"><h2>Pemasukan per jenis orderan</h2><div class="table-wrap"><table><thead><tr><th>Jenis</th><th class="num">Transaksi</th><th class="num">Pemasukan</th></tr></thead><tbody id="fin-jenis"></tbody></table></div></div>
+        <div class="panel"><h2>Capaian tim <span class="hint">order masuk di periode ini</span></h2><div class="table-wrap"><table><thead><tr><th>Anggota</th><th class="num">Order</th><th class="num">Selesai</th><th class="num">Nilai order</th></tr></thead><tbody id="fin-team"></tbody></table></div></div>
+      </div>
+      <div class="panel">
+        <h2>Riwayat pembayaran</h2>
+        <div class="table-wrap"><table><thead><tr><th>Tanggal</th><th>ID order</th><th>Jenis</th><th>Pembayaran</th><th class="num">Nominal</th></tr></thead><tbody id="fin-tx"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- TIM -->
+    <section data-panel="team" hidden>
+      <div class="page-head"><div><h1>Anggota tim</h1><p>Hanya admin yang bisa menambah dan mengubah anggota.</p></div></div>
+      <div class="team-grid">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th><th class="num">Order aktif</th><th></th></tr></thead>
+            <tbody id="team-body"></tbody>
+          </table>
+        </div>
+        <form class="panel" id="add-user-form" novalidate>
+          <h2>Tambah anggota</h2>
+          <p class="alert" id="add-user-error" role="alert" hidden></p>
+          <div class="field"><label for="nu-name">Nama</label><input id="nu-name" maxlength="60"></div>
+          <div class="field"><label for="nu-username">Username</label><input id="nu-username" autocapitalize="none" placeholder="huruf kecil, tanpa spasi"></div>
+          <div class="field"><label for="nu-role">Peran</label><select id="nu-role"><option value="member">Anggota</option><option value="admin">Admin</option></select></div>
+          <div class="field"><label for="nu-pass">Password awal</label><input id="nu-pass" type="text" autocomplete="off" placeholder="minimal 6 karakter"></div>
+          <button class="btn btn-primary btn-block" type="submit">Tambah anggota</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- DIALOG ORDER -->
+<dialog id="order-dialog" aria-labelledby="od-title">
+  <form id="order-form" novalidate>
+    <div class="dlg-head">
+      <div><h2 id="od-title"></h2><p id="od-sub"></p></div>
+      <a class="btn btn-ghost btn-sm" id="od-wa" target="_blank" rel="noopener">Chat customer</a>
+    </div>
+    <div class="dlg-body">
+      <p class="alert" id="od-error" role="alert" hidden></p>
+      <div class="grid2">
+        <div class="field"><label for="od-status">Status pengerjaan</label><select id="od-status" name="status"></select></div>
+        <div class="field"><label for="od-assignee">Ditugaskan ke</label><select id="od-assignee" name="assignee"></select></div>
+        <div class="field"><label for="od-jenis">Jenis orderan</label><input id="od-jenis" name="jenis" maxlength="100"></div>
+        <div class="field"><label for="od-deadline">Deadline</label><input id="od-deadline" name="deadline" type="date"></div>
+        <div class="field"><label for="od-wa-input">Nomor WhatsApp</label><input id="od-wa-input" name="whatsapp" type="tel" inputmode="tel"></div>
+        <div class="field"><label for="od-biaya">Biaya disepakati</label><input id="od-biaya" name="biaya" inputmode="numeric"></div>
+      </div>
+
+      <div class="section-title">Pembayaran <button class="btn btn-ghost btn-sm" type="button" id="od-fill">Catat sisa sebagai pelunasan</button></div>
+      <div class="pay-box">
+        <div class="grid2">
+          <div class="field"><label for="od-dp">Nominal DP</label><input id="od-dp" name="dpAmount" inputmode="numeric" placeholder="0"></div>
+          <div class="field"><label for="od-dpdate">Tanggal DP</label><input id="od-dpdate" name="dpDate" type="date"></div>
+          <div class="field"><label for="od-pel">Nominal pelunasan</label><input id="od-pel" name="pelunasanAmount" inputmode="numeric" placeholder="0"></div>
+          <div class="field"><label for="od-peldate">Tanggal pelunasan</label><input id="od-peldate" name="pelunasanDate" type="date"></div>
+        </div>
+        <div class="pay-sum" id="od-paysum" aria-live="polite"></div>
+      </div>
+
+      <div class="field"><label for="od-catatan">Catatan dari customer</label><textarea id="od-catatan" name="catatan" maxlength="3000"></textarea></div>
+      <div class="field"><label for="od-internal">Catatan internal tim</label><textarea id="od-internal" name="catatanInternal" maxlength="3000" placeholder="Hanya terlihat oleh tim."></textarea></div>
+      <p class="meta-line" id="od-meta"></p>
+    </div>
+    <div class="dlg-foot">
+      <button class="btn btn-ghost btn-sm" type="button" id="od-archive"></button>
+      <button class="btn btn-danger btn-sm" type="button" id="od-delete" hidden>Hapus permanen</button>
+      <span class="spacer"></span>
+      <button class="btn btn-ghost" type="button" data-close>Batal</button>
+      <button class="btn btn-primary" type="submit" id="od-save">Simpan perubahan</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- DIALOG GANTI PASSWORD -->
+<dialog id="pw-dialog" class="small" aria-labelledby="pw-title">
+  <form id="pw-form" novalidate>
+    <div class="dlg-head"><h2 id="pw-title">Ganti password</h2></div>
+    <div class="dlg-body">
+      <p class="alert" id="pw-error" role="alert" hidden></p>
+      <div class="field"><label for="pw-old">Password lama</label><input id="pw-old" type="password" autocomplete="current-password"></div>
+      <div class="field"><label for="pw-new">Password baru</label><input id="pw-new" type="password" autocomplete="new-password"></div>
+      <div class="field"><label for="pw-new2">Ulangi password baru</label><input id="pw-new2" type="password" autocomplete="new-password"></div>
+    </div>
+    <div class="dlg-foot"><span class="spacer"></span><button class="btn btn-ghost" type="button" data-close>Batal</button><button class="btn btn-primary" type="submit">Simpan password</button></div>
+  </form>
+</dialog>
+
+<!-- DIALOG UBAH ANGGOTA -->
+<dialog id="user-dialog" class="small" aria-labelledby="ud-title">
+  <form id="user-form" novalidate>
+    <div class="dlg-head"><div><h2 id="ud-title">Ubah anggota</h2><p id="ud-sub"></p></div></div>
+    <div class="dlg-body">
+      <p class="alert" id="ud-error" role="alert" hidden></p>
+      <div class="field"><label for="ud-name">Nama</label><input id="ud-name" maxlength="60"></div>
+      <div class="field"><label for="ud-role">Peran</label><select id="ud-role"><option value="member">Anggota</option><option value="admin">Admin</option></select></div>
+      <label class="check"><input type="checkbox" id="ud-active"> Akun aktif</label>
+      <div class="field"><label for="ud-pass">Reset password <span class="optional">(opsional)</span></label><input id="ud-pass" type="text" autocomplete="off" placeholder="Kosongkan jika tidak diubah"></div>
+    </div>
+    <div class="dlg-foot"><span class="spacer"></span><button class="btn btn-ghost" type="button" data-close>Batal</button><button class="btn btn-primary" type="submit">Simpan perubahan</button></div>
+  </form>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const W = PRIMAJANA.DEADLINE_WARNING_DAYS;
+  const COL_COLORS = ['var(--primary)', 'var(--signal)', 'var(--violet)', 'var(--danger)', 'var(--muted)'];
+
+  const store = {
+    get: (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} },
+    del: (k) => { try { localStorage.removeItem(k); } catch (e) {} }
+  };
+
+  const S = {
+    token: store.get('pj_token'),
+    user: null, orders: [], users: [], statuses: [],
+    tab: 'board',
+    filter: { q: '', assignee: 'all', payment: 'all', quick: null },
+    archiveQ: '',
+    fin: { preset: 'month', from: '', to: '' },
+    editing: null, editingUser: null, dragId: null, busy: false
+  };
+
+  /* ---------- Util ---------- */
+  function api(action, payload) {
+    return callApi(action, payload, S.token).catch((err) => {
+      if (err.code === 'AUTH') showLogin(err.message);
+      throw err;
+    });
+  }
+  function toast(msg, isErr) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.className = 'show' + (isErr ? ' error' : '');
+    clearTimeout(t._h);
+    t._h = setTimeout(() => { t.className = ''; }, isErr ? 5000 : 2500);
+  }
+  function showError(el, msg) { el.textContent = msg; el.hidden = !msg; }
+  const lastStatus = () => S.statuses[S.statuses.length - 1];
+  const isDone = (o) => o.status === lastStatus();
+  const userName = (u) => (S.users.find((x) => x.username === u) || {}).name || u;
+  const initials = (n) => String(n).split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
+  const activeOrders = () => S.orders.filter((o) => !o.archived);
+  const colStatus = (o) => (S.statuses.includes(o.status) ? o.status : S.statuses[0]);
+  const colColor = (i) => (i === S.statuses.length - 1 ? 'var(--ok)' : COL_COLORS[i % COL_COLORS.length]);
+  const num = (v) => Number(digitsOnly(v)) || 0;
+
+  function payBadge(o) {
+    const m = { 'Lunas': 'ok', 'DP': 'warn', 'Belum Bayar': 'danger' };
+    const label = { 'Lunas': 'Lunas', 'DP': 'DP', 'Belum Bayar': 'Belum bayar' };
+    return `<span class="badge ${m[o.paymentStatus] || ''}">${label[o.paymentStatus] || esc(o.paymentStatus)}</span>`;
+  }
+
+  function deadlineInfo(o) {
+    if (isDone(o)) return { cls: 'ok', text: 'Selesai', state: '' };
+    const d = daysUntil(o.deadline);
+    if (d === null) return { cls: '', text: 'Tanpa deadline', state: '' };
+    if (d < 0) return { cls: 'danger', text: `Terlambat ${-d} hari`, state: 'late' };
+    if (d === 0) return { cls: 'danger', text: 'Deadline hari ini', state: 'late' };
+    if (d === 1) return { cls: 'warn', text: 'Deadline besok', state: 'near' };
+    if (d <= W) return { cls: 'warn', text: `${d} hari lagi`, state: 'near' };
+    return { cls: '', text: formatTanggal(o.deadline), state: '' };
+  }
+
+  /* ---------- Login & data ---------- */
+  function showLogin(msg) {
+    S.token = null;
+    store.del('pj_token');
+    $$('dialog[open]').forEach((d) => d.close());
+    $('#boot').hidden = true;
+    $('#app').hidden = true;
+    $('#login-view').hidden = false;
+    showError($('#login-error'), msg || '');
+    $('#lg-user').focus();
+  }
+
+  function showApp() {
+    $('#boot').hidden = true;
+    $('#login-view').hidden = true;
+    $('#app').hidden = false;
+  }
+
+  async function loadData(silent) {
+    if (S.busy) return false;
+    S.busy = true;
+    const btn = $('#btn-refresh');
+    if (!silent) { btn.disabled = true; btn.textContent = 'Memuat…'; }
+    try {
+      const r = await api('getData');
+      S.user = r.user; S.orders = r.orders; S.users = r.users; S.statuses = r.statuses;
+      $('#sync-time').textContent = 'Diperbarui ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+      renderAll();
+      return true;
+    } catch (e) {
+      if (e.code !== 'AUTH' && !silent) toast(e.message, true);
+      return false;
+    } finally {
+      S.busy = false;
+      btn.disabled = false;
+      btn.textContent = 'Muat ulang';
+    }
+  }
+
+  $('#login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('#login-btn');
+    showError($('#login-error'), '');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" aria-hidden="true"></span> Memeriksa…';
+    try {
+      const r = await callApi('login', { username: $('#lg-user').value, password: $('#lg-pass').value });
+      S.token = r.token;
+      store.set('pj_token', r.token);
+      $('#lg-pass').value = '';
+      await loadData();
+      if (S.token) showApp();
+    } catch (ex) {
+      showError($('#login-error'), ex.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Masuk';
+    }
+  });
+
+  $('#btn-logout').addEventListener('click', async () => {
+    try { await api('logout'); } catch (e) {}
+    showLogin('');
+  });
+  $('#btn-refresh').addEventListener('click', () => loadData());
+
+  /* ---------- Tab ---------- */
+  $$('.tab').forEach((b) => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+  function switchTab(t) {
+    S.tab = t;
+    $$('.tab').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === t)));
+    $$('[data-panel]').forEach((p) => { p.hidden = p.dataset.panel !== t; });
+    renderAll();
+  }
+
+  function renderAll() {
+    if (!S.user) return;
+    $('#me-name').textContent = S.user.name;
+    $('#me-role').textContent = (S.user.role === 'admin' ? 'Admin' : 'Anggota tim') + ' · @' + S.user.username;
+    $('#tab-team-btn').hidden = S.user.role !== 'admin';
+    if (S.tab === 'team' && S.user.role !== 'admin') return switchTab('board');
+    renderFilters();
+    if (S.tab === 'board') { renderStats(); renderBoard(); }
+    if (S.tab === 'archive') renderArchive();
+    if (S.tab === 'finance') renderFinance();
+    if (S.tab === 'team') renderTeam();
+  }
+
+  /* ---------- Papan ---------- */
+  function renderFilters() {
+    const sel = $('#f-assignee');
+    const cur = S.filter.assignee;
+    const opts = [['all', 'Semua anggota'], ['me', 'Tugas saya'], ['none', 'Belum ditugaskan']]
+      .concat(S.users.filter((u) => u.active).map((u) => [u.username, u.name]));
+    sel.innerHTML = opts.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join('');
+    sel.value = opts.some((o) => o[0] === cur) ? cur : 'all';
+  }
+
+  function renderStats() {
+    const notDone = activeOrders().filter((o) => !isDone(o));
+    const dd = (o) => daysUntil(o.deadline);
+    const c = {
+      active: notDone.length,
+      near: notDone.filter((o) => { const d = dd(o); return d !== null && d >= 0 && d <= W; }).length,
+      overdue: notDone.filter((o) => { const d = dd(o); return d !== null && d < 0; }).length,
+      unpaid: activeOrders().filter((o) => o.paymentStatus !== 'Lunas').length,
+      done: activeOrders().filter(isDone).length
+    };
+    const defs = [
+      ['active', 'Sedang berjalan', ''],
+      ['near', `Deadline ${W} hari ke depan`, 'warn'],
+      ['overdue', 'Lewat deadline', 'danger'],
+      ['unpaid', 'Belum lunas', ''],
+      ['done', 'Selesai, siap diarsipkan', 'ok']
+    ];
+    $('#stats').innerHTML = defs.map(([k, l, cls]) =>
+      `<button type="button" class="stat ${cls}" data-quick="${k}" aria-pressed="${S.filter.quick === k}"><b>${c[k]}</b><span>${l}</span></button>`
+    ).join('');
+  }
+
+  $('#stats').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-quick]');
+    if (!b) return;
+    S.filter.quick = S.filter.quick === b.dataset.quick ? null : b.dataset.quick;
+    renderStats(); renderBoard();
+  });
+  $('#f-q').addEventListener('input', (e) => { S.filter.q = e.target.value; renderBoard(); });
+  $('#f-assignee').addEventListener('change', (e) => { S.filter.assignee = e.target.value; renderBoard(); });
+  $('#f-pay').addEventListener('change', (e) => { S.filter.payment = e.target.value; renderBoard(); });
+
+  function boardOrders() {
+    const f = S.filter;
+    const q = f.q.trim().toLowerCase();
+    return activeOrders().filter((o) => {
+      if (q && ![o.id, o.jenis, o.whatsapp, formatWa(o.whatsapp), o.catatan, userName(o.assignee)].join(' ').toLowerCase().includes(q)) return false;
+      if (f.assignee === 'me' && o.assignee !== S.user.username) return false;
+      if (f.assignee === 'none' && o.assignee) return false;
+      if (!['all', 'me', 'none'].includes(f.assignee) && o.assignee !== f.assignee) return false;
+      if (f.payment !== 'all' && o.paymentStatus !== f.payment) return false;
+      const d = daysUntil(o.deadline);
+      switch (f.quick) {
+        case 'active': return !isDone(o);
+        case 'near': return !isDone(o) && d !== null && d >= 0 && d <= W;
+        case 'overdue': return !isDone(o) && d !== null && d < 0;
+        case 'unpaid': return o.paymentStatus !== 'Lunas';
+        case 'done': return isDone(o);
+        default: return true;
+      }
+    }).sort((a, b) => (a.deadline || '9999').localeCompare(b.deadline || '9999'));
+  }
+
+  function cardHtml(o) {
+    const dl = deadlineInfo(o);
+    const who = o.assignee
+      ? `<span class="avatar" title="${esc(userName(o.assignee))}">${esc(initials(userName(o.assignee)))}</span>`
+      : '<span class="avatar none" title="Belum ditugaskan">?</span>';
+    return `<article class="card ${dl.state}" draggable="true" tabindex="0" data-id="${esc(o.id)}"
+        aria-label="${esc(o.jenis)}, ${esc(o.id)}, ${esc(dl.text)}">
+      <div class="card-top"><span class="card-id">${esc(o.id)}</span><span class="badge ${dl.cls}">${esc(dl.text)}</span></div>
+      <h3>${esc(o.jenis)}</h3>
+      ${o.catatan ? `<p class="card-note">${esc(o.catatan)}</p>` : ''}
+      <div class="card-foot">${who}${payBadge(o)}<span class="amount">${rupiah(o.biaya)}</span></div>
+      ${isDone(o) ? `<button type="button" class="btn btn-ghost btn-sm card-archive" data-archive="${esc(o.id)}">Arsipkan</button>` : ''}
+    </article>`;
+  }
+
+  function renderBoard() {
+    const list = boardOrders();
+    $('#board').innerHTML = S.statuses.map((st, i) => {
+      const items = list.filter((o) => colStatus(o) === st);
+      const total = items.reduce((s, o) => s + o.biaya, 0);
+      return `<section class="col" data-status="${esc(st)}" style="--col:${colColor(i)}" aria-label="Kolom ${esc(st)}">
+        <div class="col-head"><h2>${esc(st)}<small>${items.length}</small></h2><small>${rupiah(total)}</small></div>
+        <div class="col-list">${items.map(cardHtml).join('') || '<p class="col-empty">Belum ada order di sini.</p>'}</div>
+      </section>`;
+    }).join('');
+  }
+
+  const board = $('#board');
+  board.addEventListener('click', (e) => {
+    const ab = e.target.closest('[data-archive]');
+    if (ab) { e.stopPropagation(); setArchived(ab.dataset.archive, true); return; }
+    const c = e.target.closest('.card');
+    if (c) openOrder(c.dataset.id);
+  });
+  board.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.classList.contains('card')) openOrder(e.target.dataset.id);
+  });
+  board.addEventListener('dragstart', (e) => {
+    const c = e.target.closest('.card');
+    if (!c) return;
+    S.dragId = c.dataset.id;
+    c.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', c.dataset.id);
+  });
+  board.addEventListener('dragend', () => {
+    S.dragId = null;
+    $$('.card.dragging').forEach((x) => x.classList.remove('dragging'));
+    $$('.col.drop').forEach((x) => x.classList.remove('drop'));
+  });
+  board.addEventListener('dragover', (e) => {
+    const col = e.target.closest('.col');
+    if (!col || !S.dragId) return;
+    e.preventDefault();
+    $$('.col.drop').forEach((x) => { if (x !== col) x.classList.remove('drop'); });
+    col.classList.add('drop');
+  });
+  board.addEventListener('drop', (e) => {
+    const col = e.target.closest('.col');
+    if (!col) return;
+    e.preventDefault();
+    col.classList.remove('drop');
+    moveOrder(e.dataTransfer.getData('text/plain') || S.dragId, col.dataset.status);
+  });
+
+  function replaceOrder(n) {
+    const i = S.orders.findIndex((x) => x.id === n.id);
+    if (i > -1) S.orders[i] = n; else S.orders.push(n);
+    renderAll();
+  }
+
+  async function moveOrder(id, status) {
+    const o = S.orders.find((x) => x.id === id);
+    if (!o || o.status === status) return;
+    const prev = o.status;
+    o.status = status;
+    renderAll();
+    try {
+      const r = await api('updateOrder', { id: id, changes: { status: status }, expectedUpdatedAt: o.updatedAt });
+      replaceOrder(r.order);
+      toast(`${id} dipindah ke ${status}`);
+    } catch (e) {
+      o.status = prev;
+      renderAll();
+      toast(e.message, true);
+    }
+  }
+
+  async function setArchived(id, archived) {
+    try {
+      const r = await api(archived ? 'archiveOrder' : 'restoreOrder', { id: id });
+      replaceOrder(r.order);
+      toast(archived ? `${id} diarsipkan` : `${id} dipulihkan ke papan`);
+      return true;
+    } catch (e) {
+      toast(e.message, true);
+      return false;
+    }
+  }
+
+  /* ---------- Dialog order ---------- */
+  const of = $('#order-form');
+  const fld = (n) => of.elements[n];
+
+  function openOrder(id) {
+    const o = S.orders.find((x) => x.id === id);
+    if (!o) return;
+    S.editing = o;
+    $('#od-title').textContent = o.jenis;
+    $('#od-sub').textContent = `${o.id}, masuk ${formatWaktu(o.createdAt)}`;
+    $('#od-wa').href = 'https://wa.me/' + o.whatsapp;
+    fld('status').innerHTML = S.statuses.map((s) => `<option>${esc(s)}</option>`).join('');
+    const assignees = S.users.filter((u) => u.active || u.username === o.assignee);
+    fld('assignee').innerHTML = '<option value="">Belum ditugaskan</option>' +
+      assignees.map((u) => `<option value="${esc(u.username)}">${esc(u.name)}</option>`).join('');
+    fld('status').value = colStatus(o);
+    fld('assignee').value = o.assignee || '';
+    fld('jenis').value = o.jenis;
+    fld('deadline').value = o.deadline;
+    fld('whatsapp').value = formatWa(o.whatsapp);
+    fld('biaya').value = o.biaya || '';
+    fld('dpAmount').value = o.dpAmount || '';
+    fld('dpDate').value = o.dpDate || '';
+    fld('pelunasanAmount').value = o.pelunasanAmount || '';
+    fld('pelunasanDate').value = o.pelunasanDate || '';
+    fld('catatan').value = o.catatan || '';
+    fld('catatanInternal').value = o.catatanInternal || '';
+    $('#od-meta').textContent = `Terakhir diubah ${formatWaktu(o.updatedAt)} oleh ${o.updatedBy === 'customer' ? 'customer' : userName(o.updatedBy)}`;
+    $('#od-archive').textContent = o.archived ? 'Pulihkan ke papan' : 'Arsipkan';
+    $('#od-delete').hidden = S.user.role !== 'admin';
+    showError($('#od-error'), '');
+    updatePaySum();
+    $('#order-dialog').showModal();
+  }
+
+  function updatePaySum() {
+    const biaya = num(fld('biaya').value);
+    const paid = num(fld('dpAmount').value) + num(fld('pelunasanAmount').value);
+    const sisa = Math.max(biaya - paid, 0);
+    const status = paid <= 0 ? 'Belum Bayar' : paid >= biaya ? 'Lunas' : 'DP';
+    $('#od-paysum').innerHTML = `<span>Dibayar <b>${rupiah(paid)}</b></span><span>Sisa <b>${rupiah(sisa)}</b></span>${payBadge({ paymentStatus: status })}` +
+      (paid > biaya ? '<span class="badge danger">Pembayaran melebihi biaya</span>' : '');
+  }
+
+  ['biaya', 'dpAmount', 'pelunasanAmount'].forEach((n) => fld(n).addEventListener('input', () => {
+    const d = digitsOnly(fld(n).value);
+    if (fld(n).value !== d) fld(n).value = d;
+    updatePaySum();
+  }));
+
+  $('#od-fill').addEventListener('click', () => {
+    const sisa = num(fld('biaya').value) - num(fld('dpAmount').value);
+    fld('pelunasanAmount').value = Math.max(sisa, 0) || '';
+    if (!fld('pelunasanDate').value) fld('pelunasanDate').value = todayStr();
+    updatePaySum();
+  });
+
+  of.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const o = S.editing;
+    const vals = {
+      status: fld('status').value,
+      assignee: fld('assignee').value,
+      jenis: fld('jenis').value.trim(),
+      deadline: fld('deadline').value,
+      whatsapp: digitsOnly(fld('whatsapp').value),
+      biaya: num(fld('biaya').value),
+      dpAmount: num(fld('dpAmount').value),
+      dpDate: fld('dpDate').value,
+      pelunasanAmount: num(fld('pelunasanAmount').value),
+      pelunasanDate: fld('pelunasanDate').value,
+      catatan: fld('catatan').value.trim(),
+      catatanInternal: fld('catatanInternal').value.trim()
+    };
+    if (!vals.jenis) return showError($('#od-error'), 'Jenis orderan tidak boleh kosong.');
+    if (!vals.deadline) return showError($('#od-error'), 'Deadline tidak boleh kosong.');
+    const changes = {};
+    Object.keys(vals).forEach((k) => {
+      const before = k === 'whatsapp' ? formatWa(o.whatsapp) : o[k];
+      const after = k === 'whatsapp' ? formatWa(vals[k]) : vals[k];
+      if (String(after) !== String(before === undefined || before === null ? '' : before).trim()) changes[k] = vals[k];
+    });
+    if (!Object.keys(changes).length) { $('#order-dialog').close(); return; }
+    const btn = $('#od-save');
+    btn.disabled = true;
+    btn.textContent = 'Menyimpan…';
+    try {
+      const r = await api('updateOrder', { id: o.id, changes: changes, expectedUpdatedAt: o.updatedAt });
+      replaceOrder(r.order);
+      $('#order-dialog').close();
+      toast('Perubahan disimpan');
+    } catch (ex) {
+      showError($('#od-error'), ex.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Simpan perubahan';
+    }
+  });
+
+  $('#od-archive').addEventListener('click', async () => {
+    const o = S.editing;
+    if (await setArchived(o.id, !o.archived)) $('#order-dialog').close();
+  });
+
+  $('#od-delete').addEventListener('click', async () => {
+    const o = S.editing;
+    if (!confirm(`Hapus order ${o.id} secara permanen? Data tidak bisa dikembalikan. Gunakan "Arsipkan" jika hanya ingin menyembunyikannya.`)) return;
+    try {
+      await api('deleteOrder', { id: o.id });
+      S.orders = S.orders.filter((x) => x.id !== o.id);
+      $('#order-dialog').close();
+      renderAll();
+      toast(`${o.id} dihapus`);
+    } catch (ex) {
+      showError($('#od-error'), ex.message);
+    }
+  });
+
+  // Tutup dialog: tombol Batal & klik di luar
+  $$('dialog').forEach((d) => {
+    d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+    $$('[data-close]', d).forEach((b) => b.addEventListener('click', () => d.close()));
+  });
+
+  /* ---------- Arsip ---------- */
+  $('#a-q').addEventListener('input', (e) => { S.archiveQ = e.target.value; renderArchive(); });
+
+  function renderArchive() {
+    const all = S.orders.filter((o) => o.archived);
+    const q = S.archiveQ.trim().toLowerCase();
+    const list = all.filter((o) => !q || [o.id, o.jenis, o.whatsapp, formatWa(o.whatsapp), userName(o.assignee)].join(' ').toLowerCase().includes(q))
+      .sort((a, b) => String(b.archivedAt).localeCompare(String(a.archivedAt)));
+    $('#archive-count').textContent = `${all.length} order diarsipkan`;
+    $('#archive-body').innerHTML = list.length ? list.map((o) => `<tr>
+        <td><b>${esc(o.id)}</b></td>
+        <td class="wrap">${esc(o.jenis)}</td>
+        <td>${esc(formatWa(o.whatsapp))}</td>
+        <td>${esc(formatTanggal(o.archivedAt))}</td>
+        <td>${o.assignee ? esc(userName(o.assignee)) : '<span class="hint">-</span>'}</td>
+        <td class="num">${rupiah(o.biaya)}</td>
+        <td>${payBadge(o)}</td>
+        <td><div class="row-actions">
+          <button type="button" class="btn btn-ghost btn-sm" data-open="${esc(o.id)}">Buka</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-restore="${esc(o.id)}">Pulihkan</button>
+        </div></td></tr>`).join('')
+      : `<tr><td colspan="8" class="empty">${q ? 'Tidak ada order arsip yang cocok dengan pencarian.' : 'Belum ada order yang diarsipkan. Order berstatus selesai bisa diarsipkan dari papan.'}</td></tr>`;
+  }
+
+  $('#archive-body').addEventListener('click', (e) => {
+    const op = e.target.closest('[data-open]');
+    if (op) return openOrder(op.dataset.open);
+    const rs = e.target.closest('[data-restore]');
+    if (rs) setArchived(rs.dataset.restore, false);
+  });
+
+  /* ---------- Keuangan ---------- */
+  function transactions() {
+    const tx = [];
+    S.orders.forEach((o) => {
+      if (o.dpAmount > 0 && o.dpDate) tx.push({ date: o.dpDate, type: 'DP', amount: o.dpAmount, o: o });
+      if (o.pelunasanAmount > 0 && o.pelunasanDate) tx.push({ date: o.pelunasanDate, type: 'Pelunasan', amount: o.pelunasanAmount, o: o });
+    });
+    return tx;
+  }
+
+  function finRange() {
+    const t = new Date();
+    const y = t.getFullYear(), m = t.getMonth();
+    switch (S.fin.preset) {
+      case 'month': return [ymd(new Date(y, m, 1)), ymd(new Date(y, m + 1, 0))];
+      case 'lastmonth': return [ymd(new Date(y, m - 1, 1)), ymd(new Date(y, m, 0))];
+      case '3m': return [ymd(new Date(y, m - 2, 1)), ymd(new Date(y, m + 1, 0))];
+      case 'year': return [ymd(new Date(y, 0, 1)), ymd(new Date(y, 11, 31))];
+      case 'all': {
+        const dates = transactions().map((x) => x.date).concat(S.orders.map((o) => String(o.createdAt).slice(0, 10))).filter(Boolean).sort();
+        return [dates[0] || todayStr(), todayStr()];
+      }
+      default: return [S.fin.from || todayStr(), S.fin.to || todayStr()];
+    }
+  }
+
+  $('#fin-preset').addEventListener('change', (e) => { S.fin.preset = e.target.value; renderFinance(); });
+  ['#fin-from', '#fin-to'].forEach((id) => $(id).addEventListener('change', () => {
+    S.fin.preset = 'custom';
+    S.fin.from = $('#fin-from').value;
+    S.fin.to = $('#fin-to').value;
+    renderFinance();
+  }));
+
+  function buckets(from, to, tx) {
+    const a = parseYmd(from), b = parseYmd(to);
+    const days = Math.round((b - a) / 86400000) + 1;
+    const out = [];
+    if (days <= 31) {
+      for (let d = new Date(a); d <= b; d.setDate(d.getDate() + 1)) {
+        out.push({ key: ymd(d), label: String(d.getDate()), title: formatTanggal(ymd(d)), total: 0 });
+      }
+      tx.forEach((x) => { const k = out.find((o) => o.key === x.date); if (k) k.total += x.amount; });
+      return { unit: 'harian', list: out };
+    }
+    const multiYear = a.getFullYear() !== b.getFullYear();
+    for (let d = new Date(a.getFullYear(), a.getMonth(), 1); d <= b; d.setMonth(d.getMonth() + 1)) {
+      const lbl = d.toLocaleDateString('id-ID', { month: 'short' }) + (multiYear ? ' ' + String(d.getFullYear()).slice(2) : '');
+      out.push({ key: ymd(d).slice(0, 7), label: lbl, title: d.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' }), total: 0 });
+    }
+    tx.forEach((x) => { const k = out.find((o) => o.key === x.date.slice(0, 7)); if (k) k.total += x.amount; });
+    return { unit: 'bulanan', list: out };
+  }
+
+  function renderFinance() {
+    let [from, to] = finRange();
+    if (from > to) [from, to] = [to, from];
+    $('#fin-preset').value = S.fin.preset;
+    $('#fin-from').value = from;
+    $('#fin-to').value = to;
+    const inRange = (d) => d && d >= from && d <= to;
+
+    const tx = transactions().filter((x) => inRange(x.date)).sort((a, b) => b.date.localeCompare(a.date));
+    const income = tx.reduce((s, x) => s + x.amount, 0);
+    const dpIncome = tx.filter((x) => x.type === 'DP').reduce((s, x) => s + x.amount, 0);
+    const newOrders = S.orders.filter((o) => inRange(String(o.createdAt).slice(0, 10)));
+    const newValue = newOrders.reduce((s, o) => s + o.biaya, 0);
+    const receivable = S.orders.filter((o) => o.sisa > 0);
+    const receivableTotal = receivable.reduce((s, o) => s + o.sisa, 0);
+
+    $('#fin-cards').innerHTML = `
+      <div class="panel feature"><p class="sub">Pemasukan periode ini</p><p class="big">${rupiah(income)}</p><p class="sub">${tx.length} pembayaran, termasuk DP ${rupiah(dpIncome)}</p></div>
+      <div class="panel"><p class="sub">Order masuk</p><p class="big">${newOrders.length}</p><p class="sub">Nilai total ${rupiah(newValue)}</p></div>
+      <div class="panel"><p class="sub">Belum tertagih (semua order)</p><p class="big">${rupiah(receivableTotal)}</p><p class="sub">dari ${receivable.length} order yang belum lunas</p></div>
+      <div class="panel"><p class="sub">Rata-rata nilai order</p><p class="big">${rupiah(newOrders.length ? Math.round(newValue / newOrders.length) : 0)}</p><p class="sub">untuk order masuk periode ini</p></div>`;
+
+    // Grafik
+    const bk = buckets(from, to, tx);
+    const max = Math.max.apply(null, bk.list.map((b) => b.total).concat([1]));
+    const every = Math.ceil(bk.list.length / 12);
+    $('#chart-unit').textContent = bk.unit;
+    $('#chart').setAttribute('aria-label', `Grafik pemasukan ${bk.unit}, total ${rupiah(income)}`);
+    $('#chart').innerHTML = bk.list.map((b, i) => `
+      <div class="bar-wrap" title="${esc(b.title)}: ${rupiah(b.total)}">
+        <div class="bar-track"><div class="bar" style="height:${(b.total / max) * 100}%"></div></div>
+        <span class="bar-label">${i % every === 0 ? esc(b.label) : ''}</span>
+      </div>`).join('');
+
+    // Per jenis
+    const byJenis = {};
+    tx.forEach((x) => {
+      const k = x.o.jenis;
+      byJenis[k] = byJenis[k] || { n: 0, total: 0 };
+      byJenis[k].n++; byJenis[k].total += x.amount;
+    });
+    const jr = Object.entries(byJenis).sort((a, b) => b[1].total - a[1].total);
+    $('#fin-jenis').innerHTML = jr.length ? jr.map(([k, v]) => `<tr><td class="wrap">${esc(k)}</td><td class="num">${v.n}</td><td class="num">${rupiah(v.total)}</td></tr>`).join('')
+      : '<tr><td colspan="3" class="empty">Belum ada pembayaran tercatat di periode ini.</td></tr>';
+
+    // Capaian tim
+    const byUser = {};
+    newOrders.forEach((o) => {
+      const k = o.assignee || '';
+      byUser[k] = byUser[k] || { n: 0, done: 0, total: 0 };
+      byUser[k].n++; byUser[k].total += o.biaya;
+      if (isDone(o)) byUser[k].done++;
+    });
+    const ur = Object.entries(byUser).sort((a, b) => b[1].total - a[1].total);
+    $('#fin-team').innerHTML = ur.length ? ur.map(([k, v]) => `<tr><td>${k ? esc(userName(k)) : '<span class="hint">Belum ditugaskan</span>'}</td><td class="num">${v.n}</td><td class="num">${v.done}</td><td class="num">${rupiah(v.total)}</td></tr>`).join('')
+      : '<tr><td colspan="4" class="empty">Belum ada order masuk di periode ini.</td></tr>';
+
+    // Transaksi
+    $('#fin-tx').innerHTML = tx.length ? tx.map((x) => `<tr>
+        <td>${esc(formatTanggal(x.date))}</td>
+        <td><a href="#" data-open="${esc(x.o.id)}">${esc(x.o.id)}</a></td>
+        <td class="wrap">${esc(x.o.jenis)}</td>
+        <td><span class="badge ${x.type === 'DP' ? 'warn' : 'ok'}">${x.type}</span></td>
+        <td class="num">${rupiah(x.amount)}</td></tr>`).join('')
+      : '<tr><td colspan="5" class="empty">Belum ada pembayaran di periode ini. Catat DP atau pelunasan dari detail order.</td></tr>';
+
+    S.fin.lastTx = tx;
+    S.fin.lastRange = [from, to];
+  }
+
+  $('#fin-tx').addEventListener('click', (e) => {
+    const a = e.target.closest('[data-open]');
+    if (a) { e.preventDefault(); openOrder(a.dataset.open); }
+  });
+
+  $('#btn-csv').addEventListener('click', () => {
+    const tx = S.fin.lastTx || [];
+    if (!tx.length) return toast('Tidak ada transaksi untuk diunduh di periode ini.', true);
+    const q = (v) => '"' + String(v).replace(/"/g, '""') + '"';
+    const rows = [['Tanggal', 'ID Order', 'Jenis Orderan', 'Pembayaran', 'Nominal', 'Ditugaskan']]
+      .concat(tx.map((x) => [x.date, x.o.id, x.o.jenis, x.type, x.amount, x.o.assignee ? userName(x.o.assignee) : '']));
+    const csv = '\ufeff' + rows.map((r) => r.map(q).join(',')).join('\n');
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `primajana-transaksi-${S.fin.lastRange[0]}_${S.fin.lastRange[1]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+
+  /* ---------- Tim ---------- */
+  function renderTeam() {
+    const activeCount = (u) => activeOrders().filter((o) => o.assignee === u && !isDone(o)).length;
+    $('#team-body').innerHTML = S.users.map((u) => `<tr>
+      <td><b>${esc(u.name)}</b></td>
+      <td>@${esc(u.username)}</td>
+      <td>${u.role === 'admin' ? '<span class="badge info">Admin</span>' : 'Anggota'}</td>
+      <td>${u.active ? '<span class="badge ok">Aktif</span>' : '<span class="badge">Nonaktif</span>'}</td>
+      <td class="num">${activeCount(u.username)}</td>
+      <td><div class="row-actions"><button type="button" class="btn btn-ghost btn-sm" data-user="${esc(u.username)}">Ubah</button></div></td>
+    </tr>`).join('');
+  }
+
+  $('#team-body').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-user]');
+    if (!b) return;
+    const u = S.users.find((x) => x.username === b.dataset.user);
+    S.editingUser = u;
+    $('#ud-sub').textContent = '@' + u.username;
+    $('#ud-name').value = u.name;
+    $('#ud-role').value = u.role;
+    $('#ud-active').checked = u.active;
+    $('#ud-pass').value = '';
+    showError($('#ud-error'), '');
+    $('#user-dialog').showModal();
+  });
+
+  $('#user-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      const r = await api('updateUser', {
+        username: S.editingUser.username,
+        name: $('#ud-name').value,
+        role: $('#ud-role').value,
+        active: $('#ud-active').checked,
+        newPassword: $('#ud-pass').value
+      });
+      S.users = r.users;
+      $('#user-dialog').close();
+      renderAll();
+      toast('Data anggota disimpan');
+    } catch (ex) {
+      showError($('#ud-error'), ex.message);
+    }
+  });
+
+  $('#add-user-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    showError($('#add-user-error'), '');
+    try {
+      const r = await api('addUser', {
+        name: $('#nu-name').value,
+        username: $('#nu-username').value,
+        role: $('#nu-role').value,
+        password: $('#nu-pass').value
+      });
+      S.users = r.users;
+      e.target.reset();
+      renderAll();
+      toast('Anggota ditambahkan');
+    } catch (ex) {
+      showError($('#add-user-error'), ex.message);
+    }
+  });
+
+  /* ---------- Ganti password ---------- */
+  $('#btn-pw').addEventListener('click', () => {
+    $('#user-menu').open = false;
+    $('#pw-form').reset();
+    showError($('#pw-error'), '');
+    $('#pw-dialog').showModal();
+  });
+
+  $('#pw-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if ($('#pw-new').value !== $('#pw-new2').value) return showError($('#pw-error'), 'Password baru dan ulangannya tidak sama.');
+    try {
+      await api('changePassword', { oldPassword: $('#pw-old').value, newPassword: $('#pw-new').value });
+      $('#pw-dialog').close();
+      toast('Password diganti');
+    } catch (ex) {
+      showError($('#pw-error'), ex.message);
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    const m = $('#user-menu');
+    if (m.open && !m.contains(e.target)) m.open = false;
+  });
+
+  /* ---------- Mulai ---------- */
+  setInterval(() => {
+    if (!S.token || document.hidden || S.dragId || $$('dialog[open]').length) return;
+    loadData(true);
+  }, 60000);
+
+  (async function boot() {
+    if (!S.token) return showLogin('');
+    await loadData();
+    if (S.token) showApp(); // jika sesi habis, loadData sudah membuka halaman login
+  })();
+})();
+</script>
+</body>
+</html>

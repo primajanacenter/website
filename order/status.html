@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cek Status Order | Primajana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .wrap { max-width: 560px; margin: 0 auto; padding: 32px 20px 64px; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 40px; }
+  header a.small { font-size: 14px; font-weight: 700; }
+  h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; margin: 0 0 6px; }
+  .lead { color: var(--muted); margin: 0 0 28px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-l); padding: 24px; }
+  .result { margin-top: 24px; }
+  .result-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 4px; }
+  .result-head h2 { margin: 0; font-size: 20px; }
+  .meta { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+
+  .track { list-style: none; margin: 0 0 24px; padding: 0; }
+  .track li { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding-bottom: 18px; color: var(--muted); }
+  .track li:last-child { padding-bottom: 0; }
+  .track li::after { content: ""; position: absolute; left: 13px; top: 28px; bottom: 0; width: 2px; background: var(--line); }
+  .track li:last-child::after { display: none; }
+  .dot { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center; font-size: 13px; font-weight: 800; z-index: 1; }
+  .track li.done { color: var(--text); }
+  .track li.done .dot { background: var(--ok); border-color: var(--ok); color: var(--surface); }
+  .track li.done::after { background: var(--ok); }
+  .track li.current { color: var(--text); font-weight: 700; }
+  .track li.current .dot { border-color: var(--primary); background: var(--primary); color: var(--primary-ink); box-shadow: 0 0 0 4px var(--primary-soft); }
+  .track .label { padding-top: 3px; }
+  .track small { display: block; font-weight: 500; color: var(--muted); }
+
+  .pay { border-top: 1px solid var(--line); padding-top: 20px; }
+  .pay h3 { font-size: 15px; margin: 0 0 12px; display: flex; justify-content: space-between; align-items: center; }
+  .pay-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 15px; }
+  .pay-row span:last-child { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .pay-row.total { border-top: 1px dashed var(--line); margin-top: 6px; padding-top: 12px; }
+  .note { background: var(--surface-2); border-radius: var(--radius-s); padding: 12px 14px; font-size: 14px; margin: 0 0 20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="index.html"><span class="brand-mark">P</span>Primajana</a>
+    <a class="small" href="index.html">Buat pesanan</a>
+  </header>
+
+  <h1>Cek status order</h1>
+  <p class="lead">Masukkan ID order dan nomor WhatsApp yang Anda pakai saat memesan.</p>
+
+  <form class="panel" id="check-form" novalidate>
+    <p class="alert" id="err" role="alert" hidden></p>
+    <div class="field">
+      <label for="oid">ID order</label>
+      <input id="oid" name="id" type="text" placeholder="PJ-261107-AB12" autocapitalize="characters" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="wa">Nomor WhatsApp</label>
+      <input id="wa" name="wa" type="tel" inputmode="tel" placeholder="081234567890" autocomplete="tel">
+    </div>
+    <button class="btn btn-primary btn-block" type="submit" id="btn-check">Cek status</button>
+  </form>
+
+  <section class="panel result" id="result" hidden aria-live="polite"></section>
+</div>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const params = new URLSearchParams(location.search);
+  if (params.get('id')) { $('oid').value = params.get('id'); $('wa').focus(); }
+
+  $('check-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = $('oid').value.trim().toUpperCase();
+    const wa = digitsOnly($('wa').value);
+    const err = $('err');
+    err.hidden = true;
+    if (!id || wa.length < 9) {
+      err.textContent = 'Isi ID order dan nomor WhatsApp terlebih dahulu.';
+      err.hidden = false;
+      return;
+    }
+    const btn = $('btn-check');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner" aria-hidden="true"></span> Mencari…';
+    try {
+      const r = await callApi('checkStatus', { id: id, whatsapp: wa });
+      render(r.order, r.statuses);
+    } catch (ex) {
+      $('result').hidden = true;
+      err.textContent = ex.message;
+      err.hidden = false;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Cek status';
+    }
+  });
+
+  function render(o, statuses) {
+    const idx = Math.max(statuses.indexOf(o.status), 0);
+    const last = statuses.length - 1;
+    const steps = statuses.map((s, i) => {
+      const cls = i < idx || (i === idx && idx === last) ? 'done' : (i === idx ? 'current' : '');
+      const mark = cls === 'done' ? '✓' : i + 1;
+      const sub = i === idx ? (idx === last ? 'Pesanan selesai' : 'Tahap saat ini') : '';
+      return `<li class="${cls}"><span class="dot" aria-hidden="true">${mark}</span>
+        <span class="label">${esc(s)}${sub ? `<small>${sub}</small>` : ''}</span></li>`;
+    }).join('');
+
+    const payCls = { 'Lunas': 'ok', 'DP': 'warn', 'Belum Bayar': 'danger' }[o.paymentStatus] || '';
+    const d = daysUntil(o.deadline);
+    let dl = formatTanggal(o.deadline);
+    if (idx !== last && d !== null) {
+      dl += d < 0 ? ' (lewat deadline)' : d === 0 ? ' (hari ini)' : ` (${d} hari lagi)`;
+    }
+
+    $('result').innerHTML = `
+      <div class="result-head">
+        <h2>${esc(o.jenis)}</h2>
+        <span class="badge info">${esc(o.status)}</span>
+      </div>
+      <p class="meta">${esc(o.id)}<br>Dipesan ${esc(formatWaktu(o.createdAt))}<br>Deadline ${esc(dl)}</p>
+      ${o.archived ? '<p class="note">Order ini sudah ditutup oleh tim Primajana.</p>' : ''}
+      <ol class="track">${steps}</ol>
+      <div class="pay">
+        <h3>Pembayaran <span class="badge ${payCls}">${esc(o.paymentStatus)}</span></h3>
+        <div class="pay-row"><span>Biaya disepakati</span><span>${rupiah(o.biaya)}</span></div>
+        <div class="pay-row"><span>Sudah dibayar</span><span>${rupiah(o.paid)}</span></div>
+        <div class="pay-row total"><span>Sisa pembayaran</span><span>${rupiah(o.sisa)}</span></div>
+      </div>`;
+    $('result').hidden = false;
+    $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+})();
+</script>
+</body>
+</html>
