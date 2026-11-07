@@ -48,6 +48,7 @@
   .stat.warn b { color: var(--warn); }
   .stat.danger b { color: var(--danger); }
   .stat.ok b { color: var(--ok); }
+  .stat.info b { color: var(--primary); }
   .stat[aria-pressed="true"] { border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
 
   .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
@@ -144,6 +145,54 @@
   #toast.show { opacity: 1; }
   #toast.error { background: var(--danger); color: #fff; }
 
+  /* Notifikasi lonceng */
+  .notif { position: relative; }
+  .bell { position: relative; width: 38px; height: 38px; display: grid; place-items: center; border-radius: var(--radius-s); border: 1px solid var(--line); background: var(--surface); color: var(--text); cursor: pointer; }
+  .bell:hover { border-color: var(--primary); color: var(--primary); }
+  .bell svg { width: 20px; height: 20px; transform-origin: 50% 3px; }
+  .bell-count { position: absolute; top: -7px; right: -7px; min-width: 19px; height: 19px; padding: 0 5px; border-radius: 999px; background: var(--danger); color: #fff; font-size: 11px; font-weight: 800; display: grid; place-items: center; border: 2px solid var(--surface); }
+  .bell.ringing { border-color: var(--signal); background: var(--warn-soft); color: var(--warn); }
+  .bell.ringing svg { animation: ring 1.8s ease-in-out infinite; }
+  .bell.ringing .bell-count { animation: blink 1s ease-in-out infinite; }
+  @keyframes ring { 0%, 60%, 100% { transform: rotate(0); } 10% { transform: rotate(16deg); } 20% { transform: rotate(-14deg); } 30% { transform: rotate(10deg); } 40% { transform: rotate(-6deg); } 50% { transform: rotate(3deg); } }
+  @keyframes blink { 50% { opacity: .3; } }
+  .notif-panel { position: absolute; right: 0; top: calc(100% + 6px); width: min(360px, calc(100vw - 24px)); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-m); box-shadow: 0 12px 32px rgba(8, 20, 40, .18); z-index: 30; padding: 8px; }
+  .notif-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding: 6px 8px 10px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+  .notif-items { list-style: none; margin: 0; padding: 0; max-height: 340px; overflow: auto; }
+  .notif-item { display: grid; gap: 2px; width: 100%; text-align: left; background: none; border: 0; font: inherit; color: inherit; padding: 9px 8px; border-radius: var(--radius-s); cursor: pointer; }
+  .notif-item:hover { background: var(--surface-2); }
+  .notif-item .row { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+  .notif-item small { color: var(--muted); font-size: 12px; }
+  .notif-item.unseen b::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--danger); margin-right: 6px; vertical-align: middle; }
+  .notif-empty { padding: 18px 8px; color: var(--muted); font-size: 14px; text-align: center; margin: 0; }
+  .notif-panel .btn-block { margin-top: 6px; }
+  .welcome-alt { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 14px; }
+
+  /* Kedip untuk order yang memasuki deadline */
+  .card.late { animation: pulse-late 1.6s ease-in-out infinite; }
+  .card.near { animation: pulse-near 2.2s ease-in-out infinite; }
+  @keyframes pulse-late { 0%, 100% { box-shadow: 0 0 0 0 rgba(180, 35, 24, 0); } 50% { box-shadow: 0 0 0 4px rgba(180, 35, 24, .38); } }
+  @keyframes pulse-near { 0%, 100% { box-shadow: 0 0 0 0 rgba(242, 176, 30, 0); } 50% { box-shadow: 0 0 0 4px rgba(242, 176, 30, .5); } }
+  .badge.blink { animation: blink 1.2s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .card.late { box-shadow: 0 0 0 3px rgba(180, 35, 24, .38); }
+    .card.near { box-shadow: 0 0 0 3px rgba(242, 176, 30, .5); }
+  }
+
+  /* Tampilan daftar */
+  .view-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: var(--radius-s); overflow: hidden; flex: none; }
+  .view-toggle button { background: var(--surface); border: 0; font: inherit; font-size: 13px; font-weight: 700; padding: 0 14px; min-height: 42px; color: var(--muted); cursor: pointer; }
+  .view-toggle button + button { border-left: 1px solid var(--line); }
+  .view-toggle button[aria-pressed="true"] { background: var(--primary-soft); color: var(--primary); }
+  .quick-chip { border: 0; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; }
+  .list-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; scroll-margin-top: 80px; }
+  .list-head h2 { margin: 0; font-size: 18px; }
+  .list-head p { margin: 2px 0 0; }
+  #list-body tr { cursor: pointer; }
+  #list-body tr:hover td, #list-body tr:focus-visible td { background: var(--surface-2); }
+  #list-body tr.late td:first-child { box-shadow: inset 4px 0 0 var(--danger); }
+  #list-body tr.near td:first-child { box-shadow: inset 4px 0 0 var(--signal); }
+
   .loading-screen { min-height: 100vh; display: grid; place-items: center; color: var(--muted); gap: 10px; }
 
   @media (max-width: 700px) {
@@ -191,6 +240,17 @@
     <div class="topbar-right">
       <span class="sync" id="sync-time"></span>
       <button class="btn btn-ghost btn-sm" id="btn-refresh" type="button">Muat ulang</button>
+      <div class="notif" id="notif">
+        <button class="bell" id="bell" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="notif-panel" aria-label="Notifikasi order baru">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          <span class="bell-count" id="bell-count" hidden>0</span>
+        </button>
+        <div class="notif-panel" id="notif-panel" hidden>
+          <div class="notif-head"><b>Order baru</b><span class="hint">belum dikerjakan</span></div>
+          <div id="notif-list"></div>
+          <button class="btn btn-ghost btn-sm btn-block" type="button" id="notif-all">Lihat semua di daftar</button>
+        </div>
+      </div>
       <details class="menu" id="user-menu">
         <summary class="btn btn-ghost btn-sm" id="me-name">Akun</summary>
         <div class="menu-list">
@@ -207,6 +267,10 @@
     <section data-panel="board">
       <div class="stats" id="stats"></div>
       <div class="toolbar">
+        <div class="view-toggle" role="group" aria-label="Tampilan order">
+          <button type="button" data-view="board" aria-pressed="true">Papan</button>
+          <button type="button" data-view="list" aria-pressed="false">Daftar</button>
+        </div>
         <input type="search" id="f-q" placeholder="Cari ID, jenis, nomor WA…" aria-label="Cari order">
         <select id="f-assignee" aria-label="Filter anggota tim"></select>
         <select id="f-pay" aria-label="Filter status pembayaran">
@@ -215,10 +279,23 @@
           <option value="DP">Sudah DP</option>
           <option value="Lunas">Lunas</option>
         </select>
+        <button type="button" class="badge info quick-chip" id="quick-chip" hidden></button>
         <span class="spacer"></span>
         <a class="btn btn-ghost btn-sm" href="index.html" target="_blank" rel="noopener">Buka form order</a>
       </div>
       <div class="board" id="board"></div>
+      <div id="list-view" hidden>
+        <div class="list-head" id="list-head">
+          <div><h2 id="list-title" tabindex="-1"></h2><p class="hint">Diurutkan dari deadline terdekat. Klik baris untuk membuka detail order.</p></div>
+          <button class="btn btn-ghost btn-sm" type="button" id="list-clear">Tampilkan semua order aktif</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Jenis</th><th>Deadline</th><th>Status</th><th>Ditugaskan</th><th>Pembayaran</th><th class="num">Biaya</th></tr></thead>
+            <tbody id="list-body"></tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <!-- ARSIP -->
@@ -365,6 +442,16 @@
   </form>
 </dialog>
 
+<!-- POPUP SAAT MASUK -->
+<dialog id="welcome-dialog" class="small" aria-labelledby="wd-title">
+  <div class="dlg-head"><div><h2 id="wd-title"></h2><p id="wd-sub"></p></div></div>
+  <div class="dlg-body">
+    <ul class="notif-items" id="wd-list"></ul>
+    <div class="welcome-alt" id="wd-alt"></div>
+  </div>
+  <div class="dlg-foot"><span class="spacer"></span><button class="btn btn-ghost" type="button" data-close>Nanti saja</button><button class="btn btn-primary" type="button" id="wd-go">Lihat order baru</button></div>
+</dialog>
+
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script src="config.js"></script>
@@ -388,7 +475,17 @@
     filter: { q: '', assignee: 'all', payment: 'all', quick: null },
     archiveQ: '',
     fin: { preset: 'month', from: '', to: '' },
-    editing: null, editingUser: null, dragId: null, busy: false
+    editing: null, editingUser: null, dragId: null, busy: false,
+    view: 'board', knownIds: null
+  };
+
+  const QUICK = {
+    new: { label: 'Order baru belum dikerjakan', cls: 'info' },
+    active: { label: 'Sedang berjalan', cls: '' },
+    near: { label: `Deadline ${W} hari ke depan`, cls: 'warn' },
+    overdue: { label: 'Lewat deadline', cls: 'danger' },
+    unpaid: { label: 'Belum lunas', cls: '' },
+    done: { label: 'Selesai, siap diarsipkan', cls: 'ok' }
   };
 
   /* ---------- Util ---------- */
@@ -414,6 +511,27 @@
   const colStatus = (o) => (S.statuses.includes(o.status) ? o.status : S.statuses[0]);
   const colColor = (i) => (i === S.statuses.length - 1 ? 'var(--ok)' : COL_COLORS[i % COL_COLORS.length]);
   const num = (v) => Number(digitsOnly(v)) || 0;
+  const isNew = (o) => !o.archived && o.status === S.statuses[0];
+  const newOrders = () => S.orders.filter(isNew).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+
+  function matchQuick(o, k) {
+    const d = daysUntil(o.deadline);
+    switch (k) {
+      case 'new': return isNew(o);
+      case 'active': return !isDone(o);
+      case 'near': return !isDone(o) && d !== null && d >= 0 && d <= W;
+      case 'overdue': return !isDone(o) && d !== null && d < 0;
+      case 'unpaid': return o.paymentStatus !== 'Lunas';
+      case 'done': return isDone(o);
+      default: return true;
+    }
+  }
+  function quickCounts() {
+    const act = activeOrders();
+    const c = {};
+    Object.keys(QUICK).forEach((k) => { c[k] = act.filter((o) => matchQuick(o, k)).length; });
+    return c;
+  }
 
   function payBadge(o) {
     const m = { 'Lunas': 'ok', 'DP': 'warn', 'Belum Bayar': 'danger' };
@@ -434,6 +552,9 @@
 
   /* ---------- Login & data ---------- */
   function showLogin(msg) {
+    if (S.user) { try { sessionStorage.removeItem('pj_welcomed_' + S.user.username); } catch (e) {} }
+    S.knownIds = null;
+    closeNotif();
     S.token = null;
     store.del('pj_token');
     $$('dialog[open]').forEach((d) => d.close());
@@ -458,6 +579,7 @@
     try {
       const r = await api('getData');
       S.user = r.user; S.orders = r.orders; S.users = r.users; S.statuses = r.statuses;
+      detectArrivals();
       $('#sync-time').textContent = 'Diperbarui ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
       renderAll();
       return true;
@@ -483,7 +605,7 @@
       store.set('pj_token', r.token);
       $('#lg-pass').value = '';
       await loadData();
-      if (S.token) showApp();
+      if (S.token) { showApp(); maybeWelcome(); }
     } catch (ex) {
       showError($('#login-error'), ex.message);
     } finally {
@@ -514,7 +636,8 @@
     $('#tab-team-btn').hidden = S.user.role !== 'admin';
     if (S.tab === 'team' && S.user.role !== 'admin') return switchTab('board');
     renderFilters();
-    if (S.tab === 'board') { renderStats(); renderBoard(); }
+    renderBell();
+    if (S.tab === 'board') renderBoardArea();
     if (S.tab === 'archive') renderArchive();
     if (S.tab === 'finance') renderFinance();
     if (S.tab === 'team') renderTeam();
@@ -531,36 +654,50 @@
   }
 
   function renderStats() {
-    const notDone = activeOrders().filter((o) => !isDone(o));
-    const dd = (o) => daysUntil(o.deadline);
-    const c = {
-      active: notDone.length,
-      near: notDone.filter((o) => { const d = dd(o); return d !== null && d >= 0 && d <= W; }).length,
-      overdue: notDone.filter((o) => { const d = dd(o); return d !== null && d < 0; }).length,
-      unpaid: activeOrders().filter((o) => o.paymentStatus !== 'Lunas').length,
-      done: activeOrders().filter(isDone).length
-    };
-    const defs = [
-      ['active', 'Sedang berjalan', ''],
-      ['near', `Deadline ${W} hari ke depan`, 'warn'],
-      ['overdue', 'Lewat deadline', 'danger'],
-      ['unpaid', 'Belum lunas', ''],
-      ['done', 'Selesai, siap diarsipkan', 'ok']
-    ];
-    $('#stats').innerHTML = defs.map(([k, l, cls]) =>
-      `<button type="button" class="stat ${cls}" data-quick="${k}" aria-pressed="${S.filter.quick === k}"><b>${c[k]}</b><span>${l}</span></button>`
+    const c = quickCounts();
+    $('#stats').innerHTML = Object.keys(QUICK).map((k) =>
+      `<button type="button" class="stat ${QUICK[k].cls}" data-quick="${k}" aria-pressed="${S.filter.quick === k}" title="Lihat daftar: ${esc(QUICK[k].label.toLowerCase())}"><b>${c[k]}</b><span>${QUICK[k].label}</span></button>`
     ).join('');
+  }
+
+  // Klik angka ringkasan → tampilkan daftar order terkait
+  function goQuick(k) {
+    if (S.tab !== 'board') switchTab('board');
+    S.filter = { q: '', assignee: 'all', payment: 'all', quick: k };
+    $('#f-q').value = '';
+    $('#f-pay').value = 'all';
+    $('#f-assignee').value = 'all';
+    setView('list');
+    $('#list-head').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    $('#list-title').focus({ preventScroll: true });
+  }
+
+  function setView(v) {
+    S.view = v;
+    $$('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === v)));
+    renderBoardArea();
+  }
+
+  function renderBoardArea() {
+    renderStats();
+    const chip = $('#quick-chip');
+    chip.hidden = !S.filter.quick || S.view === 'list';
+    if (S.filter.quick) chip.textContent = `Filter: ${QUICK[S.filter.quick].label} ✕`;
+    $('#board').hidden = S.view !== 'board';
+    $('#list-view').hidden = S.view !== 'list';
+    if (S.view === 'board') renderBoard(); else renderList();
   }
 
   $('#stats').addEventListener('click', (e) => {
     const b = e.target.closest('[data-quick]');
-    if (!b) return;
-    S.filter.quick = S.filter.quick === b.dataset.quick ? null : b.dataset.quick;
-    renderStats(); renderBoard();
+    if (b) goQuick(b.dataset.quick);
   });
-  $('#f-q').addEventListener('input', (e) => { S.filter.q = e.target.value; renderBoard(); });
-  $('#f-assignee').addEventListener('change', (e) => { S.filter.assignee = e.target.value; renderBoard(); });
-  $('#f-pay').addEventListener('change', (e) => { S.filter.payment = e.target.value; renderBoard(); });
+  $$('[data-view]').forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
+  $('#quick-chip').addEventListener('click', () => { S.filter.quick = null; renderBoardArea(); });
+  $('#list-clear').addEventListener('click', () => { S.filter.quick = null; renderBoardArea(); });
+  $('#f-q').addEventListener('input', (e) => { S.filter.q = e.target.value; renderBoardArea(); });
+  $('#f-assignee').addEventListener('change', (e) => { S.filter.assignee = e.target.value; renderBoardArea(); });
+  $('#f-pay').addEventListener('change', (e) => { S.filter.payment = e.target.value; renderBoardArea(); });
 
   function boardOrders() {
     const f = S.filter;
@@ -571,15 +708,7 @@
       if (f.assignee === 'none' && o.assignee) return false;
       if (!['all', 'me', 'none'].includes(f.assignee) && o.assignee !== f.assignee) return false;
       if (f.payment !== 'all' && o.paymentStatus !== f.payment) return false;
-      const d = daysUntil(o.deadline);
-      switch (f.quick) {
-        case 'active': return !isDone(o);
-        case 'near': return !isDone(o) && d !== null && d >= 0 && d <= W;
-        case 'overdue': return !isDone(o) && d !== null && d < 0;
-        case 'unpaid': return o.paymentStatus !== 'Lunas';
-        case 'done': return isDone(o);
-        default: return true;
-      }
+      return f.quick ? matchQuick(o, f.quick) : true;
     }).sort((a, b) => (a.deadline || '9999').localeCompare(b.deadline || '9999'));
   }
 
@@ -590,7 +719,7 @@
       : '<span class="avatar none" title="Belum ditugaskan">?</span>';
     return `<article class="card ${dl.state}" draggable="true" tabindex="0" data-id="${esc(o.id)}"
         aria-label="${esc(o.jenis)}, ${esc(o.id)}, ${esc(dl.text)}">
-      <div class="card-top"><span class="card-id">${esc(o.id)}</span><span class="badge ${dl.cls}">${esc(dl.text)}</span></div>
+      <div class="card-top"><span class="card-id">${esc(o.id)}</span><span class="badge ${dl.cls} ${dl.state === 'late' ? 'blink' : ''}">${esc(dl.text)}</span></div>
       <h3>${esc(o.jenis)}</h3>
       ${o.catatan ? `<p class="card-note">${esc(o.catatan)}</p>` : ''}
       <div class="card-foot">${who}${payBadge(o)}<span class="amount">${rupiah(o.biaya)}</span></div>
@@ -609,6 +738,166 @@
       </section>`;
     }).join('');
   }
+
+  function renderList() {
+    const list = boardOrders();
+    const q = S.filter.quick;
+    $('#list-title').textContent = (q ? QUICK[q].label : 'Semua order aktif') + ` (${list.length})`;
+    $('#list-clear').hidden = !q;
+    $('#list-body').innerHTML = list.length ? list.map((o) => {
+      const dl = deadlineInfo(o);
+      return `<tr class="${dl.state}" data-id="${esc(o.id)}" tabindex="0">
+        <td><b>${esc(o.id)}</b></td>
+        <td class="wrap">${esc(o.jenis)}</td>
+        <td><span class="badge ${dl.cls} ${dl.state ? 'blink' : ''}">${esc(dl.text)}</span></td>
+        <td>${esc(o.status)}</td>
+        <td>${o.assignee ? esc(userName(o.assignee)) : '<span class="hint">Belum ditugaskan</span>'}</td>
+        <td>${payBadge(o)}</td>
+        <td class="num">${rupiah(o.biaya)}</td></tr>`;
+    }).join('') : '<tr><td colspan="7" class="empty">Tidak ada order di kategori ini.</td></tr>';
+  }
+
+  $('#list-body').addEventListener('click', (e) => {
+    const tr = e.target.closest('tr[data-id]');
+    if (tr) openOrder(tr.dataset.id);
+  });
+  $('#list-body').addEventListener('keydown', (e) => {
+    const tr = e.target.closest('tr[data-id]');
+    if (tr && e.key === 'Enter') openOrder(tr.dataset.id);
+  });
+
+  /* ---------- Notifikasi order baru ---------- */
+  const seenKey = () => 'pj_seen_' + (S.user ? S.user.username : '');
+  function getSeen() {
+    try { return JSON.parse(store.get(seenKey()) || '[]'); } catch (e) { return []; }
+  }
+  function markSeen() {
+    const ids = getSeen().filter((id) => S.orders.some((o) => o.id === id)).concat(newOrders().map((o) => o.id));
+    store.set(seenKey(), JSON.stringify(Array.from(new Set(ids))));
+    renderBellButton();
+  }
+
+  function renderBellButton() {
+    const list = newOrders();
+    const seen = getSeen();
+    const unseen = list.filter((o) => !seen.includes(o.id)).length;
+    const bell = $('#bell');
+    $('#bell-count').textContent = list.length;
+    $('#bell-count').hidden = !list.length;
+    bell.classList.toggle('ringing', unseen > 0);
+    bell.setAttribute('aria-label', list.length
+      ? `${list.length} order baru belum dikerjakan` + (unseen ? `, ${unseen} belum dilihat` : '')
+      : 'Tidak ada order baru');
+    document.title = (unseen ? `(${unseen}) ` : '') + 'Dashboard Order | Primajana';
+  }
+
+  function notifItems(list, seen) {
+    return list.map((o) => {
+      const dl = deadlineInfo(o);
+      return `<li><button type="button" class="notif-item ${seen.includes(o.id) ? '' : 'unseen'}" data-open="${esc(o.id)}">
+        <span class="row"><b>${esc(o.jenis)}</b><span class="badge ${dl.cls}">${esc(dl.text)}</span></span>
+        <small>${esc(o.id)}, masuk ${esc(formatWaktu(o.createdAt))}, ${o.assignee ? esc(userName(o.assignee)) : 'belum ditugaskan'}</small>
+      </button></li>`;
+    }).join('');
+  }
+
+  function renderBell() {
+    renderBellButton();
+    if (!$('#notif-panel').hidden) renderNotifList();
+  }
+
+  function renderNotifList() {
+    const list = newOrders();
+    $('#notif-list').innerHTML = list.length
+      ? `<ul class="notif-items">${notifItems(list.slice(0, 20), getSeen())}</ul>`
+      : '<p class="notif-empty">Tidak ada order baru. Semua order sudah mulai dikerjakan.</p>';
+    $('#notif-all').hidden = !list.length;
+  }
+
+  function closeNotif() {
+    $('#notif-panel').hidden = true;
+    $('#bell').setAttribute('aria-expanded', 'false');
+  }
+
+  $('#bell').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const panel = $('#notif-panel');
+    if (!panel.hidden) return closeNotif();
+    renderNotifList();      // tampilkan titik "belum dilihat" dulu
+    panel.hidden = false;
+    $('#bell').setAttribute('aria-expanded', 'true');
+    markSeen();             // lalu hentikan kedipan lonceng
+  });
+  $('#notif-list').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-open]');
+    if (!b) return;
+    closeNotif();
+    openOrder(b.dataset.open);
+  });
+  $('#notif-all').addEventListener('click', () => { closeNotif(); goQuick('new'); });
+  document.addEventListener('click', (e) => {
+    if (!$('#notif-panel').hidden && !$('#notif').contains(e.target)) closeNotif();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !$('#notif-panel').hidden) { closeNotif(); $('#bell').focus(); }
+  });
+
+  // Beri tahu jika ada order baru masuk saat dashboard sedang dibuka
+  function detectArrivals() {
+    if (S.knownIds) {
+      const fresh = S.orders.filter((o) => !S.knownIds.has(o.id) && isNew(o));
+      if (fresh.length === 1) toast(`Order baru masuk: ${fresh[0].jenis} (${fresh[0].id})`);
+      else if (fresh.length > 1) toast(`${fresh.length} order baru masuk`);
+    }
+    S.knownIds = new Set(S.orders.map((o) => o.id));
+  }
+
+  // Popup setiap kali anggota tim masuk ke dashboard (sekali per sesi login)
+  function maybeWelcome() {
+    if (!S.user) return;
+    const key = 'pj_welcomed_' + S.user.username;
+    try {
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, '1');
+    } catch (e) {}
+    const list = newOrders();
+    const c = quickCounts();
+    if (!list.length && !c.overdue && !c.near) return;
+
+    $('#wd-title').textContent = list.length
+      ? `Ada ${list.length} order baru belum dikerjakan`
+      : 'Tidak ada order baru hari ini';
+    $('#wd-sub').textContent = `Halo, ${S.user.name}. ` + (list.length
+      ? 'Tugaskan anggota tim dan pindahkan statusnya agar segera dikerjakan.'
+      : 'Berikut order yang perlu diperhatikan.');
+    const shown = list.slice(0, 5);
+    $('#wd-list').innerHTML = notifItems(shown, getSeen()) +
+      (list.length > shown.length ? `<li class="notif-empty">dan ${list.length - shown.length} order baru lainnya</li>` : '');
+    const alt = [];
+    if (c.overdue) alt.push(`<button type="button" class="btn btn-danger btn-sm" data-goquick="overdue">${c.overdue} order lewat deadline</button>`);
+    if (c.near) alt.push(`<button type="button" class="btn btn-ghost btn-sm" data-goquick="near">${c.near} order deadline ${W} hari ke depan</button>`);
+    $('#wd-alt').innerHTML = alt.join('');
+    $('#wd-go').hidden = !list.length;
+    $('#welcome-dialog').showModal();
+  }
+
+  $('#wd-list').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-open]');
+    if (!b) return;
+    $('#welcome-dialog').close();
+    openOrder(b.dataset.open);
+  });
+  $('#wd-alt').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-goquick]');
+    if (!b) return;
+    $('#welcome-dialog').close();
+    goQuick(b.dataset.goquick);
+  });
+  $('#wd-go').addEventListener('click', () => {
+    $('#welcome-dialog').close();
+    markSeen();
+    goQuick('new');
+  });
 
   const board = $('#board');
   board.addEventListener('click', (e) => {
@@ -1083,7 +1372,7 @@
   (async function boot() {
     if (!S.token) return showLogin('');
     await loadData();
-    if (S.token) showApp(); // jika sesi habis, loadData sudah membuka halaman login
+    if (S.token) { showApp(); maybeWelcome(); } // jika sesi habis, loadData sudah membuka halaman login
   })();
 })();
 </script>
