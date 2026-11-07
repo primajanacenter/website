@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Panduan CPNS untuk Pemula — Siap CPNS</title>
+  <meta name="description" content="Panduan CPNS untuk pemula: alur seleksi, format SKD, ambang batas, aturan 3× formasi, checklist dokumen, dan tips memilih formasi.">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <style>
+    .guide { display: grid; grid-template-columns: 220px 1fr; gap: var(--sp-6); align-items: start; }
+    .guide > * { min-width: 0; }
+    .toc { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 6px; font-size: var(--fs-sm); }
+    .toc a { color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 8px; }
+    .toc a:hover { background: var(--surface-2); color: var(--fg); }
+    @media (max-width: 820px) {
+      .guide { grid-template-columns: 1fr; }
+      .toc { position: static; flex-direction: row; flex-wrap: wrap; }
+      .toc a { background: var(--surface-2); }
+    }
+    .guide section { scroll-margin-top: 80px; display: flex; flex-direction: column; gap: var(--sp-4); padding-bottom: var(--sp-7); }
+    .timeline { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0; }
+    .timeline li { display: grid; grid-template-columns: 36px 1fr; gap: var(--sp-3); padding-bottom: var(--sp-4); position: relative; }
+    .timeline li::after { content: ""; position: absolute; left: 17px; top: 36px; bottom: 0; width: 2px; background: var(--line); }
+    .timeline li:last-child::after { display: none; }
+    .timeline .dot { width: 36px; height: 36px; border-radius: 10px; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center; font-weight: 800; }
+    .check-progress { display: flex; align-items: center; gap: var(--sp-3); }
+    .check-progress .progress { flex: 1; }
+  </style>
+</head>
+<body>
+
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama">
+      <a href="panduan.html" aria-current="page">Panduan</a>
+      <a class="nav-cta" href="../#cek-kesiapan">Cek kesiapan</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-band">
+  <div class="container stack" style="gap:10px">
+    <nav class="crumbs" aria-label="Lokasi halaman"><a href="../">Beranda</a> / <span>Panduan CPNS</span></nav>
+    <h1>Panduan CPNS untuk pemula</h1>
+    <p class="lead">Semua yang perlu kamu tahu sebelum ikut seleksi: alur, format SKD, syarat lolos, dokumen, dan tips belajar. Dibaca ± 10 menit.</p>
+  </div>
+</section>
+
+<main class="section">
+  <div class="container stack-lg">
+    <div class="callout">
+      <div>
+        <strong>Selalu cek sumber resmi</strong>
+        Jadwal, formasi, dan syarat CPNS 2026 ditetapkan oleh KemenPANRB dan BKN. Isi panduan ini merangkum aturan seleksi terakhir; jika aturan 2026 berbeda, ikuti pengumuman resmi di <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">sscasn.bkn.go.id</a>.
+      </div>
+    </div>
+
+    <div class="guide">
+      <nav class="toc" aria-label="Daftar isi">
+        <a href="#alur">1. Alur seleksi</a>
+        <a href="#skd">2. Format SKD</a>
+        <a href="#lolos">3. Syarat lolos SKD</a>
+        <a href="#dokumen">4. Checklist dokumen</a>
+        <a href="#formasi">5. Memilih formasi</a>
+        <a href="#tips">6. Tips belajar</a>
+        <a href="#hoaks">7. Waspada hoaks</a>
+      </nav>
+
+      <div>
+        <section id="alur">
+          <h2>1. Alur seleksi CPNS</h2>
+          <ol class="timeline">
+            <li><span class="dot">1</span><div><h3>Pengumuman dan pendaftaran</h3><p class="small muted">Formasi diumumkan, lalu kamu membuat akun dan mendaftar di portal SSCASN. Pilih satu formasi yang sesuai kualifikasi pendidikanmu dan unggah dokumen.</p></div></li>
+            <li><span class="dot">2</span><div><h3>Seleksi administrasi</h3><p class="small muted">Instansi memeriksa kelengkapan dan kesesuaian berkas. Hasilnya MS (memenuhi syarat) atau TMS (tidak memenuhi syarat). Biasanya ada masa sanggah singkat.</p></div></li>
+            <li><span class="dot">3</span><div><h3>SKD (Seleksi Kompetensi Dasar)</h3><p class="small muted">Tes berbasis komputer (CAT) berisi TWK, TIU, dan TKP. Skor langsung terlihat setelah selesai.</p></div></li>
+            <li><span class="dot">4</span><div><h3>SKB (Seleksi Kompetensi Bidang)</h3><p class="small muted">Tes sesuai jabatan yang dilamar. Bentuknya bisa CAT, wawancara, praktik, atau tes lain sesuai instansi.</p></div></li>
+            <li><span class="dot">5</span><div><h3>Pengumuman akhir dan pemberkasan</h3><p class="small muted">Nilai akhir gabungan SKD dan SKB menentukan kelulusan. Peserta yang lulus melengkapi berkas untuk penetapan NIP.</p></div></li>
+          </ol>
+        </section>
+
+        <section id="skd">
+          <h2>2. Format SKD</h2>
+          <p class="muted">SKD terdiri dari 110 soal yang dikerjakan dalam 100 menit, rata-rata sekitar 55 detik per soal.</p>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Subtes</th><th>Isi</th><th>Soal</th><th>Penilaian</th><th>Ambang batas*</th></tr></thead>
+              <tbody>
+                <tr><td><strong>TWK</strong><br><span class="muted">Wawasan Kebangsaan</span></td><td>Pancasila, UUD 1945, NKRI, Bhinneka Tunggal Ika, nasionalisme, integritas, bela negara</td><td class="num">30</td><td>Benar 5, salah 0</td><td class="num">65</td></tr>
+                <tr><td><strong>TIU</strong><br><span class="muted">Intelegensia Umum</span></td><td>Verbal (analogi, silogisme), numerik (deret, hitungan, soal cerita), figural</td><td class="num">35</td><td>Benar 5, salah 0</td><td class="num">80</td></tr>
+                <tr><td><strong>TKP</strong><br><span class="muted">Karakteristik Pribadi</span></td><td>Pelayanan publik, jejaring kerja, sosial budaya, TIK, profesionalisme, anti-radikalisme</td><td class="num">45</td><td>Setiap opsi bernilai 1–5</td><td class="num">166</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="xsmall muted">* Ambang batas berdasarkan seleksi CPNS terakhir. Angka untuk 2026 mengikuti Keputusan MenPANRB yang berlaku.</p>
+        </section>
+
+        <section id="lolos">
+          <h2>3. Syarat lolos SKD: dua-duanya wajib</h2>
+          <div class="grid-auto">
+            <div class="card stack" style="gap:8px">
+              <span class="chip chip-primary" style="align-self:flex-start">Syarat 1</span>
+              <h3>Lolos ambang batas di setiap subtes</h3>
+              <p class="small muted">Skor TWK, TIU, dan TKP masing-masing harus mencapai ambang batas. Skor total tinggi tidak menolong jika satu subtes saja kurang.</p>
+            </div>
+            <div class="card stack" style="gap:8px">
+              <span class="chip chip-accent" style="align-self:flex-start">Syarat 2</span>
+              <h3>Masuk peringkat 3× jumlah formasi</h3>
+              <p class="small muted">Jika formasi membuka 4 kursi, umumnya hanya 12 peserta dengan skor tertinggi yang lanjut ke SKB.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="dokumen">
+          <h2>4. Checklist dokumen</h2>
+          <p class="muted">Centang yang sudah siap. Tanda centang tersimpan di perangkat ini. Syarat pasti, termasuk ukuran file dan format surat, mengikuti pengumuman instansi yang kamu pilih.</p>
+          <div class="check-progress">
+            <div class="progress"><span id="doc-progress"></span></div>
+            <span class="small muted num" id="doc-count">0/8</span>
+          </div>
+          <ul class="checklist" id="doc-checklist">
+            <li><label><input type="checkbox" value="ktp"><span><strong>KTP elektronik</strong><br><span class="small muted">Dipindai berwarna, format PDF.</span></span></label></li>
+            <li><label><input type="checkbox" value="kk"><span><strong>Kartu Keluarga</strong><br><span class="small muted">Untuk pembuatan akun SSCASN, siapkan NIK dan nomor KK.</span></span></label></li>
+            <li><label><input type="checkbox" value="ijazah"><span><strong>Ijazah asli</strong><br><span class="small muted">Dipindai dari dokumen asli, format PDF.</span></span></label></li>
+            <li><label><input type="checkbox" value="transkrip"><span><strong>Transkrip nilai</strong><br><span class="small muted">Perhatikan IPK minimal yang disyaratkan formasi.</span></span></label></li>
+            <li><label><input type="checkbox" value="foto"><span><strong>Pas foto</strong><br><span class="small muted">Biasanya latar belakang merah, format JPG.</span></span></label></li>
+            <li><label><input type="checkbox" value="selfie"><span><strong>Swafoto dengan KTP</strong><br><span class="small muted">Diunggah saat membuat akun SSCASN.</span></span></label></li>
+            <li><label><input type="checkbox" value="sertifikat"><span><strong>Sertifikat pendukung</strong><br><span class="small muted">Contoh: STR untuk tenaga kesehatan, sertifikat bahasa, jika disyaratkan.</span></span></label></li>
+            <li><label><input type="checkbox" value="surat"><span><strong>Surat lamaran dan surat pernyataan</strong><br><span class="small muted">Formatnya mengikuti instansi. Tunggu pengumuman resmi sebelum membuat.</span></span></label></li>
+          </ul>
+        </section>
+
+        <section id="formasi">
+          <h2>5. Memilih formasi</h2>
+          <ul class="stack" style="gap:10px">
+            <li><strong>Cocokkan kualifikasi pendidikan secara persis.</strong> Nama program studi di ijazah harus sesuai dengan yang tercantum di formasi.</li>
+            <li><strong>Perhatikan jumlah kursi.</strong> Formasi dengan 1 kursi berarti hanya 3 peserta teratas yang lanjut ke SKB.</li>
+            <li><strong>Pertimbangkan persaingan.</strong> Formasi populer di kota besar biasanya punya pelamar jauh lebih banyak.</li>
+            <li><strong>Baca syarat tambahan.</strong> Batas usia, IPK minimal, akreditasi, dan sertifikat bisa berbeda per instansi.</li>
+          </ul>
+        </section>
+
+        <section id="tips">
+          <h2>6. Tips belajar yang terbukti efektif</h2>
+          <div class="grid-auto">
+            <div class="card stack" style="gap:6px"><h3>Latihan soal, bukan cuma membaca</h3><p class="small muted">Mengerjakan soal lalu membaca pembahasan jauh lebih efektif untuk mengingat dibanding membaca ulang materi.</p></div>
+            <div class="card stack" style="gap:6px"><h3>Sedikit tapi setiap hari</h3><p class="small muted">20–30 menit setiap hari lebih baik daripada 4 jam sekali seminggu. Ulang soal yang salah beberapa hari kemudian.</p></div>
+            <div class="card stack" style="gap:6px"><h3>Campur tipe soal</h3><p class="small muted">Latihan TIU dengan tipe soal yang diacak melatihmu mengenali jenis soal, persis seperti di ujian.</p></div>
+            <div class="card stack" style="gap:6px"><h3>Biasakan batas waktu</h3><p class="small muted">Kerjakan tryout 110 soal dalam 100 menit secara rutin agar terbiasa membagi waktu dan tidak panik.</p></div>
+          </div>
+        </section>
+
+        <section id="hoaks">
+          <h2>7. Waspada hoaks dan penipuan</h2>
+          <div class="callout callout-warn">
+            <div>
+              <strong>Ingat tiga hal ini</strong>
+              Pendaftaran hanya melalui SSCASN. Seleksi CPNS tidak dipungut biaya. Tidak ada "jalur orang dalam" atau jaminan lulus dengan membayar.
+            </div>
+          </div>
+          <div class="row">
+            <a class="btn btn-secondary" data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">Portal SSCASN</a>
+            <a class="btn btn-secondary" data-link="bkn" href="https://www.bkn.go.id" target="_blank" rel="noopener">Situs BKN</a>
+            <a class="btn btn-secondary" data-link="menpan" href="https://www.menpan.go.id" target="_blank" rel="noopener">Situs KemenPANRB</a>
+          </div>
+        </section>
+
+        <div class="card stack" style="align-items:flex-start">
+          <h3>Sudah baca panduannya?</h3>
+          <p class="small muted">Cek seberapa siap kamu dalam 3 menit, lengkap dengan contoh soal TWK, TIU, dan TKP.</p>
+          <a class="btn btn-primary" href="../#cek-kesiapan">Cek kesiapan sekarang</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div>
+    <p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Layanan persiapan belajar independen, tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p>
+  </div>
+</footer>
+
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  import { initChecklist } from "../assets/js/features/panduan.js";
+  hydrateCommon();
+  initChecklist();
+</script>
+</body>
+</html>
