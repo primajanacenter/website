@@ -1,7 +1,7 @@
 /* ==================== PENGATURAN – ubah bagian ini ==================== */
 const PRIMAJANA = {
   // URL Web App dari Apps Script (Deploy → Web app). Berakhiran /exec
-  API_URL: 'https://script.google.com/macros/s/GANTI_DENGAN_ID_DEPLOYMENT/exec',
+  API_URL: 'https://script.google.com/macros/s/AKfycbx0o41daov3n8Dd7yHC1OAx0ukmeZPTJ_JzOGYpzN7T8GCQp7bLZO0YAQzx0blWGrfrjQ/exec',
 
   // Nomor WhatsApp admin (format 62…), dipakai untuk tombol konfirmasi setelah pesan
   ADMIN_WHATSAPP: '6281234567890',
