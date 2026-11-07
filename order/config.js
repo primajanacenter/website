@@ -4,7 +4,7 @@ const PRIMAJANA = {
   API_URL: 'https://script.google.com/macros/s/AKfycbx0o41daov3n8Dd7yHC1OAx0ukmeZPTJ_JzOGYpzN7T8GCQp7bLZO0YAQzx0blWGrfrjQ/exec',
 
   // Nomor WhatsApp admin (format 62…), dipakai untuk tombol konfirmasi setelah pesan
-  ADMIN_WHATSAPP: '6281234567890',
+  ADMIN_WHATSAPP: '6285935201571',
 
   // Pilihan jenis orderan di form. Opsi "Lainnya" ditambahkan otomatis.
   JENIS_ORDER: [
