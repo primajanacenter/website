@@ -79,6 +79,7 @@
   .card-foot { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
   .card-foot .amount { margin-left: auto; font-weight: 800; font-size: 13px; font-variant-numeric: tabular-nums; }
   .card .card-archive { margin-top: 10px; width: 100%; }
+  .auto-note { margin: 10px 0 0; font-size: 12px; color: var(--muted); font-weight: 600; }
   .avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--primary); color: var(--primary-ink); display: inline-grid; place-items: center; font-size: 11px; font-weight: 800; flex: none; }
   .avatar.none { background: transparent; color: var(--muted); border: 1.5px dashed var(--line); }
 
@@ -476,7 +477,7 @@
     archiveQ: '',
     fin: { preset: 'month', from: '', to: '' },
     editing: null, editingUser: null, dragId: null, busy: false,
-    view: 'board', knownIds: null
+    view: 'board', knownIds: null, autoArchiveDays: 0
   };
 
   const QUICK = {
@@ -533,6 +534,17 @@
     return c;
   }
 
+  // Kapan order selesai akan diarsipkan otomatis
+  function autoArchiveText(o) {
+    if (!S.autoArchiveDays || !isDone(o) || o.archived) return '';
+    const base = String(o.completedAt || o.updatedAt || '').slice(0, 10);
+    const elapsed = daysUntil(base) === null ? 0 : -daysUntil(base);
+    const left = S.autoArchiveDays - elapsed;
+    if (left <= 0) return 'Diarsipkan otomatis pada pengecekan berikutnya';
+    if (left === 1) return 'Diarsipkan otomatis besok';
+    return `Diarsipkan otomatis dalam ${left} hari`;
+  }
+
   function payBadge(o) {
     const m = { 'Lunas': 'ok', 'DP': 'warn', 'Belum Bayar': 'danger' };
     const label = { 'Lunas': 'Lunas', 'DP': 'DP', 'Belum Bayar': 'Belum bayar' };
@@ -579,6 +591,8 @@
     try {
       const r = await api('getData');
       S.user = r.user; S.orders = r.orders; S.users = r.users; S.statuses = r.statuses;
+      S.autoArchiveDays = r.autoArchiveDays || 0;
+      if (r.autoArchived > 0) toast(`${r.autoArchived} order selesai diarsipkan otomatis`);
       detectArrivals();
       $('#sync-time').textContent = 'Diperbarui ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
       renderAll();
@@ -723,7 +737,8 @@
       <h3>${esc(o.jenis)}</h3>
       ${o.catatan ? `<p class="card-note">${esc(o.catatan)}</p>` : ''}
       <div class="card-foot">${who}${payBadge(o)}<span class="amount">${rupiah(o.biaya)}</span></div>
-      ${isDone(o) ? `<button type="button" class="btn btn-ghost btn-sm card-archive" data-archive="${esc(o.id)}">Arsipkan</button>` : ''}
+      ${isDone(o) && autoArchiveText(o) ? `<p class="auto-note">${esc(autoArchiveText(o))}</p>` : ''}
+      ${isDone(o) ? `<button type="button" class="btn btn-ghost btn-sm card-archive" data-archive="${esc(o.id)}">Arsipkan sekarang</button>` : ''}
     </article>`;
   }
 
@@ -999,7 +1014,10 @@
     fld('pelunasanDate').value = o.pelunasanDate || '';
     fld('catatan').value = o.catatan || '';
     fld('catatanInternal').value = o.catatanInternal || '';
-    $('#od-meta').textContent = `Terakhir diubah ${formatWaktu(o.updatedAt)} oleh ${o.updatedBy === 'customer' ? 'customer' : userName(o.updatedBy)}`;
+    const who = o.updatedBy === 'customer' ? 'customer' : o.updatedBy === 'sistem' ? 'sistem (arsip otomatis)' : userName(o.updatedBy);
+    $('#od-meta').textContent = `Terakhir diubah ${formatWaktu(o.updatedAt)} oleh ${who}.` +
+      (o.completedAt && isDone(o) ? ` Selesai sejak ${formatWaktu(o.completedAt)}.` : '') +
+      (autoArchiveText(o) ? ` ${autoArchiveText(o)}.` : '');
     $('#od-archive').textContent = o.archived ? 'Pulihkan ke papan' : 'Arsipkan';
     $('#od-delete').hidden = S.user.role !== 'admin';
     showError($('#od-error'), '');
@@ -1109,7 +1127,7 @@
         <td><b>${esc(o.id)}</b></td>
         <td class="wrap">${esc(o.jenis)}</td>
         <td>${esc(formatWa(o.whatsapp))}</td>
-        <td>${esc(formatTanggal(o.archivedAt))}</td>
+        <td>${esc(formatTanggal(o.archivedAt))} ${o.updatedBy === 'sistem' ? '<span class="badge info">Otomatis</span>' : ''}</td>
         <td>${o.assignee ? esc(userName(o.assignee)) : '<span class="hint">-</span>'}</td>
         <td class="num">${rupiah(o.biaya)}</td>
         <td>${payBadge(o)}</td>
@@ -1117,7 +1135,7 @@
           <button type="button" class="btn btn-ghost btn-sm" data-open="${esc(o.id)}">Buka</button>
           <button type="button" class="btn btn-ghost btn-sm" data-restore="${esc(o.id)}">Pulihkan</button>
         </div></td></tr>`).join('')
-      : `<tr><td colspan="8" class="empty">${q ? 'Tidak ada order arsip yang cocok dengan pencarian.' : 'Belum ada order yang diarsipkan. Order berstatus selesai bisa diarsipkan dari papan.'}</td></tr>`;
+      : `<tr><td colspan="8" class="empty">${q ? 'Tidak ada order arsip yang cocok dengan pencarian.' : `Belum ada order yang diarsipkan. Order selesai diarsipkan otomatis setelah ${S.autoArchiveDays} hari, atau bisa diarsipkan manual dari papan.`}</td></tr>`;
   }
 
   $('#archive-body').addEventListener('click', (e) => {
