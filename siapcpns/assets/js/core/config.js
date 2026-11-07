@@ -23,7 +23,7 @@ export const CONFIG = {
   APPS_SCRIPT_URL: "",
 
   // Diisi di Fase 2: OAuth Client ID dari Google Cloud Console (untuk Google Sign-In).
-  GOOGLE_CLIENT_ID: "",
+  GOOGLE_CLIENT_ID: "147292358449-k4p0l3fnur271gmduq0su3lcp15l8va1.apps.googleusercontent.com",
 
   // Opsional (Fase 1): link Google Form untuk daftar tunggu sebelum fitur akun siap.
   // Kosongkan jika belum ada; tombol daftar tunggu akan disembunyikan.
