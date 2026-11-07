@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Siap CPNS — Cek Kesiapan CPNS 2026</title>
+  <meta name="description" content="Cek seberapa siap kamu ikut seleksi CPNS 2026 dalam 3 menit. Gratis, tanpa daftar. Dapatkan skor kesiapan, level, dan 3 rekomendasi langkah berikutnya.">
+  <meta name="theme-color" content="#0f2d55">
+  <meta property="og:title" content="Cek Kesiapan CPNS 2026">
+  <meta property="og:description" content="10 pertanyaan, 3 menit, tanpa daftar. Lihat seberapa siap kamu ikut CPNS.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/pages/landing.css">
+</head>
+<body>
+
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="./"><span class="brand-mark"><img src="assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama">
+      <a href="pages/panduan.html">Panduan</a>
+      <a class="hide-sm" href="pages/segera.html?fitur=tryout">Tryout</a>
+      <a class="nav-cta" href="pages/segera.html?fitur=akun">Masuk</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- =========================================================
+       VIEW 1: INTRO / LANDING
+       ========================================================= -->
+  <div id="view-intro">
+
+    <section class="hero-band">
+      <div class="container hero-grid">
+        <div class="stack-lg">
+          <div class="stack">
+            <span class="eyebrow">Persiapan CPNS 2026 · Untuk pemula</span>
+            <h1>Seberapa siap kamu ikut <span>seleksi CPNS?</span></h1>
+            <p class="lead">Jawab 10 pertanyaan dengan tampilan layaknya ujian CAT. Dalam 3 menit kamu tahu posisimu sekarang dan 3 langkah terpenting berikutnya.</p>
+          </div>
+          <div class="row">
+            <button class="btn btn-accent btn-lg" type="button" data-start-assessment>Mulai cek kesiapan</button>
+            <button class="btn btn-secondary" type="button" id="btn-last-result" hidden>Lihat hasil terakhir</button>
+          </div>
+          <p id="resume-note" class="small resume" hidden>Kamu punya jawaban yang belum selesai. Tekan "Mulai cek kesiapan" untuk melanjutkan.</p>
+          <div class="hero-meta">
+            <span class="chip">Gratis</span>
+            <span class="chip">Tanpa daftar</span>
+            <span class="chip">± 3 menit</span>
+            <span class="chip">Contoh soal TWK, TIU, TKP</span>
+          </div>
+        </div>
+
+        <figure style="margin:0">
+          <div class="cat-preview" aria-hidden="true">
+            <div class="bar"><span>Simulasi CAT · Soal 7</span><span class="timer">01:24:36</span></div>
+            <div class="body">
+              <div class="q">
+                <span class="num-label">SOAL NOMOR 7 · TIU</span>
+                <div>Lanjutkan deret: 3, 6, 12, 24, …</div>
+                <div class="opt"><i>A</i>36</div>
+                <div class="opt on"><i>B</i>48</div>
+                <div class="opt"><i>C</i>42</div>
+              </div>
+              <div class="grid">
+                <span class="a">1</span><span class="a">2</span><span class="a">3</span><span class="r">4</span>
+                <span class="a">5</span><span class="a">6</span><span class="a c">7</span><span>8</span>
+                <span>9</span><span>10</span><span>11</span><span>12</span>
+              </div>
+            </div>
+            <div class="foot"><span>‹ Sebelumnya</span><span class="y">Ragu-ragu</span><span class="n">Selanjutnya ›</span></div>
+          </div>
+          <figcaption class="cat-caption">Ilustrasi tampilan latihan di aplikasi ini. Bukan tangkapan layar sistem ujian resmi.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="facts">
+      <div class="container facts-grid">
+        <div class="fact">
+          <span class="eyebrow">Format SKD</span>
+          <span class="big num">110 soal · 100 menit</span>
+          <span class="small muted">Rata-rata hanya ± 55 detik per soal.</span>
+          <div class="subtests"><span>TWK 30</span><span>TIU 35</span><span>TKP 45</span></div>
+        </div>
+        <div class="fact">
+          <span class="eyebrow">Syarat 1</span>
+          <span class="big">Lolos ketiga subtes</span>
+          <span class="small muted">Ambang batas berlaku per subtes. Satu subtes kurang, gugur.</span>
+          <div class="subtests"><span>TWK ≥ 65</span><span>TIU ≥ 80</span><span>TKP ≥ 166</span></div>
+        </div>
+        <div class="fact">
+          <span class="eyebrow">Syarat 2</span>
+          <span class="big">Peringkat 3× formasi</span>
+          <span class="small muted">Formasi 2 kursi berarti umumnya hanya 6 peserta teratas lanjut ke SKB.</span>
+        </div>
+      </div>
+      <div class="container"><p class="xsmall muted" style="margin-top:var(--sp-3)">Angka ambang batas berdasarkan seleksi terakhir. Ikuti Keputusan MenPANRB untuk CPNS 2026 saat terbit.</p></div>
+    </section>
+
+    <section class="section">
+      <div class="container stack-lg">
+        <div class="stack reading">
+          <span class="eyebrow">Yang diukur</span>
+          <h2>Empat hal yang menentukan kesiapanmu</h2>
+          <p class="muted">Kesiapan bukan hanya soal pintar mengerjakan soal. Banyak peserta gugur karena salah memahami aturan atau berkasnya tidak lengkap.</p>
+        </div>
+        <div class="aspect-cards">
+          <div class="aspect-card">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/></svg></span>
+            <span class="w">Bobot 25</span>
+            <h3>Pemahaman alur</h3>
+            <p class="small muted">Tahapan seleksi, ambang batas per subtes, dan aturan peringkat 3× formasi.</p>
+          </div>
+          <div class="aspect-card">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14l2 2 4-4"/></svg></span>
+            <span class="w">Bobot 15</span>
+            <h3>Kesiapan dokumen</h3>
+            <p class="small muted">KTP, ijazah, transkrip dalam PDF, dan akun SSCASN.</p>
+          </div>
+          <div class="aspect-card">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3M7 9h4M7 13h7"/></svg></span>
+            <span class="w">Bobot 40</span>
+            <h3>Gambaran kemampuan</h3>
+            <p class="small muted">Satu contoh soal TWK, TIU, dan TKP lengkap dengan pembahasan.</p>
+          </div>
+          <div class="aspect-card">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg></span>
+            <span class="w">Bobot 20</span>
+            <h3>Waktu dan pengalaman</h3>
+            <p class="small muted">Waktu belajar yang realistis dan pengalaman mengerjakan soal CAT.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container stack-lg">
+        <div class="row" style="justify-content:space-between;align-items:flex-end">
+          <div class="stack reading" style="gap:8px">
+            <span class="eyebrow">Alur seleksi</span>
+            <h2>Lima tahap menuju NIP</h2>
+          </div>
+          <a class="btn btn-secondary" href="pages/panduan.html#alur">Baca panduan lengkap</a>
+        </div>
+        <ol class="stepper">
+          <li><h3>Pendaftaran</h3><p class="small muted">Buat akun dan daftar di SSCASN, pilih satu formasi.</p></li>
+          <li><h3>Administrasi</h3><p class="small muted">Berkas diperiksa: MS atau TMS.</p></li>
+          <li><h3>SKD</h3><p class="small muted">TWK, TIU, TKP dengan sistem CAT.</p></li>
+          <li><h3>SKB</h3><p class="small muted">Tes bidang sesuai jabatan.</p></li>
+          <li><h3>Pengumuman</h3><p class="small muted">Nilai akhir, lalu pemberkasan.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="callout callout-warn">
+          <div>
+            <strong>Waspada informasi palsu</strong>
+            Pendaftaran CPNS hanya melalui portal resmi <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN BKN</a>. Seleksi CPNS tidak dipungut biaya. Abaikan tawaran "jalur khusus" atau link pendaftaran di luar kanal resmi.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================================================
+       VIEW 2: KUIS BERGAYA CAT
+       ========================================================= -->
+  <section id="view-quiz" class="cat" hidden aria-labelledby="q-text">
+    <div class="cat-bar">
+      <div class="container">
+        <div class="cat-title">
+          <b>Cek Kesiapan CPNS</b>
+          <span>Latihan · 10 soal · tanpa batas waktu</span>
+        </div>
+        <div class="row" style="gap:8px">
+          <span class="cat-timer" aria-live="off"><small>Waktu</small><span id="q-timer">00:00</span></span>
+          <button class="btn btn-ghost" type="button" id="btn-exit">Keluar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container cat-layout">
+      <div class="cat-main">
+        <div class="cat-qhead">
+          <span class="qno">Soal nomor <span id="q-no" class="num">1</span></span>
+          <span class="chip chip-primary" id="q-section">Alur seleksi</span>
+        </div>
+        <div class="cat-qbody">
+          <p class="question-text" id="q-text" tabindex="-1">Memuat pertanyaan…</p>
+          <div class="question-context" id="q-context" hidden></div>
+          <div class="options" id="options" role="radiogroup" aria-labelledby="q-text"></div>
+        </div>
+        <div class="cat-actions">
+          <button class="btn btn-secondary" type="button" id="btn-prev">‹ Sebelumnya</button>
+          <button class="btn btn-doubt" type="button" id="btn-doubt" aria-pressed="false">Ragu-ragu</button>
+          <button class="btn btn-primary" type="button" id="btn-next">Selanjutnya ›</button>
+        </div>
+      </div>
+
+      <aside class="cat-side" aria-label="Navigasi nomor soal">
+        <h3>Nomor soal</h3>
+        <div class="qgrid" id="q-grid"></div>
+        <div class="qlegend">
+          <span><i class="l-a"></i>Dijawab</span>
+          <span><i class="l-r"></i>Ragu-ragu</span>
+          <span><i></i>Belum</span>
+        </div>
+        <div class="summary"><span class="muted">Terjawab</span><b class="num" id="q-answered">0 / 10</b></div>
+        <button class="btn btn-primary btn-block" type="button" id="btn-finish">Selesai</button>
+        <p class="xsmall muted">Tips: tekan 1–5 untuk memilih jawaban, Enter untuk lanjut.</p>
+      </aside>
+    </div>
+
+    <div class="confirm" id="confirm" hidden role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <div class="card card-elevated">
+        <h3 id="confirm-title">Selesaikan cek kesiapan?</h3>
+        <p class="small muted" id="confirm-text"></p>
+        <div class="row" style="justify-content:flex-end">
+          <button class="btn btn-secondary" type="button" id="confirm-back">Periksa lagi</button>
+          <button class="btn btn-primary" type="button" id="confirm-ok">Ya, lihat hasil</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       VIEW 3: LEMBAR HASIL
+       ========================================================= -->
+  <section id="view-result" class="section" hidden>
+    <div class="container">
+      <div class="result-shell">
+
+        <div class="report">
+          <div class="report-head">
+            <b>LEMBAR HASIL · CEK KESIAPAN CPNS</b>
+            <span id="r-date"></span>
+          </div>
+          <div class="report-body">
+            <div class="score-hero">
+              <div class="gauge" role="img" aria-label="Skor kesiapan">
+                <svg viewBox="0 0 150 150" aria-hidden="true">
+                  <circle class="track" cx="75" cy="75" r="64" fill="none" stroke-width="14"></circle>
+                  <circle class="bar" id="r-gauge-bar" cx="75" cy="75" r="64" fill="none" stroke-width="14" stroke-linecap="round"></circle>
+                </svg>
+                <div class="value"><div><b id="r-score">0</b><small>dari 100</small></div></div>
+              </div>
+              <div class="stack" style="gap:10px">
+                <span class="eyebrow">Skor kesiapan</span>
+                <div><span id="r-level" class="chip">Level</span></div>
+                <h2 id="r-headline" style="font-size:var(--fs-xl)">…</h2>
+                <p id="r-message" class="muted"></p>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table class="table score-table">
+                <thead><tr><th>Aspek</th><th>Skor</th><th>Capaian</th><th>Status</th></tr></thead>
+                <tbody id="r-aspects"></tbody>
+              </table>
+            </div>
+            <p class="xsmall muted" id="r-disclaimer"></p>
+          </div>
+        </div>
+
+        <div class="card stack">
+          <span class="eyebrow">Langkah berikutnya</span>
+          <h2 style="font-size:var(--fs-xl)">3 rekomendasi prioritas untukmu</h2>
+          <ol class="reco-list" id="r-recos"></ol>
+        </div>
+
+        <div class="save-cta">
+          <h2 style="font-size:var(--fs-xl)">Simpan hasil dan dapatkan rencana belajar personal</h2>
+          <p class="muted">Fitur akun, tryout diagnostik 110 soal, dan rencana belajar sesuai levelmu sedang disiapkan. Hasilmu bisa disimpan dulu di perangkat ini.</p>
+          <div class="row">
+            <button class="btn btn-accent" type="button" id="btn-save">Simpan di perangkat ini</button>
+            <a class="btn btn-outline-light" href="pages/segera.html?fitur=akun">Kabari saya saat siap</a>
+          </div>
+        </div>
+
+        <div class="card stack">
+          <span class="eyebrow">Pembahasan</span>
+          <h2 style="font-size:var(--fs-xl)">Contoh soal dan aturan seleksi</h2>
+          <div class="stack" id="r-review"></div>
+        </div>
+
+        <div class="row">
+          <button class="btn btn-secondary" type="button" id="btn-share">Bagikan hasil</button>
+          <button class="btn btn-ghost" type="button" id="btn-retake">Ulangi cek kesiapan</button>
+          <a class="btn btn-ghost" href="pages/panduan.html">Baca panduan CPNS</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-org"><img src="assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div>
+    <div class="footer-links">
+      <a href="pages/panduan.html">Panduan CPNS</a>
+      <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>
+      <a data-link="bkn" href="https://www.bkn.go.id" target="_blank" rel="noopener">BKN</a>
+      <a data-link="menpan" href="https://www.menpan.go.id" target="_blank" rel="noopener">KemenPANRB</a>
+    </div>
+    <p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Layanan persiapan belajar independen, tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p>
+  </div>
+</footer>
+
+<script type="module">
+  import { hydrateCommon } from "./assets/js/core/ui.js";
+  import { initAssessment } from "./assets/js/features/assessment.js";
+  hydrateCommon();
+  initAssessment();
+</script>
+</body>
+</html>
