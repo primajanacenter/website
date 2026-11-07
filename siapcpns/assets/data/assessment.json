@@ -1,0 +1,211 @@
+{
+  "version": "2026.1",
+  "title": "Cek Kesiapan CPNS",
+  "durationLabel": "± 3 menit",
+  "disclaimer": "Hasil ini gambaran awal kesiapan kamu, bukan prediksi kelulusan. Skor yang sebenarnya datang dari tryout lengkap.",
+
+  "aspects": [
+    { "id": "alur", "label": "Pemahaman alur seleksi", "max": 25 },
+    { "id": "dokumen", "label": "Kesiapan dokumen", "max": 15 },
+    { "id": "kemampuan", "label": "Gambaran kemampuan SKD", "max": 40 },
+    { "id": "waktu", "label": "Waktu dan pengalaman", "max": 20 }
+  ],
+
+  "levels": [
+    {
+      "id": "baru-mulai",
+      "min": 0,
+      "max": 39,
+      "label": "Baru mulai",
+      "chip": "chip-warn",
+      "headline": "Wajar untuk pemula. Kamu sudah mengambil langkah pertama.",
+      "message": "Fokus awalmu: pahami alur seleksi dan siapkan dokumen dulu. Setelah itu, kenali tipe soal SKD sedikit demi sedikit."
+    },
+    {
+      "id": "sedang-bersiap",
+      "min": 40,
+      "max": 69,
+      "label": "Sedang bersiap",
+      "chip": "chip-primary",
+      "headline": "Dasarmu sudah ada. Saatnya tahu skor nyatamu.",
+      "message": "Langkah berikutnya: kerjakan tryout lengkap untuk melihat subtes mana yang belum aman di ambang batas."
+    },
+    {
+      "id": "hampir-siap",
+      "min": 70,
+      "max": 100,
+      "label": "Hampir siap",
+      "chip": "chip-ok",
+      "headline": "Kamu siap diuji.",
+      "message": "Pastikan ketiga subtes aman di atas ambang batas, lalu kejar peringkat agar masuk 3× jumlah formasi."
+    }
+  ],
+
+  "questions": [
+    {
+      "id": "q1",
+      "aspect": "alur",
+      "section": "Alur seleksi",
+      "text": "Tes CPNS tahap pertama yang diikuti semua pelamar yang lolos administrasi disebut apa?",
+      "options": [
+        { "id": "a", "text": "SKD (Seleksi Kompetensi Dasar)", "points": 9, "correct": true },
+        { "id": "b", "text": "SKB (Seleksi Kompetensi Bidang)", "points": 0 },
+        { "id": "c", "text": "TOEFL", "points": 0 },
+        { "id": "d", "text": "Psikotes", "points": 0 }
+      ],
+      "explanation": "Tahap tes pertama adalah SKD, berisi TWK, TIU, dan TKP dengan sistem CAT. Peserta yang lolos SKD baru lanjut ke SKB sesuai jabatan."
+    },
+    {
+      "id": "q2",
+      "aspect": "alur",
+      "section": "Alur seleksi",
+      "text": "Skor total SKD kamu tinggi, tapi nilai TIU di bawah ambang batas. Apakah kamu lolos SKD?",
+      "options": [
+        { "id": "a", "text": "Lolos, karena skor totalnya tinggi", "points": 0 },
+        { "id": "b", "text": "Tidak lolos, karena setiap subtes harus mencapai ambang batas", "points": 8, "correct": true },
+        { "id": "c", "text": "Lolos, asalkan nilai TWK tinggi", "points": 0 },
+        { "id": "d", "text": "Tergantung keputusan instansi", "points": 0 }
+      ],
+      "explanation": "Ambang batas (passing grade) berlaku per subtes. Satu subtes di bawah ambang batas sudah cukup membuat peserta gugur, berapa pun skor totalnya."
+    },
+    {
+      "id": "q3",
+      "aspect": "alur",
+      "section": "Alur seleksi",
+      "text": "Sebuah formasi membuka 2 kursi. Umumnya, paling banyak berapa peserta yang bisa lanjut ke SKB?",
+      "options": [
+        { "id": "a", "text": "2 peserta", "points": 0 },
+        { "id": "b", "text": "4 peserta", "points": 0 },
+        { "id": "c", "text": "6 peserta (3× jumlah formasi)", "points": 8, "correct": true },
+        { "id": "d", "text": "Semua yang lolos ambang batas", "points": 0 }
+      ],
+      "explanation": "Lolos ambang batas saja belum cukup. Peserta juga harus masuk peringkat 3× jumlah formasi yang dilamar untuk lanjut ke SKB."
+    },
+    {
+      "id": "q4",
+      "aspect": "dokumen",
+      "section": "Kesiapan dokumen",
+      "text": "Apakah KTP, ijazah, dan transkrip nilai kamu sudah dipindai dalam format PDF?",
+      "options": [
+        { "id": "a", "text": "Sudah semua", "points": 8 },
+        { "id": "b", "text": "Baru sebagian", "points": 4 },
+        { "id": "c", "text": "Belum sama sekali", "points": 0 }
+      ]
+    },
+    {
+      "id": "q5",
+      "aspect": "dokumen",
+      "section": "Kesiapan dokumen",
+      "text": "Apakah kamu sudah punya akun di portal SSCASN?",
+      "options": [
+        { "id": "a", "text": "Sudah punya", "points": 7 },
+        { "id": "b", "text": "Belum, tapi tahu caranya", "points": 4 },
+        { "id": "c", "text": "Belum tahu apa itu SSCASN", "points": 0 }
+      ]
+    },
+    {
+      "id": "q6",
+      "aspect": "kemampuan",
+      "section": "Contoh soal TWK",
+      "text": "Nilai musyawarah untuk mencapai mufakat dalam mengambil keputusan bersama paling sesuai dengan sila ke berapa Pancasila?",
+      "options": [
+        { "id": "a", "text": "Sila kedua", "points": 0 },
+        { "id": "b", "text": "Sila ketiga", "points": 0 },
+        { "id": "c", "text": "Sila keempat", "points": 13, "correct": true },
+        { "id": "d", "text": "Sila kelima", "points": 0 }
+      ],
+      "explanation": "Sila keempat: \"Kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan\". Musyawarah untuk mufakat adalah pengamalan utamanya. Di SKD, TWK bernilai 5 untuk jawaban benar dan 0 untuk salah."
+    },
+    {
+      "id": "q7",
+      "aspect": "kemampuan",
+      "section": "Contoh soal TIU",
+      "text": "Lanjutkan deret angka berikut.",
+      "context": "2, 5, 11, 23, 47, …",
+      "options": [
+        { "id": "a", "text": "71", "points": 0 },
+        { "id": "b", "text": "94", "points": 0 },
+        { "id": "c", "text": "95", "points": 14, "correct": true },
+        { "id": "d", "text": "96", "points": 0 }
+      ],
+      "explanation": "Polanya: setiap angka dikali 2 lalu ditambah 1. 2→5→11→23→47→(47×2+1) = 95. Deret angka adalah salah satu tipe soal TIU yang paling sering keluar."
+    },
+    {
+      "id": "q8",
+      "aspect": "kemampuan",
+      "section": "Contoh soal TKP",
+      "text": "Kamu bertugas di loket pelayanan dengan antrean panjang. Seorang warga marah karena berkas yang ia bawa ternyata kurang lengkap. Apa yang kamu lakukan?",
+      "scoring": "tkp",
+      "options": [
+        { "id": "a", "text": "Meminta petugas keamanan menenangkan warga tersebut", "points": 5, "tkp": 2 },
+        { "id": "b", "text": "Menjelaskan kekurangan berkas dan memintanya kembali besok", "points": 10, "tkp": 4 },
+        { "id": "c", "text": "Menjelaskan dengan sopan berkas yang kurang dan memberi daftar tertulis agar ia tidak perlu bolak-balik", "points": 13, "tkp": 5 },
+        { "id": "d", "text": "Memintanya membaca papan pengumuman persyaratan", "points": 8, "tkp": 3 },
+        { "id": "e", "text": "Melanjutkan memanggil antrean berikutnya", "points": 3, "tkp": 1 }
+      ],
+      "explanation": "Di TKP tidak ada jawaban bernilai nol; setiap opsi bernilai 1–5. Nilai tertinggi diberikan pada sikap yang tetap melayani dengan empati dan memberi solusi nyata. Di soal ini, opsi \"menjelaskan dengan sopan dan memberi daftar tertulis\" bernilai 5."
+    },
+    {
+      "id": "q9",
+      "aspect": "waktu",
+      "section": "Waktu belajar",
+      "text": "Berapa waktu yang realistis bisa kamu luangkan untuk belajar setiap hari?",
+      "options": [
+        { "id": "a", "text": "Kurang dari 15 menit", "points": 2 },
+        { "id": "b", "text": "15–30 menit", "points": 6 },
+        { "id": "c", "text": "30–60 menit", "points": 10 },
+        { "id": "d", "text": "Lebih dari 60 menit", "points": 11 }
+      ]
+    },
+    {
+      "id": "q10",
+      "aspect": "waktu",
+      "section": "Pengalaman",
+      "text": "Pernahkah kamu mengerjakan tryout dengan sistem CAT (berbasis komputer, ada batas waktu)?",
+      "options": [
+        { "id": "a", "text": "Belum pernah", "points": 0 },
+        { "id": "b", "text": "1–3 kali", "points": 6 },
+        { "id": "c", "text": "Lebih dari 3 kali", "points": 9 }
+      ]
+    }
+  ],
+
+  "recommendations": {
+    "alur": {
+      "title": "Pahami aturan main seleksi",
+      "text": "Baca panduan alur CPNS, terutama soal ambang batas per subtes dan aturan peringkat 3× formasi. Banyak peserta gugur karena salah strategi, bukan karena kurang pintar.",
+      "link": "pages/panduan.html#alur",
+      "linkLabel": "Baca panduan alur"
+    },
+    "dokumen": {
+      "title": "Siapkan dokumen sekarang",
+      "text": "Pindai KTP, ijazah, dan transkrip ke PDF, siapkan pas foto, dan buat akun SSCASN. Kesalahan berkas bisa menggugurkanmu sebelum sempat ikut tes.",
+      "link": "pages/panduan.html#dokumen",
+      "linkLabel": "Buka checklist dokumen"
+    },
+    "kemampuan": {
+      "title": "Kenali tipe soal SKD",
+      "text": "Mulai dari konsep dasar TWK, TIU, dan TKP. Latihan soal rutin dengan pembahasan jauh lebih efektif dibanding hanya membaca materi.",
+      "link": "pages/panduan.html#skd",
+      "linkLabel": "Lihat format SKD"
+    },
+    "waktu": {
+      "title": "Bangun kebiasaan belajar dan latihan CAT",
+      "text": "Belajar 20–30 menit setiap hari lebih efektif daripada belajar berjam-jam sekali seminggu. Biasakan juga mengerjakan soal dengan batas waktu seperti di CAT.",
+      "link": "pages/panduan.html#tips",
+      "linkLabel": "Lihat tips belajar"
+    },
+    "tryout": {
+      "title": "Ikut tryout diagnostik lengkap",
+      "text": "Kerjakan 110 soal dalam 100 menit untuk melihat skor nyatamu di setiap subtes dan seberapa jauh dari ambang batas.",
+      "link": "pages/segera.html?fitur=tryout",
+      "linkLabel": "Segera hadir"
+    },
+    "peringkat": {
+      "title": "Pikirkan formasi dan persaingannya",
+      "text": "Pilih formasi yang sesuai kualifikasi pendidikanmu, lalu perhatikan jumlah kursi dan pesaingnya. Peringkat menentukan siapa yang lanjut ke SKB.",
+      "link": "pages/panduan.html#formasi",
+      "linkLabel": "Tips memilih formasi"
+    }
+  }
+}

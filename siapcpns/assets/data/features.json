@@ -1,1 +1,57 @@
-
+{
+  "akun": {
+    "title": "Akun dan simpan hasil",
+    "phase": "Fase 2",
+    "desc": "Login dengan Google, hasil Cek Kesiapan tersimpan, dan profil belajarmu dibuat otomatis."
+  },
+  "onboarding": {
+    "title": "Onboarding",
+    "phase": "Fase 2",
+    "desc": "Lengkapi profil, target formasi, tanggal tes, dan komitmen waktu belajar."
+  },
+  "dashboard": {
+    "title": "Beranda belajar",
+    "phase": "Fase 4",
+    "desc": "Tugas belajar hari ini, progres, dan streak."
+  },
+  "tryout": {
+    "title": "Tryout CAT",
+    "phase": "Fase 3",
+    "desc": "Tryout diagnostik 110 soal dalam 100 menit dengan penilaian seperti tes asli."
+  },
+  "rapor": {
+    "title": "Rapor",
+    "phase": "Fase 3",
+    "desc": "Skor per subtes, status ambang batas, dan kelemahan per topik."
+  },
+  "latihan": {
+    "title": "Latihan harian",
+    "phase": "Fase 4",
+    "desc": "Latihan soal sesuai topik terlemah dengan pembahasan langsung."
+  },
+  "materi": {
+    "title": "Materi per level",
+    "phase": "Fase 4",
+    "desc": "Konsep dasar hingga pendalaman untuk setiap topik TWK, TIU, dan TKP."
+  },
+  "rencana": {
+    "title": "Rencana belajar",
+    "phase": "Fase 4",
+    "desc": "Rencana harian dan mingguan sesuai level, target, dan komitmenmu."
+  },
+  "akbar": {
+    "title": "Tryout Akbar mingguan",
+    "phase": "Fase 7",
+    "desc": "Tryout serentak nasional setiap minggu dengan peringkat dan persentil."
+  },
+  "premium": {
+    "title": "Paket Premium",
+    "phase": "Fase 5",
+    "desc": "Tryout tanpa batas, rapor detail, latihan adaptif, dan peringkat per formasi."
+  },
+  "status-bayar": {
+    "title": "Status pembayaran",
+    "phase": "Fase 5",
+    "desc": "Konfirmasi pembayaran dan aktivasi paket premium."
+  }
+}
