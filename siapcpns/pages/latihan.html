@@ -12,9 +12,12 @@
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="stylesheet" href="../assets/css/cat.css">
+  <link rel="stylesheet" href="../assets/css/pages/belajar.css">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -23,28 +26,70 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a href="panduan.html">Panduan</a><a class="nav-cta" href="masuk.html" data-nav-auth="dashboard.html">Masuk</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="materi.html">Materi</a><a class="nav-cta" href="dashboard.html">Beranda</a></nav>
   </div>
 </header>
-<main class="container placeholder-page" data-feature="latihan">
-  <div class="card card-elevated">
-    <span class="chip chip-accent" id="ph-phase">Fase 4</span>
-    <h1 style="font-size:var(--fs-2xl)" id="ph-title">Latihan harian</h1>
-    <p class="muted" id="ph-desc">Latihan soal sesuai topik terlemah dengan pembahasan langsung.</p>
-    <p class="small muted">Fitur ini sedang dibangun. Sementara itu, kamu bisa cek kesiapan dan membaca panduan CPNS.</p>
-    <div class="row" style="justify-content:center">
-      <a class="btn btn-primary" href="../#cek-kesiapan">Cek kesiapan</a>
-      <a class="btn btn-secondary" href="panduan.html">Baca panduan</a>
-      <a class="btn btn-secondary" id="ph-waitlist" href="#" target="_blank" rel="noopener" hidden>Daftar tunggu</a>
+<main class="app-main">
+  <div class="container">
+    <div class="practice">
+      <nav class="crumbs" aria-label="Lokasi halaman" style="color:var(--muted)"><a href="dashboard.html" style="color:var(--primary)">Beranda</a> / <span>Latihan harian</span></nav>
+
+      <!-- Memuat / pesan -->
+      <div id="l-state" class="card stack" style="align-items:flex-start">
+        <h1 style="font-size:var(--fs-2xl)" id="l-state-title">Menyiapkan latihan…</h1>
+        <p class="muted" id="l-state-text">Soal dipilih dari topik yang paling perlu kamu latih.</p>
+        <div class="row" id="l-state-actions"></div>
+      </div>
+
+      <!-- Sesi -->
+      <section id="l-session" hidden aria-labelledby="l-q">
+        <div class="stack">
+          <div class="practice-head">
+            <div class="stack" style="gap:2px">
+              <span class="eyebrow" id="l-topic">Latihan harian</span>
+              <strong>Soal <span id="l-no" class="num">1</span> dari <span id="l-total" class="num">10</span></strong>
+            </div>
+            <div class="dots" id="l-dots" aria-hidden="true"></div>
+          </div>
+          <div class="card stack">
+            <span class="chip chip-primary" id="l-sub" style="align-self:flex-start">TWK</span>
+            <p class="question-text" id="l-q" tabindex="-1" style="font-size:var(--fs-lg);font-weight:600"></p>
+            <div class="question-context" id="l-ctx" hidden style="font-family:var(--font-mono);padding:10px 14px;border-left:4px solid var(--primary);background:var(--surface-2);border-radius:0 8px 8px 0"></div>
+            <div class="options" id="l-opts" role="radiogroup" aria-labelledby="l-q"></div>
+            <div class="feedback" id="l-fb" hidden aria-live="polite"></div>
+            <div class="row" style="justify-content:flex-end">
+              <button class="btn btn-primary" type="button" id="l-next" hidden>Soal berikutnya ›</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ringkasan -->
+      <section id="l-summary" class="card stack" hidden>
+        <span class="eyebrow">Latihan selesai</span>
+        <div class="row" style="gap:var(--sp-4)">
+          <span class="summary-score"><span id="s-ok">0</span><small style="font-size:var(--fs-lg);color:var(--muted)"> / <span id="s-n">0</span></small></span>
+          <div class="stack" style="gap:4px">
+            <strong id="s-head">Kerja bagus!</strong>
+            <span class="small muted" id="s-sub"></span>
+          </div>
+        </div>
+        <div id="s-topics" class="stack" style="gap:8px"></div>
+        <div class="row">
+          <a class="btn btn-primary" id="s-materi" href="materi.html">Pelajari materi topik terlemah</a>
+          <a class="btn btn-secondary" href="dashboard.html">Kembali ke beranda</a>
+          <button class="btn btn-ghost" type="button" id="s-again" hidden>Latihan lagi</button>
+        </div>
+      </section>
     </div>
   </div>
 </main>
+
 <footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
 <script type="module">
   import { hydrateCommon } from "../assets/js/core/ui.js";
-  import { initPlaceholder } from "../assets/js/features/placeholder.js";
   hydrateCommon();
-  initPlaceholder();
+  import("../assets/js/features/latihan.js").then((m) => m.initLatihan());
 </script>
 </body>
 </html>

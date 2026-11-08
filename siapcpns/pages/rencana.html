@@ -12,9 +12,11 @@
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="stylesheet" href="../assets/css/pages/belajar.css">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -23,28 +25,57 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a href="panduan.html">Panduan</a><a class="nav-cta" href="masuk.html" data-nav-auth="dashboard.html">Masuk</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="materi.html">Materi</a><a class="nav-cta" href="dashboard.html">Beranda</a></nav>
   </div>
 </header>
-<main class="container placeholder-page" data-feature="rencana">
-  <div class="card card-elevated">
-    <span class="chip chip-accent" id="ph-phase">Fase 4</span>
-    <h1 style="font-size:var(--fs-2xl)" id="ph-title">Rencana belajar</h1>
-    <p class="muted" id="ph-desc">Rencana harian dan mingguan sesuai level, target, dan komitmenmu.</p>
-    <p class="small muted">Fitur ini sedang dibangun. Sementara itu, kamu bisa cek kesiapan dan membaca panduan CPNS.</p>
-    <div class="row" style="justify-content:center">
-      <a class="btn btn-primary" href="../#cek-kesiapan">Cek kesiapan</a>
-      <a class="btn btn-secondary" href="panduan.html">Baca panduan</a>
-      <a class="btn btn-secondary" id="ph-waitlist" href="#" target="_blank" rel="noopener" hidden>Daftar tunggu</a>
+<section class="page-band">
+  <div class="container stack" style="gap:10px">
+    <nav class="crumbs" aria-label="Lokasi halaman"><a href="dashboard.html">Beranda</a> / <span>Rencana belajar</span></nav>
+    <h1>Rencana belajar minggu ini</h1>
+    <p class="lead" id="r-lead">Disusun dari target, komitmen waktu, dan topik terlemahmu.</p>
+  </div>
+</section>
+
+<main class="app-main">
+  <div class="container stack-lg">
+    <p id="r-status" class="status-msg" role="status" hidden></p>
+
+    <div class="stats3" id="r-stats">
+      <div><span class="xsmall muted">Komitmen</span><b id="st-commit">–</b><span class="xsmall muted" id="st-commit-sub"></span></div>
+      <div><span class="xsmall muted">Menuju tes</span><b id="st-days">–</b><span class="xsmall muted" id="st-days-sub"></span></div>
+      <div><span class="xsmall muted">Latihan beruntun</span><b id="st-streak">–</b><span class="xsmall muted">hari berturut-turut</span></div>
+    </div>
+
+    <section class="stack">
+      <div class="row" style="justify-content:space-between">
+        <h2 style="font-size:var(--fs-xl)">Jadwal minggu ini</h2>
+        <a class="small" href="onboarding.html?next=rencana.html"><strong>Ubah komitmen</strong></a>
+      </div>
+      <div class="week" id="r-week"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>Topik fokus</h2><span class="xsmall muted">dari tryout & latihan terakhir</span></div>
+      <div class="row" id="r-focus"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>Peta level 20 topik</h2><span class="xsmall muted">Lv 1 Kenal · Lv 2 Paham · Lv 3 Mahir · Lv 4 Siap tes</span></div>
+      <div class="level-map" id="r-levels"></div>
+      <p class="xsmall muted">Level dihitung dari tryout terakhir dan 60 jawaban latihan terakhir. Topik "belum diukur" akan terisi setelah kamu berlatih.</p>
+    </section>
+
+    <div class="callout">
+      <div><strong>Rencana adaptif</strong>Rencana dasar ini disusun ulang setiap kamu membuka halaman. Versi Premium akan menyesuaikan target mingguan secara otomatis berdasarkan kemajuanmu.</div>
     </div>
   </div>
 </main>
+
 <footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
 <script type="module">
   import { hydrateCommon } from "../assets/js/core/ui.js";
-  import { initPlaceholder } from "../assets/js/features/placeholder.js";
   hydrateCommon();
-  initPlaceholder();
+  import("../assets/js/features/rencana.js").then((m) => m.initRencana());
 </script>
 </body>
 </html>

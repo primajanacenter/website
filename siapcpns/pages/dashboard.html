@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="stylesheet" href="../assets/css/pages/belajar.css">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -24,7 +25,7 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="panduan.html">Panduan</a><a href="#" id="btn-logout">Keluar</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="materi.html">Materi</a><a class="hide-sm" href="tryout.html">Tryout</a><a class="hide-sm" href="rencana.html">Rencana</a><a href="#" id="btn-logout">Keluar</a></nav>
   </div>
 </header>
 <section class="welcome">
@@ -46,6 +47,21 @@
 <main class="app-main">
   <div class="container">
     <p id="d-status" class="status-msg" role="status" hidden></p>
+
+    <section class="today-card" id="today-card" aria-labelledby="today-title" style="margin-bottom:var(--sp-5)">
+      <div class="today-head">
+        <div class="stack" style="gap:2px">
+          <span class="eyebrow" id="today-date">Hari ini</span>
+          <h2 id="today-title" style="font-size:var(--fs-xl)">Tugas belajar hari ini</h2>
+        </div>
+        <span class="streak" title="Hari berturut-turut berlatih"><span aria-hidden="true">🔥</span><b id="today-streak">0</b><span class="small">hari beruntun</span></span>
+      </div>
+      <ul class="today-tasks" id="today-tasks"><li><span class="ck"></span><div class="skeleton" style="width:60%"></div><span></span></li></ul>
+      <div class="row" style="justify-content:space-between">
+        <span class="small muted" id="today-quota"></span>
+        <a class="small" href="rencana.html"><strong>Lihat rencana minggu ini →</strong></a>
+      </div>
+    </section>
 
     <div class="dash-grid">
       <div class="stack-lg">
