@@ -1,0 +1,653 @@
+{
+  "version": "2026.1",
+  "level": 1,
+  "levelName": "Kenal",
+  "note": "Materi level 1 (konsep dasar) gratis untuk semua pengguna. Materi level 2–4 disajikan server untuk pengguna Premium.",
+  "topics": [
+    {
+      "id": "twk-nasionalisme",
+      "subtest": "twk",
+      "name": "Nasionalisme",
+      "minutes": 6,
+      "ringkasan": "Nasionalisme adalah sikap cinta, setia, dan bangga terhadap bangsa dan negara, yang diwujudkan dengan mengutamakan kepentingan nasional. Nasionalisme Indonesia adalah nasionalisme Pancasila: mencintai bangsa sendiri tanpa merendahkan bangsa lain. Di SKD, soal nasionalisme biasanya berbentuk kasus sehari-hari: memilih produk, menyikapi budaya asing, menyikapi konflik antardaerah, dan memaknai peristiwa sejarah pergerakan.",
+      "poinKunci": [
+        "Tonggak sejarah: Budi Utomo 20 Mei 1908 (Kebangkitan Nasional), Sumpah Pemuda 28 Oktober 1928, Proklamasi 17 Agustus 1945.",
+        "Bentuk menyimpang: chauvinisme (merasa bangsa sendiri paling unggul), primordialisme (mengutamakan suku/daerah), xenosentrisme (mengagungkan budaya asing), etnosentrisme (menilai budaya lain dengan ukuran budaya sendiri).",
+        "Nasionalisme modern bersifat rasional: mendukung produk dalam negeri yang berkualitas, berkontribusi sesuai profesi, menjaga nama baik bangsa.",
+        "Globalisasi disikapi secara selektif: terbuka pada hal positif tanpa kehilangan jati diri."
+      ],
+      "contoh": {
+        "soal": "Sikap mengagungkan budaya asing dan menganggap rendah budaya bangsa sendiri disebut …",
+        "pilihan": [
+          "Chauvinisme",
+          "Xenosentrisme",
+          "Primordialisme",
+          "Etnosentrisme",
+          "Patriotisme"
+        ],
+        "jawaban": 1,
+        "pembahasan": "Xenosentrisme adalah sikap mengagungkan budaya asing dan merendahkan budaya sendiri. Chauvinisme adalah kebalikannya: menganggap bangsa sendiri paling unggul."
+      },
+      "tips": [
+        "Pilih jawaban yang menyeimbangkan cinta tanah air dengan sikap terbuka dan rasional.",
+        "Waspadai pilihan yang bernada ekstrem: \"menolak semua\" atau \"paling unggul\"."
+      ],
+      "jebakan": [
+        "Pilihan yang terlihat sangat patriotik tetapi merendahkan bangsa lain adalah chauvinisme.",
+        "Sumpah Pemuda menegaskan bahasa persatuan, sedangkan bahasa negara ditetapkan dalam Pasal 36 UUD 1945."
+      ]
+    },
+    {
+      "id": "twk-integritas",
+      "subtest": "twk",
+      "name": "Integritas",
+      "minutes": 6,
+      "ringkasan": "Integritas adalah konsistensi antara nilai, ucapan, dan tindakan, termasuk saat tidak diawasi. Bagi ASN, integritas berkaitan erat dengan antikorupsi: menolak gratifikasi dan suap, mengelola konflik kepentingan, tidak memalsukan data, dan menjaga aset negara. Soal SKD menguji kemampuan memilih tindakan yang jujur sekaligus sesuai prosedur.",
+      "poinKunci": [
+        "Gratifikasi: pemberian dalam arti luas (uang, barang, diskon, komisi, fasilitas). Yang berhubungan dengan jabatan wajib ditolak atau dilaporkan ke KPK paling lambat 30 hari kerja.",
+        "Konflik kepentingan: deklarasikan dan jangan terlibat dalam keputusan yang menyangkut pihak tersebut.",
+        "Pelanggaran yang sering muncul: titip presensi, lembur atau perjalanan dinas fiktif, mark-up pengadaan, memakai aset negara untuk keperluan pribadi.",
+        "Pelaporan pelanggaran melalui saluran resmi (whistleblowing system), bukan media sosial."
+      ],
+      "contoh": {
+        "soal": "Seorang pegawai menerima voucher belanja dari rekanan setelah proyek selesai. Yang wajib ia lakukan adalah …",
+        "pilihan": [
+          "Menyimpannya karena proyek sudah selesai",
+          "Membagikannya kepada tim",
+          "Menolak atau melaporkannya kepada KPK paling lambat 30 hari kerja",
+          "Menukarnya dengan barang untuk kantor",
+          "Mengembalikannya setelah satu tahun"
+        ],
+        "jawaban": 2,
+        "pembahasan": "Voucher dari rekanan termasuk gratifikasi yang berhubungan dengan jabatan, meskipun diberikan setelah proyek selesai."
+      },
+      "tips": [
+        "Jawaban terbaik biasanya menolak sekaligus mengingatkan atau melapor melalui jalur resmi.",
+        "Izin lisan atasan tidak membuat pelanggaran aturan menjadi sah."
+      ],
+      "jebakan": [
+        "\"Menerima lalu membagikan ke rekan\" tetap gratifikasi.",
+        "\"Menyebarkan di media sosial\" bukan cara melapor yang tepat."
+      ]
+    },
+    {
+      "id": "twk-belanegara",
+      "subtest": "twk",
+      "name": "Bela negara",
+      "minutes": 6,
+      "ringkasan": "Bela negara adalah tekad, sikap, dan perilaku warga negara yang dijiwai kecintaan kepada NKRI berdasarkan Pancasila dan UUD 1945 untuk menjamin kelangsungan hidup bangsa. Bela negara adalah hak sekaligus kewajiban setiap warga (Pasal 27 ayat 3 UUD 1945) dan dapat dilakukan secara fisik maupun nonfisik sesuai profesi.",
+      "poinKunci": [
+        "Lima nilai dasar (UU 23/2019): cinta tanah air; sadar berbangsa dan bernegara; setia pada Pancasila; rela berkorban; kemampuan awal bela negara.",
+        "Komponen pertahanan: Komponen Utama (TNI), Komponen Cadangan (warga/sumber daya yang dilatih sukarela), Komponen Pendukung.",
+        "Sishankamrata (Pasal 30 ayat 2): TNI dan Polri sebagai kekuatan utama, rakyat sebagai kekuatan pendukung.",
+        "Ancaman militer: agresi, pelanggaran wilayah, pemberontakan bersenjata, teror bersenjata. Ancaman nonmiliter: ideologi, politik, ekonomi, sosial budaya, teknologi, keselamatan umum."
+      ],
+      "contoh": {
+        "soal": "Komponen Utama dalam pertahanan negara menurut UU Nomor 23 Tahun 2019 adalah …",
+        "pilihan": [
+          "Polri",
+          "Rakyat terlatih",
+          "TNI",
+          "Komponen Cadangan",
+          "Pemerintah daerah"
+        ],
+        "jawaban": 2,
+        "pembahasan": "Komponen Utama adalah TNI. Komponen Cadangan dan Komponen Pendukung memperbesar serta memperkuat Komponen Utama."
+      },
+      "tips": [
+        "Hafalkan lima nilai dasar dan cocokkan kata kunci kasus: berkorban → rela berkorban; menjaga lingkungan → cinta tanah air; disiplin dan bugar → kemampuan awal.",
+        "Bela negara ASN = bekerja sebaik-baiknya sesuai profesi."
+      ],
+      "jebakan": [
+        "Bela negara bukan hanya tugas TNI.",
+        "Pasal 27 ayat (3) tentang pembelaan negara; Pasal 30 tentang pertahanan dan keamanan."
+      ]
+    },
+    {
+      "id": "twk-pancasila",
+      "subtest": "twk",
+      "name": "Pilar negara: Pancasila",
+      "minutes": 8,
+      "ringkasan": "Pancasila adalah dasar negara, pandangan hidup bangsa, dan sumber segala sumber hukum negara (UU 12/2011). Soal SKD menguji sejarah perumusan, kedudukan dan fungsi Pancasila, serta kemampuan mengaitkan suatu sikap dengan sila yang tepat.",
+      "poinKunci": [
+        "Perumusan: sidang BPUPKI 29 Mei–1 Juni 1945; pidato Soekarno 1 Juni 1945 (Hari Lahir Pancasila); Piagam Jakarta oleh Panitia Sembilan 22 Juni 1945; disahkan PPKI 18 Agustus 1945.",
+        "Perubahan sila pertama Piagam Jakarta menunjukkan sikap mengutamakan persatuan bangsa.",
+        "Lambang sila: bintang (1), rantai (2), pohon beringin (3), kepala banteng (4), padi dan kapas (5).",
+        "Ideologi terbuka: nilai dasar tetap, sedangkan nilai instrumental dan praksis dapat berkembang.",
+        "Petunjuk sila: ibadah dan toleransi (1); martabat manusia (2); persatuan lintas suku/daerah (3); musyawarah (4); keadilan sosial dan pemerataan (5)."
+      ],
+      "contoh": {
+        "soal": "Hari Lahir Pancasila diperingati setiap tanggal …",
+        "pilihan": [
+          "29 Mei",
+          "1 Juni",
+          "22 Juni",
+          "17 Agustus",
+          "18 Agustus"
+        ],
+        "jawaban": 1,
+        "pembahasan": "Tanggal 1 Juni merujuk pada pidato Soekarno di sidang BPUPKI tahun 1945 yang memperkenalkan istilah Pancasila."
+      },
+      "tips": [
+        "Cari kata kunci kasus: perbedaan suku/daerah → sila 3; rapat/keputusan bersama → sila 4; pemerataan/kesejahteraan → sila 5."
+      ],
+      "jebakan": [
+        "Pandangan hidup (pedoman perilaku pribadi) berbeda dengan dasar negara (penyelenggaraan negara dan hukum)."
+      ]
+    },
+    {
+      "id": "twk-uud",
+      "subtest": "twk",
+      "name": "Pilar negara: UUD 1945",
+      "minutes": 8,
+      "ringkasan": "UUD NRI Tahun 1945 adalah konstitusi tertulis Indonesia yang telah empat kali diubah (1999–2002). Soal SKD sering meminta Anda mencocokkan kasus dengan pasal yang tepat, terutama pasal tentang HAM, lembaga negara, pendidikan, perekonomian, dan pemilu.",
+      "poinKunci": [
+        "Pembukaan terdiri atas 4 alinea; tujuan negara ada di alinea keempat.",
+        "Pasal 1: bentuk negara kesatuan berbentuk republik (ayat 1), kedaulatan di tangan rakyat (ayat 2), negara hukum (ayat 3).",
+        "Lembaga: MPR = DPR + DPD (Pasal 2); Presiden dipilih langsung (6A); MK menguji UU terhadap UUD (24C); MA menguji peraturan di bawah UU terhadap UU (24A).",
+        "Pasal penting: 22E pemilu 5 tahunan; 27(3) bela negara; 28A–28J HAM (28J pembatasan hak); 29 kebebasan beragama; 31(4) anggaran pendidikan minimal 20%; 33(3) kekayaan alam untuk kemakmuran rakyat; 34(1) fakir miskin dan anak terlantar dipelihara negara."
+      ],
+      "contoh": {
+        "soal": "Ketentuan bahwa Indonesia adalah negara hukum terdapat dalam UUD 1945 …",
+        "pilihan": [
+          "Pasal 1 ayat (1)",
+          "Pasal 1 ayat (2)",
+          "Pasal 1 ayat (3)",
+          "Pasal 27 ayat (1)",
+          "Pasal 28D ayat (1)"
+        ],
+        "jawaban": 2,
+        "pembahasan": "Pasal 1 ayat (3): Negara Indonesia adalah negara hukum."
+      },
+      "tips": [
+        "Buat tabel kecil: kasus → pasal. Latih minimal 10 pasal yang paling sering muncul."
+      ],
+      "jebakan": [
+        "MK menguji UU terhadap UUD, MA menguji peraturan di bawah UU. Jangan tertukar.",
+        "Pasal 28E(3) menjamin kebebasan berkumpul, sedangkan pembatasannya ada di Pasal 28J(2)."
+      ]
+    },
+    {
+      "id": "twk-nkri",
+      "subtest": "twk",
+      "name": "Pilar negara: NKRI",
+      "minutes": 5,
+      "ringkasan": "Indonesia adalah negara kesatuan yang berbentuk republik. Dalam negara kesatuan, kedaulatan tetap pada negara, sedangkan daerah menjalankan otonomi. Soal SKD menguji pemahaman otonomi daerah, wawasan nusantara, dan ketentuan yang tidak dapat diubah.",
+      "poinKunci": [
+        "Pasal 37 ayat (5): bentuk NKRI tidak dapat diubah.",
+        "Urusan absolut pemerintah pusat: politik luar negeri, pertahanan, keamanan, yustisi, moneter dan fiskal nasional, agama.",
+        "Pasal 18B(1): pengakuan daerah khusus/istimewa; 18B(2): masyarakat hukum adat; 25A: negara kepulauan berciri Nusantara.",
+        "Wawasan Nusantara: kesatuan politik, ekonomi, sosial budaya, serta pertahanan dan keamanan.",
+        "Sejarah: RIS (negara serikat) 1949–1950, lalu kembali ke negara kesatuan 17 Agustus 1950."
+      ],
+      "contoh": {
+        "soal": "Ketentuan UUD 1945 yang menyatakan bentuk NKRI tidak dapat diubah adalah …",
+        "pilihan": [
+          "Pasal 1 ayat (1)",
+          "Pasal 18 ayat (1)",
+          "Pasal 25A",
+          "Pasal 37 ayat (5)",
+          "Pasal 37 ayat (1)"
+        ],
+        "jawaban": 3,
+        "pembahasan": "Pasal 37 ayat (5): khusus mengenai bentuk Negara Kesatuan Republik Indonesia tidak dapat dilakukan perubahan."
+      },
+      "tips": [
+        "Hafalkan 6 urusan absolut dengan singkatan \"PoLu–Han–Kam–Yus–MoFis–Ag\"."
+      ],
+      "jebakan": [
+        "Daerah tetap boleh bekerja sama dengan pihak luar negeri untuk urusan selain urusan absolut, sesuai ketentuan."
+      ]
+    },
+    {
+      "id": "twk-bhinneka",
+      "subtest": "twk",
+      "name": "Pilar negara: Bhinneka Tunggal Ika",
+      "minutes": 5,
+      "ringkasan": "Bhinneka Tunggal Ika (berbeda-beda tetapi tetap satu) adalah semboyan negara yang tercantum bersama lambang Garuda Pancasila (Pasal 36A). Semboyan ini berasal dari Kakawin Sutasoma karya Mpu Tantular pada masa Majapahit. Soal SKD menguji sikap menghargai keragaman dan menyelesaikan konflik antarkelompok.",
+      "poinKunci": [
+        "Keragaman dikelola melalui dialog, kesetaraan, dan kerja sama, bukan penyeragaman atau pemisahan.",
+        "Pasal 28D(3): kesempatan yang sama dalam pemerintahan; diskriminasi berdasarkan suku atau agama bertentangan dengan konstitusi.",
+        "Pasal 32(2): negara menghormati dan memelihara bahasa daerah sebagai kekayaan budaya nasional.",
+        "Toleransi beragama: menghormati tanpa harus mengikuti ritual ibadah agama lain."
+      ],
+      "contoh": {
+        "soal": "Kakawin Sutasoma yang memuat semboyan Bhinneka Tunggal Ika ditulis oleh …",
+        "pilihan": [
+          "Mpu Prapanca",
+          "Mpu Tantular",
+          "Mpu Kanwa",
+          "Mpu Sedah",
+          "Mpu Panuluh"
+        ],
+        "jawaban": 1,
+        "pembahasan": "Mpu Tantular menulis Kakawin Sutasoma pada masa Majapahit. Mpu Prapanca menulis Negarakertagama."
+      },
+      "tips": [
+        "Pilihan terbaik biasanya inklusif: melibatkan semua pihak dan menghormati perbedaan."
+      ],
+      "jebakan": [
+        "\"Menyeragamkan budaya\" bukan tujuan Bhinneka Tunggal Ika."
+      ]
+    },
+    {
+      "id": "twk-bahasa",
+      "subtest": "twk",
+      "name": "Bahasa negara",
+      "minutes": 7,
+      "ringkasan": "Bahasa Indonesia adalah bahasa negara (Pasal 36 UUD 1945) dan bahasa persatuan (Sumpah Pemuda 1928). UU Nomor 24 Tahun 2009 mengatur kewajiban penggunaannya. SKD juga menguji kaidah bahasa: kata baku, kalimat efektif, dan huruf kapital.",
+      "poinKunci": [
+        "Wajib berbahasa Indonesia (UU 24/2009): dokumen resmi negara, pidato resmi Presiden/pejabat di dalam maupun luar negeri, nama bangunan/gedung/jalan, komunikasi resmi di lingkungan kerja pemerintah dan swasta, serta nota kesepahaman (bila melibatkan pihak asing, juga ditulis dalam bahasa pihak asing dan/atau bahasa Inggris).",
+        "Kata baku yang sering diuji: analisis, kualitas, sistematis, praktik, risiko, objek, apotek, aktif, atlet, nasihat.",
+        "Kalimat efektif: hemat (tanpa pleonasme seperti \"para hadirin\", \"agar supaya\", \"berhubung karena\"), memiliki subjek jelas, dan logis.",
+        "Huruf kapital: nama jabatan yang diikuti nama instansi/wilayah ditulis kapital, misalnya Kepala Dinas Pendidikan Kota Bandung."
+      ],
+      "contoh": {
+        "soal": "Penulisan kata berikut yang baku adalah …",
+        "pilihan": [
+          "Kwitansi",
+          "Kuitansi",
+          "Sistim",
+          "Resiko",
+          "Obyektif"
+        ],
+        "jawaban": 1,
+        "pembahasan": "Bentuk baku: kuitansi, sistem, risiko, objektif."
+      },
+      "tips": [
+        "Untuk kalimat efektif, coret kata yang bisa dihapus tanpa mengubah makna. Pilihan terpendek yang tetap lengkap biasanya benar."
+      ],
+      "jebakan": [
+        "\"Dikarenakan\" dan \"bahwasanya\" kurang efektif dalam surat dinas.",
+        "Kata depan di awal kalimat sering membuat kalimat tidak bersubjek."
+      ]
+    },
+    {
+      "id": "tiu-analogi",
+      "subtest": "tiu",
+      "name": "Analogi",
+      "minutes": 6,
+      "ringkasan": "Soal analogi meminta Anda menemukan hubungan antara dua kata, lalu mencari pasangan lain dengan hubungan yang sama persis. Kuncinya: rumuskan hubungan dalam satu kalimat, lalu uji ke setiap pilihan dengan urutan yang sama.",
+      "poinKunci": [
+        "Jenis hubungan umum: sinonim, antonim, sebab–akibat, alat–fungsi, pelaku–tempat kerja, bahan–hasil, bagian–keseluruhan, golongan–anggota, tingkat (besar–raksasa), alat ukur–besaran.",
+        "Urutan harus sama: jika soal \"sebab : akibat\", pilihan \"akibat : sebab\" salah.",
+        "Untuk analogi tiga kata, pastikan ketiga posisinya cocok (misalnya alat : kegiatan : HASIL, bukan objek).",
+        "Analogi angka: uji pola pada semua pasangan, misalnya 2:8 dan 3:27 menunjukkan pangkat tiga, bukan dikali 4."
+      ],
+      "contoh": {
+        "soal": "PENULIS : NASKAH = …",
+        "pilihan": [
+          "Arsitek : Rancangan bangunan",
+          "Pembaca : Buku",
+          "Guru : Murid",
+          "Dokter : Rumah sakit",
+          "Penjahit : Gunting"
+        ],
+        "jawaban": 0,
+        "pembahasan": "Pola pelaku dan hasil karyanya. Penulis menghasilkan naskah, arsitek menghasilkan rancangan bangunan."
+      },
+      "tips": [
+        "Ucapkan hubungannya: \"Termometer adalah alat untuk mengukur suhu\", lalu ganti katanya dengan setiap pilihan."
+      ],
+      "jebakan": [
+        "Pasangan yang terlihat \"akrab\" (Payung : Hujan) belum tentu hubungannya sama.",
+        "Waspadai klasifikasi yang menjebak: lumba-lumba mamalia, katak amfibi, laba-laba bukan serangga."
+      ]
+    },
+    {
+      "id": "tiu-silogisme",
+      "subtest": "tiu",
+      "name": "Silogisme",
+      "minutes": 8,
+      "ringkasan": "Silogisme adalah penarikan kesimpulan dari premis-premis. Kunci menjawab: jangan memakai pengetahuan di luar premis, dan kenali pola penalaran yang sah.",
+      "poinKunci": [
+        "Modus ponens: p → q, p, maka q. Modus tollens: p → q, ~q, maka ~p. Silogisme hipotetis: p → q, q → r, maka p → r.",
+        "Silogisme disjungtif: p ∨ q, ~p, maka q.",
+        "Tidak sah: dari p → q dan q, tidak bisa disimpulkan p (menegaskan konsekuen).",
+        "Ekuivalen p → q: kontraposisi ~q → ~p, atau ~p ∨ q. Konvers (q → p) dan invers (~p → ~q) TIDAK setara.",
+        "Ingkaran: ~(p → q) = p ∧ ~q; ~(semua A B) = ada A yang tidak B; ~(beberapa A B) = semua A tidak B; ~(p ∧ q) = ~p ∨ ~q."
+      ],
+      "contoh": {
+        "soal": "Semua peserta yang hadir mendapat sertifikat. Dodi tidak mendapat sertifikat. Kesimpulan …",
+        "pilihan": [
+          "Dodi hadir",
+          "Dodi tidak hadir",
+          "Dodi terlambat",
+          "Sertifikat habis",
+          "Tidak dapat disimpulkan"
+        ],
+        "jawaban": 1,
+        "pembahasan": "Modus tollens: jika hadir maka mendapat sertifikat; Dodi tidak mendapat sertifikat, maka Dodi tidak hadir."
+      },
+      "tips": [
+        "Ubah kalimat menjadi simbol p, q, r sebelum menjawab.",
+        "Untuk premis \"semua/sebagian\", gambar diagram lingkaran (Venn)."
+      ],
+      "jebakan": [
+        "\"Sebagian A adalah B\" tidak berarti \"sebagian A bukan B\".",
+        "Pernyataan yang benar menurut akal sehat belum tentu kesimpulan yang sah dari premis."
+      ]
+    },
+    {
+      "id": "tiu-analitis",
+      "subtest": "tiu",
+      "name": "Penalaran analitis",
+      "minutes": 8,
+      "ringkasan": "Soal analitis menyajikan beberapa syarat (posisi duduk, jadwal, urutan, himpunan), lalu meminta kesimpulan yang pasti benar. Kuncinya adalah mencatat syarat secara sistematis dan menguji kemungkinan.",
+      "poinKunci": [
+        "Mulailah dari syarat yang paling pasti (posisi tetap), lalu syarat berpasangan (bersebelahan, berurutan), terakhir syarat larangan.",
+        "Gunakan tabel atau garis posisi 1–5 untuk soal urutan.",
+        "Untuk soal \"pasti benar\", pilih pernyataan yang berlaku di SEMUA kemungkinan, bukan hanya salah satu.",
+        "Himpunan dua kelompok: n(A ∪ B) = n(A) + n(B) − n(A ∩ B); yang tidak keduanya = total − n(A ∪ B).",
+        "Soal kalender: hitung selisih hari lalu ambil sisa bagi 7. Ingat tahun kabisat."
+      ],
+      "contoh": {
+        "soal": "Rapat A sebelum B, C setelah B, dan D paling awal. Urutan ketiga adalah …",
+        "pilihan": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "Tidak dapat ditentukan"
+        ],
+        "jawaban": 1,
+        "pembahasan": "D paling awal, lalu A, B, C. Urutan ketiga adalah B."
+      },
+      "tips": [
+        "Jika dua kemungkinan tersisa, uji keduanya. Salah satu biasanya melanggar syarat lain."
+      ],
+      "jebakan": [
+        "Pernyataan yang \"mungkin benar\" bukan jawaban untuk pertanyaan \"pasti benar\"."
+      ]
+    },
+    {
+      "id": "tiu-deret",
+      "subtest": "tiu",
+      "name": "Deret angka dan huruf",
+      "minutes": 7,
+      "ringkasan": "Soal deret meminta Anda menemukan pola. Langkah tercepat: hitung selisih antarsuku. Jika selisihnya belum berpola, coba perkalian, kuadrat, atau deret berselang-seling.",
+      "poinKunci": [
+        "Selisih tetap (+4) atau selisih bertingkat (+3, +6, +9, …).",
+        "Perkalian: ×2, ×3, …; kombinasi ×2+1 atau ×2−1.",
+        "Fibonacci: suku = jumlah dua suku sebelumnya; variasi: suku = hasil kali dua suku sebelumnya.",
+        "Kuadrat dan pangkat: n², n²+1, n(n+1), n³.",
+        "Berselang-seling: pisahkan suku ganjil dan genap menjadi dua deret.",
+        "Deret huruf: ubah ke nomor urut (A=1 … Z=26), lalu cari polanya."
+      ],
+      "contoh": {
+        "soal": "5, 8, 14, 26, 50, …",
+        "pilihan": [
+          "74",
+          "86",
+          "98",
+          "100",
+          "102"
+        ],
+        "jawaban": 2,
+        "pembahasan": "Selisihnya 3, 6, 12, 24 (berlipat dua), berikutnya 48. Jadi 50 + 48 = 98."
+      },
+      "tips": [
+        "Tulis selisih di bawah deret. Jika selisihnya juga berpola, Anda hampir selesai."
+      ],
+      "jebakan": [
+        "Deret yang panjangnya 7–8 suku sering berselang-seling."
+      ]
+    },
+    {
+      "id": "tiu-hitung",
+      "subtest": "tiu",
+      "name": "Berhitung dan perbandingan kuantitatif",
+      "minutes": 8,
+      "ringkasan": "Bagian ini menguji operasi bilangan, pecahan, persen, rata-rata, perbandingan, dan membandingkan dua besaran (x dan y). Kecepatan menghitung sangat menentukan karena waktu rata-rata hanya ± 55 detik per soal.",
+      "poinKunci": [
+        "Pecahan yang sering muncul: 1/8 = 0,125; 3/8 = 0,375; 1/6 ≈ 0,167; 1/9 ≈ 0,111.",
+        "Diskon bertingkat dikalikan: 20% lalu 10% = 0,8 × 0,9 = 0,72 (bukan diskon 30%).",
+        "Naik a% lalu turun b% tidak sama dengan naik (a−b)%. Contoh: naik 25% lalu turun 20% = tetap.",
+        "Rata-rata gabungan memakai jumlah total ÷ jumlah data, bukan rata-rata dari rata-rata.",
+        "Perbandingan berantai a:b dan b:c: samakan nilai b terlebih dahulu."
+      ],
+      "contoh": {
+        "soal": "Harga awal Rp200.000 didiskon 25% lalu 10%. Harga akhir …",
+        "pilihan": [
+          "Rp130.000",
+          "Rp135.000",
+          "Rp140.000",
+          "Rp145.000",
+          "Rp150.000"
+        ],
+        "jawaban": 1,
+        "pembahasan": "200.000 × 0,75 × 0,9 = Rp135.000. Diskon bertingkat bukan diskon 35% (yang hasilnya Rp130.000)."
+      },
+      "tips": [
+        "Gunakan perkiraan untuk mengeliminasi pilihan yang jelas salah sebelum menghitung detail."
+      ],
+      "jebakan": [
+        "Menambah persen dari harga akhir (48.000 + 20%) adalah jebakan klasik."
+      ]
+    },
+    {
+      "id": "tiu-cerita",
+      "subtest": "tiu",
+      "name": "Soal cerita",
+      "minutes": 8,
+      "ringkasan": "Soal cerita menerjemahkan situasi sehari-hari ke dalam persamaan: kecepatan, pekerjaan bersama, umur, untung–rugi, peluang, dan skala.",
+      "poinKunci": [
+        "Kecepatan: jarak = kecepatan × waktu. Menyusul: selisih jarak ÷ selisih kecepatan. Berpapasan: jarak ÷ jumlah kecepatan.",
+        "Kecepatan rata-rata pergi–pulang = 2ab ÷ (a + b), bukan (a + b) ÷ 2.",
+        "Pekerjaan bersama: jumlahkan kecepatan kerja (1/A + 1/B). Gunakan satuan orang-hari untuk soal penambahan atau pengurangan pekerja.",
+        "Untung/rugi dihitung dari harga beli. Harga jual = (100% + untung%) × harga beli.",
+        "Peluang = banyak kejadian ÷ banyak kemungkinan; untuk pengambilan sekaligus gunakan kombinasi."
+      ],
+      "contoh": {
+        "soal": "Jarak 150 km ditempuh dengan kecepatan 60 km/jam. Waktu tempuhnya …",
+        "pilihan": [
+          "2 jam",
+          "2 jam 15 menit",
+          "2 jam 30 menit",
+          "2 jam 45 menit",
+          "3 jam"
+        ],
+        "jawaban": 2,
+        "pembahasan": "Waktu = jarak ÷ kecepatan = 150 ÷ 60 = 2,5 jam = 2 jam 30 menit."
+      },
+      "tips": [
+        "Tuliskan apa yang diketahui dan ditanya dalam satu baris sebelum menghitung."
+      ],
+      "jebakan": [
+        "Mengurangi untung dari harga jual (138.000 − 15%) tidak sama dengan mencari harga beli."
+      ]
+    },
+    {
+      "id": "tkp-pelayanan",
+      "subtest": "tkp",
+      "name": "Pelayanan publik",
+      "minutes": 6,
+      "ringkasan": "TKP pelayanan publik menilai sikap Anda saat melayani: cepat, ramah, adil, tuntas, dan berorientasi perbaikan. Setiap opsi bernilai 1–5, sehingga Anda perlu memilih yang PALING baik, bukan sekadar yang baik.",
+      "poinKunci": [
+        "Opsi bernilai 5 biasanya: menyelesaikan kebutuhan warga saat itu juga + memperbaiki sistem atau sumber masalah.",
+        "Adil dan tidak diskriminatif: tetap sesuai antrean meski ada \"orang dalam\".",
+        "Utamakan kelompok rentan (lansia, disabilitas, ibu dengan anak) sesuai ketentuan.",
+        "Keluhan dianggap masukan: akui, perbaiki, tindak lanjuti.",
+        "Opsi bernilai rendah: menolak, menyuruh warga mencari sendiri, menyalahkan warga, atau membiarkan."
+      ],
+      "contoh": {
+        "soal": "Warga datang dengan berkas yang kurang satu fotokopi, padahal mesin fotokopi tersedia di kantor. Sikap terbaik …",
+        "pilihan": [
+          "Menolak berkas",
+          "Meminta warga kembali besok",
+          "Membantu memfotokopi di kantor sehingga layanan selesai hari itu",
+          "Menyuruh mencari tempat fotokopi di luar",
+          "Menerima berkas tanpa fotokopi"
+        ],
+        "jawaban": 2,
+        "pembahasan": "Solusi sederhana yang membuat layanan tuntas tanpa melanggar persyaratan bernilai tertinggi."
+      },
+      "tips": [
+        "Bandingkan dua opsi terbaik: yang menambahkan perbaikan sistem atau komunikasi jelas biasanya bernilai 5."
+      ],
+      "jebakan": [
+        "Opsi \"meminta maaf\" saja kalah oleh opsi yang menyelesaikan masalah."
+      ]
+    },
+    {
+      "id": "tkp-jejaring",
+      "subtest": "tkp",
+      "name": "Jejaring kerja",
+      "minutes": 6,
+      "ringkasan": "Jejaring kerja menilai kemampuan membangun dan memelihara hubungan kerja yang produktif: berinisiatif, berkomunikasi, berkolaborasi lintas unit, dan mengelola konflik.",
+      "poinKunci": [
+        "Inisiatif: memperkenalkan diri, membuka komunikasi, mengajak kolaborasi.",
+        "Konflik dikelola dengan mempertemukan pihak dan berfokus pada tujuan bersama.",
+        "Berbagi pengetahuan dan informasi secara terbuka bernilai tinggi.",
+        "Kolaborasi dengan pihak luar disertai kesepakatan peran dan akuntabilitas.",
+        "Nilai rendah: menghindar, menunggu, menolak, atau saling menyalahkan."
+      ],
+      "contoh": {
+        "soal": "Anda pindah ke unit baru. Sikap terbaik …",
+        "pilihan": [
+          "Menunggu diperkenalkan",
+          "Fokus bekerja sendiri",
+          "Memperkenalkan diri dan mempelajari peran setiap rekan",
+          "Bergaul dengan rekan seangkatan saja",
+          "Menghindari interaksi"
+        ],
+        "jawaban": 2,
+        "pembahasan": "Inisiatif membangun komunikasi dan memahami peran rekan mempercepat kerja sama."
+      },
+      "tips": [
+        "Pilih opsi yang aktif, kolaboratif, dan menyelesaikan akar masalah."
+      ],
+      "jebakan": [
+        "Membantu rekan sepenuhnya sampai tugas sendiri terbengkalai bukan nilai tertinggi."
+      ]
+    },
+    {
+      "id": "tkp-sosbud",
+      "subtest": "tkp",
+      "name": "Sosial budaya",
+      "minutes": 6,
+      "ringkasan": "Aspek sosial budaya menilai kemampuan beradaptasi dan menghargai keberagaman suku, agama, budaya, gender, dan kondisi sosial, serta menjaga kerukunan.",
+      "poinKunci": [
+        "Beradaptasi aktif: mempelajari bahasa dan tata krama setempat.",
+        "Melibatkan tokoh adat atau agama dalam program di masyarakat.",
+        "Berani mengingatkan candaan SARA atau seksis dengan santun.",
+        "Netralitas ASN dalam politik praktis.",
+        "Inklusi: menyesuaikan cara kerja agar rekan disabilitas dapat berkontribusi setara."
+      ],
+      "contoh": {
+        "soal": "Pegawai pindahan dari provinsi lain tampak canggung karena belum memahami kebiasaan di kantor Anda. Sikap terbaik …",
+        "pilihan": [
+          "Membiarkannya menyesuaikan diri sendiri",
+          "Bersikap ramah bila bertemu",
+          "Mengenalkannya pada kebiasaan kantor dan mengajaknya terlibat dalam kegiatan tim",
+          "Menyarankannya bertanya kepada atasan",
+          "Menertawakan kebiasaannya yang berbeda"
+        ],
+        "jawaban": 2,
+        "pembahasan": "Membantu rekan beradaptasi dan melibatkannya secara aktif mencerminkan sikap inklusif dan menghargai keberagaman."
+      },
+      "tips": [
+        "Opsi bernilai 5 biasanya menghormati perbedaan sekaligus aktif menjaga kerukunan."
+      ],
+      "jebakan": [
+        "\"Bersikap biasa saja\" terdengar netral, tetapi nilainya rendah karena pasif."
+      ]
+    },
+    {
+      "id": "tkp-tik",
+      "subtest": "tkp",
+      "name": "Teknologi informasi dan komunikasi",
+      "minutes": 6,
+      "ringkasan": "Aspek TIK menilai kemauan memanfaatkan teknologi untuk meningkatkan kinerja, serta kesadaran keamanan informasi dan pelindungan data.",
+      "poinKunci": [
+        "Cepat beradaptasi dengan sistem baru dan membantu rekan.",
+        "Inisiatif otomatisasi atau digitalisasi pekerjaan berulang.",
+        "Keamanan: jangan berikan OTP atau kata sandi, laporkan phishing, kunci layar, hindari Wi-Fi publik untuk sistem penting.",
+        "Data pribadi warga hanya diolah dengan sarana resmi; jangan masukkan ke layanan AI publik.",
+        "Celah keamanan dilaporkan secara tertutup kepada pengelola, bukan diumumkan."
+      ],
+      "contoh": {
+        "soal": "Anda akan meninggalkan meja untuk rapat. Tindakan terbaik terhadap komputer kantor …",
+        "pilihan": [
+          "Membiarkan menyala",
+          "Mengunci layar",
+          "Menitipkan ke rekan",
+          "Mematikan monitor saja",
+          "Menempel kata sandi di layar"
+        ],
+        "jawaban": 1,
+        "pembahasan": "Mengunci layar melindungi data dari akses yang tidak berwenang."
+      },
+      "tips": [
+        "Di antara dua opsi aman, pilih yang juga memberi manfaat bagi tim."
+      ],
+      "jebakan": [
+        "\"Mengabaikan\" aman bagi diri sendiri, tetapi tidak mencegah korban lain."
+      ]
+    },
+    {
+      "id": "tkp-profesionalisme",
+      "subtest": "tkp",
+      "name": "Profesionalisme",
+      "minutes": 6,
+      "ringkasan": "Profesionalisme menilai tanggung jawab, kualitas kerja, kedisiplinan, kemauan belajar, dan kepatuhan pada prosedur dengan orientasi solusi.",
+      "poinKunci": [
+        "Kelola prioritas dan komunikasikan dengan atasan.",
+        "Akui kesalahan, perbaiki, dan pastikan dampaknya tertangani.",
+        "Ikuti prosedur; usulkan perbaikan melalui jalur resmi.",
+        "Terbuka terhadap kritik dan aktif belajar.",
+        "Hindari konflik kepentingan; hargai kontribusi tim."
+      ],
+      "contoh": {
+        "soal": "Anda menyadari ada kesalahan pada laporan yang sudah dikirim. Sikap terbaik …",
+        "pilihan": [
+          "Menunggu ada yang sadar",
+          "Memperbaiki di arsip sendiri",
+          "Segera memberi tahu, memperbaiki, dan memastikan penerima memakai data yang benar",
+          "Menyalahkan sistem",
+          "Mengirim ulang tanpa penjelasan"
+        ],
+        "jawaban": 2,
+        "pembahasan": "Akuntabilitas berarti mengakui kesalahan dan memastikan dampaknya tertangani."
+      },
+      "tips": [
+        "Opsi \"menolak\" yang disertai solusi biasanya lebih tinggi daripada sekadar menolak."
+      ],
+      "jebakan": [
+        "Lembur berlebihan bukan selalu jawaban terbaik; perencanaan dan komunikasi lebih dihargai."
+      ]
+    },
+    {
+      "id": "tkp-antiradikalisme",
+      "subtest": "tkp",
+      "name": "Anti-radikalisme",
+      "minutes": 6,
+      "ringkasan": "Aspek anti-radikalisme menilai kemampuan mengenali, menolak, dan mencegah paham yang bertentangan dengan Pancasila, NKRI, serta yang membenarkan kekerasan, dengan cara yang moderat dan sesuai hukum.",
+      "poinKunci": [
+        "Tolak tegas ajakan dan laporkan melalui saluran resmi atau aparat berwenang.",
+        "Putus penyebaran konten (jangan dibagikan), laporkan, dan sajikan kontra-narasi damai.",
+        "Pendekatan dialog untuk keluarga atau rekan yang mulai terpapar.",
+        "Hindari prasangka, penyebaran kecurigaan, dan main hakim sendiri.",
+        "Dukung reintegrasi mantan narapidana yang telah menjalani deradikalisasi."
+      ],
+      "contoh": {
+        "soal": "Anda diajak bergabung dengan kelompok yang ingin mengganti dasar negara. Sikap terbaik …",
+        "pilihan": [
+          "Bergabung",
+          "Mempertimbangkan dulu",
+          "Menolak dengan halus",
+          "Menolak tegas",
+          "Menolak tegas dan melapor kepada pihak berwenang"
+        ],
+        "jawaban": 4,
+        "pembahasan": "Menolak saja belum cukup; melapor membantu mencegah perluasan pengaruh kelompok tersebut."
+      },
+      "tips": [
+        "Kata kunci nilai 5: tegas + melapor + tidak menyebarkan + moderat."
+      ],
+      "jebakan": [
+        "Menyebarkan tangkapan layar \"agar orang lain waspada\" tetap memperluas konten tersebut."
+      ]
+    }
+  ]
+}

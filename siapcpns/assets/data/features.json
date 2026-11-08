@@ -4,21 +4,6 @@
     "phase": "Fase 2",
     "desc": "Masuk dengan akun Google untuk menyimpan hasil dan profil belajarmu."
   },
-  "latihan": {
-    "title": "Latihan harian",
-    "phase": "Fase 4",
-    "desc": "Latihan soal sesuai topik terlemah dengan pembahasan langsung."
-  },
-  "materi": {
-    "title": "Materi per level",
-    "phase": "Fase 4",
-    "desc": "Konsep dasar hingga pendalaman untuk setiap topik TWK, TIU, dan TKP."
-  },
-  "rencana": {
-    "title": "Rencana belajar",
-    "phase": "Fase 4",
-    "desc": "Rencana harian dan mingguan sesuai level, target, dan komitmenmu."
-  },
   "akbar": {
     "title": "Tryout Akbar mingguan",
     "phase": "Fase 7",
