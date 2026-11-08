@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Paket Premium — Siap CPNS</title>
-  <meta name="robots" content="noindex">
+  <meta name="robots" content="index">
   <meta name="theme-color" content="#0f2d55">
   <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
@@ -12,9 +12,11 @@
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="stylesheet" href="../assets/css/pages/premium.css">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -23,28 +25,75 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a href="panduan.html">Panduan</a><a class="nav-cta" href="masuk.html" data-nav-auth="dashboard.html">Masuk</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="materi.html">Materi</a><a class="nav-cta" href="masuk.html" data-nav-auth="dashboard.html">Masuk</a></nav>
   </div>
 </header>
-<main class="container placeholder-page" data-feature="premium">
-  <div class="card card-elevated">
-    <span class="chip chip-accent" id="ph-phase">Fase 5</span>
-    <h1 style="font-size:var(--fs-2xl)" id="ph-title">Paket Premium</h1>
-    <p class="muted" id="ph-desc">Tryout tanpa batas, rapor detail, latihan adaptif, dan peringkat per formasi.</p>
-    <p class="small muted">Fitur ini sedang dibangun. Sementara itu, kamu bisa cek kesiapan dan membaca panduan CPNS.</p>
-    <div class="row" style="justify-content:center">
-      <a class="btn btn-primary" href="../#cek-kesiapan">Cek kesiapan</a>
-      <a class="btn btn-secondary" href="panduan.html">Baca panduan</a>
-      <a class="btn btn-secondary" id="ph-waitlist" href="#" target="_blank" rel="noopener" hidden>Daftar tunggu</a>
+<section class="page-band">
+  <div class="container stack" style="gap:10px">
+    <nav class="crumbs" aria-label="Lokasi halaman"><a href="../">Beranda</a> / <span>Premium</span></nav>
+    <h1>Belajar lebih tuntas dengan Premium</h1>
+    <p class="lead">Latihan tanpa batas, rapor lengkap per topik, dan pembahasan semua soal. Bayar sekali sesuai durasi, tanpa perpanjangan otomatis.</p>
+  </div>
+</section>
+
+<main class="app-main">
+  <div class="container stack-lg">
+    <p id="pr-status" class="status-msg" role="status" hidden></p>
+    <div id="pr-env" class="callout callout-warn" hidden>
+      <div><strong>Mode uji pembayaran.</strong> <span id="pr-env-text">Pembayaran di halaman ini tidak memotong saldo sungguhan.</span></div>
     </div>
+    <div id="pr-current" class="callout" hidden></div>
+    <div id="pr-pending" class="callout" hidden></div>
+
+    <section aria-labelledby="pl-title">
+      <h2 id="pl-title" class="sr-only">Pilihan paket</h2>
+      <div class="plan-grid" id="pr-plans">
+        <div class="plan-card"><div class="skeleton" style="width:60%"></div><div class="skeleton" style="width:40%;height:28px"></div></div>
+        <div class="plan-card"><div class="skeleton" style="width:60%"></div><div class="skeleton" style="width:40%;height:28px"></div></div>
+        <div class="plan-card"><div class="skeleton" style="width:60%"></div><div class="skeleton" style="width:40%;height:28px"></div></div>
+      </div>
+      <p class="xsmall muted pr-consent">Dengan menekan tombol beli, kamu menyetujui <a href="syarat.html">Syarat &amp; Ketentuan</a> dan <a href="privasi.html">Kebijakan Privasi</a>. Pembayaran diproses oleh Mayar.id (QRIS, virtual account, e-wallet, dan gerai ritel).</p>
+    </section>
+
+    <section class="panel" aria-labelledby="cmp-title">
+      <div class="panel-head"><h2 id="cmp-title">Gratis vs Premium</h2></div>
+      <div class="table-wrap">
+        <table class="cmp-table">
+          <thead><tr><th scope="col">Fitur</th><th scope="col">Gratis</th><th scope="col">Premium</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Cek Kesiapan &amp; panduan CPNS</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Materi level 1 (20 topik SKD)</th><td>✓</td><td>✓</td></tr>
+            <tr><th scope="row">Latihan harian</th><td>10 soal/hari</td><td><b>Tanpa batas</b></td></tr>
+            <tr><th scope="row">Tryout CAT diagnostik</th><td>Kuota per paket</td><td><b>Ulangi tanpa batas</b></td></tr>
+            <tr><th scope="row">Rapor per topik</th><td>1 topik terlemah</td><td><b>Semua topik</b></td></tr>
+            <tr><th scope="row">Pembahasan tryout</th><td>5 soal</td><td><b>Semua soal</b></td></tr>
+            <tr><th scope="row">Rencana belajar</th><td>Rencana dasar</td><td>Rencana dasar · adaptif <span class="chip chip-accent">segera</span></td></tr>
+            <tr><th scope="row">Materi pendalaman level 2–4</th><td>—</td><td><span class="chip chip-accent">segera</span></td></tr>
+            <tr><th scope="row">Tryout Akbar &amp; peringkat nasional</th><td colspan="2"><span class="chip chip-accent">segera</span> diumumkan terpisah</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="xsmall muted">Fitur bertanda <b>segera</b> sedang dikembangkan dan otomatis terbuka bagi pengguna Premium yang masih aktif saat fitur dirilis.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="faq-title">
+      <div class="panel-head"><h2 id="faq-title">Pertanyaan umum</h2></div>
+      <div class="faq">
+        <details><summary>Apakah Premium diperpanjang otomatis?</summary><p>Tidak. Premium berlaku sesuai durasi paket sejak pembayaran berhasil. Jika kamu membeli lagi saat masih aktif, durasinya ditambahkan ke masa aktif yang tersisa.</p></details>
+        <details><summary>Berapa lama sampai Premium aktif?</summary><p>Biasanya beberapa detik setelah pembayaran berhasil. Jika belum aktif, buka halaman status pembayaran atau tunggu paling lama ±15 menit karena sistem mengecek ulang secara otomatis.</p></details>
+        <details><summary>Metode pembayaran apa saja yang tersedia?</summary><p>Metode yang tersedia ditampilkan di halaman pembayaran Mayar, misalnya QRIS, virtual account bank, e-wallet, dan gerai ritel.</p></details>
+        <details><summary>Apakah Premium menjamin lolos CPNS?</summary><p>Tidak ada layanan yang dapat menjamin kelulusan. Premium membantu kamu berlatih lebih banyak dan memahami kelemahan secara lebih rinci.</p></details>
+        <details><summary>Bagaimana jika ada kendala pembayaran?</summary><p>Hubungi kami melalui kontak di <a href="syarat.html#kontak">Syarat &amp; Ketentuan</a> dengan menyertakan kode transaksi (diawali <code>trx_</code>).</p></details>
+      </div>
+    </section>
   </div>
 </main>
-<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
 <script type="module">
   import { hydrateCommon } from "../assets/js/core/ui.js";
-  import { initPlaceholder } from "../assets/js/features/placeholder.js";
   hydrateCommon();
-  initPlaceholder();
+  import("../assets/js/features/premium.js").then((m) => m.initPremium());
 </script>
 </body>
 </html>
