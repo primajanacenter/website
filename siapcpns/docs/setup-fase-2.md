@@ -103,4 +103,4 @@ Commit & push → situs ter-deploy ulang.
 ```bash
 node backend/tests/gas-harness.test.js
 ```
-Menjalankan 29 uji (login, token palsu/kedaluwarsa, validasi profil, manipulasi skor, formula injection, dll.) dengan simulasi layanan Google.
+Menjalankan 51 uji (login, token palsu/kedaluwarsa, validasi profil, manipulasi skor, formula injection, dll.) dengan simulasi layanan Google.

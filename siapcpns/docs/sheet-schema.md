@@ -32,8 +32,8 @@ assessment_id · user_id (kosong jika belum login) · version · total · level_
 ### `waitlist`
 email · source · created_at
 
-### `attempts`
-attempt_id · user_id · type (diagnostic/practice/akbar) · started_at · submitted_at · twk · tiu · tkp · total · passed_twk · passed_tiu · passed_tkp · answers_json
+### `attempts` (Fase 3)
+attempt_id · user_id · package_id · type · status (in_progress/submitted) · started_at · ends_at · submitted_at · twk · tiu · tkp · total · passed_twk · passed_tiu · passed_tkp · passed_all · answered · correct_json · topic_json · answers_json · duration_sec · finish_mode (manual/timeout/late/auto)
 
 ### `topic_levels` (Fase 4)
 user_id · topic_id · level (1–4) · accuracy · avg_seconds · updated_at
@@ -46,11 +46,13 @@ received_at · event · trx_id · raw_json · result
 
 ## Bank soal
 
-### `questions`
-question_id · subtest (TWK/TIU/TKP) · topic_id · level (1–4) · text · option_a … option_e · answer (TWK/TIU: huruf benar) · score_a … score_e (TKP: 1–5) · explanation · status (draft/review/live) · source · created_by
+### `packages` (Fase 3)
+package_id · title · type · description · duration_min · pg_twk · pg_tiu · pg_tkp · free_attempts · status · order
 
-### `topics`
-topic_id · subtest · name · order
+### `questions` (Fase 3)
+question_id · package_id · number · subtest · topic_id · level · text · context · option_a … option_e · answer · score_a … score_e · explanation · status · source
+
+Daftar topik ada di konstanta `TOPICS` pada `Tryout.gs`. Panduan pengisian lengkap: `docs/setup-fase-3.md`.
 
 ### `materials`
 material_id · topic_id · level (1–4) · title · body_markdown · video_url · status

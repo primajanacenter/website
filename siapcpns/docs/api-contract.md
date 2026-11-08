@@ -27,9 +27,11 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `login` | 2 | Ya | `{ assessment? }` (hasil Cek Kesiapan lokal untuk ditautkan) | `{ user, profile, profileComplete, latestAssessment, isNew, attachedAssessmentId }` | ✅ mock + backend |
 | `getMe` | 2 | Ya | – | `{ user: { userId, email, name, picture, plan, premiumUntil }, profile, profileComplete, latestAssessment }` | ✅ mock + backend |
 | `saveProfile` | 2 | Ya | `{ education, major, targetFormation, targetProvince, testDate, targetType, minutesPerDay, daysPerWeek, reminderTime }` | `{ profile, profileComplete }` | ✅ mock + backend |
-| `startAttempt` | 3 | Ya | `{ type: "diagnostic" \| "practice" \| "akbar" }` | `{ attemptId, questions[] (tanpa kunci), endsAt }` | ⏳ |
-| `submitAttempt` | 3 | Ya | `{ attemptId, answers{} }` | `{ scores: { twk, tiu, tkp, total }, passed: { twk, tiu, tkp } }` | ⏳ |
-| `getReport` | 3/6 | Ya | `{ attemptId }` | ringkas (gratis) / detail per topik (premium) | ⏳ |
+| `getTryoutInfo` | 3 | Ya | – | `{ packages: [{ packageId, title, type, durationMin, pg, questionCount, attempts[], inProgress, canStart, lockReason }], plan, serverNow }` | ✅ |
+| `startAttempt` | 3 | Ya | `{ packageId }` | `{ attemptId, title, durationMin, startedAt, endsAt, serverNow, questions[] (tanpa kunci), answers{} }` — melanjutkan jika masih berjalan | ✅ |
+| `saveProgress` | 3 | Ya | `{ attemptId, answers{} }` | `{ saved, count, savedAt }` | ✅ |
+| `submitAttempt` | 3 | Ya | `{ attemptId, answers{}, finishMode }` | `{ attemptId, status }` (idempoten) | ✅ |
+| `getReport` | 3/6 | Ya | `{ attemptId }` | `{ total, maxTotal, passedAll, subtests[], topics[] (gratis: 1 terbuka), review[] (gratis: 5), topicsLocked, reviewLocked, … }` | ✅ |
 | `getPractice` / `submitPractice` | 4 | Ya | – | soal latihan & hasil | ⏳ |
 | `getMaterial` | 4/6 | Ya | `{ topic, level }` | isi materi (level 2–4 butuh premium) | ⏳ |
 | `getPlan` | 4/6 | Ya | – | rencana harian/mingguan | ⏳ |
@@ -43,6 +45,9 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | Kode | Arti |
 |---|---|
 | `UNAUTHENTICATED` | Belum login / token tidak valid |
+| `NOT_FOUND` | Paket/attempt tidak ada atau bukan milik pengguna |
+| `NOT_FINISHED` | Rapor diminta saat ujian masih berjalan |
+| `BUSY` | Server sedang memproses permintaan lain, coba lagi |
 | `FORBIDDEN` | Fitur butuh premium |
 | `BAD_REQUEST` | Format permintaan salah |
 | `UNKNOWN_ACTION` | Action tidak dikenal |
