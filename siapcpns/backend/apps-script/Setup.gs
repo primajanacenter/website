@@ -20,6 +20,7 @@ function setupSheets() {
   });
   var def = ss.getSheetByName('Sheet1') || ss.getSheetByName('Lembar1');
   if (def && def.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(def);
+  if (seedPlans_()) Logger.log('Sheet plans diisi 3 paket awal (ubah harga langsung di sheet, lalu jalankan refreshPlanCache).');
   Logger.log('Selesai. Jalankan testBackend() untuk uji cepat.');
 }
 

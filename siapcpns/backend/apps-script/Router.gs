@@ -38,11 +38,12 @@ function getRoutes_() {
     // Fase 4
     getToday:       { handler: handleGetToday_,       auth: 'required' },
     startPractice:  { handler: handleStartPractice_,  auth: 'required' },
-    answerPractice: { handler: handleAnswerPractice_, auth: 'required' }
+    answerPractice: { handler: handleAnswerPractice_, auth: 'required' },
 
     // Fase 5
-    // createCheckout:   { handler: handleCreateCheckout_,   auth: 'required' },
-    // getPaymentStatus: { handler: handleGetPaymentStatus_, auth: 'required' }
+    getPlans:         { handler: handleGetPlans_,         auth: 'optional' },
+    createCheckout:   { handler: handleCreateCheckout_,   auth: 'required' },
+    getPaymentStatus: { handler: handleGetPaymentStatus_, auth: 'required' }
   };
 }
 

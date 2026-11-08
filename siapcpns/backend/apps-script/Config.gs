@@ -7,7 +7,7 @@
  * Properti yang dibutuhkan (diisi bertahap):
  *   Fase 2: SPREADSHEET_ID, GOOGLE_CLIENT_ID, ALLOWED_ORIGIN
  *   Fase 3: QUESTIONS_FOLDER_ID (folder Drive, 1 file = 1 paket) dan/atau QUESTIONS_SPREADSHEET_ID
- *   Fase 5: MAYAR_API_KEY, MAYAR_BASE_URL, WEBHOOK_TOKEN
+ *   Fase 5: MAYAR_API_KEY, MAYAR_BASE_URL, WEBHOOK_TOKEN (+ opsional APP_BASE_URL, WEBAPP_URL)
  */
 
 var REQUIRED_KEYS = {

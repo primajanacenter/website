@@ -29,7 +29,15 @@ var SCHEMA = {
   ],
   practice_answers: [
     'user_id', 'date', 'question_id', 'package_id', 'topic_id', 'subtest', 'answer', 'points', 'answered_at'
-  ]
+  ],
+  // Fase 5: pembayaran
+  plans: ['plan_id', 'name', 'duration_days', 'price', 'price_before', 'badge', 'description', 'status', 'order'],
+  transactions: [
+    'trx_id', 'user_id', 'email', 'plan_id', 'plan_name', 'duration_days', 'amount', 'status',
+    'mayar_id', 'mayar_trx_id', 'payment_url', 'created_at', 'expires_at', 'paid_at', 'processed',
+    'premium_until', 'source', 'note'
+  ],
+  webhook_log: ['received_at', 'event', 'trx_id', 'mayar_ref', 'result', 'raw_json']
 };
 
 /** Struktur sheet di file BANK SOAL (QUESTIONS_SPREADSHEET_ID). Hanya bisa dibaca server. */
