@@ -189,7 +189,7 @@ Object.assign(mockHandlers, {
 });
 const SUBTEST_NAMES = { twk: "Tes Wawasan Kebangsaan", tiu: "Tes Intelegensia Umum", tkp: "Tes Karakteristik Pribadi" };
 const TOPIC_NAMES = {
-  "twk-pancasila": "Pancasila", "twk-uud": "UUD 1945", "twk-nkri": "NKRI", "twk-bhinneka": "Bhinneka Tunggal Ika", "twk-nasionalisme": "Nasionalisme", "twk-integritas": "Integritas", "twk-belanegara": "Bela negara",
+  "twk-pancasila": "Pancasila", "twk-uud": "UUD 1945", "twk-nkri": "NKRI", "twk-bhinneka": "Bhinneka Tunggal Ika", "twk-nasionalisme": "Nasionalisme", "twk-integritas": "Integritas", "twk-belanegara": "Bela negara", "twk-bahasa": "Bahasa negara",
   "tiu-analogi": "Analogi", "tiu-silogisme": "Silogisme", "tiu-analitis": "Penalaran analitis", "tiu-deret": "Deret angka", "tiu-hitung": "Hitungan & perbandingan", "tiu-cerita": "Soal cerita", "tiu-figural": "Figural",
   "tkp-pelayanan": "Pelayanan publik", "tkp-jejaring": "Jejaring kerja", "tkp-sosbud": "Sosial budaya", "tkp-tik": "Teknologi informasi", "tkp-profesionalisme": "Profesionalisme", "tkp-antiradikalisme": "Anti-radikalisme",
 };
