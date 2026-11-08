@@ -20,7 +20,7 @@ export const CONFIG = {
   USE_MOCK: true,
 
   // Diisi di Fase 2: URL dari Deploy > Web app (berakhiran /exec).
-  APPS_SCRIPT_URL: "",
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwSDilVMMG3nE6LW-d2e4lbg5keUBttfqWcGGfSxbCFmPFn0dJ3pMouTbuwqpm68vmE/exec",
 
   // Diisi di Fase 2: OAuth Client ID dari Google Cloud Console (untuk Google Sign-In).
   GOOGLE_CLIENT_ID: "147292358449-k4p0l3fnur271gmduq0su3lcp15l8va1.apps.googleusercontent.com",
