@@ -10,6 +10,7 @@ import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
 import { store, KEYS } from "../core/store.js";
 import { $, esc, fmtDate } from "../core/ui.js";
+import { buildPlan, taskDone } from "./plan.js";
 
 const LEVELS = {
   "baru-mulai": { label: "Baru mulai", chip: "chip-warn" },
@@ -51,7 +52,45 @@ export async function initDashboard() {
   const me = store.get(KEYS.ME);
   if (me && !me.profileComplete) {
     location.replace(`onboarding.html?next=${encodeURIComponent("dashboard.html")}`);
+    return;
   }
+
+  // Tugas hari ini (selalu data terbaru)
+  const t = await api.call("getToday");
+  if (t.ok) {
+    renderToday(t.data);
+    renderTasks(store.get(KEYS.ME) || me, t.data);
+  } else {
+    $("#today-card").hidden = true;
+  }
+}
+
+function renderToday(today) {
+  const plan = buildPlan(today);
+  $("#today-date").textContent = new Date().toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long" });
+  $("#today-streak").textContent = today.streak;
+  const p = today.practice;
+  $("#today-quota").textContent =
+    p.dailyLimit === null
+      ? `Latihan hari ini: ${p.doneToday} soal (Premium, tanpa batas)`
+      : `Latihan hari ini: ${p.doneToday}/${p.dailyLimit} soal · ${p.correctToday} tepat`;
+
+  const day = plan.today;
+  const list = $("#today-tasks");
+  if (!day || !day.study) {
+    $("#today-title").textContent = "Hari istirahat";
+    list.innerHTML = `<li><span class="ck">☕</span><div><b>Tidak ada jadwal belajar hari ini</b><br><small>Istirahat juga bagian dari rencana. Jika ingin tetap berlatih, kuota latihan tetap tersedia.</small></div><a class="btn btn-secondary" style="min-height:36px;padding:0 14px" href="latihan.html">Latihan</a></li>`;
+    return;
+  }
+  const doneCount = day.tasks.filter((t) => taskDone(t, today)).length;
+  $("#today-title").textContent = doneCount === day.tasks.length ? "Semua tugas hari ini selesai 🎉" : `Tugas belajar hari ini (${doneCount}/${day.tasks.length})`;
+  list.innerHTML = day.tasks
+    .map((t) => {
+      const done = taskDone(t, today);
+      const cta = done ? `<span class="chip chip-ok">Selesai</span>` : `<a class="btn btn-primary" style="min-height:36px;padding:0 14px" href="${t.href}">${t.type === "materi" ? "Baca" : t.type === "tryout" ? "Mulai" : "Kerjakan"}</a>`;
+      return `<li class="${done ? "done" : ""}"><span class="ck">${done ? "✓" : ""}</span><div><b>${esc(t.label)}</b><br><small>± ${t.minutes} menit</small></div>${cta}</li>`;
+    })
+    .join("");
 }
 
 function render(me) {
@@ -74,12 +113,12 @@ function renderWelcome(user) {
   $("#d-plan").textContent = user.plan === "premium" ? `Premium s.d. ${fmtDate(user.premiumUntil)}` : "Paket Gratis";
 }
 
-function renderTasks(me) {
+function renderTasks(me, today = null) {
   const tasks = [
     { title: "Cek kesiapan", desc: "Kenali posisimu sekarang", done: Boolean(me.latestAssessment), href: "../#cek-kesiapan", cta: "Mulai" },
     { title: "Lengkapi profil & target", desc: "Pendidikan, target, komitmen belajar", done: Boolean(me.profileComplete), href: "onboarding.html?next=dashboard.html", cta: "Isi" },
     tryoutTask(me.latestAttempt),
-    { title: "Latihan harian & materi", desc: "Sesuai level dan topik terlemahmu", done: false, locked: true },
+    { title: "Latihan harian & materi", desc: "10 soal per hari sesuai topik terlemahmu", done: Boolean(today && (today.streak > 0 || today.practice.doneToday > 0)), href: "latihan.html", cta: "Mulai" },
     { title: "Tryout Akbar mingguan", desc: "Peringkat nasional setiap minggu", done: false, locked: true },
   ];
   const nextIdx = tasks.findIndex((t) => !t.done && !t.locked);
