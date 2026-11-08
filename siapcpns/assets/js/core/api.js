@@ -180,10 +180,10 @@ Object.assign(mockHandlers, {
       startedAt: a.startedAt, submittedAt: a.submittedAt, durationSec: a.durationSec, finishMode: a.finishMode,
       total: a.total, maxTotal: qs.length * 5, passedAll: a.passedAll, answered: Object.keys(a.answers).length, questionCount: qs.length,
       subtests: ["twk", "tiu", "tkp"].map((id) => ({ id, label: SUBTEST_NAMES[id], score: a.sub[id].score, max: a.sub[id].max, passingGrade: info.pg[id], passed: a.passed[id], answered: a.sub[id].answered, total: a.sub[id].total, correct: a.sub[id].correct })),
-      topics: topics.map((t, i) => (i === 0 ? t : { topicId: t.topicId, name: t.name, subtest: t.subtest, locked: true })),
-      topicsLocked: topics.length > 1,
-      review: wrong.sort((x, y) => x.w - y.w || x.number - y.number).slice(0, 5).sort((x, y) => x.number - y.number).map(({ w, ...r }) => r),
-      reviewLocked: true, reviewTotal: wrong.length, premium: false,
+      topics: mockPremium(mockDb()) ? topics : topics.map((t, i) => (i === 0 ? t : { topicId: t.topicId, name: t.name, subtest: t.subtest, locked: true })),
+      topicsLocked: !mockPremium(mockDb()) && topics.length > 1,
+      review: (mockPremium(mockDb()) ? pool : wrong.sort((x, y) => x.w - y.w || x.number - y.number).slice(0, 5)).sort((x, y) => x.number - y.number).map(({ w, ...r }) => r),
+      reviewLocked: !mockPremium(mockDb()), reviewTotal: wrong.length, premium: mockPremium(mockDb()),
     };
   },
 });
@@ -212,10 +212,12 @@ Object.assign(mockHandlers, {
     let streak = 0; const c = new Date(); if (!days.has(today)) c.setDate(c.getDate() - 1);
     while (days.has(new Date(c.getTime() - c.getTimezoneOffset() * 60000).toISOString().slice(0, 10))) { streak++; c.setDate(c.getDate() - 1); }
     return {
-      date: today, profile: db.profile, plan: "free", streak,
+      date: today, profile: db.profile, plan: mockPremium(db) ? "premium" : "free", streak,
       focusTopics: focus.map((k) => ({ topicId: k, name: TOPIC_NAMES[k] || k, subtest: k.slice(0, 3) })),
       topicLevels: levels,
-      practice: { doneToday: done.length, correctToday: done.filter((h) => h.points >= 4).length, dailyLimit: FREE_DAILY, remaining: Math.max(0, FREE_DAILY - done.length), bankSize: d.questions.length },
+      practice: mockPremium(db)
+        ? { doneToday: done.length, correctToday: done.filter((h) => h.points >= 4).length, dailyLimit: null, remaining: 10, bankSize: d.questions.length }
+        : { doneToday: done.length, correctToday: done.filter((h) => h.points >= 4).length, dailyLimit: FREE_DAILY, remaining: Math.max(0, FREE_DAILY - done.length), bankSize: d.questions.length },
       hasTryout: (db.attempts || []).some((a) => a.status === "submitted"),
     };
   },
@@ -223,7 +225,8 @@ Object.assign(mockHandlers, {
     requireMockSession();
     const db = mockDb(); const qs = demoQuestions(await demoPkg());
     const done = (db.practice || []).filter((h) => h.date === todayLocal()).length;
-    const remaining = FREE_DAILY - done;
+    const premium = mockPremium(db);
+    const remaining = premium ? 10 : FREE_DAILY - done;
     if (remaining <= 0) throw apiError("DAILY_LIMIT", "Kuota latihan gratis hari ini sudah habis. Lanjutkan besok, atau pelajari materi sambil menunggu.");
     let pool = topicId ? qs.filter((q) => q.topicId === topicId) : qs;
     if (!pool.length) throw apiError("NOT_FOUND", "Belum ada soal latihan untuk topik ini.");
@@ -231,7 +234,7 @@ Object.assign(mockHandlers, {
     const sessionId = "p_mock_" + Date.now();
     db.practiceSession = { sessionId, ids: pool.map((q) => q.id), answered: {} };
     saveMockDb(db);
-    return { sessionId, topicId: topicId || null, remainingToday: remaining, dailyLimit: FREE_DAILY,
+    return { sessionId, topicId: topicId || null, remainingToday: premium ? null : remaining, dailyLimit: premium ? null : FREE_DAILY,
       questions: pool.map((q) => ({ id: q.id, number: q.number, subtest: q.subtest, topicId: q.topicId, text: q.text, context: q.context, options: q.options.map(({ key, text }) => ({ key, text })) })) };
   },
   async answerPractice({ sessionId, questionId, answer }) {
@@ -251,6 +254,71 @@ Object.assign(mockHandlers, {
       optionScores: q.subtest === "tkp" ? q.options.map((o) => ({ key: o.key, score: o.score })) : null, explanation: q.explanation, topic: TOPIC_NAMES[q.topicId] || q.topicId };
   },
 });
+// ---------- Fase 5: pembayaran (mode uji: disimulasikan di browser) ----------
+const MOCK_PLANS = [
+  { planId: "P1M", name: "Premium 1 bulan", durationDays: 30, price: 49000, priceBefore: null, badge: "", description: "Cocok untuk persiapan singkat menjelang tes.", order: 1 },
+  { planId: "P3M", name: "Premium 3 bulan", durationDays: 90, price: 119000, priceBefore: 147000, badge: "Paling populer", description: "Waktu ideal untuk menutup topik lemah secara bertahap.", order: 2 },
+  { planId: "P6M", name: "Premium 6 bulan", durationDays: 180, price: 179000, priceBefore: 294000, badge: "Paling hemat", description: "Untuk yang mulai jauh hari sampai hari-H SKD.", order: 3 },
+];
+function mockPremium(db) {
+  return Boolean(db.user && db.user.plan === "premium" && db.user.premiumUntil && new Date(db.user.premiumUntil) > new Date());
+}
+function mockPublicTrx(t) {
+  return { ...t, paymentUrl: t.status === "pending" ? t.paymentUrl : "" };
+}
+Object.assign(mockHandlers, {
+  async getPlans() {
+    const out = { plans: MOCK_PLANS, env: "mock", current: null, pending: null, history: [] };
+    if (auth.isLoggedIn()) {
+      const db = mockDb();
+      if (db.user) {
+        out.current = { plan: mockPremium(db) ? "premium" : "free", premiumUntil: db.user.premiumUntil || "" };
+        const list = (db.transactions || []).slice(-5).reverse();
+        out.history = list.map(mockPublicTrx);
+        const p = list.find((t) => t.status === "pending" && new Date(t.expiresAt) > new Date());
+        out.pending = p ? mockPublicTrx(p) : null;
+      }
+    }
+    return out;
+  },
+  async createCheckout({ planId }) {
+    requireMockSession();
+    const plan = MOCK_PLANS.find((p) => p.planId === planId);
+    if (!plan) throw apiError("BAD_REQUEST", "Paket tidak ditemukan.");
+    const db = mockDb();
+    const trxId = "trx_mock" + Date.now().toString(36);
+    const t = { trxId, planId, planName: plan.name, amount: plan.price, durationDays: plan.durationDays, status: "pending",
+      paymentUrl: `status-bayar.html?trx=${trxId}`, createdAt: new Date().toISOString(), expiresAt: new Date(Date.now() + 86400000).toISOString(), paidAt: "", premiumUntil: "" };
+    (db.transactions ||= []).push(t);
+    saveMockDb(db);
+    return { trxId, paymentUrl: t.paymentUrl, expiresAt: t.expiresAt, reused: false };
+  },
+  async getPaymentStatus({ trxId }) {
+    requireMockSession();
+    const db = mockDb();
+    const t = (db.transactions || []).find((x) => x.trxId === trxId);
+    if (!t) throw apiError("NOT_FOUND", "Transaksi tidak ditemukan.");
+    return { transaction: mockPublicTrx(t), plan: mockPremium(db) ? "premium" : "free", premiumUntil: db.user.premiumUntil || "" };
+  },
+  // Khusus mode uji: tombol "Simulasikan berhasil/kedaluwarsa" di halaman status
+  async mockSimulatePayment({ trxId, result }) {
+    requireMockSession();
+    const db = mockDb();
+    const t = (db.transactions || []).find((x) => x.trxId === trxId);
+    if (!t || t.status !== "pending") return { ok: false };
+    if (result === "paid") {
+      const base = mockPremium(db) ? new Date(db.user.premiumUntil).getTime() : Date.now();
+      const until = new Date(base + t.durationDays * 86400000).toISOString();
+      Object.assign(t, { status: "paid", paidAt: new Date().toISOString(), premiumUntil: until.slice(0, 10) });
+      db.user.plan = "premium"; db.user.premiumUntil = until.slice(0, 10);
+    } else {
+      t.status = "expired";
+    }
+    saveMockDb(db);
+    return { ok: true };
+  },
+});
+
 const SUBTEST_NAMES = { twk: "Tes Wawasan Kebangsaan", tiu: "Tes Intelegensia Umum", tkp: "Tes Karakteristik Pribadi" };
 const TOPIC_NAMES = {
   "twk-pancasila": "Pancasila", "twk-uud": "UUD 1945", "twk-nkri": "NKRI", "twk-bhinneka": "Bhinneka Tunggal Ika", "twk-nasionalisme": "Nasionalisme", "twk-integritas": "Integritas", "twk-belanegara": "Bela negara", "twk-bahasa": "Bahasa negara",
