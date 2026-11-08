@@ -111,6 +111,8 @@ function renderWelcome(user) {
     av.textContent = first.charAt(0).toUpperCase();
   }
   $("#d-plan").textContent = user.plan === "premium" ? `Premium s.d. ${fmtDate(user.premiumUntil)}` : "Paket Gratis";
+  const up = $("#d-upsell");
+  if (up) up.hidden = user.plan === "premium";
 }
 
 function renderTasks(me, today = null) {
