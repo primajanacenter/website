@@ -17,9 +17,13 @@ class Sheet{ constructor(n){this.name=n;this.rows=[];this.maxRows=1000;}
   }}
   setFrozenRows(){}
   deleteRow(r){this.rows.splice(r-1,1)}
+  getLastColumn(){return this.rows.reduce((m,r)=>Math.max(m,r.length),0)}
+  setName(n){this.name=n;return this}
 }
 function makeSS(store){return {getSheetByName:n=>store[n]||null,insertSheet:n=>(store[n]=new Sheet(n)),getSheets:()=>Object.values(store),deleteSheet:s=>delete store[s.name]};}
 const sheets={}; const ss=makeSS(sheets); const qsheets={}; const qss=makeSS(qsheets);
+const files={}; // id -> {ss, name, folder}
+function newFile(id,name,folder,store={}){const s2=makeSS(store); s2.getId=()=>id; s2.getUrl=()=>'https://x/'+id; files[id]={ss:s2,name,folder,store}; return s2;}
 const props={SPREADSHEET_ID:'sheet123',QUESTIONS_SPREADSHEET_ID:'qsheet456',GOOGLE_CLIENT_ID:'client-abc.apps.googleusercontent.com'};
 const cacheStore={};
 let tokeninfoCalls=0;
@@ -31,7 +35,11 @@ const tokens={ // fake id tokens -> claims
 };
 const ctx={
  console, JSON, Math, Date, Number, String, Object, Array, isNaN, encodeURIComponent,
- SpreadsheetApp:{openById:id=>{if(id==='sheet123')return ss;if(id==='qsheet456')return qss;throw new Error('bad id')}},
+ SpreadsheetApp:{openById:id=>{if(id==='sheet123')return ss;if(id==='qsheet456')return qss;if(files[id])return files[id].ss;throw new Error('bad id')},
+   create:name=>{const id='new'+Object.keys(files).length;const st={};const s2=newFile(id,name,null,st);st['Sheet1']=new Sheet('Sheet1');s2.getSheets=()=>Object.values(st);const orig=st['Sheet1'];orig.setName=n=>{delete st['Sheet1'];orig.name=n;st[n]=orig;return orig};return s2}},
+ DriveApp:{getFolderById:fid=>({_id:fid,getFilesByType:()=>{const list=Object.entries(files).filter(([id,f])=>f.folder===fid).map(([id,f])=>({getId:()=>id,getName:()=>f.name,isTrashed:()=>false}));let i=0;return {hasNext:()=>i<list.length,next:()=>list[i++]}}}),
+   getFileById:id=>({moveTo:folder=>{files[id].folder=folder._id}})},
+ MimeType:{GOOGLE_SHEETS:'sheets'},
  PropertiesService:{getScriptProperties:()=>({getProperty:k=>props[k]||null,getProperties:()=>props})},
  CacheService:{getScriptCache:()=>({get:k=>cacheStore[k]??null,put:(k,v)=>{cacheStore[k]=v},putAll:m=>Object.assign(cacheStore,m),getAll:ks=>Object.fromEntries(ks.filter(k=>k in cacheStore).map(k=>[k,cacheStore[k]])),remove:k=>{delete cacheStore[k]}})},
  LockService:{getScriptLock:()=>({tryLock:()=>true,releaseLock(){}})},
@@ -145,5 +153,49 @@ const diag=info.data.packages.find(p=>p.packageId==='DIAG-01');
 check('diag default passing grade & lock reason', diag.pg.twk===65 && diag.lockReason==='FREE_LIMIT' && !diag.canStart, diag);
 check('getMe latestAttempt', post('getMe',{},'h.alice.s').data.latestAttempt.status==='submitted');
 check('unknown package', post('startAttempt',{packageId:'NOPE'},'h.alice.s').error.code==='NOT_FOUND');
+
+
+// ================= Mode folder: 1 file = 1 paket =================
+function pkgFile(id,name,pkgRow,qRows,folder='folderA'){const st={};newFile(id,name,folder,st);
+  st.packages=new Sheet('packages'); st.packages.rows=[['package_id','title','type','description','duration_min','pg_twk','pg_tiu','pg_tkp','free_attempts','status','order'],pkgRow];
+  st.questions=new Sheet('questions'); st.questions.rows=qRows; return st;}
+const QH=['question_id','package_id','number','subtest','topic_id','level','text','context','option_a','option_b','option_c','option_d','option_e','answer','score_a','score_b','score_c','score_d','score_e','explanation','status','source'];
+// file with SHUFFLED column order to prove header-based reading
+const QH2=[...QH].reverse();
+const mk=(pid,h)=>demo.questions.map(q=>{const o={question_id:pid+'-'+q.number,package_id:pid,number:q.number,subtest:q.subtest,topic_id:q.topic_id,level:q.level,text:q.text,context:q.context||'',answer:q.answer||'',explanation:q.explanation,status:'live',source:'t'};'abcde'.split('').forEach((l,i)=>{o['option_'+l]=q.options[i];o['score_'+l]=q.scores?q.scores[i]:''});return h.map(k=>o[k]);});
+pkgFile('f1','Paket P-01',['P-01','Paket Satu','diagnostic','',100,'','','',1,'live',1],[QH,...mk('P-01',QH)]);
+pkgFile('f2','Paket P-02',['P-02','Paket Dua','diagnostic','',90,'','','','','live',2],[QH2,...mk('P-02',QH2)]);
+pkgFile('f3','Paket P-03 draft',['P-03','Draft','diagnostic','',100,'','','','','draft',3],[QH,...mk('P-03',QH)]);
+pkgFile('f4','Duplikat',['P-01','Duplikat P-01','diagnostic','',100,'','','','','live',4],[QH,...mk('P-01',QH)]);
+const bad={}; newFile('f5','Rusak','folderA',bad); // file tanpa sheet
+pkgFile('f6','Folder lain',['X-01','Lain','diagnostic','',100,'','','','','live',1],[QH,...mk('X-01',QH)],'folderB');
+props.QUESTIONS_FOLDER_ID='folderA';
+ctx.refreshQuestionCache();
+info=post('getTryoutInfo',{},'h.alice.s');
+const ids=info.data.packages.map(p=>p.packageId);
+check('folder: live packages from files + bank merged', ids.includes('P-01')&&ids.includes('P-02')&&ids.includes('DEMO-01')&&ids.includes('DIAG-01'), ids);
+check('folder: draft hidden, other folder ignored', !ids.includes('P-03')&&!ids.includes('X-01'), ids);
+check('folder: duplicate id kept once', ids.filter(x=>x==='P-01').length===1 && info.data.packages.find(p=>p.packageId==='P-01').title==='Paket Satu');
+check('folder: fileId not exposed', !JSON.stringify(info.data).includes('fileId'));
+check('folder: shuffled columns read correctly', info.data.packages.find(p=>p.packageId==='P-02').questionCount===15 && info.data.packages.find(p=>p.packageId==='P-02').durationMin===90);
+let fst=post('startAttempt',{packageId:'P-02'},'h.bob.s');
+const fq=fst.data.questions; const fans={}; fq.forEach((q,i)=>{const src=demo.questions[i]; fans[q.id]= src.answer || 'abcde'[src.scores.indexOf(5)];});
+post('submitAttempt',{attemptId:fst.data.attemptId,answers:fans},'h.bob.s');
+let frep=post('getReport',{attemptId:fst.data.attemptId},'h.bob.s');
+check('folder: perfect answers score 75 (shuffled columns), default PG applied', frep.data.total===75 && frep.data.subtests[0].passingGrade===65, frep.data&&frep.data.total);
+// new file appears after refresh
+pkgFile('f7','Paket P-07',['P-07','Paket Tujuh','diagnostic','',100,'','','','','live',7],[QH,...mk('P-07',QH)]);
+check('folder: new file hidden until cache refresh', !post('getTryoutInfo',{},'h.alice.s').data.packages.some(p=>p.packageId==='P-07'));
+ctx.warmQuestionCache();
+check('folder: new file visible after warm', post('getTryoutInfo',{},'h.alice.s').data.packages.some(p=>p.packageId==='P-07'));
+// folder only mode (no single bank)
+delete props.QUESTIONS_SPREADSHEET_ID; ctx.refreshQuestionCache();
+const ids2=post('getTryoutInfo',{},'h.alice.s').data.packages.map(p=>p.packageId);
+check('folder-only mode works', ids2.includes('P-01') && !ids2.includes('DEMO-01'), ids2);
+ctx.createDemoPackageFile();
+check('createDemoPackageFile into folder', post('getTryoutInfo',{},'h.alice.s').data.packages.some(p=>p.packageId==='DEMO-01'));
+ctx.checkQuestionFolder();
+delete props.QUESTIONS_FOLDER_ID; ctx.clearPackageCache_(null);
+check('no source -> clear config error', post('getTryoutInfo',{},'h.alice.s').error.code==='CONFIG_MISSING');
 
 console.log(fails? `\n${fails} FAILED` : '\nALL PASSED');
