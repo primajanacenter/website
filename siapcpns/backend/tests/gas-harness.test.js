@@ -33,6 +33,27 @@ const tokens={ // fake id tokens -> claims
  'h.wrongaud.s':{aud:'other',iss:'accounts.google.com',exp:Math.floor(Date.now()/1000)+3000,email:'eve@x.com',email_verified:'true'},
  'h.expired.s':{aud:props.GOOGLE_CLIENT_ID,iss:'accounts.google.com',exp:Math.floor(Date.now()/1000)-10,email:'old@x.com',email_verified:'true'},
 };
+// ---- Mayar API V2 palsu ----
+const mayar={payments:{},calls:[],failCreate:false,rejectRedirect:false,seq:0};
+function mayarMock(url,opts){
+  const path=url.split('/hl/v2')[1]; const method=(opts.method||'get').toLowerCase();
+  const body=opts.payload?JSON.parse(opts.payload):null; mayar.calls.push({method,path,body,auth:(opts.headers||{}).Authorization});
+  const reply=(code,obj)=>({getResponseCode:()=>code,getContentText:()=>JSON.stringify(obj)});
+  if((opts.headers||{}).Authorization!=='Bearer test-key') return reply(401,{statusCode:401,messages:'Unauthorized'});
+  if(method==='post'&&path==='/payments/create'){
+    if(mayar.failCreate) return reply(500,{statusCode:500,messages:'Internal error'});
+    if(mayar.rejectRedirect&&body.redirectUrl) return reply(200,{statusCode:400,messages:'redirectUrl is not supported on payment requests and was not saved'});
+    const id='pr_'+(++mayar.seq), tid='tx_'+mayar.seq;
+    mayar.payments[id]={id,transactionId:tid,status:'unpaid',amount:body.amount,body};
+    return reply(200,{statusCode:200,messages:'success',data:{id,transactionId:tid,link:'https://sandbox.myr.id/pl/'+id}});
+  }
+  let m=path.match(/^\/payments\/(.+)$/);
+  if(method==='get'&&m){const p=mayar.payments[decodeURIComponent(m[1])];return p?reply(200,{statusCode:200,messages:'success',data:{id:p.id,status:p.status,amount:p.amount,transactions:[]}}):reply(404,{statusCode:404,messages:'not found'});}
+  m=path.match(/^\/transactions\/(.+)$/);
+  if(method==='get'&&m){const p=Object.values(mayar.payments).find(x=>x.transactionId===decodeURIComponent(m[1]));return p?reply(200,{statusCode:200,messages:'success',data:{id:p.transactionId,status:p.status,amount:p.amount}}):reply(404,{statusCode:404,messages:'Transaction not found'});}
+  if(method==='post'&&path==='/webhooks/update') return reply(200,{statusCode:200,messages:'success'});
+  return reply(404,{statusCode:404,messages:'unknown'});
+}
 const ctx={
  console, JSON, Math, Date, Number, String, Object, Array, isNaN, encodeURIComponent,
  SpreadsheetApp:{openById:id=>{if(id==='sheet123')return ss;if(id==='qsheet456')return qss;if(files[id])return files[id].ss;throw new Error('bad id')},
@@ -43,7 +64,7 @@ const ctx={
  PropertiesService:{getScriptProperties:()=>({getProperty:k=>props[k]||null,getProperties:()=>props})},
  CacheService:{getScriptCache:()=>({get:k=>cacheStore[k]??null,put:(k,v)=>{cacheStore[k]=v},putAll:m=>Object.assign(cacheStore,m),getAll:ks=>Object.fromEntries(ks.filter(k=>k in cacheStore).map(k=>[k,cacheStore[k]])),remove:k=>{delete cacheStore[k]}})},
  LockService:{getScriptLock:()=>({tryLock:()=>true,releaseLock(){}})},
- UrlFetchApp:{fetch:(url)=>{tokeninfoCalls++;const t=decodeURIComponent(url.split('id_token=')[1]);const c=tokens[t];
+ UrlFetchApp:{fetch:(url,opts)=>{if(url.includes('/hl/v2/'))return mayarMock(url,opts||{});tokeninfoCalls++;const t=decodeURIComponent(url.split('id_token=')[1]);const c=tokens[t];
    return {getResponseCode:()=>c?200:400,getContentText:()=>JSON.stringify(c||{error:'invalid_token'})}}},
  Utilities:{getUuid:()=>crypto.randomUUID(),computeDigest:(a,s)=>[...crypto.createHash('sha256').update(s).digest()],
    base64EncodeWebSafe:b=>Buffer.from(b.map(x=>x&255)).toString('base64url'),DigestAlgorithm:{SHA_256:1},
@@ -239,6 +260,84 @@ sheets.practice_answers.rows.slice(1).forEach(r=>{r[1]=new Date().toISOString().
 for (let i=0;i<5;i++) sheets.practice_answers.rows.push([...sheets.practice_answers.rows[1]]);
 td=post('getToday',{},carol);
 check('premium: tanpa batas harian', td.data.practice.dailyLimit===null && post('startPractice',{},carol).ok, td.data.practice);
+
+
+// ================= Fase 5: pembayaran Mayar =================
+Object.assign(props,{MAYAR_API_KEY:'test-key',MAYAR_BASE_URL:'https://api.mayar.io',WEBHOOK_TOKEN:'tok_rahasia_panjang_1234567890',APP_BASE_URL:'https://app.contoh.id'});
+tokens['h.dina.s']={aud:props.GOOGLE_CLIENT_ID,iss:'accounts.google.com',exp:Math.floor(Date.now()/1000)+3000,email:'dina@x.com',email_verified:'true',name:'Dina'};
+const dina='h.dina.s';
+ctx.setupSheets();
+check('setup: sheet pembayaran & paket awal', sheets.transactions && sheets.webhook_log && sheets.plans.rows.length===4, sheets.plans&&sheets.plans.rows.length);
+ctx.setupSheets();
+check('setup ulang tidak menggandakan paket', sheets.plans.rows.length===4);
+let gp=post('getPlans',{});
+check('getPlans tanpa login', gp.ok && gp.data.plans.length===3 && gp.data.plans[1].planId==='P3M' && gp.data.plans[1].price===119000 && gp.data.env==='sandbox' && gp.data.current===null, gp);
+post('login',{},dina);
+check('checkout butuh login', post('createCheckout',{planId:'P3M'}).error.code==='UNAUTHENTICATED');
+check('paket tidak dikenal ditolak', post('createCheckout',{planId:'P99'},dina).error.code==='BAD_REQUEST');
+let co5=post('createCheckout',{planId:'P3M',amount:1000,price:1},dina);
+const trxRow=()=>sheets.transactions.rows.find(r=>r[0]===co5.data.trxId);
+check('checkout dibuat', co5.ok && co5.data.paymentUrl.startsWith('https://sandbox.myr.id/') && trxRow()[7]==='pending', co5);
+const lastCreate=mayar.calls.filter(c=>c.path==='/payments/create').pop();
+check('nominal dari server, bukan dari frontend', lastCreate.body.amount===119000 && trxRow()[6]==='119000', lastCreate.body);
+check('redirectUrl ke halaman status', lastCreate.body.redirectUrl==='https://app.contoh.id/pages/status-bayar.html?trx='+co5.data.trxId && lastCreate.body.email==='dina@x.com');
+let co2=post('createCheckout',{planId:'P3M'},dina);
+check('checkout ulang memakai link yang sama', co2.ok && co2.data.trxId===co5.data.trxId && co2.data.reused===true, co2);
+const clearThrottle=()=>Object.keys(cacheStore).filter(k=>k.startsWith('pchk_')).forEach(k=>delete cacheStore[k]);
+let pst5=post('getPaymentStatus',{trxId:co5.data.trxId},dina);
+check('status pending sebelum bayar', pst5.ok && pst5.data.transaction.status==='pending' && pst5.data.plan==='free', pst5);
+check('transaksi orang lain tidak bisa dibaca', post('getPaymentStatus',{trxId:co5.data.trxId},'h.bob.s').error.code==='NOT_FOUND');
+const hook=(token,obj)=>ctx.doPost({parameter:{hook:'mayar',token},postData:{contents:JSON.stringify(obj)}});
+const prId=trxRow()[8], txId=trxRow()[9];
+const payload={event:'payment.received',data:{id:txId,transactionId:txId,status:'SUCCESS',transactionStatus:'paid',customerEmail:'dina@x.com',amount:119000,productId:prId}};
+hook('salah',payload);
+check('webhook token salah diabaikan', trxRow()[7]==='pending' && sheets.webhook_log.rows.length===1);
+hook(props.WEBHOOK_TOKEN,payload);
+check('webhook palsu (Mayar belum lunas) tidak mengaktifkan premium', trxRow()[7]==='pending' && sheets.webhook_log.rows.length===2 && String(sheets.webhook_log.rows[1][4]).startsWith('not_paid'), sheets.webhook_log.rows[1]);
+mayar.payments[prId].status='paid';
+hook(props.WEBHOOK_TOKEN,payload);
+const drow=()=>sheets.users.rows.find(r=>r[1]==='dina@x.com');
+const days=(iso)=>Math.round((new Date(iso)-Date.now())/86400000);
+check('webhook valid → premium 90 hari', trxRow()[7]==='paid' && trxRow()[14]==='ya' && drow()[5]==='premium' && days(drow()[6])===90, {trx:trxRow(),user:drow()});
+const until1=drow()[6];
+hook(props.WEBHOOK_TOKEN,payload); clearThrottle(); post('getPaymentStatus',{trxId:co5.data.trxId},dina);
+check('webhook & cek ulang tidak menambah premium dua kali', drow()[6]===until1 && sheets.webhook_log.rows[3][4]==='already_processed', sheets.webhook_log.rows[3]);
+pst5=post('getPaymentStatus',{trxId:co5.data.trxId},dina);
+check('status lunas & plan premium', pst5.data.transaction.status==='paid' && pst5.data.plan==='premium' && pst5.data.premiumUntil, pst5.data);
+check('getPlans menampilkan status premium & riwayat', (()=>{const g=post('getPlans',{},dina).data;return g.current.plan==='premium'&&g.history[0].status==='paid'&&g.pending===null;})());
+// pembelian kedua: diperpanjang dari tanggal premium yang masih berlaku
+co5=post('createCheckout',{planId:'P1M'},dina); mayar.payments[trxRow()[8]].status='paid'; clearThrottle();
+pst5=post('getPaymentStatus',{trxId:co5.data.trxId},dina);
+check('perpanjangan ditumpuk dari masa aktif (90+30)', pst5.data.transaction.status==='paid' && days(drow()[6])===120, days(drow()[6]));
+// rekonsiliasi tanpa webhook
+co5=post('createCheckout',{planId:'P6M'},dina);
+const recRow=trxRow(); mayar.payments[recRow[8]].status='paid';
+let rc5=ctx.reconcilePayments();
+check('rekonsiliasi mengaktifkan tanpa webhook', trxRow()[7]==='paid' && trxRow()[16]==='reconcile' && days(drow()[6])===300 && rc5.fulfilled===1, {rc5,row:trxRow()});
+// kedaluwarsa
+co5=post('createCheckout',{planId:'P1M'},dina); trxRow()[12]=new Date(Date.now()-60000).toISOString();
+rc5=ctx.reconcilePayments();
+check('link lewat batas waktu ditandai kedaluwarsa', trxRow()[7]==='expired', trxRow());
+// redirectUrl ditolak → ulang tanpa redirect
+mayar.rejectRedirect=true; tokens['h.eka.s']={...tokens['h.dina.s'],email:'eka@x.com',name:'Eka'};
+co5=post('createCheckout',{planId:'P1M'},'h.eka.s');
+check('redirectUrl tidak didukung → dibuat ulang tanpa redirect', co5.ok && co5.data.redirect===false && !mayar.calls.filter(c=>c.path==='/payments/create').pop().body.redirectUrl, co5);
+mayar.rejectRedirect=false;
+// Mayar error
+mayar.failCreate=true; tokens['h.fani.s']={...tokens['h.dina.s'],email:'fani@x.com',name:'Fani'};
+co5=post('createCheckout',{planId:'P1M'},'h.fani.s');
+check('Mayar gagal → PAYMENT_ERROR & transaksi failed', !co5.ok && co5.error.code==='PAYMENT_ERROR' && sheets.transactions.rows[sheets.transactions.rows.length-1][7]==='failed', co5);
+mayar.failCreate=false;
+check('API key tidak pernah dikirim ke frontend', !JSON.stringify(post('getPlans',{},dina)).includes('test-key'));
+// batas pembuatan checkout per jam
+tokens['h.gita.s']={...tokens['h.dina.s'],email:'gita@x.com',name:'Gita'};
+['P1M','P3M','P6M'].forEach(p=>post('createCheckout',{planId:p},'h.gita.s'));
+sheets.transactions.rows.filter(r=>r[2]==='gita@x.com').forEach(r=>{r[11]=new Date(Date.now()-40*60000).toISOString();});
+['P1M','P3M'].forEach(p=>post('createCheckout',{planId:p},'h.gita.s'));
+check('batas 5 checkout per jam', post('createCheckout',{planId:'P6M'},'h.gita.s').error.code==='RATE_LIMITED');
+const offBase=props.MAYAR_BASE_URL; delete props.MAYAR_BASE_URL;
+check('pembayaran nonaktif bila belum dikonfigurasi', post('createCheckout',{planId:'P1M'},dina).error.code==='PAYMENT_OFF' && post('getPlans',{}).data.env==='off');
+props.MAYAR_BASE_URL=offBase;
 
 delete props.QUESTIONS_FOLDER_ID; ctx.clearPackageCache_(null);
 check('no source -> clear config error', post('getTryoutInfo',{},'h.alice.s').error.code==='CONFIG_MISSING');
