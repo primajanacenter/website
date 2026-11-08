@@ -17,7 +17,7 @@
 | 1 | Landing + Cek Kesiapan + Panduan | ✅ |
 | 2 | Apps Script + Sheets, Google Sign-In, onboarding, beranda | ✅ |
 | 3 | Tryout CAT + rapor (paket DEMO; paket diagnostik 110 soal disusun tim) | ✅ |
-| 4 | Materi level 1, latihan harian, rencana dasar → soft launch | ⏳ |
+| 4 | Materi level 1, latihan harian, rencana dasar → soft launch | ✅ |
 | 5 | Pembayaran Mayar (sandbox → production) | ⏳ |
 | 6 | Fitur premium inti | ⏳ |
 | 7 | Tryout Akbar (uji beban dulu) | ⏳ |

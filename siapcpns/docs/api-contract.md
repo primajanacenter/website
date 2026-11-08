@@ -32,9 +32,11 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `saveProgress` | 3 | Ya | `{ attemptId, answers{} }` | `{ saved, count, savedAt }` | ✅ |
 | `submitAttempt` | 3 | Ya | `{ attemptId, answers{}, finishMode }` | `{ attemptId, status }` (idempoten) | ✅ |
 | `getReport` | 3/6 | Ya | `{ attemptId }` | `{ total, maxTotal, passedAll, subtests[], topics[] (gratis: 1 terbuka), review[] (gratis: 5), topicsLocked, reviewLocked, … }` | ✅ |
-| `getPractice` / `submitPractice` | 4 | Ya | – | soal latihan & hasil | ⏳ |
-| `getMaterial` | 4/6 | Ya | `{ topic, level }` | isi materi (level 2–4 butuh premium) | ⏳ |
-| `getPlan` | 4/6 | Ya | – | rencana harian/mingguan | ⏳ |
+| `getToday` | 4 | Ya | – | `{ date, profile, focusTopics[{topicId,name,subtest}], topicLevels{topicId:{level,pct,n}}, practice{doneToday,correctToday,dailyLimit (null = Premium),remaining,bankSize}, streak, hasTryout }` | ✅ |
+| `startPractice` | 4 | Ya | `{ topicId? }` | `{ sessionId, topicId, questions[] (tanpa kunci), remainingToday, dailyLimit }` — error `DAILY_LIMIT` bila kuota gratis habis | ✅ |
+| `answerPractice` | 4 | Ya | `{ sessionId, questionId, answer }` | `{ questionId, answer, points, correct, bestAnswer, optionScores (TKP), explanation, topic }` — error `SESSION_EXPIRED` setelah 6 jam | ✅ |
+| `getMaterial` | 6 | Ya | `{ topic, level }` | materi level 2–4 (premium). Level 1 statis: `assets/data/materi-level1.json` | ⏳ |
+| `getPlan` | 6 | Ya | – | rencana adaptif premium (Fase 4: disusun di browser, `plan.js`) | ⏳ |
 | `getPlans` | 5 | Tidak | – | daftar paket & harga (dari server) | ⏳ |
 | `createCheckout` | 5 | Ya | `{ planId }` | `{ trxId, paymentUrl }` | ⏳ |
 | `getPaymentStatus` | 5 | Ya | `{ trxId }` | `{ status, plan, premiumUntil }` | ⏳ |
@@ -49,6 +51,8 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `NOT_FINISHED` | Rapor diminta saat ujian masih berjalan |
 | `BUSY` | Server sedang memproses permintaan lain, coba lagi |
 | `FORBIDDEN` | Fitur butuh premium |
+| `DAILY_LIMIT` | Kuota latihan gratis (10 soal/hari, WIB) sudah habis |
+| `SESSION_EXPIRED` | Sesi latihan lebih dari 6 jam, mulai sesi baru |
 | `BAD_REQUEST` | Format permintaan salah |
 | `UNKNOWN_ACTION` | Action tidak dikenal |
 | `RATE_LIMITED` | Terlalu banyak permintaan |
