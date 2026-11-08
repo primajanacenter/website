@@ -8,15 +8,5 @@
     "title": "Tryout Akbar mingguan",
     "phase": "Fase 7",
     "desc": "Tryout serentak nasional setiap minggu dengan peringkat dan persentil."
-  },
-  "premium": {
-    "title": "Paket Premium",
-    "phase": "Fase 5",
-    "desc": "Tryout tanpa batas, rapor detail, latihan adaptif, dan peringkat per formasi."
-  },
-  "status-bayar": {
-    "title": "Status pembayaran",
-    "phase": "Fase 5",
-    "desc": "Konfirmasi pembayaran dan aktivasi paket premium."
   }
 }
