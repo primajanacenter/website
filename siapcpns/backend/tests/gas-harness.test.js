@@ -195,6 +195,51 @@ check('folder-only mode works', ids2.includes('P-01') && !ids2.includes('DEMO-01
 ctx.createDemoPackageFile();
 check('createDemoPackageFile into folder', post('getTryoutInfo',{},'h.alice.s').data.packages.some(p=>p.packageId==='DEMO-01'));
 ctx.checkQuestionFolder();
+// ================= Fase 4: latihan harian =================
+ctx.setupSheets();
+pkgFile('lat','Bank Latihan',['LAT-01','Bank Latihan Harian 1','latihan','',"",'','','','','live',90],[QH,...mk('LAT-01',QH)]);
+ctx.refreshQuestionCache();
+check('latihan bank hidden from tryout list', !post('getTryoutInfo',{},'h.alice.s').data.packages.some(p=>p.packageId==='LAT-01'));
+check('latihan bank cannot start as tryout', post('startAttempt',{packageId:'LAT-01'},'h.alice.s').error.code==='NOT_FOUND');
+const carol='h.carol.s'; tokens[carol]={aud:props.GOOGLE_CLIENT_ID,iss:'accounts.google.com',exp:Math.floor(Date.now()/1000)+3000,email:'carol@x.com',email_verified:'true',name:'Carol'};
+let td=post('getToday',{},carol);
+check('getToday fresh user', td.ok && td.data.practice.remaining===10 && td.data.practice.doneToday===0 && td.data.streak===0 && td.data.focusTopics.length===3 && td.data.practice.bankSize===15, td);
+let ps=post('startPractice',{},carol);
+check('startPractice 10 soal tanpa kunci', ps.ok && ps.data.questions.length===10 && !/"answer"|"score"|"explanation"/.test(JSON.stringify(ps.data.questions)), ps);
+const key=Object.fromEntries(demo.questions.map(q=>['LAT-01-'+q.number,q]));
+const right=q=>{const d=key[q.id]; return d.answer || 'abcde'[d.scores.indexOf(5)];};
+const wrong=q=>{const d=key[q.id]; return d.answer ? (d.answer==='a'?'b':'a') : 'abcde'[d.scores.indexOf(1)];};
+let a1=post('answerPractice',{sessionId:ps.data.sessionId,questionId:ps.data.questions[0].id,answer:right(ps.data.questions[0])},carol);
+check('jawaban benar dinilai', a1.ok && a1.data.correct && a1.data.points===5 && a1.data.explanation.length>10, a1);
+let a1b=post('answerPractice',{sessionId:ps.data.sessionId,questionId:ps.data.questions[0].id,answer:'a'},carol);
+check('jawab ulang tidak dihitung dua kali', a1b.ok && sheets.practice_answers.rows.length===2);
+let a2=post('answerPractice',{sessionId:ps.data.sessionId,questionId:ps.data.questions[1].id,answer:wrong(ps.data.questions[1])},carol);
+check('jawaban salah dinilai', a2.ok && !a2.data.correct && a2.data.bestAnswer===right(ps.data.questions[1]), a2);
+const wrongId=ps.data.questions[1].id;
+check('soal di luar sesi ditolak', post('answerPractice',{sessionId:ps.data.sessionId,questionId:'LAT-01-999',answer:'a'},carol).error.code==='BAD_REQUEST');
+check('sesi milik orang lain ditolak', post('answerPractice',{sessionId:ps.data.sessionId,questionId:ps.data.questions[2].id,answer:'a'},'h.bob.s').error.code==='SESSION_EXPIRED');
+for (let i=2;i<10;i++) post('answerPractice',{sessionId:ps.data.sessionId,questionId:ps.data.questions[i].id,answer:right(ps.data.questions[i])},carol);
+td=post('getToday',{},carol);
+check('kuota habis setelah 10', td.data.practice.doneToday===10 && td.data.practice.remaining===0 && td.data.streak===1, td.data.practice);
+check('startPractice ditolak saat kuota habis', post('startPractice',{},carol).error.code==='DAILY_LIMIT');
+check('fokus topik memuat topik yang salah', td.data.focusTopics.some(t=>t.topicId===key[wrongId].topic_id), td.data.focusTopics);
+check('level topik tersedia', Object.keys(td.data.topicLevels).length>=5);
+// geser riwayat ke 2 hari lalu → kuota pulih, soal salah diprioritaskan
+const two=new Date(Date.now()-2*86400000); const dTwo=two.toISOString().slice(0,10);
+sheets.practice_answers.rows.slice(1).forEach(r=>{r[1]=dTwo; r[8]=two.toISOString();});
+let ps2=post('startPractice',{},carol);
+check('hari baru: kuota pulih & soal salah muncul pertama', ps2.ok && ps2.data.questions[0].id===wrongId, ps2.data&&ps2.data.questions.map(q=>q.id));
+td=post('getToday',{},carol);
+check('streak putus bila kemarin tidak latihan', td.data.streak===0, td.data.streak);
+let pst=post('startPractice',{topicId:'tiu-deret'},carol);
+check('latihan per topik', pst.ok && pst.data.questions.every(q=>q.topicId==='tiu-deret'), pst.data&&pst.data.questions.map(q=>q.topicId));
+// premium tanpa batas harian
+const crow=sheets.users.rows.find(r=>r[1]==='carol@x.com'); crow[5]='premium'; crow[6]=new Date(Date.now()+30*86400000).toISOString().slice(0,10);
+sheets.practice_answers.rows.slice(1).forEach(r=>{r[1]=new Date().toISOString().slice(0,10);});
+for (let i=0;i<5;i++) sheets.practice_answers.rows.push([...sheets.practice_answers.rows[1]]);
+td=post('getToday',{},carol);
+check('premium: tanpa batas harian', td.data.practice.dailyLimit===null && post('startPractice',{},carol).ok, td.data.practice);
+
 delete props.QUESTIONS_FOLDER_ID; ctx.clearPackageCache_(null);
 check('no source -> clear config error', post('getTryoutInfo',{},'h.alice.s').error.code==='CONFIG_MISSING');
 
