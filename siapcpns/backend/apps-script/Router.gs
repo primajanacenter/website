@@ -10,23 +10,33 @@
  * Lihat docs/api-contract.md untuk daftar action.
  */
 
-/** Daftar action. auth: true = wajib login (token diverifikasi di Auth.gs). */
-var ROUTES = {
-  ping: { handler: handlePing_, auth: false },
+/**
+ * Daftar action. auth:
+ *  - "none"     : tanpa login
+ *  - "optional" : jika ada token, diverifikasi dan user dikirim ke handler; jika tidak, user = null
+ *  - "required" : wajib login
+ * Dibuat sebagai fungsi (bukan variabel global) agar semua handler di file lain sudah terdefinisi.
+ */
+function getRoutes_() {
+  return {
+    ping:           { handler: handlePing_,           auth: 'none' },
 
-  // Fase 2
-  // saveAssessment: { handler: handleSaveAssessment_, auth: false },
-  // getMe:          { handler: handleGetMe_,          auth: true  },
-  // saveProfile:    { handler: handleSaveProfile_,    auth: true  },
+    // Fase 2
+    joinWaitlist:   { handler: handleJoinWaitlist_,   auth: 'none' },
+    saveAssessment: { handler: handleSaveAssessment_, auth: 'optional' },
+    login:          { handler: handleLogin_,          auth: 'required' },
+    getMe:          { handler: handleGetMe_,          auth: 'required' },
+    saveProfile:    { handler: handleSaveProfile_,    auth: 'required' }
 
-  // Fase 3
-  // startAttempt:   { handler: handleStartAttempt_,   auth: true  },
-  // submitAttempt:  { handler: handleSubmitAttempt_,  auth: true  },
+    // Fase 3
+    // startAttempt:  { handler: handleStartAttempt_,  auth: 'required' },
+    // submitAttempt: { handler: handleSubmitAttempt_, auth: 'required' },
 
-  // Fase 5
-  // createCheckout:   { handler: handleCreateCheckout_,   auth: true },
-  // getPaymentStatus: { handler: handleGetPaymentStatus_, auth: true }
-};
+    // Fase 5
+    // createCheckout:   { handler: handleCreateCheckout_,   auth: 'required' },
+    // getPaymentStatus: { handler: handleGetPaymentStatus_, auth: 'required' }
+  };
+}
 
 function doGet(e) {
   return json_({ ok: true, data: { status: 'ok', service: 'siap-cpns-api', time: new Date().toISOString() } });
@@ -40,12 +50,14 @@ function doPost(e) {
     }
 
     var body = parseBody_(e);
-    var route = ROUTES[body.action];
+    var route = getRoutes_()[body.action];
     if (!route) throw new AppError_('UNKNOWN_ACTION', 'Action "' + body.action + '" tidak dikenal.');
 
     var user = null;
-    if (route.auth) {
-      user = verifyUser_(body.token); // Auth.gs (Fase 2)
+    if (route.auth === 'required') {
+      user = verifyUser_(body.token);
+    } else if (route.auth === 'optional' && body.token) {
+      try { user = verifyUser_(body.token); } catch (err) { user = null; }
     }
 
     var data = route.handler(body.payload || {}, user);
@@ -66,6 +78,9 @@ function handlePing_(payload) {
 function parseBody_(e) {
   if (!e || !e.postData || !e.postData.contents) {
     throw new AppError_('BAD_REQUEST', 'Body permintaan kosong.');
+  }
+  if (e.postData.contents.length > 100000) {
+    throw new AppError_('BAD_REQUEST', 'Permintaan terlalu besar.');
   }
   try {
     return JSON.parse(e.postData.contents);
