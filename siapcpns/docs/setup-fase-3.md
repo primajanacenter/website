@@ -10,7 +10,26 @@ Salin/push semua file di `backend/apps-script/`. File baru dan berubah: `Tryout.
 cd backend/apps-script && clasp push
 ```
 
-## 2. Buat file Spreadsheet BANK SOAL (terpisah)
+## 2. Siapkan tempat paket soal — pilih salah satu (boleh keduanya)
+
+### Cara 1 (disarankan): folder Google Drive, 1 file = 1 paket
+
+1. Buat folder di Google Drive, misalnya **Siap CPNS – Paket Soal**. Jangan dibagikan selain ke tim penyusun soal.
+2. Salin ID folder dari URL: `https://drive.google.com/drive/folders/`**`INI_ID_FOLDER`**.
+3. Tambahkan Script Property **`QUESTIONS_FOLDER_ID`** = ID folder.
+4. Untuk setiap paket: buat file dari `template-paket-soal-tryout.xlsx` → unggah ke folder → **File › Simpan sebagai Google Spreadsheet** (file .xlsx tidak terbaca; hanya Google Spreadsheet). Hapus file .xlsx-nya agar tidak membingungkan.
+   - Tip: di Google Drive ⚙ Setelan → centang **"Konversi file yang diupload ke format editor Google Dokumen"**, maka file .xlsx otomatis menjadi Google Spreadsheet saat diunggah.
+5. Setiap file wajib berisi sheet **`packages`** (1 baris) dan **`questions`**. Sheet lain diabaikan. Urutan kolom boleh berbeda selama nama kolomnya benar.
+6. `package_id` harus unik di semua file. Jika ganda, yang terbaca hanya satu dan sisanya diabaikan (tercatat di log).
+
+File baru otomatis muncul di aplikasi dalam ± 1 jam (setelah `installQuestionTrigger` dipasang), atau **langsung** dengan menjalankan `refreshQuestionCache`.
+
+Fungsi tambahan:
+- `checkQuestionFolder` — laporan semua paket: jumlah soal per subtes dan baris yang bermasalah (tidak mengubah data).
+- `createDemoPackageFile` — membuat file paket DEMO-01 (15 soal) langsung di folder.
+- `installQuestionTrigger` — jalankan sekali untuk memasang pembaruan otomatis per jam.
+
+### Cara 2: satu file BANK SOAL berisi banyak paket
 
 1. Buat Spreadsheet baru, misalnya **Siap CPNS – Bank Soal**. **Jangan dibagikan** ke siapa pun selain tim penyusun soal.
 2. Salin ID-nya, tambahkan Script Property **`QUESTIONS_SPREADSHEET_ID`**.
@@ -19,11 +38,15 @@ Bank soal dipisah dari database pengguna agar akses tim penyusun soal tidak menc
 
 ## 3. Jalankan fungsi setup (dari editor Apps Script)
 
-| Urutan | Fungsi | Hasil |
-|---|---|---|
-| 1 | `setupSheets` | Menambah sheet **attempts** di database utama (sheet lama tidak berubah) |
-| 2 | `setupQuestionSheets` | Membuat sheet **packages** dan **questions** di bank soal |
-| 3 | `importDemoPackage` | Memasukkan paket **DEMO-01** (15 soal contoh) |
+| Urutan | Fungsi | Cara 1 (folder) | Cara 2 (satu file) |
+|---|---|---|---|
+| 1 | `setupSheets` | ✓ | ✓ — menambah sheet **attempts** di database utama |
+| 2 | `setupQuestionSheets` | – | ✓ — membuat sheet packages & questions |
+| 3 | paket demo | `createDemoPackageFile` | `importDemoPackage` |
+| 4 | `installQuestionTrigger` | ✓ (sekali) | opsional |
+| 5 | `checkQuestionFolder` | cek laporan di Execution log | cek laporan |
+
+Saat pertama menjalankan fungsi yang memakai folder, Google meminta izin akses Drive — klik **Izinkan**.
 
 ## 4. Deploy versi baru
 
@@ -82,7 +105,7 @@ question_id	package_id	number	subtest	topic_id	level	text	context	option_a	optio
 
 ### Setelah mengubah soal atau paket
 
-Soal di-cache ± 10 menit. Agar perubahan langsung aktif, jalankan **`refreshQuestionCache`** dari editor.
+Daftar paket dan soal di-cache (diperbarui otomatis tiap jam bila trigger terpasang). Agar perubahan langsung aktif, jalankan **`refreshQuestionCache`** dari editor. Jalankan **`checkQuestionFolder`** untuk memeriksa kelengkapan sebelum mengubah status ke `live`.
 
 ### Checklist kualitas sebelum `live`
 - [ ] Jumlah soal per subtes sesuai (30/35/45 untuk paket penuh)

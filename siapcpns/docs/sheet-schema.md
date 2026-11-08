@@ -3,7 +3,7 @@
 Dua file terpisah:
 
 1. **Database utama** (`SPREADSHEET_ID`) — data pengguna & transaksi.
-2. **Bank soal** (`QUESTIONS_SPREADSHEET_ID`) — soal, kunci, pembahasan, materi premium. Hanya bisa diakses akun pemilik Apps Script.
+2. **Paket soal** — soal, kunci, pembahasan. Bisa berupa folder Drive berisi satu file per paket (`QUESTIONS_FOLDER_ID`, disarankan) dan/atau satu file bank soal (`QUESTIONS_SPREADSHEET_ID`). Hanya diakses akun pemilik Apps Script. Kolom dibaca berdasarkan nama di baris judul.
 
 Baris 1 setiap sheet = nama kolom persis seperti di bawah. Sheet di database utama dibuat otomatis oleh `setupSheets()` (sumber kebenaran: `SCHEMA` di `backend/apps-script/Db.gs`). Semua sel diformat teks agar tanggal dan nomor HP tidak berubah otomatis.
 
