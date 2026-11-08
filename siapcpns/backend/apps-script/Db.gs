@@ -21,24 +21,77 @@ var SCHEMA = {
     'assessment_id', 'user_id', 'version', 'total', 'level_id', 'alur', 'dokumen',
     'kemampuan', 'waktu', 'duration_sec', 'answers_json', 'source', 'created_at'
   ],
-  waitlist: ['email', 'source', 'created_at']
+  waitlist: ['email', 'source', 'created_at'],
+  attempts: [
+    'attempt_id', 'user_id', 'package_id', 'type', 'status', 'started_at', 'ends_at', 'submitted_at',
+    'twk', 'tiu', 'tkp', 'total', 'passed_twk', 'passed_tiu', 'passed_tkp', 'passed_all',
+    'answered', 'correct_json', 'topic_json', 'answers_json', 'duration_sec', 'finish_mode'
+  ]
+};
+
+/** Struktur sheet di file BANK SOAL (QUESTIONS_SPREADSHEET_ID). Hanya bisa dibaca server. */
+var QSCHEMA = {
+  packages: [
+    'package_id', 'title', 'type', 'description', 'duration_min', 'pg_twk', 'pg_tiu', 'pg_tkp',
+    'free_attempts', 'status', 'order'
+  ],
+  questions: [
+    'question_id', 'package_id', 'number', 'subtest', 'topic_id', 'level', 'text', 'context',
+    'option_a', 'option_b', 'option_c', 'option_d', 'option_e', 'answer',
+    'score_a', 'score_b', 'score_c', 'score_d', 'score_e', 'explanation', 'status', 'source'
+  ]
 };
 
 var _ssCache = null;
+var _qsCache = null;
 
 function db_() {
   if (!_ssCache) _ssCache = SpreadsheetApp.openById(getConfig_('SPREADSHEET_ID'));
   return _ssCache;
 }
 
+function qdb_() {
+  if (!_qsCache) _qsCache = SpreadsheetApp.openById(getConfig_('QUESTIONS_SPREADSHEET_ID'));
+  return _qsCache;
+}
+
 function sheet_(name) {
-  var sh = db_().getSheetByName(name);
-  if (!sh) throw new AppError_('CONFIG_MISSING', 'Sheet "' + name + '" belum ada. Jalankan setupSheets().');
+  var isQ = QSCHEMA.hasOwnProperty(name);
+  var sh = (isQ ? qdb_() : db_()).getSheetByName(name);
+  if (!sh) {
+    throw new AppError_('CONFIG_MISSING', 'Sheet "' + name + '" belum ada. Jalankan ' + (isQ ? 'setupQuestionSheets()' : 'setupSheets()') + '.');
+  }
   return sh;
 }
 
 function headers_(name) {
-  return SCHEMA[name];
+  return SCHEMA[name] || QSCHEMA[name];
+}
+
+/** Baca semua baris sebuah sheet sebagai array objek (untuk sheet kecil/menengah). */
+function readAll_(name) {
+  var sh = sheet_(name);
+  var last = sh.getLastRow();
+  if (last < 2) return [];
+  var h = headers_(name);
+  var values = sh.getRange(2, 1, last - 1, h.length).getValues();
+  return values.map(function (v, i) { return rowToObj_(name, v, i + 2); });
+}
+
+/** Semua baris dengan nilai persis di satu kolom (memakai TextFinder). */
+function findAll_(name, field, value) {
+  if (!value) return [];
+  var sh = sheet_(name);
+  var last = sh.getLastRow();
+  if (last < 2) return [];
+  var h = headers_(name);
+  var col = h.indexOf(field) + 1;
+  var cells = sh.getRange(2, col, last - 1, 1)
+    .createTextFinder(String(value)).matchEntireCell(true).matchCase(true).findAll();
+  return cells.map(function (c) {
+    var r = c.getRow();
+    return rowToObj_(name, sh.getRange(r, 1, 1, h.length).getValues()[0], r);
+  });
 }
 
 /** Ubah satu baris (array) menjadi objek sesuai header. */

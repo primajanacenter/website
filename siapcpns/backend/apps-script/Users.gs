@@ -40,11 +40,23 @@ function buildMe_(user) {
   var profileRow = findOne_('profiles', 'user_id', user.userId);
   var profile = profileRow ? toProfile_(profileRow) : null;
   var lastAssessment = findLast_('assessments', 'user_id', user.userId);
+  var lastAttempt = null;
+  try {
+    var a = findLast_('attempts', 'user_id', user.userId);
+    if (a) {
+      lastAttempt = a.status === 'submitted'
+        ? { attemptId: a.attempt_id, status: 'submitted', packageId: a.package_id, total: Number(a.total) || 0, passedAll: isTrue_(a.passed_all), submittedAt: String(a.submitted_at) }
+        : { attemptId: a.attempt_id, status: a.status, packageId: a.package_id, endsAt: String(a.ends_at) };
+    }
+  } catch (e) {
+    lastAttempt = null; // sheet attempts belum dibuat (jalankan setupSheets)
+  }
   return {
     user: publicUser_(user),
     profile: profile,
     profileComplete: isProfileComplete_(profile),
-    latestAssessment: lastAssessment ? toAssessment_(lastAssessment) : null
+    latestAssessment: lastAssessment ? toAssessment_(lastAssessment) : null,
+    latestAttempt: lastAttempt
   };
 }
 

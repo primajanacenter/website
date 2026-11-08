@@ -26,11 +26,14 @@ function getRoutes_() {
     saveAssessment: { handler: handleSaveAssessment_, auth: 'optional' },
     login:          { handler: handleLogin_,          auth: 'required' },
     getMe:          { handler: handleGetMe_,          auth: 'required' },
-    saveProfile:    { handler: handleSaveProfile_,    auth: 'required' }
+    saveProfile:    { handler: handleSaveProfile_,    auth: 'required' },
 
     // Fase 3
-    // startAttempt:  { handler: handleStartAttempt_,  auth: 'required' },
-    // submitAttempt: { handler: handleSubmitAttempt_, auth: 'required' },
+    getTryoutInfo:  { handler: handleGetTryoutInfo_,  auth: 'required' },
+    startAttempt:   { handler: handleStartAttempt_,   auth: 'required' },
+    saveProgress:   { handler: handleSaveProgress_,   auth: 'required' },
+    submitAttempt:  { handler: handleSubmitAttempt_,  auth: 'required' },
+    getReport:      { handler: handleGetReport_,      auth: 'required' }
 
     // Fase 5
     // createCheckout:   { handler: handleCreateCheckout_,   auth: 'required' },
