@@ -15,7 +15,7 @@
 |---|---|---|
 | 0 | Fondasi: struktur, CSS, api.js mock, deploy | ✅ |
 | 1 | Landing + Cek Kesiapan + Panduan | ✅ |
-| 2 | Apps Script + Sheets, Google Sign-In, profil | ⏳ |
+| 2 | Apps Script + Sheets, Google Sign-In, onboarding, beranda | ✅ |
 | 3 | Tryout diagnostik + rapor ringkas | ⏳ |
 | 4 | Materi level 1, latihan harian, rencana dasar → soft launch | ⏳ |
 | 5 | Pembayaran Mayar (sandbox → production) | ⏳ |

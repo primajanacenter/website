@@ -22,10 +22,11 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | Action | Fase | Login | Payload | Data balasan | Status |
 |---|---|---|---|---|---|
 | `ping` | 0 | Tidak | – | `{ status, mode, time }` | ✅ mock + backend |
-| `saveAssessment` | 1–2 | Tidak | `{ version, total, levelId, aspects[], answers{} }` | `{ id }` | ✅ mock |
-| `joinWaitlist` | 1 | Tidak | `{ email }` | `{ email }` | ✅ mock |
-| `getMe` | 2 | Ya | – | `{ user, profile, plan, premiumUntil }` | ⏳ |
-| `saveProfile` | 2 | Ya | `{ education, major, targetFormation, testDate, minutesPerDay, daysPerWeek }` | `{ profile }` | ⏳ |
+| `saveAssessment` | 1–2 | Opsional | `{ version, total, levelId, durationSec, aspects[], answers{} }` | `{ saved, id }` | ✅ mock + backend |
+| `joinWaitlist` | 1–2 | Tidak | `{ email, source? }` | `{ email }` | ✅ mock + backend |
+| `login` | 2 | Ya | `{ assessment? }` (hasil Cek Kesiapan lokal untuk ditautkan) | `{ user, profile, profileComplete, latestAssessment, isNew, attachedAssessmentId }` | ✅ mock + backend |
+| `getMe` | 2 | Ya | – | `{ user: { userId, email, name, picture, plan, premiumUntil }, profile, profileComplete, latestAssessment }` | ✅ mock + backend |
+| `saveProfile` | 2 | Ya | `{ education, major, targetFormation, targetProvince, testDate, targetType, minutesPerDay, daysPerWeek, reminderTime }` | `{ profile, profileComplete }` | ✅ mock + backend |
 | `startAttempt` | 3 | Ya | `{ type: "diagnostic" \| "practice" \| "akbar" }` | `{ attemptId, questions[] (tanpa kunci), endsAt }` | ⏳ |
 | `submitAttempt` | 3 | Ya | `{ attemptId, answers{} }` | `{ scores: { twk, tiu, tkp, total }, passed: { twk, tiu, tkp } }` | ⏳ |
 | `getReport` | 3/6 | Ya | `{ attemptId }` | ringkas (gratis) / detail per topik (premium) | ⏳ |
@@ -50,3 +51,14 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `SERVER_ERROR` | Kesalahan internal |
 
 Perbarui file ini **sebelum** menambah action baru di frontend atau backend.
+
+## Nilai yang valid (divalidasi di server)
+
+- `education`: `SMA/SMK`, `D3`, `D4/S1`, `S2`, `S3`
+- `targetType`: `passing_grade`, `kompetitif`
+- `minutesPerDay`: 15, 30, 45, 60, 90 · `daysPerWeek`: 1–7 · `reminderTime`: `HH:MM` · `testDate`: `YYYY-MM-DD` atau kosong
+- `levelId`: `baru-mulai`, `sedang-bersiap`, `hampir-siap` · skor aspek ≤ maksimum (25/15/40/20) dan jumlahnya = `total`
+
+## Login
+
+Login "Ya" = kirim `token` (Google ID token). Server memverifikasi ke Google (aud, iss, exp, email_verified). Identitas pengguna hanya diambil dari token, bukan dari payload.

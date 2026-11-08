@@ -5,7 +5,7 @@ Dua file terpisah:
 1. **Database utama** (`SPREADSHEET_ID`) — data pengguna & transaksi.
 2. **Bank soal** (`QUESTIONS_SPREADSHEET_ID`) — soal, kunci, pembahasan, materi premium. Hanya bisa diakses akun pemilik Apps Script.
 
-Baris 1 setiap sheet = nama kolom persis seperti di bawah.
+Baris 1 setiap sheet = nama kolom persis seperti di bawah. Sheet di database utama dibuat otomatis oleh `setupSheets()` (sumber kebenaran: `SCHEMA` di `backend/apps-script/Db.gs`). Semua sel diformat teks agar tanggal dan nomor HP tidak berubah otomatis.
 
 ## Database utama
 
@@ -13,6 +13,7 @@ Baris 1 setiap sheet = nama kolom persis seperti di bawah.
 | Kolom | Contoh | Catatan |
 |---|---|---|
 | user_id | u_8f3a… | dibuat server |
+| picture | https://… | foto profil Google |
 | email | nama@gmail.com | dari token Google |
 | name | Rina | |
 | phone | 0812… | opsional, dibutuhkan saat checkout Mayar |
@@ -23,10 +24,13 @@ Baris 1 setiap sheet = nama kolom persis seperti di bawah.
 | last_login_at | ISO datetime | |
 
 ### `profiles`
-user_id · education · major · target_formation · target_province · test_date · minutes_per_day · days_per_week · target_score · updated_at
+user_id · education · major · target_formation · target_province · test_date · target_type · minutes_per_day · days_per_week · reminder_time · updated_at
 
 ### `assessments`
-assessment_id · user_id (kosong jika belum login) · version · total · level_id · alur · dokumen · kemampuan · waktu · answers_json · created_at
+assessment_id · user_id (kosong jika belum login) · version · total · level_id · alur · dokumen · kemampuan · waktu · duration_sec · answers_json · source (anon/login) · created_at
+
+### `waitlist`
+email · source · created_at
 
 ### `attempts`
 attempt_id · user_id · type (diagnostic/practice/akbar) · started_at · submitted_at · twk · tiu · tkp · total · passed_twk · passed_tiu · passed_tkp · answers_json
