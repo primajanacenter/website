@@ -4,7 +4,9 @@ Aplikasi persiapan belajar CPNS untuk pemula. Dibangun bertahap dengan HTML, CSS
 
 > Aplikasi independen, tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.
 
-**Status: Fase 0 + Fase 1 selesai** — landing page, Cek Kesiapan (10 pertanyaan, tanpa login), dan Panduan CPNS.
+**Status: Fase 0–2 selesai** — landing page, Cek Kesiapan, Panduan CPNS, login Google, onboarding profil (3 langkah), beranda, dan backend Apps Script + Spreadsheet.
+
+➡️ **Menyambungkan backend:** ikuti [`docs/setup-fase-2.md`](docs/setup-fase-2.md).
 
 ---
 
@@ -105,17 +107,17 @@ Semua rahasia disimpan di **Apps Script → Project Settings → Script Properti
 
 Jika rahasia pernah ter-commit: **segera buat ulang (rotate)** key tersebut. Menghapus file di commit berikutnya tidak cukup, karena riwayat Git tetap menyimpannya.
 
-## Backend (mulai Fase 2)
+## Backend
 
-1. Install clasp: `npm i -g @google/clasp` lalu `clasp login`.
-2. Buat proyek: `cd backend/apps-script && clasp create --type webapp --title "Siap CPNS API"`.
-3. `clasp push`, lalu di editor Apps Script: Deploy → New deployment → Web app.
-4. Isi Script Properties, jalankan fungsi `checkConfig()` untuk mengecek.
-5. Salin URL Web App ke `APPS_SCRIPT_URL`, ubah `USE_MOCK` ke `false`.
+Panduan lengkap langkah demi langkah: **[`docs/setup-fase-2.md`](docs/setup-fase-2.md)** (Spreadsheet, Apps Script, Script Properties, OAuth Client ID, deploy Web App, sambungkan frontend).
+
+Uji backend tanpa akun Google: `node backend/tests/gas-harness.test.js`.
+
+Selama `USE_MOCK = true`, halaman Masuk menampilkan tombol "Masuk dengan akun uji" sehingga seluruh alur (login → onboarding → beranda) bisa dicoba tanpa backend.
 
 ## Tahapan
 
-Lihat `docs/user-flow.md`. Ringkasnya: 0 Fondasi ✅ · 1 Cek Kesiapan ✅ · 2 Login & profil · 3 Tryout diagnostik · 4 Produk gratis lengkap (soft launch) · 5 Pembayaran Mayar · 6 Fitur premium · 7 Tryout Akbar · 8 Pasca-SKD.
+Lihat `docs/user-flow.md`. Ringkasnya: 0 Fondasi ✅ · 1 Cek Kesiapan ✅ · 2 Login & profil ✅ · 3 Tryout diagnostik · 4 Produk gratis lengkap (soft launch) · 5 Pembayaran Mayar · 6 Fitur premium · 7 Tryout Akbar · 8 Pasca-SKD.
 
 Beri tag di akhir setiap fase: `git tag v0.1-landing && git push --tags`.
 

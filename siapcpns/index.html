@@ -9,11 +9,11 @@
   <meta property="og:title" content="Cek Kesiapan CPNS 2026">
   <meta property="og:description" content="10 pertanyaan, 3 menit, tanpa daftar. Lihat seberapa siap kamu ikut CPNS.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://primajana.com/siapcpns/assets/img/og-image.png">
+  <meta property="og:image" content="assets/img/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="https://primajana.com/siapcpns/assets/img/favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="https://primajana.com/siapcpns/assets/img/favicon-64.png" type="image/png">
-  <link rel="apple-touch-icon" href="https://primajana.com/siapcpns/assets/img/apple-touch-icon.png">
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +35,7 @@
     <nav class="nav" aria-label="Navigasi utama">
       <a href="pages/panduan.html">Panduan</a>
       <a class="hide-sm" href="pages/segera.html?fitur=tryout">Tryout</a>
-      <a class="nav-cta" href="pages/segera.html?fitur=akun">Masuk</a>
+      <a class="nav-cta" href="pages/masuk.html" data-nav-auth="pages/dashboard.html">Masuk</a>
     </nav>
   </div>
 </header>
@@ -290,10 +290,10 @@
 
         <div class="save-cta">
           <h2 style="font-size:var(--fs-xl)">Simpan hasil dan dapatkan rencana belajar personal</h2>
-          <p class="muted">Fitur akun, tryout diagnostik 110 soal, dan rencana belajar sesuai levelmu sedang disiapkan. Hasilmu bisa disimpan dulu di perangkat ini.</p>
+          <p class="muted">Masuk gratis dengan akun Google. Hasil ini otomatis tersimpan ke akunmu, lalu kami bantu menyusun target dan komitmen belajarmu.</p>
           <div class="row">
-            <button class="btn btn-accent" type="button" id="btn-save">Simpan di perangkat ini</button>
-            <a class="btn btn-outline-light" href="pages/segera.html?fitur=akun">Kabari saya saat siap</a>
+            <a class="btn btn-accent" href="pages/masuk.html?next=dashboard.html">Masuk &amp; simpan hasil</a>
+            <button class="btn btn-outline-light" type="button" id="btn-save">Simpan di perangkat ini saja</button>
           </div>
         </div>
 
@@ -322,6 +322,7 @@
       <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>
       <a data-link="bkn" href="https://www.bkn.go.id" target="_blank" rel="noopener">BKN</a>
       <a data-link="menpan" href="https://www.menpan.go.id" target="_blank" rel="noopener">KemenPANRB</a>
+      <a href="pages/privasi.html">Kebijakan Privasi</a>
     </div>
     <p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Layanan persiapan belajar independen, tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p>
   </div>
