@@ -187,6 +187,70 @@ Object.assign(mockHandlers, {
     };
   },
 });
+// ---------- Fase 4: latihan harian (mode uji: soal DEMO publik sebagai bank latihan) ----------
+const FREE_DAILY = 10;
+function todayLocal() {
+  const d = new Date();
+  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+}
+Object.assign(mockHandlers, {
+  async getToday() {
+    requireMockSession();
+    const db = mockDb(); const d = await demoPkg();
+    const hist = db.practice || [];
+    const today = todayLocal();
+    const done = hist.filter((h) => h.date === today);
+    const stats = {};
+    const lastAttempt = (db.attempts || []).filter((a) => a.status === "submitted").slice(-1)[0];
+    if (lastAttempt) Object.entries(lastAttempt.topics).forEach(([k, t]) => (stats[k] = { p: t.points, m: t.max, n: t.total }));
+    hist.slice(-60).forEach((h) => { const s = (stats[h.topicId] ||= { p: 0, m: 0, n: 0 }); s.p += h.points; s.m += 5; s.n++; });
+    const levels = {};
+    Object.entries(stats).forEach(([k, s]) => { const pct = Math.round((s.p / s.m) * 100); levels[k] = { pct, n: s.n, level: pct < 40 ? 1 : pct < 70 ? 2 : pct <= 85 ? 3 : 4 }; });
+    const focus = Object.keys(levels).sort((a, b) => levels[a].pct - levels[b].pct).slice(0, 3);
+    ["tiu-deret", "twk-pancasila", "tkp-pelayanan"].forEach((t) => { if (focus.length < 3 && !focus.includes(t)) focus.push(t); });
+    const days = new Set(hist.map((h) => h.date));
+    let streak = 0; const c = new Date(); if (!days.has(today)) c.setDate(c.getDate() - 1);
+    while (days.has(new Date(c.getTime() - c.getTimezoneOffset() * 60000).toISOString().slice(0, 10))) { streak++; c.setDate(c.getDate() - 1); }
+    return {
+      date: today, profile: db.profile, plan: "free", streak,
+      focusTopics: focus.map((k) => ({ topicId: k, name: TOPIC_NAMES[k] || k, subtest: k.slice(0, 3) })),
+      topicLevels: levels,
+      practice: { doneToday: done.length, correctToday: done.filter((h) => h.points >= 4).length, dailyLimit: FREE_DAILY, remaining: Math.max(0, FREE_DAILY - done.length), bankSize: d.questions.length },
+      hasTryout: (db.attempts || []).some((a) => a.status === "submitted"),
+    };
+  },
+  async startPractice({ topicId } = {}) {
+    requireMockSession();
+    const db = mockDb(); const qs = demoQuestions(await demoPkg());
+    const done = (db.practice || []).filter((h) => h.date === todayLocal()).length;
+    const remaining = FREE_DAILY - done;
+    if (remaining <= 0) throw apiError("DAILY_LIMIT", "Kuota latihan gratis hari ini sudah habis. Lanjutkan besok, atau pelajari materi sambil menunggu.");
+    let pool = topicId ? qs.filter((q) => q.topicId === topicId) : qs;
+    if (!pool.length) throw apiError("NOT_FOUND", "Belum ada soal latihan untuk topik ini.");
+    pool = [...pool].sort(() => Math.random() - 0.5).slice(0, Math.min(10, remaining));
+    const sessionId = "p_mock_" + Date.now();
+    db.practiceSession = { sessionId, ids: pool.map((q) => q.id), answered: {} };
+    saveMockDb(db);
+    return { sessionId, topicId: topicId || null, remainingToday: remaining, dailyLimit: FREE_DAILY,
+      questions: pool.map((q) => ({ id: q.id, number: q.number, subtest: q.subtest, topicId: q.topicId, text: q.text, context: q.context, options: q.options.map(({ key, text }) => ({ key, text })) })) };
+  },
+  async answerPractice({ sessionId, questionId, answer }) {
+    requireMockSession();
+    const db = mockDb(); const sess = db.practiceSession;
+    if (!sess || sess.sessionId !== sessionId) throw apiError("SESSION_EXPIRED", "Sesi latihan sudah berakhir. Mulai sesi latihan baru.");
+    if (!sess.ids.includes(questionId)) throw apiError("BAD_REQUEST", "Soal tidak termasuk dalam sesi ini.");
+    const q = demoQuestions(await demoPkg()).find((x) => x.id === questionId);
+    const points = q.subtest === "tkp" ? q.options.find((o) => o.key === answer)?.score || 0 : answer === q.answer ? 5 : 0;
+    if (!(questionId in sess.answered)) {
+      sess.answered[questionId] = points;
+      (db.practice ||= []).push({ date: todayLocal(), questionId, topicId: q.topicId, points });
+      saveMockDb(db);
+    }
+    const best = q.subtest === "tkp" ? q.options.reduce((a, b) => ((b.score || 0) > (a.score || 0) ? b : a)) : q.options.find((o) => o.key === q.answer);
+    return { questionId, answer, points, correct: q.subtest === "tkp" ? points >= 4 : points === 5, bestAnswer: best.key,
+      optionScores: q.subtest === "tkp" ? q.options.map((o) => ({ key: o.key, score: o.score })) : null, explanation: q.explanation, topic: TOPIC_NAMES[q.topicId] || q.topicId };
+  },
+});
 const SUBTEST_NAMES = { twk: "Tes Wawasan Kebangsaan", tiu: "Tes Intelegensia Umum", tkp: "Tes Karakteristik Pribadi" };
 const TOPIC_NAMES = {
   "twk-pancasila": "Pancasila", "twk-uud": "UUD 1945", "twk-nkri": "NKRI", "twk-bhinneka": "Bhinneka Tunggal Ika", "twk-nasionalisme": "Nasionalisme", "twk-integritas": "Integritas", "twk-belanegara": "Bela negara", "twk-bahasa": "Bahasa negara",
@@ -198,7 +262,7 @@ function requireMockSession() {
   if (!auth.isLoggedIn()) throw apiError("UNAUTHENTICATED", "Silakan masuk terlebih dahulu.");
 }
 function mockDb() {
-  return store.get("mock.db", { user: null, profile: null, assessments: [], attempts: [] });
+  return store.get("mock.db", { user: null, profile: null, assessments: [], attempts: [], practice: [] });
 }
 function saveMockDb(db) {
   store.set("mock.db", db);
