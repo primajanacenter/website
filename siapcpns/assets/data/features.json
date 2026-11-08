@@ -4,16 +4,6 @@
     "phase": "Fase 2",
     "desc": "Masuk dengan akun Google untuk menyimpan hasil dan profil belajarmu."
   },
-  "tryout": {
-    "title": "Tryout CAT",
-    "phase": "Fase 3",
-    "desc": "Tryout diagnostik 110 soal dalam 100 menit dengan penilaian seperti tes asli."
-  },
-  "rapor": {
-    "title": "Rapor",
-    "phase": "Fase 3",
-    "desc": "Skor per subtes, status ambang batas, dan kelemahan per topik."
-  },
   "latihan": {
     "title": "Latihan harian",
     "phase": "Fase 4",
