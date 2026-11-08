@@ -4,9 +4,9 @@ Aplikasi persiapan belajar CPNS untuk pemula. Dibangun bertahap dengan HTML, CSS
 
 > Aplikasi independen, tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.
 
-**Status: Fase 0–2 selesai** — landing page, Cek Kesiapan, Panduan CPNS, login Google, onboarding profil (3 langkah), beranda, dan backend Apps Script + Spreadsheet.
+**Status: Fase 0–3 selesai** — landing page, Cek Kesiapan, Panduan CPNS, login Google, onboarding, beranda, tryout CAT (timer server, simpan otomatis, panel nomor soal) dan rapor per subtes & topik.
 
-➡️ **Menyambungkan backend:** ikuti [`docs/setup-fase-2.md`](docs/setup-fase-2.md).
+➡️ Setup backend: [`docs/setup-fase-2.md`](docs/setup-fase-2.md) lalu [`docs/setup-fase-3.md`](docs/setup-fase-3.md) (bank soal & paket tryout).
 
 ---
 
@@ -100,7 +100,7 @@ Soal Cek Kesiapan, bobot nilai, level, dan rekomendasi diatur di `assets/data/as
 - [ ] Token webhook
 - [ ] ID Spreadsheet
 - [ ] `.clasp.json` / `.clasprc.json`
-- [ ] Soal tryout, kunci jawaban, pembahasan berbayar, materi premium
+- [ ] Soal tryout, kunci jawaban, pembahasan berbayar, materi premium (pengecualian: paket DEMO-01 di `backend/sample/` dan `assets/data/demo-tryout.json` memang publik)
 - [ ] Data pengguna (termasuk ekspor CSV/XLSX)
 
 Semua rahasia disimpan di **Apps Script → Project Settings → Script Properties** (lihat `backend/apps-script/Config.gs`).
@@ -117,7 +117,7 @@ Selama `USE_MOCK = true`, halaman Masuk menampilkan tombol "Masuk dengan akun uj
 
 ## Tahapan
 
-Lihat `docs/user-flow.md`. Ringkasnya: 0 Fondasi ✅ · 1 Cek Kesiapan ✅ · 2 Login & profil ✅ · 3 Tryout diagnostik · 4 Produk gratis lengkap (soft launch) · 5 Pembayaran Mayar · 6 Fitur premium · 7 Tryout Akbar · 8 Pasca-SKD.
+Lihat `docs/user-flow.md`. Ringkasnya: 0 Fondasi ✅ · 1 Cek Kesiapan ✅ · 2 Login & profil ✅ · 3 Tryout & rapor ✅ · 4 Produk gratis lengkap (soft launch) · 5 Pembayaran Mayar · 6 Fitur premium · 7 Tryout Akbar · 8 Pasca-SKD.
 
 Beri tag di akhir setiap fase: `git tag v0.1-landing && git push --tags`.
 
