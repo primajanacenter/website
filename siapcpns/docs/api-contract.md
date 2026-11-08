@@ -37,9 +37,9 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `answerPractice` | 4 | Ya | `{ sessionId, questionId, answer }` | `{ questionId, answer, points, correct, bestAnswer, optionScores (TKP), explanation, topic }` — error `SESSION_EXPIRED` setelah 6 jam | ✅ |
 | `getMaterial` | 6 | Ya | `{ topic, level }` | materi level 2–4 (premium). Level 1 statis: `assets/data/materi-level1.json` | ⏳ |
 | `getPlan` | 6 | Ya | – | rencana adaptif premium (Fase 4: disusun di browser, `plan.js`) | ⏳ |
-| `getPlans` | 5 | Tidak | – | daftar paket & harga (dari server) | ⏳ |
-| `createCheckout` | 5 | Ya | `{ planId }` | `{ trxId, paymentUrl }` | ⏳ |
-| `getPaymentStatus` | 5 | Ya | `{ trxId }` | `{ status, plan, premiumUntil }` | ⏳ |
+| `getPlans` | 5 | Opsional | – | `{ plans: [{ planId, name, durationDays, price, priceBefore, badge, description }], env: "sandbox"\|"production"\|"off", current: { plan, premiumUntil } \| null, pending: trx \| null, history: trx[] }` | ✅ |
+| `createCheckout` | 5 | Ya | `{ planId }` (nominal dari server) | `{ trxId, paymentUrl, expiresAt, reused, redirect }` — error `PAYMENT_OFF`, `PAYMENT_ERROR`, `RATE_LIMITED` | ✅ |
+| `getPaymentStatus` | 5 | Ya | `{ trxId }` | `{ transaction: { trxId, planId, planName, amount, status: pending\|paid\|expired\|failed, paymentUrl, createdAt, expiresAt, paidAt, premiumUntil }, plan, premiumUntil }` | ✅ |
 | `getAkbarSchedule` / `joinAkbar` / `getAkbarRanking` | 7 | Ya | – | jadwal, slot, peringkat | ⏳ |
 
 ## Kode error umum
@@ -53,6 +53,8 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `FORBIDDEN` | Fitur butuh premium |
 | `DAILY_LIMIT` | Kuota latihan gratis (10 soal/hari, WIB) sudah habis |
 | `SESSION_EXPIRED` | Sesi latihan lebih dari 6 jam, mulai sesi baru |
+| `PAYMENT_OFF` | Pembayaran belum dikonfigurasi (MAYAR_BASE_URL kosong) |
+| `PAYMENT_ERROR` | Gagal menghubungi Mayar atau Mayar menolak permintaan |
 | `BAD_REQUEST` | Format permintaan salah |
 | `UNKNOWN_ACTION` | Action tidak dikenal |
 | `RATE_LIMITED` | Terlalu banyak permintaan |
@@ -71,3 +73,8 @@ Perbarui file ini **sebelum** menambah action baru di frontend atau backend.
 ## Login
 
 Login "Ya" = kirim `token` (Google ID token). Server memverifikasi ke Google (aud, iss, exp, email_verified). Identitas pengguna hanya diambil dari token, bukan dari payload.
+
+
+## Webhook Mayar (Fase 5)
+
+`POST <URL /exec>?hook=mayar&token=<WEBHOOK_TOKEN>` dengan body JSON dari Mayar (`event`, `data`). Balasan `{ received: true|false }`. Isi webhook hanya pemicu; status lunas selalu dicek ulang ke `GET /hl/v2/payments/{id}`. Lihat `docs/setup-fase-5.md`.

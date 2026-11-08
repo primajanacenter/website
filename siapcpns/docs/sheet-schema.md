@@ -40,11 +40,16 @@ user_id · date (YYYY-MM-DD, WIB) · question_id · package_id · topic_id · su
 
 Satu baris per jawaban latihan harian. Level topik, topik fokus, kuota harian, dan streak dihitung dari sheet ini (ditambah hasil tryout), sehingga tidak perlu sheet `topic_levels` terpisah. Level: < 40% → 1 Kenal · < 70% → 2 Paham · ≤ 85% → 3 Mahir · > 85% → 4 Siap tes.
 
+### `plans` (Fase 5)
+plan_id · name · duration_days · price · price_before · badge · description · status (active/inactive) · order
+
+Harga & durasi paket Premium. Ubah langsung di sheet, lalu jalankan `refreshPlanCache`.
+
 ### `transactions` (Fase 5)
-trx_id · user_id · plan_id · amount · status (pending/paid/expired) · payment_url · created_at · paid_at · processed (ya/tidak)
+trx_id · user_id · email · plan_id · plan_name · duration_days · amount · status (pending/paid/expired/failed) · mayar_id (id payment request) · mayar_trx_id · payment_url · created_at · expires_at · paid_at · processed (ya/tidak) · premium_until (hasil aktivasi) · source (webhook/status-page/reconcile/admin) · note
 
 ### `webhook_log` (Fase 5)
-received_at · event · trx_id · raw_json · result
+received_at · event · trx_id · mayar_ref · result (fulfilled/already_processed/not_paid:…/no_match/ignored/error:…) · raw_json (maks. 4.000 karakter)
 
 ## Bank soal
 
