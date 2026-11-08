@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Masuk — Siap CPNS</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a href="panduan.html">Panduan</a></nav>
+  </div>
+</header>
+<main class="app-main">
+  <div class="container auth-wrap">
+    <section class="stack-lg">
+      <div class="stack">
+        <span class="eyebrow">Akun gratis</span>
+        <h1 style="font-size:var(--fs-2xl)">Masuk untuk menyimpan progres belajarmu</h1>
+        <p class="muted">Cukup dengan akun Google. Tidak perlu membuat kata sandi baru.</p>
+      </div>
+      <ul class="benefits">
+        <li><span class="tick">✓</span><div><b>Hasil Cek Kesiapan tersimpan</b><p class="small muted">Hasil yang kamu kerjakan sebelum masuk otomatis ditautkan ke akunmu.</p></div></li>
+        <li><span class="tick">✓</span><div><b>Rencana belajar sesuai kondisimu</b><p class="small muted">Disusun dari target, tanggal tes, dan waktu belajar yang kamu punya.</p></div></li>
+        <li><span class="tick">✓</span><div><b>Tryout diagnostik gratis</b><p class="small muted">110 soal, 100 menit, dengan rapor per subtes. Segera hadir.</p></div></li>
+      </ul>
+    </section>
+
+    <section class="card card-elevated auth-card" aria-labelledby="login-title">
+      <h2 id="login-title" style="font-size:var(--fs-xl)">Masuk atau daftar</h2>
+      <p class="small muted" id="login-sub">Akun baru dibuat otomatis saat kamu masuk pertama kali.</p>
+
+      <div id="assessment-note" class="summary-box" hidden>
+        <span class="eyebrow">Hasil yang akan disimpan</span>
+        <span>Skor kesiapan <b id="note-score" class="num">0</b>/100 · <span id="note-level"></span></span>
+      </div>
+
+      <div id="gsi-button" class="gbtn" aria-live="polite"></div>
+
+      <div id="mock-box" class="mock-note" hidden>
+        <strong>Mode uji (USE_MOCK = true)</strong>
+        <p>Login Google belum disambungkan. Gunakan tombol di bawah untuk mencoba alur dengan akun contoh. Data hanya tersimpan di browser ini.</p>
+        <button class="btn btn-primary btn-block" type="button" id="btn-mock-login" style="margin-top:8px">Masuk dengan akun uji</button>
+      </div>
+
+      <p id="login-status" class="status-msg" role="status" hidden></p>
+
+      <p class="xsmall muted">Dengan masuk, kamu menyetujui <a href="privasi.html">Kebijakan Privasi</a>. Kami hanya mengambil nama, email, dan foto profil dari akun Google-mu.</p>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/login.js").then((m) => m.initLogin());
+</script>
+</body>
+</html>

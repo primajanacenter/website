@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Onboarding — Siap CPNS</title>
+  <title>Lengkapi profil — Siap CPNS</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0f2d55">
   <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
@@ -12,9 +12,10 @@
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -23,28 +24,119 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a href="panduan.html">Panduan CPNS</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a href="dashboard.html">Beranda</a></nav>
   </div>
 </header>
-<main class="container placeholder-page" data-feature="onboarding">
-  <div class="card card-elevated">
-    <span class="chip chip-accent" id="ph-phase">Fase 2</span>
-    <h1 style="font-size:var(--fs-2xl)" id="ph-title">Onboarding</h1>
-    <p class="muted" id="ph-desc">Lengkapi profil, target formasi, tanggal tes, dan komitmen waktu belajar.</p>
-    <p class="small muted">Fitur ini sedang dibangun. Sementara itu, kamu bisa cek kesiapan dan membaca panduan CPNS.</p>
-    <div class="row" style="justify-content:center">
-      <a class="btn btn-primary" href="../#cek-kesiapan">Cek kesiapan</a>
-      <a class="btn btn-secondary" href="panduan.html">Baca panduan</a>
-      <a class="btn btn-secondary" id="ph-waitlist" href="#" target="_blank" rel="noopener" hidden>Daftar tunggu</a>
+<main class="app-main">
+  <div class="container narrow stack-lg">
+    <div class="stack" style="gap:10px">
+      <span class="eyebrow" id="ob-eyebrow">Langkah 1 dari 3</span>
+      <h1 style="font-size:var(--fs-2xl)" id="ob-title">Lengkapi profil belajarmu</h1>
+      <p class="muted">Data ini dipakai untuk menyusun rencana belajar yang sesuai kondisimu. Bisa diubah kapan saja.</p>
     </div>
+
+    <ol class="stepbar" aria-hidden="true">
+      <li data-step-ind="1">Pendidikan</li>
+      <li data-step-ind="2">Target</li>
+      <li data-step-ind="3">Komitmen</li>
+    </ol>
+
+    <form id="ob-form" class="form-card" novalidate>
+      <!-- Langkah 1 -->
+      <div class="body" data-step="1">
+        <fieldset>
+          <legend>Jenjang pendidikan terakhir</legend>
+          <div class="choice-grid">
+            <label class="choice"><input type="radio" name="education" value="SMA/SMK"><span>SMA/SMK</span></label>
+            <label class="choice"><input type="radio" name="education" value="D3"><span>D3</span></label>
+            <label class="choice"><input type="radio" name="education" value="D4/S1"><span>D4/S1</span></label>
+            <label class="choice"><input type="radio" name="education" value="S2"><span>S2</span></label>
+            <label class="choice"><input type="radio" name="education" value="S3"><span>S3</span></label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="major">Program studi atau jurusan</label>
+          <input class="input" id="major" name="major" type="text" maxlength="120" list="major-list" autocomplete="off" placeholder="Contoh: S1 Akuntansi">
+          <datalist id="major-list">
+            <option value="Akuntansi"></option><option value="Manajemen"></option><option value="Ilmu Hukum"></option>
+            <option value="Ilmu Administrasi Negara"></option><option value="Teknik Informatika"></option><option value="Sistem Informasi"></option>
+            <option value="Teknik Sipil"></option><option value="Keperawatan"></option><option value="Kebidanan"></option>
+            <option value="Pendidikan Guru Sekolah Dasar"></option><option value="Kesehatan Masyarakat"></option><option value="Statistika"></option>
+          </datalist>
+          <span class="hint">Tulis sesuai nama di ijazah. Kecocokan jurusan menentukan formasi yang bisa kamu lamar.</span>
+        </div>
+      </div>
+
+      <!-- Langkah 2 -->
+      <div class="body" data-step="2" hidden>
+        <div class="field">
+          <label for="targetFormation">Instansi atau jabatan incaran <span class="muted">(opsional)</span></label>
+          <input class="input" id="targetFormation" name="targetFormation" type="text" maxlength="120" placeholder="Contoh: Pranata Komputer, Pemkot Makassar">
+          <span class="hint">Belum tahu? Kosongkan dulu. Kamu bisa mengisinya setelah formasi CPNS 2026 diumumkan.</span>
+        </div>
+        <div class="field">
+          <label for="targetProvince">Lokasi formasi yang diincar</label>
+          <select class="input" id="targetProvince" name="targetProvince"></select>
+        </div>
+        <div class="field">
+          <label for="testDate">Perkiraan tanggal tes SKD <span class="muted">(opsional)</span></label>
+          <input class="input" id="testDate" name="testDate" type="date">
+          <span class="hint">Jadwal resmi belum terbit? Isi perkiraan, nanti bisa diperbarui. Dipakai untuk menghitung sisa waktu belajar.</span>
+        </div>
+        <fieldset>
+          <legend>Target kamu</legend>
+          <div class="choice-grid two">
+            <label class="choice"><input type="radio" name="targetType" value="passing_grade"><span>Lolos ambang batas<small>Fokus aman di ketiga subtes dulu</small></span></label>
+            <label class="choice"><input type="radio" name="targetType" value="kompetitif"><span>Skor kompetitif<small>Mengejar peringkat 3× formasi</small></span></label>
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Langkah 3 -->
+      <div class="body" data-step="3" hidden>
+        <fieldset>
+          <legend>Berapa menit per hari kamu bisa belajar dengan rutin?</legend>
+          <div class="choice-grid">
+            <label class="choice"><input type="radio" name="minutesPerDay" value="15"><span>15 menit</span></label>
+            <label class="choice"><input type="radio" name="minutesPerDay" value="30"><span>30 menit</span></label>
+            <label class="choice"><input type="radio" name="minutesPerDay" value="45"><span>45 menit</span></label>
+            <label class="choice"><input type="radio" name="minutesPerDay" value="60"><span>60 menit</span></label>
+            <label class="choice"><input type="radio" name="minutesPerDay" value="90"><span>90 menit</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Berapa hari dalam seminggu?</legend>
+          <div class="choice-grid">
+            <label class="choice"><input type="radio" name="daysPerWeek" value="3"><span>3 hari</span></label>
+            <label class="choice"><input type="radio" name="daysPerWeek" value="4"><span>4 hari</span></label>
+            <label class="choice"><input type="radio" name="daysPerWeek" value="5"><span>5 hari</span></label>
+            <label class="choice"><input type="radio" name="daysPerWeek" value="6"><span>6 hari</span></label>
+            <label class="choice"><input type="radio" name="daysPerWeek" value="7"><span>Setiap hari</span></label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="reminderTime">Jam pengingat belajar</label>
+          <input class="input" id="reminderTime" name="reminderTime" type="time" value="19:30" style="max-width:180px">
+          <span class="hint">Pilih jam yang realistis setiap hari. Notifikasi pengingat akan aktif di fase berikutnya.</span>
+        </div>
+        <div class="summary-box" id="commit-summary" aria-live="polite"></div>
+      </div>
+
+      <p id="ob-error" class="status-msg error" role="alert" hidden style="margin:0 var(--sp-5) var(--sp-4)"></p>
+
+      <div class="foot">
+        <button class="btn btn-secondary" type="button" id="ob-prev">‹ Kembali</button>
+        <button class="btn btn-primary" type="submit" id="ob-next">Lanjut ›</button>
+      </div>
+    </form>
   </div>
 </main>
-<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
 <script type="module">
   import { hydrateCommon } from "../assets/js/core/ui.js";
-  import { initPlaceholder } from "../assets/js/features/placeholder.js";
   hydrateCommon();
-  initPlaceholder();
+  import("../assets/js/features/onboarding.js").then((m) => m.initOnboarding());
 </script>
 </body>
 </html>
