@@ -94,7 +94,7 @@ Masuk ke situs → Beranda → **Tryout CAT** → Mulai **Tryout Demo**. Kerjaka
 | source | Penyusun/sumber, untuk catatan internal |
 
 **Kode topik (`topic_id`):**
-- TWK: `twk-pancasila`, `twk-uud`, `twk-nkri`, `twk-bhinneka`, `twk-nasionalisme`, `twk-integritas`, `twk-belanegara`
+- TWK: `twk-pancasila`, `twk-uud`, `twk-nkri`, `twk-bhinneka`, `twk-nasionalisme`, `twk-integritas`, `twk-belanegara`, `twk-bahasa`
 - TIU: `tiu-analogi`, `tiu-silogisme`, `tiu-analitis`, `tiu-deret`, `tiu-hitung`, `tiu-cerita`, `tiu-figural`
 - TKP: `tkp-pelayanan`, `tkp-jejaring`, `tkp-sosbud`, `tkp-tik`, `tkp-profesionalisme`, `tkp-antiradikalisme`
 
