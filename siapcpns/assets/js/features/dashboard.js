@@ -78,7 +78,7 @@ function renderTasks(me) {
   const tasks = [
     { title: "Cek kesiapan", desc: "Kenali posisimu sekarang", done: Boolean(me.latestAssessment), href: "../#cek-kesiapan", cta: "Mulai" },
     { title: "Lengkapi profil & target", desc: "Pendidikan, target, komitmen belajar", done: Boolean(me.profileComplete), href: "onboarding.html?next=dashboard.html", cta: "Isi" },
-    { title: "Tryout diagnostik", desc: "110 soal · 100 menit · rapor per subtes", done: false, href: "tryout.html", cta: "Segera hadir", soon: true },
+    tryoutTask(me.latestAttempt),
     { title: "Latihan harian & materi", desc: "Sesuai level dan topik terlemahmu", done: false, locked: true },
     { title: "Tryout Akbar mingguan", desc: "Peringkat nasional setiap minggu", done: false, locked: true },
   ];
@@ -89,7 +89,9 @@ function renderTasks(me) {
     .map((t, i) => {
       const cls = t.done ? "done" : i === nextIdx ? "next" : t.locked ? "locked" : "";
       const action = t.done
-        ? `<span class="chip chip-ok">Selesai</span>`
+        ? t.doneHref
+          ? `<a class="chip chip-ok" href="${t.doneHref}">${t.doneLabel || "Selesai"}</a>`
+          : `<span class="chip chip-ok">Selesai</span>`
         : t.locked
           ? `<span class="chip">Terkunci</span>`
           : t.soon
@@ -98,6 +100,19 @@ function renderTasks(me) {
       return `<li class="task ${cls}"><span class="st">${t.done ? "✓" : i + 1}</span><div><b>${t.title}</b><small>${t.desc}</small></div>${action}</li>`;
     })
     .join("");
+}
+
+function tryoutTask(a) {
+  const base = { title: "Tryout CAT", desc: "Soal & waktu seperti ujian asli, rapor per subtes", href: "tryout.html", cta: "Mulai" };
+  if (!a) return { ...base, done: false };
+  if (a.status === "in_progress") return { ...base, desc: "Ujianmu masih berjalan", done: false, cta: "Lanjutkan" };
+  return {
+    ...base,
+    desc: `Skor terakhir ${a.total} · ${a.passedAll ? "lolos ambang batas" : "belum lolos ambang batas"}`,
+    done: true,
+    doneHref: `rapor.html?id=${encodeURIComponent(a.attemptId)}`,
+    doneLabel: "Lihat rapor",
+  };
 }
 
 function renderAssessment(a) {
