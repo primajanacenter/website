@@ -1,18 +1,8 @@
 {
   "akun": {
-    "title": "Akun dan simpan hasil",
+    "title": "Akun",
     "phase": "Fase 2",
-    "desc": "Login dengan Google, hasil Cek Kesiapan tersimpan, dan profil belajarmu dibuat otomatis."
-  },
-  "onboarding": {
-    "title": "Onboarding",
-    "phase": "Fase 2",
-    "desc": "Lengkapi profil, target formasi, tanggal tes, dan komitmen waktu belajar."
-  },
-  "dashboard": {
-    "title": "Beranda belajar",
-    "phase": "Fase 4",
-    "desc": "Tugas belajar hari ini, progres, dan streak."
+    "desc": "Masuk dengan akun Google untuk menyimpan hasil dan profil belajarmu."
   },
   "tryout": {
     "title": "Tryout CAT",
