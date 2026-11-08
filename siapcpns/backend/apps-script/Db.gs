@@ -26,6 +26,9 @@ var SCHEMA = {
     'attempt_id', 'user_id', 'package_id', 'type', 'status', 'started_at', 'ends_at', 'submitted_at',
     'twk', 'tiu', 'tkp', 'total', 'passed_twk', 'passed_tiu', 'passed_tkp', 'passed_all',
     'answered', 'correct_json', 'topic_json', 'answers_json', 'duration_sec', 'finish_mode'
+  ],
+  practice_answers: [
+    'user_id', 'date', 'question_id', 'package_id', 'topic_id', 'subtest', 'answer', 'points', 'answered_at'
   ]
 };
 

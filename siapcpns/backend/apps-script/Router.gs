@@ -33,7 +33,12 @@ function getRoutes_() {
     startAttempt:   { handler: handleStartAttempt_,   auth: 'required' },
     saveProgress:   { handler: handleSaveProgress_,   auth: 'required' },
     submitAttempt:  { handler: handleSubmitAttempt_,  auth: 'required' },
-    getReport:      { handler: handleGetReport_,      auth: 'required' }
+    getReport:      { handler: handleGetReport_,      auth: 'required' },
+
+    // Fase 4
+    getToday:       { handler: handleGetToday_,       auth: 'required' },
+    startPractice:  { handler: handleStartPractice_,  auth: 'required' },
+    answerPractice: { handler: handleAnswerPractice_, auth: 'required' }
 
     // Fase 5
     // createCheckout:   { handler: handleCreateCheckout_,   auth: 'required' },

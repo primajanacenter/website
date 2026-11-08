@@ -295,7 +295,7 @@ function installQuestionTrigger() {
 /** Daftar paket + status percobaan pengguna. */
 function handleGetTryoutInfo_(payload, user) {
   var attempts = finalizeExpiredAttempts_(user);
-  var packages = getPackages_().map(function (p) {
+  var packages = getPackages_().filter(function (p) { return p.type !== 'latihan'; }).map(function (p) {
     var mine = attempts.filter(function (a) { return a.package_id === p.packageId; });
     var done = mine.filter(function (a) { return a.status === 'submitted'; });
     var running = mine.filter(function (a) { return a.status === 'in_progress'; })[0];
@@ -317,6 +317,7 @@ function handleGetTryoutInfo_(payload, user) {
 function handleStartAttempt_(payload, user) {
   var packageId = String(payload.packageId || '');
   var pkg = getPackage_(packageId);
+  if (pkg.type === 'latihan') throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.');
   var questions = getPackageQuestions_(packageId);
 
   var attempt = withLock_(function () {
