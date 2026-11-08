@@ -24,6 +24,7 @@ var TOPICS = {
   'twk-nasionalisme': { subtest: 'twk', name: 'Nasionalisme' },
   'twk-integritas': { subtest: 'twk', name: 'Integritas' },
   'twk-belanegara': { subtest: 'twk', name: 'Bela negara' },
+  'twk-bahasa': { subtest: 'twk', name: 'Bahasa negara' },
   'tiu-analogi': { subtest: 'tiu', name: 'Analogi' },
   'tiu-silogisme': { subtest: 'tiu', name: 'Silogisme' },
   'tiu-analitis': { subtest: 'tiu', name: 'Penalaran analitis' },
