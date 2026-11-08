@@ -1,1 +1,123 @@
-
+{
+  "package": {
+    "package_id": "DEMO-01",
+    "title": "Tryout Demo (15 soal)",
+    "type": "demo",
+    "description": "Paket contoh untuk mencoba sistem CAT. 5 soal TWK, 5 TIU, 5 TKP. Ambang batas disesuaikan dengan jumlah soal.",
+    "duration_min": 15,
+    "pg_twk": 11,
+    "pg_tiu": 11,
+    "pg_tkp": 18,
+    "free_attempts": "",
+    "status": "live",
+    "order": 2
+  },
+  "questions": [
+    {
+      "number": 1, "subtest": "TWK", "topic_id": "twk-pancasila", "level": 1,
+      "text": "Gotong royong membersihkan lingkungan yang diikuti warga dari berbagai suku dan agama paling mencerminkan pengamalan sila …",
+      "options": ["Pertama", "Kedua", "Ketiga", "Keempat", "Kelima"],
+      "answer": "c",
+      "explanation": "Kerja sama lintas suku dan agama demi kepentingan bersama mencerminkan sila ketiga, Persatuan Indonesia, yang menempatkan persatuan dan kepentingan bersama di atas kepentingan golongan."
+    },
+    {
+      "number": 2, "subtest": "TWK", "topic_id": "twk-uud", "level": 2,
+      "text": "Menurut UUD 1945, kedaulatan berada di tangan rakyat dan dilaksanakan menurut Undang-Undang Dasar. Ketentuan ini tercantum dalam pasal …",
+      "options": ["Pasal 1 ayat (1)", "Pasal 1 ayat (2)", "Pasal 1 ayat (3)", "Pasal 2 ayat (1)", "Pasal 3 ayat (1)"],
+      "answer": "b",
+      "explanation": "Pasal 1 ayat (2) UUD 1945 hasil amandemen berbunyi: \"Kedaulatan berada di tangan rakyat dan dilaksanakan menurut Undang-Undang Dasar.\" Ayat (1) tentang bentuk negara kesatuan berbentuk republik, ayat (3) tentang negara hukum."
+    },
+    {
+      "number": 3, "subtest": "TWK", "topic_id": "twk-nkri", "level": 2,
+      "text": "Deklarasi yang menegaskan bahwa laut di antara dan di sekitar pulau-pulau Indonesia merupakan satu kesatuan wilayah NKRI dikenal sebagai …",
+      "options": ["Sumpah Pemuda 1928", "Deklarasi Djuanda 1957", "Dekret Presiden 1959", "Konferensi Meja Bundar 1949", "Konferensi Asia Afrika 1955"],
+      "answer": "b",
+      "explanation": "Deklarasi Djuanda (13 Desember 1957) menyatakan perairan di antara pulau-pulau Indonesia sebagai bagian wilayah NKRI, dasar konsep Wawasan Nusantara dan negara kepulauan."
+    },
+    {
+      "number": 4, "subtest": "TWK", "topic_id": "twk-bhinneka", "level": 1,
+      "text": "Semboyan Bhinneka Tunggal Ika berasal dari kitab …",
+      "options": ["Negarakertagama karya Mpu Prapanca", "Sutasoma karya Mpu Tantular", "Arjunawiwaha karya Mpu Kanwa", "Pararaton", "Bharatayudha karya Mpu Sedah"],
+      "answer": "b",
+      "explanation": "Bhinneka Tunggal Ika dikutip dari Kakawin Sutasoma karya Mpu Tantular pada masa Majapahit. Maknanya: berbeda-beda tetapi tetap satu."
+    },
+    {
+      "number": 5, "subtest": "TWK", "topic_id": "twk-belanegara", "level": 2,
+      "text": "Sebagai pegawai di kantor pelayanan, contoh sikap bela negara yang paling tepat dalam keseharian adalah …",
+      "options": ["Mengikuti pelatihan militer setiap akhir pekan", "Bekerja jujur, disiplin, dan melayani masyarakat sebaik mungkin", "Menolak semua produk dari luar negeri", "Mengikuti upacara hanya pada hari besar nasional", "Memasang bendera di rumah sepanjang tahun"],
+      "answer": "b",
+      "explanation": "Bela negara tidak selalu berbentuk fisik atau militer. Bagi aparatur, wujud nyatanya adalah bekerja dengan jujur, disiplin, dan memberi pelayanan terbaik sesuai profesinya."
+    },
+    {
+      "number": 6, "subtest": "TIU", "topic_id": "tiu-analogi", "level": 1,
+      "text": "AIR : HAUS = MAKANAN : …",
+      "options": ["Kenyang", "Lapar", "Gizi", "Piring", "Dapur"],
+      "answer": "b",
+      "explanation": "Air menghilangkan rasa haus; makanan menghilangkan rasa lapar. Hubungannya: sesuatu dan kondisi yang diatasinya."
+    },
+    {
+      "number": 7, "subtest": "TIU", "topic_id": "tiu-silogisme", "level": 2,
+      "text": "Semua peserta yang lolos SKD mengikuti SKB. Sebagian peserta yang mengikuti SKB berasal dari luar kota. Kesimpulan yang PASTI benar adalah …",
+      "options": ["Semua peserta dari luar kota lolos SKD", "Sebagian peserta yang lolos SKD berasal dari luar kota", "Tidak dapat ditarik kesimpulan yang pasti tentang asal peserta yang lolos SKD", "Semua peserta SKB lolos SKD", "Peserta dari luar kota tidak mengikuti SKB"],
+      "answer": "c",
+      "explanation": "Premis kedua hanya menyebut sebagian peserta SKB dari luar kota, tanpa menjamin mereka termasuk kelompok yang lolos SKD. Jadi asal peserta yang lolos SKD tidak bisa dipastikan. Opsi D adalah kebalikan premis 1 yang tidak otomatis benar."
+    },
+    {
+      "number": 8, "subtest": "TIU", "topic_id": "tiu-deret", "level": 2,
+      "text": "Lanjutkan deret berikut.",
+      "context": "4, 7, 13, 25, 49, …",
+      "options": ["73", "91", "97", "98", "100"],
+      "answer": "c",
+      "explanation": "Setiap suku dikali 2 lalu dikurangi 1: 4×2−1=7, 7×2−1=13, 13×2−1=25, 25×2−1=49, 49×2−1=97."
+    },
+    {
+      "number": 9, "subtest": "TIU", "topic_id": "tiu-hitung", "level": 2,
+      "text": "Harga sebuah buku setelah diskon 20% adalah Rp48.000. Berapa harga buku sebelum diskon?",
+      "options": ["Rp57.600", "Rp58.000", "Rp60.000", "Rp62.400", "Rp64.000"],
+      "answer": "c",
+      "explanation": "Harga setelah diskon = 80% harga awal. Harga awal = 48.000 ÷ 0,8 = Rp60.000. Jebakan umum: menambah 20% dari 48.000 (= Rp57.600)."
+    },
+    {
+      "number": 10, "subtest": "TIU", "topic_id": "tiu-cerita", "level": 3,
+      "text": "Andi dapat menyelesaikan sebuah pekerjaan dalam 6 hari, sedangkan Budi dalam 12 hari. Jika mereka bekerja bersama, pekerjaan itu selesai dalam …",
+      "options": ["3 hari", "4 hari", "5 hari", "8 hari", "9 hari"],
+      "answer": "b",
+      "explanation": "Per hari Andi menyelesaikan 1/6 dan Budi 1/12 bagian. Bersama: 1/6 + 1/12 = 3/12 = 1/4 bagian per hari, jadi selesai dalam 4 hari."
+    },
+    {
+      "number": 11, "subtest": "TKP", "topic_id": "tkp-pelayanan", "level": 2,
+      "text": "Menjelang jam tutup layanan, masih ada seorang warga lanjut usia yang belum terlayani dan datang dari desa yang jauh. Sikap Anda …",
+      "options": ["Memintanya datang kembali besok karena jam layanan sudah habis", "Melayaninya hingga selesai karena ia sudah menempuh perjalanan jauh", "Meminta rekan lain yang masih di kantor untuk melayaninya", "Memberi nomor antrean prioritas untuk esok hari", "Melayaninya sambil mengingatkan agar lain kali datang lebih awal"],
+      "scores": [1, 5, 3, 2, 4],
+      "explanation": "Nilai tertinggi diberikan pada sikap yang mengutamakan kebutuhan pengguna layanan dengan empati: melayani hingga tuntas. Mengingatkan agar datang lebih awal tetap baik (4), tetapi menambahkan beban pesan yang tidak perlu."
+    },
+    {
+      "number": 12, "subtest": "TKP", "topic_id": "tkp-jejaring", "level": 2,
+      "text": "Anda ditugaskan dalam tim lintas bidang yang anggotanya belum saling mengenal. Pada pertemuan pertama, Anda …",
+      "options": ["Menunggu ketua tim memulai pembicaraan", "Memperkenalkan diri dan mengajak anggota lain berkenalan serta membahas pembagian tugas", "Langsung membahas tugas agar waktu tidak terbuang", "Berkenalan hanya dengan anggota dari bidang yang sama", "Mengusulkan perkenalan melalui grup pesan saja"],
+      "scores": [2, 5, 3, 1, 4],
+      "explanation": "Aspek jejaring kerja menilai inisiatif membangun hubungan kerja yang efektif. Mengambil inisiatif berkenalan sekaligus mengarahkan ke pembagian tugas bernilai tertinggi."
+    },
+    {
+      "number": 13, "subtest": "TKP", "topic_id": "tkp-sosbud", "level": 2,
+      "text": "Anda ditempatkan di daerah dengan adat istiadat yang sangat berbeda dari daerah asal Anda. Sikap Anda …",
+      "options": ["Mempelajari adat setempat dan menyesuaikan diri tanpa meninggalkan nilai yang saya yakini", "Tetap menjalankan kebiasaan dari daerah asal", "Bergaul hanya dengan sesama pendatang", "Meminta pindah ke daerah yang budayanya mirip", "Mengikuti adat setempat hanya saat ada acara resmi"],
+      "scores": [5, 2, 1, 3, 4],
+      "explanation": "Aspek sosial budaya menilai kemampuan beradaptasi dan menghargai keragaman. Mempelajari dan menyesuaikan diri secara aktif bernilai tertinggi."
+    },
+    {
+      "number": 14, "subtest": "TKP", "topic_id": "tkp-tik", "level": 2,
+      "text": "Kantor Anda mulai menerapkan aplikasi baru untuk pengarsipan surat, sementara Anda terbiasa dengan cara manual. Sikap Anda …",
+      "options": ["Tetap memakai cara manual karena lebih cepat", "Mempelajari aplikasi tersebut dan membantu rekan yang kesulitan", "Menunggu pelatihan resmi sebelum memakainya", "Meminta rekan yang paham untuk mengerjakan bagian saya", "Mempelajari aplikasi tersebut sesuai kebutuhan pekerjaan saya"],
+      "scores": [1, 5, 3, 2, 4],
+      "explanation": "Aspek teknologi informasi menilai kemauan memanfaatkan TIK untuk meningkatkan kinerja. Belajar proaktif sekaligus membantu rekan bernilai tertinggi."
+    },
+    {
+      "number": 15, "subtest": "TKP", "topic_id": "tkp-profesionalisme", "level": 3,
+      "text": "Seorang kerabat meminta Anda mendahulukan berkas pengajuannya di atas antrean warga lain. Sikap Anda …",
+      "options": ["Mendahulukannya karena ia keluarga", "Menolak dengan sopan dan memprosesnya sesuai urutan antrean", "Mendahulukannya asal tidak diketahui atasan", "Meminta rekan lain yang memproses berkasnya", "Memprosesnya sesuai urutan sambil menjelaskan persyaratan yang perlu disiapkan"],
+      "scores": [1, 4, 1, 2, 5],
+      "explanation": "Aspek profesionalisme menilai integritas dan perlakuan adil. Tetap sesuai antrean sambil tetap membantu (menjelaskan persyaratan) bernilai tertinggi; menolak dengan sopan juga baik (4)."
+    }
+  ]
+}
