@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Rapor — Siap CPNS</title>
+  <title>Rapor Tryout — Siap CPNS</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0f2d55">
   <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
@@ -12,9 +12,12 @@
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="stylesheet" href="../assets/css/cat.css">
+  <link rel="stylesheet" href="../assets/css/pages/tryout.css">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -23,28 +26,77 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a href="panduan.html">Panduan</a><a class="nav-cta" href="masuk.html" data-nav-auth="dashboard.html">Masuk</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="tryout.html">Tryout</a><a class="nav-cta" href="dashboard.html">Beranda</a></nav>
   </div>
 </header>
-<main class="container placeholder-page" data-feature="rapor">
-  <div class="card card-elevated">
-    <span class="chip chip-accent" id="ph-phase">Fase 3</span>
-    <h1 style="font-size:var(--fs-2xl)" id="ph-title">Rapor</h1>
-    <p class="muted" id="ph-desc">Skor per subtes, status ambang batas, dan kelemahan per topik.</p>
-    <p class="small muted">Fitur ini sedang dibangun. Sementara itu, kamu bisa cek kesiapan dan membaca panduan CPNS.</p>
-    <div class="row" style="justify-content:center">
-      <a class="btn btn-primary" href="../#cek-kesiapan">Cek kesiapan</a>
-      <a class="btn btn-secondary" href="panduan.html">Baca panduan</a>
-      <a class="btn btn-secondary" id="ph-waitlist" href="#" target="_blank" rel="noopener" hidden>Daftar tunggu</a>
+<main class="app-main">
+  <div class="container">
+    <div class="result-shell">
+      <nav class="crumbs" aria-label="Lokasi halaman" style="color:var(--muted)"><a href="dashboard.html" style="color:var(--primary)">Beranda</a> / <a href="tryout.html" style="color:var(--primary)">Tryout</a> / <span>Rapor</span></nav>
+      <p id="r-status" class="status-msg" role="status" hidden></p>
+
+      <div class="report" id="r-report" hidden>
+        <div class="report-head">
+          <b>RAPOR TRYOUT · <span id="r-title"></span></b>
+          <span id="r-meta"></span>
+        </div>
+        <div class="report-body">
+          <div class="score-hero">
+            <div class="verdict">
+              <span class="eyebrow">Skor total</span>
+              <span class="big"><span id="r-total">0</span> <small>/ <span id="r-max">0</span></small></span>
+            </div>
+            <div class="stack" style="gap:8px">
+              <div><span class="chip" id="r-verdict">-</span></div>
+              <h2 id="r-headline" style="font-size:var(--fs-xl)">-</h2>
+              <p class="muted small" id="r-message"></p>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Subtes</th><th>Skor</th><th>Posisi terhadap ambang batas</th><th>Status</th></tr></thead>
+              <tbody id="r-subtests"></tbody>
+            </table>
+          </div>
+          <p class="xsmall muted">Garis hitam pada bar = ambang batas. <span id="r-answered"></span></p>
+        </div>
+      </div>
+
+      <section class="card stack" id="r-topics-card" hidden>
+        <span class="eyebrow">Analisis per topik</span>
+        <h2 style="font-size:var(--fs-xl)">Topik yang perlu diprioritaskan</h2>
+        <p class="small muted">Diurutkan dari capaian terendah. Fokuskan latihan pada topik teratas.</p>
+        <ul class="topic-list" id="r-topics"></ul>
+        <div class="lock-cta" id="r-topics-lock" hidden>
+          <span><b>Rapor detail per topik</b> tersedia di paket Premium.</span>
+          <a class="btn btn-accent" href="premium.html" style="min-height:38px">Lihat Premium</a>
+        </div>
+      </section>
+
+      <section class="card stack" id="r-review-card" hidden>
+        <span class="eyebrow">Pembahasan</span>
+        <h2 style="font-size:var(--fs-xl)" id="r-review-title">Pembahasan soal</h2>
+        <div class="stack" id="r-review"></div>
+        <div class="lock-cta" id="r-review-lock" hidden>
+          <span id="r-review-lock-text"></span>
+          <a class="btn btn-accent" href="premium.html" style="min-height:38px">Lihat Premium</a>
+        </div>
+      </section>
+
+      <div class="row" id="r-actions" hidden>
+        <a class="btn btn-primary" href="dashboard.html">Kembali ke beranda</a>
+        <a class="btn btn-secondary" href="tryout.html">Daftar tryout</a>
+      </div>
     </div>
   </div>
 </main>
+
 <footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
 <script type="module">
   import { hydrateCommon } from "../assets/js/core/ui.js";
-  import { initPlaceholder } from "../assets/js/features/placeholder.js";
   hydrateCommon();
-  initPlaceholder();
+  import("../assets/js/features/rapor.js").then((m) => m.initRapor());
 </script>
 </body>
 </html>
