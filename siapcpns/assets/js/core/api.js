@@ -41,7 +41,64 @@ const mockHandlers = {
     store.set("mock.waitlist", { email, at: new Date().toISOString() });
     return { email };
   },
+
+  // Fase 2: login, profil. Data uji disimpan di browser.
+  async login(payload) {
+    requireMockSession();
+    const db = mockDb();
+    const isNew = !db.user;
+    if (!db.user) {
+      const u = auth.getUser() || {};
+      db.user = { userId: "u_mock", email: u.email || "uji@contoh.id", name: u.name || "Pengguna Uji", picture: "", plan: "free", premiumUntil: "" };
+    }
+    let attachedAssessmentId = null;
+    if (payload?.assessment) {
+      const a = payload.assessment;
+      db.assessments.push({ id: "a_mock_" + Date.now(), total: a.total, levelId: a.levelId, aspects: a.aspects, completedAt: a.completedAt || new Date().toISOString() });
+      attachedAssessmentId = db.assessments[db.assessments.length - 1].id;
+    }
+    saveMockDb(db);
+    return { ...buildMockMe(db), isNew, attachedAssessmentId };
+  },
+
+  async getMe() {
+    requireMockSession();
+    const db = mockDb();
+    if (!db.user) throw apiError("UNAUTHENTICATED", "Silakan masuk terlebih dahulu.");
+    return buildMockMe(db);
+  },
+
+  async saveProfile(p) {
+    requireMockSession();
+    if (!p.education) throw apiError("BAD_REQUEST", "Pilih jenjang pendidikan.");
+    if (!String(p.major || "").trim()) throw apiError("BAD_REQUEST", "Isi program studi atau jurusan.");
+    if (!p.minutesPerDay) throw apiError("BAD_REQUEST", "Pilih waktu belajar per hari.");
+    if (!p.daysPerWeek) throw apiError("BAD_REQUEST", "Pilih jumlah hari belajar per minggu.");
+    const db = mockDb();
+    db.profile = { ...p, minutesPerDay: Number(p.minutesPerDay), daysPerWeek: Number(p.daysPerWeek), updatedAt: new Date().toISOString() };
+    saveMockDb(db);
+    return { profile: db.profile, profileComplete: true };
+  },
 };
+
+function requireMockSession() {
+  if (!auth.isLoggedIn()) throw apiError("UNAUTHENTICATED", "Silakan masuk terlebih dahulu.");
+}
+function mockDb() {
+  return store.get("mock.db", { user: null, profile: null, assessments: [] });
+}
+function saveMockDb(db) {
+  store.set("mock.db", db);
+}
+function buildMockMe(db) {
+  const p = db.profile;
+  return {
+    user: db.user,
+    profile: p,
+    profileComplete: Boolean(p && p.education && p.major && p.minutesPerDay && p.daysPerWeek),
+    latestAssessment: db.assessments[db.assessments.length - 1] || null,
+  };
+}
 
 /* ------------------------------------------------------------------ */
 /* Utilitas                                                            */
@@ -105,6 +162,8 @@ export const api = {
       const data = CONFIG.USE_MOCK ? await callMock(action, payload) : await callRemote(action, payload);
       return { ok: true, data };
     } catch (e) {
+      // Token ditolak server: hapus sesi lokal agar halaman bisa mengarahkan ke login.
+      if (e.code === "UNAUTHENTICATED") auth.logout();
       return { ok: false, error: { code: e.code || "UNKNOWN", message: e.message || "Terjadi kesalahan." } };
     }
   },

@@ -40,5 +40,7 @@ export const KEYS = {
   ASSESSMENT_RESULT: "assessment.result",
   ASSESSMENT_DRAFT: "assessment.draft",
   DOC_CHECKLIST: "panduan.checklist",
-  SESSION: "auth.session",          // Fase 2
+  SESSION: "auth.session",          // Fase 2: token & data tampilan user
+  ME: "auth.me",                    // Fase 2: cache profil dari server
+  ONBOARDING_DRAFT: "onboarding.draft",
 };
