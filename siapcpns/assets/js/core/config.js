@@ -17,7 +17,7 @@ export const CONFIG = {
 
   // Fase 0–1: true (data contoh, tanpa backend).
   // Fase 2  : ubah ke false setelah Web App Apps Script di-deploy.
-  USE_MOCK: true,
+  USE_MOCK: false,
 
   // Diisi di Fase 2: URL dari Deploy > Web app (berakhiran /exec).
   APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwSDilVMMG3nE6LW-d2e4lbg5keUBttfqWcGGfSxbCFmPFn0dJ3pMouTbuwqpm68vmE/exec",
