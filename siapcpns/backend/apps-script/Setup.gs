@@ -85,3 +85,36 @@ function importDemoPackage() {
   clearPackageCache_(pkg.package_id);
   Logger.log('Paket ' + pkg.package_id + ' dimasukkan: ' + data.questions.length + ' soal.');
 }
+
+/**
+ * Mode folder: buat file Spreadsheet "Paket DEMO-01" di folder QUESTIONS_FOLDER_ID
+ * berisi sheet packages & questions (15 soal contoh). Jalankan sekali bila perlu.
+ */
+function createDemoPackageFile() {
+  var folder = DriveApp.getFolderById(getConfig_('QUESTIONS_FOLDER_ID'));
+  var data = getDemoPackageData_();
+  var ss = SpreadsheetApp.create('Paket ' + data.package.package_id + ' – ' + data.package.title);
+  var pk = ss.getSheets()[0].setName('packages');
+  var ph = QSCHEMA.packages;
+  pk.getRange(1, 1, 1, ph.length).setValues([ph]).setFontWeight('bold');
+  pk.getRange(2, 1, 1, ph.length).setValues([ph.map(function (k) { return data.package[k] === undefined ? '' : data.package[k]; })]);
+  var qs = ss.insertSheet('questions');
+  var qh = QSCHEMA.questions;
+  var rows = data.questions.map(function (q) {
+    var row = {
+      question_id: data.package.package_id + '-' + ('00' + q.number).slice(-3), package_id: data.package.package_id,
+      number: q.number, subtest: q.subtest, topic_id: q.topic_id, level: q.level, text: q.text, context: q.context || '',
+      answer: q.answer || '', explanation: q.explanation, status: 'live', source: 'demo'
+    };
+    ['a', 'b', 'c', 'd', 'e'].forEach(function (l, i) {
+      row['option_' + l] = q.options[i] || '';
+      row['score_' + l] = q.scores ? q.scores[i] : '';
+    });
+    return qh.map(function (k) { return row[k] === undefined ? '' : row[k]; });
+  });
+  qs.getRange(1, 1, 1, qh.length).setValues([qh]).setFontWeight('bold');
+  qs.getRange(2, 1, rows.length, qh.length).setValues(rows);
+  DriveApp.getFileById(ss.getId()).moveTo(folder);
+  refreshQuestionCache();
+  Logger.log('File demo dibuat di folder: ' + ss.getUrl());
+}
