@@ -109,7 +109,9 @@ Jika rahasia pernah ter-commit: **segera buat ulang (rotate)** key tersebut. Men
 
 ## Backend
 
-Panduan lengkap langkah demi langkah: **[`docs/setup-fase-2.md`](docs/setup-fase-2.md)** (Spreadsheet, Apps Script, Script Properties, OAuth Client ID, deploy Web App, sambungkan frontend).
+Panduan langkah demi langkah: **[`docs/setup-fase-2.md`](docs/setup-fase-2.md)** → [`setup-fase-3.md`](docs/setup-fase-3.md) → [`setup-fase-4.md`](docs/setup-fase-4.md).
+
+Panduan Fase 2 (Spreadsheet, Apps Script, Script Properties, OAuth Client ID, deploy Web App, sambungkan frontend).
 
 Uji backend tanpa akun Google: `node backend/tests/gas-harness.test.js`.
 
@@ -117,7 +119,7 @@ Selama `USE_MOCK = true`, halaman Masuk menampilkan tombol "Masuk dengan akun uj
 
 ## Tahapan
 
-Lihat `docs/user-flow.md`. Ringkasnya: 0 Fondasi ✅ · 1 Cek Kesiapan ✅ · 2 Login & profil ✅ · 3 Tryout & rapor ✅ · 4 Produk gratis lengkap (soft launch) · 5 Pembayaran Mayar · 6 Fitur premium · 7 Tryout Akbar · 8 Pasca-SKD.
+Lihat `docs/user-flow.md`. Ringkasnya: 0 Fondasi ✅ · 1 Cek Kesiapan ✅ · 2 Login & profil ✅ · 3 Tryout & rapor ✅ · 4 Produk gratis lengkap (soft launch) ✅ · 5 Pembayaran Mayar · 6 Fitur premium · 7 Tryout Akbar · 8 Pasca-SKD.
 
 Beri tag di akhir setiap fase: `git tag v0.1-landing && git push --tags`.
 
