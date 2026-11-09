@@ -295,7 +295,7 @@ function installQuestionTrigger() {
 /** Daftar paket + status percobaan pengguna. */
 function handleGetTryoutInfo_(payload, user) {
   var attempts = finalizeExpiredAttempts_(user);
-  var packages = getPackages_().filter(function (p) { return p.type !== 'latihan'; }).map(function (p) {
+  var packages = getPackages_().filter(function (p) { return p.type !== 'latihan' && p.type !== 'akbar'; }).map(function (p) {
     var mine = attempts.filter(function (a) { return a.package_id === p.packageId; });
     var done = mine.filter(function (a) { return a.status === 'submitted'; });
     var running = mine.filter(function (a) { return a.status === 'in_progress'; })[0];
@@ -317,7 +317,7 @@ function handleGetTryoutInfo_(payload, user) {
 function handleStartAttempt_(payload, user) {
   var packageId = String(payload.packageId || '');
   var pkg = getPackage_(packageId);
-  if (pkg.type === 'latihan') throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.');
+  if (pkg.type === 'latihan' || pkg.type === 'akbar') throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.');
   var questions = getPackageQuestions_(packageId);
 
   var attempt = withLock_(function () {
@@ -392,6 +392,13 @@ function handleGetReport_(payload, user) {
       });
     } else {
       throw new AppError_('NOT_FINISHED', 'Tryout ini masih berlangsung.');
+    }
+  }
+  if (row.type === 'akbar') {
+    // Kunci jawaban & skor Tryout Akbar baru dibuka setelah hasil terbit (mencegah bocoran saat event berjalan)
+    var ev = findOne_('akbar_events', 'event_id', row.event_id);
+    if (!ev || ev.status !== 'published') {
+      throw new AppError_('RESULTS_PENDING', 'Jawabanmu sudah tersimpan. Skor, rapor, dan peringkat terbit ' + (ev ? fmtJkt_(ev.results_at) : 'setelah event selesai') + '.');
     }
   }
   return buildReport_(row, user);

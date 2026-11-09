@@ -48,7 +48,13 @@ function getRoutes_() {
     // Fase 6
     getMaterialIndex: { handler: handleGetMaterialIndex_, auth: 'optional' },
     getMaterial:      { handler: handleGetMaterial_,      auth: 'optional' },
-    getPlan:          { handler: handleGetPlan_,          auth: 'required' }
+    getPlan:          { handler: handleGetPlan_,          auth: 'required' },
+
+    // Fase 7
+    getAkbarInfo:     { handler: handleGetAkbarInfo_,     auth: 'optional' },
+    joinAkbar:        { handler: handleJoinAkbar_,        auth: 'required' },
+    getAkbarRanking:  { handler: handleGetAkbarRanking_,  auth: 'optional' },
+    loadProbe:        { handler: handleLoadProbe_,        auth: 'none' }
   };
 }
 

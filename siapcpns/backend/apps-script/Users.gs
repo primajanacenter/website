@@ -42,7 +42,8 @@ function buildMe_(user) {
   var lastAssessment = findLast_('assessments', 'user_id', user.userId);
   var lastAttempt = null;
   try {
-    var a = findLast_('attempts', 'user_id', user.userId);
+    var mineA = findAll_('attempts', 'user_id', user.userId).filter(function (x) { return x.type !== 'akbar'; });
+    var a = mineA[mineA.length - 1];
     if (a) {
       lastAttempt = a.status === 'submitted'
         ? { attemptId: a.attempt_id, status: 'submitted', packageId: a.package_id, total: Number(a.total) || 0, passedAll: isTrue_(a.passed_all), submittedAt: String(a.submitted_at) }

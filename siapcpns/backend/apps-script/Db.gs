@@ -25,7 +25,7 @@ var SCHEMA = {
   attempts: [
     'attempt_id', 'user_id', 'package_id', 'type', 'status', 'started_at', 'ends_at', 'submitted_at',
     'twk', 'tiu', 'tkp', 'total', 'passed_twk', 'passed_tiu', 'passed_tkp', 'passed_all',
-    'answered', 'correct_json', 'topic_json', 'answers_json', 'duration_sec', 'finish_mode'
+    'answered', 'correct_json', 'topic_json', 'answers_json', 'duration_sec', 'finish_mode', 'event_id'
   ],
   practice_answers: [
     'user_id', 'date', 'question_id', 'package_id', 'topic_id', 'subtest', 'answer', 'points', 'answered_at'
@@ -37,7 +37,14 @@ var SCHEMA = {
     'mayar_id', 'mayar_trx_id', 'payment_url', 'created_at', 'expires_at', 'paid_at', 'processed',
     'premium_until', 'source', 'note'
   ],
-  webhook_log: ['received_at', 'event', 'trx_id', 'mayar_ref', 'result', 'raw_json']
+  webhook_log: ['received_at', 'event', 'trx_id', 'mayar_ref', 'result', 'raw_json'],
+  // Fase 7: Tryout Akbar
+  akbar_events: ['event_id', 'package_id', 'title', 'opens_at', 'closes_at', 'results_at', 'status', 'participants', 'created_at'],
+  akbar_results: [
+    'event_id', 'user_id', 'attempt_id', 'rank', 'total', 'twk', 'tiu', 'tkp', 'passed_all', 'percentile',
+    'duration_sec', 'province', 'province_rank', 'province_total', 'education', 'display_name', 'published_at'
+  ],
+  loadtest_log: ['at', 'probe_id', 'note']
 };
 
 /** Struktur sheet di file BANK SOAL (QUESTIONS_SPREADSHEET_ID). Hanya bisa dibaca server. */
@@ -156,6 +163,16 @@ function insert_(name, obj) {
   var row = h.map(function (k) { return obj[k] === undefined || obj[k] === null ? '' : obj[k]; });
   sheet_(name).appendRow(row);
   return obj;
+}
+
+/** Tambah banyak baris sekaligus (satu kali tulis). */
+function insertMany_(name, objs) {
+  if (!objs.length) return 0;
+  var h = headers_(name);
+  var sh = sheet_(name);
+  var rows = objs.map(function (obj) { return h.map(function (k) { return obj[k] === undefined || obj[k] === null ? '' : obj[k]; }); });
+  sh.getRange(sh.getLastRow() + 1, 1, rows.length, h.length).setValues(rows);
+  return rows.length;
 }
 
 /** Perbarui sebagian kolom pada baris tertentu. */
