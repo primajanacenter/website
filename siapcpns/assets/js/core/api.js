@@ -14,6 +14,7 @@
 import { CONFIG } from "./config.js";
 import { store } from "./store.js";
 import { auth } from "./auth.js";
+import { buildPlan, ALL_TOPICS } from "../features/plan.js";
 
 /* ------------------------------------------------------------------ */
 /* Mock: handler sementara untuk Fase 0–1                              */
@@ -216,8 +217,8 @@ Object.assign(mockHandlers, {
       focusTopics: focus.map((k) => ({ topicId: k, name: TOPIC_NAMES[k] || k, subtest: k.slice(0, 3) })),
       topicLevels: levels,
       practice: mockPremium(db)
-        ? { doneToday: done.length, correctToday: done.filter((h) => h.points >= 4).length, dailyLimit: null, remaining: 10, bankSize: d.questions.length }
-        : { doneToday: done.length, correctToday: done.filter((h) => h.points >= 4).length, dailyLimit: FREE_DAILY, remaining: Math.max(0, FREE_DAILY - done.length), bankSize: d.questions.length },
+        ? { doneToday: done.length, correctToday: done.filter((h) => h.points >= 4).length, byTopicToday: countBy(done), dailyLimit: null, remaining: 10, bankSize: d.questions.length }
+        : { doneToday: done.length, correctToday: done.filter((h) => h.points >= 4).length, byTopicToday: countBy(done), dailyLimit: FREE_DAILY, remaining: Math.max(0, FREE_DAILY - done.length), bankSize: d.questions.length },
       hasTryout: (db.attempts || []).some((a) => a.status === "submitted"),
     };
   },
@@ -316,6 +317,79 @@ Object.assign(mockHandlers, {
     }
     saveMockDb(db);
     return { ok: true };
+  },
+});
+
+// ---------- Fase 6: materi premium & rencana adaptif (mode uji: isi contoh, bukan materi asli) ----------
+function countBy(list) {
+  return list.reduce((m, h) => ((m[h.topicId] = (m[h.topicId] || 0) + 1), m), {});
+}
+const MOCK_LEVEL_TITLE = { 2: "Konsep lengkap & pola soal", 3: "Analisis kasus HOTS", 4: "Strategi waktu & jebakan lanjut" };
+function mockMaterial(topicId, level) {
+  const name = TOPIC_NAMES[topicId] || topicId;
+  return {
+    materialId: `MAT-${topicId}-L${level}`, topicId, level, title: `${name}: ${MOCK_LEVEL_TITLE[level]}`, minutes: 8 + level,
+    ringkasan: `Ini contoh isi materi level ${level} untuk mode uji. Materi Premium yang sebenarnya disimpan di spreadsheet server dan hanya dikirim kepada pengguna Premium setelah backend tersambung.`,
+    poinKunci: ["Poin kunci contoh pertama.", "Poin kunci contoh kedua.", "Poin kunci contoh ketiga."],
+    contoh: { soal: `Contoh soal level ${level} (mode uji). Pilih jawaban yang paling tepat.`, pilihan: ["Jawaban benar", "Pengecoh 1", "Pengecoh 2", "Pengecoh 3", "Pengecoh 4"], jawaban: 0, pembahasan: "Pembahasan contoh untuk mode uji." },
+    tips: ["Strategi contoh."], jebakan: ["Jebakan contoh."],
+  };
+}
+async function mockTopicStats() {
+  if (!auth.isLoggedIn() || !mockDb().user) return null;
+  return (await mockHandlers.getToday()).topicLevels;
+}
+Object.assign(mockHandlers, {
+  async getMaterialIndex() {
+    const available = {};
+    ALL_TOPICS.forEach((t) => (available[t.id] = [2, 3, 4].map((l) => ({ level: l, title: mockMaterial(t.id, l).title, minutes: 8 + l }))));
+    const db = mockDb(); const levels = await mockTopicStats();
+    const recommended = {};
+    if (levels) ALL_TOPICS.forEach((t) => (recommended[t.id] = levels[t.id] ? Math.min(4, levels[t.id].level + 1) : 1));
+    return { premium: mockPremium(db), loggedIn: Boolean(levels), available, recommended };
+  },
+  async getMaterial({ topicId, level }) {
+    level = Number(level);
+    if (!TOPIC_NAMES[topicId] || ![2, 3, 4].includes(level)) throw apiError("BAD_REQUEST", "Topik atau level materi tidak valid.");
+    const m = mockMaterial(topicId, level);
+    const db = mockDb();
+    if (!auth.isLoggedIn() || !mockPremium(db)) {
+      return { locked: true, reason: auth.isLoggedIn() ? "PREMIUM" : "LOGIN", teaser: { topicId, level, title: m.title, minutes: m.minutes, pointCount: 3, intro: m.ringkasan.slice(0, 120) + "…" } };
+    }
+    return { locked: false, material: m };
+  },
+  async getPlan() {
+    requireMockSession();
+    const db = mockDb();
+    if (!mockPremium(db)) throw apiError("FORBIDDEN", "Rencana adaptif tersedia untuk pengguna Premium.");
+    const today = await mockHandlers.getToday();
+    if (!today.profile) throw apiError("PROFILE_INCOMPLETE", "Lengkapi profil belajar terlebih dahulu.");
+    const base = buildPlan(today);
+    const lv = today.topicLevels;
+    const priorities = ALL_TOPICS.map((t) => {
+      const st = lv[t.id]; const level = st ? st.level : null;
+      return { topicId: t.id, name: t.name, subtest: t.subtest, level, pct: st ? st.pct : null, n: st ? st.n : 0, targetLevel: 3,
+        recommendedLevel: st ? Math.min(4, st.level + 1) : 1, score: (3 - (level || 1)) + (st ? 0 : 0.75),
+        reason: st ? `Level ${level} (${st.pct}%), target level 3` : "Belum cukup data — kerjakan latihan topik ini untuk mengukur levelmu" };
+    }).sort((a, b) => b.score - a.score);
+    const last = (db.attempts || []).filter((a) => a.status === "submitted").slice(-1)[0];
+    const gaps = last ? Object.fromEntries(["twk", "tiu", "tkp"].map((s) => { const pg = { twk: 65, tiu: 80, tkp: 166 }[s] * last.sub[s].max / ({ twk: 150, tiu: 175, tkp: 225 }[s]); const pgR = Math.round(pg); return [s, { score: last.sub[s].score, pg: pgR, gap: Math.max(0, pgR - last.sub[s].score), passed: last.sub[s].score >= pgR }]; })) : null;
+    let i = 0;
+    const week = base.week.map((d) => {
+      const p = priorities[i++ % 6]; const l = Math.max(2, p.recommendedLevel);
+      return { ...d, tasks: d.tasks.map((t) => {
+        if (t.type === "materi") return { ...t, topicId: p.topicId, level: l, label: `Materi Lv${l}: ${p.name}`, href: `materi.html?topik=${p.topicId}&level=${l}` };
+        if (t.type === "latihan-topik") return { ...t, topicId: p.topicId, count: 10, label: `Latihan topik ${p.name} (10 soal)`, href: `latihan.html?topik=${p.topicId}` };
+        return t;
+      }) };
+    });
+    const notes = [];
+    if (!last) notes.push("Belum ada tryout. Kerjakan tryout diagnostik minggu ini agar prioritas topik lebih akurat.");
+    if (gaps) ["twk", "tiu", "tkp"].forEach((s) => { if (!gaps[s].passed) notes.push(`${s.toUpperCase()} masih ${gaps[s].gap} poin di bawah ambang batas (${gaps[s].score}/${gaps[s].pg}). Porsi topik ${s.toUpperCase()} dinaikkan.`); });
+    notes.push("Mode uji: analisis ini disederhanakan di browser. Versi server memakai skor tryout, level topik, dan kepatuhan mingguan.");
+    return { ...base, week, today: week.find((w) => w.isToday), adaptive: true, generatedAt: new Date().toISOString(), targetLevel: 3,
+      targets: { practicePerDay: 20, practicePerWeek: 20 * base.weekly.days, tryoutThisWeek: !last, cadenceDays: 14, intensity: 1 },
+      adherence: { done: 0, planned: 0, pct: null }, gaps, priorities, notes };
   },
 });
 
