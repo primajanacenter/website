@@ -2,7 +2,7 @@
  * plan.js — rencana belajar dasar (Fase 4)
  *
  * Disusun di browser dari data getToday (profil, topik fokus, level topik, status latihan).
- * Premium (Fase 6) akan mendapat rencana adaptif dari server; struktur keluarannya sama.
+ * Premium (Fase 6) mendapat rencana adaptif dari server (action getPlan); struktur keluarannya sama.
  */
 
 import { store } from "../core/store.js";
@@ -33,10 +33,16 @@ export function localDate(d = new Date()) {
   return z.toISOString().slice(0, 10);
 }
 
-export function markRead(topicId) {
+/** Tandai materi dibaca hari ini. Level 2–4 dicatat juga sebagai "topik@level". */
+export function markRead(topicId, level = 1) {
   const m = store.get(READ_KEY, {});
   m[topicId] = localDate();
+  if (level > 1) m[`${topicId}@${level}`] = localDate();
   store.set(READ_KEY, m);
+}
+
+export function readLevel(topicId, level) {
+  return Boolean(store.get(READ_KEY, {})[`${topicId}@${level}`]);
 }
 
 export function readToday(topicId) {
@@ -122,7 +128,9 @@ export function buildPlan(today) {
 export function taskDone(task, today) {
   // Materi dianggap selesai bila ada topik yang dibaca hari ini (topik fokus bisa berubah setelah latihan).
   if (task.type === "materi") return readToday(task.topicId) || Object.values(readMap()).includes(localDate());
+  if (task.type === "latihan-topik") return (today.practice.byTopicToday?.[task.topicId] || 0) >= (task.count || 10);
   if (task.type === "latihan") {
+    if (task.count) return today.practice.doneToday >= task.count;
     const target = today.practice.dailyLimit ?? 10;
     return today.practice.doneToday >= Math.min(10, target);
   }

@@ -10,7 +10,8 @@ import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
 import { store, KEYS } from "../core/store.js";
 import { $, esc, fmtDate } from "../core/ui.js";
-import { buildPlan, taskDone } from "./plan.js";
+import { taskDone } from "./plan.js";
+import { loadPlan } from "./rencana.js";
 
 const LEVELS = {
   "baru-mulai": { label: "Baru mulai", chip: "chip-warn" },
@@ -58,15 +59,15 @@ export async function initDashboard() {
   // Tugas hari ini (selalu data terbaru)
   const t = await api.call("getToday");
   if (t.ok) {
-    renderToday(t.data);
+    await renderToday(t.data);
     renderTasks(store.get(KEYS.ME) || me, t.data);
   } else {
     $("#today-card").hidden = true;
   }
 }
 
-function renderToday(today) {
-  const plan = buildPlan(today);
+async function renderToday(today) {
+  const plan = await loadPlan(today);
   $("#today-date").textContent = new Date().toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long" });
   $("#today-streak").textContent = today.streak;
   const p = today.practice;
