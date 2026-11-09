@@ -391,6 +391,80 @@ check('getToday memuat byTopicToday', td6.ok && typeof td6.data.practice.byTopic
 var P2,P3;
 }
 
+
+// ================= Fase 7: Tryout Akbar =================
+{
+ctx.setupSheets();
+pkgFile('fak1','AKBAR-T1',['AK-T1','Tryout Akbar Uji','akbar','',100,'','','','','live',50],[QH,...mk('AK-T1',QH)]);
+pkgFile('fak2','AKBAR-T2',['AK-T2','Tryout Akbar Uji 2','akbar','',100,'','','','','live',51],[QH,...mk('AK-T2',QH)]);
+ctx.refreshQuestionCache(); delete cacheStore['pkgs'];
+const lobby=post('getTryoutInfo',{},'h.bob.s').data.packages.map(p=>p.packageId);
+check('akbar: tidak tampil di lobi tryout', !lobby.includes('AK-T1'), lobby);
+check('akbar: tidak bisa lewat startAttempt', post('startAttempt',{packageId:'AK-T1'},'h.bob.s').error.code==='NOT_FOUND');
+const H=sheets.akbar_events.rows[0]; const now=Date.now();
+const evRow=(id,pkg,o,c,r)=>H.map(k=>({event_id:id,package_id:pkg,title:'Akbar '+id,opens_at:new Date(now+o*3600e3).toISOString(),closes_at:new Date(now+c*3600e3).toISOString(),results_at:new Date(now+r*3600e3).toISOString(),status:'scheduled',participants:'',created_at:''}[k]??''));
+sheets.akbar_events.rows.push(evRow('E1','AK-T1',-1,5,6), evRow('E0','AK-T1',24,39,48));
+let ai=post('getAkbarInfo',{});
+check('akbar info anonim: event berjalan', ai.ok && ai.data.current.eventId==='E1' && ai.data.current.state==='open' && ai.data.current.my===null && ai.data.next.length===1, ai.data);
+check('join butuh login', post('joinAkbar',{eventId:'E1'}).error.code==='UNAUTHENTICATED');
+check('event belum dibuka', post('joinAkbar',{eventId:'E0'},'h.bob.s').error.code==='NOT_OPEN');
+const perfect=(qs)=>{const a={};qs.forEach((q,i)=>{const src=demo.questions[i];a[q.id]=src.answer||'abcde'[src.scores.indexOf(5)];});return a;};
+const users=['h.bob.s','h.alice.s',dina,'h.eka.s'];
+const joins={};
+users.forEach(u=>{joins[u]=post('joinAkbar',{eventId:'E1'},u);});
+check('join berhasil, tanpa kunci jawaban', joins['h.bob.s'].ok && joins['h.bob.s'].data.questions.length===15 && !/"answer"|"score"/.test(JSON.stringify(joins['h.bob.s'].data)), joins['h.bob.s']);
+check('join ulang melanjutkan attempt yang sama', post('joinAkbar',{eventId:'E1'},'h.bob.s').data.attemptId===joins['h.bob.s'].data.attemptId);
+const qs=joins['h.bob.s'].data.questions;
+const half=Object.fromEntries(Object.entries(perfect(qs)).slice(0,8));
+post('submitAttempt',{attemptId:joins['h.bob.s'].data.attemptId,answers:perfect(qs)},'h.bob.s');
+post('submitAttempt',{attemptId:joins['h.alice.s'].data.attemptId,answers:half},'h.alice.s');
+post('submitAttempt',{attemptId:joins[dina].data.attemptId,answers:perfect(qs)},dina);
+// eka dibiarkan berjalan (akan dinilai otomatis saat terbit)
+post('saveProgress',{attemptId:joins['h.eka.s'].data.attemptId,answers:half},'h.eka.s');
+check('ikut lagi setelah selesai ditolak', post('joinAkbar',{eventId:'E1'},'h.bob.s').error.code==='ALREADY_DONE');
+check('rapor dikunci sebelum hasil terbit', post('getReport',{attemptId:joins['h.bob.s'].data.attemptId},'h.bob.s').error.code==='RESULTS_PENDING');
+check('peringkat belum terbit', post('getAkbarRanking',{eventId:'E1'}).error.code==='RESULTS_PENDING');
+check('akbar tidak menjadi latestAttempt di beranda', (post('getMe',{},'h.bob.s').data.latestAttempt||{}).packageId!=='AK-T1');
+ai=post('getAkbarInfo',{},'h.bob.s');
+check('status peserta: submitted', ai.data.current.my.status==='submitted' && ai.data.current.my.rank===null);
+// samakan durasi agar tie-break: bob & dina sama total → dina lebih cepat
+const att=(id)=>sheets.attempts.rows.find(r=>r[0]===id); const AHh=sheets.attempts.rows[0];
+att(joins['h.bob.s'].data.attemptId)[AHh.indexOf('duration_sec')]='3000';
+att(joins[dina].data.attemptId)[AHh.indexOf('duration_sec')]='2000';
+// tutup event & terbitkan
+const E1=sheets.akbar_events.rows.find(r=>r[0]==='E1'); const ix=(k)=>H.indexOf(k);
+E1[ix('opens_at')]=new Date(now-10*3600e3).toISOString(); E1[ix('closes_at')]=new Date(now-3*3600e3).toISOString(); E1[ix('results_at')]=new Date(now-60e3).toISOString();
+att(joins['h.eka.s'].data.attemptId)[AHh.indexOf('ends_at')]=new Date(now-4*3600e3).toISOString();
+check('join setelah ditutup ditolak', post('joinAkbar',{eventId:'E1'},'h.fani.s').error.code==='CLOSED');
+ctx.publishAkbarResults();
+const R=sheets.akbar_results.rows; const RH=R[0];
+check('hasil terbit: 4 peserta (termasuk yang dinilai otomatis)', R.length===5 && E1[ix('status')]==='published' && E1[ix('participants')]==='4', R.length);
+const rk=post('getAkbarRanking',{eventId:'E1'});
+check('peringkat: urutan total & tie-break durasi', rk.ok && rk.data.top[0].total===75 && rk.data.top[0].name==='Dina' && rk.data.top[1].total===75 && rk.data.top.length===4, rk.data.top);
+check('peringkat publik tanpa user_id/email', !/user_id|@|userId/.test(JSON.stringify(rk.data)));
+check('nama disamarkan', rk.data.top.some(t=>t.name==='Alice W.'), rk.data.top.map(t=>t.name));
+const rb=post('getAkbarRanking',{eventId:'E1'},'h.bob.s');
+check('posisi saya & persentil', rb.data.me.rank===2 && rb.data.me.percentile===67 && rb.data.stats.n===4 && !rb.data.analysis, rb.data.me);
+check('peringkat provinsi khusus premium', post('getAkbarRanking',{eventId:'E1',scope:'province'},'h.bob.s').error.code==='FORBIDDEN');
+const rd=post('getAkbarRanking',{eventId:'E1',scope:'province'},dina);
+check('premium: provinsi & analisis subtes', rd.ok && rd.data.province==='Jawa Tengah' && rd.data.top.length>=1 && rd.data.analysis.length===3 && rd.data.analysis[0].top10>0, rd.data);
+check('rapor terbuka setelah terbit', post('getReport',{attemptId:joins['h.bob.s'].data.attemptId},'h.bob.s').ok);
+ai=post('getAkbarInfo',{},'h.bob.s');
+check('riwayat memuat peringkat saya', ai.data.past[0].eventId==='E1' && ai.data.past[0].my.rank===2 && ai.data.past[0].participants===4, ai.data.past);
+ctx.publishAkbarResults();
+check('terbit ulang tidak menggandakan', sheets.akbar_results.rows.length===5);
+ctx.scheduleAkbarEvents();
+const newEv=sheets.akbar_events.rows.find(r=>r[1]==='AK-T2');
+check('jadwal otomatis: Minggu 06.00–21.00 WIB', newEv && new Date(newEv[ix('opens_at')]).getUTCHours()===23 && new Date(new Date(newEv[ix('opens_at')]).getTime()+7*3600e3).getUTCDay()===0 && new Date(newEv[ix('closes_at')]).getUTCHours()===14, newEv);
+ctx.scheduleAkbarEvents();
+check('jadwal tidak dobel', sheets.akbar_events.rows.filter(r=>r[1]==='AK-T2').length===1);
+check('loadProbe tanpa token ditolak', post('loadProbe',{key:'x'}).error.code==='UNKNOWN_ACTION');
+props.LOADTEST_TOKEN='lt-123';
+const lp=post('loadProbe',{key:'lt-123',probeId:'p1'});
+check('loadProbe dengan token', lp.ok && lp.data.questions===15 && sheets.loadtest_log.rows.length===2, lp);
+delete props.LOADTEST_TOKEN;
+}
+
 delete props.QUESTIONS_FOLDER_ID; ctx.clearPackageCache_(null);
 check('no source -> clear config error', post('getTryoutInfo',{},'h.alice.s').error.code==='CONFIG_MISSING');
 
