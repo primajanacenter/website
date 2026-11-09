@@ -8,12 +8,14 @@
  *   Fase 2: SPREADSHEET_ID, GOOGLE_CLIENT_ID, ALLOWED_ORIGIN
  *   Fase 3: QUESTIONS_FOLDER_ID (folder Drive, 1 file = 1 paket) dan/atau QUESTIONS_SPREADSHEET_ID
  *   Fase 5: MAYAR_API_KEY, MAYAR_BASE_URL, WEBHOOK_TOKEN (+ opsional APP_BASE_URL, WEBAPP_URL)
+ *   Fase 6: MATERIALS_SPREADSHEET_ID (file materi premium, sheet "materials")
  */
 
 var REQUIRED_KEYS = {
   2: ['SPREADSHEET_ID', 'GOOGLE_CLIENT_ID'],
   3: ['QUESTIONS_FOLDER_ID atau QUESTIONS_SPREADSHEET_ID'],
-  5: ['MAYAR_API_KEY', 'MAYAR_BASE_URL', 'WEBHOOK_TOKEN']
+  5: ['MAYAR_API_KEY', 'MAYAR_BASE_URL', 'WEBHOOK_TOKEN'],
+  6: ['MATERIALS_SPREADSHEET_ID']
 };
 
 /** Ambil satu properti. Lempar error jelas jika belum diisi. */

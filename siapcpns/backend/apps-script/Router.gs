@@ -43,7 +43,12 @@ function getRoutes_() {
     // Fase 5
     getPlans:         { handler: handleGetPlans_,         auth: 'optional' },
     createCheckout:   { handler: handleCreateCheckout_,   auth: 'required' },
-    getPaymentStatus: { handler: handleGetPaymentStatus_, auth: 'required' }
+    getPaymentStatus: { handler: handleGetPaymentStatus_, auth: 'required' },
+
+    // Fase 6
+    getMaterialIndex: { handler: handleGetMaterialIndex_, auth: 'optional' },
+    getMaterial:      { handler: handleGetMaterial_,      auth: 'optional' },
+    getPlan:          { handler: handleGetPlan_,          auth: 'required' }
   };
 }
 

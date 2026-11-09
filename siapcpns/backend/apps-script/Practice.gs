@@ -136,6 +136,7 @@ function handleGetToday_(payload, user) {
     practice: {
       doneToday: doneToday.length,
       correctToday: doneToday.filter(function (h) { return h.points >= 4; }).length,
+      byTopicToday: doneToday.reduce(function (m, h) { m[h.topicId] = (m[h.topicId] || 0) + 1; return m; }, {}),
       dailyLimit: premium ? null : FREE_PRACTICE_DAILY,
       remaining: premium ? PRACTICE_SESSION_SIZE : Math.max(0, FREE_PRACTICE_DAILY - doneToday.length),
       bankSize: getPracticeBank_().length
