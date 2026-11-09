@@ -32,7 +32,7 @@
   <div class="container stack" style="gap:10px">
     <nav class="crumbs" aria-label="Lokasi halaman"><a href="dashboard.html">Beranda</a> / <a href="materi.html">Materi</a><span id="crumb-topic"></span></nav>
     <h1 id="m-title">Materi SKD</h1>
-    <p class="lead" id="m-lead">Konsep dasar (level 1) untuk 20 topik TWK, TIU, dan TKP. Gratis, ± 5–8 menit per topik.</p>
+    <p class="lead" id="m-lead">Konsep dasar (level 1) gratis untuk 20 topik TWK, TIU, dan TKP. Pendalaman level 2–4 tersedia di Premium.</p>
   </div>
 </section>
 
@@ -49,7 +49,10 @@
     <!-- Detail topik -->
     <div id="m-detail" class="lesson" hidden>
       <article class="lesson-body">
-        <div class="row" style="gap:8px"><span class="chip chip-primary" id="d-subtest">TWK</span><span class="lv lv-1">Level 1 · Kenal</span><span class="chip" id="d-minutes"></span></div>
+        <nav class="level-tabs" id="d-tabs" aria-label="Level materi"></nav>
+        <div class="row" style="gap:8px"><span class="chip chip-primary" id="d-subtest">TWK</span><span class="lv lv-1" id="d-levelchip">Level 1 · Kenal</span><span class="chip" id="d-minutes"></span></div>
+        <section class="card locked-panel" id="d-locked" hidden></section>
+        <div id="d-content" class="lesson-body">
         <section>
           <h2>Ringkasan</h2>
           <p id="d-summary"></p>
@@ -65,8 +68,9 @@
           <p class="small muted" id="d-expl" hidden></p>
         </section>
         <div class="grid-auto">
-          <div class="tipbox"><strong>Tips cepat</strong><ul id="d-tips"></ul></div>
+          <div class="tipbox"><strong id="d-tips-title">Tips cepat</strong><ul id="d-tips"></ul></div>
           <div class="trapbox"><strong>Jebakan yang sering muncul</strong><ul id="d-traps"></ul></div>
+        </div>
         </div>
       </article>
 
@@ -77,14 +81,10 @@
           <a class="btn btn-secondary btn-block" id="d-practice" href="latihan.html">Latihan topik ini</a>
           <a class="btn btn-ghost btn-block" id="d-next" href="materi.html">Topik berikutnya →</a>
         </div>
-        <div class="card stack">
+        <div class="card stack" id="d-levelcard">
           <strong class="small">Materi pendalaman</strong>
-          <div class="locked-levels">
-            <div><span>Level 2 · Paham</span><span>🔒</span></div>
-            <div><span>Level 3 · Mahir</span><span>🔒</span></div>
-            <div><span>Level 4 · Siap tes</span><span>🔒</span></div>
-          </div>
-          <a class="small" href="premium.html"><strong>Tersedia di Premium →</strong></a>
+          <div class="locked-levels" id="d-levels"></div>
+          <p class="xsmall muted" id="d-levelnote"></p>
         </div>
       </aside>
     </div>

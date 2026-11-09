@@ -46,6 +46,13 @@
       <div><span class="xsmall muted">Latihan beruntun</span><b id="st-streak">–</b><span class="xsmall muted">hari berturut-turut</span></div>
     </div>
 
+    <section class="panel adaptive" id="r-adaptive" hidden>
+      <div class="panel-head"><h2>Analisis rencana adaptif</h2><span class="chip chip-accent">Premium</span></div>
+      <ul class="adapt-notes" id="r-notes"></ul>
+      <div class="gap-grid" id="r-gaps"></div>
+      <p class="xsmall muted" id="r-adherence"></p>
+    </section>
+
     <section class="stack">
       <div class="row" style="justify-content:space-between">
         <h2 style="font-size:var(--fs-xl)">Jadwal minggu ini</h2>
@@ -55,7 +62,7 @@
     </section>
 
     <section class="panel">
-      <div class="panel-head"><h2>Topik fokus</h2><span class="xsmall muted">dari tryout & latihan terakhir</span></div>
+      <div class="panel-head"><h2 id="r-focus-title">Topik fokus</h2><span class="xsmall muted" id="r-focus-sub">dari tryout & latihan terakhir</span></div>
       <div class="row" id="r-focus"></div>
     </section>
 
@@ -65,8 +72,8 @@
       <p class="xsmall muted">Level dihitung dari tryout terakhir dan 60 jawaban latihan terakhir. Topik "belum diukur" akan terisi setelah kamu berlatih.</p>
     </section>
 
-    <div class="callout">
-      <div><strong>Rencana adaptif</strong>Rencana dasar ini disusun ulang setiap kamu membuka halaman. Versi Premium akan menyesuaikan target mingguan secara otomatis berdasarkan kemajuanmu.</div>
+    <div class="callout" id="r-upsell" hidden>
+      <div><strong>Rencana adaptif (Premium)</strong>Rencana dasar ini memakai pola tetap. Rencana adaptif memprioritaskan topik dari selisih skor tryout terhadap ambang batas, menyesuaikan target latihan dengan kepatuhan minggu lalu, dan menautkan materi level yang tepat. <a href="premium.html"><strong>Lihat Premium →</strong></a></div>
     </div>
   </div>
 </main>
