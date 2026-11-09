@@ -1,0 +1,39 @@
+/* ==========================================================================
+   akbar.css — Tryout Akbar mingguan (Fase 7)
+   ========================================================================== */
+
+.ak-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-5); align-items: center; }
+@media (max-width: 760px) { .ak-hero { grid-template-columns: 1fr; } }
+.ak-hero h2 { font-size: var(--fs-xl); }
+.ak-meta { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: var(--fs-sm); color: var(--muted); }
+.ak-meta b { color: var(--fg); }
+.ak-count { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 220px; padding: var(--sp-4); border-radius: var(--radius-lg); background: var(--primary-strong); color: #fff; text-align: center; }
+.ak-count small { color: #c8d6ee; font-size: var(--fs-xs); }
+.ak-count .t { font-family: var(--font-mono); font-size: 1.7rem; font-weight: 600; letter-spacing: .02em; }
+.ak-count .btn { width: 100%; margin-top: 6px; }
+.ak-rules { margin: 6px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-sm); }
+
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--surface-2); gap: 2px; }
+.seg button { border: 0; background: transparent; padding: 6px 12px; border-radius: 999px; font: inherit; font-size: var(--fs-sm); font-weight: 600; color: var(--muted); cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.seg button.active { background: var(--surface); color: var(--primary); box-shadow: var(--shadow); }
+
+.ak-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--sp-3); }
+.ak-stats > div { border: 1px solid var(--line); border-radius: var(--radius); padding: var(--sp-3); display: flex; flex-direction: column; gap: 2px; background: var(--surface); }
+.ak-stats b { font-size: var(--fs-lg); }
+.ak-me { display: flex; flex-wrap: wrap; gap: var(--sp-4); align-items: center; justify-content: space-between; padding: var(--sp-4); border-radius: var(--radius-lg); background: var(--accent-soft); border: 1px solid var(--accent); margin: var(--sp-3) 0; }
+.ak-me .rank { font-size: var(--fs-2xl); font-weight: 800; color: var(--primary); line-height: 1; }
+.ak-anl { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); margin-bottom: var(--sp-3); }
+.ak-anl th, .ak-anl td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+.rk-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.rk-table th, .rk-table td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.rk-table thead th { background: var(--surface-2); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.rk-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.rk-table tr.me td { background: var(--accent-soft); font-weight: 700; }
+.rk-table .medal { font-weight: 800; color: var(--accent); }
+.ak-past { display: flex; flex-direction: column; gap: 8px; }
+.ak-past a, .ak-past div { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--fg); background: var(--surface); font-size: var(--fs-sm); }
+.ak-past a:hover { border-color: var(--primary); }
+.ak-past a.active { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-soft); }
+#ak-rank .panel-head { flex-wrap: wrap; gap: var(--sp-2); }
+#ak-rank .table-wrap { overflow-x: auto; max-width: 100%; }
+@media (max-width: 480px) { .seg button { padding: 6px 10px; } .seg .chip { display: none; } .rk-table th, .rk-table td { padding: 8px 6px; } }
