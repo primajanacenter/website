@@ -122,7 +122,7 @@ function renderTasks(me, today = null) {
     { title: "Lengkapi profil & target", desc: "Pendidikan, target, komitmen belajar", done: Boolean(me.profileComplete), href: "onboarding.html?next=dashboard.html", cta: "Isi" },
     tryoutTask(me.latestAttempt),
     { title: "Latihan harian & materi", desc: "10 soal per hari sesuai topik terlemahmu", done: Boolean(today && (today.streak > 0 || today.practice.doneToday > 0)), href: "latihan.html", cta: "Mulai" },
-    { title: "Tryout Akbar mingguan", desc: "Peringkat nasional setiap minggu", done: false, locked: true },
+    { title: "Tryout Akbar mingguan", desc: "Gratis setiap Minggu, peringkat nasional terbit Senin", done: false, href: "akbar.html", cta: "Lihat jadwal" },
   ];
   const nextIdx = tasks.findIndex((t) => !t.done && !t.locked);
   $("#t-progress").textContent = `${tasks.filter((t) => t.done).length} dari ${tasks.length}`;
