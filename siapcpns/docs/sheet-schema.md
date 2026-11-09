@@ -33,7 +33,7 @@ assessment_id · user_id (kosong jika belum login) · version · total · level_
 email · source · created_at
 
 ### `attempts` (Fase 3)
-attempt_id · user_id · package_id · type · status (in_progress/submitted) · started_at · ends_at · submitted_at · twk · tiu · tkp · total · passed_twk · passed_tiu · passed_tkp · passed_all · answered · correct_json · topic_json · answers_json · duration_sec · finish_mode (manual/timeout/late/auto)
+attempt_id · user_id · package_id · type · status (in_progress/submitted) · started_at · ends_at · submitted_at · twk · tiu · tkp · total · passed_twk · passed_tiu · passed_tkp · passed_all · answered · correct_json · topic_json · answers_json · duration_sec · finish_mode (manual/timeout/late/auto) · event_id (Fase 7, terisi hanya untuk attempt Tryout Akbar)
 
 ### `practice_answers` (Fase 4)
 user_id · date (YYYY-MM-DD, WIB) · question_id · package_id · topic_id · subtest · answer · points · answered_at
@@ -51,9 +51,18 @@ trx_id · user_id · email · plan_id · plan_name · duration_days · amount ·
 ### `webhook_log` (Fase 5)
 received_at · event · trx_id · mayar_ref · result (fulfilled/already_processed/not_paid:…/no_match/ignored/error:…) · raw_json (maks. 4.000 karakter)
 
+### `akbar_events` (Fase 7)
+event_id (AK-YYYYMMDD) · package_id · title · opens_at · closes_at · results_at (ISO, WIB +07:00) · status (scheduled/published/cancelled) · participants · created_at
+
+### `akbar_results` (Fase 7, ditulis ulang tiap penerbitan)
+event_id · user_id · attempt_id · rank · total · twk · tiu · tkp · passed_all · percentile · duration_sec · province · province_rank · province_total · education · display_name (nama tersamar) · published_at
+
+### `loadtest_log` (Fase 7, boleh dikosongkan)
+at · probe_id · note
+
 ## Bank soal
 
-### `packages` (Fase 3)
+### `packages` (Fase 3; `type` = diagnostic / latihan / akbar)
 package_id · title · type · description · duration_min · pg_twk · pg_tiu · pg_tkp · free_attempts · status · order
 
 Kolom `type`: `diagnostik`/`tryout` tampil di lobi Tryout; **`latihan`** tidak tampil di lobi dan hanya dipakai sebagai bank soal latihan harian (Fase 4). Soal latihan harian diambil dari **semua** paket aktif (termasuk paket tryout) — paket `latihan` menambah variasi.

@@ -31,7 +31,7 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `startAttempt` | 3 | Ya | `{ packageId }` | `{ attemptId, title, durationMin, startedAt, endsAt, serverNow, questions[] (tanpa kunci), answers{} }` — melanjutkan jika masih berjalan | ✅ |
 | `saveProgress` | 3 | Ya | `{ attemptId, answers{} }` | `{ saved, count, savedAt }` | ✅ |
 | `submitAttempt` | 3 | Ya | `{ attemptId, answers{}, finishMode }` | `{ attemptId, status }` (idempoten) | ✅ |
-| `getReport` | 3/6 | Ya | `{ attemptId }` | `{ total, maxTotal, passedAll, subtests[], topics[] (gratis: 1 terbuka), review[] (gratis: 5), topicsLocked, reviewLocked, … }` | ✅ |
+| `getReport` | 3/6/7 | Ya | `{ attemptId }` (attempt akbar: error `RESULTS_PENDING` sampai event terbit) | `{ total, maxTotal, passedAll, subtests[], topics[] (gratis: 1 terbuka), review[] (gratis: 5), topicsLocked, reviewLocked, … }` | ✅ |
 | `getToday` | 4 | Ya | – | `{ date, profile, focusTopics[{topicId,name,subtest}], topicLevels{topicId:{level,pct,n}}, practice{doneToday,correctToday,byTopicToday,dailyLimit (null = Premium),remaining,bankSize}, streak, hasTryout }` | ✅ |
 | `startPractice` | 4 | Ya | `{ topicId? }` | `{ sessionId, topicId, questions[] (tanpa kunci), remainingToday, dailyLimit }` — error `DAILY_LIMIT` bila kuota gratis habis | ✅ |
 | `answerPractice` | 4 | Ya | `{ sessionId, questionId, answer }` | `{ questionId, answer, points, correct, bestAnswer, optionScores (TKP), explanation, topic }` — error `SESSION_EXPIRED` setelah 6 jam | ✅ |
@@ -41,7 +41,10 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `getPlans` | 5 | Opsional | – | `{ plans: [{ planId, name, durationDays, price, priceBefore, badge, description }], env: "sandbox"\|"production"\|"off", current: { plan, premiumUntil } \| null, pending: trx \| null, history: trx[] }` | ✅ |
 | `createCheckout` | 5 | Ya | `{ planId }` (nominal dari server) | `{ trxId, paymentUrl, expiresAt, reused, redirect }` — error `PAYMENT_OFF`, `PAYMENT_ERROR`, `RATE_LIMITED` | ✅ |
 | `getPaymentStatus` | 5 | Ya | `{ trxId }` | `{ transaction: { trxId, planId, planName, amount, status: pending\|paid\|expired\|failed, paymentUrl, createdAt, expiresAt, paidAt, premiumUntil }, plan, premiumUntil }` | ✅ |
-| `getAkbarSchedule` / `joinAkbar` / `getAkbarRanking` | 7 | Ya | – | jadwal, slot, peringkat | ⏳ |
+| `getAkbarInfo` | 7 | Opsional | – | `{ serverNow, loggedIn, premium, current: { eventId, title, opensAt, closesAt, lastStartAt, resultsAt, state: upcoming\|open\|closing\|scoring\|published, durationMin, questionCount, participants, my: { attemptId, status, endsAt, rank, total, percentile, passedAll } \| null } \| null, next[{eventId,title,opensAt,closesAt}], past[] }` | ✅ |
+| `joinAkbar` | 7 | Ya | `{ eventId }` | sama dengan `startAttempt` + `{ packageId, eventId, resultsAt }`; melanjutkan attempt yang berjalan — error `NOT_OPEN`, `CLOSED`, `ALREADY_DONE` | ✅ |
+| `getAkbarRanking` | 7 | Opsional | `{ eventId, scope: national\|province }` | `{ event, scope, premium, stats{n,passRate,median,top10,pg}, me \| null, top[{rank,name,province,total,twk,tiu,tkp,passedAll}] }`; Premium: `analysis[{subtest,mine,median,top10,pg}]`, scope provinsi (`province`, `provinceTotal`) — error `RESULTS_PENDING`, `FORBIDDEN` (provinsi, non-Premium) | ✅ |
+| `loadProbe` | 7 | Tidak | `{ key, probeId }` (key = Script Property `LOADTEST_TOKEN`) | `{ ms, questions }`; tanpa token dianggap `UNKNOWN_ACTION` | ✅ (uji beban) |
 
 ## Kode error umum
 
@@ -57,6 +60,10 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `PROFILE_INCOMPLETE` | Profil belajar belum diisi |
 | `PAYMENT_OFF` | Pembayaran belum dikonfigurasi (MAYAR_BASE_URL kosong) |
 | `PAYMENT_ERROR` | Gagal menghubungi Mayar atau Mayar menolak permintaan |
+| `RESULTS_PENDING` | Skor/rapor/peringkat Tryout Akbar dikunci sampai hasil terbit |
+| `NOT_OPEN` | Tryout Akbar belum dibuka |
+| `CLOSED` | Batas mulai Tryout Akbar sudah lewat |
+| `ALREADY_DONE` | Sudah mengikuti Tryout Akbar ini (1× per event) |
 | `BAD_REQUEST` | Format permintaan salah |
 | `UNKNOWN_ACTION` | Action tidak dikenal |
 | `RATE_LIMITED` | Terlalu banyak permintaan |

@@ -20,5 +20,5 @@
 | 4 | Materi level 1, latihan harian, rencana dasar → soft launch | ✅ |
 | 5 | Pembayaran Mayar (sandbox → production) | ✅ |
 | 6 | Fitur premium inti (materi Lv2–4, rencana adaptif) | ✅ |
-| 7 | Tryout Akbar (uji beban dulu) | ⏳ |
+| 7 | Tryout Akbar mingguan (Minggu 06.00–21.00 WIB, peringkat nasional; Premium: provinsi & analisis) + alat uji beban | ✅ |
 | 8 | Pasca-SKD, SKB, referral | ⏳ |
