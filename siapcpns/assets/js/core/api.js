@@ -120,7 +120,7 @@ Object.assign(mockHandlers, {
   async getTryoutInfo() {
     requireMockSession();
     const d = await demoPkg(); const db = mockDb(); const info = mockPkgInfo(d);
-    const mine = (db.attempts || []).filter((a) => a.packageId === info.packageId);
+    const mine = (db.attempts || []).filter((a) => a.packageId === info.packageId && a.type !== "akbar");
     const run = mine.find((a) => a.status === "in_progress" && Date.parse(a.endsAt) > Date.now());
     return { plan: "free", serverNow: new Date().toISOString(), packages: [{
       ...info, questionCount: d.questions.length, canStart: true, lockReason: null,
@@ -133,7 +133,7 @@ Object.assign(mockHandlers, {
     const d = await demoPkg(); const info = mockPkgInfo(d);
     if (packageId !== info.packageId) throw apiError("NOT_FOUND", "Paket tryout tidak ditemukan.");
     const db = mockDb(); db.attempts ||= [];
-    let a = db.attempts.find((x) => x.packageId === packageId && x.status === "in_progress" && Date.parse(x.endsAt) > Date.now());
+    let a = db.attempts.find((x) => x.type !== "akbar" && x.packageId === packageId && x.status === "in_progress" && Date.parse(x.endsAt) > Date.now());
     if (!a) {
       a = { attemptId: "t_mock_" + Date.now(), packageId, status: "in_progress", startedAt: new Date().toISOString(), endsAt: new Date(Date.now() + info.durationMin * 60000).toISOString(), answers: {} };
       db.attempts.push(a); saveMockDb(db);
@@ -166,6 +166,7 @@ Object.assign(mockHandlers, {
     const a = (mockDb().attempts || []).find((x) => x.attemptId === attemptId);
     if (!a) throw apiError("NOT_FOUND", "Data tryout tidak ditemukan.");
     if (a.status !== "submitted") throw apiError("NOT_FINISHED", "Tryout ini masih berlangsung.");
+    if (a.type === "akbar") throw apiError("RESULTS_PENDING", "Jawabanmu sudah tersimpan. Skor, rapor, dan peringkat terbit Senin 06.00 WIB.");
     const NAMES = TOPIC_NAMES;
     const topics = Object.entries(a.topics).map(([id, t]) => ({ topicId: id, name: NAMES[id] || id, subtest: id.slice(0, 3), pct: Math.round((t.points / t.max) * 100), answered: t.answered, total: t.total })).sort((x, y) => x.pct - y.pct);
     const order = Object.fromEntries(topics.map((t, i) => [t.topicId, i]));
@@ -393,6 +394,70 @@ Object.assign(mockHandlers, {
   },
 });
 
+// ---------- Fase 7: Tryout Akbar (mode uji: event & peringkat sintetis) ----------
+const MOCK_EV_ID = "AK-MOCK-NOW";
+function mockEvents() {
+  const t0 = Math.floor(Date.now() / 3600000) * 3600000;
+  return {
+    current: { eventId: MOCK_EV_ID, title: "Tryout Akbar #2 (mode uji)", opensAt: new Date(t0 - 3600e3).toISOString(), closesAt: new Date(t0 + 6 * 3600e3).toISOString(), resultsAt: new Date(t0 + 15 * 3600e3).toISOString() },
+    past: { eventId: "AK-MOCK-LALU", title: "Tryout Akbar #1 (mode uji)", opensAt: new Date(t0 - 7 * 86400e3).toISOString(), closesAt: new Date(t0 - 7 * 86400e3 + 15 * 3600e3).toISOString(), resultsAt: new Date(t0 - 6 * 86400e3).toISOString() },
+  };
+}
+function mockBoard() {
+  const names = ["Rina S.", "Bagas P.", "Dewi A.", "Fikri H.", "Sinta M.", "Yusuf R.", "Nadia K.", "Arif W.", "Lestari D.", "Galih T."];
+  const provs = ["Jawa Barat", "Jawa Tengah", "Jawa Timur", "DKI Jakarta", "Sumatera Utara", "Sulawesi Selatan"];
+  let seed = 7; const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+  const rows = Array.from({ length: 137 }, (_, i) => {
+    const twk = Math.round(60 + rnd() * 70), tiu = Math.round(60 + rnd() * 90), tkp = Math.round(150 + rnd() * 60);
+    return { name: names[i % names.length], province: provs[i % provs.length], twk, tiu, tkp, total: twk + tiu + tkp, passedAll: twk >= 65 && tiu >= 80 && tkp >= 166 };
+  }).sort((a, b) => b.total - a.total || b.tkp - a.tkp).map((r, i) => ({ ...r, rank: i + 1 }));
+  const q = (k) => rows.map((r) => r[k]).sort((a, b) => a - b)[Math.floor(rows.length / 2)];
+  const top = rows.slice(0, 14); const avg = (k) => Math.round(top.reduce((s, r) => s + r[k], 0) / top.length);
+  return { rows, stats: { n: rows.length, passRate: Math.round(rows.filter((r) => r.passedAll).length / rows.length * 100),
+    median: { total: q("total"), twk: q("twk"), tiu: q("tiu"), tkp: q("tkp") }, top10: { total: avg("total"), twk: avg("twk"), tiu: avg("tiu"), tkp: avg("tkp") }, pg: { twk: 65, tiu: 80, tkp: 166 } } };
+}
+Object.assign(mockHandlers, {
+  async getAkbarInfo() {
+    const ev = mockEvents(); const d = await demoPkg(); const info = mockPkgInfo(d);
+    const logged = auth.isLoggedIn() && Boolean(mockDb().user);
+    const a = logged ? (mockDb().attempts || []).find((x) => x.eventId === MOCK_EV_ID) : null;
+    const lastStart = new Date(Date.parse(ev.current.closesAt) - info.durationMin * 60000).toISOString();
+    return { serverNow: new Date().toISOString(), loggedIn: logged, premium: logged && mockPremium(mockDb()),
+      current: { ...ev.current, lastStartAt: lastStart, state: "open", durationMin: info.durationMin, questionCount: demoQuestions(d).length, participants: null,
+        my: a ? { attemptId: a.attemptId, status: a.status, endsAt: a.status === "in_progress" ? a.endsAt : null, rank: null, total: null, percentile: null, passedAll: null } : null },
+      next: [],
+      past: [{ ...ev.past, lastStartAt: ev.past.closesAt, state: "published", durationMin: 100, questionCount: 110, participants: 137, my: null }] };
+  },
+  async joinAkbar({ eventId }) {
+    requireMockSession();
+    if (eventId !== MOCK_EV_ID) throw apiError("NOT_FOUND", "Tryout Akbar tidak ditemukan.");
+    const d = await demoPkg(); const info = mockPkgInfo(d);
+    const db = mockDb(); db.attempts ||= [];
+    let a = db.attempts.find((x) => x.eventId === eventId);
+    if (a && a.status === "submitted") throw apiError("ALREADY_DONE", "Kamu sudah mengikuti Tryout Akbar ini. Hasil dan peringkat terbit Senin 06.00 WIB.");
+    if (!a) {
+      a = { attemptId: "t_akbar_" + Date.now(), packageId: info.packageId, eventId, type: "akbar", status: "in_progress", startedAt: new Date().toISOString(), endsAt: new Date(Date.now() + info.durationMin * 60000).toISOString(), answers: {} };
+      db.attempts.push(a); saveMockDb(db);
+    }
+    const qs = demoQuestions(d).map(({ answer, explanation, ...q }) => ({ ...q, options: q.options.map(({ key, text }) => ({ key, text })) }));
+    return { attemptId: a.attemptId, packageId: info.packageId, eventId, title: "Tryout Akbar #2 (mode uji)", durationMin: info.durationMin, startedAt: a.startedAt, endsAt: a.endsAt, serverNow: new Date().toISOString(), resultsAt: mockEvents().current.resultsAt, questions: qs, answers: a.answers };
+  },
+  async getAkbarRanking({ eventId, scope }) {
+    if (eventId === MOCK_EV_ID) throw apiError("RESULTS_PENDING", "Peringkat terbit Senin 06.00 WIB.");
+    if (eventId !== "AK-MOCK-LALU") throw apiError("NOT_FOUND", "Tryout Akbar tidak ditemukan.");
+    const premium = auth.isLoggedIn() && mockPremium(mockDb());
+    const b = mockBoard();
+    const out = { event: { eventId, title: "Tryout Akbar #1 (mode uji)" }, scope: scope === "province" ? "province" : "national", premium, stats: b.stats, me: null, top: b.rows.slice(0, 50) };
+    if (scope === "province") {
+      if (!premium) throw apiError("FORBIDDEN", "Peringkat per provinsi tersedia untuk Premium.");
+      const prov = mockDb().profile?.targetProvince || "Jawa Barat";
+      const rows = b.rows.filter((r) => r.province === prov);
+      Object.assign(out, { province: prov, provinceCount: rows.length, top: rows.slice(0, 20).map((r, i) => ({ ...r, provinceRank: i + 1 })) });
+    }
+    return out;
+  },
+});
+
 const SUBTEST_NAMES = { twk: "Tes Wawasan Kebangsaan", tiu: "Tes Intelegensia Umum", tkp: "Tes Karakteristik Pribadi" };
 const TOPIC_NAMES = {
   "twk-pancasila": "Pancasila", "twk-uud": "UUD 1945", "twk-nkri": "NKRI", "twk-bhinneka": "Bhinneka Tunggal Ika", "twk-nasionalisme": "Nasionalisme", "twk-integritas": "Integritas", "twk-belanegara": "Bela negara", "twk-bahasa": "Bahasa negara",
@@ -417,7 +482,8 @@ function buildMockMe(db) {
     profileComplete: Boolean(p && p.education && p.major && p.minutesPerDay && p.daysPerWeek),
     latestAssessment: db.assessments[db.assessments.length - 1] || null,
     latestAttempt: (() => {
-      const a = (db.attempts || [])[(db.attempts || []).length - 1];
+      const list = (db.attempts || []).filter((x) => x.type !== "akbar");
+      const a = list[list.length - 1];
       if (!a) return null;
       return a.status === "submitted"
         ? { attemptId: a.attemptId, status: "submitted", packageId: a.packageId, total: a.total, passedAll: a.passedAll, submittedAt: a.submittedAt }
