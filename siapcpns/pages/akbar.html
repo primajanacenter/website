@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Tryout Akbar mingguan — Siap CPNS</title>
-  <meta name="robots" content="noindex">
+  <title>Tryout Akbar — Siap CPNS</title>
+  <meta name="robots" content="index">
   <meta name="theme-color" content="#0f2d55">
   <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
@@ -12,9 +12,13 @@
   <link rel="manifest" href="../manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="stylesheet" href="../assets/css/cat.css">
+  <link rel="stylesheet" href="../assets/css/pages/tryout.css">
+  <link rel="stylesheet" href="../assets/css/pages/akbar.css">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -23,28 +27,145 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a href="panduan.html">Panduan</a><a class="nav-cta" href="masuk.html" data-nav-auth="dashboard.html">Masuk</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="tryout.html">Tryout</a><a class="nav-cta" href="masuk.html" data-nav-auth="dashboard.html">Masuk</a></nav>
   </div>
 </header>
-<main class="container placeholder-page" data-feature="akbar">
-  <div class="card card-elevated">
-    <span class="chip chip-accent" id="ph-phase">Fase 7</span>
-    <h1 style="font-size:var(--fs-2xl)" id="ph-title">Tryout Akbar mingguan</h1>
-    <p class="muted" id="ph-desc">Tryout serentak nasional setiap minggu dengan peringkat dan persentil.</p>
-    <p class="small muted">Fitur ini sedang dibangun. Sementara itu, kamu bisa cek kesiapan dan membaca panduan CPNS.</p>
-    <div class="row" style="justify-content:center">
-      <a class="btn btn-primary" href="../#cek-kesiapan">Cek kesiapan</a>
-      <a class="btn btn-secondary" href="panduan.html">Baca panduan</a>
-      <a class="btn btn-secondary" id="ph-waitlist" href="#" target="_blank" rel="noopener" hidden>Daftar tunggu</a>
+<div id="view-lobby">
+  <section class="page-band">
+    <div class="container stack" style="gap:10px">
+      <nav class="crumbs" aria-label="Lokasi halaman"><a href="dashboard.html">Beranda</a> / <span>Tryout Akbar</span></nav>
+      <h1>Tryout Akbar Mingguan</h1>
+      <p class="lead">Satu paket SKD baru setiap Minggu, dikerjakan peserta dari seluruh Indonesia. Gratis untuk semua pengguna. Peringkat nasional terbit Senin pagi.</p>
+    </div>
+  </section>
+
+  <main class="app-main">
+    <div class="container stack-lg">
+      <p id="ak-status" class="status-msg" role="status" hidden></p>
+
+      <section class="ak-hero card card-elevated" id="ak-current" aria-live="polite">
+        <div class="skeleton" style="width:50%"></div><div class="skeleton" style="width:70%"></div>
+      </section>
+
+      <div class="callout">
+        <div><strong>Aturan main</strong>
+          <ul class="ak-rules">
+            <li>Dibuka hari Minggu 06.00–21.00 WIB. Mulai paling lambat 100 menit sebelum tutup; waktu tidak bisa dijeda.</li>
+            <li>Satu kali per pengguna per minggu. Gunakan koneksi stabil; jawaban tersimpan berkala di server.</li>
+            <li>Skor, rapor, dan peringkat terbit <b>Senin 06.00 WIB</b> agar soal tidak bocor selama event berlangsung.</li>
+            <li>Peringkat diurutkan dari skor total, lalu TKP, TIU, TWK, dan waktu pengerjaan tercepat. Nama ditampilkan disamarkan (contoh: Rina S.).</li>
+          </ul>
+        </div>
+      </div>
+
+      <section class="panel" id="ak-rank" hidden aria-labelledby="rk-title">
+        <div class="panel-head">
+          <h2 id="rk-title">Peringkat</h2>
+          <div class="seg" role="tablist" id="rk-scope">
+            <button type="button" class="active" data-scope="national" role="tab" aria-selected="true">Nasional</button>
+            <button type="button" data-scope="province" role="tab" aria-selected="false">Provinsiku <span class="chip chip-accent">Premium</span></button>
+          </div>
+        </div>
+        <div class="ak-stats" id="rk-stats"></div>
+        <div id="rk-me"></div>
+        <div id="rk-analysis"></div>
+        <div class="table-wrap">
+          <table class="rk-table">
+            <thead><tr><th scope="col">#</th><th scope="col">Peserta</th><th scope="col" class="hide-sm">Provinsi</th><th scope="col" class="num">TWK</th><th scope="col" class="num">TIU</th><th scope="col" class="num">TKP</th><th scope="col" class="num">Total</th></tr></thead>
+            <tbody id="rk-body"></tbody>
+          </table>
+        </div>
+        <p class="xsmall muted" id="rk-note"></p>
+      </section>
+
+      <section class="panel" id="ak-past-wrap" hidden aria-labelledby="past-title">
+        <div class="panel-head"><h2 id="past-title">Riwayat Tryout Akbar</h2></div>
+        <div class="ak-past" id="ak-past"></div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ================= UJIAN ================= -->
+<section id="view-exam" class="cat" hidden aria-labelledby="q-text">
+  <div class="cat-bar">
+    <div class="container">
+      <div class="cat-title">
+        <b id="ex-title">Tryout</b>
+        <span><span id="ex-subtest">TWK</span> · <span class="save-state" id="ex-save">Tersimpan</span></span>
+      </div>
+      <span class="cat-timer exam-timer" id="ex-timer-box" role="timer" aria-live="off"><small>Sisa waktu</small><span id="ex-timer">--:--:--</span></span>
     </div>
   </div>
-</main>
+
+  <div class="container cat-layout">
+    <div class="cat-main">
+      <div class="cat-qhead">
+        <span class="qno">Soal nomor <span id="q-no" class="num">1</span> <span class="muted small">dari <span id="q-total" class="num">110</span></span></span>
+        <span class="chip chip-primary" id="q-badge">TWK</span>
+      </div>
+      <div class="cat-qbody">
+        <p class="question-text" id="q-text" tabindex="-1">Memuat soal…</p>
+        <div class="question-context" id="q-context" hidden></div>
+        <div class="options" id="options" role="radiogroup" aria-labelledby="q-text"></div>
+      </div>
+      <div class="cat-actions">
+        <button class="btn btn-secondary" type="button" id="btn-prev">‹ Sebelumnya</button>
+        <button class="btn btn-doubt" type="button" id="btn-doubt" aria-pressed="false">Ragu-ragu</button>
+        <button class="btn btn-primary" type="button" id="btn-next">Selanjutnya ›</button>
+      </div>
+    </div>
+
+    <aside class="cat-side" aria-label="Navigasi nomor soal">
+      <details class="nav-details" id="nav-details" open>
+        <summary>Nomor soal <span class="chip num" id="q-answered">0 / 110</span></summary>
+        <div>
+          <div class="qgrid big" id="q-grid"></div>
+          <div class="qlegend">
+            <span><i class="l-a"></i>Dijawab</span>
+            <span><i class="l-r"></i>Ragu-ragu</span>
+            <span><i></i>Belum</span>
+          </div>
+        </div>
+      </details>
+      <div class="subcount" id="sub-count"></div>
+      <button class="btn btn-primary btn-block" type="button" id="btn-finish">Selesai ujian</button>
+      <p class="xsmall muted">Tombol: 1–5 pilih jawaban, ← → pindah soal.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= KONFIRMASI MULAI ================= -->
+<div class="confirm" id="start-modal" hidden role="dialog" aria-modal="true" aria-labelledby="start-title">
+  <div class="card card-elevated">
+    <h3 id="start-title">Mulai Tryout Akbar sekarang?</h3>
+    <p class="small muted" id="start-text"></p>
+    <label class="check"><input type="checkbox" id="start-ready"> <span>Saya sudah siap dan berada di tempat yang tenang dengan koneksi internet stabil.</span></label>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn btn-secondary" type="button" id="start-cancel">Nanti saja</button>
+      <button class="btn btn-primary" type="button" id="start-ok" disabled>Mulai</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= KONFIRMASI SELESAI ================= -->
+<div class="confirm" id="finish-modal" hidden role="dialog" aria-modal="true" aria-labelledby="finish-title">
+  <div class="card card-elevated">
+    <h3 id="finish-title">Akhiri ujian?</h3>
+    <p class="small" id="finish-text"></p>
+    <p id="finish-error" class="status-msg error" hidden></p>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn btn-secondary" type="button" id="finish-cancel">Kembali ke soal</button>
+      <button class="btn btn-primary" type="button" id="finish-ok">Ya, kirim jawaban</button>
+    </div>
+  </div>
+</div>
+
 <footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
 <script type="module">
   import { hydrateCommon } from "../assets/js/core/ui.js";
-  import { initPlaceholder } from "../assets/js/features/placeholder.js";
   hydrateCommon();
-  initPlaceholder();
+  import("../assets/js/features/akbar.js").then((m) => m.initAkbar());
 </script>
 </body>
 </html>
