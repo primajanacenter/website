@@ -63,5 +63,7 @@ question_id · package_id · number · subtest · topic_id · level · text · c
 
 Daftar topik ada di konstanta `TOPICS` pada `Tryout.gs`. Panduan pengisian lengkap: `docs/setup-fase-3.md`.
 
-### `materials` (Fase 6, premium level 2–4)
-material_id · topic_id · level (1–4) · title · body_markdown · video_url · status
+### `materials` (Fase 6, file terpisah `MATERIALS_SPREADSHEET_ID`)
+material_id · topic_id · level (2–4) · title · minutes · ringkasan · poin_kunci (1 butir per baris) · contoh_soal · opsi_a … opsi_e · kunci (a–e) · pembahasan · strategi (per baris) · jebakan (per baris) · status (live/draft)
+
+Hanya dibaca server. Level 1 tetap di `assets/data/materi-level1.json` (publik).

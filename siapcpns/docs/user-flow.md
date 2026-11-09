@@ -19,6 +19,6 @@
 | 3 | Tryout CAT + rapor (paket DEMO; paket diagnostik 110 soal disusun tim) | ✅ |
 | 4 | Materi level 1, latihan harian, rencana dasar → soft launch | ✅ |
 | 5 | Pembayaran Mayar (sandbox → production) | ✅ |
-| 6 | Fitur premium inti | ⏳ |
+| 6 | Fitur premium inti (materi Lv2–4, rencana adaptif) | ✅ |
 | 7 | Tryout Akbar (uji beban dulu) | ⏳ |
 | 8 | Pasca-SKD, SKB, referral | ⏳ |
