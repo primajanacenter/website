@@ -4,7 +4,7 @@ Aplikasi persiapan belajar CPNS untuk pemula. Dibangun bertahap dengan HTML, CSS
 
 > Aplikasi independen, tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.
 
-**Status: Fase 0–3 selesai** — landing page, Cek Kesiapan, Panduan CPNS, login Google, onboarding, beranda, tryout CAT (timer server, simpan otomatis, panel nomor soal) dan rapor per subtes & topik.
+**Status: Fase 0–7 selesai** — landing page, Cek Kesiapan, Panduan CPNS, login Google, onboarding, beranda, tryout CAT & rapor, materi level 1, latihan harian, rencana belajar, pembayaran Mayar, materi premium Lv2–4, rencana adaptif, dan Tryout Akbar mingguan dengan peringkat nasional.
 
 ➡️ Setup backend: [`docs/setup-fase-2.md`](docs/setup-fase-2.md) lalu [`docs/setup-fase-3.md`](docs/setup-fase-3.md) (bank soal & paket tryout).
 
@@ -109,7 +109,7 @@ Jika rahasia pernah ter-commit: **segera buat ulang (rotate)** key tersebut. Men
 
 ## Backend
 
-Panduan langkah demi langkah: **[`docs/setup-fase-2.md`](docs/setup-fase-2.md)** → [`setup-fase-3.md`](docs/setup-fase-3.md) → [`setup-fase-4.md`](docs/setup-fase-4.md) → [`setup-fase-5.md`](docs/setup-fase-5.md) → [`setup-fase-6.md`](docs/setup-fase-6.md).
+Panduan langkah demi langkah: **[`docs/setup-fase-2.md`](docs/setup-fase-2.md)** → [`setup-fase-3.md`](docs/setup-fase-3.md) → [`setup-fase-4.md`](docs/setup-fase-4.md) → [`setup-fase-5.md`](docs/setup-fase-5.md) → [`setup-fase-6.md`](docs/setup-fase-6.md) → [`setup-fase-7.md`](docs/setup-fase-7.md).
 
 Panduan Fase 2 (Spreadsheet, Apps Script, Script Properties, OAuth Client ID, deploy Web App, sambungkan frontend).
 
