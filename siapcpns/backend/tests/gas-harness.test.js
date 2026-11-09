@@ -339,6 +339,58 @@ const offBase=props.MAYAR_BASE_URL; delete props.MAYAR_BASE_URL;
 check('pembayaran nonaktif bila belum dikonfigurasi', post('createCheckout',{planId:'P1M'},dina).error.code==='PAYMENT_OFF' && post('getPlans',{}).data.env==='off');
 props.MAYAR_BASE_URL=offBase;
 
+
+// ================= Fase 6: materi premium & rencana adaptif =================
+{
+const mstore={}; newFile('mat1','MATERI – Materi Premium – LIVE',null,mstore); mstore.materials=new Sheet('materials');
+const MH=['material_id','topic_id','level','title','minutes','ringkasan','poin_kunci','contoh_soal','opsi_a','opsi_b','opsi_c','opsi_d','opsi_e','kunci','pembahasan','strategi','jebakan','status'];
+mstore.materials.rows.push(MH);
+const mrow=(t,l,st='live')=>[`MAT-${t}-L${l}`,t,String(l),`Judul ${t} L${l}`,'9','Ringkasan rahasia '+t+' level '+l+' '.repeat(5)+'x'.repeat(200),'Poin satu\nPoin dua\nPoin tiga','Soal contoh?','A1','B1','C1','D1','E1','c','PEMBAHASAN-RAHASIA-'+t+l,'Strategi 1\nStrategi 2','Jebakan 1',st];
+mstore.materials.rows.push(mrow('tiu-deret',2),mrow('tiu-deret',3),mrow('tiu-deret',4),mrow('twk-uud',2),mrow('twk-uud',3,'draft'),mrow('tiu-figural-x',2));
+props.MATERIALS_SPREADSHEET_ID='mat1';
+let mi=post('getMaterialIndex',{});
+check('indeks materi tanpa login', mi.ok && mi.data.available['tiu-deret'].length===3 && mi.data.available['twk-uud'].length===1 && !mi.data.loggedIn && Object.keys(mi.data.recommended).length===0, mi.data);
+let gm=post('getMaterial',{topicId:'tiu-deret',level:2});
+check('tanpa login: terkunci (LOGIN) & tanpa isi', gm.ok && gm.data.locked && gm.data.reason==='LOGIN' && !JSON.stringify(gm).includes('PEMBAHASAN-RAHASIA') && !JSON.stringify(gm).includes('Poin dua'), gm);
+gm=post('getMaterial',{topicId:'tiu-deret',level:3},'h.bob.s');
+check('gratis: terkunci (PREMIUM) & cuplikan dipotong', gm.ok && gm.data.locked && gm.data.reason==='PREMIUM' && gm.data.teaser.pointCount===3 && gm.data.teaser.intro.length<=172 && !JSON.stringify(gm).includes('PEMBAHASAN-RAHASIA'), gm.data);
+gm=post('getMaterial',{topicId:'tiu-deret',level:4},dina);
+check('premium: materi lengkap', gm.ok && !gm.data.locked && gm.data.material.poinKunci.length===3 && gm.data.material.contoh.jawaban===2 && gm.data.material.tips.length===2, gm.data);
+check('level 1 lewat API ditolak', post('getMaterial',{topicId:'tiu-deret',level:1},dina).error.code==='BAD_REQUEST');
+check('materi draft tidak tampil', post('getMaterial',{topicId:'twk-uud',level:3},dina).error.code==='NOT_FOUND');
+check('topik tidak dikenal ditolak', post('getMaterial',{topicId:'tiu-figural-x',level:2},dina).error.code==='BAD_REQUEST');
+mi=post('getMaterialIndex',{},dina);
+check('indeks: rekomendasi level untuk pengguna', mi.data.premium===true && mi.data.recommended['tiu-deret']>=1, mi.data.recommended);
+// rencana adaptif
+check('rencana adaptif terkunci untuk gratis', post('getPlan',{},'h.bob.s').error.code==='FORBIDDEN');
+check('rencana adaptif butuh profil', post('getPlan',{},dina).error.code==='PROFILE_INCOMPLETE');
+post('saveProfile',{education:'D4/S1',major:'Akuntansi',targetFormation:'',targetProvince:'Jawa Tengah',testDate:'',targetType:'passing_grade',minutesPerDay:60,daysPerWeek:7,reminderTime:'19:00'},dina);
+let gp6=post('getPlan',{},dina);
+const P=gp6.data;
+check('rencana: 7 hari, 20 prioritas, hari ini ada', gp6.ok && P.adaptive && P.week.length===7 && P.priorities.length===20 && P.today && P.today.tasks.length>=1, gp6);
+check('rencana: belum tryout → dijadwalkan & catatan', P.targets.tryoutThisWeek===true && P.week.some(w=>w.tasks.some(t=>t.type==='tryout')) && P.notes.some(n=>n.includes('Belum ada tryout')), P.notes);
+const mt=P.week.flatMap(w=>w.tasks).find(t=>t.type==='materi');
+check('tugas materi memakai level ≥2 & tautan level', mt && mt.level>=2 && mt.href.includes('&level='+mt.level), mt);
+// tryout terakhir: TIU jauh di bawah ambang batas → topik TIU naik ke atas
+const did=sheets.users.rows.find(r=>r[1]==='dina@x.com')[0];
+const AH=sheets.attempts.rows[0]; const arow=AH.map(()=> '');
+const setA=(k,v)=>{arow[AH.indexOf(k)]=v;};
+setA('attempt_id','a_dina1');setA('user_id',did);setA('package_id','PX-99');setA('status','submitted');setA('submitted_at',new Date().toISOString());setA('started_at',new Date().toISOString());
+setA('twk','100');setA('tiu','40');setA('tkp','175');setA('topic_json','{}');
+sheets.attempts.rows.push(arow);
+P2=post('getPlan',{},dina).data;
+check('selisih TIU → topik TIU diprioritaskan', P2.priorities.slice(0,6).every(x=>x.subtest==='tiu') && P2.gaps.tiu.gap===40 && P2.notes.some(n=>n.startsWith('TIU masih 40 poin')), {g:P2.gaps,n:P2.notes});
+check('baru tryout → tidak dijadwalkan ulang minggu ini', P2.targets.tryoutThisWeek===false, P2.targets);
+// kepatuhan tinggi → target dinaikkan
+const PH=sheets.practice_answers.rows[0];
+for(let i=1;i<=6;i++){const d=new Date(Date.now()+7*3600000-i*86400000).toISOString().slice(0,10);for(let j=0;j<80;j++){const r=PH.map(()=> '');r[0]=did;r[1]=d;r[2]='Q'+i+'-'+j;r[4]='tiu-deret';r[5]='tiu';r[6]='a';r[7]='5';r[8]=d+'T10:00:00Z';sheets.practice_answers.rows.push(r);}}
+P3=post('getPlan',{},dina).data;
+check('kepatuhan >110% → target harian naik', P3.adherence.pct>110 && P3.targets.intensity===1.15 && P3.notes.some(n=>n.startsWith('Konsisten')), P3.adherence);
+let td6=post('getToday',{},dina);
+check('getToday memuat byTopicToday', td6.ok && typeof td6.data.practice.byTopicToday==='object');
+var P2,P3;
+}
+
 delete props.QUESTIONS_FOLDER_ID; ctx.clearPackageCache_(null);
 check('no source -> clear config error', post('getTryoutInfo',{},'h.alice.s').error.code==='CONFIG_MISSING');
 
