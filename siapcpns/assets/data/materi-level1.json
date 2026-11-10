@@ -458,6 +458,41 @@
       ]
     },
     {
+      "id": "tiu-figural",
+      "subtest": "tiu",
+      "name": "Figural (penalaran gambar)",
+      "minutes": 7,
+      "ringkasan": "Soal figural memakai gambar, bukan kata atau angka. Sejak kisi-kisi SKD terbaru, TIU memuat tiga jenis figural: analogi gambar (hubungan A : B = C : ?), ketidaksamaan (mencari satu gambar yang berbeda aturannya), dan serial (melanjutkan deret gambar). Kuncinya: pecah gambar menjadi unsur-unsur kecil dan cari aturan perubahannya satu per satu.",
+      "poinKunci": [
+        "Unsur yang diamati: bentuk luar, arah panah, posisi penanda, arsiran, dan jumlah titik/sisi.",
+        "Perubahan yang paling sering: rotasi (45°, 90°, 180°), pencerminan, arsiran bergantian, jumlah bertambah/berkurang.",
+        "Analogi gambar: temukan perubahan A → B, lalu terapkan sama persis pada C.",
+        "Ketidaksamaan: empat gambar mematuhi satu aturan, satu gambar melanggar. Perbedaan tampilan (misalnya arsiran) sering hanya pengalih.",
+        "Serial: bisa ada dua pola sekaligus, misalnya panah berputar sambil jumlah titik bertambah."
+      ],
+      "contoh": {
+        "soal": "Gambar manakah yang tepat menggantikan tanda tanya sehingga hubungan kedua pasangan gambar sama?",
+        "konteks": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 508 100\" width=\"508\" height=\"100\"><rect width=\"508\" height=\"100\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"74.0,22.0 74.0,70.0 26.0,70.0 26.0,22.0\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"50.0\" y2=\"32.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"50.0,26.0 54.5,33.8 45.5,33.8\" fill=\"#1b2a4a\"/><circle cx=\"74.0\" cy=\"46.0\" r=\"6\" fill=\"#1b2a4a\"/><text x=\"122\" y=\"62\" font-size=\"34\" font-family=\"Arial, sans-serif\" font-weight=\"700\" fill=\"#1b2a4a\" text-anchor=\"middle\">:</text><rect x=\"136\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"210.0,70.0 162.0,70.0 162.0,22.0 210.0,22.0\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"186\" y1=\"46\" x2=\"200.0\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"206.0,46.0 198.2,50.5 198.2,41.5\" fill=\"#1b2a4a\"/><circle cx=\"186.0\" cy=\"70.0\" r=\"6\" fill=\"#1b2a4a\"/><text x=\"258\" y=\"62\" font-size=\"34\" font-family=\"Arial, sans-serif\" font-weight=\"700\" fill=\"#1b2a4a\" text-anchor=\"middle\">=</text><rect x=\"272\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"322.0,12.0 354.3,35.5 342.0,73.5 302.0,73.5 289.7,35.5\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"322\" y1=\"46\" x2=\"322.0\" y2=\"63.5\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"322.0,69.5 317.5,61.7 326.5,61.7\" fill=\"#1b2a4a\"/><circle cx=\"305.0\" cy=\"29.0\" r=\"6\" fill=\"#1b2a4a\"/><text x=\"394\" y=\"62\" font-size=\"34\" font-family=\"Arial, sans-serif\" font-weight=\"700\" fill=\"#1b2a4a\" text-anchor=\"middle\">:</text><rect x=\"408\" y=\"0\" width=\"100\" height=\"100\" fill=\"#f3f6fb\" stroke=\"#9aa8bf\" stroke-width=\"1.5\" stroke-dasharray=\"6 4\"/><text x=\"458\" y=\"64\" font-size=\"44\" font-family=\"Arial, sans-serif\" font-weight=\"700\" fill=\"#5b6b85\" text-anchor=\"middle\">?</text></svg>",
+        "pilihan": [
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"16.0,46.0 39.5,13.7 77.5,26.0 77.5,66.0 39.5,78.3\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"67.5\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"73.5,46.0 65.7,50.5 65.7,41.5\" fill=\"#1b2a4a\"/><circle cx=\"33.0\" cy=\"63.0\" r=\"6\" fill=\"#1b2a4a\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"50.0,80.0 17.7,56.5 30.0,18.5 70.0,18.5 82.3,56.5\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"50.0\" y2=\"28.5\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"50.0,22.5 54.5,30.3 45.5,30.3\" fill=\"#1b2a4a\"/><circle cx=\"67.0\" cy=\"63.0\" r=\"6\" fill=\"#1b2a4a\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"84.0,46.0 60.5,78.3 22.5,66.0 22.5,26.0 60.5,13.7\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"32.5\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"26.5,46.0 34.3,41.5 34.3,50.5\" fill=\"#1b2a4a\"/><circle cx=\"67.0\" cy=\"29.0\" r=\"6\" fill=\"#1b2a4a\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"50.0,12.0 82.3,35.5 70.0,73.5 30.0,73.5 17.7,35.5\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"50.0\" y2=\"63.5\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"50.0,69.5 45.5,61.7 54.5,61.7\" fill=\"#1b2a4a\"/><circle cx=\"67.0\" cy=\"29.0\" r=\"6\" fill=\"#1b2a4a\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"84.0,46.0 60.5,78.3 22.5,66.0 22.5,26.0 60.5,13.7\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"32.5\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"26.5,46.0 34.3,41.5 34.3,50.5\" fill=\"#1b2a4a\"/><circle cx=\"67.0\" cy=\"63.0\" r=\"6\" fill=\"#1b2a4a\"/></svg>"
+        ],
+        "jawaban": 2,
+        "pembahasan": "Analogi gambar. Hubungan A ke B: seluruh gambar diputar 90° searah jarum jam. Terapkan aturan yang sama pada gambar ketiga."
+      },
+      "tips": [
+        "Periksa unsur satu per satu: arah dulu, lalu penanda, arsiran, dan jumlah.",
+        "Untuk rotasi, ikuti ujung panah: ke kanan berarti searah jarum jam."
+      ],
+      "jebakan": [
+        "Mengira pencerminan sama dengan rotasi 180°.",
+        "Memilih gambar yang paling berbeda tampilannya, padahal aturannya ada pada hubungan antarunsur."
+      ]
+    },
+    {
       "id": "tkp-pelayanan",
       "subtest": "tkp",
       "name": "Pelayanan publik",
