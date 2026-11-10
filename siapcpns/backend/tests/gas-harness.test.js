@@ -371,7 +371,7 @@ check('rencana adaptif butuh profil', post('getPlan',{},dina).error.code==='PROF
 post('saveProfile',{education:'D4/S1',major:'Akuntansi',targetFormation:'',targetProvince:'Jawa Tengah',testDate:'',targetType:'passing_grade',minutesPerDay:60,daysPerWeek:7,reminderTime:'19:00'},dina);
 let gp6=post('getPlan',{},dina);
 const P=gp6.data;
-check('rencana: 7 hari, 20 prioritas, hari ini ada', gp6.ok && P.adaptive && P.week.length===7 && P.priorities.length===20 && P.today && P.today.tasks.length>=1, gp6);
+check('rencana: 7 hari, 21 prioritas (termasuk figural), hari ini ada', gp6.ok && P.adaptive && P.week.length===7 && P.priorities.length===21 && P.today && P.today.tasks.length>=1, gp6);
 check('rencana: belum tryout → dijadwalkan & catatan', P.targets.tryoutThisWeek===true && P.week.some(w=>w.tasks.some(t=>t.type==='tryout')) && P.notes.some(n=>n.includes('Belum ada tryout')), P.notes);
 const mt=P.week.flatMap(w=>w.tasks).find(t=>t.type==='materi');
 check('tugas materi memakai level ≥2 & tautan level', mt && mt.level>=2 && mt.href.includes('&level='+mt.level), mt);
