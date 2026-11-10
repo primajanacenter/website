@@ -60,9 +60,15 @@ event_id · user_id · attempt_id · rank · total · twk · tiu · tkp · passe
 ### `loadtest_log` (Fase 7, boleh dikosongkan)
 at · probe_id · note
 
+### `skd_results` (Fase 8)
+user_id · test_date (YYYY-MM-DD) · twk · tiu · tkp · total · passed_all · formation · skb_date · created_at · updated_at
+
+### `referrals` (Fase 8)
+referee_id (teman) · referrer_id (pengajak) · code · status (joined/rewarded/capped/void) · trx_id · bonus_days · created_at · rewarded_at
+
 ## Bank soal
 
-### `packages` (Fase 3; `type` = diagnostic / latihan / akbar)
+### `packages` (Fase 3; `type` = diagnostic / latihan / akbar / skb)
 package_id · title · type · description · duration_min · pg_twk · pg_tiu · pg_tkp · free_attempts · status · order
 
 Kolom `type`: `diagnostik`/`tryout` tampil di lobi Tryout; **`latihan`** tidak tampil di lobi dan hanya dipakai sebagai bank soal latihan harian (Fase 4). Soal latihan harian diambil dari **semua** paket aktif (termasuk paket tryout) — paket `latihan` menambah variasi.
