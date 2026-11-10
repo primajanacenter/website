@@ -59,6 +59,7 @@ export async function copyText(text) {
 /** Isi nama aplikasi dan tahun di elemen dengan atribut data-app-name / data-year. */
 export function hydrateCommon() {
   captureReferral();
+  installErrorReporter();
   $$("[data-app-name]").forEach((el) => (el.textContent = CONFIG.APP_NAME));
   $$("[data-org-name]").forEach((el) => (el.textContent = CONFIG.ORG_NAME));
   $$("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
@@ -122,4 +123,34 @@ export function pendingReferral() {
   const r = store.get(KEYS.REF_CODE);
   if (!r || !r.code || Date.now() - (r.at || 0) > 30 * 864e5) return "";
   return r.code;
+}
+
+/**
+ * Fase 9: kirim galat JavaScript halaman ke backend (sheet error_log) agar masalah di HP pengguna terlihat.
+ * Hanya aktif saat terhubung ke backend sungguhan; maksimal 3 laporan per halaman; tanpa data pribadi.
+ */
+let reporterOn = false;
+export function installErrorReporter() {
+  if (reporterOn || CONFIG.USE_MOCK || !CONFIG.APPS_SCRIPT_URL) return;
+  reporterOn = true;
+  let sent = 0;
+  const seen = new Set();
+  const report = (message, source, line) => {
+    const msg = String(message || "").slice(0, 300);
+    if (!msg || sent >= 3 || seen.has(msg)) return;
+    // abaikan galat dari ekstensi browser/skrip pihak ketiga & galat jaringan yang sudah ditangani
+    if (source && !String(source).startsWith(location.origin)) return;
+    if (/ResizeObserver loop|Script error\.?$|NetworkError|Failed to fetch|Load failed/i.test(msg)) return;
+    seen.add(msg);
+    sent++;
+    import("./api.js")
+      .then(({ api }) => api.call("logClientError", { message: msg, source: String(source || ""), line: line || 0, page: location.pathname, ua: navigator.userAgent.slice(0, 160), action: "" }))
+      .catch(() => {});
+  };
+  window.addEventListener("error", (e) => report(e.message, e.filename, e.lineno));
+  window.addEventListener("unhandledrejection", (e) => {
+    const r = e.reason;
+    if (r && r.code) return; // galat API yang sudah berbentuk {code,message} ditangani halaman
+    report(r && (r.stack || r.message) ? String(r.message || r) : String(r), location.href.split(/[?#]/)[0], 0);
+  });
 }
