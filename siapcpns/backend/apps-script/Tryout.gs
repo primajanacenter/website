@@ -16,7 +16,7 @@ var SUBTEST_LABEL = { twk: 'Tes Wawasan Kebangsaan', tiu: 'Tes Intelegensia Umum
 var NON_LOBBY_TYPES = ['latihan', 'akbar', 'skb'];
 var GRACE_SEC = 180;           // toleransi keterlambatan kirim jawaban (detik)
 var FREE_REVIEW_LIMIT = 5;     // jumlah pembahasan untuk pengguna gratis
-var PKG_CACHE_SEC = 3600;    // cache daftar paket & soal (detik); diperbarui trigger per jam
+var PKG_CACHE_SEC = 21600;   // cache daftar paket & soal (6 jam, maksimum CacheService); ditimpa pemicu per jam
 
 var TOPICS = {
   'twk-pancasila': { subtest: 'twk', name: 'Pancasila' },
@@ -68,10 +68,16 @@ var SKB_TOPICS = {
 function getPackages_() {
   var cached = cacheGetJson_('pkgs');
   if (cached) return cached;
+  // Jalur lambat (cache kosong): hanya daftar paket. Pemicu warmQuestionCache biasanya mencegah ini terjadi.
+  var list = buildPackageList_(loadPackageSources_(false));
+  cachePutJson_('pkgs', list, PKG_CACHE_SEC);
+  return list;
+}
 
+function buildPackageList_(sources) {
   var seen = {};
   var list = [];
-  loadPackageSources_().forEach(function (src) {
+  sources.forEach(function (src) {
     src.packages.forEach(function (p) {
       var id = String(p.package_id || '').trim();
       if (!id || String(p.status).toLowerCase() !== 'live') return;
@@ -93,23 +99,57 @@ function getPackages_() {
         },
         freeAttempts: isBlank_(p.free_attempts) ? null : Number(p.free_attempts),
         order: Number(p.order) || 99,
-        fileId: src.fileId
+        fileId: src.fileId,
+        questionCount: null
       });
     });
   });
   list.sort(function (a, b) { return a.order - b.order || (a.packageId < b.packageId ? -1 : 1); });
-  cachePutJson_('pkgs', list, PKG_CACHE_SEC);
   return list;
 }
 
-/** Baca sheet "packages" dari semua sumber. */
-function loadPackageSources_() {
+/**
+ * Bangun ulang SEMUA cache paket dalam satu kali baca per file (packages + questions sekaligus),
+ * lalu menimpa cache lama. Tidak pernah mengosongkan cache lebih dulu, jadi pengguna tidak pernah
+ * mendapat "cache dingin" saat pembaruan berjalan.
+ */
+function rebuildPackageCache_() {
+  var t0 = Date.now();
+  var sources = loadPackageSources_(true);
+  var list = buildPackageList_(sources);
+  var bySrc = {};
+  sources.forEach(function (s) { bySrc[s.fileId] = s; });
+  var bankIndex = [];
+  list.forEach(function (p) {
+    try {
+      var qs = parseQuestions_(bySrc[p.fileId].questions || [], p.packageId);
+      p.questionCount = qs.length;
+      if (qs.length) cachePutJson_('pq_' + p.packageId, qs, PKG_CACHE_SEC);
+      if (p.type === 'latihan') qs.forEach(function (q) { bankIndex.push([q.id, p.packageId, q.topicId]); });
+    } catch (e) { console.warn(p.packageId + ': ' + e.message); }
+  });
+  cachePutJson_('pkgs', list, PKG_CACHE_SEC);
+  cachePutJson_('pbx', bankIndex, PKG_CACHE_SEC);
+  Logger.log('Cache paket dibangun ulang: ' + list.length + ' paket, ' + bankIndex.length + ' soal latihan, ' + Math.round((Date.now() - t0) / 1000) + ' detik.');
+  return list;
+}
+
+/** Jumlah soal sebuah paket tanpa memuat seluruh soal (dari daftar paket bila sudah dihitung). */
+function packageQuestionCount_(p) {
+  if (p.questionCount !== null && p.questionCount !== undefined) return p.questionCount;
+  try { return getPackageQuestions_(p.packageId).length; } catch (e) { return 0; }
+}
+
+/** Baca sheet "packages" (dan bila diminta, "questions") dari semua sumber. */
+function loadPackageSources_(withQuestions) {
   var sources = [];
+  var add = function (ss, fileId, label) {
+    var src = { fileId: fileId, label: label, packages: readTable_(ss, 'packages') };
+    if (withQuestions) src.questions = readTable_(ss, 'questions');
+    sources.push(src);
+  };
   var single = getConfigOptional_('QUESTIONS_SPREADSHEET_ID', '');
-  if (single) {
-    var ss = SpreadsheetApp.openById(single);
-    sources.push({ fileId: single, label: 'bank soal utama', packages: readTable_(ss, 'packages') });
-  }
+  if (single) add(SpreadsheetApp.openById(single), single, 'bank soal utama');
   var folderId = getConfigOptional_('QUESTIONS_FOLDER_ID', '');
   if (folderId) {
     var files = DriveApp.getFolderById(folderId).getFilesByType(MimeType.GOOGLE_SHEETS);
@@ -117,8 +157,7 @@ function loadPackageSources_() {
       var f = files.next();
       if (f.isTrashed && f.isTrashed()) continue;
       try {
-        var fss = SpreadsheetApp.openById(f.getId());
-        sources.push({ fileId: f.getId(), label: 'file "' + f.getName() + '"', packages: readTable_(fss, 'packages') });
+        add(SpreadsheetApp.openById(f.getId()), f.getId(), 'file "' + f.getName() + '"');
       } catch (e) {
         console.warn('Lewati file "' + f.getName() + '": ' + e.message);
       }
@@ -219,7 +258,9 @@ function publicQuestions_(questions) {
 }
 
 function clearPackageCache_(packageId) {
+  resetMemo_();
   var c = CacheService.getScriptCache();
+  c.remove('pbx');
   c.remove('pkgs');
   if (packageId) {
     c.remove('pq_' + packageId);
@@ -229,11 +270,8 @@ function clearPackageCache_(packageId) {
 
 /** Jalankan dari editor setelah mengubah soal/paket agar perubahan langsung aktif. */
 function refreshQuestionCache() {
-  var cached = cacheGetJson_('pkgs') || [];
-  cached.forEach(function (p) { clearPackageCache_(p.packageId); });
-  clearPackageCache_(null);
-  var list = getPackages_(); // bangun ulang daftar paket
-  Logger.log('Cache dibersihkan. Paket live: ' + list.map(function (p) { return p.packageId; }).join(', '));
+  var list = rebuildPackageCache_();
+  Logger.log('Paket live: ' + list.map(function (p) { return p.packageId + ' (' + p.questionCount + ')'; }).join(', '));
 }
 
 /**
@@ -282,12 +320,7 @@ function checkQuestionFolder() {
 
 /** Dipanggil trigger per jam: membangun ulang daftar paket agar file baru di folder otomatis muncul. */
 function warmQuestionCache() {
-  var cached = cacheGetJson_('pkgs') || [];
-  cached.forEach(function (p) { clearPackageCache_(p.packageId); });
-  clearPackageCache_(null);
-  getPackages_().forEach(function (p) {
-    try { getPackageQuestions_(p.packageId); } catch (e) { console.warn(p.packageId + ': ' + e.message); }
-  });
+  rebuildPackageCache_();
 }
 
 /** Jalankan SEKALI dari editor: pasang trigger per jam untuk warmQuestionCache. */
@@ -316,7 +349,7 @@ function handleGetTryoutInfo_(payload, user) {
     var running = mine.filter(function (a) { return a.status === 'in_progress'; })[0];
     var gate = canStart_(p, user, done.length);
     var qCount = 0;
-    try { qCount = getPackageQuestions_(p.packageId).length; } catch (e) { qCount = 0; }
+    qCount = packageQuestionCount_(p);
     return {
       packageId: p.packageId, title: p.title, type: p.type, description: p.description,
       durationMin: p.durationMin, pg: p.pg, questionCount: qCount,
@@ -660,7 +693,12 @@ function toIso_(v) {
 }
 
 /* Cache JSON besar dipecah per 90 KB (batas CacheService 100 KB per nilai). */
+/* Memo per eksekusi: daftar paket & soal dibaca dari CacheService sekali saja per permintaan. */
+var _memo = {};
+function resetMemo_() { _memo = {}; }
+
 function cachePutJson_(key, obj, ttl) {
+  _memo['cj:' + key] = obj;
   var c = CacheService.getScriptCache();
   var s = JSON.stringify(obj);
   var size = 90000;
@@ -673,6 +711,7 @@ function cachePutJson_(key, obj, ttl) {
 }
 
 function cacheGetJson_(key) {
+  if (_memo.hasOwnProperty('cj:' + key)) return _memo['cj:' + key];
   var c = CacheService.getScriptCache();
   var n = Number(c.get(key) || 0);
   if (!n) return null;
@@ -684,5 +723,5 @@ function cacheGetJson_(key) {
     if (got[keys[j]] === undefined || got[keys[j]] === null) return null;
     s += got[keys[j]];
   }
-  try { return JSON.parse(s); } catch (e) { return null; }
+  try { var v = JSON.parse(s); _memo['cj:' + key] = v; return v; } catch (e) { return null; }
 }

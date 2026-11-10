@@ -97,6 +97,8 @@ function computeMetrics_() {
 
   var refs = readAll_('referrals');
   var skd = readAll_('skd_results');
+  var np = readAll_('notif_prefs').map(toNotifPrefs_);
+  var sentLog = readAll_('notif_log').filter(function (n) { return n.status === 'sent' && jktDateOf_(n.at) >= d7; });
   var errs = readAll_('error_log').filter(function (e) { return new Date(e.at).getTime() > Date.now() - 86400000; });
 
   var since = function (arr, from) { return arr.filter(function (d) { return d && d >= from; }).length; };
@@ -122,6 +124,8 @@ function computeMetrics_() {
     skd: { results: skd.length, passed: skd.filter(function (r) { return isTrue_(r.passed_all); }).length },
     referral: { joined: refs.length, rewarded: refs.filter(function (r) { return r.status === 'rewarded'; }).length,
       capped: refs.filter(function (r) { return r.status === 'capped'; }).length },
+    reminders: { daily: np.filter(function (x) { return x.daily; }).length, akbar: np.filter(function (x) { return x.akbar; }).length,
+      premiumOff: np.filter(function (x) { return !x.premium; }).length, sent7: sentLog.length },
     akbar: akbarEvents_().slice(-5).map(function (e) {
       return { eventId: e.event_id, packageId: e.package_id, opensAt: e.opens_at, status: e.status || 'scheduled', participants: Number(e.participants) || 0 };
     }),
@@ -165,6 +169,10 @@ function buildAdminDashboard() {
     ['', ''],
     ['AJAK TEMAN', ''],
     ['Teman bergabung lewat kode', m.referral.joined], ['Bonus diberikan', m.referral.rewarded], ['Bonus terkena batas', m.referral.capped],
+    ['', ''],
+    ['PENGINGAT EMAIL', ''],
+    ['Pengingat harian aktif', m.reminders.daily], ['Pengingat Tryout Akbar aktif', m.reminders.akbar],
+    ['Mematikan pengingat Premium', m.reminders.premiumOff], ['Email pengingat terkirim 7 hari', m.reminders.sent7],
     ['', ''],
     ['TRYOUT AKBAR (5 terakhir)', '']
   ];
@@ -255,7 +263,7 @@ function installOpsTrigger() {
 
 var EXPECTED_TRIGGERS = {
   reconcilePayments: 'installPaymentTrigger', warmQuestionCache: 'installQuestionTrigger',
-  publishAkbarResults: 'installAkbarTrigger', dailyOps: 'installOpsTrigger'
+  publishAkbarResults: 'installAkbarTrigger', dailyOps: 'installOpsTrigger', sendReminders: 'installReminderTrigger'
 };
 
 function healthCheck() {
@@ -330,7 +338,7 @@ function deleteUserData_(email, dryRun) {
   if (!user) return { found: false };
   var uid = user.user_id;
   var plan = [['profiles', 'user_id'], ['assessments', 'user_id'], ['practice_answers', 'user_id'], ['skd_results', 'user_id'],
-    ['attempts', 'user_id'], ['akbar_results', 'user_id'], ['referrals', 'referee_id']];
+    ['attempts', 'user_id'], ['akbar_results', 'user_id'], ['referrals', 'referee_id'], ['notif_prefs', 'user_id'], ['notif_log', 'user_id']];
   var counts = {};
   plan.forEach(function (p) { counts[p[0]] = findAll_(p[0], p[1], uid).length; });
   var trx = findAll_('transactions', 'user_id', uid);
@@ -346,4 +354,15 @@ function deleteUserData_(email, dryRun) {
     update_('users', user._row, { email: 'deleted+' + uid + '@invalid', name: 'Pengguna dihapus', picture: '', phone: '', ref_code: '' });
   });
   return { found: true, userId: uid, dryRun: false, counts: counts, note: 'Papan peringkat Akbar ter-cache akan diperbarui saat terbit ulang (adminRepublishAkbar) atau dalam 6 jam.' };
+}
+
+/**
+ * Fase 10.2: setelah MENGEDIT LANGSUNG baris sheet users (mis. mengubah premium_until di Spreadsheet),
+ * isi EMAIL lalu jalankan agar perubahan langsung terbaca (tanpa ini berlaku otomatis dalam ≤ 5 menit).
+ * Perubahan lewat aplikasi/fungsi admin (adminGrantPremium, pembayaran) tidak perlu langkah ini.
+ */
+function adminClearUserCache() {
+  var EMAIL = 'nama@contoh.com';
+  invalidateUserCache_(EMAIL.toLowerCase());
+  Logger.log('Cache pengguna ' + EMAIL + ' dihapus.');
 }

@@ -54,14 +54,29 @@ function verifyGoogleToken_(token) {
   }
 
   var claims = { sub: c.sub, email: String(c.email).toLowerCase(), name: c.name || '', picture: c.picture || '' };
-  var ttl = Math.min(600, Number(c.exp) - now); // maksimal 10 menit, tidak melewati masa berlaku token
+  // Fase 10.2: cache sampai token kedaluwarsa (token Google berlaku ± 1 jam) → tokeninfo cukup dipanggil
+  // sekali per sesi login, bukan setiap 10 menit. Tetap tidak melewati masa berlaku token.
+  var ttl = Math.min(3600, Number(c.exp) - now - 30);
   if (ttl > 30) cache.put(key, JSON.stringify(claims), ttl);
   return claims;
 }
 
+var USER_CACHE_SEC = 300; // baris users di-cache 5 menit; dihapus otomatis setiap kali baris itu diubah (update_)
+
+function userCacheKey_(email) {
+  return 'usr_' + Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(email).toLowerCase())).slice(0, 32);
+}
+
 function findOrCreateUser_(claims) {
+  var cache = CacheService.getScriptCache();
+  var ck = userCacheKey_(claims.email);
+  var hit = cache.get(ck);
+  if (hit) {
+    try { return toUser_(JSON.parse(hit), false); } catch (e) { /* lanjut baca sheet */ }
+  }
   var existing = findOne_('users', 'email', claims.email);
   if (existing) {
+    cache.put(ck, JSON.stringify(existing), USER_CACHE_SEC);
     return toUser_(existing, false);
   }
   return withLock_(function () {

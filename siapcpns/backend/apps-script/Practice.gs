@@ -24,27 +24,47 @@ function todayStr_() {
 /* ------------------------------------------------------------------ */
 /* Bank latihan                                                        */
 /* ------------------------------------------------------------------ */
-function getPracticeBank_() {
-  var bank = [];
-  getPackages_().filter(function (p) { return p.type === 'latihan'; }).forEach(function (p) {
-    try {
-      getPackageQuestions_(p.packageId).forEach(function (q) {
-        bank.push(Object.assign({ packageId: p.packageId }, q));
-      });
-    } catch (e) {
-      console.warn('Bank latihan ' + p.packageId + ': ' + e.message);
-    }
+/**
+ * Indeks ringkas bank latihan: [{ id, packageId, topicId }] (± 60 byte per soal, di-cache 6 jam).
+ * Isi soal lengkap hanya dimuat untuk paket dari soal yang terpilih — jauh lebih ringan daripada
+ * memuat ±1.200 soal di setiap permintaan.
+ */
+function getPracticeIndex_() {
+  var cached = cacheGetJson_('pbx');
+  if (!cached) {
+    cached = [];
+    getPackages_().filter(function (p) { return p.type === 'latihan'; }).forEach(function (p) {
+      try {
+        getPackageQuestions_(p.packageId).forEach(function (q) { cached.push([q.id, p.packageId, q.topicId]); });
+      } catch (e) {
+        console.warn('Bank latihan ' + p.packageId + ': ' + e.message);
+      }
+    });
+    cachePutJson_('pbx', cached, PKG_CACHE_SEC);
+  }
+  return cached.map(function (x) { return { id: x[0], packageId: x[1], topicId: x[2] }; });
+}
+
+/** Soal lengkap untuk daftar referensi { id, packageId } (urutan dipertahankan). */
+function loadPracticeQuestions_(refs) {
+  var byPkg = {};
+  refs.forEach(function (r) { (byPkg[r.packageId] = byPkg[r.packageId] || []).push(r.id); });
+  var full = {};
+  Object.keys(byPkg).forEach(function (pid) {
+    getPackageQuestions_(pid).forEach(function (q) { if (byPkg[pid].indexOf(q.id) >= 0) full[q.id] = Object.assign({ packageId: pid }, q); });
   });
-  return bank;
+  return refs.map(function (r) { return full[r.id]; }).filter(Boolean);
 }
 
 function practiceHistory_(user) {
-  return findAll_('practice_answers', 'user_id', user.userId).map(function (r) {
+  var mk = 'ph:' + user.userId;
+  if (_memo[mk]) return _memo[mk];
+  return (_memo[mk] = findAll_('practice_answers', 'user_id', user.userId).map(function (r) {
     return {
       date: String(r.date).slice(0, 10), questionId: String(r.question_id), topicId: String(r.topic_id),
       subtest: String(r.subtest), points: Number(r.points) || 0, at: String(r.answered_at)
     };
-  });
+  }));
 }
 
 /* ------------------------------------------------------------------ */
@@ -139,7 +159,7 @@ function handleGetToday_(payload, user) {
       byTopicToday: doneToday.reduce(function (m, h) { m[h.topicId] = (m[h.topicId] || 0) + 1; return m; }, {}),
       dailyLimit: premium ? null : FREE_PRACTICE_DAILY,
       remaining: premium ? PRACTICE_SESSION_SIZE : Math.max(0, FREE_PRACTICE_DAILY - doneToday.length),
-      bankSize: getPracticeBank_().length
+      bankSize: getPracticeIndex_().length
     },
     streak: streak_(history),
     hasTryout: hasTryout,
@@ -151,7 +171,7 @@ function handleGetToday_(payload, user) {
 /* startPractice                                                       */
 /* ------------------------------------------------------------------ */
 function handleStartPractice_(payload, user) {
-  var bank = getPracticeBank_();
+  var bank = getPracticeIndex_();
   if (!bank.length) throw new AppError_('NOT_FOUND', 'Bank latihan belum tersedia.');
   var premium = user.plan === 'premium';
   var history = practiceHistory_(user);
@@ -188,6 +208,7 @@ function handleStartPractice_(payload, user) {
     .sort(function (a, b) { return b.s - a.s; })
     .slice(0, Math.min(remaining, PRACTICE_SESSION_SIZE))
     .map(function (x) { return x.q; });
+  chosen = loadPracticeQuestions_(chosen);
 
   var sessionId = newId_('p');
   CacheService.getScriptCache().put('ps_' + sessionId, JSON.stringify({

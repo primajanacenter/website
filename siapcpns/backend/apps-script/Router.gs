@@ -63,16 +63,25 @@ function getRoutes_() {
     claimReferral:    { handler: handleClaimReferral_,    auth: 'required' },
 
     // Fase 9
-    logClientError:   { handler: handleLogClientError_,   auth: 'none' }
+    logClientError:   { handler: handleLogClientError_,   auth: 'none' },
+
+    // Fase 10
+    getNotifPrefs:    { handler: handleGetNotifPrefs_,    auth: 'required' },
+    saveNotifPrefs:   { handler: handleSaveNotifPrefs_,   auth: 'required' }
   };
 }
 
 function doGet(e) {
+  // Fase 10: tautan berhenti langganan dari email pengingat
+  if (e && e.parameter && e.parameter.unsub) {
+    try { return handleUnsubscribe_(e); } catch (err) { console.error(err); return HtmlService.createHtmlOutput('<p>Terjadi kesalahan. Coba lagi nanti atau atur di halaman Pengaturan aplikasi.</p>'); }
+  }
   return json_({ ok: true, data: { status: 'ok', service: 'siap-cpns-api', time: new Date().toISOString() } });
 }
 
 function doPost(e) {
   var body = null;
+  resetMemo_();
   try {
     // Webhook Mayar (Fase 5)
     if (e && e.parameter && e.parameter.hook === 'mayar') {
@@ -80,6 +89,7 @@ function doPost(e) {
     }
 
     body = parseBody_(e);
+    if (body.action === 'batch') return json_({ ok: true, data: runBatch_(body) });
     var route = getRoutes_()[body.action];
     if (!route) throw new AppError_('UNKNOWN_ACTION', 'Action "' + body.action + '" tidak dikenal.');
 
@@ -139,4 +149,39 @@ function errorBody_(err) {
   console.error(err && err.stack ? err.stack : err);
   // Jangan bocorkan detail error internal ke pengguna.
   return { ok: false, error: { code: 'SERVER_ERROR', message: 'Terjadi kesalahan di server. Coba lagi sebentar.' } };
+}
+
+/* ---------------- Fase 10.2: batch ---------------- */
+
+/**
+ * Beberapa action BACA dalam satu permintaan HTTP (hemat 1–3 detik per action tambahan di Apps Script).
+ * payload: { calls: [{ action, payload }] } (maks 6) → data: [{ ok, data } | { ok:false, error }]
+ * Token diverifikasi sekali. Hanya action baca (tanpa efek samping) yang boleh digabung.
+ */
+var BATCHABLE = {
+  ping: 1, getMe: 1, getToday: 1, getPlan: 1, getPlans: 1, getMaterialIndex: 1, getTryoutInfo: 1,
+  getAkbarInfo: 1, getAkbarRanking: 1, getReferral: 1, getPostSkd: 1, getNotifPrefs: 1
+};
+var BATCH_MAX = 6;
+
+function runBatch_(body) {
+  var calls = body.payload && Array.isArray(body.payload.calls) ? body.payload.calls : null;
+  if (!calls || !calls.length || calls.length > BATCH_MAX) throw new AppError_('BAD_REQUEST', 'Batch harus berisi 1–' + BATCH_MAX + ' permintaan.');
+  var routes = getRoutes_();
+  var user = null, authErr = null;
+  if (body.token) {
+    try { user = verifyUser_(body.token); } catch (err) { authErr = err; }
+  }
+  return calls.map(function (c) {
+    var action = c && String(c.action || '');
+    try {
+      var route = routes[action];
+      if (!route || !BATCHABLE[action]) throw new AppError_('BAD_REQUEST', 'Action "' + action + '" tidak bisa digabung.');
+      if (route.auth === 'required' && !user) throw authErr instanceof AppError_ ? authErr : new AppError_('UNAUTHENTICATED', 'Silakan masuk terlebih dahulu.');
+      return { ok: true, data: route.handler((c && c.payload) || {}, route.auth === 'none' ? null : user) };
+    } catch (err) {
+      if (!(err instanceof AppError_)) logServerError_('batch:' + action, err);
+      return errorBody_(err);
+    }
+  });
 }

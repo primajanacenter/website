@@ -20,14 +20,73 @@ var AKBAR_PROVINCE_TOP_N = 20;
 
 /* ================= Jadwal ================= */
 
+/**
+ * Baca tanggal dari sel akbar_events dengan toleran: objek Date (sel berformat tanggal), ISO
+ * (2026-11-15T06:00:00+07:00), "2026-11-15 06:00", atau "15/11/2026 06.00". Tanpa zona waktu = WIB.
+ * Mengembalikan Date atau null bila tidak bisa dibaca.
+ */
+function akbarDate_(v) {
+  if (v === '' || v === null || v === undefined) return null;
+  if (v instanceof Date) return isNaN(v.getTime()) ? null : v;
+  var s = String(v).trim();
+  var m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2})[:.](\d{2})(?:[:.](\d{2}))?(?:\.\d+)?)?\s*(Z|[+-]\d{2}:?\d{2})?$/i);
+  var y, mo, d, h, mi, se, tz;
+  if (m) { y = m[1]; mo = m[2]; d = m[3]; h = m[4]; mi = m[5]; se = m[6]; tz = m[7]; }
+  else {
+    m = s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})(?:[ ,]+(\d{1,2})[:.](\d{2})(?:[:.](\d{2}))?)?$/);
+    if (!m) { var t = new Date(s); return isNaN(t.getTime()) ? null : t; }
+    d = m[1]; mo = m[2]; y = m[3]; h = m[4]; mi = m[5]; se = m[6];
+  }
+  var pad = function (x) { x = String(x || '0'); return x.length < 2 ? '0' + x : x; };
+  if (!tz) tz = '+07:00';
+  else if (/^[+-]\d{4}$/.test(tz)) tz = tz.slice(0, 3) + ':' + tz.slice(3);
+  var iso = y + '-' + pad(mo) + '-' + pad(d) + 'T' + pad(h) + ':' + pad(mi) + ':' + pad(se) + (tz.toUpperCase() === 'Z' ? 'Z' : tz);
+  var out = new Date(iso);
+  return isNaN(out.getTime()) ? null : out;
+}
+
+/** Event aktif (bukan cancelled) dengan tanggal yang sudah dinormalkan ke ISO. Baris rusak dilewati (lihat checkAkbarEvents). */
 function akbarEvents_() {
-  return readAll_('akbar_events').filter(function (e) { return e.event_id && e.status !== 'cancelled'; })
-    .sort(function (a, b) { return new Date(a.opens_at) - new Date(b.opens_at); });
+  var out = [];
+  readAll_('akbar_events').forEach(function (e) {
+    if (!e.event_id || String(e.status).trim().toLowerCase() === 'cancelled') return;
+    var o = akbarDate_(e.opens_at), c = akbarDate_(e.closes_at), r = akbarDate_(e.results_at);
+    if (!o || !c) { console.warn('akbar_events baris ' + e._row + ' (' + e.event_id + ') dilewati: opens_at/closes_at tidak terbaca.'); return; }
+    if (c <= o) { console.warn('akbar_events baris ' + e._row + ' (' + e.event_id + ') dilewati: closes_at tidak setelah opens_at.'); return; }
+    if (!r) r = new Date(c.getTime() + AKBAR_RESULTS_DELAY_H * 3600000);
+    e.event_id = String(e.event_id).trim(); e.package_id = String(e.package_id).trim();
+    e.status = String(e.status || '').trim().toLowerCase();
+    e.opens_at = o.toISOString(); e.closes_at = c.toISOString(); e.results_at = r.toISOString();
+    out.push(e);
+  });
+  return out.sort(function (a, b) { return new Date(a.opens_at) - new Date(b.opens_at); });
+}
+
+/** Admin: periksa sheet akbar_events dan tampilkan cara server membaca tiap baris. */
+function checkAkbarEvents() {
+  var pk = {}; getPackages_().forEach(function (p) { pk[p.packageId] = p; });
+  readAll_('akbar_events').forEach(function (e) {
+    var o = akbarDate_(e.opens_at), c = akbarDate_(e.closes_at), r = akbarDate_(e.results_at);
+    var p = pk[String(e.package_id).trim()];
+    var problems = [];
+    if (!e.event_id) problems.push('event_id kosong');
+    if (!o) problems.push('opens_at tidak terbaca: "' + e.opens_at + '"');
+    if (!c) problems.push('closes_at tidak terbaca: "' + e.closes_at + '"');
+    if (!r) problems.push('results_at kosong/tidak terbaca (dipakai closes_at + 9 jam)');
+    if (o && c && c <= o) problems.push('closes_at harus setelah opens_at');
+    if (!p) problems.push('paket ' + e.package_id + ' tidak ditemukan / belum live (jalankan refreshQuestionCache)');
+    else if (p.type !== 'akbar') problems.push('paket ' + e.package_id + ' bertipe ' + p.type + ', harus akbar');
+    var st = (o && c && p) ? akbarState_({ opens_at: o.toISOString(), closes_at: c.toISOString(), package_id: p.packageId, status: String(e.status).trim().toLowerCase() }) : '-';
+    Logger.log((problems.length ? '⚠️ ' : '✅ ') + 'baris ' + e._row + ' ' + e.event_id + ' · ' + e.package_id +
+      ' · buka ' + (o ? fmtJkt_(o) : '?') + ' · tutup ' + (c ? fmtJkt_(c) : '?') + ' · terbit ' + (r ? fmtJkt_(r) : '?') +
+      ' · status ' + (e.status || '-') + ' · keadaan ' + st + (problems.length ? '\n     → ' + problems.join('; ') : ''));
+  });
 }
 
 function akbarLastStart_(ev) {
-  var pkg = getPackage_(ev.package_id);
-  return new Date(new Date(ev.closes_at).getTime() - pkg.durationMin * 60000);
+  var dur = 100;
+  try { dur = Number(getPackage_(ev.package_id).durationMin) || 100; } catch (e) { /* paket belum live: pakai 100 menit */ }
+  return new Date(new Date(ev.closes_at).getTime() - dur * 60000);
 }
 
 function akbarState_(ev, now) {
@@ -87,7 +146,7 @@ function handleGetAkbarInfo_(payload, user) {
     var att = mine.filter(function (a) { return a.event_id === e.event_id; })[0];
     var res = myResults.filter(function (r) { return r.event_id === e.event_id; })[0];
     var qCount = 0;
-    try { qCount = getPackageQuestions_(e.package_id).length; } catch (err) { qCount = 0; }
+    qCount = packageQuestionCount_(pkg);
     return {
       eventId: e.event_id, title: e.title || pkg.title, opensAt: toIso_(e.opens_at), closesAt: toIso_(e.closes_at),
       lastStartAt: akbarLastStart_(e).toISOString(), resultsAt: toIso_(e.results_at), state: akbarState_(e, now),
@@ -100,13 +159,17 @@ function handleGetAkbarInfo_(payload, user) {
       } : null
     };
   }
+  // satu event bermasalah (mis. paket belum live) tidak boleh membuat seluruh halaman gagal
+  function safePub(e) {
+    try { return pub(e); } catch (err) { console.warn('getAkbarInfo: event ' + e.event_id + ' dilewati: ' + (err && err.message)); return null; }
+  }
   return {
     serverNow: nowIso_(), loggedIn: Boolean(user), premium: Boolean(user && user.plan === 'premium'),
-    current: current ? pub(current) : null,
+    current: current ? safePub(current) : null,
     next: events.filter(function (e) { return akbarState_(e, now) === 'upcoming' && (!current || e.event_id !== current.event_id); }).slice(0, 3).map(function (e) {
       return { eventId: e.event_id, title: e.title, opensAt: toIso_(e.opens_at), closesAt: toIso_(e.closes_at) };
     }),
-    past: past.map(pub)
+    past: past.map(safePub).filter(Boolean)
   };
 }
 
@@ -289,7 +352,9 @@ function akbarBoard_(eventId, pg) {
 /* ================= Utilitas ================= */
 
 function fmtJkt_(iso) {
-  var d = new Date(new Date(iso).getTime() + 7 * 3600000);
+  var base = akbarDate_(iso);
+  if (!base) return 'segera';
+  var d = new Date(base.getTime() + 7 * 3600000);
   var days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
   var months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
   var pad = function (x) { return (x < 10 ? '0' : '') + x; };

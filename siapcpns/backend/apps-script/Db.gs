@@ -56,7 +56,10 @@ var SCHEMA = {
   metrics_daily: [
     'date', 'users_total', 'new_users', 'active_7d', 'premium_active', 'paid_trx', 'revenue', 'revenue_30d',
     'attempts', 'practice', 'skd_results', 'referrals_rewarded', 'errors_24h'
-  ]
+  ],
+  // Fase 10: pengingat email
+  notif_prefs: ['user_id', 'daily', 'akbar', 'premium', 'token', 'created_at', 'updated_at'],
+  notif_log: ['at', 'user_id', 'kind', 'key', 'status']
 };
 
 /** Struktur sheet di file BANK SOAL (QUESTIONS_SPREADSHEET_ID). Hanya bisa dibaca server. */
@@ -171,6 +174,7 @@ function findLast_(name, field, value) {
 
 /** Tambah baris baru dari objek. Kolom yang tidak ada di objek dibiarkan kosong. */
 function insert_(name, obj) {
+  if (name === 'practice_answers' && typeof _memo !== 'undefined') delete _memo['ph:' + obj.user_id];
   var h = headers_(name);
   var row = h.map(function (k) { return obj[k] === undefined || obj[k] === null ? '' : obj[k]; });
   sheet_(name).appendRow(row);
@@ -193,12 +197,19 @@ function update_(name, rowIndex, patch) {
   var h = headers_(name);
   var range = sh.getRange(rowIndex, 1, 1, h.length);
   var values = range.getValues()[0];
+  var oldEmail = name === 'users' ? values[h.indexOf('email')] : '';
   Object.keys(patch).forEach(function (k) {
     var i = h.indexOf(k);
     if (i >= 0) values[i] = patch[k] === null || patch[k] === undefined ? '' : patch[k];
   });
   range.setValues([values]);
+  if (name === 'users') { invalidateUserCache_(oldEmail); invalidateUserCache_(values[h.indexOf('email')]); }
   return rowToObj_(name, values, rowIndex);
+}
+
+/** Hapus cache baris pengguna (lihat findOrCreateUser_) setelah baris users berubah. */
+function invalidateUserCache_(email) {
+  try { if (email) CacheService.getScriptCache().remove(userCacheKey_(email)); } catch (e) { /* abaikan */ }
 }
 
 /** Jalankan fn dengan kunci script agar penulisan bersamaan tidak saling menimpa. */
