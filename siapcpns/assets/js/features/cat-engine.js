@@ -11,7 +11,7 @@
 
 import { api } from "../core/api.js";
 import { store } from "../core/store.js";
-import { $, esc, toast } from "../core/ui.js";
+import { $, esc, toast, isSvg, richText, setContext } from "../core/ui.js";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 const SUB_LABEL = { twk: "TWK", tiu: "TIU", tkp: "TKP" };
@@ -183,15 +183,15 @@ function render() {
   $("#q-badge").textContent = SUB_LABEL[q.subtest] || q.subtest.toUpperCase();
   $("#ex-subtest").textContent = SUB_LABEL[q.subtest] || "";
   $("#q-text").textContent = q.text;
-  const ctx = $("#q-context");
-  ctx.hidden = !q.context;
-  ctx.textContent = q.context || "";
+  setContext($("#q-context"), q.context);
 
   const list = $("#options");
+  const figOpts = q.options.some((o) => isSvg(o.text));
+  list.classList.toggle("options-fig", figOpts);
   list.innerHTML = q.options
     .map(
       (o, i) => `<button type="button" class="option" role="radio" data-id="${esc(o.key)}" aria-checked="${o.key === selected}">
-        <span class="key" aria-hidden="true">${LETTERS[i]}</span><span>${esc(o.text)}</span></button>`
+        <span class="key" aria-hidden="true">${LETTERS[i]}</span><span>${richText(o.text, `Gambar pilihan ${LETTERS[i]}`)}</span></button>`
     )
     .join("");
   list.querySelectorAll(".option").forEach((el) => el.addEventListener("click", () => choose(el.dataset.id)));

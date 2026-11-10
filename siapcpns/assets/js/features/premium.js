@@ -11,7 +11,7 @@ import { store, KEYS } from "../core/store.js";
 import { $, esc, fmtDate, getParam, setBusy, toast } from "../core/ui.js";
 
 const PENDING_KEY = "pay.pending";
-const FEATURES = ["Materi pendalaman level 2–4 (60 materi)", "Rencana belajar adaptif", "Latihan harian tanpa batas", "Rapor lengkap & pembahasan semua soal", "Ulangi tryout diagnostik tanpa batas", "Pengingat belajar & Tryout Akbar lewat email"];
+const FEATURES = ["Materi pendalaman level 2–4 (63 materi)", "Rencana belajar adaptif", "Latihan harian tanpa batas", "Rapor lengkap & pembahasan semua soal", "Ulangi tryout diagnostik tanpa batas", "Pengingat belajar & Tryout Akbar lewat email"];
 const rupiah = (n) => "Rp" + Number(n || 0).toLocaleString("id-ID");
 
 /* ======================= Halaman Premium ======================= */

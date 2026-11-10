@@ -8,7 +8,7 @@
 import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
 import { store, KEYS } from "../core/store.js";
-import { $, esc, fmtDate, getParam } from "../core/ui.js";
+import { $, esc, fmtDate, getParam, isSvg, richText } from "../core/ui.js";
 
 const SHORT = { twk: "TWK", tiu: "TIU", tkp: "TKP", skb: "SKB" };
 const LETTERS = { a: "A", b: "B", c: "C", d: "D", e: "E" };
@@ -109,6 +109,11 @@ function renderTopics(r) {
 }
 
 function renderReview(r) {
+  if (r.reviewStale) {
+    $("#r-review-card").hidden = false;
+    $("#r-review").innerHTML = `<p class="muted">Paket ini sudah diperbarui ke versi soal terbaru, jadi pembahasan per soal untuk percobaan lama tidak lagi tersedia. Skor dan analisis topikmu tetap tersimpan.</p>`;
+    return;
+  }
   if (!r.review.length) {
     if (r.reviewTotal === 0) {
       $("#r-review-card").hidden = false;
@@ -131,14 +136,14 @@ function renderReview(r) {
           const cls = [o.key === q.bestAnswer ? "best" : "", o.key === q.yourAnswer ? "mine" : ""].join(" ").trim();
           const tag = o.key === q.yourAnswer ? "Jawabanmu" : o.key === q.bestAnswer ? "Terbaik" : "";
           const pts = q.subtest === "tkp" ? `${o.score} poin` : "";
-          return `<li class="${cls}"><b>${LETTERS[o.key]}</b><span>${esc(o.text)}</span><span class="pts">${[tag, pts].filter(Boolean).join(" · ")}</span></li>`;
+          return `<li class="${cls}"><b>${LETTERS[o.key]}</b><span>${richText(o.text, `Gambar pilihan ${LETTERS[o.key]}`)}</span><span class="pts">${[tag, pts].filter(Boolean).join(" · ")}</span></li>`;
         })
         .join("");
       return `<article class="rv">
         <div class="row" style="justify-content:space-between"><span class="eyebrow">Soal ${q.number} · ${SHORT[q.subtest]} · ${esc(q.topic)}</span>${status}</div>
         <p><strong>${esc(q.text)}</strong></p>
-        ${q.context ? `<div class="question-context">${esc(q.context)}</div>` : ""}
-        <ul class="rv-opts">${opts}</ul>
+        ${q.context ? `<div class="question-context${isSvg(q.context) ? " has-fig" : ""}">${richText(q.context, "Gambar soal")}</div>` : ""}
+        <ul class="rv-opts${q.options.some((o) => isSvg(o.text)) ? " rv-fig" : ""}">${opts}</ul>
         <p class="small muted">${esc(q.explanation)}</p>
       </article>`;
     })

@@ -12,7 +12,7 @@ export const ALL_TOPICS = [
   ["twk-pancasila", "twk", "Pancasila"], ["twk-uud", "twk", "UUD 1945"], ["twk-nkri", "twk", "NKRI"],
   ["twk-bhinneka", "twk", "Bhinneka Tunggal Ika"], ["twk-bahasa", "twk", "Bahasa negara"],
   ["tiu-analogi", "tiu", "Analogi"], ["tiu-silogisme", "tiu", "Silogisme"], ["tiu-analitis", "tiu", "Penalaran analitis"],
-  ["tiu-deret", "tiu", "Deret angka"], ["tiu-hitung", "tiu", "Berhitung & perbandingan"], ["tiu-cerita", "tiu", "Soal cerita"],
+  ["tiu-deret", "tiu", "Deret angka"], ["tiu-hitung", "tiu", "Berhitung & perbandingan"], ["tiu-cerita", "tiu", "Soal cerita"], ["tiu-figural", "tiu", "Figural (gambar)"],
   ["tkp-pelayanan", "tkp", "Pelayanan publik"], ["tkp-jejaring", "tkp", "Jejaring kerja"], ["tkp-sosbud", "tkp", "Sosial budaya"],
   ["tkp-tik", "tkp", "Teknologi informasi"], ["tkp-profesionalisme", "tkp", "Profesionalisme"], ["tkp-antiradikalisme", "tkp", "Anti-radikalisme"],
 ].map(([id, subtest, name]) => ({ id, subtest, name }));

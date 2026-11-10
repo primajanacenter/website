@@ -9,7 +9,7 @@
 
 import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
-import { $, esc, getParam, toast } from "../core/ui.js";
+import { $, esc, getParam, isSvg, richText, setContext, toast } from "../core/ui.js";
 import { LEVEL_NAMES, markRead, readLevel, readMap, topicQueue } from "./plan.js";
 
 const SUB = { twk: "TWK · Tes Wawasan Kebangsaan", tiu: "TIU · Tes Intelegensia Umum", tkp: "TKP · Tes Karakteristik Pribadi" };
@@ -133,9 +133,16 @@ function renderExample(c, id) {
   sec.hidden = false;
   const isTkp = id.startsWith("tkp-");
   $("#d-q").textContent = c.soal;
+  // Soal figural: gambar soal (konteks) dan opsi bergambar
+  let ctx = $("#d-ctx");
+  if (!ctx) { ctx = document.createElement("div"); ctx.id = "d-ctx"; ctx.className = "question-context"; $("#d-q").closest("p").after(ctx); }
+  ctx.hidden = !c.konteks;
+  if (c.konteks) setContext(ctx, c.konteks);
   $("#d-expl").hidden = true;
+  const fig = c.pilihan.some(isSvg);
+  box.classList.toggle("options-fig", fig);
   box.innerHTML = c.pilihan
-    .map((o, i) => `<button type="button" class="option" data-i="${i}"><span class="key">${LETTERS[i]}</span><span>${esc(o)}</span></button>`)
+    .map((o, i) => `<button type="button" class="option" data-i="${i}"><span class="key">${LETTERS[i]}</span><span>${richText(o, `Gambar pilihan ${LETTERS[i]}`)}</span></button>`)
     .join("");
   box.querySelectorAll(".option").forEach((b) =>
     b.addEventListener("click", () => {

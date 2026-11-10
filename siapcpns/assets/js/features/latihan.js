@@ -9,7 +9,7 @@
 import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
 import { store, KEYS } from "../core/store.js";
-import { $, esc, getParam } from "../core/ui.js";
+import { $, esc, getParam, isSvg, richText, setContext } from "../core/ui.js";
 import { topicName } from "./plan.js";
 
 const LETTERS = { a: "A", b: "B", c: "C", d: "D", e: "E" };
@@ -41,16 +41,15 @@ function renderQuestion() {
   $("#l-no").textContent = S.index + 1;
   $("#l-sub").textContent = `${SUB[q.subtest] || ""} · ${topicName(q.topicId)}`;
   $("#l-q").textContent = q.text;
-  const ctx = $("#l-ctx");
-  ctx.hidden = !q.context;
-  ctx.textContent = q.context || "";
+  setContext($("#l-ctx"), q.context);
   $("#l-fb").hidden = true;
   $("#l-next").hidden = true;
   renderDots();
 
   const box = $("#l-opts");
+  box.classList.toggle("options-fig", q.options.some((o) => isSvg(o.text)));
   box.innerHTML = q.options
-    .map((o) => `<button type="button" class="option" role="radio" aria-checked="false" data-k="${o.key}"><span class="key">${LETTERS[o.key]}</span><span>${esc(o.text)}</span><span class="pts"></span></button>`)
+    .map((o) => `<button type="button" class="option" role="radio" aria-checked="false" data-k="${o.key}"><span class="key">${LETTERS[o.key]}</span><span>${richText(o.text, `Gambar pilihan ${LETTERS[o.key]}`)}</span><span class="pts"></span></button>`)
     .join("");
   box.querySelectorAll(".option").forEach((b) => b.addEventListener("click", () => answer(b.dataset.k)));
   $("#l-q").focus({ preventScroll: true });
