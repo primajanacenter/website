@@ -463,8 +463,89 @@ props.LOADTEST_TOKEN='lt-123';
 const lp=post('loadProbe',{key:'lt-123',probeId:'p1'});
 check('loadProbe dengan token', lp.ok && lp.data.questions===15 && sheets.loadtest_log.rows.length===2, lp);
 delete props.LOADTEST_TOKEN;
+// --- ketahanan: sel tanggal hasil edit manual di Spreadsheet ---
+const D=(x)=>{const d=ctx.akbarDate_(x);return d?d.toISOString():null;};
+check('akbarDate_: ISO, WIB tanpa zona, dd/mm/yyyy, Date, kosong', D('2026-11-15T06:00:00+07:00')==='2026-11-14T23:00:00.000Z' && D('2026-11-15 06:00')==='2026-11-14T23:00:00.000Z' && D('15/11/2026 06.00')==='2026-11-14T23:00:00.000Z' && D(new Date('2026-11-14T23:00:00Z'))==='2026-11-14T23:00:00.000Z' && D('')===null && D('besok pagi')===null && D('2026-11-14T23:00:00.000Z')==='2026-11-14T23:00:00.000Z');
+const nEv=sheets.akbar_events.rows.length;
+const raw=(id,pkg,o,c,r,st)=>H.map(k=>({event_id:id,package_id:pkg,title:'Uji '+id,opens_at:o,closes_at:c,results_at:r,status:st||'scheduled'}[k]??''));
+const fmtW=(ms)=>{const d=new Date(ms+7*3600e3);const p=x=>String(x).padStart(2,'0');return `${p(d.getUTCDate())}/${p(d.getUTCMonth()+1)}/${d.getUTCFullYear()} ${p(d.getUTCHours())}.${p(d.getUTCMinutes())}`;};
+sheets.akbar_events.rows.push(raw('EBAD','AK-T1','besok','',''), raw('EGHOST','PAKET-HILANG',new Date(now-3600e3).toISOString(),new Date(now+5*3600e3).toISOString(),''),
+  raw('EDMY','AK-T1',fmtW(now-3600e3),fmtW(now+5*3600e3),''));
+delete cacheStore['pkgs'];
+const ai2=post('getAkbarInfo',{},'h.bob.s');
+check('getAkbarInfo tetap jalan dengan baris rusak & paket hilang', ai2.ok, ai2.error);
+check('event dd/mm/yyyy terbaca sebagai event berjalan', ai2.ok && ai2.data.current && ['EDMY','EGHOST'].includes(ai2.data.current.eventId) || (ai2.ok && ai2.data.current===null), ai2.data&&ai2.data.current);
+const jd=post('joinAkbar',{eventId:'EDMY'},'h.fani.s'); check('join event dd/mm/yyyy', jd.ok && jd.data.questions.length===15, jd.error);
+check('getAkbarRanking event tanpa hasil → RESULTS_PENDING (bukan SERVER_ERROR)', post('getAkbarRanking',{eventId:'EDMY'}).error.code==='RESULTS_PENDING');
+check('getAkbarRanking event rusak → NOT_FOUND', post('getAkbarRanking',{eventId:'EBAD'}).error.code==='NOT_FOUND');
+sheets.akbar_events.rows.splice(nEv);
 }
 
+// ================= Fase 8: SKB, pasca-SKD, referral =================
+{
+ctx.setupSheets();
+check('setup: sheet skd_results & referrals', sheets.skd_results && sheets.referrals && sheets.users.rows[0].includes('ref_code') && sheets.transactions.rows[0].includes('discount'));
+const skbRows=Array.from({length:10},(_,i)=>{const o={question_id:'SKB-T1-'+(i+1),package_id:'SKB-T1',number:i+1,subtest:'SKB',topic_id:i<5?'skb-asn':'skb-pelayanan',level:3,text:'Soal SKB '+(i+1),context:'',option_a:'Benar',option_b:'Salah 1',option_c:'Salah 2',option_d:'Salah 3',option_e:'Salah 4',answer:'a',explanation:'Penjelasan',status:'live',source:'t'};return QH.map(k=>o[k]??'');});
+pkgFile('fskb','SKB-T1',['SKB-T1','SKB Uji','skb','Paket SKB uji',60,'','','',1,'live',300],[QH,...skbRows]);
+ctx.refreshQuestionCache(); delete cacheStore['pkgs'];
+tokens['h.sari.s']={...tokens['h.dina.s'],email:'sari@x.com',name:'Sari Putri',sub:'sari'};
+tokens['h.rina.s']={...tokens['h.dina.s'],email:'rina@x.com',name:'Rina',sub:'rina'};
+tokens['h.tono.s']={...tokens['h.dina.s'],email:'tono@x.com',name:'Tono',sub:'tono'};
+post('login',{},'h.tono.s');
+const lob=post('getTryoutInfo',{},'h.tono.s').data.packages.map(p=>p.packageId);
+check('skb: tidak tampil di lobi SKD', !lob.includes('SKB-T1'), lob);
+const sk=post('getTryoutInfo',{type:'skb'},'h.tono.s');
+check('skb: daftar khusus SKB', sk.ok && sk.data.packages.length===1 && sk.data.packages[0].packageId==='SKB-T1' && sk.data.packages[0].questionCount===10, sk.data&&sk.data.packages);
+const st8=post('startAttempt',{packageId:'SKB-T1'},'h.tono.s');
+check('skb: mulai', st8.ok && st8.data.questions.length===10 && st8.data.questions[0].subtest==='skb' && !/"answer"/.test(JSON.stringify(st8.data)), st8.error);
+const ans8={}; st8.data.questions.forEach((q,i)=>ans8[q.id]=i<8?'a':'b');
+post('submitAttempt',{attemptId:st8.data.attemptId,answers:ans8},'h.tono.s');
+const rp8=post('getReport',{attemptId:st8.data.attemptId},'h.tono.s');
+check('skb: rapor skor 40/50, skala 100 = 80', rp8.ok && rp8.data.total===40 && rp8.data.maxTotal===50 && rp8.data.score100===80 && rp8.data.subtests.length===1 && rp8.data.subtests[0].id==='skb' && rp8.data.passedAll===null, rp8.data||rp8.error);
+check('skb: nama topik & pembahasan gratis', rp8.data.topics[0].name && /ASN|pelayanan/i.test(rp8.data.topics[0].name) && rp8.data.review.length===2, rp8.data.topics);
+check('skb: kuota gratis 1×', post('startAttempt',{packageId:'SKB-T1'},'h.tono.s').error.code==='FORBIDDEN');
+check('skb: bukan latestAttempt beranda', (post('getMe',{},'h.tono.s').data.latestAttempt||{}).packageId!=='SKB-T1');
+const tdy=new Date(Date.now()+7*3600e3).toISOString().slice(0,10);
+check('pasca-SKD: kosong', (()=>{const g=post('getPostSkd',{},'h.tono.s');return g.ok&&g.data.result===null;})());
+check('pasca-SKD: skor di luar rentang ditolak', post('saveSkdResult',{testDate:tdy,twk:200,tiu:100,tkp:180},'h.tono.s').error.code==='BAD_REQUEST');
+check('pasca-SKD: tanggal masa depan ditolak', post('saveSkdResult',{testDate:'2099-01-01',twk:90,tiu:100,tkp:180},'h.tono.s').error.code==='BAD_REQUEST');
+let ps=post('saveSkdResult',{testDate:tdy,twk:90,tiu:100,tkp:180,formation:'Analis Kebijakan <b>'},'h.tono.s');
+check('pasca-SKD: lolos → langkah SKB', ps.ok && ps.data.result.total===370 && ps.data.result.passedAll===true && ps.data.analysis.skdPart===26.91 && ps.data.analysis.steps[0].id==='skb' && ps.data.analysis.scenarios[1].final===68.91, ps.data&&ps.data.analysis);
+check('pasca-SKD: teks formasi dibersihkan', !/[<>]/.test(ps.data.result.formation), ps.data.result.formation);
+ps=post('saveSkdResult',{testDate:tdy,twk:90,tiu:70,tkp:180},'h.tono.s');
+check('pasca-SKD: tanggal sama → diperbarui, TIU gagal → fokus TIU', ps.ok && sheets.skd_results.rows.length===2 && ps.data.result.passedAll===false && ps.data.analysis.weakest==='tiu' && ps.data.analysis.steps[0].id==='fokus', ps.data&&ps.data.analysis);
+check('pasca-SKD: data orang lain terpisah', post('getPostSkd',{},'h.bob.s').data.result===null);
+// --- referral ---
+post('login',{},'h.rina.s');
+const gr=post('getReferral',{},'h.rina.s');
+check('referral: kode dibuat', gr.ok && /^SC[A-Z2-9]{6}$/.test(gr.data.code) && gr.data.invited===0, gr.data);
+check('referral: kode stabil', post('getReferral',{},'h.rina.s').data.code===gr.data.code);
+check('referral: kode sendiri ditolak', post('claimReferral',{code:gr.data.code},'h.rina.s').error.code==='BAD_REQUEST');
+check('referral: kode tak dikenal', post('claimReferral',{code:'SCZZZZZZ'},'h.tono.s').error.code==='NOT_FOUND');
+check('referral: pembeli lama tidak bisa', post('claimReferral',{code:gr.data.code},dina).error.code==='BAD_REQUEST');
+const lg=post('login',{ref:gr.data.code.toLowerCase()},'h.sari.s');
+check('referral: klaim lewat login ?ref=', lg.ok && lg.data.referralClaimed===true, lg.data&&lg.data.referralClaimed);
+check('referral: klaim ulang ditolak', post('claimReferral',{code:gr.data.code},'h.sari.s').error.code==='ALREADY_DONE');
+const gps=post('getPlans',{},'h.sari.s').data;
+check('referral: harga diskon 10% di getPlans', gps.referral && gps.referral.discountPct===10 && gps.plans[0].refPrice===44100 && gps.plans[0].price===49000, gps.plans[0]);
+const cos=post('createCheckout',{planId:'P1M'},'h.sari.s');
+const srow=()=>sheets.transactions.rows.find(r=>r[0]===cos.data.trxId); const TH=sheets.transactions.rows[0];
+check('referral: tagihan Mayar memakai harga diskon', cos.ok && mayar.calls.filter(c=>c.path==='/payments/create').pop().body.amount===44100 && srow()[TH.indexOf('amount')]==='44100' && srow()[TH.indexOf('discount')]==='4900', srow());
+const rinaRow=()=>sheets.users.rows.find(r=>r[1]==='rina@x.com'); const sariRow=()=>sheets.users.rows.find(r=>r[1]==='sari@x.com');
+mayar.payments[srow()[TH.indexOf('mayar_id')]].status='paid'; Object.keys(cacheStore).filter(k=>k.startsWith('pchk_')).forEach(k=>delete cacheStore[k]);
+post('getPaymentStatus',{trxId:cos.data.trxId},'h.sari.s');
+const dd=(iso)=>Math.round((new Date(iso)-Date.now())/86400000);
+check('referral: teman premium 30 hari, pengajak +7 hari', sariRow()[5]==='premium' && dd(sariRow()[6])===30 && rinaRow()[5]==='premium' && dd(rinaRow()[6])===7, {s:sariRow(),r:rinaRow()});
+const RH=sheets.referrals.rows[0]; const rrow=sheets.referrals.rows[1];
+check('referral: status rewarded', rrow[RH.indexOf('status')]==='rewarded' && rrow[RH.indexOf('trx_id')]===cos.data.trxId);
+ctx.fulfillTransaction_(cos.data.trxId,'ulang');
+check('referral: bonus tidak dobel', dd(rinaRow()[6])===7);
+check('referral: diskon hilang setelah pembelian pertama', !post('getPlans',{},'h.sari.s').data.referral);
+const gr2=post('getReferral',{},'h.rina.s').data;
+check('referral: statistik pengajak', gr2.invited===1 && gr2.rewarded===1 && gr2.bonusDaysEarned===7 && gr2.recent[0].status==='rewarded' && !/sari|@/.test(JSON.stringify(gr2)), gr2);
+const gs=post('getReferral',{},'h.sari.s').data;
+check('referral: status teman', gs.myReferral && gs.myReferral.status==='rewarded' && gs.myReferral.discountActive===false && gs.canClaim===false, gs);
+}
 delete props.QUESTIONS_FOLDER_ID; ctx.clearPackageCache_(null);
 check('no source -> clear config error', post('getTryoutInfo',{},'h.alice.s').error.code==='CONFIG_MISSING');
 
