@@ -16,12 +16,20 @@
   <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="modulepreload" href="../assets/js/core/config.js">
+  <link rel="modulepreload" href="../assets/js/core/store.js">
+  <link rel="modulepreload" href="../assets/js/core/auth.js">
+  <link rel="modulepreload" href="../assets/js/core/ui.js">
+  <link rel="modulepreload" href="../assets/js/core/api.js">
+  <link rel="modulepreload" href="../assets/js/features/dashboard.js">
   <link rel="stylesheet" href="../assets/css/pages/belajar.css">
   <link rel="stylesheet" href="../assets/css/pages/premium.css">
   <link rel="stylesheet" href="../assets/css/pages/fase8.css">
@@ -33,7 +41,7 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="materi.html">Materi</a><a class="hide-sm" href="tryout.html">Tryout</a><a class="hide-sm" href="akbar.html">Akbar</a><a class="hide-sm" href="rencana.html">Rencana</a><a class="hide-sm" href="premium.html">Premium</a><a href="#" id="btn-logout">Keluar</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="materi.html">Materi</a><a class="hide-sm" href="tryout.html">Tryout</a><a class="hide-sm" href="akbar.html">Akbar</a><a class="hide-sm" href="rencana.html">Rencana</a><a class="hide-sm" href="premium.html">Premium</a><a class="hide-sm" href="pengaturan.html">Pengaturan</a><a href="#" id="btn-logout">Keluar</a></nav>
   </div>
 </header>
 <section class="welcome">
@@ -70,6 +78,11 @@
         <a class="small" href="rencana.html"><strong>Lihat rencana minggu ini →</strong></a>
       </div>
     </section>
+
+    <div class="install-card" id="d-install" hidden>
+      <div class="txt"><img src="../assets/img/icon-192.png" alt=""><div class="stack" style="gap:2px"><b>Pasang Siap CPNS di HP</b><span class="small muted">Buka langsung dari layar utama, tetap bisa baca materi saat offline.</span></div></div>
+      <div class="row"><button class="btn btn-primary" type="button" id="d-install-btn">Pasang</button><button class="btn btn-ghost" type="button" id="d-install-x" aria-label="Tutup">Nanti</button></div>
+    </div>
 
     <div class="upsell" id="d-upsell" hidden style="margin-bottom:var(--sp-5)">
       <div class="stack" style="gap:2px"><strong>Materi level 2–4, rencana adaptif &amp; latihan tanpa batas</strong><p>Paket Premium 1, 3, atau 6 bulan. Sekali bayar, tanpa perpanjangan otomatis.</p></div>
@@ -113,6 +126,7 @@
           <ul class="next-links">
             <li><a href="pasca-skd.html"><span><b>Hasil SKD</b><small id="d-postskd">Masukkan skor resmi, lihat analisis &amp; langkah berikutnya</small></span><span aria-hidden="true">→</span></a></li>
             <li><a href="skb.html"><span><b>Persiapan SKB</b><small>Panduan, checklist, simulasi nilai akhir, tryout SKB</small></span><span aria-hidden="true">→</span></a></li>
+            <li><a href="pengaturan.html"><span><b>Aplikasi &amp; pengingat</b><small>Pasang di HP, pengingat belajar &amp; Tryout Akbar</small></span><span aria-hidden="true">→</span></a></li>
             <li><a href="ajak.html"><span><b>Ajak teman</b><small>Teman diskon 10%, kamu +7 hari Premium</small></span><span aria-hidden="true">→</span></a></li>
           </ul>
         </section>

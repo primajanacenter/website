@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pengaturan — Siap CPNS</title>
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <meta property="og:title" content="Pengaturan — Siap CPNS">
+  <meta property="og:description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="modulepreload" href="../assets/js/core/config.js">
+  <link rel="modulepreload" href="../assets/js/core/store.js">
+  <link rel="modulepreload" href="../assets/js/core/auth.js">
+  <link rel="modulepreload" href="../assets/js/core/ui.js">
+  <link rel="modulepreload" href="../assets/js/core/api.js">
+  <link rel="modulepreload" href="../assets/js/features/pengaturan.js">
+  <link rel="stylesheet" href="../assets/css/pages/fase8.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="dashboard.html">Beranda</a><a class="nav-cta" href="latihan.html">Latihan</a></nav>
+  </div>
+</header>
+<section class="page-band">
+  <div class="container stack" style="gap:10px">
+    <nav class="crumbs" aria-label="Lokasi halaman"><a href="dashboard.html">Beranda</a> / <span>Pengaturan</span></nav>
+    <h1>Aplikasi &amp; pengingat</h1>
+    <p class="lead">Pasang Siap CPNS di layar utama HP agar terbuka seperti aplikasi, lalu atur pengingat supaya target belajarmu tetap terjaga.</p>
+  </div>
+</section>
+
+<main class="app-main">
+  <div class="container stack-lg">
+    <p id="st-status" class="status-msg" role="status" hidden></p>
+
+    <div class="set-grid">
+      <section class="panel" aria-labelledby="ins-title">
+        <div class="panel-head"><h2 id="ins-title">Pasang di HP</h2><span class="chip" id="ins-chip"></span></div>
+        <ul class="install-benefits">
+          <li>Terbuka langsung dari ikon di layar utama, tanpa bilah browser</li>
+          <li>Halaman yang pernah dibuka, Panduan, dan Materi level 1 tetap bisa dibaca saat sinyal putus</li>
+          <li>Tidak perlu unduh dari Play Store/App Store dan hampir tidak memakan memori</li>
+        </ul>
+        <div id="ins-action"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="lr-title">
+        <div class="panel-head"><h2 id="lr-title">Pengingat di perangkat ini</h2><span class="chip chip-ok">Gratis</span></div>
+        <p class="small muted">Disimpan hanya di HP/browser ini, tanpa email dan tanpa dikirim ke server. Atur ulang di setiap perangkat yang kamu pakai.</p>
+        <form id="lr-form" novalidate>
+          <div class="toggle-row">
+            <div class="txt"><b id="lb-ldaily">Pengingat belajar harian</b><small>Muncul setelah jam pilihanmu bila hari itu belum latihan.</small>
+              <div class="time-row"><label class="small" for="lr-time">Jam (sesuai jam HP)</label><input class="input" id="lr-time" type="time" step="300"></div>
+            </div>
+            <label class="switch"><input type="checkbox" id="lr-daily" aria-labelledby="lb-ldaily"><span></span></label>
+          </div>
+          <div class="toggle-row">
+            <div class="txt"><b id="lb-lakbar">Tryout Akbar</b><small>Sabtu malam sampai batas mulai hari Minggu.</small></div>
+            <label class="switch"><input type="checkbox" id="lr-akbar" aria-labelledby="lb-lakbar"><span></span></label>
+          </div>
+          <div class="row" style="margin-top:var(--sp-3)">
+            <button class="btn btn-primary" type="submit" id="lr-save">Simpan</button>
+            <button class="btn btn-secondary" type="button" id="lr-perm">Izinkan notifikasi</button>
+            <button class="btn btn-ghost" type="button" id="lr-test">Coba pengingat</button>
+          </div>
+          <p class="xsmall muted" id="lr-perm-info" style="margin-top:var(--sp-2)"></p>
+        </form>
+        <details class="lr-how"><summary class="small"><b>Kapan pengingat muncul?</b></summary>
+          <ul class="small">
+            <li><b>Saat kamu membuka Siap CPNS</b> setelah jam pengingat: kartu pengingat di layar (semua HP, termasuk iPhone).</li>
+            <li><b>Saat aplikasi/tab masih terbuka di latar belakang</b>: notifikasi HP pada jam pengingat (perlu izin notifikasi).</li>
+            <li><b>Saat aplikasi tertutup</b>: hanya di Chrome/Edge Android atau komputer untuk aplikasi yang sudah dipasang; jamnya diatur browser sehingga bisa terlambat. Untuk pengingat yang pasti tepat waktu, gunakan pengingat email Premium.</li>
+          </ul>
+        </details>
+      </section>
+    </div>
+
+    <section class="panel" aria-labelledby="nt-title">
+      <div class="panel-head"><h2 id="nt-title">Pengingat email</h2><span class="chip chip-accent">Premium</span></div>
+      <div id="nt-lock" class="callout" hidden></div>
+      <p class="small muted" id="nt-email">Dikirim tepat waktu ke email akun Google-mu, walaupun HP sedang tidak membuka aplikasi.</p>
+      <form id="nt-form" novalidate>
+        <div class="toggle-row">
+          <div class="txt"><b id="lb-daily">Email belajar harian</b><small>Pada jam pengingat (WIB), hanya bila hari itu kamu belum latihan.</small>
+            <div class="time-row"><label class="small" for="nt-time">Jam (WIB)</label><input class="input" id="nt-time" type="time" step="300"></div>
+          </div>
+          <label class="switch"><input type="checkbox" id="nt-daily" aria-labelledby="lb-daily"><span></span></label>
+        </div>
+        <div class="toggle-row">
+          <div class="txt"><b id="lb-akbar">Email Tryout Akbar</b><small>Sabtu malam, sehari sebelum Tryout Akbar dibuka.</small></div>
+          <label class="switch"><input type="checkbox" id="nt-akbar" aria-labelledby="lb-akbar"><span></span></label>
+        </div>
+        <div class="toggle-row">
+          <div class="txt"><b id="lb-premium">Masa aktif Premium</b><small>3 hari sebelum dan pada hari Premium berakhir.</small></div>
+          <label class="switch"><input type="checkbox" id="nt-premium" aria-labelledby="lb-premium"><span></span></label>
+        </div>
+        <button class="btn btn-primary" type="submit" id="nt-save" style="margin-top:var(--sp-3)">Simpan pengingat email</button>
+        <p class="xsmall muted" style="margin-top:var(--sp-2)">Setiap email berisi tautan untuk berhenti menerima pengingat. Jika tidak muncul, periksa folder Promosi atau Spam.</p>
+      </form>
+    </section>
+
+    <section class="panel" aria-labelledby="dv-title">
+      <div class="panel-head"><h2 id="dv-title">Perangkat ini</h2></div>
+      <p class="small muted">Siap CPNS menyimpan salinan halaman di perangkat ini agar cepat dan bisa dibuka saat offline. Jika tampilan terasa aneh setelah pembaruan, hapus salinan ini lalu muat ulang.</p>
+      <div class="row"><button class="btn btn-secondary" type="button" id="dv-clear">Hapus salinan offline</button><span class="xsmall muted" id="dv-info"></span></div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo-112.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/pengaturan.js").then((m) => m.initPengaturan());
+</script>
+</body>
+</html>

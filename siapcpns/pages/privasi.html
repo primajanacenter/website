@@ -16,12 +16,19 @@
   <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
   <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="modulepreload" href="../assets/js/core/config.js">
+  <link rel="modulepreload" href="../assets/js/core/store.js">
+  <link rel="modulepreload" href="../assets/js/core/auth.js">
+  <link rel="modulepreload" href="../assets/js/core/ui.js">
+  <link rel="modulepreload" href="../assets/js/core/api.js">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -46,7 +53,7 @@
     <article class="prose">
       <!-- CATATAN UNTUK PENGELOLA: ini draf awal. Tinjau bersama penasihat hukum,
            lengkapi bagian bertanda [ ], lalu hapus komentar ini sebelum dipublikasikan. -->
-      <p class="small muted">Berlaku sejak: 1 November 2026</p>
+      <p class="small muted">Berlaku sejak: [tanggal berlaku]</p>
 
       <h2>1. Data yang kami kumpulkan</h2>
       <ul>
@@ -63,6 +70,7 @@
         <li>Menampilkan skor, peringkat, dan rekomendasi belajar.</li>
         <li><strong>Papan peringkat Tryout Akbar:</strong> jika kamu ikut, peringkat publik hanya menampilkan nama tersamar (nama depan + inisial, misalnya "Alice W."), skor, status lolos ambang batas, dan provinsi target. Email, foto, dan ID akunmu tidak pernah ditampilkan.</li>
         <li>Mengaktifkan paket premium setelah pembayaran berhasil.</li>
+        <li>Untuk pengguna Premium: mengirim email pengingat (belajar harian, Tryout Akbar, masa aktif Premium) sesuai pengaturan yang kamu pilih. Pengingat bisa dimatikan kapan saja di halaman Pengaturan atau lewat tautan di setiap email. Pengingat di perangkat (gratis) disimpan hanya di browser-mu dan tidak dikirim ke server kami.</li>
         <li>Menyusun statistik gabungan tanpa identitas untuk meningkatkan kualitas soal dan materi.</li>
       </ul>
       <p>Kami tidak menjual data pribadimu kepada pihak mana pun.</p>
@@ -72,11 +80,11 @@
         <li>Data disimpan pada layanan Google Workspace yang dikelola <span data-org-name>Primajana</span>, dengan akses terbatas pada pengelola yang berwenang.</li>
         <li>Pihak ketiga yang membantu layanan ini: Google (login dan penyimpanan data), Mayar.id (pembayaran), dan penyedia hosting situs.</li>
         <li>Untuk menjaga aplikasi tetap berjalan baik, kami mencatat laporan galat teknis (pesan galat, halaman yang dibuka, dan jenis browser) tanpa nama atau email. Kami juga membuat salinan cadangan database yang disimpan terbatas selama 14 hari.</li>
-        <li>Browser-mu menyimpan sebagian data secara lokal (misalnya hasil Cek Kesiapan dan status login) agar aplikasi berjalan lancar. Data ini bisa kamu hapus dengan membersihkan data situs di browser.</li>
+        <li>Browser-mu menyimpan sebagian data secara lokal (misalnya hasil Cek Kesiapan, status login, dan salinan halaman untuk dibuka saat offline) agar aplikasi berjalan lancar. Data ini bisa kamu hapus di halaman Pengaturan atau dengan membersihkan data situs di browser.</li>
       </ul>
 
       <h2>4. Hak kamu</h2>
-      <p>Sesuai Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi, kamu berhak meminta akses, perbaikan, atau penghapusan data pribadimu, serta menarik persetujuan. Kirim permintaan ke [email kontak Primajana]. Kami akan menanggapi dalam 2 x 24 jam hari kerja.</p>
+      <p>Sesuai Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi, kamu berhak meminta akses, perbaikan, atau penghapusan data pribadimu, serta menarik persetujuan. Kirim permintaan ke [email kontak Primajana]. Kami akan menanggapi dalam [jangka waktu] hari kerja.</p>
 
       <h2>5. Berapa lama data disimpan</h2>
       <p>Data disimpan selama akunmu aktif. Jika kamu meminta penghapusan akun, data pribadimu dihapus dalam [jangka waktu], kecuali data yang wajib kami simpan menurut peraturan (misalnya catatan transaksi).</p>
@@ -88,7 +96,7 @@
       <p>Jika kebijakan ini berubah, versi terbaru akan ditampilkan di halaman ini beserta tanggal berlakunya.</p>
 
       <h2>8. Kontak</h2>
-      <p><span data-org-name>Primajana</span> · Denpasar, Bali · haloprimajana@gmail.com</p>
+      <p><span data-org-name>Primajana</span> · [alamat] · [email kontak]</p>
     </article>
   </div>
 </main>
