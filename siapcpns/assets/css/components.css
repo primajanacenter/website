@@ -259,3 +259,12 @@
 .crumbs { font-size: var(--fs-xs); color: #9fb2d3; }
 .crumbs a { color: #c9d6ea; text-decoration: none; }
 .crumbs a:hover { color: #ffffff; text-decoration: underline; }
+
+/* ---------- Fase 10: pita offline ---------- */
+.offline-bar { position: sticky; top: 0; z-index: 60; background: var(--warn-soft); color: var(--warn); border-bottom: 1px solid var(--warn); font-size: var(--fs-sm); font-weight: 600; padding: 8px 16px; text-align: center; }
+
+/* ---------- Fase 10.1: kartu pengingat di perangkat ---------- */
+.rm-banner { position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 70; width: min(560px, calc(100% - 32px)); display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 14px 16px; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--primary); box-shadow: 0 10px 30px rgba(15, 45, 85, .25); }
+.rm-banner .txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 220px; font-size: var(--fs-sm); }
+.rm-banner .txt span { color: var(--muted); }
+.rm-banner .act { display: flex; gap: 8px; align-items: center; }
