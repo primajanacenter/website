@@ -276,6 +276,7 @@ function healthCheck() {
   line(Boolean(props.QUESTIONS_FOLDER_ID || props.QUESTIONS_SPREADSHEET_ID), 'Sumber bank soal (QUESTIONS_FOLDER_ID/QUESTIONS_SPREADSHEET_ID)');
   line(Boolean(props.BACKUP_FOLDER_ID), 'BACKUP_FOLDER_ID ' + (props.BACKUP_FOLDER_ID ? 'terisi' : 'belum diisi (backup harian nonaktif)'));
   line(Boolean(props.ADMIN_EMAIL), 'ADMIN_EMAIL ' + (props.ADMIN_EMAIL ? 'terisi' : 'belum diisi (tidak ada email ringkasan)'));
+  line(Boolean(props.ADMIN_EMAILS || props.ADMIN_EMAIL), 'ADMIN_EMAILS ' + (props.ADMIN_EMAILS ? 'terisi (' + adminEmails_().length + ' admin)' : props.ADMIN_EMAIL ? 'kosong — dasbor admin memakai ADMIN_EMAIL' : 'belum diisi (Super User Dashboard terkunci)'));
   line(!props.LOADTEST_TOKEN, 'LOADTEST_TOKEN ' + (props.LOADTEST_TOKEN ? 'MASIH TERISI — kosongkan setelah uji beban' : 'kosong'));
   var env = paymentEnv_();
   line(env === 'production', 'Pembayaran: ' + env + (env === 'production' ? '' : ' (ganti ke https://api.mayar.id saat rilis)'));

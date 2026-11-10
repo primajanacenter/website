@@ -67,7 +67,12 @@ function getRoutes_() {
 
     // Fase 10
     getNotifPrefs:    { handler: handleGetNotifPrefs_,    auth: 'required' },
-    saveNotifPrefs:   { handler: handleSaveNotifPrefs_,   auth: 'required' }
+    saveNotifPrefs:   { handler: handleSaveNotifPrefs_,   auth: 'required' },
+
+    // Fase 12: Super User Dashboard (hanya ADMIN_EMAILS)
+    getAdminDashboard: { handler: handleGetAdminDashboard_, auth: 'required' },
+    adminTransactions: { handler: handleAdminTransactions_, auth: 'required' },
+    adminLookupUser:   { handler: handleAdminLookupUser_,   auth: 'required' }
   };
 }
 

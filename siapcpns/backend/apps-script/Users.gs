@@ -61,6 +61,7 @@ function buildMe_(user) {
   }
   return {
     user: publicUser_(user),
+    isAdmin: isAdmin_(user),
     profile: profile,
     profileComplete: isProfileComplete_(profile),
     latestAssessment: lastAssessment ? toAssessment_(lastAssessment) : null,
