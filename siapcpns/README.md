@@ -4,7 +4,7 @@ Aplikasi persiapan belajar CPNS untuk pemula. Dibangun bertahap dengan HTML, CSS
 
 > Aplikasi independen, tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.
 
-**Status: Fase 0–8 selesai** — landing page, Cek Kesiapan, Panduan CPNS, login Google, onboarding, beranda, tryout CAT & rapor, materi level 1, latihan harian, rencana belajar, pembayaran Mayar, materi premium Lv2–4, rencana adaptif, Tryout Akbar mingguan dengan peringkat nasional, analisis hasil SKD, persiapan SKB, dan program ajak teman.
+**Status: Fase 0–9 selesai (siap rilis)** — landing page, Cek Kesiapan, Panduan CPNS, login Google, onboarding, beranda, tryout CAT & rapor, materi level 1, latihan harian, rencana belajar, pembayaran Mayar, materi premium Lv2–4, rencana adaptif, Tryout Akbar mingguan dengan peringkat nasional, analisis hasil SKD, persiapan SKB, dan program ajak teman.
 
 ➡️ Setup backend: [`docs/setup-fase-2.md`](docs/setup-fase-2.md) lalu [`docs/setup-fase-3.md`](docs/setup-fase-3.md) (bank soal & paket tryout).
 
@@ -109,7 +109,7 @@ Jika rahasia pernah ter-commit: **segera buat ulang (rotate)** key tersebut. Men
 
 ## Backend
 
-Panduan langkah demi langkah: **[`docs/setup-fase-2.md`](docs/setup-fase-2.md)** → [`setup-fase-3.md`](docs/setup-fase-3.md) → [`setup-fase-4.md`](docs/setup-fase-4.md) → [`setup-fase-5.md`](docs/setup-fase-5.md) → [`setup-fase-6.md`](docs/setup-fase-6.md) → [`setup-fase-7.md`](docs/setup-fase-7.md) → [`setup-fase-8.md`](docs/setup-fase-8.md).
+Panduan langkah demi langkah: **[`docs/setup-fase-2.md`](docs/setup-fase-2.md)** → [`setup-fase-3.md`](docs/setup-fase-3.md) → [`setup-fase-4.md`](docs/setup-fase-4.md) → [`setup-fase-5.md`](docs/setup-fase-5.md) → [`setup-fase-6.md`](docs/setup-fase-6.md) → [`setup-fase-7.md`](docs/setup-fase-7.md) → [`setup-fase-8.md`](docs/setup-fase-8.md) → [`setup-fase-9.md`](docs/setup-fase-9.md). Sebelum diumumkan: **[`docs/peluncuran.md`](docs/peluncuran.md)**.
 
 Panduan Fase 2 (Spreadsheet, Apps Script, Script Properties, OAuth Client ID, deploy Web App, sambungkan frontend).
 
