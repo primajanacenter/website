@@ -65,7 +65,8 @@ Paket `akbar` **tidak tampil** di lobi tryout dan tidak bisa dibuka melalui `sta
    4 event dibuat.
    ```
 
-2. Periksa sheet `akbar_events`. Tanggal boleh diubah manual di kolom `opens_at`, `closes_at`, dan `results_at` (format ISO, misalnya `2026-11-15T06:00:00+07:00`). Jaga `event_id` tetap unik.
+2. Periksa sheet `akbar_events`. Tanggal boleh diubah manual di kolom `opens_at`, `closes_at`, dan `results_at`. Format yang terbaca: `2026-11-15T06:00:00+07:00`, `2026-11-15 06:00`, atau `15/11/2026 06.00` (tanpa zona waktu dianggap WIB). Jaga `event_id` tetap unik.
+   Setelah mengedit, jalankan **`checkAkbarEvents`**. Log menampilkan cara server membaca setiap baris (✅/⚠️) beserta masalahnya, misalnya tanggal tidak terbaca atau paket belum live.
 3. Jalankan **`installAkbarTrigger`** satu kali. Trigger per jam ini (`publishAkbarResults`) menerbitkan hasil begitu `results_at` lewat.
 4. Untuk bulan berikutnya, cukup unggah paket `AKBAR-05` dst. lalu jalankan `scheduleAkbarEvents` lagi.
 
@@ -117,6 +118,12 @@ Apps Script membatasi sekitar **30 eksekusi bersamaan** per skrip. Jendela 15 ja
 - Error ≤ 1% dan p95 < 3 detik pada konkurensi 20–30 berarti aman untuk ratusan hingga ±1.000 peserta tersebar dalam satu hari.
 - Jika error mulai muncul di konkurensi rendah (misalnya 10), umumkan anjuran memilih jam mulai yang berbeda (pagi/siang/malam), atau pertimbangkan memindahkan penyimpanan jawaban ke layanan lain pada fase berikutnya.
 - Kuota harian akun Google gratis (waktu eksekusi total ± 90 menit/hari untuk trigger, 6 menit per eksekusi) cukup untuk trigger per jam ini. `publishAkbarEvent_` memproses ribuan peserta dalam satu eksekusi.
+
+## Jika muncul "Terjadi kesalahan di server"
+
+1. Jalankan **`checkAkbarEvents`** dan perbaiki baris bertanda ⚠️.
+2. Pastikan `setupSheets`, `refreshQuestionCache`, dan **Deploy › Manage deployments › Edit › New version** sudah dijalankan setelah `clasp push`.
+3. Buka Apps Script › **Eksekusi** (Executions), klik baris `doPost` yang gagal. Log berisi `Action … gagal` dan pesan error lengkap. Kirim baris itu bila masalah masih terjadi.
 
 ## Keamanan & privasi
 

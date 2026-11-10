@@ -59,7 +59,7 @@ Paket bertipe `latihan` **tidak muncul di lobi Tryout**; soalnya hanya dipakai u
 ## Menambah bank latihan berikutnya
 
 - Gunakan template paket soal yang sama, isi `type` = **`latihan`**, `package_id` unik (mis. `LAT-02`), `free_attempts` dikosongkan.
-- Sebaiknya ± 3 soal per topik untuk 20 topik (60 soal). Topik `tiu-figural` belum didukung (belum ada dukungan gambar).
+- Sebaiknya ± 3 soal per topik untuk 20 topik (60 soal). Topik `tiu-figural` sudah didukung sejak Fase 11 (gambar SVG, lihat setup-fase-11.md), tetapi belum dipakai di latihan harian.
 - Unggah ke folder → otomatis terbaca ± 1 jam, atau langsung dengan `refreshQuestionCache`.
 - Semakin banyak bank, semakin jarang pengguna bertemu soal yang sama. Kebutuhan kasar: 10 soal × 30 hari = 300 soal per pengguna aktif per bulan.
 
