@@ -268,3 +268,16 @@
 .rm-banner .txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 220px; font-size: var(--fs-sm); }
 .rm-banner .txt span { color: var(--muted); }
 .rm-banner .act { display: flex; gap: 8px; align-items: center; }
+
+/* ---------- Fase 11: soal bergambar (figural) ---------- */
+.fig { display: block; max-width: 100%; height: auto; background: #fff; border-radius: 8px; }
+.question-context.has-fig { font-family: inherit; padding: var(--sp-3); overflow-x: auto; }
+.question-context.has-fig .fig-ctx { width: 100%; max-width: 640px; margin: 0 auto; border: 1px solid var(--line); }
+.options.options-fig { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--sp-2); }
+.options.options-fig .option { flex-direction: column; align-items: center; justify-content: flex-start; gap: 8px; padding: 10px 6px; text-align: center; }
+.options.options-fig .option .fig { width: 100%; max-width: 112px; border: 1px solid var(--line); }
+@media (max-width: 560px) { .options.options-fig { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.rv-opts.rv-fig { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.rv-opts.rv-fig li { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+.rv-opts.rv-fig li .fig { width: 100%; max-width: 96px; border: 1px solid var(--line); }
+@media (max-width: 560px) { .rv-opts.rv-fig { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
