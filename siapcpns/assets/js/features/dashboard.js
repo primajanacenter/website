@@ -138,6 +138,7 @@ function installCard() {
 }
 
 function render(me) {
+  adminLink(me.isAdmin);
   referralNotice();
   installCard();
   renderWelcome(me.user || auth.getUser() || {});
@@ -257,4 +258,15 @@ function showStatus(msg, isError) {
   el.hidden = false;
   el.textContent = msg;
   el.classList.toggle("error", Boolean(isError));
+}
+
+/** Fase 12: tautan Super User Dashboard hanya untuk akun admin (server tetap memeriksa ulang). */
+function adminLink(isAdmin) {
+  const nav = document.querySelector(".site-header .nav");
+  const ex = document.getElementById("nav-admin");
+  if (!isAdmin) { ex?.remove(); return; }
+  if (ex || !nav) return;
+  const a = Object.assign(document.createElement("a"), { id: "nav-admin", href: "admin.html", textContent: "Admin" });
+  a.className = "nav-admin";
+  nav.prepend(a);
 }
