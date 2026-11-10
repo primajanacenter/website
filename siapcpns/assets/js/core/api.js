@@ -116,6 +116,12 @@ function mockGrade(questions, answers, pg) {
   const passed = { twk: sub.twk.score >= pg.twk, tiu: sub.tiu.score >= pg.tiu, tkp: sub.tkp.score >= pg.tkp };
   return { sub, topics, passed };
 }
+// Fase 12: Super User Dashboard (data contoh, hanya mode uji)
+Object.assign(mockHandlers, {
+  async getAdminDashboard(p) { requireMockSession(); return (await import("./mock-admin.js")).mockAdminDashboard(p); },
+  async adminTransactions(p) { requireMockSession(); return (await import("./mock-admin.js")).mockAdminTransactions(p); },
+  async adminLookupUser(p) { requireMockSession(); return (await import("./mock-admin.js")).mockAdminLookup(p); },
+});
 Object.assign(mockHandlers, {
   async getTryoutInfo() {
     requireMockSession();
@@ -666,6 +672,7 @@ function buildMockMe(db) {
   const p = db.profile;
   return {
     user: db.user,
+    isAdmin: true, // mode uji: dasbor admin memakai data contoh
     profile: p,
     profileComplete: Boolean(p && p.education && p.major && p.minutesPerDay && p.daysPerWeek),
     latestAssessment: db.assessments[db.assessments.length - 1] || null,
@@ -741,7 +748,7 @@ const READ_TTL = {
   getTryoutInfo: 30, getAkbarInfo: 60, getAkbarRanking: 300, getReferral: 120, getPostSkd: 300, getNotifPrefs: 300,
 };
 // Action baca yang tidak di-cache tetapi juga tidak mengubah data (tidak perlu mengosongkan cache).
-const NEUTRAL = new Set(["ping", "logClientError", "getReport", "saveProgress"]);
+const NEUTRAL = new Set(["ping", "logClientError", "getReport", "saveProgress", "getAdminDashboard", "adminTransactions", "adminLookupUser"]);
 const RC_PREFIX = "sc:rc:";
 const inflight = new Map();
 
