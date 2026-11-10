@@ -1,0 +1,57 @@
+/* ==========================================================================
+   fase8.css — Hasil SKD, Persiapan SKB, Ajak teman (Fase 8)
+   ========================================================================== */
+
+.ok { color: var(--ok); } .bad { color: var(--bad); }
+
+/* ---------- SKB ---------- */
+.skb-grid, .ps-grid, .rf-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-5); align-items: start; }
+@media (max-width: 860px) { .skb-grid, .ps-grid, .rf-grid { grid-template-columns: 1fr; } }
+.skb-formula { margin: var(--sp-3) 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-sm); }
+.skb-calc { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); align-items: end; padding: var(--sp-4); border-radius: var(--radius); background: var(--surface-2); border: 1px solid var(--line); }
+.skb-calc .calc-out { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 2px; }
+.skb-calc .calc-out b { font-size: var(--fs-2xl); color: var(--primary); line-height: 1.1; font-variant-numeric: tabular-nums; }
+@media (max-width: 420px) { .skb-calc { grid-template-columns: 1fr; } }
+.skb-parts { list-style: none; padding: 0; margin: 0 0 var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-3); }
+.skb-parts li { display: flex; flex-direction: column; gap: 2px; padding-left: 12px; border-left: 3px solid var(--primary); font-size: var(--fs-sm); }
+.skb-parts li span { color: var(--muted); }
+
+/* ---------- Hasil SKD ---------- */
+.ps-scores { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-3); }
+@media (max-width: 420px) { .ps-scores { grid-template-columns: 1fr; } }
+.ps-headline { font-size: var(--fs-sm); margin: 0 0 var(--sp-3); }
+.ps-table, #ps-scen-wrap .table { min-width: 0; }
+.ps-table td, .ps-table th { vertical-align: top; }
+.ps-table .pg-bar { min-width: 0; margin: 4px 0; }
+.ps-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); margin: var(--sp-4) 0; }
+.ps-kpis > div { display: flex; flex-direction: column; gap: 2px; padding: var(--sp-3); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.ps-kpis b { font-size: var(--fs-xl); font-variant-numeric: tabular-nums; }
+@media (max-width: 420px) { .ps-kpis { grid-template-columns: 1fr; } }
+.ps-h3 { font-size: var(--fs-md, 1rem); margin: 0; }
+.ps-steps { list-style: none; counter-reset: st; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+.ps-steps li { counter-increment: st; display: flex; gap: var(--sp-3); align-items: center; justify-content: space-between; padding: var(--sp-3) var(--sp-4); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.ps-steps li > div { position: relative; padding-left: 36px; min-width: 0; }
+.ps-steps li > div::before { content: counter(st); position: absolute; left: 0; top: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 700; font-size: var(--fs-sm); display: grid; place-items: center; }
+.ps-steps p { margin: 2px 0 0; }
+@media (max-width: 520px) { .ps-steps li { flex-direction: column; align-items: stretch; } .ps-steps .btn { align-self: flex-start; } }
+.ps-history { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.ps-history li { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; justify-content: space-between; padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--radius); font-size: var(--fs-sm); }
+
+/* ---------- Ajak teman ---------- */
+.rf-share { display: flex; flex-direction: column; gap: var(--sp-3); }
+.rf-code { font-family: var(--font-mono); font-size: 2rem; font-weight: 700; letter-spacing: .12em; color: var(--primary); padding: var(--sp-3) var(--sp-4); border: 2px dashed var(--primary); border-radius: var(--radius-lg); text-align: center; background: var(--primary-soft); word-break: break-all; }
+.rf-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-3); margin-bottom: var(--sp-3); }
+.rf-stats > div { display: flex; flex-direction: column; gap: 2px; padding: var(--sp-3); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.rf-stats b { font-size: var(--fs-xl); }
+@media (max-width: 420px) { .rf-stats { grid-template-columns: 1fr; } }
+.rf-recent { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.rf-recent li { display: flex; flex-wrap: wrap; gap: 6px; justify-content: space-between; align-items: center; font-size: var(--fs-sm); padding: 6px 0; border-bottom: 1px solid var(--line); }
+.rf-input { flex: 1 1 200px; text-transform: uppercase; letter-spacing: .08em; }
+.rf-rules { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: var(--fs-sm); }
+
+/* ---------- Beranda & Premium ---------- */
+.next-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.next-links a { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: var(--fg); background: var(--surface); font-size: var(--fs-sm); }
+.next-links a:hover { border-color: var(--primary); }
+.next-links small { display: block; color: var(--muted); }
+.plan-price .ref { font-size: var(--fs-xs); color: var(--ok); font-weight: 700; }
