@@ -546,6 +546,67 @@ check('referral: statistik pengajak', gr2.invited===1 && gr2.rewarded===1 && gr2
 const gs=post('getReferral',{},'h.sari.s').data;
 check('referral: status teman', gs.myReferral && gs.myReferral.status==='rewarded' && gs.myReferral.discountActive===false && gs.canClaim===false, gs);
 }
+// ================= Fase 9: operasional =================
+{
+Sheet.prototype.clear=function(){this.rows=[];return this}; Sheet.prototype.setColumnWidth=function(){return this};
+const _gr=Sheet.prototype.getRange; Sheet.prototype.getRange=function(...a){const r=_gr.apply(this,a);r.setFontSize=()=>r;return r};
+const _ins=ss.insertSheet; ss.insertSheet=(n)=>_ins(n);
+ctx.setupSheets();
+check('setup: error_log & metrics_daily', sheets.error_log && sheets.metrics_daily);
+const realPing=ctx.handlePing_; ctx.handlePing_=()=>{throw new Error('boom internal')};
+const pe=post('ping',{}); ctx.handlePing_=realPing;
+check('galat server → SERVER_ERROR tanpa detail', !pe.ok && pe.error.code==='SERVER_ERROR' && !/boom/.test(pe.error.message));
+const EL=sheets.error_log.rows; const EH=EL[0];
+check('galat server tercatat di error_log', EL.length===2 && EL[1][EH.indexOf('kind')]==='server' && EL[1][EH.indexOf('action')]==='ping' && /boom/.test(EL[1][EH.indexOf('message')]), EL[1]);
+check('AppError tidak dicatat', (post('getMe',{}), sheets.error_log.rows.length===2));
+let lc=post('logClientError',{message:'TypeError: x is undefined',source:'https://app/x.js',line:12,page:'/pages/skb.html?ref=SCAAAA&x=1',ua:'Mozilla'});
+check('galat browser tercatat (tanpa query string)', lc.ok && lc.data.logged && sheets.error_log.rows[2][EH.indexOf('page')]==='/pages/skb.html' && sheets.error_log.rows[2][EH.indexOf('kind')]==='client', sheets.error_log.rows[2]);
+check('pesan kosong diabaikan', post('logClientError',{message:''}).data.logged===false);
+for(let i=0;i<40;i++) post('logClientError',{message:'spam '+i});
+check('batas galat browser per menit', sheets.error_log.rows.length<=2+30, sheets.error_log.rows.length);
+const m=ctx.buildAdminDashboard();
+const AD=sheets.admin_dashboard.rows;
+check('dasbor: sheet admin_dashboard terisi', AD.length>20 && AD[0][0]==='Dasbor Siap CPNS' && AD.some(r=>r[0]==='Total pengguna'&&Number(r[1])===sheets.users.rows.length-1), AD.slice(0,6));
+check('dasbor: tanpa email pengguna', !AD.some(r=>/@/.test(r.join(' '))));
+check('dasbor: angka pendapatan & premium', m.revenue.total>0 && m.premium.active>0 && m.referral.rewarded===1 && m.errors24h.total>=2, {rev:m.revenue,p:m.premium});
+ctx.buildAdminDashboard();
+check('metrics_daily: satu baris per hari', sheets.metrics_daily.rows.length===2, sheets.metrics_daily.rows.length);
+check('backup tanpa folder dilewati', ctx.backupDaily().skipped===true);
+const bfiles=[]; const copies=[];
+const realDrive=ctx.DriveApp;
+ctx.DriveApp={...realDrive,
+  getFolderById:(fid)=>fid==='bk1'?{getFilesByName:(n)=>{const l=bfiles.filter(f=>f.name===n);let i=0;return{hasNext:()=>i<l.length,next:()=>l[i++]}},
+    getFiles:()=>{let i=0;return{hasNext:()=>i<bfiles.length,next:()=>{const f=bfiles[i++];return{getName:()=>f.name,getDateCreated:()=>f.created,setTrashed:()=>{f.trashed=true}}}}}}:realDrive.getFolderById(fid),
+  getFileById:(id)=>({makeCopy:(name)=>{copies.push(name);bfiles.push({name,created:new Date()})},moveTo:()=>{}})};
+bfiles.push({name:'Backup Siap CPNS 2026-01-01',created:new Date(Date.now()-30*864e5)});
+props.BACKUP_FOLDER_ID='bk1';
+const bk=ctx.backupDaily();
+check('backup dibuat & backup lama ke Sampah', copies.length===1 && /^Backup Siap CPNS \d{4}-\d{2}-\d{2}$/.test(bk.name) && bk.trashed===1 && bfiles[0].trashed, bk);
+check('backup tidak dobel di hari yang sama', ctx.backupDaily().skipped===true && copies.length===1);
+const mails=[]; ctx.MailApp={sendEmail:(o)=>mails.push(o)};
+props.ADMIN_EMAIL='admin@contoh.id';
+bfiles.length=0; copies.length=0;
+const dop=ctx.dailyOps();
+check('dailyOps: dasbor + backup + email ringkasan', dop.metrics && copies.length===1 && mails.length===1 && /Ringkasan harian/.test(mails[0].body) && !/sari@|rina@|tono@|dina@/.test(mails[0].body), mails[0]);
+const trig=[]; ctx.ScriptApp={getProjectTriggers:()=>trig.map(h=>({getHandlerFunction:()=>h})),deleteTrigger:()=>{},
+  newTrigger:(h)=>{const c={timeBased:()=>c,everyDays:()=>c,atHour:()=>c,inTimezone:()=>c,everyHours:()=>c,everyMinutes:()=>c,create:()=>{trig.push(h)}};return c}};
+ctx.installOpsTrigger();
+check('pemicu dailyOps terpasang', trig.includes('dailyOps'));
+const hc=ctx.healthCheck();
+check('healthCheck: melaporkan pemicu yang belum ada', hc.warnings>0 && hc.report.some(l=>/reconcilePayments belum ada/.test(l)) && hc.report.some(l=>/✅ Pemicu dailyOps/.test(l)), hc.report);
+// hapus data pengguna
+const tonoId=sheets.users.rows.find(r=>r[1]==='tono@x.com')[0];
+const dry=ctx.deleteUserData_('TONO@x.com',true);
+check('hapus data: dry run tidak mengubah', dry.dryRun && dry.counts.attempts>=1 && dry.counts.skd_results===1 && sheets.users.rows.some(r=>r[1]==='tono@x.com'), dry);
+const del=ctx.deleteUserData_('tono@x.com',false);
+check('hapus data: profil/attempt/skd dihapus, user dianonimkan', del.found && !sheets.attempts.rows.some(r=>r[1]===tonoId) && !sheets.skd_results.rows.some(r=>r[0]===tonoId) && sheets.users.rows.some(r=>r[0]===tonoId && r[1]==='deleted+'+tonoId+'@invalid' && r[2]==='Pengguna dihapus'), del);
+const sariId=sheets.users.rows.find(r=>r[1]==='sari@x.com')[0];
+ctx.deleteUserData_('sari@x.com',false);
+const THx=sheets.transactions.rows[0];
+check('hapus data: transaksi tetap ada, email disamarkan; data ajakan teman dihapus', sheets.transactions.rows.filter(r=>r[1]===sariId).every(r=>r[THx.indexOf('email')]==='dihapus') && sheets.transactions.rows.some(r=>r[1]===sariId) && !sheets.referrals.rows.some(r=>r[0]===sariId));
+check('pengguna terhapus tidak bisa ditemukan lewat email', ctx.deleteUserData_('tono@x.com',true).found===false);
+ctx.DriveApp=realDrive; delete props.BACKUP_FOLDER_ID; delete props.ADMIN_EMAIL;
+}
 delete props.QUESTIONS_FOLDER_ID; ctx.clearPackageCache_(null);
 check('no source -> clear config error', post('getTryoutInfo',{},'h.alice.s').error.code==='CONFIG_MISSING');
 
