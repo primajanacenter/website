@@ -74,7 +74,11 @@ const ctx={
 };
 vm.createContext(ctx);
 for(const f of fs.readdirSync(DIR).filter(f=>f.endsWith('.gs')).sort()) vm.runInContext(fs.readFileSync(DIR+'/'+f,'utf8'),ctx,{filename:f});
-const post=(action,payload,token)=>JSON.parse(ctx.doPost({parameter:{},postData:{contents:JSON.stringify({action,payload,token})}}).t);
+// Tes mengubah baris sheet secara langsung (bukan lewat update_), jadi cache baris users dibersihkan sebelum
+// setiap permintaan — kecuali saat menguji cache itu sendiri (keepUserCache = true).
+let keepUserCache=false;
+const post=(action,payload,token)=>{ if(!keepUserCache) Object.keys(cacheStore).filter(k=>k.startsWith('usr_')).forEach(k=>delete cacheStore[k]);
+  return JSON.parse(ctx.doPost({parameter:{},postData:{contents:JSON.stringify({action,payload,token})}}).t); };
 let fails=0; const check=(name,cond,extra)=>{console.log((cond?'PASS ':'FAIL ')+name+(cond?'':'  '+JSON.stringify(extra)));if(!cond)fails++};
 
 ctx.setupSheets();
@@ -606,6 +610,120 @@ const THx=sheets.transactions.rows[0];
 check('hapus data: transaksi tetap ada, email disamarkan; data ajakan teman dihapus', sheets.transactions.rows.filter(r=>r[1]===sariId).every(r=>r[THx.indexOf('email')]==='dihapus') && sheets.transactions.rows.some(r=>r[1]===sariId) && !sheets.referrals.rows.some(r=>r[0]===sariId));
 check('pengguna terhapus tidak bisa ditemukan lewat email', ctx.deleteUserData_('tono@x.com',true).found===false);
 ctx.DriveApp=realDrive; delete props.BACKUP_FOLDER_ID; delete props.ADMIN_EMAIL;
+}
+// ================= Fase 10: pengingat email =================
+{
+ctx.setupSheets();
+check('setup: notif_prefs & notif_log', sheets.notif_prefs && sheets.notif_log);
+const sent=[]; let quota=100;
+ctx.MailApp={sendEmail:(o)=>{sent.push(o);quota--},getRemainingDailyQuota:()=>quota};
+ctx.HtmlService={createHtmlOutput:(h)=>({html:h,setTitle(){return this}})};
+props.APP_BASE_URL='https://app.contoh.id'; props.WEBAPP_URL='https://script.google.com/macros/s/X/exec';
+let np=post('getNotifPrefs',{},'h.alice.s');
+check('notif: default harian & akbar mati, premium nyala', np.ok && np.data.prefs.daily===false && np.data.prefs.akbar===false && np.data.prefs.premium===true, np.data);
+check('notif: jam tidak valid ditolak', post('saveNotifPrefs',{daily:true,reminderTime:'25:00'},'h.alice.s').error.code==='BAD_REQUEST');
+check('notif: pengguna gratis tidak bisa mengaktifkan email harian/akbar', post('saveNotifPrefs',{daily:true,reminderTime:'19:30'},'h.alice.s').error.code==='FORBIDDEN' && post('getNotifPrefs',{},'h.alice.s').data.premium===false);
+const UHp=sheets.users.rows[0]; const setPrem=(email,days)=>{const r=sheets.users.rows.find(x=>x[1]===email);r[UHp.indexOf('plan')]='premium';r[UHp.indexOf('premium_until')]=new Date(Date.now()+days*864e5).toISOString();};
+setPrem('alice@gmail.com',60); setPrem('bob@x.com',60);
+np=post('saveNotifPrefs',{daily:true,akbar:true,reminderTime:'19:30'},'h.alice.s');
+const aliceId=sheets.users.rows.find(r=>r[1]==='alice@gmail.com')[0];
+const PH=sheets.profiles.rows[0];
+check('notif: simpan preferensi & jam di profil', np.ok && np.data.prefs.daily && np.data.prefs.akbar && np.data.reminderTime==='19:30' && sheets.profiles.rows.find(r=>r[0]===aliceId)[PH.indexOf('reminder_time')]==='19:30' && sheets.notif_prefs.rows.length===2, np.data);
+// waktu uji: hari Sabtu berikutnya (WIB) +14 hari ke depan agar tidak ada latihan
+const wib=(dateStr,h,mi=10)=>Date.parse(`${dateStr}T${String(h).padStart(2,'0')}:${String(mi).padStart(2,'0')}:00+07:00`);
+let d=new Date(Date.now()+7*3600e3+14*864e5); while(d.getUTCDay()!==6) d=new Date(d.getTime()+864e5);
+const sat=d.toISOString().slice(0,10), sun=new Date(d.getTime()+864e5).toISOString().slice(0,10);
+// pengguna lain: bob harian jam 19, tapi sudah latihan di hari itu
+post('saveProfile',{education:'D3',major:'Akuntansi',targetFormation:'',targetProvince:'Jawa Timur',testDate:'',targetType:'passing_grade',minutesPerDay:30,daysPerWeek:5,reminderTime:'19:05'},'h.bob.s');
+post('saveNotifPrefs',{daily:true,reminderTime:'19:05'},'h.bob.s');
+const bobId=sheets.users.rows.find(r=>r[1]==='bob@x.com')[0];
+const PAH=sheets.practice_answers.rows[0];
+sheets.practice_answers.rows.push(PAH.map(k=>({user_id:bobId,date:sat,question_id:'x',package_id:'x',topic_id:'twk-uud',subtest:'twk',answer:'a',points:'5',answered_at:new Date().toISOString()}[k]??'')));
+// event Akbar hari Minggu
+const AEH=sheets.akbar_events.rows[0];
+sheets.akbar_events.rows.push(AEH.map(k=>({event_id:'AK-NOTIF',package_id:'AK-T1',title:'Tryout Akbar Uji',opens_at:`${sun}T06:00:00+07:00`,closes_at:`${sun}T21:00:00+07:00`,results_at:'',status:'scheduled'}[k]??'')));
+let r1=ctx.sendReminders(wib(sat,19));
+const toAlice=sent.filter(m=>m.to==='alice@gmail.com');
+check('notif: harian + akbar terkirim ke alice, bob dilewati (sudah latihan)', r1.daily===1 && r1.akbar===1 && r1.skipped===1 && toAlice.length===2 && !sent.some(m=>m.to==='bob@x.com'), {r1,to:sent.map(m=>m.to+' '+m.subject)});
+const dm=toAlice.find(m=>/latihan/i.test(m.subject)), am=toAlice.find(m=>/Akbar/.test(m.subject));
+check('notif: isi email harian (tautan latihan & berhenti langganan)', /https:\/\/app\.contoh\.id\/pages\/latihan\.html/.test(dm.htmlBody) && /\?unsub=[a-f0-9]{30,}&amp;kind=daily/.test(dm.htmlBody) && /Berhenti menerima/.test(dm.body) && dm.name==='Siap CPNS', dm.body);
+check('notif: email akbar menyebut jam buka WIB', /06\.00 WIB/.test(am.body) && /19\.20 WIB/.test(am.body), am.body);
+const r2=ctx.sendReminders(wib(sat,19,40));
+check('notif: tidak dobel di hari yang sama', r2.daily===0 && r2.akbar===0 && sent.length===2);
+check('notif: jam lain tidak mengirim harian', ctx.sendReminders(wib(sat,20)).daily===0);
+setPrem('alice@gmail.com',-1);
+const nExp=sent.length; ctx.sendReminders(wib(sun,19,10));
+check('notif: Premium berakhir → email harian ke alice berhenti', !sent.slice(nExp).some(m=>m.to==='alice@gmail.com'), sent.slice(nExp).map(m=>m.to));
+setPrem('alice@gmail.com',60);
+// premium: rina berakhir 3 hari lagi
+const rinaRow=sheets.users.rows.find(r=>r[1]==='rina@x.com'); const UH=sheets.users.rows[0];
+const today=new Date(Date.now()+7*3600e3).toISOString().slice(0,10); const plus3=new Date(Date.parse(today)+3*864e5).toISOString().slice(0,10);
+rinaRow[UH.indexOf('premium_until')]=`${plus3}T15:00:00.000Z`; rinaRow[UH.indexOf('plan')]='premium';
+const before=sent.length;
+const r3=ctx.sendReminders(wib(today,9));
+const pm=sent.slice(before).find(m=>m.to==='rina@x.com');
+check('notif: premium berakhir 3 hari lagi (tanpa baris preferensi → default nyala, token dibuat)', r3.premium>=1 && pm && /berakhir/.test(pm.subject) && /kind=premium/.test(pm.body) && sheets.notif_prefs.rows.length===4, {r3,subj:pm&&pm.subject});
+check('notif: premium tidak dobel', ctx.sendReminders(wib(today,9,30)).premium===0);
+// berhenti langganan
+const NH=sheets.notif_prefs.rows[0]; const aliceTok=sheets.notif_prefs.rows.find(r=>r[0]===aliceId)[NH.indexOf('token')];
+const page=ctx.doGet({parameter:{unsub:aliceTok,kind:'daily'}});
+np=post('getNotifPrefs',{},'h.alice.s');
+check('notif: tautan berhenti langganan mematikan harian saja', /sudah dimatikan/.test(page.html) && np.data.prefs.daily===false && np.data.prefs.akbar===true, np.data.prefs);
+check('notif: token palsu', /tidak/.test(ctx.doGet({parameter:{unsub:'abc'}}).html));
+ctx.doGet({parameter:{unsub:aliceTok,kind:'all'}});
+check('notif: berhenti semua', (()=>{const p=post('getNotifPrefs',{},'h.alice.s').data.prefs;return !p.daily&&!p.akbar&&!p.premium})());
+tokens['h.nopro.s']={...tokens['h.dina.s'],email:'nopro@x.com',name:'Nopro',sub:'nopro'}; post('login',{},'h.nopro.s');
+check('notif: gratis → akbar email ditolak', post('saveNotifPrefs',{akbar:true},'h.nopro.s').error.code==='FORBIDDEN');
+check('notif: gratis boleh mematikan pengingat premium', post('saveNotifPrefs',{premium:false},'h.nopro.s').ok);
+setPrem('nopro@x.com',30);
+check('notif: premium tanpa profil, jam → PROFILE_INCOMPLETE', post('saveNotifPrefs',{daily:true,reminderTime:'07:00'},'h.nopro.s').error.code==='PROFILE_INCOMPLETE');
+check('doGet biasa tetap JSON', /siap-cpns-api/.test(ctx.doGet({parameter:{}}).t));
+// kuota habis
+post('saveNotifPrefs',{daily:true,reminderTime:'07:00'},'h.alice.s');
+quota=4; const n0=sent.length;
+const r4=ctx.sendReminders(wib(sun,7));
+check('notif: berhenti saat kuota email menipis', r4.quotaStop===true && sent.length===n0, r4);
+quota=100;
+check('notif: dashboard mencatat pengingat', ctx.computeMetrics_().reminders.sent7>=3);
+sheets.akbar_events.rows=sheets.akbar_events.rows.filter(r=>r[0]!=='AK-NOTIF');
+delete props.APP_BASE_URL; delete props.WEBAPP_URL;
+}
+// ================= Fase 10.2: performa =================
+{
+// batch: beberapa action baca dalam 1 permintaan, token diverifikasi sekali
+const before=tokeninfoCalls;
+const bt=post('batch',{calls:[{action:'getMe'},{action:'getToday'},{action:'getPlan'},{action:'getTryoutInfo'}]},'h.alice.s');
+check('batch: 4 hasil berurutan', bt.ok && bt.data.length===4 && bt.data[0].ok && bt.data[0].data.user && bt.data[1].ok && bt.data[1].data.practice && bt.data[3].ok, bt.data&&bt.data.map(x=>x.ok||x.error.code));
+check('batch: getPlan pengguna gratis → FORBIDDEN tanpa menggagalkan yang lain', bt.data[2].ok===false && ['FORBIDDEN','PROFILE_INCOMPLETE'].includes(bt.data[2].error.code) || bt.data[2].ok===true);
+check('batch: action tulis ditolak', post('batch',{calls:[{action:'saveProfile',payload:{}}]},'h.alice.s').data[0].error.code==='BAD_REQUEST');
+check('batch: tanpa token → UNAUTHENTICATED per item, action publik tetap jalan', (()=>{const r=post('batch',{calls:[{action:'getMe'},{action:'getPlans'}]});return r.ok&&r.data[0].error.code==='UNAUTHENTICATED'&&r.data[1].ok;})());
+check('batch: maksimal 6', post('batch',{calls:Array(7).fill({action:'ping'})}).error.code==='BAD_REQUEST');
+// cache baris users
+keepUserCache=true;
+const UHc=sheets.users.rows[0]; const ar=sheets.users.rows.find(r=>r[1]==='alice@gmail.com');
+post('getMe',{},'h.alice.s');
+const orig=ar[UHc.indexOf('name')]; ar[UHc.indexOf('name')]='Nama Langsung Diubah';
+check('cache user: baris dibaca dari cache (tidak membaca sheet lagi)', post('getMe',{},'h.alice.s').data.user.name===orig);
+const rowIdx=sheets.users.rows.indexOf(ar)+1;
+ctx.update_('users',rowIdx,{name:'Alice Baru'});
+check('cache user: update_ menghapus cache → data baru', post('getMe',{},'h.alice.s').data.user.name==='Alice Baru');
+ctx.update_('users',rowIdx,{name:orig}); keepUserCache=false;
+// cache paket: satu kali baca per file, indeks bank latihan
+let opens=0; const realOpen=ctx.SpreadsheetApp.openById; ctx.SpreadsheetApp.openById=(id)=>{opens++;return realOpen(id)};
+const list=ctx.rebuildPackageCache_();
+const nFiles=Object.values(files).filter(f=>f.folder===props.QUESTIONS_FOLDER_ID).length;
+check('rebuild: tiap file dibuka sekali, jumlah soal tercatat', opens===nFiles && list.every(p=>typeof p.questionCount==='number'), {opens,nFiles});
+opens=0; ctx.resetMemo_();
+const ti=post('getTryoutInfo',{},'h.alice.s');
+check('getTryoutInfo tanpa membuka file soal', ti.ok && opens===0, opens);
+const sp=post('startPractice',{},'h.bob.s');
+check('startPractice memakai indeks bank (soal lengkap tetap benar)', (sp.ok && sp.data.questions.length>0 && sp.data.questions[0].options.length===5 && opens===0) || (!sp.ok && sp.error.code==='DAILY_LIMIT'), sp.ok?opens:sp.error);
+ctx.SpreadsheetApp.openById=realOpen;
+// memo per permintaan: daftar paket dibaca dari CacheService sekali
+let gets=0; const realCache=ctx.CacheService.getScriptCache; ctx.CacheService.getScriptCache=()=>{const c=realCache();return {...c,get:(k)=>{if(k==='pkgs')gets++;return c.get(k)}}};
+post('getTryoutInfo',{},'h.alice.s');
+check('memo: daftar paket dibaca sekali per permintaan', gets===1, gets);
+ctx.CacheService.getScriptCache=realCache;
 }
 delete props.QUESTIONS_FOLDER_ID; ctx.clearPackageCache_(null);
 check('no source -> clear config error', post('getTryoutInfo',{},'h.alice.s').error.code==='CONFIG_MISSING');
