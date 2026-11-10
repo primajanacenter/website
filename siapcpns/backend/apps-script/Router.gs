@@ -60,7 +60,10 @@ function getRoutes_() {
     getPostSkd:       { handler: handleGetPostSkd_,       auth: 'required' },
     saveSkdResult:    { handler: handleSaveSkdResult_,    auth: 'required' },
     getReferral:      { handler: handleGetReferral_,      auth: 'required' },
-    claimReferral:    { handler: handleClaimReferral_,    auth: 'required' }
+    claimReferral:    { handler: handleClaimReferral_,    auth: 'required' },
+
+    // Fase 9
+    logClientError:   { handler: handleLogClientError_,   auth: 'none' }
   };
 }
 
@@ -90,7 +93,10 @@ function doPost(e) {
     var data = route.handler(body.payload || {}, user);
     return json_({ ok: true, data: data });
   } catch (err) {
-    if (!(err instanceof AppError_)) console.error('Action ' + (body && body.action) + ' gagal');
+    if (!(err instanceof AppError_)) {
+      console.error('Action ' + (body && body.action) + ' gagal');
+      logServerError_(body && body.action, err); // Fase 9: tercatat di sheet error_log
+    }
     return json_(errorBody_(err));
   }
 }

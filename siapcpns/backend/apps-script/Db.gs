@@ -50,7 +50,13 @@ var SCHEMA = {
     'user_id', 'test_date', 'twk', 'tiu', 'tkp', 'total', 'passed_all', 'formation', 'skb_date',
     'created_at', 'updated_at'
   ],
-  referrals: ['referee_id', 'referrer_id', 'code', 'status', 'trx_id', 'bonus_days', 'created_at', 'rewarded_at']
+  referrals: ['referee_id', 'referrer_id', 'code', 'status', 'trx_id', 'bonus_days', 'created_at', 'rewarded_at'],
+  // Fase 9: operasional
+  error_log: ['at', 'kind', 'action', 'code', 'message', 'detail', 'page', 'ua'],
+  metrics_daily: [
+    'date', 'users_total', 'new_users', 'active_7d', 'premium_active', 'paid_trx', 'revenue', 'revenue_30d',
+    'attempts', 'practice', 'skd_results', 'referrals_rewarded', 'errors_24h'
+  ]
 };
 
 /** Struktur sheet di file BANK SOAL (QUESTIONS_SPREADSHEET_ID). Hanya bisa dibaca server. */
