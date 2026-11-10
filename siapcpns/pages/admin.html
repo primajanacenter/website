@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Super User Dashboard — Siap CPNS</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <meta property="og:title" content="Super User Dashboard — Siap CPNS">
+  <meta property="og:description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="modulepreload" href="../assets/js/core/config.js">
+  <link rel="modulepreload" href="../assets/js/core/store.js">
+  <link rel="modulepreload" href="../assets/js/core/auth.js">
+  <link rel="modulepreload" href="../assets/js/core/ui.js">
+  <link rel="modulepreload" href="../assets/js/core/api.js">
+  <link rel="modulepreload" href="../assets/js/features/admin.js">
+  <link rel="stylesheet" href="../assets/css/pages/admin.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="dashboard.html">Beranda</a><a href="#" id="btn-logout">Keluar</a></nav>
+  </div>
+</header>
+<section class="page-band">
+  <div class="container stack" style="gap:10px">
+    <nav class="crumbs" aria-label="Lokasi halaman"><a href="dashboard.html">Beranda</a> / <span>Super User Dashboard</span></nav>
+    <div class="adm-head">
+      <div>
+        <h1>Super User Dashboard</h1>
+        <p class="lead" id="a-lead">Capaian, bisnis, dan kesehatan sistem dalam satu layar — tanpa membuka dasbor Mayar.</p>
+      </div>
+      <div class="adm-controls" id="a-controls" hidden>
+        <div class="seg" role="group" aria-label="Rentang waktu">
+          <button type="button" data-days="7">7 hari</button>
+          <button type="button" data-days="30" aria-pressed="true">30 hari</button>
+          <button type="button" data-days="90">90 hari</button>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="a-refresh">Muat ulang</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="app-main">
+  <div class="container stack-lg">
+    <p id="a-status" class="status-msg" role="status" hidden></p>
+
+    <div id="a-app" hidden>
+      <p class="xsmall muted" id="a-meta"></p>
+      <nav class="adm-tabs" id="a-tabs" aria-label="Bagian dasbor">
+        <a href="#ringkasan" data-tab="ringkasan">Ringkasan</a>
+        <a href="#bisnis" data-tab="bisnis">Bisnis</a>
+        <a href="#pengguna" data-tab="pengguna">Pengguna</a>
+        <a href="#belajar" data-tab="belajar">Capaian belajar</a>
+        <a href="#operasional" data-tab="operasional">Operasional</a>
+        <a href="#cari" data-tab="cari">Cari pengguna</a>
+      </nav>
+
+      <!-- RINGKASAN -->
+      <section class="adm-tab stack-lg" data-panel="ringkasan">
+        <div class="kpis" id="k-main"></div>
+        <div class="adm-alerts" id="k-alerts"></div>
+        <div class="adm-grid2">
+          <section class="panel"><div class="panel-head"><h2>Pendapatan harian</h2><span class="xsmall muted" id="c-rev-sub"></span></div><div class="chart" id="c-rev"></div></section>
+          <section class="panel"><div class="panel-head"><h2>Pengguna aktif belajar per hari</h2><span class="xsmall muted">latihan atau tryout</span></div><div class="chart" id="c-learn"></div></section>
+        </div>
+      </section>
+
+      <!-- BISNIS -->
+      <section class="adm-tab stack-lg" data-panel="bisnis" hidden>
+        <div class="kpis" id="b-kpis"></div>
+        <div class="adm-grid2">
+          <section class="panel"><div class="panel-head"><h2>Penjualan per paket</h2><span class="xsmall muted" id="b-plan-sub"></span></div><div id="b-plans"></div></section>
+          <section class="panel"><div class="panel-head"><h2>Status checkout</h2><span class="xsmall muted">transaksi dibuat dalam rentang</span></div><div id="b-status"></div></section>
+        </div>
+        <section class="panel"><div class="panel-head"><h2>Transaksi lunas per hari</h2><span class="xsmall muted">jumlah transaksi</span></div><div class="chart" id="c-paid"></div></section>
+        <section class="panel">
+          <div class="panel-head"><h2>Premium akan berakhir (7 hari)</h2><span class="xsmall muted" id="b-exp-sub"></span></div>
+          <div id="b-exp"></div>
+        </section>
+        <section class="panel">
+          <div class="panel-head"><h2>Daftar transaksi</h2><span class="xsmall muted">data dari webhook & rekonsiliasi Mayar</span></div>
+          <form class="trx-filter" id="t-form">
+            <label class="field"><span>Dari</span><input class="input" type="date" id="t-from"></label>
+            <label class="field"><span>Sampai</span><input class="input" type="date" id="t-to"></label>
+            <label class="field"><span>Status</span>
+              <select class="input" id="t-status"><option value="">Semua</option><option value="paid">Lunas</option><option value="pending">Menunggu</option><option value="expired">Kedaluwarsa</option><option value="failed">Gagal</option></select>
+            </label>
+            <div class="row" style="gap:8px;align-self:end"><button class="btn btn-primary btn-sm" type="submit">Tampilkan</button><button class="btn btn-secondary btn-sm" type="button" id="t-csv" disabled>Unduh CSV</button></div>
+          </form>
+          <p class="xsmall muted" id="t-sum"></p>
+          <div class="table-wrap"><table class="table adm-table" id="t-table"></table></div>
+        </section>
+      </section>
+
+      <!-- PENGGUNA -->
+      <section class="adm-tab stack-lg" data-panel="pengguna" hidden>
+        <div class="kpis" id="u-kpis"></div>
+        <div class="adm-grid2">
+          <section class="panel"><div class="panel-head"><h2>Aktivasi pengguna baru</h2><span class="xsmall muted" id="u-funnel-sub"></span></div><div id="u-funnel"></div></section>
+          <section class="panel"><div class="panel-head"><h2>Pendaftar baru per hari</h2></div><div class="chart" id="c-signup"></div></section>
+        </div>
+        <section class="panel">
+          <div class="panel-head"><h2>Retensi kohort mingguan</h2><span class="xsmall muted">% pengguna yang belajar lagi di minggu ke-n setelah mendaftar</span></div>
+          <div class="table-wrap"><table class="table adm-table cohort" id="u-cohort"></table></div>
+        </section>
+        <div class="adm-grid2">
+          <section class="panel"><div class="panel-head"><h2>Pendidikan</h2></div><div id="u-edu"></div></section>
+          <section class="panel"><div class="panel-head"><h2>Provinsi tujuan teratas</h2></div><div id="u-prov"></div></section>
+        </div>
+      </section>
+
+      <!-- BELAJAR -->
+      <section class="adm-tab stack-lg" data-panel="belajar" hidden>
+        <div class="kpis" id="l-kpis"></div>
+        <section class="panel">
+          <div class="panel-head"><h2>Tryout per jenis</h2><span class="xsmall muted">rata-rata skor & kelulusan ambang batas (TWK 65 · TIU 80 · TKP 166)</span></div>
+          <div class="table-wrap"><table class="table adm-table" id="l-types"></table></div>
+        </section>
+        <section class="panel"><div class="panel-head"><h2>Soal latihan dijawab per hari</h2><span class="xsmall muted">arahkan ke batang untuk melihat jumlah tryout</span></div><div class="chart" id="c-prac"></div></section>
+        <div class="adm-grid2">
+          <section class="panel"><div class="panel-head"><h2>Topik terlemah (latihan)</h2><span class="xsmall muted">% poin dari maksimal</span></div><div id="l-weak"></div></section>
+          <section class="panel"><div class="panel-head"><h2>Skor SKD resmi</h2><span class="xsmall muted">diisi pengguna setelah tes</span></div><div id="l-skd"></div></section>
+        </div>
+        <section class="panel">
+          <div class="panel-head"><h2>Tryout Akbar</h2><span class="xsmall muted">8 event terakhir</span></div>
+          <div class="table-wrap"><table class="table adm-table" id="l-akbar"></table></div>
+        </section>
+      </section>
+
+      <!-- OPERASIONAL -->
+      <section class="adm-tab stack-lg" data-panel="operasional" hidden>
+        <div class="kpis" id="o-kpis"></div>
+        <div class="adm-grid2">
+          <section class="panel"><div class="panel-head"><h2>Pemeriksaan sistem</h2><span class="xsmall muted">hasil healthCheck</span></div><ul class="health" id="o-health"></ul></section>
+          <section class="panel"><div class="panel-head"><h2>Galat 24 jam teratas</h2></div><div id="o-errors"></div></section>
+        </div>
+      </section>
+
+      <!-- CARI -->
+      <section class="adm-tab stack-lg" data-panel="cari" hidden>
+        <section class="panel">
+          <div class="panel-head"><h2>Cari pengguna</h2><span class="xsmall muted">untuk membantu pertanyaan pembayaran & akun</span></div>
+          <form class="row" id="s-form" style="gap:8px">
+            <input class="input" id="s-q" type="search" placeholder="Email, nama, atau kode ajak" autocomplete="off" style="flex:1;min-width:200px">
+            <button class="btn btn-primary" type="submit">Cari</button>
+          </form>
+          <p class="xsmall muted" id="s-sum"></p>
+          <div id="s-list"></div>
+        </section>
+        <section class="panel" id="s-detail" hidden></section>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo-112.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/admin.js").then((m) => m.initAdmin());
+</script>
+</body>
+</html>
