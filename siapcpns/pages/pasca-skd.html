@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hasil SKD — Siap CPNS</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="stylesheet" href="../assets/css/pages/tryout.css">
+  <link rel="stylesheet" href="../assets/css/pages/fase8.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="skb.html">Persiapan SKB</a><a class="nav-cta" href="dashboard.html">Beranda</a></nav>
+  </div>
+</header>
+<section class="page-band">
+  <div class="container stack" style="gap:10px">
+    <nav class="crumbs" aria-label="Lokasi halaman"><a href="dashboard.html">Beranda</a> / <span>Hasil SKD</span></nav>
+    <h1>Hasil SKD-mu</h1>
+    <p class="lead">Masukkan skor resmi dari BKN setelah tes. Kami bantu membaca artinya: lolos ambang batas atau belum, seberapa besar kontribusinya ke nilai akhir, dan apa yang perlu kamu lakukan selanjutnya.</p>
+  </div>
+</section>
+
+<main class="app-main">
+  <div class="container stack-lg">
+    <p id="ps-status" class="status-msg" role="status" hidden></p>
+
+    <div class="ps-grid">
+      <section class="panel" aria-labelledby="ps-form-title">
+        <div class="panel-head"><h2 id="ps-form-title">Skor SKD resmi</h2></div>
+        <form id="ps-form" class="stack" novalidate>
+          <div class="field"><label for="ps-date">Tanggal tes SKD</label><input class="input" id="ps-date" type="date" required></div>
+          <div class="ps-scores">
+            <div class="field"><label for="ps-twk">TWK <span class="muted">(0–150)</span></label><input class="input" id="ps-twk" type="number" inputmode="numeric" min="0" max="150" step="1" required></div>
+            <div class="field"><label for="ps-tiu">TIU <span class="muted">(0–175)</span></label><input class="input" id="ps-tiu" type="number" inputmode="numeric" min="0" max="175" step="1" required></div>
+            <div class="field"><label for="ps-tkp">TKP <span class="muted">(0–225)</span></label><input class="input" id="ps-tkp" type="number" inputmode="numeric" min="0" max="225" step="1" required></div>
+          </div>
+          <div class="field"><label for="ps-formation">Formasi/jabatan yang dilamar <span class="muted">(opsional)</span></label><input class="input" id="ps-formation" type="text" maxlength="120" placeholder="Contoh: Analis Kebijakan Ahli Pertama"></div>
+          <div class="field"><label for="ps-skbdate">Perkiraan tanggal SKB <span class="muted">(opsional)</span></label><input class="input" id="ps-skbdate" type="date"></div>
+          <p class="xsmall muted">Skor hanya dipakai untuk analisis di akunmu dan tidak ditampilkan ke pengguna lain.</p>
+          <button class="btn btn-primary" type="submit" id="ps-save">Simpan &amp; lihat analisis</button>
+        </form>
+      </section>
+
+      <section class="panel" id="ps-result" aria-labelledby="ps-res-title" hidden>
+        <div class="panel-head"><h2 id="ps-res-title">Analisis</h2><span class="chip" id="ps-verdict"></span></div>
+        <p id="ps-headline" class="ps-headline"></p>
+        <table class="table ps-table">
+          <thead><tr><th scope="col">Subtes</th><th scope="col" class="num">Skor</th><th scope="col">Terhadap ambang batas</th></tr></thead>
+          <tbody id="ps-sub"></tbody>
+        </table>
+        <div class="ps-kpis" id="ps-kpis"></div>
+        <div id="ps-scen-wrap" class="stack" style="gap:6px">
+          <h3 class="ps-h3">Simulasi nilai akhir (SKD 40% + SKB 60%)</h3>
+          <div class="table-wrap"><table class="table"><thead><tr><th scope="col">Jika nilai SKB</th><th scope="col" class="num">Nilai akhir</th></tr></thead><tbody id="ps-scen"></tbody></table></div>
+          <p class="xsmall muted" id="ps-note"></p>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel" id="ps-steps-card" aria-labelledby="ps-steps-title" hidden>
+      <div class="panel-head"><h2 id="ps-steps-title">Langkah berikutnya</h2></div>
+      <ol class="ps-steps" id="ps-steps"></ol>
+    </section>
+
+    <section class="panel" id="ps-history-card" aria-labelledby="ps-hist-title" hidden>
+      <div class="panel-head"><h2 id="ps-hist-title">Riwayat skor SKD</h2></div>
+      <ul class="ps-history" id="ps-history"></ul>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/postskd.js").then((m) => m.initPostSkd());
+</script>
+</body>
+</html>

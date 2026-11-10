@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ajak teman — Siap CPNS</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="stylesheet" href="../assets/css/pages/fase8.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="premium.html">Premium</a><a class="nav-cta" href="dashboard.html">Beranda</a></nav>
+  </div>
+</header>
+<section class="page-band">
+  <div class="container stack" style="gap:10px">
+    <nav class="crumbs" aria-label="Lokasi halaman"><a href="dashboard.html">Beranda</a> / <span>Ajak teman</span></nav>
+    <h1>Ajak teman belajar bersama</h1>
+    <p class="lead">Bagikan kode ajakanmu. Temanmu mendapat <b>diskon 10%</b> untuk pembelian Premium pertama, dan kamu mendapat <b>+7 hari Premium</b> setiap kali teman yang kamu ajak membeli.</p>
+  </div>
+</section>
+
+<main class="app-main">
+  <div class="container stack-lg">
+    <p id="rf-status" class="status-msg" role="status" hidden></p>
+
+    <div class="rf-grid">
+      <section class="panel rf-share" aria-labelledby="rf-code-title">
+        <div class="panel-head"><h2 id="rf-code-title">Kode ajakanmu</h2></div>
+        <div class="rf-code" id="rf-code" aria-live="polite"><span class="skeleton" style="width:140px;height:32px"></span></div>
+        <div class="field"><label for="rf-link">Tautan ajakan</label><input class="input" id="rf-link" type="text" readonly></div>
+        <div class="row">
+          <button class="btn btn-primary" type="button" id="rf-copy">Salin tautan</button>
+          <a class="btn btn-secondary" id="rf-wa" href="#" target="_blank" rel="noopener">Bagikan ke WhatsApp</a>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="rf-stat-title">
+        <div class="panel-head"><h2 id="rf-stat-title">Hasil ajakanmu</h2></div>
+        <div class="rf-stats" id="rf-stats">
+          <div><span class="xsmall muted">Teman bergabung</span><b id="rf-invited">–</b></div>
+          <div><span class="xsmall muted">Sudah membeli</span><b id="rf-purchased">–</b></div>
+          <div><span class="xsmall muted">Bonus diterima</span><b id="rf-bonus">–</b></div>
+        </div>
+        <ul class="rf-recent" id="rf-recent"></ul>
+      </section>
+    </div>
+
+    <section class="panel" id="rf-claim-card" aria-labelledby="rf-claim-title" hidden>
+      <div class="panel-head"><h2 id="rf-claim-title">Punya kode dari teman?</h2></div>
+      <form class="row" id="rf-claim" novalidate>
+        <label class="sr-only" for="rf-claim-code">Kode ajakan</label>
+        <input class="input rf-input" id="rf-claim-code" type="text" maxlength="12" autocomplete="off" placeholder="Contoh: SC7KQ2MX">
+        <button class="btn btn-accent" type="submit" id="rf-claim-btn">Pakai kode</button>
+      </form>
+      <p class="xsmall muted">Hanya bisa dipakai sekali, sebelum pembelian Premium pertama.</p>
+    </section>
+    <div class="callout" id="rf-mine" hidden></div>
+
+    <section class="panel" aria-labelledby="rf-rules-title">
+      <div class="panel-head"><h2 id="rf-rules-title">Ketentuan</h2></div>
+      <ul class="rf-rules">
+        <li>Diskon 10% berlaku untuk pembelian Premium <b>pertama</b> teman yang memakai kodemu, untuk semua pilihan paket.</li>
+        <li>Bonus +7 hari Premium diberikan otomatis setelah pembayaran temanmu berhasil. Jika Premium-mu masih aktif, bonus ditambahkan ke masa aktif.</li>
+        <li>Bonus maksimal 20 kali dalam 30 hari. Tidak ada komisi uang dan bonus tidak bisa diuangkan.</li>
+        <li>Kode milik sendiri tidak bisa dipakai. Penyalahgunaan, misalnya membuat akun palsu, dapat membatalkan bonus.</li>
+        <li>Nama dan email temanmu tidak ditampilkan di halaman ini.</li>
+      </ul>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/ajak.js").then((m) => m.initAjak());
+</script>
+</body>
+</html>

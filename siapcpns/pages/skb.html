@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Persiapan SKB — Siap CPNS</title>
+  <meta name="robots" content="index">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="stylesheet" href="../assets/css/cat.css">
+  <link rel="stylesheet" href="../assets/css/pages/tryout.css">
+  <link rel="stylesheet" href="../assets/css/pages/fase8.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="pasca-skd.html">Hasil SKD</a><a class="nav-cta" href="masuk.html" data-nav-auth="dashboard.html">Masuk</a></nav>
+  </div>
+</header>
+<!-- ================= LOBI + PANDUAN SKB ================= -->
+<div id="view-lobby">
+  <section class="page-band">
+    <div class="container stack" style="gap:10px">
+      <nav class="crumbs" aria-label="Lokasi halaman"><a href="dashboard.html">Beranda</a> / <span>Persiapan SKB</span></nav>
+      <h1>Persiapan SKB</h1>
+      <p class="lead">Seleksi Kompetensi Bidang menguji kemampuan sesuai jabatan yang kamu lamar. Bobotnya umumnya lebih besar dari SKD, jadi persiapannya perlu dimulai sejak skor SKD keluar.</p>
+    </div>
+  </section>
+
+  <main class="app-main">
+    <div class="container stack-lg">
+      <p id="lobby-status" class="status-msg" role="status" hidden></p>
+
+      <section aria-labelledby="skb-pkg-title" class="stack">
+        <div class="row" style="justify-content:space-between"><h2 id="skb-pkg-title" style="font-size:var(--fs-lg)">Tryout SKB</h2><span class="xsmall muted">Gratis 1× per paket · Premium tanpa batas &amp; pembahasan lengkap</span></div>
+        <div class="pkg-list" id="pkg-list">
+          <div class="pkg"><div class="stack"><div class="skeleton" style="width:50%"></div><div class="skeleton" style="width:80%"></div></div></div>
+        </div>
+        <p class="xsmall muted">Paket SKB disusun per rumpun jabatan dan ditambah bertahap. Soal SKB asli berbeda untuk setiap jabatan; selalu cocokkan dengan kisi-kisi resmi jabatanmu.</p>
+      </section>
+
+      <div class="skb-grid">
+        <section class="panel" aria-labelledby="skb-how">
+          <div class="panel-head"><h2 id="skb-how">Cara nilai akhir dihitung</h2></div>
+          <p class="small">Pada seleksi CPNS 2024, nilai akhir umumnya menggabungkan <b>SKD 40%</b> dan <b>SKB 60%</b> (Permenpanrb Nomor 6 Tahun 2024). Instansi bisa memakai komposisi SKB berbeda, jadi ikuti pengumuman resmi formasimu.</p>
+          <ol class="skb-formula">
+            <li><b>Nilai SKD</b> = skor SKD ÷ 550 × 40</li>
+            <li><b>Nilai SKB</b> = nilai SKB (skala 100) × 60%</li>
+            <li><b>Nilai akhir</b> = nilai SKD + nilai SKB</li>
+          </ol>
+          <form class="skb-calc" id="skb-calc" novalidate>
+            <div class="field"><label for="calc-skd">Skor SKD (0–550)</label><input class="input" id="calc-skd" type="number" inputmode="numeric" min="0" max="550" value="400"></div>
+            <div class="field"><label for="calc-skb">Nilai SKB (0–100)</label><input class="input" id="calc-skb" type="number" inputmode="numeric" min="0" max="100" value="75"></div>
+            <div class="calc-out" aria-live="polite"><span class="xsmall muted">Perkiraan nilai akhir</span><b id="calc-out">74,09</b><span class="xsmall muted" id="calc-detail">SKD 29,09 + SKB 45,00</span></div>
+          </form>
+        </section>
+
+        <section class="panel" aria-labelledby="skb-parts">
+          <div class="panel-head"><h2 id="skb-parts">Komponen SKB yang umum</h2></div>
+          <ul class="skb-parts">
+            <li><b>CAT bidang</b><span>Soal pilihan ganda sesuai kisi-kisi jabatan. Contoh komposisi yang banyak dipakai pada 2024: CAT 50% dari nilai SKB.</span></li>
+            <li><b>Wawancara</b><span>Menggali motivasi, integritas, dan pemahaman tugas jabatan. Contoh komposisi: 30%.</span></li>
+            <li><b>Tes tambahan</b><span>Psikotes, praktik kerja, kesamaptaan, kesehatan, atau bahasa asing sesuai instansi. Contoh komposisi: 20%. Sebagian bersifat menggugurkan.</span></li>
+          </ul>
+          <p class="xsmall muted">Peserta SKB dipilih dari peringkat skor SKD pada formasi yang sama (umumnya maksimal 3× jumlah kebutuhan formasi), bukan sekadar lolos ambang batas.</p>
+        </section>
+      </div>
+
+      <section class="panel" aria-labelledby="skb-check">
+        <div class="panel-head"><h2 id="skb-check">Checklist persiapan SKB</h2><span class="chip chip-primary" id="skb-check-progress">0 dari 8</span></div>
+        <ul class="checklist skb-checklist" id="skb-checklist">
+          <li><label><input type="checkbox" data-ck="kisi"> <span><b>Unduh kisi-kisi SKB jabatanmu.</b> KemenPANRB menerbitkan kisi-kisi per jabatan bersama pengumuman seleksi.</span></label></li>
+          <li><label><input type="checkbox" data-ck="jadwal"> <span><b>Cek jadwal, lokasi, dan sesi</b> di akun SSCASN dan pengumuman instansi.</span></label></li>
+          <li><label><input type="checkbox" data-ck="kartu"> <span><b>Cetak kartu peserta</b> dan siapkan KTP asli (atau dokumen pengganti sesuai pengumuman).</span></label></li>
+          <li><label><input type="checkbox" data-ck="regulasi"> <span><b>Pelajari regulasi utama bidangmu</b>, misalnya undang-undang dan peraturan teknis yang disebut di kisi-kisi.</span></label></li>
+          <li><label><input type="checkbox" data-ck="cat"> <span><b>Kerjakan tryout SKB</b> dan ulangi topik dengan nilai terendah.</span></label></li>
+          <li><label><input type="checkbox" data-ck="wawancara"> <span><b>Latih jawaban wawancara</b> dengan pola situasi–tugas–tindakan–hasil, berdasarkan pengalaman nyata.</span></label></li>
+          <li><label><input type="checkbox" data-ck="tambahan"> <span><b>Cek tes tambahan</b> (psikotes, kesehatan, kesamaptaan, praktik kerja) dan syaratnya.</span></label></li>
+          <li><label><input type="checkbox" data-ck="kondisi"> <span><b>Jaga kondisi</b>: tidur cukup, datang lebih awal, dan pahami tata tertib lokasi tes.</span></label></li>
+        </ul>
+        <p class="xsmall muted">Checklist tersimpan di perangkat ini.</p>
+      </section>
+
+      <div class="callout">
+        <div><strong>Belum memasukkan skor SKD?</strong> Isi di halaman <a href="pasca-skd.html">Hasil SKD</a> untuk melihat kontribusi skormu ke nilai akhir dan langkah berikutnya.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+<!-- ================= UJIAN ================= -->
+<section id="view-exam" class="cat" hidden aria-labelledby="q-text">
+  <div class="cat-bar">
+    <div class="container">
+      <div class="cat-title">
+        <b id="ex-title">Tryout</b>
+        <span><span id="ex-subtest">TWK</span> · <span class="save-state" id="ex-save">Tersimpan</span></span>
+      </div>
+      <span class="cat-timer exam-timer" id="ex-timer-box" role="timer" aria-live="off"><small>Sisa waktu</small><span id="ex-timer">--:--:--</span></span>
+    </div>
+  </div>
+
+  <div class="container cat-layout">
+    <div class="cat-main">
+      <div class="cat-qhead">
+        <span class="qno">Soal nomor <span id="q-no" class="num">1</span> <span class="muted small">dari <span id="q-total" class="num">110</span></span></span>
+        <span class="chip chip-primary" id="q-badge">TWK</span>
+      </div>
+      <div class="cat-qbody">
+        <p class="question-text" id="q-text" tabindex="-1">Memuat soal…</p>
+        <div class="question-context" id="q-context" hidden></div>
+        <div class="options" id="options" role="radiogroup" aria-labelledby="q-text"></div>
+      </div>
+      <div class="cat-actions">
+        <button class="btn btn-secondary" type="button" id="btn-prev">‹ Sebelumnya</button>
+        <button class="btn btn-doubt" type="button" id="btn-doubt" aria-pressed="false">Ragu-ragu</button>
+        <button class="btn btn-primary" type="button" id="btn-next">Selanjutnya ›</button>
+      </div>
+    </div>
+
+    <aside class="cat-side" aria-label="Navigasi nomor soal">
+      <details class="nav-details" id="nav-details" open>
+        <summary>Nomor soal <span class="chip num" id="q-answered">0 / 110</span></summary>
+        <div>
+          <div class="qgrid big" id="q-grid"></div>
+          <div class="qlegend">
+            <span><i class="l-a"></i>Dijawab</span>
+            <span><i class="l-r"></i>Ragu-ragu</span>
+            <span><i></i>Belum</span>
+          </div>
+        </div>
+      </details>
+      <div class="subcount" id="sub-count"></div>
+      <button class="btn btn-primary btn-block" type="button" id="btn-finish">Selesai ujian</button>
+      <p class="xsmall muted">Tombol: 1–5 pilih jawaban, ← → pindah soal.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= KONFIRMASI MULAI ================= -->
+<div class="confirm" id="start-modal" hidden role="dialog" aria-modal="true" aria-labelledby="start-title">
+  <div class="card card-elevated">
+    <h3 id="start-title">Mulai tryout sekarang?</h3>
+    <p class="small muted" id="start-text"></p>
+    <label class="check"><input type="checkbox" id="start-ready"> <span>Saya sudah siap dan berada di tempat yang tenang dengan koneksi internet stabil.</span></label>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn btn-secondary" type="button" id="start-cancel">Nanti saja</button>
+      <button class="btn btn-primary" type="button" id="start-ok" disabled>Mulai</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= KONFIRMASI SELESAI ================= -->
+<div class="confirm" id="finish-modal" hidden role="dialog" aria-modal="true" aria-labelledby="finish-title">
+  <div class="card card-elevated">
+    <h3 id="finish-title">Akhiri ujian?</h3>
+    <p class="small" id="finish-text"></p>
+    <p id="finish-error" class="status-msg error" hidden></p>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn btn-secondary" type="button" id="finish-cancel">Kembali ke soal</button>
+      <button class="btn btn-primary" type="button" id="finish-ok">Ya, kirim jawaban</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/skb.js").then((m) => m.initSkb());
+</script>
+</body>
+</html>
