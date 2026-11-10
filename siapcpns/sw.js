@@ -10,7 +10,7 @@
  *
  * Saat merilis perubahan besar, naikkan CACHE_VERSION agar cache lama dibersihkan.
  */
-const CACHE_VERSION = "sc-v10.2";
+const CACHE_VERSION = "sc-v11.1";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const NETWORK_TIMEOUT_MS = 6000;
