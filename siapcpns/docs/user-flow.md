@@ -22,3 +22,4 @@
 | 6 | Fitur premium inti (materi Lv2–4, rencana adaptif) | ✅ |
 | 7 | Tryout Akbar mingguan (Minggu 06.00–21.00 WIB, peringkat nasional; Premium: provinsi & analisis) + alat uji beban | ✅ |
 | 8 | Hasil SKD (input skor & analisis), persiapan SKB (panduan, kalkulator, checklist, tryout SKB per rumpun), ajak teman (diskon 10% & bonus +7 hari) | ✅ |
+| 9 | Siap rilis & operasional: dasbor admin, backup harian, catatan galat server & browser, email ringkasan, healthCheck, hapus data (UU PDP), SEO & prepare-release | ✅ |

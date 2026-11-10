@@ -66,6 +66,15 @@ user_id · test_date (YYYY-MM-DD) · twk · tiu · tkp · total · passed_all ·
 ### `referrals` (Fase 8)
 referee_id (teman) · referrer_id (pengajak) · code · status (joined/rewarded/capped/void) · trx_id · bonus_days · created_at · rewarded_at
 
+### `error_log` (Fase 9)
+at · kind (server/client) · action · code · message · detail · page (tanpa query string) · ua
+
+### `metrics_daily` (Fase 9, satu baris per hari WIB)
+date · users_total · new_users · active_7d · premium_active · paid_trx · revenue · revenue_30d · attempts · practice · skd_results · referrals_rewarded · errors_24h
+
+### `admin_dashboard` (Fase 9)
+Ditulis ulang otomatis oleh `buildAdminDashboard` / `dailyOps`. Hanya angka agregat, jangan diedit manual.
+
 ## Bank soal
 
 ### `packages` (Fase 3; `type` = diagnostic / latihan / akbar / skb)

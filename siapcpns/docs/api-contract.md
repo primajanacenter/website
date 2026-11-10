@@ -50,6 +50,7 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `saveSkdResult` | 8 | Ya | `{ testDate (YYYY-MM-DD, tidak di masa depan), twk 0–150, tiu 0–175, tkp 0–225, formation?, skbDate? }` | sama dengan `getPostSkd`; tanggal sama → diperbarui | ✅ |
 | `getReferral` | 8 | Ya | – | `{ code, bonusDays, discountPct, invited, purchased, rewarded, bonusDaysEarned, recent[{status,joinedAt,rewardedAt}], myReferral: { code, status, discountActive } \| null, canClaim }` | ✅ |
 | `claimReferral` | 8 | Ya | `{ code }` | `{ claimed, code, discountPct }` — error `NOT_FOUND`, `BAD_REQUEST` (kode sendiri / sudah pernah membeli), `ALREADY_DONE` | ✅ |
+| `logClientError` | 9 | Tidak | `{ message, source?, line?, page?, ua?, action?, code? }` | `{ logged }` — dibatasi 30/menit & 300/hari; dikirim otomatis oleh `ui.js` (hanya mode backend) | ✅ |
 
 ## Kode error umum
 
