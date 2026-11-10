@@ -55,6 +55,9 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `saveNotifPrefs` | 10 | Ya | `{ daily?, akbar?, premium?, reminderTime? (JJ:MM, WIB) }` | sama dengan `getNotifPrefs` + `warning?` — error `FORBIDDEN` (pengguna gratis menyalakan daily/akbar), `BAD_REQUEST`, `PROFILE_INCOMPLETE` (jam tanpa profil) | ✅ |
 | `GET /exec?unsub=TOKEN&kind=daily\|akbar\|premium\|all` | 10 | Tidak | tautan di email | halaman HTML konfirmasi berhenti langganan | ✅ |
 | `batch` | 10.2 | Opsional | `{ calls: [{ action, payload }] }` (maks 6; hanya action baca: getMe, getToday, getPlan, getPlans, getMaterialIndex, getTryoutInfo, getAkbarInfo, getAkbarRanking, getReferral, getPostSkd, getNotifPrefs, ping) | `[{ ok, data } \| { ok:false, error }]` sesuai urutan; token diverifikasi sekali | ✅ |
+| `getAdminDashboard` | 12 | Ya (ADMIN_EMAILS) | `{ days?: 7\|30\|90, force? }` | `{ range, env, kpi, business, users, learning, daily[], ops, cached }` — cache server 5 menit; error `FORBIDDEN` untuk non-admin | ✅ |
+| `adminTransactions` | 12 | Ya (ADMIN_EMAILS) | `{ from?, to? (YYYY-MM-DD), status? }` | `{ from, to, total, truncated, items[{trxId, createdAt, paidAt, email, planId, planName, amount, discount, status, refCode, source, mayarId}] }` (maks 3.000) | ✅ |
+| `adminLookupUser` | 12 | Ya (ADMIN_EMAILS) | `{ q }` (min. 3 huruf: email, nama, atau kode ajak) | `{ total, list[], detail \| null }` — detail: profil, paket, transaksi, tryout, latihan, ajakan, skor SKD | ✅ |
 
 ## Kode error umum
 
