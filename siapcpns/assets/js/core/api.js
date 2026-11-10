@@ -203,7 +203,7 @@ Object.assign(mockHandlers, {
     const today = todayLocal();
     const done = hist.filter((h) => h.date === today);
     const stats = {};
-    const lastAttempt = (db.attempts || []).filter((a) => a.status === "submitted").slice(-1)[0];
+    const lastAttempt = (db.attempts || []).filter((a) => a.status === "submitted" && a.type !== "skb").slice(-1)[0];
     if (lastAttempt) Object.entries(lastAttempt.topics).forEach(([k, t]) => (stats[k] = { p: t.points, m: t.max, n: t.total }));
     hist.slice(-60).forEach((h) => { const s = (stats[h.topicId] ||= { p: 0, m: 0, n: 0 }); s.p += h.points; s.m += 5; s.n++; });
     const levels = {};
@@ -220,7 +220,7 @@ Object.assign(mockHandlers, {
       practice: mockPremium(db)
         ? { doneToday: done.length, correctToday: done.filter((h) => h.points >= 4).length, byTopicToday: countBy(done), dailyLimit: null, remaining: 10, bankSize: d.questions.length }
         : { doneToday: done.length, correctToday: done.filter((h) => h.points >= 4).length, byTopicToday: countBy(done), dailyLimit: FREE_DAILY, remaining: Math.max(0, FREE_DAILY - done.length), bankSize: d.questions.length },
-      hasTryout: (db.attempts || []).some((a) => a.status === "submitted"),
+      hasTryout: (db.attempts || []).some((a) => a.status === "submitted" && a.type !== "skb"),
     };
   },
   async startPractice({ topicId } = {}) {
@@ -373,7 +373,7 @@ Object.assign(mockHandlers, {
         recommendedLevel: st ? Math.min(4, st.level + 1) : 1, score: (3 - (level || 1)) + (st ? 0 : 0.75),
         reason: st ? `Level ${level} (${st.pct}%), target level 3` : "Belum cukup data — kerjakan latihan topik ini untuk mengukur levelmu" };
     }).sort((a, b) => b.score - a.score);
-    const last = (db.attempts || []).filter((a) => a.status === "submitted").slice(-1)[0];
+    const last = (db.attempts || []).filter((a) => a.status === "submitted" && a.type !== "skb").slice(-1)[0];
     const gaps = last ? Object.fromEntries(["twk", "tiu", "tkp"].map((s) => { const pg = { twk: 65, tiu: 80, tkp: 166 }[s] * last.sub[s].max / ({ twk: 150, tiu: 175, tkp: 225 }[s]); const pgR = Math.round(pg); return [s, { score: last.sub[s].score, pg: pgR, gap: Math.max(0, pgR - last.sub[s].score), passed: last.sub[s].score >= pgR }]; })) : null;
     let i = 0;
     const week = base.week.map((d) => {
@@ -458,6 +458,170 @@ Object.assign(mockHandlers, {
   },
 });
 
+// ---------- Fase 8: SKB, pasca-SKD, referral (mode uji) ----------
+// Soal SKB contoh khusus mode uji (bukan isi paket SKB sungguhan).
+const MOCK_SKB_ID = "SKB-MOCK";
+const MOCK_SKB = [
+  ["skb-asn", "Menurut UU Nomor 20 Tahun 2023, pegawai ASN terdiri atas …", ["PNS dan PPPK", "PNS dan honorer", "PNS, PPPK, dan tenaga alih daya", "PNS dan TNI/Polri", "PPPK dan pegawai kontrak"], "UU 20/2023: Pegawai ASN terdiri atas PNS dan PPPK."],
+  ["skb-asn", "Nilai dasar ASN \"BerAKHLAK\" diawali dengan …", ["Berorientasi pelayanan", "Bertanggung jawab", "Beriman", "Berintegritas", "Berprestasi"], "BerAKHLAK: Berorientasi pelayanan, Akuntabel, Kompeten, Harmonis, Loyal, Adaptif, Kolaboratif."],
+  ["skb-pelayanan", "Lembaga yang berwenang mengawasi penyelenggaraan pelayanan publik dan menangani maladministrasi adalah …", ["Ombudsman Republik Indonesia", "Komisi Yudisial", "BPK", "Komisi Informasi", "KPU"], "Ombudsman mengawasi pelayanan publik termasuk dugaan maladministrasi."],
+  ["skb-pelayanan", "Standar pelayanan sebaiknya disusun dengan …", ["Mengikutsertakan masyarakat dan pihak terkait", "Hanya oleh pimpinan unit", "Menyalin dari instansi lain", "Menunggu keluhan masyarakat", "Diserahkan kepada konsultan sepenuhnya"], "UU 25/2009 mewajibkan penyusunan standar pelayanan dengan mengikutsertakan masyarakat."],
+  ["skb-integritas", "Permintaan informasi publik wajib ditanggapi badan publik paling lambat …", ["10 hari kerja, dapat diperpanjang 7 hari kerja", "3 hari kerja", "30 hari kalender", "14 hari kerja tanpa perpanjangan", "1 bulan"], "UU 14/2008 Pasal 22: paling lambat 10 hari kerja, dapat diperpanjang paling lambat 7 hari kerja."],
+  ["skb-integritas", "Gratifikasi yang diterima pegawai wajib dilaporkan kepada KPK paling lambat …", ["30 hari kerja sejak diterima", "7 hari kerja", "60 hari kalender", "Akhir tahun anggaran", "Saat diminta atasan"], "UU 20/2001 Pasal 12C: paling lambat 30 hari kerja sejak gratifikasi diterima."],
+];
+function mockSkbQuestions() {
+  return MOCK_SKB.map(([topicId, text, opts, expl], i) => ({ id: `${MOCK_SKB_ID}-${String(i + 1).padStart(3, "0")}`, number: i + 1, subtest: "skb", topicId, text, context: "",
+    options: opts.map((t, j) => ({ key: "abcde"[j], text: t })), answer: "a", explanation: expl }));
+}
+const MOCK_SKB_TOPICS = { "skb-asn": "Manajemen ASN & disiplin", "skb-pelayanan": "Standar pelayanan publik", "skb-integritas": "Integritas & keterbukaan informasi" };
+const _base = { getTryoutInfo: mockHandlers.getTryoutInfo, startAttempt: mockHandlers.startAttempt, submitAttempt: mockHandlers.submitAttempt, getReport: mockHandlers.getReport, login: mockHandlers.login, getPlans: mockHandlers.getPlans, createCheckout: mockHandlers.createCheckout };
+Object.assign(mockHandlers, {
+  async getTryoutInfo(payload = {}) {
+    if (payload.type !== "skb") return _base.getTryoutInfo(payload);
+    requireMockSession();
+    const db = mockDb(); const mine = (db.attempts || []).filter((a) => a.packageId === MOCK_SKB_ID);
+    const done = mine.filter((a) => a.status === "submitted");
+    const run = mine.find((a) => a.status === "in_progress" && Date.parse(a.endsAt) > Date.now());
+    const premium = mockPremium(db); const can = premium || done.length < 1;
+    return { plan: premium ? "premium" : "free", serverNow: new Date().toISOString(), packages: [{
+      packageId: MOCK_SKB_ID, title: "SKB Kemampuan Teknis Umum (mode uji)", type: "skb", description: "Contoh 6 soal untuk mencoba alur SKB.", durationMin: 10,
+      pg: { twk: 65, tiu: 80, tkp: 166 }, questionCount: MOCK_SKB.length, canStart: Boolean(run) || can, lockReason: run || can ? null : "FREE_LIMIT",
+      inProgress: run ? { attemptId: run.attemptId, endsAt: run.endsAt } : null,
+      attempts: done.map((a) => ({ attemptId: a.attemptId, total: a.total, passedAll: null, submittedAt: a.submittedAt })).reverse() }] };
+  },
+  async startAttempt(payload) {
+    if (payload.packageId !== MOCK_SKB_ID) return _base.startAttempt(payload);
+    requireMockSession();
+    const db = mockDb(); db.attempts ||= [];
+    let a = db.attempts.find((x) => x.packageId === MOCK_SKB_ID && x.status === "in_progress" && Date.parse(x.endsAt) > Date.now());
+    if (!a) {
+      const done = db.attempts.filter((x) => x.packageId === MOCK_SKB_ID && x.status === "submitted").length;
+      if (!mockPremium(db) && done >= 1) throw apiError("FORBIDDEN", "Kuota gratis untuk paket ini sudah dipakai. Lihat rapormu atau tunggu paket premium.");
+      a = { attemptId: "t_skb_" + Date.now(), packageId: MOCK_SKB_ID, type: "skb", status: "in_progress", startedAt: new Date().toISOString(), endsAt: new Date(Date.now() + 10 * 60000).toISOString(), answers: {} };
+      db.attempts.push(a); saveMockDb(db);
+    }
+    const qs = mockSkbQuestions().map(({ answer, explanation, ...q }) => q);
+    return { attemptId: a.attemptId, packageId: MOCK_SKB_ID, title: "SKB Kemampuan Teknis Umum (mode uji)", durationMin: 10, startedAt: a.startedAt, endsAt: a.endsAt, serverNow: new Date().toISOString(), questions: qs, answers: a.answers };
+  },
+  async submitAttempt(payload) {
+    const db = mockDb(); const a = (db.attempts || []).find((x) => x.attemptId === payload.attemptId);
+    if (!a || a.type !== "skb") return _base.submitAttempt(payload);
+    if (a.status !== "submitted") {
+      const ans = payload.answers || {}; const qs = mockSkbQuestions();
+      const topics = {}; let score = 0, correct = 0, answered = 0;
+      qs.forEach((q) => { const t = (topics[q.topicId] ||= { points: 0, max: 0, total: 0, answered: 0 }); t.max += 5; t.total++; if (ans[q.id]) { answered++; t.answered++; } if (ans[q.id] === q.answer) { score += 5; correct++; t.points += 5; } });
+      Object.assign(a, { status: "submitted", answers: ans, submittedAt: new Date().toISOString(), finishMode: payload.finishMode || "manual", total: score, topics, skb: { score, max: qs.length * 5, total: qs.length, answered, correct },
+        durationSec: Math.round((Math.min(Date.now(), Date.parse(a.endsAt)) - Date.parse(a.startedAt)) / 1000) });
+      saveMockDb(db);
+    }
+    return { attemptId: a.attemptId, status: "submitted" };
+  },
+  async getReport(payload) {
+    const db = mockDb(); const a = (db.attempts || []).find((x) => x.attemptId === payload.attemptId);
+    if (!a || a.type !== "skb") return _base.getReport(payload);
+    requireMockSession();
+    const qs = mockSkbQuestions(); const premium = mockPremium(db);
+    const topics = Object.entries(a.topics).map(([id, t]) => ({ topicId: id, name: MOCK_SKB_TOPICS[id] || id, subtest: "skb", pct: Math.round((t.points / t.max) * 100), answered: t.answered, total: t.total })).sort((x, y) => x.pct - y.pct);
+    const pool = qs.map((q) => ({ number: q.number, subtest: "skb", topic: MOCK_SKB_TOPICS[q.topicId], text: q.text, context: "", options: q.options.map((o) => ({ ...o, score: null })), yourAnswer: a.answers[q.id] || "", bestAnswer: "a", points: a.answers[q.id] === "a" ? 5 : 0, explanation: q.explanation }));
+    const wrong = pool.filter((r) => r.points < 5);
+    return { attemptId: a.attemptId, package: { packageId: MOCK_SKB_ID, title: "SKB Kemampuan Teknis Umum (mode uji)", type: "skb", durationMin: 10 },
+      startedAt: a.startedAt, submittedAt: a.submittedAt, durationSec: a.durationSec, finishMode: a.finishMode, total: a.total, maxTotal: a.skb.max, passedAll: null,
+      score100: Math.round((a.skb.score / a.skb.max) * 100), answered: a.skb.answered, questionCount: qs.length,
+      subtests: [{ id: "skb", label: "Seleksi Kompetensi Bidang", score: a.skb.score, max: a.skb.max, passingGrade: null, passed: null, answered: a.skb.answered, total: a.skb.total, correct: a.skb.correct }],
+      topics: premium ? topics : topics.map((t, i) => (i === 0 ? t : { topicId: t.topicId, name: t.name, subtest: "skb", locked: true })), topicsLocked: !premium && topics.length > 1,
+      review: premium ? pool : wrong.slice(0, 5), reviewLocked: !premium, reviewTotal: wrong.length, premium };
+  },
+  async getPostSkd() {
+    requireMockSession();
+    const db = mockDb(); const list = db.skd || [];
+    return mockPostSkd(db, list[list.length - 1] || null);
+  },
+  async saveSkdResult(p) {
+    requireMockSession();
+    const max = { twk: 150, tiu: 175, tkp: 225 };
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(p.testDate || "")) throw apiError("BAD_REQUEST", "Tanggal tes tidak valid.");
+    if (Date.parse(p.testDate) > Date.now() + 86400000) throw apiError("BAD_REQUEST", "Tanggal tes belum lewat. Isi skor setelah kamu mengikuti SKD.");
+    const r = { testDate: p.testDate, formation: String(p.formation || "").replace(/[<>]/g, "").slice(0, 120), skbDate: p.skbDate || "" };
+    for (const k of ["twk", "tiu", "tkp"]) {
+      const v = Number(p[k]);
+      if (p[k] === "" || p[k] == null || !Number.isInteger(v) || v < 0 || v > max[k]) throw apiError("BAD_REQUEST", `Skor ${k.toUpperCase()} harus bilangan bulat 0–${max[k]}.`);
+      r[k] = v;
+    }
+    const db = mockDb(); db.skd = (db.skd || []).filter((x) => x.testDate !== r.testDate); db.skd.push(r); saveMockDb(db);
+    return mockPostSkd(db, r);
+  },
+  async getReferral() {
+    requireMockSession();
+    const db = mockDb(); db.refCode ||= "SCUJI" + Math.random().toString(36).slice(2, 5).toUpperCase().replace(/[01OI]/g, "X"); saveMockDb(db);
+    return { code: db.refCode, bonusDays: 7, discountPct: 10, invited: 3, purchased: 1, rewarded: 1, bonusDaysEarned: 7,
+      recent: [{ status: "rewarded", joinedAt: new Date(Date.now() - 5 * 864e5).toISOString(), rewardedAt: new Date(Date.now() - 2 * 864e5).toISOString() }, { status: "joined", joinedAt: new Date(Date.now() - 864e5).toISOString(), rewardedAt: "" }, { status: "joined", joinedAt: new Date().toISOString(), rewardedAt: "" }],
+      myReferral: db.myRef ? { code: db.myRef, status: "joined", discountActive: !(db.transactions || []).some((t) => t.status === "paid") } : null,
+      canClaim: !db.myRef && !(db.transactions || []).some((t) => t.status === "paid") };
+  },
+  async claimReferral({ code }) {
+    requireMockSession();
+    const c = String(code || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (!/^[A-Z0-9]{6,12}$/.test(c)) throw apiError("BAD_REQUEST", "Kode ajakan tidak valid.");
+    const db = mockDb();
+    if (c === db.refCode) throw apiError("BAD_REQUEST", "Kode ajakan milikmu sendiri tidak bisa dipakai.");
+    if (db.myRef) throw apiError("ALREADY_DONE", "Kamu sudah memakai kode ajakan sebelumnya.");
+    if ((db.transactions || []).some((t) => t.status === "paid")) throw apiError("BAD_REQUEST", "Kode ajakan hanya untuk pengguna yang belum pernah membeli Premium.");
+    db.myRef = c; saveMockDb(db);
+    return { claimed: true, code: c, discountPct: 10 };
+  },
+  async login(payload = {}) {
+    const out = await _base.login(payload);
+    let referralClaimed = false;
+    if (payload.ref) { try { await mockHandlers.claimReferral({ code: payload.ref }); referralClaimed = true; } catch { referralClaimed = false; } }
+    return { ...out, referralClaimed };
+  },
+  async getPlans(payload) {
+    const out = await _base.getPlans(payload);
+    if (auth.isLoggedIn()) {
+      const db = mockDb();
+      if (db.myRef && !(db.transactions || []).some((t) => t.status === "paid")) {
+        out.referral = { discountPct: 10 };
+        out.plans = out.plans.map((p) => ({ ...p, refPrice: Math.round((p.price * 0.9) / 100) * 100 }));
+      }
+    }
+    return out;
+  },
+  async createCheckout(payload) {
+    const out = await _base.createCheckout(payload);
+    const db = mockDb();
+    if (db.myRef && !(db.transactions || []).some((t) => t.status === "paid")) {
+      const t = db.transactions.find((x) => x.trxId === out.trxId); if (t) { t.amount = Math.round((t.amount * 0.9) / 100) * 100; saveMockDb(db); }
+    }
+    return out;
+  },
+});
+function mockPostSkd(db, r) {
+  const pg = { twk: 65, tiu: 80, tkp: 166 }; const max = { twk: 150, tiu: 175, tkp: 225 };
+  const testDate = db.profile?.testDate || "";
+  const out = { premium: mockPremium(db), profileTestDate: testDate, testPassed: Boolean(testDate) && Date.parse(testDate + "T23:59:59+07:00") < Date.now(), result: null, analysis: null,
+    history: (db.skd || []).map((x) => ({ testDate: x.testDate, total: x.twk + x.tiu + x.tkp, passedAll: x.twk >= pg.twk && x.tiu >= pg.tiu && x.tkp >= pg.tkp })).reverse() };
+  if (!r) return out;
+  const total = r.twk + r.tiu + r.tkp; const passedAll = r.twk >= pg.twk && r.tiu >= pg.tiu && r.tkp >= pg.tkp;
+  out.result = { ...r, total, passedAll };
+  const subtests = ["twk", "tiu", "tkp"].map((k) => ({ id: k, score: r[k], max: max[k], pg: pg[k], gap: r[k] - pg[k], passed: r[k] >= pg[k] }));
+  const weakest = [...subtests].sort((a, b) => a.score / a.pg - b.score / b.pg)[0];
+  const tries = (db.attempts || []).filter((a) => a.status === "submitted" && a.type !== "skb" && a.type !== "akbar").slice(-5);
+  const tryout = tries.length ? { n: tries.length, total: Math.round(tries.reduce((s, a) => s + a.total, 0) / tries.length), best: Math.max(...tries.map((a) => a.total)) } : null;
+  if (tryout) tryout.diff = total - tryout.total;
+  const skdPart = Math.round((total / 550) * 40 * 100) / 100;
+  const steps = passedAll
+    ? [{ id: "skb", title: "Siapkan SKB sekarang", text: "SKB umumnya berbobot 60% dari nilai akhir, lebih besar dari SKD. Mulai dari panduan dan tryout SKB.", href: "skb.html" },
+       { id: "pengumuman", title: "Pantau pengumuman peserta SKB", text: "Lolos ambang batas belum otomatis lolos ke SKB. Peserta SKB dipilih berdasarkan peringkat skor SKD di formasi yang sama (umumnya maksimal 3× jumlah kebutuhan formasi). Cek pengumuman resmi instansi.", href: "" },
+       { id: "dokumen", title: "Siapkan dokumen & jadwal", text: "Catat jadwal, lokasi, dan syarat SKB (kartu ujian, KTP, dokumen tambahan). Beberapa instansi menambah wawancara, psikotes, atau praktik kerja.", href: "panduan.html" }]
+    : [{ id: "fokus", title: `Fokus ke ${weakest.id.toUpperCase()}`, text: `${weakest.id.toUpperCase()} paling jauh dari ambang batas (${weakest.score} dari ambang ${weakest.pg}). Satu subtes di bawah ambang batas sudah membuat peserta gugur.`, href: "materi.html" },
+       { id: "rencana", title: "Susun ulang rencana belajar", text: "Perbarui tanggal tes di profil ke perkiraan seleksi berikutnya, lalu ikuti rencana dan latihan harian.", href: "rencana.html" },
+       { id: "akbar", title: "Ikut Tryout Akbar mingguan", text: "Ukur kemajuan tiap minggu dan bandingkan dengan peserta lain.", href: "akbar.html" }];
+  out.analysis = { subtests, weakest: weakest.id, tryout, skdPart, skdWeight: 40, skbWeight: 60,
+    scenarios: [60, 70, 80, 90].map((skb) => ({ skb, final: Math.round((skdPart + skb * 0.6) * 100) / 100 })), steps,
+    note: "Perhitungan nilai akhir memakai bobot umum SKD 40% dan SKB 60%. Bobot dan komponen SKB bisa berbeda per instansi; ikuti pengumuman resmi." };
+  return out;
+}
+
 const SUBTEST_NAMES = { twk: "Tes Wawasan Kebangsaan", tiu: "Tes Intelegensia Umum", tkp: "Tes Karakteristik Pribadi" };
 const TOPIC_NAMES = {
   "twk-pancasila": "Pancasila", "twk-uud": "UUD 1945", "twk-nkri": "NKRI", "twk-bhinneka": "Bhinneka Tunggal Ika", "twk-nasionalisme": "Nasionalisme", "twk-integritas": "Integritas", "twk-belanegara": "Bela negara", "twk-bahasa": "Bahasa negara",
@@ -482,7 +646,7 @@ function buildMockMe(db) {
     profileComplete: Boolean(p && p.education && p.major && p.minutesPerDay && p.daysPerWeek),
     latestAssessment: db.assessments[db.assessments.length - 1] || null,
     latestAttempt: (() => {
-      const list = (db.attempts || []).filter((x) => x.type !== "akbar");
+      const list = (db.attempts || []).filter((x) => x.type !== "akbar" && x.type !== "skb");
       const a = list[list.length - 1];
       if (!a) return null;
       return a.status === "submitted"

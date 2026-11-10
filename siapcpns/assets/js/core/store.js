@@ -43,4 +43,5 @@ export const KEYS = {
   SESSION: "auth.session",          // Fase 2: token & data tampilan user
   ME: "auth.me",                    // Fase 2: cache profil dari server
   ONBOARDING_DRAFT: "onboarding.draft",
+  REF_CODE: "referral.code",        // Fase 8: kode ajakan dari tautan ?ref=
 };

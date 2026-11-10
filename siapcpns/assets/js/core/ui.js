@@ -4,6 +4,7 @@
 
 import { CONFIG } from "./config.js";
 import { auth } from "./auth.js";
+import { store, KEYS } from "./store.js";
 
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -57,6 +58,7 @@ export async function copyText(text) {
 
 /** Isi nama aplikasi dan tahun di elemen dengan atribut data-app-name / data-year. */
 export function hydrateCommon() {
+  captureReferral();
   $$("[data-app-name]").forEach((el) => (el.textContent = CONFIG.APP_NAME));
   $$("[data-org-name]").forEach((el) => (el.textContent = CONFIG.ORG_NAME));
   $$("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
@@ -104,4 +106,20 @@ export function fmtDate(value) {
   const d = value instanceof Date ? value : new Date(value);
   if (isNaN(d.getTime())) return "-";
   return d.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+}
+
+/** Fase 8: simpan kode ajakan dari tautan ?ref=KODE (dipakai saat login, berlaku 30 hari). */
+export function captureReferral() {
+  try {
+    const raw = new URLSearchParams(location.search).get("ref");
+    const code = String(raw || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (/^[A-Z0-9]{6,12}$/.test(code)) store.set(KEYS.REF_CODE, { code, at: Date.now() });
+  } catch { /* abaikan */ }
+}
+
+/** Kode ajakan tersimpan yang masih berlaku (≤ 30 hari), atau "". */
+export function pendingReferral() {
+  const r = store.get(KEYS.REF_CODE);
+  if (!r || !r.code || Date.now() - (r.at || 0) > 30 * 864e5) return "";
+  return r.code;
 }
