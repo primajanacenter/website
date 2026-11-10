@@ -46,7 +46,7 @@ function buildAdaptivePlan_(user, profile) {
   var stats = topicStats_(user, history);
 
   // ---- Tryout terakhir & selisih terhadap ambang batas ----
-  var attempts = findAll_('attempts', 'user_id', user.userId).filter(function (a) { return a.status === 'submitted'; });
+  var attempts = findAll_('attempts', 'user_id', user.userId).filter(function (a) { return a.status === 'submitted' && a.type !== 'skb'; });
   var last = attempts[attempts.length - 1] || null;
   var gaps = null, gapW = { twk: 1, tiu: 1, tkp: 1 };
   if (last) {

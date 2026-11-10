@@ -54,7 +54,13 @@ function getRoutes_() {
     getAkbarInfo:     { handler: handleGetAkbarInfo_,     auth: 'optional' },
     joinAkbar:        { handler: handleJoinAkbar_,        auth: 'required' },
     getAkbarRanking:  { handler: handleGetAkbarRanking_,  auth: 'optional' },
-    loadProbe:        { handler: handleLoadProbe_,        auth: 'none' }
+    loadProbe:        { handler: handleLoadProbe_,        auth: 'none' },
+
+    // Fase 8
+    getPostSkd:       { handler: handleGetPostSkd_,       auth: 'required' },
+    saveSkdResult:    { handler: handleSaveSkdResult_,    auth: 'required' },
+    getReferral:      { handler: handleGetReferral_,      auth: 'required' },
+    claimReferral:    { handler: handleClaimReferral_,    auth: 'required' }
   };
 }
 
@@ -63,13 +69,14 @@ function doGet(e) {
 }
 
 function doPost(e) {
+  var body = null;
   try {
     // Webhook Mayar (Fase 5)
     if (e && e.parameter && e.parameter.hook === 'mayar') {
       return json_(handleMayarWebhook_(e));
     }
 
-    var body = parseBody_(e);
+    body = parseBody_(e);
     var route = getRoutes_()[body.action];
     if (!route) throw new AppError_('UNKNOWN_ACTION', 'Action "' + body.action + '" tidak dikenal.');
 
@@ -83,6 +90,7 @@ function doPost(e) {
     var data = route.handler(body.payload || {}, user);
     return json_({ ok: true, data: data });
   } catch (err) {
+    if (!(err instanceof AppError_)) console.error('Action ' + (body && body.action) + ' gagal');
     return json_(errorBody_(err));
   }
 }

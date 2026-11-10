@@ -58,7 +58,7 @@ function topicStats_(user, history) {
     s.points += pts; s.max += max; s.n++;
   }
   // tryout terakhir yang sudah dinilai
-  var attempts = findAll_('attempts', 'user_id', user.userId).filter(function (a) { return a.status === 'submitted'; });
+  var attempts = findAll_('attempts', 'user_id', user.userId).filter(function (a) { return a.status === 'submitted' && a.type !== 'skb'; });
   var last = attempts[attempts.length - 1];
   if (last) {
     var t = safeParse_(last.topic_json, {});
@@ -121,7 +121,7 @@ function handleGetToday_(payload, user) {
   var premium = user.plan === 'premium';
   var profileRow = findOne_('profiles', 'user_id', user.userId);
   var attempts = findAll_('attempts', 'user_id', user.userId);
-  var hasTryout = attempts.some(function (a) { return a.status === 'submitted'; });
+  var hasTryout = attempts.some(function (a) { return a.status === 'submitted' && a.type !== 'skb'; });
 
   var topicLevels = {};
   Object.keys(stats).forEach(function (k) {

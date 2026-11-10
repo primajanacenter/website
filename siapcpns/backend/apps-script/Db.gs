@@ -11,7 +11,7 @@
 var SCHEMA = {
   users: [
     'user_id', 'email', 'name', 'picture', 'phone', 'plan', 'premium_until',
-    'mayar_member_id', 'created_at', 'last_login_at'
+    'mayar_member_id', 'created_at', 'last_login_at', 'ref_code'
   ],
   profiles: [
     'user_id', 'education', 'major', 'target_formation', 'target_province', 'test_date',
@@ -35,7 +35,7 @@ var SCHEMA = {
   transactions: [
     'trx_id', 'user_id', 'email', 'plan_id', 'plan_name', 'duration_days', 'amount', 'status',
     'mayar_id', 'mayar_trx_id', 'payment_url', 'created_at', 'expires_at', 'paid_at', 'processed',
-    'premium_until', 'source', 'note'
+    'premium_until', 'source', 'note', 'ref_code', 'discount'
   ],
   webhook_log: ['received_at', 'event', 'trx_id', 'mayar_ref', 'result', 'raw_json'],
   // Fase 7: Tryout Akbar
@@ -44,7 +44,13 @@ var SCHEMA = {
     'event_id', 'user_id', 'attempt_id', 'rank', 'total', 'twk', 'tiu', 'tkp', 'passed_all', 'percentile',
     'duration_sec', 'province', 'province_rank', 'province_total', 'education', 'display_name', 'published_at'
   ],
-  loadtest_log: ['at', 'probe_id', 'note']
+  loadtest_log: ['at', 'probe_id', 'note'],
+  // Fase 8: pasca-SKD & referral
+  skd_results: [
+    'user_id', 'test_date', 'twk', 'tiu', 'tkp', 'total', 'passed_all', 'formation', 'skb_date',
+    'created_at', 'updated_at'
+  ],
+  referrals: ['referee_id', 'referrer_id', 'code', 'status', 'trx_id', 'bonus_days', 'created_at', 'rewarded_at']
 };
 
 /** Struktur sheet di file BANK SOAL (QUESTIONS_SPREADSHEET_ID). Hanya bisa dibaca server. */

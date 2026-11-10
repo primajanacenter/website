@@ -11,7 +11,9 @@
  */
 
 var DEFAULT_PG = { twk: 65, tiu: 80, tkp: 166 };
-var SUBTEST_LABEL = { twk: 'Tes Wawasan Kebangsaan', tiu: 'Tes Intelegensia Umum', tkp: 'Tes Karakteristik Pribadi' };
+var SUBTEST_LABEL = { twk: 'Tes Wawasan Kebangsaan', tiu: 'Tes Intelegensia Umum', tkp: 'Tes Karakteristik Pribadi', skb: 'Seleksi Kompetensi Bidang' };
+/** Paket bertipe khusus yang tidak tampil di lobi tryout SKD. */
+var NON_LOBBY_TYPES = ['latihan', 'akbar', 'skb'];
 var GRACE_SEC = 180;           // toleransi keterlambatan kirim jawaban (detik)
 var FREE_REVIEW_LIMIT = 5;     // jumlah pembahasan untuk pengguna gratis
 var PKG_CACHE_SEC = 3600;    // cache daftar paket & soal (detik); diperbarui trigger per jam
@@ -38,6 +40,15 @@ var TOPICS = {
   'tkp-tik': { subtest: 'tkp', name: 'Teknologi informasi' },
   'tkp-profesionalisme': { subtest: 'tkp', name: 'Profesionalisme' },
   'tkp-antiradikalisme': { subtest: 'tkp', name: 'Anti-radikalisme' }
+};
+
+/** Fase 8: topik SKB (terpisah dari TOPICS agar tidak masuk rencana/latihan SKD). */
+var SKB_TOPICS = {
+  'skb-asn': { subtest: 'skb', name: 'Manajemen ASN & disiplin' },
+  'skb-pelayanan': { subtest: 'skb', name: 'Standar pelayanan publik' },
+  'skb-adminpem': { subtest: 'skb', name: 'Administrasi pemerintahan' },
+  'skb-kinerja': { subtest: 'skb', name: 'Akuntabilitas kinerja & anggaran' },
+  'skb-integritas': { subtest: 'skb', name: 'Integritas & keterbukaan informasi' }
 };
 
 /* ================================================================== */
@@ -295,7 +306,11 @@ function installQuestionTrigger() {
 /** Daftar paket + status percobaan pengguna. */
 function handleGetTryoutInfo_(payload, user) {
   var attempts = finalizeExpiredAttempts_(user);
-  var packages = getPackages_().filter(function (p) { return p.type !== 'latihan' && p.type !== 'akbar'; }).map(function (p) {
+  // payload.type = "skb" → hanya paket SKB (halaman skb.html); selain itu lobi tryout SKD
+  var wantSkb = payload && payload.type === 'skb';
+  var packages = getPackages_().filter(function (p) {
+    return wantSkb ? p.type === 'skb' : NON_LOBBY_TYPES.indexOf(p.type) < 0;
+  }).map(function (p) {
     var mine = attempts.filter(function (a) { return a.package_id === p.packageId; });
     var done = mine.filter(function (a) { return a.status === 'submitted'; });
     var running = mine.filter(function (a) { return a.status === 'in_progress'; })[0];
@@ -317,7 +332,7 @@ function handleGetTryoutInfo_(payload, user) {
 function handleStartAttempt_(payload, user) {
   var packageId = String(payload.packageId || '');
   var pkg = getPackage_(packageId);
-  if (pkg.type === 'latihan' || pkg.type === 'akbar') throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.');
+  if (pkg.type === 'latihan' || pkg.type === 'akbar') throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.'); // skb boleh
   var questions = getPackageQuestions_(packageId);
 
   var attempt = withLock_(function () {
@@ -411,6 +426,7 @@ function handleGetReport_(payload, user) {
 function gradeAndStore_(row, questions, answers, mode) {
   var pkg = getPackage_(row.package_id);
   var g = grade_(questions, answers);
+  if (pkg.type === 'skb') return storeSkbGrade_(row, g, answers, mode);
   var passed = {
     twk: g.sub.twk.score >= pkg.pg.twk,
     tiu: g.sub.tiu.score >= pkg.pg.tiu,
@@ -434,13 +450,26 @@ function gradeAndStore_(row, questions, answers, mode) {
   });
 }
 
+/** Simpan nilai paket SKB: tidak ada ambang batas SKD; total = skor SKB (benar × 5). */
+function storeSkbGrade_(row, g, answers, mode) {
+  var submittedAt = new Date();
+  var duration = Math.round((Math.min(submittedAt.getTime(), new Date(row.ends_at).getTime()) - new Date(row.started_at).getTime()) / 1000);
+  return update_('attempts', row._row, {
+    status: 'submitted', submitted_at: submittedAt.toISOString(),
+    twk: '', tiu: '', tkp: '', total: g.sub.skb.score,
+    passed_twk: '', passed_tiu: '', passed_tkp: '', passed_all: '',
+    answered: g.answered, correct_json: JSON.stringify(g.sub), topic_json: JSON.stringify(g.topics),
+    answers_json: JSON.stringify(answers), duration_sec: Math.max(0, duration), finish_mode: mode
+  });
+}
+
 /**
- * TWK & TIU: benar 5, salah/kosong 0.
+ * TWK, TIU & SKB: benar 5, salah/kosong 0.
  * TKP: nilai opsi 1–5 sesuai kunci skor, kosong 0.
  */
 function grade_(questions, answers) {
   var sub = {};
-  ['twk', 'tiu', 'tkp'].forEach(function (s) { sub[s] = { score: 0, max: 0, total: 0, answered: 0, correct: 0 }; });
+  ['twk', 'tiu', 'tkp', 'skb'].forEach(function (s) { sub[s] = { score: 0, max: 0, total: 0, answered: 0, correct: 0 }; });
   var topics = {};
   var answered = 0;
 
@@ -487,18 +516,20 @@ function buildReport_(row, user) {
   var answers = safeParse_(row.answers_json, {});
   var questions = getPackageQuestions_(row.package_id);
 
-  var subtests = ['twk', 'tiu', 'tkp'].map(function (id) {
+  var isSkb = pkg.type === 'skb';
+  var subtests = (isSkb ? ['skb'] : ['twk', 'tiu', 'tkp']).map(function (id) {
     var s = sub[id] || { score: 0, max: 0, total: 0, answered: 0, correct: 0 };
+    var pgv = isSkb ? null : pkg.pg[id];
     return {
-      id: id, label: SUBTEST_LABEL[id], score: s.score, max: s.max, passingGrade: pkg.pg[id],
-      passed: s.score >= pkg.pg[id], answered: s.answered, total: s.total, correct: s.correct
+      id: id, label: SUBTEST_LABEL[id], score: s.score, max: s.max, passingGrade: pgv,
+      passed: isSkb ? null : s.score >= pgv, answered: s.answered, total: s.total, correct: s.correct
     };
   });
 
   // Topik diurutkan dari yang paling lemah
   var topics = Object.keys(topicStats).map(function (id) {
     var t = topicStats[id];
-    var meta = TOPICS[id] || { subtest: '', name: id };
+    var meta = TOPICS[id] || SKB_TOPICS[id] || { subtest: '', name: id };
     return { topicId: id, name: meta.name, subtest: meta.subtest, pct: t.max ? Math.round((t.points / t.max) * 100) : 0, answered: t.answered, total: t.total };
   }).sort(function (a, b) { return a.pct - b.pct; });
 
@@ -518,7 +549,7 @@ function buildReport_(row, user) {
       ? q.options.reduce(function (a, b) { return (b.score || 0) > (a.score || 0) ? b : a; }, q.options[0])
       : q.options.filter(function (o) { return o.key === q.answer; })[0];
     return {
-      number: q.number, subtest: q.subtest, topic: (TOPICS[q.topicId] || {}).name || q.topicId,
+      number: q.number, subtest: q.subtest, topic: (TOPICS[q.topicId] || SKB_TOPICS[q.topicId] || {}).name || q.topicId,
       text: q.text, context: q.context,
       options: q.options.map(function (o) { return { key: o.key, text: o.text, score: q.subtest === 'tkp' ? o.score : null }; }),
       yourAnswer: ans, bestAnswer: best ? best.key : '', points: pts, explanation: q.explanation,
@@ -544,7 +575,8 @@ function buildReport_(row, user) {
     finishMode: String(row.finish_mode || ''),
     total: Number(row.total) || 0,
     maxTotal: subtests.reduce(function (a, s) { return a + s.max; }, 0),
-    passedAll: isTrue_(row.passed_all),
+    passedAll: isSkb ? null : isTrue_(row.passed_all),
+    score100: isSkb && subtests[0].max ? Math.round(subtests[0].score / subtests[0].max * 100) : null,
     answered: Number(row.answered) || 0,
     questionCount: questions.length,
     subtests: subtests,

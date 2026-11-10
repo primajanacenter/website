@@ -82,6 +82,13 @@ function handleGetPlans_(payload, user) {
   var out = { plans: getPlans_(), env: paymentEnv_(), current: null, pending: null, history: [] };
   if (user) {
     out.current = { plan: user.plan, premiumUntil: user.premiumUntil };
+    // Fase 8: diskon kode ajakan untuk pembelian pertama
+    var pct = 0;
+    try { pct = referralDiscountFor_(user); } catch (e) { pct = 0; }
+    if (pct) {
+      out.referral = { discountPct: pct };
+      out.plans = out.plans.map(function (p) { return Object.assign({}, p, { refPrice: discountedPrice_(p.price, pct) }); });
+    }
     var mine = findAll_('transactions', 'user_id', user.userId).slice(-5).reverse();
     out.history = mine.map(publicTrx_);
     var p = mine.filter(function (t) { return t.status === 'pending' && !isExpired_(t); })[0];
@@ -99,9 +106,12 @@ function handleCreateCheckout_(payload, user) {
 
   var mine = findAll_('transactions', 'user_id', user.userId);
   var now = Date.now();
-  // Pakai ulang link yang masih berlaku untuk paket yang sama (hindari tagihan ganda)
+  var refPct = 0;
+  try { refPct = referralDiscountFor_(user); } catch (e) { refPct = 0; }
+  var amount = discountedPrice_(plan.price, refPct);
+  // Pakai ulang link yang masih berlaku untuk paket & nominal yang sama (hindari tagihan ganda)
   var reuse = mine.filter(function (t) {
-    return t.status === 'pending' && t.plan_id === plan.planId && t.payment_url && !isExpired_(t) &&
+    return t.status === 'pending' && t.plan_id === plan.planId && Number(t.amount) === amount && t.payment_url && !isExpired_(t) &&
       now - new Date(t.created_at).getTime() < PAY_REUSE_MINUTES * 60000;
   }).pop();
   if (reuse) return { trxId: reuse.trx_id, paymentUrl: reuse.payment_url, expiresAt: reuse.expires_at, reused: true };
@@ -114,16 +124,17 @@ function handleCreateCheckout_(payload, user) {
   withLock_(function () {
     insert_('transactions', {
       trx_id: trxId, user_id: user.userId, email: user.email, plan_id: plan.planId, plan_name: plan.name,
-      duration_days: plan.durationDays, amount: plan.price, status: 'pending', created_at: nowIso_(),
-      expires_at: expiresAt, processed: 'tidak'
+      duration_days: plan.durationDays, amount: amount, status: 'pending', created_at: nowIso_(),
+      expires_at: expiresAt, processed: 'tidak',
+      ref_code: refPct ? String((myReferral_(user.userId) || {}).code || '') : '', discount: refPct ? plan.price - amount : ''
     });
   });
 
   var body = {
     name: 'Siap CPNS – ' + plan.name,
-    amount: plan.price,
+    amount: amount,
     email: user.email,
-    description: plan.name + ' (' + plan.durationDays + ' hari) · Ref ' + trxId,
+    description: plan.name + ' (' + plan.durationDays + ' hari)' + (refPct ? ' · diskon ajakan ' + refPct + '%' : '') + ' · Ref ' + trxId,
     expiredAt: expiresAt
   };
   var base = getConfigOptional_('APP_BASE_URL', getConfigOptional_('ALLOWED_ORIGIN', ''));
@@ -235,9 +246,12 @@ function fulfillTransaction_(trxId, source) {
     var base = isPremiumActive_(userRow) && current > now ? current : now;
     var until = new Date(base + Number(trx.duration_days) * 86400000).toISOString();
     update_('users', userRow._row, { plan: 'premium', premium_until: until });
-    return update_('transactions', trx._row, {
+    var done = update_('transactions', trx._row, {
       status: 'paid', paid_at: nowIso_(), processed: 'ya', premium_until: until, source: source || ''
     });
+    // Fase 8: bonus untuk pengajak (sekali, pada pembelian pertama). Gagal di sini tidak boleh membatalkan aktivasi.
+    try { rewardReferralLocked_(done); } catch (e) { console.warn('Bonus ajakan gagal untuk ' + trxId + ': ' + (e && e.message)); }
+    return done;
   });
 }
 

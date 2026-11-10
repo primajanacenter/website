@@ -26,8 +26,15 @@ function handleLogin_(payload, user) {
     }
   }
 
+  // Fase 8: kode ajakan dari tautan ?ref= (diam-diam; kode tidak valid/tidak berlaku diabaikan)
+  var refClaimed = false;
+  if (payload && payload.ref) {
+    try { claimReferral_(user, payload.ref); refClaimed = true; } catch (err) { refClaimed = false; }
+  }
+
   var me = buildMe_(user);
   me.isNew = user.isNew;
+  me.referralClaimed = refClaimed;
   me.attachedAssessmentId = attached ? attached.assessment_id : null;
   return me;
 }
@@ -42,7 +49,7 @@ function buildMe_(user) {
   var lastAssessment = findLast_('assessments', 'user_id', user.userId);
   var lastAttempt = null;
   try {
-    var mineA = findAll_('attempts', 'user_id', user.userId).filter(function (x) { return x.type !== 'akbar'; });
+    var mineA = findAll_('attempts', 'user_id', user.userId).filter(function (x) { return x.type !== 'akbar' && x.type !== 'skb'; });
     var a = mineA[mineA.length - 1];
     if (a) {
       lastAttempt = a.status === 'submitted'
