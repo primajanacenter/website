@@ -238,3 +238,33 @@ export function startLocalReminders() {
     import("../features/reminder-local.js").then((m) => m.runLocalReminders()).catch(() => {});
   } catch { /* abaikan */ }
 }
+
+/* ------------------------------------------------------------------ */
+/* Fase 11: soal bergambar (figural)                                    */
+/* ------------------------------------------------------------------ */
+/** Teks soal/opsi yang berupa gambar SVG (diawali "<svg"). */
+export function isSvg(s) {
+  return /^\s*<svg[\s>]/i.test(String(s || ""));
+}
+
+/**
+ * Tampilkan SVG sebagai <img> data-URI. Di dalam <img>, browser TIDAK menjalankan skrip/tautan
+ * apa pun di SVG, jadi aman walau isinya berasal dari sheet.
+ */
+export function svgImg(svg, alt = "Gambar soal", cls = "fig") {
+  const src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(String(svg).trim());
+  return `<img class="${cls}" src="${src}" alt="${esc(alt)}" loading="lazy" decoding="async">`;
+}
+
+/** Teks biasa di-escape; SVG ditampilkan sebagai gambar. */
+export function richText(s, alt) {
+  return isSvg(s) ? svgImg(s, alt) : esc(s);
+}
+
+/** Isi elemen konteks soal: gambar (SVG) atau teks. */
+export function setContext(el, ctx) {
+  el.hidden = !ctx;
+  el.classList.toggle("has-fig", isSvg(ctx));
+  if (isSvg(ctx)) el.innerHTML = svgImg(ctx, "Gambar soal", "fig fig-ctx");
+  else el.textContent = ctx || "";
+}
