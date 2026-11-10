@@ -725,6 +725,33 @@ post('getTryoutInfo',{},'h.alice.s');
 check('memo: daftar paket dibaca sekali per permintaan', gets===1, gets);
 ctx.CacheService.getScriptCache=realCache;
 }
+// ---------- Fase 12: Super User Dashboard ----------
+delete props.ADMIN_EMAILS; const oldAdm=props.ADMIN_EMAIL; delete props.ADMIN_EMAIL;
+check('admin: tanpa ADMIN_EMAILS semua ditolak', post('getAdminDashboard',{},'h.alice.s').error.code==='FORBIDDEN');
+props.ADMIN_EMAILS='bos@x.com, ALICE@gmail.com';
+check('admin: bukan admin ditolak', post('getAdminDashboard',{},'h.bob.s').error.code==='FORBIDDEN' && post('adminLookupUser',{q:'dina'},'h.bob.s').error.code==='FORBIDDEN' && post('adminTransactions',{},'h.bob.s').error.code==='FORBIDDEN');
+check('admin: tanpa login ditolak', post('getAdminDashboard',{}).error.code==='UNAUTHENTICATED');
+check('getMe: isAdmin', post('getMe',{},'h.alice.s').data.isAdmin===true && post('getMe',{},'h.bob.s').data.isAdmin===false);
+const ad=post('getAdminDashboard',{days:30,force:true},'h.alice.s');
+const A=ad.data||{};
+const paidSum=sheets.transactions.rows.slice(1).map(r=>Object.fromEntries(sheets.transactions.rows[0].map((h,i)=>[h,r[i]]))).filter(t=>t.status==='paid'&&Number(t.amount)>0).reduce((s,t)=>s+Number(t.amount),0);
+check('dasbor admin: struktur lengkap', ad.ok && A.kpi && A.business && A.users && A.learning && A.ops && A.daily.length===30 && A.range.days===30, ad.error||Object.keys(A));
+check('dasbor admin: pendapatan total = jumlah transaksi lunas', A.business.revenueTotal===paidSum && paidSum>0, [A.business&&A.business.revenueTotal, paidSum]);
+check('dasbor admin: pengguna total & corong', A.users.total===sheets.users.rows.length-1 && A.users.funnel[0].key==='daftar' && A.users.funnel.length===6 && A.users.cohorts.length===6, A.users&&[A.users.total,A.users.funnel]);
+check('dasbor admin: belajar & latihan terhitung', A.learning.practice>0 && A.learning.attempts>0 && A.learning.attemptsByType.length>0, A.learning);
+check('dasbor admin: seri harian konsisten dengan KPI', A.daily.reduce((s,d)=>s+d.revenue,0)===A.kpi.revenue && A.daily.reduce((s,d)=>s+d.signups,0)===A.kpi.newUsers, [A.kpi.revenue,A.kpi.newUsers]);
+check('dasbor admin: operasional (healthCheck & galat)', A.ops.health && Array.isArray(A.ops.health.report) && A.ops.errors24h && typeof A.ops.webhook.count7==='number', A.ops);
+check('dasbor admin: hasil di-cache 5 menit', post('getAdminDashboard',{days:30},'h.alice.s').data.cached===true && post('getAdminDashboard',{days:30,force:true},'h.alice.s').data.cached===false);
+check('dasbor admin: rentang tak dikenal → 30 hari', post('getAdminDashboard',{days:12345},'h.alice.s').data.range.days===30);
+const at=post('adminTransactions',{from:'2000-01-01',to:'2099-12-31'},'h.alice.s');
+check('admin transaksi: semua baris & berurutan terbaru', at.ok && at.data.total===sheets.transactions.rows.length-1 && at.data.items.every((t,i,a)=>!i||a[i-1].createdAt>=t.createdAt), at.data&&at.data.total);
+const atp=post('adminTransactions',{from:'2000-01-01',to:'2099-12-31',status:'paid'},'h.alice.s');
+check('admin transaksi: filter status', atp.ok && atp.data.items.length>0 && atp.data.items.every(t=>t.status==='paid'));
+check('admin cari: minimal 3 huruf', post('adminLookupUser',{q:'di'},'h.alice.s').error.code==='BAD_REQUEST');
+const lk=post('adminLookupUser',{q:'dina@x.com'},'h.alice.s');
+check('admin cari: detail pengguna', lk.ok && lk.data.detail && lk.data.detail.email==='dina@x.com' && Array.isArray(lk.data.detail.transactions) && lk.data.detail.transactions.length>0 && 'practice' in lk.data.detail, lk.data);
+check('admin cari: tidak membocorkan jawaban mentah', !/answers_json|correct_json/.test(JSON.stringify(lk.data)));
+delete props.ADMIN_EMAILS; if(oldAdm) props.ADMIN_EMAIL=oldAdm;
 delete props.QUESTIONS_FOLDER_ID; ctx.clearPackageCache_(null);
 check('no source -> clear config error', post('getTryoutInfo',{},'h.alice.s').error.code==='CONFIG_MISSING');
 
