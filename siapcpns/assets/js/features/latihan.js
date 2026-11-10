@@ -70,6 +70,7 @@ async function answer(key) {
     return handleError(res.error);
   }
   const r = res.data;
+  import("./reminder-local.js").then((m) => m.markPracticed()).catch(() => {});
   S.results.push({ topicId: q.topicId, correct: r.correct, points: r.points });
 
   box.querySelectorAll(".option").forEach((b) => {

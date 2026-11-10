@@ -10,9 +10,9 @@ import { ALL_TOPICS, LEVEL_NAMES, buildPlan, taskDone } from "./plan.js";
 const SUBNAME = { twk: "TWK", tiu: "TIU", tkp: "TKP" };
 
 /** Rencana yang dipakai halaman: adaptif (Premium) atau dasar. Dipakai juga oleh beranda. */
-export async function loadPlan(today) {
+export async function loadPlan(today, prefetched = null) {
   if (today.plan === "premium") {
-    const res = await api.call("getPlan");
+    const res = prefetched && prefetched.ok ? prefetched : await api.call("getPlan");
     if (res.ok) return res.data;
   }
   return buildPlan(today);
@@ -20,14 +20,16 @@ export async function loadPlan(today) {
 
 export async function initRencana() {
   if (!auth.requireLogin("masuk.html")) return;
-  const res = await api.call("getToday");
+  // getToday + getPlan dalam satu permintaan (Fase 10.2)
+  const premiumHint = auth.getUser()?.plan === "premium";
+  const [res, planRes] = await api.batch(premiumHint ? [{ action: "getToday" }, { action: "getPlan" }] : [{ action: "getToday" }]);
   if (!res.ok) {
     if (res.error.code === "UNAUTHENTICATED") return location.replace("masuk.html?next=rencana.html");
     return status(res.error.message);
   }
   const today = res.data;
   if (!today.profile) return location.replace("onboarding.html?next=rencana.html");
-  const plan = await loadPlan(today);
+  const plan = await loadPlan(today, planRes);
   const adaptive = Boolean(plan.adaptive);
 
   $("#r-lead").textContent = adaptive

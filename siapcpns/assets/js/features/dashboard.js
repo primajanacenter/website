@@ -9,7 +9,7 @@
 import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
 import { store, KEYS } from "../core/store.js";
-import { $, esc, fmtDate, toast } from "../core/ui.js";
+import { $, esc, fmtDate, toast, pwa } from "../core/ui.js";
 import { taskDone } from "./plan.js";
 import { loadPlan } from "./rencana.js";
 
@@ -33,8 +33,18 @@ export async function initDashboard() {
   const cached = store.get(KEYS.ME);
   if (cached) render(cached);
 
-  if (!cached || Date.now() - (cached.fetchedAt || 0) > ME_TTL) {
-    const res = await api.call("getMe");
+  // Fase 10.2: profil, tugas hari ini, dan rencana diambil dalam SATU permintaan ke server.
+  const needMe = !cached || Date.now() - (cached.fetchedAt || 0) > ME_TTL;
+  const calls = [{ action: "getToday" }];
+  if (needMe) calls.unshift({ action: "getMe" });
+  if ((cached?.user?.plan || auth.getUser()?.plan) === "premium") calls.push({ action: "getPlan" });
+  const results = await api.batch(calls);
+  const meRes = needMe ? results[0] : null;
+  const todayRes = results[needMe ? 1 : 0];
+  const planRes = results[needMe ? 2 : 1] || null;
+
+  if (needMe) {
+    const res = meRes;
     if (!res.ok) {
       if (res.error.code === "UNAUTHENTICATED") {
         location.replace(`masuk.html?next=${encodeURIComponent("dashboard.html")}`);
@@ -56,21 +66,22 @@ export async function initDashboard() {
     return;
   }
 
-  // Tugas hari ini (selalu data terbaru)
-  const t = await api.call("getToday");
+  // Tugas hari ini
+  const t = todayRes;
   if (t.ok) {
-    await renderToday(t.data);
+    await renderToday(t.data, planRes);
     renderTasks(store.get(KEYS.ME) || me, t.data);
   } else {
     $("#today-card").hidden = true;
   }
 }
 
-async function renderToday(today) {
-  const plan = await loadPlan(today);
+async function renderToday(today, planRes = null) {
+  const plan = await loadPlan(today, planRes);
   $("#today-date").textContent = new Date().toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long" });
   $("#today-streak").textContent = today.streak;
   const p = today.practice;
+  if (p.doneToday > 0) import("./reminder-local.js").then((m) => m.markPracticed()).catch(() => {});
   $("#today-quota").textContent =
     p.dailyLimit === null
       ? `Latihan hari ini: ${p.doneToday} soal (Premium, tanpa batas)`
@@ -101,8 +112,34 @@ function referralNotice() {
   toast(`Kode ajakan ${n.code} aktif: diskon 10% untuk pembelian Premium pertamamu.`, 5000);
 }
 
+/** Fase 10: ajakan pasang aplikasi (Android/desktop: tombol; iPhone: arahkan ke petunjuk). */
+function installCard() {
+  const card = $("#d-install");
+  if (!card) return;
+  const dismissed = Number(store.get("pwa.dismissed") || 0);
+  const hide = () => (card.hidden = true);
+  const update = () => {
+    if (pwa.isStandalone() || store.get("pwa.installed") || Date.now() - dismissed < 14 * 864e5) return hide();
+    if (pwa.canPrompt() || pwa.isIOS()) card.hidden = false;
+  };
+  $("#d-install-btn").onclick = async () => {
+    if (pwa.canPrompt()) {
+      const r = await pwa.prompt();
+      if (r === "accepted") { store.set("pwa.installed", true); toast("Siap CPNS terpasang di layar utama."); }
+      update();
+    } else {
+      location.href = "pengaturan.html";
+    }
+  };
+  $("#d-install-x").onclick = () => { store.set("pwa.dismissed", Date.now()); hide(); };
+  document.addEventListener("sc:installable", update);
+  document.addEventListener("sc:installed", hide);
+  update();
+}
+
 function render(me) {
   referralNotice();
+  installCard();
   renderWelcome(me.user || auth.getUser() || {});
   renderTasks(me);
   renderAssessment(me.latestAssessment);

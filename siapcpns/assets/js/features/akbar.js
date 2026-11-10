@@ -27,6 +27,7 @@ export async function initAkbar() {
   const res = await api.call("getAkbarInfo");
   if (!res.ok) return status(res.error.message, true);
   info = res.data;
+  import("./reminder-local.js").then((m) => m.rememberAkbar(info)).catch(() => {});
   offset = Date.parse(info.serverNow) - Date.now();
   renderCurrent();
   renderPast();
