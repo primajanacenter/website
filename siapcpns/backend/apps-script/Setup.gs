@@ -52,6 +52,9 @@ function setupQuestionSheets() {
   if (def && def.getLastRow() === 0 && ss.getSheets().length > 1) ss.deleteSheet(def);
 }
 
+/** Versi isi paket demo (ikut ID soal agar rapor lama tidak tertukar). v2 = dengan soal figural. */
+var DEMO_VERSION = 'v2';
+
 /**
  * Masukkan paket DEMO-01 (15 soal contoh) ke bank soal. Aman dijalankan ulang:
  * paket & soal DEMO-01 lama akan diganti.
@@ -71,7 +74,7 @@ function importDemoPackage() {
     data.questions.forEach(function (q) {
       var letters = ['a', 'b', 'c', 'd', 'e'];
       var row = {
-        question_id: pkg.package_id + '-' + ('00' + q.number).slice(-3),
+        question_id: pkg.package_id + '-' + DEMO_VERSION + '-' + ('00' + q.number).slice(-3),
         package_id: pkg.package_id, number: q.number, subtest: q.subtest, topic_id: q.topic_id,
         level: q.level, text: q.text, context: q.context || '', answer: q.answer || '',
         explanation: q.explanation, status: 'live', source: 'demo'
@@ -103,7 +106,7 @@ function createDemoPackageFile() {
   var qh = QSCHEMA.questions;
   var rows = data.questions.map(function (q) {
     var row = {
-      question_id: data.package.package_id + '-' + ('00' + q.number).slice(-3), package_id: data.package.package_id,
+      question_id: data.package.package_id + '-' + DEMO_VERSION + '-' + ('00' + q.number).slice(-3), package_id: data.package.package_id,
       number: q.number, subtest: q.subtest, topic_id: q.topic_id, level: q.level, text: q.text, context: q.context || '',
       answer: q.answer || '', explanation: q.explanation, status: 'live', source: 'demo'
     };

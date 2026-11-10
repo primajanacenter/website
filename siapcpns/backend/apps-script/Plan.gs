@@ -65,7 +65,7 @@ function buildAdaptivePlan_(user, profile) {
   var daysSinceTryout = lastTryoutDate ? Math.round((new Date(today.date + 'T00:00:00Z') - new Date(lastTryoutDate + 'T00:00:00Z')) / 86400000) : null;
 
   // ---- Prioritas topik ----
-  var priorities = Object.keys(TOPICS).filter(function (t) { return t !== 'tiu-figural'; }).map(function (t) {
+  var priorities = Object.keys(TOPICS).map(function (t) {
     var st = stats[t];
     var sub = TOPICS[t].subtest;
     var level = st ? st.level : 1;

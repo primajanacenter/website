@@ -105,14 +105,19 @@ function akbarState_(ev, now) {
 function scheduleAkbarEvents() {
   var events = readAll_('akbar_events');
   var scheduled = {}; var taken = {};
-  events.forEach(function (e) { scheduled[e.package_id] = true; taken[String(e.opens_at).slice(0, 10)] = true; });
+  events.forEach(function (e) {
+    scheduled[e.package_id] = true;
+    var o = akbarDate_(e.opens_at);  // tanggal WIB (06.00 WIB = 23.00 UTC hari sebelumnya)
+    if (o) taken[new Date(o.getTime() + 7 * 3600000).toISOString().slice(0, 10)] = true;
+    if (e.event_id) taken['id:' + e.event_id] = true;
+  });
   var pkgs = getPackages_().filter(function (p) { return p.type === 'akbar' && !scheduled[p.packageId]; });
   var dayOffset = 1, made = 0;
   pkgs.forEach(function (p) {
     var date;
     do {
       var d = jktDay_(dayOffset++);
-      date = d.dow === 0 && !taken[d.date] ? d.date : null;
+      date = d.dow === 0 && !taken[d.date] && !taken['id:AK-' + d.date.replace(/-/g, '')] ? d.date : null;
     } while (!date && dayOffset < 400);
     taken[date] = true;
     var opens = new Date(date + 'T' + AKBAR_OPEN + ':00+07:00');

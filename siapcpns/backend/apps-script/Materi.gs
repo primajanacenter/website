@@ -25,14 +25,18 @@ function loadMaterials_() {
     var key = topic + '|' + level;
     if (out[key]) { console.warn('Materi ganda ' + key + ' diabaikan'); return; }
     var lines = function (v) { return String(v || '').split(/\r?\n/).map(function (x) { return x.trim(); }).filter(String); };
-    var opts = ['a', 'b', 'c', 'd', 'e'].map(function (k) { return String(r['opsi_' + k] || ''); });
+    var opts = ['a', 'b', 'c', 'd', 'e'].map(function (k) { return sanitizeSvg_(String(r['opsi_' + k] || '')); });
+    // Contoh soal figural: teks soal, lalu baris baru berisi kode gambar <svg …> (opsional).
+    var soalRaw = String(r.contoh_soal || ''); var cut = soalRaw.indexOf('<svg');
+    var soalText = cut >= 0 ? soalRaw.slice(0, cut).trim() : soalRaw;
+    var konteks = cut >= 0 ? sanitizeSvg_(soalRaw.slice(cut).trim()) : '';
     var kunci = String(r.kunci || '').toLowerCase().trim();
     out[key] = {
       materialId: String(r.material_id || key), topicId: topic, level: level,
       title: String(r.title || ''), minutes: Number(r.minutes) || 8,
       ringkasan: String(r.ringkasan || ''), poinKunci: lines(r.poin_kunci),
       contoh: opts.every(String) && 'abcde'.indexOf(kunci) >= 0 && kunci ? {
-        soal: String(r.contoh_soal || ''), pilihan: opts, jawaban: 'abcde'.indexOf(kunci), pembahasan: String(r.pembahasan || '')
+        soal: soalText, konteks: konteks, pilihan: opts, jawaban: 'abcde'.indexOf(kunci), pembahasan: String(r.pembahasan || '')
       } : null,
       tips: lines(r.strategi), jebakan: lines(r.jebakan)
     };

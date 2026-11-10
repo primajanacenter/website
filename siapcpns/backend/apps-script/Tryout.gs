@@ -229,7 +229,7 @@ function parseQuestions_(rows, packageId) {
       var opts = [];
       letters.forEach(function (l) {
         var t = String(q['option_' + l] === undefined ? '' : q['option_' + l]);
-        if (t) opts.push({ key: l, text: t, score: isBlank_(q['score_' + l]) ? null : Number(q['score_' + l]) });
+        if (t) opts.push({ key: l, text: sanitizeSvg_(t), score: isBlank_(q['score_' + l]) ? null : Number(q['score_' + l]) });
       });
       return {
         id: String(q.question_id),
@@ -237,13 +237,28 @@ function parseQuestions_(rows, packageId) {
         subtest: String(q.subtest).trim().toLowerCase(),
         topicId: String(q.topic_id || '').trim(),
         text: String(q.text),
-        context: String(q.context || ''),
+        context: sanitizeSvg_(String(q.context || '')),
         options: opts,
         answer: String(q.answer || '').trim().toLowerCase(),
         explanation: String(q.explanation || '')
       };
     })
     .sort(function (a, b) { return a.number - b.number; });
+}
+
+/**
+ * Fase 11: soal bergambar. Isi kolom context/option_x yang diawali "<svg" ditampilkan sebagai gambar
+ * di aplikasi (lewat <img>, sehingga skrip di dalamnya tidak pernah berjalan). Di server tetap dibersihkan
+ * dari skrip, event handler, tautan eksternal, dan foreignObject sebagai lapisan pengaman kedua.
+ */
+function sanitizeSvg_(s) {
+  if (!/^\s*<svg[\s>]/i.test(s)) return s;
+  return s
+    .replace(/<script[\s\S]*?<\/script\s*>/gi, '')
+    .replace(/<foreignObject[\s\S]*?<\/foreignObject\s*>/gi, '')
+    .replace(/\son[a-z]+\s*=\s*("[^"]*"|'[^']*')/gi, '')
+    .replace(/\s(xlink:)?href\s*=\s*("(?!#)[^"]*"|'(?!#)[^']*')/gi, '')
+    .trim();
 }
 
 /** Versi aman untuk dikirim ke peserta (tanpa kunci & skor). */
@@ -548,6 +563,10 @@ function buildReport_(row, user) {
   var topicStats = safeParse_(row.topic_json, {});
   var answers = safeParse_(row.answers_json, {});
   var questions = getPackageQuestions_(row.package_id);
+  // Paket yang isinya sudah diganti (ID soal berubah, mis. -v2-): skor lama tetap, pembahasan per soal tidak bisa dicocokkan.
+  var qids = {}; questions.forEach(function (q) { qids[q.id] = true; });
+  var ansKeys = Object.keys(answers);
+  var stale = ansKeys.length > 0 && !ansKeys.some(function (k) { return qids[k]; });
 
   var isSkb = pkg.type === 'skb';
   var subtests = (isSkb ? ['skb'] : ['twk', 'tiu', 'tkp']).map(function (id) {
@@ -589,6 +608,7 @@ function buildReport_(row, user) {
       _weak: weakOrder[q.topicId] || 0
     };
   });
+  if (stale) reviewPool = [];
   var review = premium
     ? reviewPool
     : reviewPool.filter(function (r) { return r.points < 5; })
@@ -618,6 +638,7 @@ function buildReport_(row, user) {
     review: review,
     reviewLocked: !premium,
     reviewTotal: wrongCount,
+    reviewStale: stale,
     premium: premium
   };
 }
