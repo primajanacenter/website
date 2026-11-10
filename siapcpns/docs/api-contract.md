@@ -51,6 +51,10 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `getReferral` | 8 | Ya | – | `{ code, bonusDays, discountPct, invited, purchased, rewarded, bonusDaysEarned, recent[{status,joinedAt,rewardedAt}], myReferral: { code, status, discountActive } \| null, canClaim }` | ✅ |
 | `claimReferral` | 8 | Ya | `{ code }` | `{ claimed, code, discountPct }` — error `NOT_FOUND`, `BAD_REQUEST` (kode sendiri / sudah pernah membeli), `ALREADY_DONE` | ✅ |
 | `logClientError` | 9 | Tidak | `{ message, source?, line?, page?, ua?, action?, code? }` | `{ logged }` — dibatasi 30/menit & 300/hari; dikirim otomatis oleh `ui.js` (hanya mode backend) | ✅ |
+| `getNotifPrefs` | 10 | Ya | – | `{ prefs: { daily, akbar, premium }, premium, email, reminderTime, emailEnabled }` (default: daily & akbar mati, premium nyala). Pengingat email = khusus Premium; pengingat di perangkat tidak memakai API | ✅ |
+| `saveNotifPrefs` | 10 | Ya | `{ daily?, akbar?, premium?, reminderTime? (JJ:MM, WIB) }` | sama dengan `getNotifPrefs` + `warning?` — error `FORBIDDEN` (pengguna gratis menyalakan daily/akbar), `BAD_REQUEST`, `PROFILE_INCOMPLETE` (jam tanpa profil) | ✅ |
+| `GET /exec?unsub=TOKEN&kind=daily\|akbar\|premium\|all` | 10 | Tidak | tautan di email | halaman HTML konfirmasi berhenti langganan | ✅ |
+| `batch` | 10.2 | Opsional | `{ calls: [{ action, payload }] }` (maks 6; hanya action baca: getMe, getToday, getPlan, getPlans, getMaterialIndex, getTryoutInfo, getAkbarInfo, getAkbarRanking, getReferral, getPostSkd, getNotifPrefs, ping) | `[{ ok, data } \| { ok:false, error }]` sesuai urutan; token diverifikasi sekali | ✅ |
 
 ## Kode error umum
 

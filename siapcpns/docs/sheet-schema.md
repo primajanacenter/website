@@ -75,6 +75,13 @@ date · users_total · new_users · active_7d · premium_active · paid_trx · r
 ### `admin_dashboard` (Fase 9)
 Ditulis ulang otomatis oleh `buildAdminDashboard` / `dailyOps`. Hanya angka agregat, jangan diedit manual.
 
+### `notif_prefs` (Fase 10)
+user_id · daily · akbar · premium ("true"/"false") · token (tautan berhenti langganan) · created_at · updated_at
+Jam pengingat harian memakai `profiles.reminder_time`.
+
+### `notif_log` (Fase 10)
+at · user_id · kind (daily/akbar/premium) · key (unik per pengguna per hari/event, mencegah email ganda) · status
+
 ## Bank soal
 
 ### `packages` (Fase 3; `type` = diagnostic / latihan / akbar / skb)

@@ -45,7 +45,9 @@ Urutkan dari atas. Centang di salinanmu sendiri. Hal bertanda ⛔ wajib selesai 
   - `warmQuestionCache` (per jam)
   - `publishAkbarResults` (per jam)
   - `dailyOps` (harian)
+  - `sendReminders` (per jam)
 - Tryout Akbar: minimal 2 event ke depan sudah terjadwal (`scheduleAkbarEvents`). `checkAkbarEvents` semuanya ✅.
+- Kirim `testReminderEmails` ke `ADMIN_EMAIL`, lalu cek tampilan email dan pastikan tautan berhenti langganan berfungsi. `WEBAPP_URL` dan `APP_BASE_URL` harus terisi.
 - Uji beban (`tools/loadtest-akbar.mjs`) sudah dijalankan dan `LOADTEST_TOKEN` sudah dikosongkan.
 - Hapus data uji: pengguna, transaksi sandbox, attempt, dan referral uji di Spreadsheet. Buat backup dulu dengan `backupDaily`.
 
@@ -59,6 +61,7 @@ Urutkan dari atas. Centang di salinanmu sendiri. Hal bertanda ⛔ wajib selesai 
   5. Halaman Premium, lalu bayar.
   6. Status lunas, lalu materi Lv3 terbuka.
   7. Tautan ajak teman.
+- Di HP Android (Chrome), pasang aplikasi dari halaman Pengaturan. Di iPhone (Safari), pakai Bagikan › Tambahkan ke Layar Utama. Buka dari ikon, lalu matikan internet dan pastikan Materi dan Panduan tetap terbuka.
 - Bagikan tautan ke WhatsApp/Telegram dan pastikan pratinjau gambar (og-image) muncul.
 - Google Search Console: verifikasi domain dan kirim `sitemap.xml`.
 
