@@ -26,7 +26,17 @@ export async function initPremium() {
   renderEnv(d.env);
   renderCurrent(d.current);
   renderPending(d.pending);
+  renderReferral(d.referral);
   renderPlans(d.plans, d.env, d.current);
+}
+
+/** Fase 8: diskon kode ajakan teman untuk pembelian pertama. */
+function renderReferral(ref) {
+  if (!ref) return;
+  const box = $("#pr-referral");
+  if (!box) return;
+  box.hidden = false;
+  box.innerHTML = `<div><strong>Diskon ajakan ${ref.discountPct}% aktif.</strong> Harga di bawah sudah dipotong untuk pembelian Premium pertamamu.</div>`;
 }
 
 function renderEnv(env) {
@@ -67,13 +77,15 @@ function renderPlans(plans, env, cur) {
   grid.innerHTML = plans
     .map((p) => {
       const months = Math.max(1, Math.round(p.durationDays / 30));
-      const perMonth = Math.round(p.price / months / 100) * 100;
+      const pay = p.refPrice || p.price;
+      const perMonth = Math.round(pay / months / 100) * 100;
       const label = off ? "Segera dibuka" : cur?.plan === "premium" ? "Tambah masa aktif" : "Pilih paket";
       return `<article class="plan-card ${p.planId === featuredId ? "featured" : ""}">
         ${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ""}
         <h3>${esc(p.name)}</h3>
         <div class="plan-price">
-          <span class="now">${rupiah(p.price)}</span>
+          <span class="now">${rupiah(pay)}</span>
+          ${p.refPrice ? `<span class="ref">Harga ajakan · normal ${rupiah(p.price)}</span>` : ""}
           ${p.priceBefore && p.priceBefore > p.price ? `<span class="save">Hemat ${rupiah(p.priceBefore - p.price)} dibanding bayar bulanan</span>` : ""}
           <span class="per">${p.durationDays} hari${months > 1 ? ` · ±${rupiah(perMonth)}/bulan` : ""} · sekali bayar</span>
         </div>

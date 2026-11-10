@@ -10,7 +10,7 @@ import { auth } from "../core/auth.js";
 import { store, KEYS } from "../core/store.js";
 import { $, esc, fmtDate, getParam } from "../core/ui.js";
 
-const SHORT = { twk: "TWK", tiu: "TIU", tkp: "TKP" };
+const SHORT = { twk: "TWK", tiu: "TIU", tkp: "TKP", skb: "SKB" };
 const LETTERS = { a: "A", b: "B", c: "C", d: "D", e: "E" };
 
 export async function initRapor() {
@@ -42,6 +42,7 @@ function render(r) {
   $("#r-total").textContent = r.total;
   $("#r-max").textContent = r.maxTotal;
 
+  if (r.package.type === "skb") return renderSkb(r);
   const failed = r.subtests.filter((s) => !s.passed);
   const v = $("#r-verdict");
   v.className = `chip ${r.passedAll ? "chip-ok" : "chip-bad"}`;
@@ -68,6 +69,27 @@ function render(r) {
     })
     .join("");
 
+  renderTopics(r);
+  renderReview(r);
+}
+
+/** Fase 8: rapor paket SKB — tanpa ambang batas SKD, nilai skala 0–100. */
+function renderSkb(r) {
+  const v = $("#r-verdict");
+  const n = r.score100 ?? 0;
+  v.className = `chip ${n >= 70 ? "chip-ok" : n >= 50 ? "chip-warn" : "chip-bad"}`;
+  v.textContent = `Nilai SKB ${n} / 100`;
+  $("#r-headline").textContent = n >= 70 ? "Penguasaan materi bidangmu sudah baik." : "Masih ada topik bidang yang perlu diperkuat.";
+  $("#r-message").textContent = "SKB umumnya berbobot 60% dari nilai akhir. Ulangi topik terlemah, lalu kerjakan paket SKB lain bila tersedia.";
+  $("#r-answered").textContent = `Dijawab ${r.answered} dari ${r.questionCount} soal.`;
+  const s = r.subtests[0];
+  const pct = s.max ? Math.min(100, (s.score / s.max) * 100) : 0;
+  $("#r-subtests").innerHTML = `<tr>
+    <td><strong>SKB</strong><br><span class="xsmall muted">${esc(s.label)}</span></td>
+    <td class="num"><strong>${s.score}</strong> / ${s.max}<br><span class="xsmall muted">skala 100: ${n}</span></td>
+    <td><div class="pg-bar" role="img" aria-label="Nilai ${n} dari 100"><span style="width:${pct}%"></span></div><span class="xsmall muted">${s.correct} benar dari ${s.total}</span></td>
+    <td><a class="chip chip-primary" href="skb.html">Panduan SKB</a></td>
+  </tr>`;
   renderTopics(r);
   renderReview(r);
 }

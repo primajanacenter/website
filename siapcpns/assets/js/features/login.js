@@ -13,7 +13,7 @@ import { CONFIG } from "../core/config.js";
 import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
 import { store, KEYS } from "../core/store.js";
-import { $, getParam, safeNext } from "../core/ui.js";
+import { $, getParam, safeNext, pendingReferral } from "../core/ui.js";
 
 const GSI_SRC = "https://accounts.google.com/gsi/client";
 const LEVEL_LABEL = { "baru-mulai": "Baru mulai", "sedang-bersiap": "Sedang bersiap", "hampir-siap": "Hampir siap" };
@@ -134,6 +134,9 @@ async function completeLogin(next) {
     };
   }
 
+  const ref = pendingReferral();
+  if (ref) payload.ref = ref;
+
   const res = await api.call("login", payload);
   if (!res.ok) {
     showStatus(res.error.message, true);
@@ -146,6 +149,9 @@ async function completeLogin(next) {
   if (payload.assessment && me.attachedAssessmentId) {
     store.set(KEYS.ASSESSMENT_RESULT, { ...local, syncedAt: new Date().toISOString(), serverId: me.attachedAssessmentId });
   }
+
+  if (ref) store.remove(KEYS.REF_CODE); // dipakai sekali; server mengabaikan kode yang tidak berlaku
+  if (me.referralClaimed) store.set("referral.notice", { code: ref, at: Date.now() });
 
   location.replace(me.profileComplete ? next : `onboarding.html?next=${encodeURIComponent(next)}`);
 }

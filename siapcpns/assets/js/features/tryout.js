@@ -12,8 +12,10 @@ import { runExam } from "./cat-engine.js";
 
 let packages = [];
 let pending = null; // paket yang akan dimulai
+let MODE = { type: "", page: "tryout.html" }; // Fase 8: skb.html memakai lobi yang sama dengan type "skb"
 
-export async function initTryout() {
+export async function initTryout(opts = {}) {
+  MODE = { type: opts.type || "", page: opts.page || "tryout.html" };
   if (!auth.requireLogin("masuk.html")) return;
 
   $("#start-cancel").addEventListener("click", closeStart);
@@ -24,7 +26,7 @@ export async function initTryout() {
 }
 
 async function loadInfo() {
-  const res = await api.call("getTryoutInfo");
+  const res = await api.call("getTryoutInfo", MODE.type ? { type: MODE.type } : {});
   if (!res.ok) return handleError(res.error, "#lobby-status");
   packages = res.data.packages;
   renderPackages(res.data);
@@ -33,7 +35,9 @@ async function loadInfo() {
 function renderPackages(data) {
   const list = $("#pkg-list");
   if (!packages.length) {
-    list.innerHTML = `<div class="card"><p class="muted">Belum ada paket tryout yang dibuka. Coba lagi nanti.</p></div>`;
+    list.innerHTML = MODE.type === "skb"
+      ? `<div class="card"><p class="muted">Paket tryout SKB belum dibuka. Sambil menunggu, pelajari panduan di bawah.</p></div>`
+      : `<div class="card"><p class="muted">Belum ada paket tryout yang dibuka. Coba lagi nanti.</p></div>`;
     return;
   }
   list.innerHTML = packages
@@ -42,7 +46,7 @@ function renderPackages(data) {
       const history = p.attempts.length
         ? `<div class="history"><span class="muted">Riwayat:</span>${p.attempts
             .slice(0, 3)
-            .map((a) => `<a href="rapor.html?id=${encodeURIComponent(a.attemptId)}">Skor ${a.total} · ${a.passedAll ? "Lolos ambang batas" : "Belum lolos"} · ${fmtDate(a.submittedAt)}</a>`)
+            .map((a) => `<a href="rapor.html?id=${encodeURIComponent(a.attemptId)}">Skor ${a.total}${p.type === "skb" ? "" : ` · ${a.passedAll ? "Lolos ambang batas" : "Belum lolos"}`} · ${fmtDate(a.submittedAt)}</a>`)
             .join("")}</div>`
         : "";
       let action;
@@ -57,14 +61,16 @@ function renderPackages(data) {
         action = `<button class="btn btn-primary" data-start="${esc(p.packageId)}">${p.attempts.length ? "Kerjakan lagi" : "Mulai tryout"}</button>
                   ${last ? `<a class="btn btn-secondary" href="rapor.html?id=${encodeURIComponent(last.attemptId)}">Rapor terakhir</a>` : ""}`;
       }
-      const typeChip = p.type === "demo" ? `<span class="chip chip-accent">Demo</span>` : p.type === "diagnostic" ? `<span class="chip chip-primary">Diagnostik</span>` : "";
+      const typeChip = p.type === "demo" ? `<span class="chip chip-accent">Demo</span>` : p.type === "diagnostic" ? `<span class="chip chip-primary">Diagnostik</span>` : p.type === "skb" ? `<span class="chip chip-primary">SKB</span>` : "";
+      const pgRow = p.type === "skb" ? `<div class="meta"><span class="xsmall muted">Nilai SKB ditampilkan dalam skala 0–100. Benar 5, salah/kosong 0.</span></div>`
+        : `<div class="meta"><span class="xsmall muted">Ambang batas:</span><span class="chip num">TWK ${p.pg.twk}</span><span class="chip num">TIU ${p.pg.tiu}</span><span class="chip num">TKP ${p.pg.tkp}</span></div>`;
       return `
       <article class="pkg ${p.inProgress ? "running" : ""}">
         <div class="stack" style="gap:10px">
           <div class="meta">${typeChip}<span class="chip num">${p.questionCount} soal</span><span class="chip num">${p.durationMin} menit</span></div>
           <h2>${esc(p.title)}</h2>
           ${p.description ? `<p class="small muted">${esc(p.description)}</p>` : ""}
-          <div class="meta"><span class="xsmall muted">Ambang batas:</span><span class="chip num">TWK ${p.pg.twk}</span><span class="chip num">TIU ${p.pg.tiu}</span><span class="chip num">TKP ${p.pg.tkp}</span></div>
+          ${pgRow}
           ${history}
         </div>
         <div class="actions">${action}</div>
@@ -126,7 +132,7 @@ async function begin(packageId, button) {
 
 function handleError(error, sel) {
   if (error.code === "UNAUTHENTICATED") {
-    location.replace(`masuk.html?next=${encodeURIComponent("tryout.html")}`);
+    location.replace(`masuk.html?next=${encodeURIComponent(MODE.page)}`);
     return;
   }
   const el = $(sel);

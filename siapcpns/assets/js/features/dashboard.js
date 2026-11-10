@@ -9,7 +9,7 @@
 import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
 import { store, KEYS } from "../core/store.js";
-import { $, esc, fmtDate } from "../core/ui.js";
+import { $, esc, fmtDate, toast } from "../core/ui.js";
 import { taskDone } from "./plan.js";
 import { loadPlan } from "./rencana.js";
 
@@ -94,7 +94,15 @@ async function renderToday(today) {
     .join("");
 }
 
+function referralNotice() {
+  const n = store.get("referral.notice");
+  if (!n) return;
+  store.remove("referral.notice");
+  toast(`Kode ajakan ${n.code} aktif: diskon 10% untuk pembelian Premium pertamamu.`, 5000);
+}
+
 function render(me) {
+  referralNotice();
   renderWelcome(me.user || auth.getUser() || {});
   renderTasks(me);
   renderAssessment(me.latestAssessment);
@@ -199,7 +207,9 @@ function renderProfile(p) {
     cd.innerHTML =
       days > 0
         ? `<div class="stack" style="gap:2px"><span class="countdown">${days} hari lagi</span><span class="xsmall muted">menuju perkiraan tes ${fmtDate(p.testDate)}</span></div>`
-        : `<p class="small muted">Tanggal tes (${fmtDate(p.testDate)}) sudah lewat. Perbarui di profil.</p>`;
+        : `<p class="small muted">Tanggal tes (${fmtDate(p.testDate)}) sudah lewat. Sudah ikut SKD? <a href="pasca-skd.html"><strong>Masukkan skormu</strong></a> untuk analisis &amp; langkah berikutnya, atau perbarui tanggal di profil.</p>`;
+    const ps = $("#d-postskd");
+    if (ps && days <= 0) ps.textContent = "Tes sudah lewat? Masukkan skor resmimu sekarang";
   } else {
     cd.innerHTML = `<p class="small muted">Belum ada perkiraan tanggal tes. <a href="onboarding.html?next=dashboard.html">Tambahkan</a> untuk melihat hitung mundur.</p>`;
   }
