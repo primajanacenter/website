@@ -89,6 +89,7 @@ export const auth = {
   logout() {
     store.remove(KEYS.SESSION);
     store.remove(KEYS.ME);
+    try { Object.keys(sessionStorage).filter((k) => k.startsWith("sc:rc:")).forEach((k) => sessionStorage.removeItem(k)); } catch { /* abaikan */ }
     try {
       window.google?.accounts?.id?.disableAutoSelect();
     } catch {

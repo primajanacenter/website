@@ -60,6 +60,9 @@ export async function copyText(text) {
 export function hydrateCommon() {
   captureReferral();
   installErrorReporter();
+  registerServiceWorker();
+  watchConnection();
+  startLocalReminders();
   $$("[data-app-name]").forEach((el) => (el.textContent = CONFIG.APP_NAME));
   $$("[data-org-name]").forEach((el) => (el.textContent = CONFIG.ORG_NAME));
   $$("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
@@ -153,4 +156,85 @@ export function installErrorReporter() {
     if (r && r.code) return; // galat API yang sudah berbentuk {code,message} ditangani halaman
     report(r && (r.stack || r.message) ? String(r.message || r) : String(r), location.href.split(/[?#]/)[0], 0);
   });
+}
+
+/* ------------------------------------------------------------------ */
+/* Fase 10: aplikasi terpasang (PWA) & mode offline                     */
+/* ------------------------------------------------------------------ */
+const SITE_ROOT = new URL("../../../", import.meta.url);
+let deferredInstall = null;
+let swStarted = false;
+
+/** Daftarkan service worker (hanya di https atau localhost). */
+export function registerServiceWorker() {
+  if (swStarted || !("serviceWorker" in navigator)) return;
+  if (location.protocol !== "https:" && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return;
+  swStarted = true;
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register(new URL("sw.js", SITE_ROOT), { scope: SITE_ROOT.pathname }).catch(() => {});
+  });
+}
+
+// Chrome/Edge/Android: simpan prompt pemasangan agar bisa dipicu dari tombol kita sendiri.
+if (typeof window !== "undefined") {
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstall = e;
+    document.dispatchEvent(new CustomEvent("sc:installable"));
+  });
+  window.addEventListener("appinstalled", () => {
+    deferredInstall = null;
+    store.set("pwa.installed", true);
+    document.dispatchEvent(new CustomEvent("sc:installed"));
+  });
+}
+
+export const pwa = {
+  /** Sedang dibuka sebagai aplikasi terpasang? */
+  isStandalone() {
+    return window.matchMedia?.("(display-mode: standalone)").matches || window.navigator.standalone === true;
+  },
+  /** iPhone/iPad (Safari tidak punya tombol pasang otomatis; pakai Bagikan › Tambahkan ke Layar Utama). */
+  isIOS() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  },
+  canPrompt() {
+    return Boolean(deferredInstall);
+  },
+  async prompt() {
+    if (!deferredInstall) return "unavailable";
+    deferredInstall.prompt();
+    const choice = await deferredInstall.userChoice.catch(() => ({ outcome: "dismissed" }));
+    deferredInstall = null;
+    return choice.outcome; // "accepted" | "dismissed"
+  },
+};
+
+/** Tampilkan pita kecil saat koneksi terputus. */
+export function watchConnection() {
+  const show = () => {
+    let bar = document.getElementById("offline-bar");
+    if (navigator.onLine) { if (bar) bar.hidden = true; return; }
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "offline-bar";
+      bar.className = "offline-bar";
+      bar.setAttribute("role", "status");
+      bar.textContent = "Kamu sedang offline. Halaman yang pernah dibuka tetap bisa dilihat; latihan, tryout, dan pembayaran butuh internet.";
+      document.body.prepend(bar);
+    }
+    bar.hidden = false;
+  };
+  window.addEventListener("online", show);
+  window.addEventListener("offline", show);
+  show();
+}
+
+/** Fase 10.1: pengingat di perangkat — modul dimuat hanya bila pengguna mengaktifkannya. */
+export function startLocalReminders() {
+  try {
+    const p = store.get("reminder.local");
+    if (!p || !(p.daily || p.akbar)) return;
+    import("../features/reminder-local.js").then((m) => m.runLocalReminders()).catch(() => {});
+  } catch { /* abaikan */ }
 }

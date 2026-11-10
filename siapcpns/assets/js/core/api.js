@@ -595,6 +595,30 @@ Object.assign(mockHandlers, {
     return out;
   },
 });
+// ---------- Fase 10: pengingat email (mode uji) ----------
+Object.assign(mockHandlers, {
+  async getNotifPrefs() {
+    requireMockSession();
+    const db = mockDb();
+    return { prefs: { daily: false, akbar: false, premium: true, ...(db.notif || {}) }, premium: mockPremium(db), email: db.user?.email || "uji@contoh.id", reminderTime: db.profile?.reminderTime || "", emailEnabled: true };
+  },
+  async saveNotifPrefs(p = {}) {
+    requireMockSession();
+    if (p.reminderTime !== undefined && p.reminderTime !== "" && !/^([01]\d|2[0-3]):[0-5]\d$/.test(p.reminderTime)) throw apiError("BAD_REQUEST", "Jam pengingat tidak valid (format JJ:MM).");
+    const db = mockDb();
+    if (!mockPremium(db) && (p.daily === true || p.akbar === true)) throw apiError("FORBIDDEN", "Pengingat lewat email tersedia untuk pengguna Premium. Gunakan pengingat di perangkat ini (gratis).");
+    if (p.reminderTime && !db.profile) throw apiError("PROFILE_INCOMPLETE", "Lengkapi profil belajar terlebih dahulu agar jam pengingat bisa disimpan.");
+    const cur = { daily: false, akbar: false, premium: true, ...(db.notif || {}) };
+    for (const k of ["daily", "akbar", "premium"]) if (p[k] !== undefined) cur[k] = Boolean(p[k]);
+    db.notif = cur;
+    if (p.reminderTime !== undefined && db.profile) db.profile.reminderTime = p.reminderTime;
+    saveMockDb(db);
+    const out = await mockHandlers.getNotifPrefs();
+    if (out.prefs.daily && !out.reminderTime) out.warning = "Isi jam pengingat agar pengingat harian bisa dikirim.";
+    return out;
+  },
+});
+
 function mockPostSkd(db, r) {
   const pg = { twk: 65, tiu: 80, tkp: 166 }; const max = { twk: 150, tiu: 175, tkp: 225 };
   const testDate = db.profile?.testDate || "";
@@ -707,21 +731,113 @@ async function callRemote(action, payload) {
 /* ------------------------------------------------------------------ */
 /* API publik                                                          */
 /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
+/* Fase 10.2: cache baca di browser + penggabungan permintaan           */
+/* ------------------------------------------------------------------ */
+// Action baca yang aman di-cache sebentar (detik). Disimpan di sessionStorage (hilang saat browser ditutup),
+// per akun. Semua action lain dianggap TULIS dan langsung mengosongkan cache ini agar data selalu benar.
+const READ_TTL = {
+  getMe: 120, getToday: 45, getPlan: 300, getPlans: 300, getMaterialIndex: 600, getMaterial: 1800,
+  getTryoutInfo: 30, getAkbarInfo: 60, getAkbarRanking: 300, getReferral: 120, getPostSkd: 300, getNotifPrefs: 300,
+};
+// Action baca yang tidak di-cache tetapi juga tidak mengubah data (tidak perlu mengosongkan cache).
+const NEUTRAL = new Set(["ping", "logClientError", "getReport", "saveProgress"]);
+const RC_PREFIX = "sc:rc:";
+const inflight = new Map();
+
+function cacheKey(action, payload) {
+  const who = (auth.getUser && auth.getUser()?.email) || "anon";
+  return RC_PREFIX + who + ":" + action + ":" + JSON.stringify(payload || {});
+}
+function rcGet(key, ttl) {
+  try {
+    const raw = sessionStorage.getItem(key);
+    if (!raw) return null;
+    const v = JSON.parse(raw);
+    return Date.now() - v.at < ttl * 1000 ? v.data : null;
+  } catch { return null; }
+}
+function rcSet(key, data) {
+  try { sessionStorage.setItem(key, JSON.stringify({ at: Date.now(), data })); } catch { /* penuh/diblokir: abaikan */ }
+}
+export function clearReadCache() {
+  try {
+    Object.keys(sessionStorage).filter((k) => k.startsWith(RC_PREFIX)).forEach((k) => sessionStorage.removeItem(k));
+  } catch { /* abaikan */ }
+}
+function wrapError(e) {
+  if (e.code === "UNAUTHENTICATED") { auth.logout(); clearReadCache(); }
+  return { ok: false, error: { code: e.code || "UNKNOWN", message: e.message || "Terjadi kesalahan." } };
+}
+
 export const api = {
   /**
    * @param {string} action  nama action, lihat docs/api-contract.md
    * @param {object} payload data yang dikirim
+   * @param {{fresh?: boolean}} opts fresh = abaikan cache baca
    * @returns {Promise<{ok: boolean, data?: any, error?: {code: string, message: string}}>}
    */
-  async call(action, payload = {}) {
-    try {
-      const data = CONFIG.USE_MOCK ? await callMock(action, payload) : await callRemote(action, payload);
-      return { ok: true, data };
-    } catch (e) {
-      // Token ditolak server: hapus sesi lokal agar halaman bisa mengarahkan ke login.
-      if (e.code === "UNAUTHENTICATED") auth.logout();
-      return { ok: false, error: { code: e.code || "UNKNOWN", message: e.message || "Terjadi kesalahan." } };
+  async call(action, payload = {}, opts = {}) {
+    const ttl = READ_TTL[action];
+    const key = ttl ? cacheKey(action, payload) : null;
+    if (key && !opts.fresh) {
+      const hit = rcGet(key, ttl);
+      if (hit !== null) return { ok: true, data: hit };
+      if (inflight.has(key)) return inflight.get(key); // permintaan sama sedang berjalan: tunggu hasilnya
     }
+    if (!ttl && !NEUTRAL.has(action)) clearReadCache(); // aksi tulis: data baca lama tidak dipakai lagi
+    const run = (async () => {
+      try {
+        const data = CONFIG.USE_MOCK ? await callMock(action, payload) : await callRemote(action, payload);
+        if (key) rcSet(key, data);
+        if (!ttl && !NEUTRAL.has(action)) clearReadCache(); // juga setelah selesai (hasil server sudah berubah)
+        return { ok: true, data };
+      } catch (e) {
+        return wrapError(e);
+      } finally {
+        if (key) inflight.delete(key);
+      }
+    })();
+    if (key) inflight.set(key, run);
+    return run;
+  },
+
+  /**
+   * Beberapa action BACA dalam satu permintaan ke server (lihat BATCHABLE di Router.gs).
+   * Hasil dari cache dipakai bila ada; sisanya dikirim sekaligus. Urutan hasil = urutan calls.
+   * @param {{action: string, payload?: object}[]} calls
+   */
+  async batch(calls, opts = {}) {
+    const out = new Array(calls.length);
+    const need = [];
+    calls.forEach((c, i) => {
+      const ttl = READ_TTL[c.action];
+      const hit = ttl && !opts.fresh ? rcGet(cacheKey(c.action, c.payload || {}), ttl) : null;
+      if (hit !== null) out[i] = { ok: true, data: hit }; else need.push(i);
+    });
+    if (!need.length) return out;
+    if (need.length === 1 || CONFIG.USE_MOCK) {
+      await Promise.all(need.map(async (i) => { out[i] = await api.call(calls[i].action, calls[i].payload || {}, { fresh: true }); }));
+      return out;
+    }
+    try {
+      const results = await callRemote("batch", { calls: need.map((i) => ({ action: calls[i].action, payload: calls[i].payload || {} })) });
+      need.forEach((i, j) => {
+        const r = results[j] || { ok: false, error: { code: "UNKNOWN", message: "Tidak ada jawaban." } };
+        if (r.ok && READ_TTL[calls[i].action]) rcSet(cacheKey(calls[i].action, calls[i].payload || {}), r.data);
+        if (!r.ok && r.error?.code === "UNAUTHENTICATED") { auth.logout(); clearReadCache(); }
+        out[i] = r.ok ? { ok: true, data: r.data } : { ok: false, error: r.error };
+      });
+    } catch (e) {
+      // Backend lama tanpa action "batch": jatuh ke panggilan satu per satu (paralel)
+      if (e.code === "UNKNOWN_ACTION") {
+        await Promise.all(need.map(async (i) => { out[i] = await api.call(calls[i].action, calls[i].payload || {}, { fresh: true }); }));
+      } else {
+        const err = wrapError(e);
+        need.forEach((i) => (out[i] = err));
+      }
+    }
+    return out;
   },
 
   get isMock() {
