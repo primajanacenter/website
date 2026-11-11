@@ -10,7 +10,7 @@
  *
  * Saat merilis perubahan besar, naikkan CACHE_VERSION agar cache lama dibersihkan.
  */
-const CACHE_VERSION = "sc-v12.0";
+const CACHE_VERSION = "sc-v13.0";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const NETWORK_TIMEOUT_MS = 6000;
@@ -19,13 +19,14 @@ const NETWORK_TIMEOUT_MS = 6000;
 const PRECACHE = [
   "./", "index.html", "offline.html", "manifest.webmanifest",
   "assets/css/base.css", "assets/css/components.css", "assets/css/cat.css",
-  "assets/css/pages/app.css", "assets/css/pages/landing.css", "assets/css/pages/belajar.css",
+  "assets/css/pages/app.css", "assets/css/pages/landing.css", "assets/css/pages/belajar.css", "assets/css/pages/hub.css",
   "assets/js/core/config.js", "assets/js/core/api.js", "assets/js/core/auth.js", "assets/js/core/store.js", "assets/js/core/ui.js",
   "assets/js/features/plan.js", "assets/js/features/materi.js", "assets/js/features/panduan.js", "assets/js/features/dashboard.js",
   "assets/js/features/rencana.js", "assets/js/features/reminder-local.js", "assets/js/features/pengaturan.js",
+  "assets/js/features/hub.js", "assets/js/features/home.js", "assets/js/features/assessment.js",
   "assets/data/materi-level1.json",
   "assets/img/primajana-mark-96.png", "assets/img/primajana-logo-112.png", "assets/img/icon-192.png", "assets/img/favicon-32.png",
-  "pages/dashboard.html", "pages/materi.html", "pages/panduan.html", "pages/pengaturan.html",
+  "pages/materi.html", "pages/panduan.html", "pages/pengaturan.html", "pages/akun.html", "pages/rapot.html",
 ];
 
 self.addEventListener("install", (event) => {
