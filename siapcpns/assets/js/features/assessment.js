@@ -76,6 +76,7 @@ export async function initAssessment() {
   }
 
   if (location.hash === "#cek-kesiapan") startQuiz();
+  else if (location.hash === "#hasil-cek" && last) renderResult(last, { fromHistory: true });
 }
 
 function startButtons() {

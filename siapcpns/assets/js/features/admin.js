@@ -187,6 +187,17 @@ function renderBusiness(d) {
     ? hbars(Object.keys(sc).sort((a, z) => sc[z] - sc[a]).map((k) => ({ label: STATUS_LABEL[k] || k, value: sc[k], w: sc[k] / totalSc, text: `${sc[k]} (${Math.round((sc[k] / totalSc) * 100)}%)` })))
     : `<p class="muted small">Belum ada checkout pada periode ini.</p>`;
 
+  const kinds = b.byKind || [];
+  const maxK = Math.max(1, ...kinds.map((k) => k.revenue));
+  $("#b-kinds").innerHTML = kinds.length
+    ? hbars(kinds.map((k) => ({ label: esc(k.label), value: k.revenue, w: k.revenue / maxK, text: `${rp(k.revenue)} · ${k.count}×` })))
+    : `<p class="muted small">Belum ada penjualan pada periode ini.</p>`;
+  const sv = b.services || { live: [], consult: { next: [] } };
+  const upcoming = (sv.live || []).filter((x) => Date.parse(x.startsAt) > Date.now() - 3 * 3600e3).slice(0, 6);
+  $("#b-services").innerHTML = `${upcoming.length ? hbars(upcoming.map((x) => ({ label: `${esc(dShort(x.startsAt))} · ${esc(x.title)}${x.zoomReady ? "" : ` <span class="chip chip-warn">link Zoom belum diisi</span>`}`, value: x.sold, w: x.capacity ? x.sold / x.capacity : 0, text: `${x.sold}/${x.capacity} kursi${x.recordingSold ? ` · rekaman ${x.recordingSold}×` : ""}` }))) : `<p class="muted small">Belum ada sesi Live Mentoring terjadwal.</p>`}
+    <p class="small" style="margin-top:12px"><b>Konsultasi:</b> ${num(sv.consult?.booked || 0)} dipesan · ${num(sv.consult?.open || 0)} slot kosong</p>
+    ${(sv.consult?.next || []).slice(0, 5).map((c) => `<p class="xsmall muted">${esc(dTime(c.startsAt))} · ${esc(c.client)} · ${esc(c.consultant)}</p>`).join("")}`;
+
   barChart($("#c-paid"), d.daily, { y: "paid", fmt: (v) => `${num(v)} transaksi`, axis: num, label: "Transaksi lunas", title: "Transaksi lunas per hari" });
 
   $("#b-exp-sub").textContent = `${b.expiringCount} pengguna`;

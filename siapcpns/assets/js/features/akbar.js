@@ -9,6 +9,7 @@
 import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
 import { $, esc, getParam, setBusy } from "../core/ui.js";
+import { buy, rupiah, initBottomNav } from "./hub.js";
 import { runExam } from "./cat-engine.js";
 
 const STATE_LABEL = { upcoming: "Segera dibuka", open: "Sedang dibuka", closing: "Batas mulai lewat", scoring: "Menunggu hasil", published: "Hasil terbit" };
@@ -24,6 +25,7 @@ const fmt = (iso, opt = { weekday: "long", day: "numeric", month: "long", hour: 
 const now = () => Date.now() + offset;
 
 export async function initAkbar() {
+  initBottomNav("tryout");
   const res = await api.call("getAkbarInfo");
   if (!res.ok) return status(res.error.message, true);
   info = res.data;
@@ -89,8 +91,9 @@ function renderCurrent() {
 
 function myNote(ev) {
   const my = ev.my;
-  if (!info.loggedIn) return "Masuk untuk ikut. Gratis untuk semua pengguna.";
-  if (!my) return ev.state === "open" ? "Kamu belum ikut minggu ini." : ev.state === "upcoming" ? "Siapkan waktu 100 menit tanpa gangguan." : "Kamu tidak mengikuti event ini.";
+  if (!info.loggedIn) return `Masuk lalu beli tiket (${rupiah(ev.price || 10000)}) untuk ikut dan masuk peringkat nasional.`;
+  if (!my && !ev.ticket && (ev.state === "open" || ev.state === "upcoming")) return `Tiket ${rupiah(ev.price || 10000)} · peringkat nasional & provinsi, analisis lengkap, dan pembahasan semua soal.`;
+  if (!my) return ev.state === "open" ? "Tiketmu aktif. Kamu belum mulai mengerjakan." : ev.state === "upcoming" ? "Tiketmu aktif. Siapkan waktu 100 menit tanpa gangguan." : "Kamu tidak mengikuti event ini.";
   if (my.status === "in_progress") return `Ujianmu sedang berjalan, berakhir ${fmt(my.endsAt, { hour: "2-digit", minute: "2-digit" })}.`;
   return "Jawabanmu sudah terkirim. Skor dan peringkat terbit sesuai jadwal hasil.";
 }
@@ -104,6 +107,10 @@ function renderCta(ev) {
   }
   if (my && my.status === "in_progress") {
     el.innerHTML = `<button class="btn btn-accent" type="button" id="ak-join">Lanjutkan ujian</button>`;
+  } else if (!my && !ev.ticket && (ev.state === "open" || ev.state === "upcoming")) {
+    el.innerHTML = `<button class="btn btn-accent" type="button" id="ak-buy">Beli tiket ${rupiah(ev.price || 10000)}</button>`;
+    $("#ak-buy").addEventListener("click", (e) => buy("akbar", ev.eventId, e.currentTarget));
+    return;
   } else if (!my && ev.state === "open") {
     el.innerHTML = `<button class="btn btn-accent" type="button" id="ak-join">Ikut sekarang</button>`;
   } else {
@@ -127,9 +134,11 @@ async function begin(eventId, button) {
   setBusy(button, false);
   if (!res.ok) {
     if (res.error.code === "UNAUTHENTICATED") return location.replace(`masuk.html?next=${encodeURIComponent("akbar.html")}`);
+    if (res.error.code === "PAYMENT_REQUIRED") return buy("akbar", eventId, button);
     return status(res.error.message, true);
   }
   clearInterval(tick);
+  document.body.classList.add("exam-on");
   $("#view-lobby").hidden = true;
   $("#view-exam").hidden = false;
   window.scrollTo(0, 0);
@@ -145,7 +154,7 @@ async function loadRanking(eventId) {
   document.querySelectorAll("#ak-past a").forEach((a) => a.classList.toggle("active", a.dataset.ev === eventId));
   if (!res.ok) {
     if (scope === "province" && res.error.code === "FORBIDDEN") {
-      $("#rk-body").innerHTML = `<tr><td colspan="7"><span class="small">${esc(res.error.message)} <a href="premium.html"><strong>Lihat Premium →</strong></a></span></td></tr>`;
+      $("#rk-body").innerHTML = `<tr><td colspan="7"><span class="small">${esc(res.error.message)}</span></td></tr>`;
       return;
     }
     $("#rk-body").innerHTML = `<tr><td colspan="7" class="small muted">${esc(res.error.message)}</td></tr>`;
@@ -172,7 +181,7 @@ async function loadRanking(eventId) {
     ? `<table class="ak-anl"><thead><tr><th>Subtes</th><th>Skormu</th><th>Ambang</th><th>Median</th><th>Rata-rata 10% teratas</th></tr></thead><tbody>
         ${d.analysis.map((a) => `<tr><td><b>${SUB[a.subtest]}</b></td><td>${a.mine}</td><td>${a.pg}</td><td>${a.median}</td><td>${a.top10} <span class="xsmall muted">(${a.mine >= a.top10 ? "sudah setara" : "kurang " + (a.top10 - a.mine)})</span></td></tr>`).join("")}
        </tbody></table>`
-    : me && !d.premium ? `<p class="xsmall muted">Analisis per subtes dibanding 10% teratas dan peringkat provinsi tersedia di <a href="premium.html"><strong>Premium</strong></a>.</p>` : "";
+    : me && !d.premium ? `<p class="xsmall muted">Analisis per subtes dibanding 10% teratas dan peringkat provinsi tersedia untuk peserta event ini.</p>` : "";
   $("#rk-body").innerHTML = d.top.length
     ? d.top.map((r, i) => {
         const rank = scope === "province" ? r.provinceRank || i + 1 : r.rank;

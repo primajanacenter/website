@@ -43,6 +43,7 @@ function render(r) {
   $("#r-max").textContent = r.maxTotal;
 
   if (r.package.type === "skb") return renderSkb(r);
+  if (r.package.type === "topik") return renderTopik(r);
   const failed = r.subtests.filter((s) => !s.passed);
   const v = $("#r-verdict");
   v.className = `chip ${r.passedAll ? "chip-ok" : "chip-bad"}`;
@@ -91,6 +92,29 @@ function renderSkb(r) {
     <td><a class="chip chip-primary" href="skb.html">Panduan SKB</a></td>
   </tr>`;
   renderTopics(r);
+  renderReview(r);
+}
+
+/** Fase 13: rapor Latihan Soal per Materi — satu topik, skala 0–100, pembahasan semua soal. */
+function renderTopik(r) {
+  const v = $("#r-verdict");
+  const n = r.score100 ?? 0;
+  v.className = `chip ${n >= 80 ? "chip-ok" : n >= 60 ? "chip-warn" : "chip-bad"}`;
+  v.textContent = `Nilai ${n} / 100`;
+  $("#r-headline").textContent = n >= 80 ? "Topik ini sudah kamu kuasai dengan baik." : n >= 60 ? "Hampir! Pelajari pembahasan soal yang salah." : "Topik ini masih perlu diperkuat.";
+  $("#r-message").textContent = "Baca pembahasan setiap soal di bawah, ulangi materinya, lalu kerjakan lagi untuk melihat kemajuanmu.";
+  $("#r-answered").textContent = `Dijawab ${r.answered} dari ${r.questionCount} soal.`;
+  const s = r.subtests[0];
+  const pct = s.max ? Math.min(100, (s.score / s.max) * 100) : 0;
+  const topic = r.package.packageId.replace(/^LTP-/, "");
+  $("#r-subtests").innerHTML = `<tr>
+    <td><strong>${SHORT[s.id] || ""}</strong><br><span class="xsmall muted">${esc(s.label)}</span></td>
+    <td class="num"><strong>${s.score}</strong> / ${s.max}<br><span class="xsmall muted">skala 100: ${n}</span></td>
+    <td><div class="pg-bar" role="img" aria-label="Nilai ${n} dari 100"><span style="width:${pct}%"></span></div><span class="xsmall muted">${s.id === "tkp" ? `${s.correct} jawaban bernilai 4–5` : `${s.correct} benar dari ${s.total}`}</span></td>
+    <td><a class="chip chip-primary" href="materi.html?topik=${encodeURIComponent(topic)}">Materi topik</a></td>
+  </tr>`;
+  const again = document.querySelector("#r-actions .btn-secondary");
+  if (again) { again.href = `latihan-soal.html?topik=${encodeURIComponent(topic)}`; again.textContent = "Kerjakan lagi"; }
   renderReview(r);
 }
 

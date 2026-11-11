@@ -11,7 +11,16 @@ import { store, KEYS } from "../core/store.js";
 import { $, esc, fmtDate, getParam, setBusy, toast } from "../core/ui.js";
 
 const PENDING_KEY = "pay.pending";
-const FEATURES = ["Materi pendalaman level 2–4 (63 materi)", "Rencana belajar adaptif", "Latihan harian tanpa batas", "Rapor lengkap & pembahasan semua soal", "Ulangi tryout diagnostik tanpa batas", "Pengingat belajar & Tryout Akbar lewat email"];
+const FEATURES = ["Semua judul Paket Materi TWK, TIU, TKP (21 topik)", "Contoh soal mudah, sedang, sulit + pembahasan di tiap materi", "Semua Paket Latihan Soal per Materi (50 soal HOTS per topik)", "Latihan harian tanpa batas & rencana belajar adaptif", "Pengingat belajar lewat email"];
+const DONE_LINK = {
+  premium: ["materi.html", "Buka Paket Materi"], tryout: ["tryout.html", "Kerjakan paket tryout"], akbar: ["tryout.html", "Lihat Tryout Akbar"],
+  live: ["akun.html#live", "Lihat tiket di Akun"], rec: ["akun.html#rekaman", "Tonton rekaman"], consult: ["akun.html#konsultasi", "Lihat jadwal konsultasi"],
+};
+const DONE_TEXT = {
+  tryout: "Paket tryout sudah menjadi milikmu dan bisa dikerjakan berulang kali.", akbar: "Tiket Tryout Akbar sudah aktif. Kerjakan saat event dibuka.",
+  live: "Tiket Live Mentoring sudah aktif. Tombol Gabung muncul di menu Akun 15 menit sebelum sesi.", rec: "Rekaman sudah terbuka di menu Akun.",
+  consult: "Jadwal konsultasimu sudah dipesan. Ruang chat terbuka 10 menit sebelum sesi di menu Akun.",
+};
 const rupiah = (n) => "Rp" + Number(n || 0).toLocaleString("id-ID");
 
 /* ======================= Halaman Premium ======================= */
@@ -186,7 +195,7 @@ function render(state, o = {}) {
   if (t) {
     kv.hidden = false;
     kv.innerHTML = [
-      ["Paket", t.planName],
+      [t.kind && t.kind !== "premium" ? "Produk" : "Paket", t.planName],
       ["Jumlah", rupiah(t.amount)],
       ["Kode transaksi", `<code>${esc(t.trxId)}</code>`],
       t.paidAt ? ["Dibayar", new Date(t.paidAt).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })] : null,
@@ -197,9 +206,11 @@ function render(state, o = {}) {
   }
   if (state === "paid") {
     icon.classList.add("ok"); icon.textContent = "✓";
-    title.textContent = "Pembayaran berhasil, Premium aktif";
-    desc.textContent = `Premium kamu berlaku s.d. ${fmtDate(o.premiumUntil)}. Selamat belajar!`;
-    acts.innerHTML = `<a class="btn btn-primary" href="latihan.html">Mulai latihan tanpa batas</a><a class="btn btn-secondary" href="dashboard.html">Ke beranda</a>`;
+    const kind = t.kind || "premium";
+    const [href, label] = DONE_LINK[kind] || DONE_LINK.premium;
+    title.textContent = kind === "premium" ? "Pembayaran berhasil, Premium aktif" : "Pembayaran berhasil";
+    desc.textContent = kind === "premium" ? `Premium kamu berlaku s.d. ${fmtDate(o.premiumUntil)}. Semua materi dan latihan soal sudah terbuka.` : DONE_TEXT[kind] || "Terima kasih!";
+    acts.innerHTML = `<a class="btn btn-primary" href="${href}">${label}</a><a class="btn btn-secondary" href="../">Ke beranda</a>`;
     $("#ps-mock").hidden = true;
   } else if (state === "pending") {
     icon.innerHTML = `<span class="spinner"></span>`;
@@ -216,7 +227,7 @@ function render(state, o = {}) {
     icon.classList.add(state === "failed" ? "bad" : "warn"); icon.textContent = "!";
     title.textContent = state === "failed" ? "Pembayaran gagal dibuat" : "Link pembayaran kedaluwarsa";
     desc.textContent = "Tidak ada dana yang ditagih untuk transaksi ini. Silakan buat pembayaran baru.";
-    acts.innerHTML = `<a class="btn btn-primary" href="premium.html">Pilih paket lagi</a>`;
+    acts.innerHTML = t && t.kind && t.kind !== "premium" ? `<a class="btn btn-primary" href="../">Kembali ke beranda</a>` : `<a class="btn btn-primary" href="premium.html">Pilih paket lagi</a>`;
   } else if (state === "none") {
     icon.classList.add("warn"); icon.textContent = "?";
     title.textContent = "Belum ada pembayaran";
