@@ -58,6 +58,22 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `getAdminDashboard` | 12 | Ya (ADMIN_EMAILS) | `{ days?: 7\|30\|90, force? }` | `{ range, env, kpi, business, users, learning, daily[], ops, cached }` — cache server 5 menit; error `FORBIDDEN` untuk non-admin | ✅ |
 | `adminTransactions` | 12 | Ya (ADMIN_EMAILS) | `{ from?, to? (YYYY-MM-DD), status? }` | `{ from, to, total, truncated, items[{trxId, createdAt, paidAt, email, planId, planName, amount, discount, status, refCode, source, mayarId}] }` (maks 3.000) | ✅ |
 | `adminLookupUser` | 12 | Ya (ADMIN_EMAILS) | `{ q }` (min. 3 huruf: email, nama, atau kode ajak) | `{ total, list[], detail \| null }` — detail: profil, paket, transaksi, tryout, latihan, ajakan, skor SKD | ✅ |
+| `getTryoutCatalog` | 13 | Opsional | – | `{ akbar: {eventId,title,opensAt,closesAt,lastStartAt,resultsAt,state,questionCount,durationMin,price,owned,my} \| null, demo, packages[{packageId,title,type,description,durationMin,pg,questionCount,price,owned,legacy,attempts[],inProgress}] }` | ✅ |
+| `createCheckout` (produk) | 13 | Ya | `{ kind: tryout\|akbar\|live\|rec\|consult, refId }` | sama dengan Premium; error `ALREADY_OWNED`, `SOLD_OUT`, `CLOSED`, `NOT_FOUND`, `RATE_LIMITED` (12/jam) | ✅ |
+| `startAttempt` (tambahan) | 13 | Ya | `{ packageId }` — juga `LTP-<topicId>` untuk Latihan Soal per Materi | error `PAYMENT_REQUIRED` (paket belum dibeli), `PREMIUM_REQUIRED` (topik Premium) | ✅ |
+| `joinAkbar` (tambahan) | 13 | Ya | `{ eventId }` | error `PAYMENT_REQUIRED` bila belum punya tiket | ✅ |
+| `getMateriIndex` | 13 | Opsional | – | `{ premium, loggedIn, topics[{topicId,name,subtest,free,locked}] }` (21 topik) | ✅ |
+| `getMateriTopic` | 13 | Opsional | `{ topicId }` | `{ locked:false, levels[materi L2–4] }` atau `{ locked:true, reason, teaser }` | ✅ |
+| `getTopicPractice` | 13 | Opsional | – | `{ premium, durationMin:45, size:50, topics[{topicId,packageId,name,subtest,free,locked,attempts,last,inProgress}] }` | ✅ |
+| `getMentoring` | 13 | Opsional | – | `{ live[{sessionId,title,subtest,description,startsAt,endsAt,price,capacity,seatsLeft,owned,onSale,state,canJoin}], recordings[{sessionId,title,startsAt,price,owned}] }` — tanpa link Zoom/ID video | ✅ |
+| `joinLive` | 13 | Ya | `{ sessionId }` | `{ url, passcode, title, endsAt, name }` — hanya pemilik tiket, mulai 15 menit sebelum sesi; error `FORBIDDEN`, `NOT_OPEN`, `CLOSED` | ✅ |
+| `getRecording` | 13 | Ya | `{ sessionId }` | `{ videoId, title, watermark }` — hanya pembeli; error `PAYMENT_REQUIRED` | ✅ |
+| `getConsultSlots` | 13 | Opsional | – | `{ slots[{slotId,startsAt,endsAt,consultantName,price}], mine[], isConsultant }` | ✅ |
+| `getConsultChat` | 13 | Ya | `{ slotId, after? }` | `{ role: client\|consultant, slot{state,chatOpen,...}, messages[{id,sender,text,at}], full }` | ✅ |
+| `sendConsultMessage` | 13 | Ya | `{ slotId, text (≤1000) }` | `{ id, sender, text, at }` — error `NOT_OPEN`, `CLOSED`, `RATE_LIMITED` (20/menit) | ✅ |
+| `getConsultDesk` | 13 | Ya (konsultan/admin) | – | `{ slots[{...,status,clientName,clientEmail}] }` | ✅ |
+| `getMyItems` | 13 | Ya | – | `{ premium{active,until,legacy}, tryouts[], akbar[], live[], recordings[], consults[], pending[], history[] }` | ✅ |
+| `getRaporHub` | 13 | Ya | – | `{ attempts[{attemptId,title,type,total,passedAll,...}], summary, levels[21], assessment }` | ✅ |
 
 ## Kode error umum
 
