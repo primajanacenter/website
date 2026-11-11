@@ -116,6 +116,48 @@ function mockGrade(questions, answers, pg) {
   const passed = { twk: sub.twk.score >= pg.twk, tiu: sub.tiu.score >= pg.tiu, tkp: sub.tkp.score >= pg.tkp };
   return { sub, topics, passed };
 }
+// Fase 13: menu A–F di mode uji (tanpa backend). Hanya data contoh; pembelian disimulasikan di halaman status bayar.
+const MOCK_FREE = ["twk-nasionalisme", "tiu-analogi", "tkp-pelayanan"];
+const MOCK_ORDER = ["twk-nasionalisme", "twk-integritas", "twk-belanegara", "twk-pancasila", "twk-uud", "twk-nkri", "twk-bhinneka", "twk-bahasa",
+  "tiu-analogi", "tiu-silogisme", "tiu-analitis", "tiu-deret", "tiu-hitung", "tiu-cerita", "tiu-figural",
+  "tkp-pelayanan", "tkp-jejaring", "tkp-sosbud", "tkp-tik", "tkp-profesionalisme", "tkp-antiradikalisme"];
+const mockPremiumNow = () => mockPremium(mockDb());
+Object.assign(mockHandlers, {
+  async getTryoutCatalog() {
+    const d = await demoPkg(); const info = mockPkgInfo(d); const db = mockDb();
+    const mine = (db.attempts || []).filter((a) => a.packageId === info.packageId);
+    const run = mine.find((a) => a.status === "in_progress" && Date.parse(a.endsAt) > Date.now());
+    return { serverNow: new Date().toISOString(), loggedIn: auth.isLoggedIn(), akbar: null, packages: [],
+      demo: { ...info, questionCount: d.questions.length, price: 0, owned: true, attempts: mine.filter((a) => a.status === "submitted").map((a) => ({ attemptId: a.attemptId, total: a.total, passedAll: a.passedAll, submittedAt: a.submittedAt })).reverse(),
+        inProgress: run ? { attemptId: run.attemptId, endsAt: run.endsAt } : null } };
+  },
+  async getMateriIndex() {
+    const prem = auth.isLoggedIn() && mockPremiumNow();
+    return { premium: prem, loggedIn: auth.isLoggedIn(), topics: MOCK_ORDER.map((t) => ({ topicId: t, name: TOPIC_NAMES[t] || t, subtest: t.slice(0, 3), free: MOCK_FREE.includes(t), locked: !MOCK_FREE.includes(t) && !prem })) };
+  },
+  async getMateriTopic({ topicId }) {
+    const prem = auth.isLoggedIn() && mockPremiumNow();
+    if (!MOCK_FREE.includes(topicId) && !prem) return { locked: true, reason: auth.isLoggedIn() ? "PREMIUM" : "LOGIN", topicId, teaser: { titles: [2, 3, 4].map((l) => mockMaterial(topicId, l).title), pointCount: 9 } };
+    return { locked: false, topicId, free: MOCK_FREE.includes(topicId), levels: [2, 3, 4].map((l) => mockMaterial(topicId, l)) };
+  },
+  async getTopicPractice() {
+    const prem = auth.isLoggedIn() && mockPremiumNow();
+    return { premium: prem, loggedIn: auth.isLoggedIn(), durationMin: 45, size: 50,
+      topics: MOCK_ORDER.map((t) => ({ topicId: t, packageId: "LTP-" + t, name: TOPIC_NAMES[t] || t, subtest: t.slice(0, 3), free: MOCK_FREE.includes(t), locked: !MOCK_FREE.includes(t) && !prem, attempts: 0, last: null, inProgress: null })) };
+  },
+  async getMentoring() { return { serverNow: new Date().toISOString(), loggedIn: auth.isLoggedIn(), joinBeforeMin: 15, live: [], recordings: [] }; },
+  async getConsultSlots() { return { serverNow: new Date().toISOString(), loggedIn: auth.isLoggedIn(), minutes: 60, isConsultant: false, slots: [], mine: [] }; },
+  async getMyItems() {
+    requireMockSession(); const db = mockDb();
+    return { serverNow: new Date().toISOString(), premium: { active: mockPremiumNow(), until: db.user?.premiumUntil || "", legacy: false }, tryouts: [], akbar: [], live: [], recordings: [], consults: [], pending: [], history: [] };
+  },
+  async getRaporHub() {
+    requireMockSession(); const db = mockDb();
+    const list = (db.attempts || []).filter((a) => a.status === "submitted" && a.type !== "akbar").map((a) => ({ attemptId: a.attemptId, packageId: a.packageId, title: "Tryout Demo", type: "demo", total: a.total, passedAll: a.passedAll, submittedAt: a.submittedAt })).reverse();
+    return { attempts: list, summary: { tryouts: list.length, best: list.length ? Math.max(...list.map((x) => x.total)) : null, passed: list.filter((x) => x.passedAll).length, topicPractice: 0, practiceAnswers: 0 },
+      levels: MOCK_ORDER.map((t) => ({ topicId: t, name: TOPIC_NAMES[t] || t, subtest: t.slice(0, 3), level: null, pct: null, n: 0 })), assessment: db.assessments?.[db.assessments.length - 1] || null };
+  },
+});
 // Fase 12: Super User Dashboard (data contoh, hanya mode uji)
 Object.assign(mockHandlers, {
   async getAdminDashboard(p) { requireMockSession(); return (await import("./mock-admin.js")).mockAdminDashboard(p); },
@@ -748,7 +790,10 @@ const READ_TTL = {
   getTryoutInfo: 30, getAkbarInfo: 60, getAkbarRanking: 300, getReferral: 120, getPostSkd: 300, getNotifPrefs: 300,
 };
 // Action baca yang tidak di-cache tetapi juga tidak mengubah data (tidak perlu mengosongkan cache).
-const NEUTRAL = new Set(["ping", "logClientError", "getReport", "saveProgress", "getAdminDashboard", "adminTransactions", "adminLookupUser"]);
+const NEUTRAL = new Set(["ping", "logClientError", "getReport", "saveProgress", "getAdminDashboard", "adminTransactions", "adminLookupUser",
+  // Fase 13: data yang berubah cepat (tidak di-cache, juga tidak mengosongkan cache baca)
+  "getTryoutCatalog", "getMateriIndex", "getMateriTopic", "getTopicPractice", "getMentoring", "getConsultSlots", "getConsultChat",
+  "sendConsultMessage", "getConsultDesk", "getMyItems", "getRaporHub", "joinLive", "getRecording"]);
 const RC_PREFIX = "sc:rc:";
 const inflight = new Map();
 

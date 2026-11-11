@@ -62,6 +62,10 @@ export function mockAdminDashboard({ days = 30 } = {}) {
       referral: { joined: 64, rewarded: 21, joinedTotal: 188 },
       expiring: NAMES.slice(0, 5).map((n, i) => ({ email: `${n.toLowerCase()}@contoh.id`, name: n + " Uji", premiumUntil: day(i + 1) })), expiringCount: 17,
       recent,
+      byKind: [["premium", "Premium (Materi + Latihan)", 0.42], ["tryout", "Paket Tryout", 0.2], ["akbar", "Tiket Tryout Akbar", 0.16], ["live", "Tiket Live Mentoring", 0.12], ["consult", "Konsultasi CPNS", 0.07], ["rec", "Rekaman Mentoring", 0.03]]
+        .map(([kind, label, f]) => ({ kind, label, count: Math.max(1, Math.round(sum("paid") * f)), revenue: Math.round(sum("revenue") * f) })),
+      services: { live: [1, 8, 15].map((k, i) => ({ sessionId: "MTR-" + i, title: ["TIU: Figural — analogi, ketidaksamaan, serial", "TKP: pelayanan publik & jejaring kerja", "TWK: Pancasila & UUD 1945"][i], startsAt: new Date(Date.now() + k * 86400e3).toISOString(), sold: [27, 14, 6][i], capacity: 30, zoomReady: i === 0, recordingSold: 0 })),
+        consult: { open: 18, booked: 4, next: [{ slotId: "KS-1", startsAt: new Date(Date.now() + 86400e3).toISOString(), consultant: "Bu Rina", client: "Rani Uji" }] }, recordings: 3 },
     },
     users: {
       total: 4820, newToday: daily[days - 1].signups, new7: daily.slice(-7).reduce((s, d) => s + d.signups, 0), new30: Math.round(sum("signups") * (30 / days)),

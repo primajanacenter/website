@@ -73,7 +73,7 @@ export function hydrateCommon() {
   // Tombol "Masuk" berubah menjadi "Beranda" untuk pengguna yang pernah login di perangkat ini.
   $$("[data-nav-auth]").forEach((el) => {
     if (auth.hasPreviousSession()) {
-      el.textContent = "Beranda";
+      el.textContent = el.dataset.navLabel || "Beranda";
       el.href = el.dataset.navAuth;
     }
   });
