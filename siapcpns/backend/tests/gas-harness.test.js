@@ -77,8 +77,17 @@ for(const f of fs.readdirSync(DIR).filter(f=>f.endsWith('.gs')).sort()) vm.runIn
 // Tes mengubah baris sheet secara langsung (bukan lewat update_), jadi cache baris users dibersihkan sebelum
 // setiap permintaan — kecuali saat menguji cache itu sendiri (keepUserCache = true).
 let keepUserCache=false;
-const post=(action,payload,token)=>{ if(!keepUserCache) Object.keys(cacheStore).filter(k=>k.startsWith('usr_')).forEach(k=>delete cacheStore[k]);
+const post0=(action,payload,token)=>{ if(!keepUserCache) Object.keys(cacheStore).filter(k=>k.startsWith('usr_')).forEach(k=>delete cacheStore[k]);
   return JSON.parse(ctx.doPost({parameter:{},postData:{contents:JSON.stringify({action,payload,token})}}).t); };
+// Fase 13: paket tryout berbayar. Setelah uji pembelian khusus, autoBuy = true membuat pengguna uji otomatis
+// "membeli" paket (hak akses langsung ditulis) agar uji lama tentang alur ujian tetap berjalan.
+let autoBuy=false;
+const post=(action,payload,token)=>{ let r=post0(action,payload,token);
+  if(autoBuy && action==='startAttempt' && r.error && r.error.code==='PAYMENT_REQUIRED' && tokens[token]){
+    const u=sheets.users.rows.find(x=>x[1]===String(tokens[token].email).toLowerCase());
+    sheets.entitlements.rows.push(['ent_auto'+Math.random(),u[0],'tryout',payload.packageId,'TEST','active',new Date().toISOString(),'']);
+    r=post0(action,payload,token); }
+  return r; };
 let fails=0; const check=(name,cond,extra)=>{console.log((cond?'PASS ':'FAIL ')+name+(cond?'':'  '+JSON.stringify(extra)));if(!cond)fails++};
 
 ctx.setupSheets();
@@ -148,8 +157,8 @@ let rep=post('getReport',{attemptId:st.data.attemptId},'h.alice.s');
 const S={}; (rep.data?rep.data.subtests:[]).forEach(x=>S[x.id]=x);
 check('scores correct (TWK 25, TIU 10, TKP 25)', S.twk.score===25 && S.tiu.score===10 && S.tkp.score===25 && rep.data.total===60, rep.data&&rep.data.subtests);
 check('passing flags (TWK ok, TIU fail, TKP ok)', S.twk.passed && !S.tiu.passed && S.tkp.passed && rep.data.passedAll===false);
-check('free: only weakest topic open', rep.data.topics.filter(t=>!t.locked).length===1 && rep.data.topicsLocked===true && rep.data.topics[0].name.length>0, rep.data.topics);
-check('free: review limited & wrong only', rep.data.review.length===3 && rep.data.review.every(r=>r.points<5) && rep.data.reviewLocked, rep.data.review.map(r=>r.number));
+check('Fase 13: rapor lengkap (semua topik terbuka)', rep.data.topics.every(t=>!t.locked) && rep.data.topicsLocked===false && rep.data.topics[0].name.length>0, rep.data.topics);
+check('Fase 13: pembahasan semua soal', rep.data.review.length===15 && rep.data.reviewLocked===false, rep.data.review.map(r=>r.number));
 let sub2=post('submitAttempt',{attemptId:st.data.attemptId,answers:{}},'h.alice.s');
 let rep2=post('getReport',{attemptId:st.data.attemptId},'h.alice.s');
 check('resubmit is idempotent', sub2.ok && rep2.data.total===60);
@@ -170,12 +179,19 @@ check('expired attempt auto-finalized', info.data.packages[0].inProgress===null 
 qsheets.packages.rows.push(['DIAG-01','Diagnostik','diagnostic','',100,'','','',1,'live',1]);
 qsheets.questions.rows.push(...demo.questions.map((q,i)=>['DIAG-01-'+(i+1),'DIAG-01',String(q.number),q.subtest,q.topic_id,String(q.level),q.text,q.context||'',...q.options,q.answer||'',...(q.scores||['','','','','']).map(String),q.explanation,'live','test']));
 ctx.refreshQuestionCache(); delete cacheStore['pkgs'];
-let d1=post('startAttempt',{packageId:'DIAG-01'},'h.alice.s'); post('submitAttempt',{attemptId:d1.data.attemptId,answers:{}},'h.alice.s');
-let d2=post('startAttempt',{packageId:'DIAG-01'},'h.alice.s');
-check('free attempt limit enforced', d2.error && d2.error.code==='FORBIDDEN', d2);
+let d0=post('startAttempt',{packageId:'DIAG-01'},'h.alice.s');
+check('Fase 13: paket tryout berbayar wajib dibeli', d0.error && d0.error.code==='PAYMENT_REQUIRED', d0);
 info=post('getTryoutInfo',{},'h.alice.s');
 const diag=info.data.packages.find(p=>p.packageId==='DIAG-01');
-check('diag default passing grade & lock reason', diag.pg.twk===65 && diag.lockReason==='FREE_LIMIT' && !diag.canStart, diag);
+check('diag default passing grade & lock reason', diag.pg.twk===65 && diag.lockReason==='PAYMENT_REQUIRED' && !diag.canStart, diag);
+const aliceId=sheets.users.rows.find(r=>r[1]==='alice@gmail.com')[0];
+const grantEnt=(uid,kind,ref)=>sheets.entitlements.rows.push(['ent_'+kind+ref+uid,uid,kind,ref,'TEST','active',new Date().toISOString(),'']);
+grantEnt(aliceId,'tryout','DIAG-01');
+let d1=post('startAttempt',{packageId:'DIAG-01'},'h.alice.s'); post('submitAttempt',{attemptId:d1.data.attemptId,answers:{}},'h.alice.s');
+let d2=post('startAttempt',{packageId:'DIAG-01'},'h.alice.s');
+check('Fase 13: setelah beli, paket bebas diulang', d1.ok && d2.ok && d2.data.attemptId!==d1.data.attemptId, d2);
+post('submitAttempt',{attemptId:d2.data.attemptId,answers:{}},'h.alice.s');
+autoBuy=true;
 check('getMe latestAttempt', post('getMe',{},'h.alice.s').data.latestAttempt.status==='submitted');
 check('unknown package', post('startAttempt',{packageId:'NOPE'},'h.alice.s').error.code==='NOT_FOUND');
 
@@ -275,7 +291,7 @@ check('setup: sheet pembayaran & paket awal', sheets.transactions && sheets.webh
 ctx.setupSheets();
 check('setup ulang tidak menggandakan paket', sheets.plans.rows.length===4);
 let gp=post('getPlans',{});
-check('getPlans tanpa login', gp.ok && gp.data.plans.length===3 && gp.data.plans[1].planId==='P3M' && gp.data.plans[1].price===119000 && gp.data.env==='sandbox' && gp.data.current===null, gp);
+check('getPlans tanpa login', gp.ok && gp.data.plans.length===3 && gp.data.plans[1].planId==='P3M' && gp.data.plans[1].price===75000 && gp.data.env==='sandbox' && gp.data.current===null, gp);
 post('login',{},dina);
 check('checkout butuh login', post('createCheckout',{planId:'P3M'}).error.code==='UNAUTHENTICATED');
 check('paket tidak dikenal ditolak', post('createCheckout',{planId:'P99'},dina).error.code==='BAD_REQUEST');
@@ -283,7 +299,7 @@ let co5=post('createCheckout',{planId:'P3M',amount:1000,price:1},dina);
 const trxRow=()=>sheets.transactions.rows.find(r=>r[0]===co5.data.trxId);
 check('checkout dibuat', co5.ok && co5.data.paymentUrl.startsWith('https://sandbox.myr.id/') && trxRow()[7]==='pending', co5);
 const lastCreate=mayar.calls.filter(c=>c.path==='/payments/create').pop();
-check('nominal dari server, bukan dari frontend', lastCreate.body.amount===119000 && trxRow()[6]==='119000', lastCreate.body);
+check('nominal dari server, bukan dari frontend', lastCreate.body.amount===75000 && trxRow()[6]==='75000', lastCreate.body);
 check('redirectUrl ke halaman status', lastCreate.body.redirectUrl==='https://app.contoh.id/pages/status-bayar.html?trx='+co5.data.trxId && lastCreate.body.email==='dina@x.com');
 let co2=post('createCheckout',{planId:'P3M'},dina);
 check('checkout ulang memakai link yang sama', co2.ok && co2.data.trxId===co5.data.trxId && co2.data.reused===true, co2);
@@ -338,7 +354,8 @@ tokens['h.gita.s']={...tokens['h.dina.s'],email:'gita@x.com',name:'Gita'};
 ['P1M','P3M','P6M'].forEach(p=>post('createCheckout',{planId:p},'h.gita.s'));
 sheets.transactions.rows.filter(r=>r[2]==='gita@x.com').forEach(r=>{r[11]=new Date(Date.now()-40*60000).toISOString();});
 ['P1M','P3M'].forEach(p=>post('createCheckout',{planId:p},'h.gita.s'));
-check('batas 5 checkout per jam', post('createCheckout',{planId:'P6M'},'h.gita.s').error.code==='RATE_LIMITED');
+{ const TH0=sheets.transactions.rows[0]; const g=sheets.transactions.rows.find(r=>r[2]==='gita@x.com'); for(let i=0;i<7;i++){ const c=[...g]; c[0]='trx_fake'+i; c[TH0.indexOf('status')]='expired'; c[TH0.indexOf('created_at')]=new Date(Date.now()-5*60000).toISOString(); sheets.transactions.rows.push(c);} }
+check('batas 12 checkout per jam', post('createCheckout',{planId:'P6M'},'h.gita.s').error.code==='RATE_LIMITED');
 const offBase=props.MAYAR_BASE_URL; delete props.MAYAR_BASE_URL;
 check('pembayaran nonaktif bila belum dikonfigurasi', post('createCheckout',{planId:'P1M'},dina).error.code==='PAYMENT_OFF' && post('getPlans',{}).data.env==='off');
 props.MAYAR_BASE_URL=offBase;
@@ -411,6 +428,10 @@ sheets.akbar_events.rows.push(evRow('E1','AK-T1',-1,5,6), evRow('E0','AK-T1',24,
 let ai=post('getAkbarInfo',{});
 check('akbar info anonim: event berjalan', ai.ok && ai.data.current.eventId==='E1' && ai.data.current.state==='open' && ai.data.current.my===null && ai.data.next.length===1, ai.data);
 check('join butuh login', post('joinAkbar',{eventId:'E1'}).error.code==='UNAUTHENTICATED');
+check('Fase 13: Tryout Akbar berbayar — tanpa tiket ditolak', post('joinAkbar',{eventId:'E1'},'h.bob.s').error.code==='PAYMENT_REQUIRED');
+const uidOf=(t)=>sheets.users.rows.find(x=>x[1]===String(tokens[t].email).toLowerCase())[0];
+const giveTicket=(t,ev)=>sheets.entitlements.rows.push(['ent_t'+ev+t,uidOf(t),'akbar',ev,'TEST','active',new Date().toISOString(),'']);
+['h.bob.s','h.alice.s',dina,'h.eka.s'].forEach(t=>giveTicket(t,'E1')); giveTicket('h.bob.s','E0');
 check('event belum dibuka', post('joinAkbar',{eventId:'E0'},'h.bob.s').error.code==='NOT_OPEN');
 const perfect=(qs)=>{const a={};qs.forEach((q,i)=>{const src=demo.questions[i];a[q.id]=src.answer||'abcde'[src.scores.indexOf(5)];});return a;};
 const users=['h.bob.s','h.alice.s',dina,'h.eka.s'];
@@ -439,6 +460,7 @@ att(joins[dina].data.attemptId)[AHh.indexOf('duration_sec')]='2000';
 const E1=sheets.akbar_events.rows.find(r=>r[0]==='E1'); const ix=(k)=>H.indexOf(k);
 E1[ix('opens_at')]=new Date(now-10*3600e3).toISOString(); E1[ix('closes_at')]=new Date(now-3*3600e3).toISOString(); E1[ix('results_at')]=new Date(now-60e3).toISOString();
 att(joins['h.eka.s'].data.attemptId)[AHh.indexOf('ends_at')]=new Date(now-4*3600e3).toISOString();
+post('getMe',{},'h.fani.s'); giveTicket('h.fani.s','E1'); giveTicket('h.fani.s','EDMY');
 check('join setelah ditutup ditolak', post('joinAkbar',{eventId:'E1'},'h.fani.s').error.code==='CLOSED');
 ctx.publishAkbarResults();
 const R=sheets.akbar_results.rows; const RH=R[0];
@@ -448,8 +470,8 @@ check('peringkat: urutan total & tie-break durasi', rk.ok && rk.data.top[0].tota
 check('peringkat publik tanpa user_id/email', !/user_id|@|userId/.test(JSON.stringify(rk.data)));
 check('nama disamarkan', rk.data.top.some(t=>t.name==='Alice W.'), rk.data.top.map(t=>t.name));
 const rb=post('getAkbarRanking',{eventId:'E1'},'h.bob.s');
-check('posisi saya & persentil', rb.data.me.rank===2 && rb.data.me.percentile===67 && rb.data.stats.n===4 && !rb.data.analysis, rb.data.me);
-check('peringkat provinsi khusus premium', post('getAkbarRanking',{eventId:'E1',scope:'province'},'h.bob.s').error.code==='FORBIDDEN');
+check('posisi saya, persentil & analisis untuk peserta', rb.data.me.rank===2 && rb.data.me.percentile===67 && rb.data.stats.n===4 && rb.data.analysis.length===3, rb.data.me);
+check('peringkat provinsi: bukan peserta & bukan premium ditolak', post('getAkbarRanking',{eventId:'E1',scope:'province'},'h.gita.s').error.code==='FORBIDDEN');
 const rd=post('getAkbarRanking',{eventId:'E1',scope:'province'},dina);
 check('premium: provinsi & analisis subtes', rd.ok && rd.data.province==='Jawa Tengah' && rd.data.top.length>=1 && rd.data.analysis.length===3 && rd.data.analysis[0].top10>0, rd.data);
 check('rapor terbuka setelah terbit', post('getReport',{attemptId:joins['h.bob.s'].data.attemptId},'h.bob.s').ok);
@@ -506,7 +528,7 @@ const ans8={}; st8.data.questions.forEach((q,i)=>ans8[q.id]=i<8?'a':'b');
 post('submitAttempt',{attemptId:st8.data.attemptId,answers:ans8},'h.tono.s');
 const rp8=post('getReport',{attemptId:st8.data.attemptId},'h.tono.s');
 check('skb: rapor skor 40/50, skala 100 = 80', rp8.ok && rp8.data.total===40 && rp8.data.maxTotal===50 && rp8.data.score100===80 && rp8.data.subtests.length===1 && rp8.data.subtests[0].id==='skb' && rp8.data.passedAll===null, rp8.data||rp8.error);
-check('skb: nama topik & pembahasan gratis', rp8.data.topics[0].name && /ASN|pelayanan/i.test(rp8.data.topics[0].name) && rp8.data.review.length===2, rp8.data.topics);
+check('skb: nama topik & pembahasan gratis', rp8.data.topics[0].name && /ASN|pelayanan/i.test(rp8.data.topics[0].name) && rp8.data.review.length===10, rp8.data.topics);
 check('skb: kuota gratis 1×', post('startAttempt',{packageId:'SKB-T1'},'h.tono.s').error.code==='FORBIDDEN');
 check('skb: bukan latestAttempt beranda', (post('getMe',{},'h.tono.s').data.latestAttempt||{}).packageId!=='SKB-T1');
 const tdy=new Date(Date.now()+7*3600e3).toISOString().slice(0,10);
@@ -531,10 +553,10 @@ const lg=post('login',{ref:gr.data.code.toLowerCase()},'h.sari.s');
 check('referral: klaim lewat login ?ref=', lg.ok && lg.data.referralClaimed===true, lg.data&&lg.data.referralClaimed);
 check('referral: klaim ulang ditolak', post('claimReferral',{code:gr.data.code},'h.sari.s').error.code==='ALREADY_DONE');
 const gps=post('getPlans',{},'h.sari.s').data;
-check('referral: harga diskon 10% di getPlans', gps.referral && gps.referral.discountPct===10 && gps.plans[0].refPrice===44100 && gps.plans[0].price===49000, gps.plans[0]);
+check('referral: harga diskon 10% di getPlans', gps.referral && gps.referral.discountPct===10 && gps.plans[0].refPrice===27000 && gps.plans[0].price===30000, gps.plans[0]);
 const cos=post('createCheckout',{planId:'P1M'},'h.sari.s');
 const srow=()=>sheets.transactions.rows.find(r=>r[0]===cos.data.trxId); const TH=sheets.transactions.rows[0];
-check('referral: tagihan Mayar memakai harga diskon', cos.ok && mayar.calls.filter(c=>c.path==='/payments/create').pop().body.amount===44100 && srow()[TH.indexOf('amount')]==='44100' && srow()[TH.indexOf('discount')]==='4900', srow());
+check('referral: tagihan Mayar memakai harga diskon', cos.ok && mayar.calls.filter(c=>c.path==='/payments/create').pop().body.amount===27000 && srow()[TH.indexOf('amount')]==='27000' && srow()[TH.indexOf('discount')]==='3000', srow());
 const rinaRow=()=>sheets.users.rows.find(r=>r[1]==='rina@x.com'); const sariRow=()=>sheets.users.rows.find(r=>r[1]==='sari@x.com');
 mayar.payments[srow()[TH.indexOf('mayar_id')]].status='paid'; Object.keys(cacheStore).filter(k=>k.startsWith('pchk_')).forEach(k=>delete cacheStore[k]);
 post('getPaymentStatus',{trxId:cos.data.trxId},'h.sari.s');
@@ -724,6 +746,163 @@ let gets=0; const realCache=ctx.CacheService.getScriptCache; ctx.CacheService.ge
 post('getTryoutInfo',{},'h.alice.s');
 check('memo: daftar paket dibaca sekali per permintaan', gets===1, gets);
 ctx.CacheService.getScriptCache=realCache;
+}
+// ---------- Fase 13: menu A–F, produk satuan, mentoring, konsultasi ----------
+{
+const uidOf=(t)=>sheets.users.rows.find(x=>x[1]===String(tokens[t].email).toLowerCase())[0];
+const yan='h.yan.s'; tokens[yan]={...tokens['h.dina.s'],email:'yan@x.com',name:'Yan'};
+const zed='h.zed.s'; tokens[zed]={...tokens['h.dina.s'],email:'zed@x.com',name:'Zed Uji'}; post('login',{},zed);
+const zid=uidOf(zed);
+const TH13=sheets.transactions.rows[0];
+const trxOf=(id)=>{const r=sheets.transactions.rows.find(x=>x[0]===id); return r?Object.fromEntries(TH13.map((h,i)=>[h,r[i]])):null;};
+const pay=(co,tok)=>{const t=trxOf(co.data.trxId); mayar.payments[t.mayar_id].status='paid'; delete cacheStore['pchk_'+co.data.trxId]; return post('getPaymentStatus',{trxId:co.data.trxId},tok);};
+const lastBody=()=>mayar.calls.filter(c=>c.path==='/payments/create').pop().body;
+props.PRICING_V2_FROM=new Date(Date.now()-86400e3).toISOString();
+
+// A. Paket Tryout
+let cat=post('getTryoutCatalog',{},zed);
+check('F13 katalog: demo terbuka, paket berbayar Rp10.000 belum dimiliki', cat.ok && cat.data.demo && cat.data.demo.owned && cat.data.packages.length>0 && cat.data.packages.every(p=>!p.owned && p.price===10000), cat.error||cat.data);
+check('F13 katalog anonim bisa dibuka', post('getTryoutCatalog',{}).ok);
+const pid=cat.data.packages[0].packageId;
+check('F13 tanpa beli: startAttempt PAYMENT_REQUIRED', post0('startAttempt',{packageId:pid},zed).error.code==='PAYMENT_REQUIRED');
+let co=post('createCheckout',{kind:'tryout',refId:pid},zed);
+check('F13 checkout tryout memakai harga server Rp10.000', co.ok && lastBody().amount===10000 && trxOf(co.data.trxId).kind==='tryout' && trxOf(co.data.trxId).ref_id===pid, co.error);
+check('F13 checkout ulang memakai link yang sama', post('createCheckout',{kind:'tryout',refId:pid},zed).data.reused===true);
+let pst=pay(co,zed);
+check('F13 lunas → hak akses tercatat, Premium tidak berubah', pst.ok && pst.data.transaction.status==='paid' && pst.data.transaction.kind==='tryout' && pst.data.plan==='free' && sheets.entitlements.rows.some(r=>r[1]===zid&&r[2]==='tryout'&&r[3]===pid), pst.data);
+pay(co,zed);
+check('F13 aktivasi idempoten', sheets.entitlements.rows.filter(r=>r[1]===zid&&r[2]==='tryout'&&r[3]===pid).length===1);
+check('F13 beli ulang ditolak', post('createCheckout',{kind:'tryout',refId:pid},zed).error.code==='ALREADY_OWNED');
+const zs=post0('startAttempt',{packageId:pid},zed);
+check('F13 setelah beli bisa mengerjakan', zs.ok, zs.error);
+post('submitAttempt',{attemptId:zs.data.attemptId,answers:{}},zed);
+cat=post('getTryoutCatalog',{},zed);
+check('F13 katalog: dimiliki + riwayat', cat.data.packages.find(p=>p.packageId===pid).owned && cat.data.packages.find(p=>p.packageId===pid).attempts.length===1);
+check('F13 produk tidak dikenal ditolak', post('createCheckout',{kind:'emas',refId:'x'},zed).error.code==='BAD_REQUEST');
+check('F13 paket demo/latihan tidak dijual', post('createCheckout',{kind:'tryout',refId:'LAT-01'},zed).error.code==='BAD_REQUEST');
+
+// Tryout Akbar berbayar
+const HE=sheets.akbar_events.rows[0];
+sheets.akbar_events.rows.push(HE.map(k=>({event_id:'E9',package_id:'AK-T1',title:'Akbar E9',opens_at:new Date(Date.now()+24*3600e3).toISOString(),closes_at:new Date(Date.now()+39*3600e3).toISOString(),results_at:new Date(Date.now()+48*3600e3).toISOString(),status:'scheduled'}[k]??'')));
+check('F13 akbar tanpa tiket', post('joinAkbar',{eventId:'E9'},zed).error.code==='PAYMENT_REQUIRED');
+let coA=post('createCheckout',{kind:'akbar',refId:'E9'},zed);
+check('F13 tiket akbar Rp10.000', coA.ok && lastBody().amount===10000, coA.error);
+pay(coA,zed);
+check('F13 punya tiket: menunggu jadwal', post('joinAkbar',{eventId:'E9'},zed).error.code==='NOT_OPEN');
+check('F13 info akbar: status tiket', post('getAkbarInfo',{},zed).data.next.length>=0 && post('getTryoutCatalog',{},zed).ok);
+check('F13 tiket event yang sudah ditutup tidak dijual', post('createCheckout',{kind:'akbar',refId:'E1'},zed).error.code==='CLOSED');
+check('F13 paket Akbar yang semua event-nya terbit dijual sebagai tryout', (function(){ const c=post('getTryoutCatalog',{},zed).data; return !c.packages.some(p=>p.packageId==='AK-T1'); })());
+
+// B. Paket Materi
+let mi=post('getMateriIndex',{},zed);
+check('F13 materi: 21 topik, 3 gratis (judul teratas tiap subtes)', mi.ok && mi.data.topics.length===21 && mi.data.topics.filter(t=>t.free).map(t=>t.topicId).join()==='twk-nasionalisme,tiu-analogi,tkp-pelayanan' && mi.data.topics.filter(t=>t.locked).length===18, mi.data);
+let mt=post('getMateriTopic',{topicId:'tiu-deret'},zed);
+check('F13 materi terkunci untuk non-Premium tanpa isi', mt.ok && mt.data.locked && mt.data.reason==='PREMIUM' && !JSON.stringify(mt.data).includes('PEMBAHASAN-RAHASIA'), mt.data);
+const mrow13=(t,l)=>[`MAT-${t}-L${l}`,t,String(l),`Judul ${t} L${l}`,'9','Ringkasan '+t,'Poin satu\nPoin dua','Soal contoh?','A1','B1','C1','D1','E1','c','Pembahasan '+t+l,'Strategi 1','Jebakan 1','live'];
+files['mat1'].store.materials.rows.push(mrow13('tiu-analogi',2),mrow13('tiu-analogi',3));
+delete cacheStore['mats_v1'];
+mt=post('getMateriTopic',{topicId:'tiu-analogi'});
+check('F13 materi topik gratis terbuka tanpa login', mt.ok && !mt.data.locked && mt.data.levels.length===2 && mt.data.levels[0].contoh, mt.data);
+check('F13 materi lama (getMaterial) topik gratis terbuka', post('getMaterial',{topicId:'tiu-analogi',level:2}).data.locked===false);
+const dinaPrem=post('getMe',{},dina).data.user.plan==='premium';
+check('F13 materi Premium terbuka untuk Premium', !dinaPrem || post('getMateriTopic',{topicId:'tiu-deret'},dina).data.locked===false);
+
+// C. Latihan Soal per Materi
+let tp=post('getTopicPractice',{},zed);
+check('F13 latihan per materi: 21 topik, 45 menit, 50 soal', tp.ok && tp.data.topics.length===21 && tp.data.durationMin===45 && tp.data.size===50 && !tp.data.topics.find(t=>t.topicId==='tiu-analogi').locked && tp.data.topics.find(t=>t.topicId==='twk-pancasila').locked, tp.data);
+check('F13 topik terkunci butuh Premium', post0('startAttempt',{packageId:'LTP-twk-pancasila'},zed).error.code==='PREMIUM_REQUIRED');
+const lt=post0('startAttempt',{packageId:'LTP-tiu-analogi'},zed);
+check('F13 latihan topik gratis: soal dari bank latihan, 45 menit, tanpa kunci', lt.ok && lt.data.questions.length>=1 && lt.data.questions.every(q=>q.topicId==='tiu-analogi') && lt.data.durationMin===45 && !/"answer"|"explanation"/.test(JSON.stringify(lt.data.questions)), lt.error||lt.data);
+const ltAns={}; lt.data.questions.forEach(q=>{const src=demo.questions[Number(q.id.split('-').pop())-1]; ltAns[q.id]=src.answer;});
+post('submitAttempt',{attemptId:lt.data.attemptId,answers:ltAns},zed);
+const ltr=post('getReport',{attemptId:lt.data.attemptId},zed);
+check('F13 rapor latihan topik: satu subtes, skala 100, pembahasan semua', ltr.ok && ltr.data.subtests.length===1 && ltr.data.subtests[0].id==='tiu' && ltr.data.score100===100 && ltr.data.review.length===lt.data.questions.length && ltr.data.package.type==='topik', ltr.error||ltr.data);
+check('F13 topik tidak dikenal', post0('startAttempt',{packageId:'LTP-xyz'},zed).error.code==='NOT_FOUND');
+check('F13 Premium membuka semua topik', !dinaPrem || post0('startAttempt',{packageId:'LTP-twk-pancasila'},dina).ok);
+
+// D. Mentoring
+ctx.seedMentoringSeries();
+const MH=sheets.mentoring_sessions.rows[0]; const mcol=(k)=>MH.indexOf(k);
+check('F13 seed mentoring: 8 sesi Jumat 19.00–21.00 WIB', sheets.mentoring_sessions.rows.length===9 && sheets.mentoring_sessions.rows.slice(1).every(r=>new Date(r[mcol('starts_at')]).getUTCHours()===12 && new Date(new Date(r[mcol('starts_at')]).getTime()+7*3600e3).getUTCDay()===5));
+ctx.seedMentoringSeries();
+check('F13 seed mentoring lanjut tanpa dobel', new Set(sheets.mentoring_sessions.rows.slice(1).map(r=>r[0])).size===sheets.mentoring_sessions.rows.length-1);
+const s1=sheets.mentoring_sessions.rows[1], s2=sheets.mentoring_sessions.rows[2];
+s1[mcol('capacity')]='1'; s1[mcol('zoom_url')]='https://zoom.us/j/123?pwd=RAHASIA'; s1[mcol('zoom_passcode')]='777';
+let mg=post('getMentoring',{},zed);
+check('F13 mentoring: harga Rp25.000, kursi, link Zoom tidak pernah dikirim', mg.ok && mg.data.live.length>=8 && mg.data.live[0].price===25000 && mg.data.live[0].seatsLeft===1 && !JSON.stringify(mg.data).includes('RAHASIA') && !JSON.stringify(mg.data).includes('zoom'), mg.data.live[0]);
+let coL=post('createCheckout',{kind:'live',refId:s1[0]},zed);
+check('F13 tiket live Rp25.000', coL.ok && lastBody().amount===25000, coL.error);
+check('F13 kursi ditahan selama checkout: orang lain SOLD_OUT', post('createCheckout',{kind:'live',refId:s1[0]},yan).error.code==='SOLD_OUT');
+pay(coL,zed);
+check('F13 kursi habis setelah lunas', post('getMentoring',{},'h.gita.s').data.live[0].seatsLeft===0);
+check('F13 gabung sebelum waktunya ditolak', post('joinLive',{sessionId:s1[0]},zed).error.code==='NOT_OPEN');
+check('F13 bukan pemilik tiket tidak dapat link', post('joinLive',{sessionId:s1[0]},'h.gita.s').error.code==='FORBIDDEN');
+s1[mcol('starts_at')]=new Date(Date.now()+10*60e3).toISOString(); s1[mcol('ends_at')]=new Date(Date.now()+130*60e3).toISOString();
+let jl=post('joinLive',{sessionId:s1[0],ua:'test'},zed);
+check('F13 gabung 15 menit sebelum mulai → link Zoom + tercatat', jl.ok && jl.data.url.includes('zoom.us') && jl.data.passcode==='777' && sheets.access_log.rows.some(r=>r[2]==='live'&&r[3]===s1[0]), jl.error);
+s2[mcol('recording_url')]='https://youtu.be/AbCdEfGhIjK'; s2[mcol('recording_status')]='published';
+mg=post('getMentoring',{},'h.gita.s');
+check('F13 katalog rekaman Rp10.000 tanpa ID video', mg.data.recordings.length===1 && mg.data.recordings[0].price===10000 && !JSON.stringify(mg.data).includes('AbCdEfGhIjK'), mg.data.recordings);
+check('F13 rekaman belum dibeli ditolak', post('getRecording',{sessionId:s2[0]},zed).error.code==='PAYMENT_REQUIRED');
+let coR=post('createCheckout',{kind:'rec',refId:s2[0]},zed); pay(coR,zed);
+let gr=post('getRecording',{sessionId:s2[0]},zed);
+check('F13 rekaman dibeli: ID video + tanda air email', gr.ok && gr.data.videoId==='AbCdEfGhIjK' && gr.data.watermark==='zed@x.com', gr.error||gr.data);
+check('F13 rekaman yang belum terbit tidak dijual', post('createCheckout',{kind:'rec',refId:s1[0]},zed).error.code==='NOT_FOUND');
+
+// E. Konsultasi
+const kons='h.kons.s'; tokens[kons]={...tokens['h.dina.s'],email:'kons@x.com',name:'Bu Konsultan'}; post('login',{},kons);
+const CH=sheets.consult_slots.rows[0];
+const slotRow=(id,startMs)=>CH.map(k=>({slot_id:id,starts_at:new Date(startMs).toISOString(),consultant_name:'Bu Konsultan',consultant_email:'kons@x.com',status:'open',created_at:new Date().toISOString()}[k]??''));
+sheets.consult_slots.rows.push(slotRow('KS-1',Date.now()+20*60e3), slotRow('KS-2',Date.now()+48*3600e3), slotRow('KS-0',Date.now()+5*60e3));
+ctx.refreshConsultCache();
+let cs=post('getConsultSlots',{},zed);
+check('F13 konsultasi: slot ≥15 menit ke depan, Rp30.000', cs.ok && cs.data.slots.map(x=>x.slotId).join()==='KS-1,KS-2' && cs.data.slots[0].price===30000, cs.data&&cs.data.slots);
+let coK=post('createCheckout',{kind:'consult',refId:'KS-1'},zed);
+check('F13 checkout konsultasi Rp30.000', coK.ok && lastBody().amount===30000, coK.error);
+check('F13 slot yang sedang dibayar disembunyikan dari orang lain', !post('getConsultSlots',{},'h.gita.s').data.slots.some(x=>x.slotId==='KS-1'));
+check('F13 slot ditahan: orang lain SOLD_OUT', post('createCheckout',{kind:'consult',refId:'KS-1'},yan).error.code==='SOLD_OUT');
+pay(coK,zed);
+const slotNow=()=>Object.fromEntries(CH.map((h,i)=>[h,sheets.consult_slots.rows.find(r=>r[0]==='KS-1')[i]]));
+check('F13 lunas → slot booked untuk pembeli', slotNow().status==='booked' && slotNow().booked_by===zid);
+check('F13 konsultasi saya tampil', post('getConsultSlots',{},zed).data.mine.length===1);
+check('F13 chat belum dibuka (10 menit sebelum)', post('sendConsultMessage',{slotId:'KS-1',text:'halo'},zed).error.code==='NOT_OPEN');
+sheets.consult_slots.rows.find(r=>r[0]==='KS-1')[CH.indexOf('starts_at')]=new Date(Date.now()-5*60e3).toISOString(); ctx.refreshConsultCache();
+let m1=post('sendConsultMessage',{slotId:'KS-1',text:'Halo kak, saya mau tanya formasi.'},zed);
+check('F13 pembeli kirim pesan', m1.ok && m1.data.sender==='client', m1.error);
+let ch=post('getConsultChat',{slotId:'KS-1'},kons);
+check('F13 konsultan melihat pesan & nama klien', ch.ok && ch.data.role==='consultant' && ch.data.messages.length===1 && ch.data.slot.clientName==='Zed Uji', ch.error||ch.data);
+post('sendConsultMessage',{slotId:'KS-1',text:'Halo Zed, silakan.'},kons);
+let ch2=post('getConsultChat',{slotId:'KS-1',after:m1.data.id},zed);
+check('F13 polling hanya pesan baru', ch2.ok && ch2.data.messages.length===1 && ch2.data.messages[0].sender==='consultant', ch2.data);
+check('F13 orang lain tidak bisa membaca chat', post('getConsultChat',{slotId:'KS-1'},'h.gita.s').error.code==='FORBIDDEN');
+check('F13 pesan kosong/terlalu panjang ditolak', post('sendConsultMessage',{slotId:'KS-1',text:'  '},zed).error.code==='BAD_REQUEST' && post('sendConsultMessage',{slotId:'KS-1',text:'x'.repeat(1001)},zed).error.code==='BAD_REQUEST');
+check('F13 pesan tersimpan di sheet', sheets.consult_messages.rows.length===3);
+let desk=post('getConsultDesk',{},kons);
+check('F13 meja konsultan', desk.ok && desk.data.slots.some(x=>x.slotId==='KS-1' && x.clientEmail==='zed@x.com'), desk.error);
+check('F13 meja konsultan khusus konsultan', post('getConsultDesk',{},'h.gita.s').error.code==='FORBIDDEN');
+sheets.consult_slots.rows.find(r=>r[0]==='KS-1')[CH.indexOf('starts_at')]=new Date(Date.now()-70*60e3).toISOString(); ctx.refreshConsultCache();
+check('F13 chat tertutup setelah 60 menit', post('sendConsultMessage',{slotId:'KS-1',text:'masih?'},zed).error.code==='CLOSED' && post('getConsultChat',{slotId:'KS-1'},zed).data.messages.length===2);
+
+// F. Rapot & member area
+let hub=post('getRaporHub',{},zed);
+check('F13 rapot: semua hasil (tryout & latihan topik) + peta level', hub.ok && hub.data.attempts.some(a=>a.type==='topik' && a.max===250) && hub.data.attempts.some(a=>a.packageId===pid) && hub.data.levels.length===21 && hub.data.summary.topicPractice===1, hub.error||hub.data.summary);
+let my=post('getMyItems',{},zed);
+check('F13 member area: tryout, akbar, live, rekaman, konsultasi', my.ok && my.data.tryouts.length===1 && my.data.akbar.length===1 && my.data.live.length===1 && my.data.live[0].canJoin && my.data.recordings.length===1 && my.data.consults.length===1 && my.data.history.length>=5, my.error||my.data);
+check('F13 member area tidak membocorkan link Zoom/ID video', !/zoom\.us|AbCdEfGhIjK/.test(JSON.stringify(my.data)));
+
+// Premium lama (dibeli sebelum harga baru) tetap membuka paket tryout reguler
+if (dinaPrem) {
+  props.PRICING_V2_FROM=new Date(Date.now()+86400e3).toISOString();
+  check('F13 Premium lama: paket tryout terbuka tanpa beli', post0('startAttempt',{packageId:pid},dina).ok);
+  props.PRICING_V2_FROM=new Date(Date.now()-365*86400e3).toISOString();
+  const r2=post0('startAttempt',{packageId:cat.data.packages[cat.data.packages.length-1].packageId},dina);
+  check('F13 Premium baru: paket tryout tetap dibeli satuan', r2.ok || (r2.error && r2.error.code==='PAYMENT_REQUIRED'), r2.error);
+}
+check('F13 referral: pembelian produk tidak menghapus hak diskon Premium', ctx.hasPaidTransaction_(zid)===false);
+props.ADMIN_EMAILS='alice@gmail.com';
+const adm=post('getAdminDashboard',{days:30,force:true},'h.alice.s');
+check('F13 dasbor admin: pendapatan per produk & layanan', adm.ok && adm.data.business.byKind.some(k=>k.kind==='tryout') && adm.data.business.byKind.some(k=>k.kind==='consult' && k.revenue===30000) && adm.data.business.services.live.length>=8 && adm.data.business.services.consult.booked===0, adm.error||adm.data.business.byKind);
+delete props.ADMIN_EMAILS;
 }
 // ---------- Fase 12: Super User Dashboard ----------
 delete props.ADMIN_EMAILS; const oldAdm=props.ADMIN_EMAIL; delete props.ADMIN_EMAIL;
