@@ -130,6 +130,7 @@ function rebuildPackageCache_() {
   });
   cachePutJson_('pkgs', list, PKG_CACHE_SEC);
   cachePutJson_('pbx', bankIndex, PKG_CACHE_SEC);
+  clearTopicPackageCache_();
   Logger.log('Cache paket dibangun ulang: ' + list.length + ' paket, ' + bankIndex.length + ' soal latihan, ' + Math.round((Date.now() - t0) / 1000) + ' detik.');
   return list;
 }
@@ -201,6 +202,7 @@ function isBlank_(v) {
 }
 
 function getPackage_(packageId) {
+  if (/^LTP-/.test(String(packageId))) return topicPackage_(packageId);
   var p = getPackages_().filter(function (x) { return x.packageId === packageId; })[0];
   if (!p) throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.');
   return p;
@@ -212,6 +214,12 @@ function getPackageQuestions_(packageId) {
   var cached = cacheGetJson_(key);
   if (cached) return cached;
   var pkg = getPackage_(packageId);
+  if (pkg.type === 'topik') {
+    var tq = topicQuestions_(pkg.topicId);
+    if (!tq.length) throw new AppError_('NOT_FOUND', 'Soal latihan untuk topik ini belum tersedia.');
+    cachePutJson_(key, tq, PKG_CACHE_SEC);
+    return tq;
+  }
   var list = parseQuestions_(readTable_(SpreadsheetApp.openById(pkg.fileId), 'questions'), packageId);
   if (!list.length) throw new AppError_('NOT_FOUND', 'Soal untuk paket ini belum tersedia.');
   cachePutJson_(key, list, PKG_CACHE_SEC);
@@ -240,7 +248,8 @@ function parseQuestions_(rows, packageId) {
         context: sanitizeSvg_(String(q.context || '')),
         options: opts,
         answer: String(q.answer || '').trim().toLowerCase(),
-        explanation: String(q.explanation || '')
+        explanation: String(q.explanation || ''),
+        level: Number(q.level) || 0
       };
     })
     .sort(function (a, b) { return a.number - b.number; });
@@ -277,6 +286,7 @@ function clearPackageCache_(packageId) {
   var c = CacheService.getScriptCache();
   c.remove('pbx');
   c.remove('pkgs');
+  clearTopicPackageCache_();
   if (packageId) {
     c.remove('pq_' + packageId);
     for (var i = 0; i < 10; i++) c.remove('pq_' + packageId + '__' + i);
@@ -362,7 +372,7 @@ function handleGetTryoutInfo_(payload, user) {
     var mine = attempts.filter(function (a) { return a.package_id === p.packageId; });
     var done = mine.filter(function (a) { return a.status === 'submitted'; });
     var running = mine.filter(function (a) { return a.status === 'in_progress'; })[0];
-    var gate = canStart_(p, user, done.length);
+    var gate = p.type === 'skb' ? canStart_(p, user, done.length) : (function (a) { return { ok: a.ok, reason: a.ok ? null : a.reason }; })(packageAccess_(p, user));
     var qCount = 0;
     qCount = packageQuestionCount_(p);
     return {
@@ -380,16 +390,19 @@ function handleGetTryoutInfo_(payload, user) {
 function handleStartAttempt_(payload, user) {
   var packageId = String(payload.packageId || '');
   var pkg = getPackage_(packageId);
-  if (pkg.type === 'latihan' || pkg.type === 'akbar') throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.'); // skb boleh
+  if (pkg.type === 'latihan' || (pkg.type === 'akbar' && !isSellableTryout_(pkg))) throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.'); // skb boleh
+  // Fase 13: paket berbayar / Premium
+  var access = packageAccess_(pkg, user);
+  if (!access.ok) throw new AppError_(access.reason, access.message);
   var questions = getPackageQuestions_(packageId);
 
   var attempt = withLock_(function () {
-    var mine = finalizeExpiredAttempts_(user).filter(function (a) { return a.package_id === packageId; });
+    var mine = finalizeExpiredAttempts_(user).filter(function (a) { return a.package_id === packageId && !a.event_id; });
     var running = mine.filter(function (a) { return a.status === 'in_progress'; })[0];
     if (running) return running;
 
     var done = mine.filter(function (a) { return a.status === 'submitted'; }).length;
-    var gate = canStart_(pkg, user, done);
+    var gate = pkg.type === 'skb' ? canStart_(pkg, user, done) : { ok: true };
     if (!gate.ok) throw new AppError_('FORBIDDEN', gate.message);
 
     var now = new Date();
@@ -397,7 +410,7 @@ function handleStartAttempt_(payload, user) {
       attempt_id: newId_('t'),
       user_id: user.userId,
       package_id: packageId,
-      type: pkg.type,
+      type: pkg.type === 'akbar' ? 'tryout' : pkg.type,
       status: 'in_progress',
       started_at: now.toISOString(),
       ends_at: new Date(now.getTime() + pkg.durationMin * 60000).toISOString(),
@@ -474,7 +487,7 @@ function handleGetReport_(payload, user) {
 function gradeAndStore_(row, questions, answers, mode) {
   var pkg = getPackage_(row.package_id);
   var g = grade_(questions, answers);
-  if (pkg.type === 'skb') return storeSkbGrade_(row, g, answers, mode);
+  if (pkg.type === 'skb' || pkg.type === 'topik') return storeSkbGrade_(row, g, answers, mode, pkg.type === 'topik' ? pkg.subtest : 'skb');
   var passed = {
     twk: g.sub.twk.score >= pkg.pg.twk,
     tiu: g.sub.tiu.score >= pkg.pg.tiu,
@@ -499,12 +512,12 @@ function gradeAndStore_(row, questions, answers, mode) {
 }
 
 /** Simpan nilai paket SKB: tidak ada ambang batas SKD; total = skor SKB (benar × 5). */
-function storeSkbGrade_(row, g, answers, mode) {
+function storeSkbGrade_(row, g, answers, mode, subKey) {
   var submittedAt = new Date();
   var duration = Math.round((Math.min(submittedAt.getTime(), new Date(row.ends_at).getTime()) - new Date(row.started_at).getTime()) / 1000);
   return update_('attempts', row._row, {
     status: 'submitted', submitted_at: submittedAt.toISOString(),
-    twk: '', tiu: '', tkp: '', total: g.sub.skb.score,
+    twk: '', tiu: '', tkp: '', total: g.sub[subKey || 'skb'].score,
     passed_twk: '', passed_tiu: '', passed_tkp: '', passed_all: '',
     answered: g.answered, correct_json: JSON.stringify(g.sub), topic_json: JSON.stringify(g.topics),
     answers_json: JSON.stringify(answers), duration_sec: Math.max(0, duration), finish_mode: mode
@@ -558,7 +571,7 @@ function grade_(questions, answers) {
 
 function buildReport_(row, user) {
   var pkg = getPackage_(row.package_id);
-  var premium = user.plan === 'premium';
+  var premium = true;   // Fase 13: akses paket sudah dibayar/terbuka → rapor & pembahasan lengkap untuk semua
   var sub = safeParse_(row.correct_json, {});
   var topicStats = safeParse_(row.topic_json, {});
   var answers = safeParse_(row.answers_json, {});
@@ -568,8 +581,8 @@ function buildReport_(row, user) {
   var ansKeys = Object.keys(answers);
   var stale = ansKeys.length > 0 && !ansKeys.some(function (k) { return qids[k]; });
 
-  var isSkb = pkg.type === 'skb';
-  var subtests = (isSkb ? ['skb'] : ['twk', 'tiu', 'tkp']).map(function (id) {
+  var isSkb = pkg.type === 'skb' || pkg.type === 'topik';
+  var subtests = (pkg.type === 'topik' ? [pkg.subtest] : isSkb ? ['skb'] : ['twk', 'tiu', 'tkp']).map(function (id) {
     var s = sub[id] || { score: 0, max: 0, total: 0, answered: 0, correct: 0 };
     var pgv = isSkb ? null : pkg.pg[id];
     return {
@@ -746,3 +759,182 @@ function cacheGetJson_(key) {
   }
   try { var v = JSON.parse(s); _memo['cj:' + key] = v; return v; } catch (e) { return null; }
 }
+
+/* ================================================================== */
+/* Fase 13: Paket Latihan Soal per Materi (paket virtual "LTP-<topik>") */
+/* ================================================================== */
+
+var TOPIC_PRACTICE_SIZE = 50;
+var TOPIC_PRACTICE_MIN = 45;
+
+/** Paket virtual: 50 soal satu topik dari bank latihan, 45 menit, kerjakan semua lalu kirim. */
+function topicPackage_(packageId) {
+  var topicId = String(packageId).replace(/^LTP-/, '');
+  var meta = TOPICS[topicId];
+  if (!meta) throw new AppError_('NOT_FOUND', 'Topik latihan tidak ditemukan.');
+  return {
+    packageId: 'LTP-' + topicId, title: 'Latihan ' + meta.name, type: 'topik', topicId: topicId, subtest: meta.subtest,
+    description: TOPIC_PRACTICE_SIZE + ' soal HOTS ' + meta.subtest.toUpperCase() + ' topik ' + meta.name + ', dari mudah ke sulit.',
+    durationMin: Number(getConfigOptional_('TOPIC_PRACTICE_MIN', '')) || TOPIC_PRACTICE_MIN,
+    pg: { twk: null, tiu: null, tkp: null }, freeAttempts: null, order: 500 + TOPIC_ORDER.indexOf(topicId), questionCount: null
+  };
+}
+
+/**
+ * 50 soal satu topik dari bank latihan (LAT-xx), urut dari level mudah ke sulit.
+ * Bila tersedia lebih dari 50, soal dikurangi merata di semua level agar sebaran kesulitan tetap.
+ */
+function topicQuestions_(topicId) {
+  var refs = getPracticeIndex_().filter(function (r) { return r.topicId === topicId; });
+  var qs = loadPracticeQuestions_(refs).map(function (q) { var c = Object.assign({}, q); delete c.packageId; return c; });
+  qs.sort(function (a, b) { return (a.level || 0) - (b.level || 0) || (a.id < b.id ? -1 : 1); });
+  var n = qs.length, size = TOPIC_PRACTICE_SIZE;
+  if (n > size) {
+    var keep = [];
+    for (var i = 0; i < size; i++) keep.push(qs[Math.floor(i * n / size)]);
+    qs = keep;
+  }
+  return qs.map(function (q, i) { q.number = i + 1; return q; });
+}
+
+function clearTopicPackageCache_() {
+  var c = CacheService.getScriptCache();
+  Object.keys(TOPICS).forEach(function (t) {
+    c.remove('pq_LTP-' + t);
+    for (var i = 0; i < 4; i++) c.remove('pq_LTP-' + t + '__' + i);
+  });
+}
+
+/** getTopicPractice (auth optional): daftar 21 topik + status kunci + hasil terakhir milik pengguna. */
+function handleGetTopicPractice_(payload, user) {
+  var attempts = user ? finalizeExpiredAttempts_(user).filter(function (a) { return a.type === 'topik'; }) : [];
+  var premium = Boolean(user && user.plan === 'premium');
+  return {
+    premium: premium, loggedIn: Boolean(user), durationMin: topicPackage_('LTP-' + TOPIC_ORDER[0]).durationMin, size: TOPIC_PRACTICE_SIZE,
+    topics: TOPIC_ORDER.map(function (t) {
+      var mine = attempts.filter(function (a) { return a.package_id === 'LTP-' + t; });
+      var done = mine.filter(function (a) { return a.status === 'submitted'; });
+      var run = mine.filter(function (a) { return a.status === 'in_progress'; })[0];
+      var last = done[done.length - 1];
+      return {
+        topicId: t, packageId: 'LTP-' + t, name: TOPICS[t].name, subtest: TOPICS[t].subtest,
+        free: isFreeTopic_(t), locked: !isFreeTopic_(t) && !premium,
+        attempts: done.length,
+        last: last ? { attemptId: last.attempt_id, total: Number(last.total) || 0, max: TOPIC_PRACTICE_SIZE * 5, submittedAt: toIso_(last.submitted_at) } : null,
+        inProgress: run ? { attemptId: run.attempt_id, endsAt: toIso_(run.ends_at) } : null
+      };
+    })
+  };
+}
+
+/* ================================================================== */
+/* Fase 13: katalog Paket Tryout (menu A)                              */
+/* ================================================================== */
+
+/** getTryoutCatalog (auth optional): Tryout Akbar terdekat, paket coba (demo), dan paket berbayar. */
+function handleGetTryoutCatalog_(payload, user) {
+  var attempts = user ? finalizeExpiredAttempts_(user) : [];
+  var now = Date.now();
+  var pkgs = getPackages_();
+
+  // 1. Tryout Akbar terdekat (berjalan atau berikutnya)
+  var akbar = null;
+  try {
+    var ev = akbarEvents_().filter(function (e) { return ['upcoming', 'open', 'closing', 'scoring'].indexOf(akbarState_(e, now)) >= 0; })[0];
+    if (ev) {
+      var apkg = getPackage_(ev.package_id);
+      var att = attempts.filter(function (a) { return a.event_id === ev.event_id; })[0];
+      akbar = {
+        eventId: ev.event_id, title: ev.title || apkg.title, opensAt: toIso_(ev.opens_at), closesAt: toIso_(ev.closes_at),
+        lastStartAt: akbarLastStart_(ev).toISOString(), resultsAt: toIso_(ev.results_at), state: akbarState_(ev, now),
+        questionCount: packageQuestionCount_(apkg), durationMin: apkg.durationMin, price: productPrice_('akbar'),
+        owned: owns_(user, 'akbar', ev.event_id),
+        my: att ? { attemptId: att.attempt_id, status: att.status } : null
+      };
+    }
+  } catch (e) { console.warn('katalog: akbar dilewati: ' + e.message); }
+
+  function view(p) {
+    var mine = attempts.filter(function (a) { return a.package_id === p.packageId && !a.event_id; });
+    var done = mine.filter(function (a) { return a.status === 'submitted'; });
+    var run = mine.filter(function (a) { return a.status === 'in_progress'; })[0];
+    var acc = packageAccess_(p, user);
+    return {
+      packageId: p.packageId, title: p.title, type: p.type,
+      description: p.type === 'akbar' ? 'Paket dari Tryout Akbar yang sudah selesai: 110 soal HOTS format terbaru, termasuk figural. Rapor & pembahasan semua soal.' : p.description,
+      durationMin: p.durationMin, pg: p.pg,
+      questionCount: packageQuestionCount_(p), price: p.type === 'demo' ? 0 : productPrice_('tryout'),
+      owned: p.type === 'demo' || acc.ok, legacy: p.type !== 'demo' && acc.ok && isLegacyPremium_(user) && !owns_(user, 'tryout', p.packageId),
+      attempts: done.map(attemptSummary_).reverse(),
+      inProgress: run ? { attemptId: run.attempt_id, endsAt: toIso_(run.ends_at) } : null
+    };
+  }
+  var demo = pkgs.filter(function (p) { return p.type === 'demo'; })[0] || null;
+  var paid = pkgs.filter(function (p) { return isSellableTryout_(p); });
+  return {
+    serverNow: nowIso_(), loggedIn: Boolean(user),
+    akbar: akbar,
+    demo: demo ? view(demo) : null,
+    packages: paid.map(view)
+  };
+}
+
+/* ================================================================== */
+/* Fase 13: Cek Kesiapan & Rapot (menu F)                              */
+/* ================================================================== */
+
+/** getRaporHub (auth required): semua hasil dalam satu tempat. */
+function handleGetRaporHub_(payload, user) {
+  var attempts = finalizeExpiredAttempts_(user).filter(function (a) { return a.status === 'submitted'; });
+  var titles = {};
+  getPackages_().forEach(function (p) { titles[p.packageId] = p.title; });
+  var events = {};
+  try { akbarEvents_().forEach(function (e) { events[e.event_id] = e; }); } catch (e) { /* abaikan */ }
+  var results = {};
+  try { findAll_('akbar_results', 'user_id', user.userId).forEach(function (r) { results[r.event_id] = r; }); } catch (e) { /* abaikan */ }
+
+  var list = attempts.map(function (a) {
+    var type = a.type || 'diagnostic';
+    var title = titles[a.package_id] || a.package_id;
+    if (type === 'topik') { var tp = topicPackage_(a.package_id); title = tp.title; }
+    var item = {
+      attemptId: a.attempt_id, packageId: a.package_id, title: title, type: type,
+      total: Number(a.total) || 0, twk: Number(a.twk) || 0, tiu: Number(a.tiu) || 0, tkp: Number(a.tkp) || 0,
+      passedAll: type === 'skb' || type === 'topik' ? null : isTrue_(a.passed_all), submittedAt: toIso_(a.submitted_at)
+    };
+    if (type === 'topik') { item.max = TOPIC_PRACTICE_SIZE * 5; item.subtest = topicPackage_(a.package_id).subtest; }
+    if (type === 'akbar') {
+      var ev = events[a.event_id], r = results[a.event_id];
+      item.eventId = a.event_id;
+      item.published = Boolean(ev && ev.status === 'published');
+      item.rank = r ? Number(r.rank) : null;
+      item.participants = ev ? Number(ev.participants) || null : null;
+      if (!item.published) { item.total = null; item.passedAll = null; item.twk = item.tiu = item.tkp = null; }
+    }
+    return item;
+  }).sort(function (a, b) { return a.submittedAt < b.submittedAt ? 1 : -1; });
+
+  var hist = practiceHistory_(user);
+  var stats = topicStats_(user, hist);
+  var levels = TOPIC_ORDER.map(function (t) {
+    var s = stats[t];
+    return { topicId: t, name: TOPICS[t].name, subtest: TOPICS[t].subtest, level: s ? s.level : null, pct: s ? s.pct : null, n: s ? s.n : 0 };
+  });
+  var lastAssess = findLast_('assessments', 'user_id', user.userId);
+  var sk = SKD_TYPES_();
+  var skd = list.filter(function (x) { return sk.indexOf(x.type) >= 0; });
+  return {
+    attempts: list,
+    summary: {
+      tryouts: skd.length,
+      best: skd.length ? Math.max.apply(null, skd.map(function (x) { return x.total || 0; })) : null,
+      passed: skd.filter(function (x) { return x.passedAll; }).length,
+      topicPractice: list.filter(function (x) { return x.type === 'topik'; }).length,
+      practiceAnswers: hist.length
+    },
+    levels: levels,
+    assessment: lastAssess ? toAssessment_(lastAssess) : null
+  };
+}
+
+function SKD_TYPES_() { return ['diagnostic', 'premium', 'tryout', 'akbar', 'demo']; }

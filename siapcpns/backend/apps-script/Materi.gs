@@ -84,7 +84,7 @@ function handleGetMaterial_(payload, user) {
   if (!TOPICS[topicId] || MATERIAL_LEVELS.indexOf(level) < 0) throw new AppError_('BAD_REQUEST', 'Topik atau level materi tidak valid.');
   var m = loadMaterials_()[topicId + '|' + level];
   if (!m) throw new AppError_('NOT_FOUND', 'Materi level ini belum tersedia.');
-  if (!user || user.plan !== 'premium') {
+  if (!isFreeTopic_(topicId) && (!user || user.plan !== 'premium')) {
     return {
       locked: true, reason: user ? 'PREMIUM' : 'LOGIN',
       teaser: {
@@ -94,4 +94,33 @@ function handleGetMaterial_(payload, user) {
     };
   }
   return { locked: false, material: m };
+}
+
+/**
+ * getMateriTopic (auth optional, Fase 13 — Paket Materi): { topicId } → isi pendalaman level 2–4 satu topik.
+ * Topik teratas tiap subtes (FREE_TOPICS) terbuka untuk semua; topik lain khusus Premium.
+ * Konsep dasar (level 1) disajikan statis dari assets/data/materi-level1.json.
+ */
+function handleGetMateriTopic_(payload, user) {
+  var topicId = String(payload.topicId || '');
+  if (!TOPICS[topicId]) throw new AppError_('BAD_REQUEST', 'Topik materi tidak valid.');
+  var mats = loadMaterials_();
+  var levels = MATERIAL_LEVELS.map(function (l) { return mats[topicId + '|' + l]; }).filter(Boolean);
+  var open = isFreeTopic_(topicId) || Boolean(user && user.plan === 'premium');
+  if (!open) {
+    return {
+      locked: true, reason: user ? 'PREMIUM' : 'LOGIN', topicId: topicId,
+      teaser: { titles: levels.map(function (m) { return m.title; }), pointCount: levels.reduce(function (s, m) { return s + m.poinKunci.length; }, 0) }
+    };
+  }
+  return { locked: false, topicId: topicId, free: isFreeTopic_(topicId), levels: levels };
+}
+
+/** getMateriIndex (auth optional, Fase 13): status kunci 21 topik untuk daftar Paket Materi. */
+function handleGetMateriIndex_(payload, user) {
+  var premium = Boolean(user && user.plan === 'premium');
+  return {
+    premium: premium, loggedIn: Boolean(user),
+    topics: TOPIC_ORDER.map(function (t) { return { topicId: t, name: TOPICS[t].name, subtest: TOPICS[t].subtest, free: isFreeTopic_(t), locked: !isFreeTopic_(t) && !premium }; })
+  };
 }

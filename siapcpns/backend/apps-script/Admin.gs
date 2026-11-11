@@ -255,6 +255,16 @@ function computeAdminDashboard_(days) {
       statusCounts: statusCounts,
       checkoutToPaidPct: pct_(statusCounts.paid || 0, createdRange.filter(function (t) { return num_(t.amount) > 0; }).length),
       byPlan: Object.keys(plans).map(function (k) { return plans[k]; }).sort(function (a, b) { return b.revenue - a.revenue; }),
+      byKind: (function () {
+        var o = {};
+        paidRange.forEach(function (t) {
+          var k = isPremiumTrx_(t) ? 'premium' : String(t.kind);
+          var x = o[k] || (o[k] = { kind: k, label: k === 'premium' ? 'Premium (Materi + Latihan)' : (PRODUCT_LABEL[k] || k), count: 0, revenue: 0 });
+          x.count++; x.revenue += num_(t.amount);
+        });
+        return Object.keys(o).map(function (k) { return o[k]; }).sort(function (a, b) { return b.revenue - a.revenue; });
+      })(),
+      services: adminServices_(),
       payers: payers.length, repeatPct: pct_(repeat, payers.length),
       discountRange: paidRange.reduce(function (s, t) { return s + num_(t.discount); }, 0),
       grantsRange: paid.filter(function (t) { return num_(t.amount) === 0 && inR(paidDate(t)); }).length,
@@ -390,4 +400,36 @@ function adminUserDetail_(u) {
     referrals: { invited: refs.length, rewarded: refs.filter(function (r) { return r.status === 'rewarded'; }).length },
     skd: skd ? { total: num_(skd.total), passedAll: isTrue_(skd.passed_all), testDate: toIsoDate_(skd.test_date) } : null
   };
+}
+
+/** Ringkasan layanan (Fase 13): kursi Live Mentoring & slot konsultasi mendatang. */
+function adminServices_() {
+  var now = Date.now();
+  var out = { live: [], consult: { open: 0, booked: 0, next: [] }, recordings: 0 };
+  try {
+    var ents = adminCols_('entitlements', ['kind', 'ref_id', 'status']).filter(function (e) { return String(e.status || 'active') === 'active'; });
+    var cnt = function (kind, ref) { return ents.filter(function (e) { return e.kind === kind && String(e.ref_id) === String(ref); }).length; };
+    mentoringSessions_().forEach(function (s) {
+      var end = mDate_(s.ends_at) || mDate_(s.starts_at);
+      if (end > now - 7 * 86400000 && String(s.status) !== 'cancelled') {
+        out.live.push({ sessionId: s.session_id, title: s.title, startsAt: new Date(mDate_(s.starts_at)).toISOString(), sold: cnt('live', s.session_id),
+          capacity: Number(s.capacity) || MENTORING_DEFAULT_CAPACITY, zoomReady: Boolean(s.zoom_url), recordingSold: cnt('rec', s.session_id) });
+      }
+      if (isRecordingPublished_(s)) out.recordings++;
+    });
+    out.live.sort(function (a, b) { return a.startsAt < b.startsAt ? -1 : 1; });
+    consultSlots_().forEach(function (s) {
+      var t = slotTimes_(s);
+      if (t.end < now) return;
+      if (String(s.status) === 'open') out.consult.open++;
+      if (String(s.status) === 'booked') {
+        out.consult.booked++;
+        var u = findOne_('users', 'user_id', s.booked_by);
+        out.consult.next.push({ slotId: s.slot_id, startsAt: new Date(t.start).toISOString(), consultant: String(s.consultant_name || ''), client: u ? String(u.name || u.email) : '' });
+      }
+    });
+    out.consult.next.sort(function (a, b) { return a.startsAt < b.startsAt ? -1 : 1; });
+    out.consult.next = out.consult.next.slice(0, 10);
+  } catch (e) { out.error = e.message; }
+  return out;
 }

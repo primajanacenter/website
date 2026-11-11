@@ -23,13 +23,13 @@
 
 var PAY_EXPIRE_HOURS = 24;          // masa berlaku link pembayaran
 var PAY_REUSE_MINUTES = 30;         // link pending yang sama dipakai ulang bila diminta lagi dalam 30 menit
-var PAY_MAX_PER_HOUR = 5;           // batas pembuatan checkout per pengguna per jam
+var PAY_MAX_PER_HOUR = 12;          // batas pembuatan checkout per pengguna per jam (Fase 13: produk satuan → dinaikkan dari 5)
 var PAY_CHECK_THROTTLE_SEC = 15;    // jeda minimal cek status ke Mayar per transaksi
 
 var DEFAULT_PLANS = [
-  { plan_id: 'P1M', name: 'Premium 1 bulan', duration_days: 30, price: 49000, price_before: '', badge: '', description: 'Cocok untuk persiapan singkat menjelang tes.', status: 'active', order: 1 },
-  { plan_id: 'P3M', name: 'Premium 3 bulan', duration_days: 90, price: 119000, price_before: 147000, badge: 'Paling populer', description: 'Waktu ideal untuk menutup topik lemah secara bertahap.', status: 'active', order: 2 },
-  { plan_id: 'P6M', name: 'Premium 6 bulan', duration_days: 180, price: 179000, price_before: 294000, badge: 'Paling hemat', description: 'Untuk yang mulai jauh hari sampai hari-H SKD.', status: 'active', order: 3 }
+  { plan_id: 'P1M', name: 'Premium 1 bulan', duration_days: 30, price: 30000, price_before: '', badge: '', description: 'Semua materi & latihan soal TWK, TIU, TKP selama 30 hari.', status: 'active', order: 1 },
+  { plan_id: 'P3M', name: 'Premium 3 bulan', duration_days: 90, price: 75000, price_before: 90000, badge: 'Paling populer', description: 'Semua materi & latihan soal TWK, TIU, TKP selama 90 hari.', status: 'active', order: 2 },
+  { plan_id: 'P6M', name: 'Premium 6 bulan', duration_days: 180, price: 150000, price_before: 180000, badge: 'Paling lama', description: 'Semua materi & latihan soal TWK, TIU, TKP selama 180 hari.', status: 'active', order: 3 }
 ];
 
 /* ================= Paket ================= */
@@ -97,9 +97,15 @@ function handleGetPlans_(payload, user) {
   return out;
 }
 
-/** createCheckout (auth required): { planId } → { trxId, paymentUrl, expiresAt, reused } */
+/**
+ * createCheckout (auth required)
+ *   Premium : { planId }                       → langganan (lihat sheet plans)
+ *   Satuan  : { kind, refId }  kind = tryout | akbar | live | rec | consult (Fase 13, lihat Shop.gs)
+ * → { trxId, paymentUrl, expiresAt, reused }
+ */
 function handleCreateCheckout_(payload, user) {
   if (paymentEnv_() === 'off') throw new AppError_('PAYMENT_OFF', 'Pembayaran belum dibuka. Coba lagi nanti.');
+  if (payload.kind && payload.kind !== 'premium') return handleProductCheckout_(payload, user);
   var planId = String(payload.planId || '').trim();
   var plan = getPlans_().filter(function (p) { return p.planId === planId; })[0];
   if (!plan) throw new AppError_('BAD_REQUEST', 'Paket tidak ditemukan.');
@@ -116,25 +122,43 @@ function handleCreateCheckout_(payload, user) {
   }).pop();
   if (reuse) return { trxId: reuse.trx_id, paymentUrl: reuse.payment_url, expiresAt: reuse.expires_at, reused: true };
 
+  checkPayRate_(mine);
+  return startPayment_(user, {
+    plan_id: plan.planId, plan_name: plan.name, duration_days: plan.durationDays, amount: amount, kind: 'premium', ref_id: plan.planId,
+    ref_code: refPct ? String((myReferral_(user.userId) || {}).code || '') : '', discount: refPct ? plan.price - amount : '',
+    description: plan.name + ' (' + plan.durationDays + ' hari)' + (refPct ? ' · diskon ajakan ' + refPct + '%' : '')
+  });
+}
+
+function checkPayRate_(mine) {
+  var now = Date.now();
   var lastHour = mine.filter(function (t) { return now - new Date(t.created_at).getTime() < 3600000; }).length;
   if (lastHour >= PAY_MAX_PER_HOUR) throw new AppError_('RATE_LIMITED', 'Terlalu banyak permintaan pembayaran. Coba lagi dalam satu jam.');
+}
 
+/**
+ * Catat transaksi pending lalu buat payment request Mayar. Dipakai Premium & produk satuan.
+ * rec: { plan_id, plan_name, duration_days, amount, kind, ref_id, ref_code?, discount?, description, expireMinutes? }
+ */
+function startPayment_(user, rec) {
+  var now = Date.now();
   var trxId = newId_('trx');
-  var expiresAt = new Date(now + PAY_EXPIRE_HOURS * 3600000).toISOString();
+  var expiresAt = new Date(now + (rec.expireMinutes || PAY_EXPIRE_HOURS * 60) * 60000).toISOString();
   withLock_(function () {
+    if (rec.beforeInsert) rec.beforeInsert();   // pemeriksaan kuota di dalam lock (mis. kursi mentoring)
     insert_('transactions', {
-      trx_id: trxId, user_id: user.userId, email: user.email, plan_id: plan.planId, plan_name: plan.name,
-      duration_days: plan.durationDays, amount: amount, status: 'pending', created_at: nowIso_(),
-      expires_at: expiresAt, processed: 'tidak',
-      ref_code: refPct ? String((myReferral_(user.userId) || {}).code || '') : '', discount: refPct ? plan.price - amount : ''
+      trx_id: trxId, user_id: user.userId, email: user.email, plan_id: rec.plan_id, plan_name: rec.plan_name,
+      duration_days: rec.duration_days || 0, amount: rec.amount, status: 'pending', created_at: nowIso_(),
+      expires_at: expiresAt, processed: 'tidak', ref_code: rec.ref_code || '', discount: rec.discount || '',
+      kind: rec.kind || 'premium', ref_id: rec.ref_id || ''
     });
   });
 
   var body = {
-    name: 'Siap CPNS – ' + plan.name,
-    amount: amount,
+    name: 'Siap CPNS – ' + rec.plan_name,
+    amount: rec.amount,
     email: user.email,
-    description: plan.name + ' (' + plan.durationDays + ' hari)' + (refPct ? ' · diskon ajakan ' + refPct + '%' : '') + ' · Ref ' + trxId,
+    description: rec.description + ' · Ref ' + trxId,
     expiredAt: expiresAt
   };
   var base = getConfigOptional_('APP_BASE_URL', getConfigOptional_('ALLOWED_ORIGIN', ''));
@@ -239,6 +263,7 @@ function fulfillTransaction_(trxId, source) {
     var trx = findOne_('transactions', 'trx_id', trxId);
     if (!trx) throw new AppError_('NOT_FOUND', 'Transaksi tidak ditemukan.');
     if (trx.processed === 'ya') return trx;
+    if (!isPremiumTrx_(trx)) return fulfillProductLocked_(trx, source);   // Fase 13: produk satuan (Shop.gs)
     var userRow = findOne_('users', 'user_id', trx.user_id);
     if (!userRow) throw new Error('User transaksi tidak ditemukan: ' + trx.user_id);
     var now = Date.now();
@@ -259,9 +284,16 @@ function isExpired_(trx) {
   return trx.expires_at && new Date(trx.expires_at).getTime() < Date.now();
 }
 
+/** Transaksi langganan Premium? (baris lama tanpa kolom kind dianggap Premium) */
+function isPremiumTrx_(t) {
+  var k = String(t.kind || '').trim();
+  return !k || k === 'premium';
+}
+
 function publicTrx_(t) {
   return {
     trxId: t.trx_id, planId: t.plan_id, planName: t.plan_name, amount: Number(t.amount) || 0,
+    kind: isPremiumTrx_(t) ? 'premium' : String(t.kind), refId: String(t.ref_id || ''),
     status: t.status, paymentUrl: t.status === 'pending' ? t.payment_url : '',
     createdAt: t.created_at, expiresAt: t.expires_at, paidAt: t.paid_at || '', premiumUntil: t.premium_until ? toIsoDate_(t.premium_until) : ''
   };
@@ -342,7 +374,8 @@ function adminGrantPremium() {
   withLock_(function () {
     insert_('transactions', {
       trx_id: trxId, user_id: u.user_id, email: u.email, plan_id: 'ADMIN', plan_name: 'Pemberian manual ' + DAYS + ' hari',
-      duration_days: DAYS, amount: 0, status: 'pending', created_at: nowIso_(), expires_at: '', processed: 'tidak'
+      duration_days: DAYS, amount: 0, status: 'pending', created_at: nowIso_(), expires_at: '', processed: 'tidak',
+      kind: 'premium', ref_id: 'ADMIN'
     });
   });
   var t = fulfillTransaction_(trxId, 'admin');

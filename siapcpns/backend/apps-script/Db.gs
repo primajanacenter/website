@@ -35,7 +35,9 @@ var SCHEMA = {
   transactions: [
     'trx_id', 'user_id', 'email', 'plan_id', 'plan_name', 'duration_days', 'amount', 'status',
     'mayar_id', 'mayar_trx_id', 'payment_url', 'created_at', 'expires_at', 'paid_at', 'processed',
-    'premium_until', 'source', 'note', 'ref_code', 'discount'
+    'premium_until', 'source', 'note', 'ref_code', 'discount',
+    // Fase 13: pembelian satuan. kind kosong/"premium" = langganan Premium.
+    'kind', 'ref_id'
   ],
   webhook_log: ['received_at', 'event', 'trx_id', 'mayar_ref', 'result', 'raw_json'],
   // Fase 7: Tryout Akbar
@@ -59,7 +61,19 @@ var SCHEMA = {
   ],
   // Fase 10: pengingat email
   notif_prefs: ['user_id', 'daily', 'akbar', 'premium', 'token', 'created_at', 'updated_at'],
-  notif_log: ['at', 'user_id', 'kind', 'key', 'status']
+  notif_log: ['at', 'user_id', 'kind', 'key', 'status'],
+  // Fase 13: produk satuan, mentoring, konsultasi
+  entitlements: ['ent_id', 'user_id', 'kind', 'ref_id', 'trx_id', 'status', 'created_at', 'note'],
+  mentoring_sessions: [
+    'session_id', 'title', 'subtest', 'description', 'starts_at', 'ends_at', 'price', 'capacity',
+    'zoom_url', 'zoom_passcode', 'status', 'recording_url', 'recording_price', 'recording_status', 'created_at'
+  ],
+  consult_slots: [
+    'slot_id', 'starts_at', 'ends_at', 'consultant_name', 'consultant_email', 'price', 'status',
+    'booked_by', 'trx_id', 'note', 'created_at'
+  ],
+  consult_messages: ['msg_id', 'slot_id', 'sender', 'user_id', 'text', 'at'],
+  access_log: ['at', 'user_id', 'kind', 'ref_id', 'ua']
 };
 
 /** Struktur sheet di file BANK SOAL (QUESTIONS_SPREADSHEET_ID). Hanya bisa dibaca server. */

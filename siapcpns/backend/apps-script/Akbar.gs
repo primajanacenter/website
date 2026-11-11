@@ -5,8 +5,9 @@
  * "batas mulai" (= tutup − durasi), satu kali per event. Hasil, rapor, dan peringkat terbit pada
  * results_at (default Senin 06.00 WIB) lewat pemicu publishAkbarResults.
  *
- * Akses: gratis untuk semua pengguna login. Premium mendapat peringkat per provinsi, analisis
- * dibanding 10% teratas, dan pembahasan semua soal (aturan rapor yang sudah ada).
+ * Akses (Fase 13): berbayar per event (tiket, lihat Shop.gs). Peserta mendapat peringkat nasional & provinsi,
+ * analisis dibanding 10% teratas, dan pembahasan semua soal. Setelah semua event sebuah paket terbit, paket
+ * itu dijual sebagai paket tryout biasa (pemilik tiket otomatis memilikinya).
  *
  * Paket soal: file paket dengan type "akbar" di folder paket soal. Paket akbar tidak tampil di lobi
  * Tryout dan tidak dipakai latihan harian. Jadwal dibuat dengan scheduleAkbarEvents().
@@ -156,6 +157,7 @@ function handleGetAkbarInfo_(payload, user) {
       eventId: e.event_id, title: e.title || pkg.title, opensAt: toIso_(e.opens_at), closesAt: toIso_(e.closes_at),
       lastStartAt: akbarLastStart_(e).toISOString(), resultsAt: toIso_(e.results_at), state: akbarState_(e, now),
       durationMin: pkg.durationMin, questionCount: qCount, participants: Number(e.participants) || null,
+      price: productPrice_('akbar'), ticket: owns_(user, 'akbar', e.event_id),
       my: att ? {
         attemptId: att.attempt_id, status: att.status,
         endsAt: att.status === 'in_progress' ? toIso_(att.ends_at) : null,
@@ -183,6 +185,10 @@ function handleJoinAkbar_(payload, user) {
   var ev = akbarEvents_().filter(function (e) { return e.event_id === String(payload.eventId || ''); })[0];
   if (!ev) throw new AppError_('NOT_FOUND', 'Tryout Akbar tidak ditemukan.');
   var pkg = getPackage_(ev.package_id);
+  // Fase 13: Tryout Akbar berbayar — wajib punya tiket event ini
+  if (!owns_(user, 'akbar', ev.event_id)) {
+    throw new AppError_('PAYMENT_REQUIRED', 'Beli tiket Tryout Akbar (' + rupiah_(productPrice_('akbar')) + ') untuk ikut dan masuk peringkat nasional.');
+  }
   var questions = getPackageQuestions_(ev.package_id);
 
   var attempt = withLock_(function () {
@@ -231,15 +237,15 @@ function handleGetAkbarRanking_(payload, user) {
     };
   }
 
-  var out = { event: { eventId: ev.event_id, title: ev.title, resultsAt: toIso_(ev.results_at) }, scope: scope, premium: premium,
+  var out = { event: { eventId: ev.event_id, title: ev.title, resultsAt: toIso_(ev.results_at) }, scope: scope, premium: premium || Boolean(me),
     stats: board.stats, me: me, top: board.top };
   if (scope === 'province') {
-    if (!premium) throw new AppError_('FORBIDDEN', 'Peringkat per provinsi tersedia untuk Premium.');
+    if (!premium && !me) throw new AppError_('FORBIDDEN', 'Peringkat per provinsi tersedia untuk peserta event ini.');
     var prov = String(payload.province || (me && me.province) || '');
     var pb = board.byProvince[prov] || { n: 0, top: [] };
     out.province = prov; out.top = pb.top; out.provinceCount = pb.n;
   }
-  if (premium && me) {
+  if (me) {   // Fase 13: semua peserta (tiket berbayar) mendapat analisis lengkap
     out.analysis = ['twk', 'tiu', 'tkp'].map(function (s) {
       return { subtest: s, mine: me[s], median: board.stats.median[s], top10: board.stats.top10[s], pg: board.stats.pg[s] };
     });

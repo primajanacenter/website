@@ -279,9 +279,9 @@ function buildAkbarMail_(u, ev, pref) {
   if (!u) return null;
   var m = mailLayout_('Tryout Akbar dibuka besok',
     ['Halo ' + firstName_(u) + ', ' + (ev.title || 'Tryout Akbar') + ' dibuka ' + fmtJkt_(ev.opens_at) + ' sampai ' + fmtJkt_(ev.closes_at) + '.',
-     '110 soal, 100 menit, gratis. Batas terakhir mulai ' + fmtJkt_(akbarLastStart_(ev)) + '. Peringkat nasional terbit ' + fmtJkt_(ev.results_at) + '.'],
-    { label: 'Lihat jadwal Tryout Akbar', path: '/pages/akbar.html' }, pref, 'akbar');
-  m.subject = 'Besok: ' + (ev.title || 'Tryout Akbar') + ' (gratis, peringkat nasional)';
+     '110 soal, 100 menit, tiket ' + rupiah_(productPrice_('akbar')) + '. Batas terakhir mulai ' + fmtJkt_(akbarLastStart_(ev)) + '. Peringkat nasional terbit ' + fmtJkt_(ev.results_at) + '.'],
+    { label: 'Lihat Tryout Akbar', path: '/pages/tryout.html' }, pref, 'akbar');
+  m.subject = 'Besok: ' + (ev.title || 'Tryout Akbar') + ' (peringkat nasional)';
   return m;
 }
 

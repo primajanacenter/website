@@ -39,7 +39,8 @@ function ensureRefCode_(user) {
 }
 
 function hasPaidTransaction_(userId) {
-  return findAll_('transactions', 'user_id', userId).some(function (t) { return t.status === 'paid'; });
+  // Fase 13: hanya pembelian Premium yang dihitung (beli tryout/mentoring tidak menghapus hak diskon ajakan)
+  return findAll_('transactions', 'user_id', userId).some(function (t) { return t.status === 'paid' && isPremiumTrx_(t); });
 }
 
 /** Referral milik pengguna sebagai teman yang diajak (null bila tidak ada). */
@@ -110,7 +111,7 @@ function rewardReferralLocked_(trx) {
   var ref = findOne_('referrals', 'referee_id', trx.user_id);
   if (!ref || ref.status !== 'joined') return null;
   // hanya pembelian pertama yang lunas
-  var paidBefore = findAll_('transactions', 'user_id', trx.user_id).filter(function (t) { return t.status === 'paid' && t.trx_id !== trx.trx_id; });
+  var paidBefore = findAll_('transactions', 'user_id', trx.user_id).filter(function (t) { return t.status === 'paid' && t.trx_id !== trx.trx_id && isPremiumTrx_(t); });
   if (paidBefore.length) { update_('referrals', ref._row, { status: 'void', trx_id: trx.trx_id }); return null; }
   var since = Date.now() - 30 * 86400000;
   var recent = findAll_('referrals', 'referrer_id', ref.referrer_id).filter(function (r) {
