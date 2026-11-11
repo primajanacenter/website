@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Materi — Siap CPNS</title>
+  <title>Paket Materi — Siap CPNS</title>
   <meta name="robots" content="index">
   <meta name="description" content="Materi SKD CPNS per topik TWK, TIU, dan TKP: ringkasan, poin kunci, contoh soal HOTS, dan pembahasan. Level 1 gratis.">
-  <meta property="og:title" content="Materi — Siap CPNS">
+  <meta property="og:title" content="Paket Materi — Siap CPNS">
   <meta property="og:description" content="Materi SKD CPNS per topik TWK, TIU, dan TKP: ringkasan, poin kunci, contoh soal HOTS, dan pembahasan. Level 1 gratis.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="../assets/img/og-image.png">
@@ -31,6 +31,7 @@
   <link rel="modulepreload" href="../assets/js/core/api.js">
   <link rel="modulepreload" href="../assets/js/features/materi.js">
   <link rel="stylesheet" href="../assets/css/pages/belajar.css">
+  <link rel="stylesheet" href="../assets/css/pages/hub.css">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -39,68 +40,43 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="latihan.html">Latihan</a><a class="nav-cta" href="masuk.html" data-nav-auth="dashboard.html">Masuk</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="../">Beranda</a><a class="hide-sm" href="rapot.html">Rapot</a><a class="nav-cta" href="masuk.html" data-nav-auth="akun.html" data-nav-label="Akun">Masuk</a></nav>
   </div>
 </header>
-<section class="page-band">
-  <div class="container stack" style="gap:10px">
-    <nav class="crumbs" aria-label="Lokasi halaman"><a href="dashboard.html">Beranda</a> / <a href="materi.html">Materi</a><span id="crumb-topic"></span></nav>
-    <h1 id="m-title">Materi SKD</h1>
-    <p class="lead" id="m-lead">Konsep dasar (level 1) gratis untuk 21 topik TWK, TIU (termasuk figural), dan TKP. Pendalaman level 2–4 tersedia di Premium.</p>
+<section class="page-top">
+  <div class="container">
+    <a class="back-link" href="../" id="m-back">‹ Beranda</a>
+    <h1 id="m-title">Paket Materi</h1>
+    <p id="m-lead">Pilih TWK, TIU, atau TKP lalu pilih judul materi. Judul teratas tiap subtes gratis; judul lainnya terbuka dengan Premium.</p>
   </div>
 </section>
 
 <main class="app-main">
-  <div class="container">
+  <div class="container mid stack-lg">
     <p id="m-status" class="status-msg" role="status" hidden></p>
 
-    <!-- Daftar topik -->
+    <!-- Daftar judul -->
     <div id="m-list" class="stack-lg">
-      <div class="callout" id="m-focus-note" hidden><div><strong>Topik fokusmu</strong><span id="m-focus-text"></span></div></div>
-      <div id="m-groups" class="stack-lg"></div>
+      <div class="subtabs" role="group" aria-label="Pilih subtes">
+        <button type="button" class="subtab" data-sub="twk"><b>TWK</b><span>Wawasan Kebangsaan</span></button>
+        <button type="button" class="subtab" data-sub="tiu"><b>TIU</b><span>Intelegensia Umum</span></button>
+        <button type="button" class="subtab" data-sub="tkp"><b>TKP</b><span>Karakteristik Pribadi</span></button>
+      </div>
+      <ul class="tlist" id="m-titles"><li><div class="titem"><div class="skeleton" style="width:60%"></div></div></li></ul>
+      <p class="xsmall muted" id="m-premium-note"></p>
     </div>
 
-    <!-- Detail topik -->
-    <div id="m-detail" class="lesson" hidden>
-      <article class="lesson-body">
-        <nav class="level-tabs" id="d-tabs" aria-label="Level materi"></nav>
-        <div class="row" style="gap:8px"><span class="chip chip-primary" id="d-subtest">TWK</span><span class="lv lv-1" id="d-levelchip">Level 1 · Kenal</span><span class="chip" id="d-minutes"></span></div>
-        <section class="card locked-panel" id="d-locked" hidden></section>
-        <div id="d-content" class="lesson-body">
-        <section>
-          <h2>Ringkasan</h2>
-          <p id="d-summary"></p>
-        </section>
-        <section>
-          <h2>Poin kunci</h2>
-          <ul class="keypoints" id="d-points"></ul>
-        </section>
-        <section class="card example">
-          <span class="eyebrow">Contoh soal</span>
-          <p><strong id="d-q"></strong></p>
-          <div class="options" id="d-opts"></div>
-          <p class="small muted" id="d-expl" hidden></p>
-        </section>
-        <div class="grid-auto">
-          <div class="tipbox"><strong id="d-tips-title">Tips cepat</strong><ul id="d-tips"></ul></div>
-          <div class="trapbox"><strong>Jebakan yang sering muncul</strong><ul id="d-traps"></ul></div>
-        </div>
-        </div>
-      </article>
-
-      <aside class="lesson-side">
-        <div class="card stack">
-          <span class="small muted" id="d-mylevel">Levelmu: belum diukur</span>
-          <button class="btn btn-primary btn-block" type="button" id="d-done">Tandai sudah dibaca</button>
-          <a class="btn btn-secondary btn-block" id="d-practice" href="latihan.html">Latihan topik ini</a>
-          <a class="btn btn-ghost btn-block" id="d-next" href="materi.html">Topik berikutnya →</a>
-        </div>
-        <div class="card stack" id="d-levelcard">
-          <strong class="small">Materi pendalaman</strong>
-          <div class="locked-levels" id="d-levels"></div>
-          <p class="xsmall muted" id="d-levelnote"></p>
-        </div>
-      </aside>
+    <!-- Rincian materi -->
+    <div id="m-detail" class="stack-lg" hidden>
+      <article class="mdoc" id="d-doc"></article>
+      <section class="stack" aria-labelledby="ex-h">
+        <div class="sec-title"><h2 id="ex-h">Contoh soal</h2><span class="muted">Jawab satu per satu — kunci & pembahasan langsung muncul</span></div>
+        <div class="stack" id="d-examples"></div>
+      </section>
+      <div class="card stack" id="d-next">
+        <b>Sudah paham? Uji dengan 50 soal latihan HOTS topik ini.</b>
+        <div class="row" style="gap:8px"><a class="btn btn-primary" id="d-practice" href="latihan-soal.html">Latihan soal topik ini</a><button class="btn btn-secondary" type="button" id="d-done">Tandai sudah dibaca</button></div>
+      </div>
     </div>
   </div>
 </main>

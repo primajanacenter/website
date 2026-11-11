@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Tryout CAT — Siap CPNS</title>
-  <meta name="robots" content="noindex">
-  <meta name="description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
-  <meta property="og:title" content="Tryout CAT — Siap CPNS">
-  <meta property="og:description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <title>Paket Tryout — Siap CPNS</title>
+  <meta name="robots" content="index">
+  <meta name="description" content="Paket tryout SKD CPNS format terbaru: Tryout Akbar mingguan berperingkat nasional, coba paket gratis, dan paket tryout Rp10.000 yang bisa diulang.">
+  <meta property="og:title" content="Paket Tryout — Siap CPNS">
+  <meta property="og:description" content="Paket tryout SKD CPNS format terbaru: Tryout Akbar mingguan berperingkat nasional, coba paket gratis, dan paket tryout Rp10.000 yang bisa diulang.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="../assets/img/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -32,6 +32,7 @@
   <link rel="modulepreload" href="../assets/js/features/tryout.js">
   <link rel="stylesheet" href="../assets/css/cat.css">
   <link rel="stylesheet" href="../assets/css/pages/tryout.css">
+  <link rel="stylesheet" href="../assets/css/pages/hub.css">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -40,36 +41,48 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="akbar.html">Tryout Akbar</a><a class="nav-cta" href="dashboard.html">Beranda</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="../">Beranda</a><a class="hide-sm" href="rapot.html">Rapot</a><a class="nav-cta" href="masuk.html" data-nav-auth="akun.html" data-nav-label="Akun">Masuk</a></nav>
   </div>
 </header>
 <!-- ================= LOBI ================= -->
 <div id="view-lobby">
-  <section class="page-band">
-    <div class="container stack" style="gap:10px">
-      <nav class="crumbs" aria-label="Lokasi halaman"><a href="dashboard.html">Beranda</a> / <span>Tryout</span></nav>
-      <h1>Tryout CAT</h1>
-      <p class="lead">Kerjakan seperti ujian sungguhan: waktu berjalan sejak kamu mulai, jawaban tersimpan otomatis, dan rapor keluar begitu selesai.</p>
+  <section class="page-top">
+    <div class="container">
+      <a class="back-link" href="../">‹ Beranda</a>
+      <h1 id="lobby-h">Paket Tryout</h1>
+      <p id="lobby-p">Simulasi CAT SKD format terbaru: 110 soal (TWK 30 · TIU 35 · TKP 45), 100 menit, rapor & pembahasan lengkap.</p>
     </div>
   </section>
 
   <main class="app-main">
     <div class="container mid stack-lg">
       <p id="lobby-status" class="status-msg" role="status" hidden></p>
-      <div class="pkg-list" id="pkg-list">
-        <div class="pkg"><div class="stack"><div class="skeleton" style="width:50%"></div><div class="skeleton" style="width:80%"></div></div></div>
-      </div>
 
-      <section class="card stack">
-        <h2 style="font-size:var(--fs-lg)">Aturan pengerjaan</h2>
-        <ol class="rules">
-          <li>Waktu dihitung oleh server sejak kamu menekan <b>Mulai</b>, dan tetap berjalan walau halaman ditutup.</li>
-          <li>Jawaban tersimpan otomatis. Jika koneksi terputus, lanjutkan dari perangkat yang sama dan jawabanmu tetap ada.</li>
-          <li>TWK dan TIU: benar 5, salah atau kosong 0. TKP: setiap opsi bernilai 1–5, kosong 0.</li>
-          <li>Saat waktu habis, jawaban dikirim otomatis.</li>
-          <li>Lolos SKD membutuhkan skor di atas ambang batas pada <b>ketiga</b> subtes.</li>
-        </ol>
+      <section id="sec-akbar" aria-labelledby="h-akbar">
+        <div class="sec-title"><h2 id="h-akbar">1. Tryout Akbar mingguan</h2><a class="small" href="akbar.html">Peringkat & jadwal ›</a></div>
+        <div id="t-akbar"><div class="pcard"><div class="skeleton" style="width:60%"></div><div class="skeleton" style="width:85%"></div></div></div>
       </section>
+
+      <section id="sec-demo" aria-labelledby="h-demo">
+        <div class="sec-title"><h2 id="h-demo">2. Coba Paket Tryout</h2><span class="muted">gratis</span></div>
+        <div id="t-demo"><div class="pcard"><div class="skeleton" style="width:60%"></div></div></div>
+      </section>
+
+      <section id="sec-paid" aria-labelledby="h-paid">
+        <div class="sec-title"><h2 id="h-paid">3. Paket Tryout SKD</h2><span class="muted" id="t-paid-note">Rp10.000 per paket · bebas diulang</span></div>
+        <div class="cards" id="pkg-list"><div class="pcard"><div class="skeleton" style="width:60%"></div><div class="skeleton" style="width:85%"></div></div></div>
+      </section>
+
+      <details class="card">
+        <summary><b>Aturan pengerjaan</b></summary>
+        <ol class="rules" style="margin-top:10px">
+          <li>Waktu dihitung server sejak kamu menekan <b>Mulai</b>, dan tetap berjalan walau halaman ditutup.</li>
+          <li>Jawaban tersimpan otomatis. Jika koneksi terputus, lanjutkan dari perangkat yang sama.</li>
+          <li>Kerjakan semua soal lalu kirim. Kunci jawaban dan pembahasan tampil setelah dikirim.</li>
+          <li>TWK dan TIU: benar 5, salah atau kosong 0. TKP: setiap opsi bernilai 1–5, kosong 0.</li>
+          <li>Lolos SKD membutuhkan skor di atas ambang batas pada <b>ketiga</b> subtes (TWK 65 · TIU 80 · TKP 166).</li>
+        </ol>
+      </details>
     </div>
   </main>
 </div>

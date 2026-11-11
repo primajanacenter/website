@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Konsultasi CPNS — Siap CPNS</title>
+  <meta name="robots" content="index">
+  <meta name="description" content="Konsultasi CPNS via chat 1 jam dengan konsultan: strategi belajar, formasi, berkas, dan persiapan SKB.">
+  <meta property="og:title" content="Konsultasi CPNS — Siap CPNS">
+  <meta property="og:description" content="Konsultasi CPNS via chat 1 jam dengan konsultan: strategi belajar, formasi, berkas, dan persiapan SKB.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="modulepreload" href="../assets/js/core/config.js">
+  <link rel="modulepreload" href="../assets/js/core/store.js">
+  <link rel="modulepreload" href="../assets/js/core/auth.js">
+  <link rel="modulepreload" href="../assets/js/core/ui.js">
+  <link rel="modulepreload" href="../assets/js/core/api.js">
+  <link rel="modulepreload" href="../assets/js/features/konsultasi.js">
+  <link rel="stylesheet" href="../assets/css/pages/hub.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="../">Beranda</a><a class="hide-sm" href="rapot.html">Rapot</a><a class="nav-cta" href="masuk.html" data-nav-auth="akun.html" data-nav-label="Akun">Masuk</a></nav>
+  </div>
+</header>
+<section class="page-top">
+  <div class="container">
+    <a class="back-link" href="../" id="k-back">‹ Beranda</a>
+    <h1 id="k-title">Konsultasi CPNS</h1>
+    <p id="k-lead">Tanya langsung ke konsultan lewat chat: strategi belajar, pilihan formasi, berkas, hingga persiapan SKB. 1 sesi = maksimal 1 jam, Rp30.000.</p>
+  </div>
+</section>
+
+<main class="app-main">
+  <div class="container mid stack-lg">
+    <p id="k-status" class="status-msg" role="status" hidden></p>
+
+    <!-- Pesan jadwal -->
+    <div id="k-book" class="stack-lg">
+      <div id="k-desk-link" hidden><a class="promo" href="?desk=1"><span class="ic" data-icon="konsultasi"></span><span><b>Meja konsultan</b><span>Lihat sesi yang harus kamu layani</span></span><span class="go">›</span></a></div>
+      <section id="k-mine-sec" hidden aria-labelledby="k-mine-h">
+        <div class="sec-title"><h2 id="k-mine-h">Konsultasi saya</h2></div>
+        <div class="mini-list" id="k-mine"></div>
+      </section>
+      <section aria-labelledby="k-pick-h" class="stack">
+        <div class="sec-title"><h2 id="k-pick-h">Pilih jadwal</h2><span class="muted">waktu WIB · 60 menit via chat</span></div>
+        <div class="daypick" id="k-days" role="group" aria-label="Pilih tanggal"></div>
+        <div class="slots" id="k-slots"></div>
+      </section>
+      <details class="card">
+        <summary><b>Cara kerja konsultasi</b></summary>
+        <ol class="rules" style="margin-top:10px">
+          <li>Pilih tanggal & jam, lalu bayar Rp30.000. Jadwal langsung dikunci untukmu.</li>
+          <li>Ruang chat terbuka 10 menit sebelum jadwal di menu Konsultasi atau <a href="akun.html#konsultasi">Akun</a>, dan tertutup otomatis setelah 60 menit.</li>
+          <li>Riwayat percakapan tetap bisa dibaca setelah sesi selesai.</li>
+          <li>Konsultasi bersifat pendampingan belajar, bukan jaminan kelulusan atau layanan resmi BKN.</li>
+        </ol>
+      </details>
+    </div>
+
+    <!-- Ruang chat -->
+    <div id="k-chat" hidden>
+      <div class="chat">
+        <div class="chat-head"><span class="av" id="c-av">K</span><div><b id="c-name">Konsultan</b><small id="c-state"></small></div></div>
+        <div class="chat-body" id="c-body" aria-live="polite"></div>
+        <form class="chat-form" id="c-form">
+          <label class="sr-only" for="c-text">Tulis pesan</label>
+          <textarea id="c-text" rows="1" maxlength="1000" placeholder="Tulis pesan…" disabled></textarea>
+          <button class="btn btn-primary" type="submit" id="c-send" disabled>Kirim</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Meja konsultan -->
+    <div id="k-desk" hidden class="stack">
+      <div class="mini-list" id="k-desk-list"></div>
+    </div>
+  </div>
+</main>
+
+<div class="sheet" id="k-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="k-sheet-h">
+  <div class="box">
+    <div class="row" style="align-items:center"><b id="k-sheet-h">Konfirmasi jadwal</b><button class="x" type="button" id="k-sheet-x" aria-label="Tutup">×</button></div>
+    <div id="k-sheet-body"></div>
+    <button class="btn btn-accent btn-block" type="button" id="k-sheet-buy">Bayar</button>
+    <p class="xsmall muted">Jadwal ditahan selama 30 menit sambil kamu menyelesaikan pembayaran.</p>
+  </div>
+</div>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo-112.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/konsultasi.js").then((m) => m.initKonsultasi());
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Cek Kesiapan & Rapot — Siap CPNS</title>
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <meta property="og:title" content="Cek Kesiapan & Rapot — Siap CPNS">
+  <meta property="og:description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="modulepreload" href="../assets/js/core/config.js">
+  <link rel="modulepreload" href="../assets/js/core/store.js">
+  <link rel="modulepreload" href="../assets/js/core/auth.js">
+  <link rel="modulepreload" href="../assets/js/core/ui.js">
+  <link rel="modulepreload" href="../assets/js/core/api.js">
+  <link rel="modulepreload" href="../assets/js/features/rapot.js">
+  <link rel="stylesheet" href="../assets/css/pages/hub.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="../">Beranda</a><a class="hide-sm" href="rapot.html">Rapot</a><a class="nav-cta" href="masuk.html" data-nav-auth="akun.html" data-nav-label="Akun">Masuk</a></nav>
+  </div>
+</header>
+<section class="page-top">
+  <div class="container">
+    <a class="back-link" href="../">‹ Beranda</a>
+    <h1>Cek Kesiapan & Rapot</h1>
+    <p>Semua hasilmu di satu tempat: cek kesiapan, tryout, Tryout Akbar, latihan per materi, dan peta level 21 topik.</p>
+  </div>
+</section>
+
+<main class="app-main">
+  <div class="container mid stack-lg">
+    <p id="rp-status" class="status-msg" role="status" hidden></p>
+
+    <section class="pcard" id="rp-cek" aria-labelledby="rp-cek-h">
+      <div class="sec-title" style="margin:0"><h2 id="rp-cek-h">Cek kesiapan CPNS</h2><span class="muted">gratis · 3 menit</span></div>
+      <div id="rp-cek-body"><div class="skeleton" style="width:60%"></div></div>
+    </section>
+
+    <div id="rp-login" hidden class="card stack">
+      <b>Masuk untuk melihat rapor tryout dan latihanmu.</b>
+      <a class="btn btn-primary" href="masuk.html?next=rapot.html" style="align-self:flex-start">Masuk dengan Google</a>
+    </div>
+
+    <div id="rp-main" hidden class="stack-lg">
+      <div class="rstats" id="rp-stats"></div>
+
+      <section aria-labelledby="rp-list-h" class="stack">
+        <div class="sec-title" style="margin:0"><h2 id="rp-list-h">Riwayat hasil</h2></div>
+        <div class="fil" id="rp-fil" role="group" aria-label="Saring hasil">
+          <button type="button" data-f="all" aria-pressed="true">Semua</button>
+          <button type="button" data-f="tryout">Tryout</button>
+          <button type="button" data-f="akbar">Tryout Akbar</button>
+          <button type="button" data-f="topik">Latihan per materi</button>
+          <button type="button" data-f="skb">SKB</button>
+        </div>
+        <ul class="rlist" id="rp-list"></ul>
+      </section>
+
+      <section aria-labelledby="rp-lv-h" class="stack">
+        <div class="sec-title" style="margin:0"><h2 id="rp-lv-h">Peta level 21 topik</h2><span class="muted">dari latihan & tryout · Lv1 Kenal → Lv4 Siap tes</span></div>
+        <div class="lvgrid" id="rp-levels"></div>
+      </section>
+
+      <ul class="menu-list">
+        <li><a href="rencana.html">Rencana belajar mingguan<small>Prioritas topik dari hasilmu</small></a></li>
+        <li><a href="latihan.html">Latihan harian campuran<small>10 soal cepat setiap hari</small></a></li>
+        <li><a href="pasca-skd.html">Hasil SKD resmi & persiapan SKB<small>Input skor SKD-mu dan lihat analisisnya</small></a></li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo-112.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/rapot.js").then((m) => m.initRapot());
+</script>
+</body>
+</html>

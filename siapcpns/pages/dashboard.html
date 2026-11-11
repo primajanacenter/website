@@ -29,10 +29,6 @@
   <link rel="modulepreload" href="../assets/js/core/auth.js">
   <link rel="modulepreload" href="../assets/js/core/ui.js">
   <link rel="modulepreload" href="../assets/js/core/api.js">
-  <link rel="modulepreload" href="../assets/js/features/dashboard.js">
-  <link rel="stylesheet" href="../assets/css/pages/belajar.css">
-  <link rel="stylesheet" href="../assets/css/pages/premium.css">
-  <link rel="stylesheet" href="../assets/css/pages/fase8.css">
 </head>
 <body>
 <div class="notice-bar" role="note">
@@ -41,104 +37,12 @@
 <header class="site-header">
   <div class="container">
     <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
-    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="materi.html">Materi</a><a class="hide-sm" href="tryout.html">Tryout</a><a class="hide-sm" href="akbar.html">Akbar</a><a class="hide-sm" href="rencana.html">Rencana</a><a class="hide-sm" href="premium.html">Premium</a><a class="hide-sm" href="pengaturan.html">Pengaturan</a><a href="#" id="btn-logout">Keluar</a></nav>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="../">Beranda</a><a class="hide-sm" href="rapot.html">Rapot</a><a class="nav-cta" href="masuk.html" data-nav-auth="akun.html" data-nav-label="Akun">Masuk</a></nav>
   </div>
 </header>
-<section class="welcome">
-  <div class="container">
-    <div class="who">
-      <span class="avatar" id="d-avatar" aria-hidden="true">?</span>
-      <div class="stack" style="gap:4px">
-        <h1 id="d-greeting">Halo!</h1>
-        <p id="d-email" class="small"></p>
-      </div>
-    </div>
-    <div class="row">
-      <span class="chip plan" id="d-plan">Paket Gratis</span>
-      <a class="btn btn-accent" href="onboarding.html?next=dashboard.html">Ubah profil</a>
-    </div>
-  </div>
-</section>
-
 <main class="app-main">
   <div class="container">
-    <p id="d-status" class="status-msg" role="status" hidden></p>
-
-    <section class="today-card" id="today-card" aria-labelledby="today-title" style="margin-bottom:var(--sp-5)">
-      <div class="today-head">
-        <div class="stack" style="gap:2px">
-          <span class="eyebrow" id="today-date">Hari ini</span>
-          <h2 id="today-title" style="font-size:var(--fs-xl)">Tugas belajar hari ini</h2>
-        </div>
-        <span class="streak" title="Hari berturut-turut berlatih"><span aria-hidden="true">🔥</span><b id="today-streak">0</b><span class="small">hari beruntun</span></span>
-      </div>
-      <ul class="today-tasks" id="today-tasks"><li><span class="ck"></span><div class="skeleton" style="width:60%"></div><span></span></li></ul>
-      <div class="row" style="justify-content:space-between">
-        <span class="small muted" id="today-quota"></span>
-        <a class="small" href="rencana.html"><strong>Lihat rencana minggu ini →</strong></a>
-      </div>
-    </section>
-
-    <div class="install-card" id="d-install" hidden>
-      <div class="txt"><img src="../assets/img/icon-192.png" alt=""><div class="stack" style="gap:2px"><b>Pasang Siap CPNS di HP</b><span class="small muted">Buka langsung dari layar utama, tetap bisa baca materi saat offline.</span></div></div>
-      <div class="row"><button class="btn btn-primary" type="button" id="d-install-btn">Pasang</button><button class="btn btn-ghost" type="button" id="d-install-x" aria-label="Tutup">Nanti</button></div>
-    </div>
-
-    <div class="upsell" id="d-upsell" hidden style="margin-bottom:var(--sp-5)">
-      <div class="stack" style="gap:2px"><strong>Materi level 2–4, rencana adaptif &amp; latihan tanpa batas</strong><p>Paket Premium 1, 3, atau 6 bulan. Sekali bayar, tanpa perpanjangan otomatis.</p></div>
-      <a class="btn btn-accent" href="premium.html">Lihat Premium</a>
-    </div>
-
-    <div class="dash-grid">
-      <div class="stack-lg">
-        <section class="panel" aria-labelledby="t-title">
-          <div class="panel-head">
-            <h2 id="t-title">Langkah persiapanmu</h2>
-            <span class="chip chip-primary" id="t-progress">0 dari 5</span>
-          </div>
-          <ol class="tasks" id="d-tasks">
-            <li class="task"><span class="st"></span><div><div class="skeleton" style="width:60%"></div></div><span></span></li>
-            <li class="task"><span class="st"></span><div><div class="skeleton" style="width:45%"></div></div><span></span></li>
-          </ol>
-        </section>
-
-        <section class="panel" aria-labelledby="a-title">
-          <div class="panel-head">
-            <h2 id="a-title">Hasil Cek Kesiapan terakhir</h2>
-            <a class="small" href="../#cek-kesiapan"><strong>Ulangi</strong></a>
-          </div>
-          <div id="d-assessment"><div class="skeleton" style="width:70%"></div></div>
-        </section>
-      </div>
-
-      <div class="stack-lg">
-        <section class="panel" aria-labelledby="p-title">
-          <div class="panel-head">
-            <h2 id="p-title">Target dan komitmen</h2>
-            <a class="small" href="onboarding.html?next=dashboard.html"><strong>Ubah</strong></a>
-          </div>
-          <div id="d-countdown"></div>
-          <dl class="kv" id="d-profile"><dt><div class="skeleton" style="width:80px"></div></dt><dd><div class="skeleton"></div></dd></dl>
-        </section>
-
-        <section class="panel" aria-labelledby="n-title">
-          <div class="panel-head"><h2 id="n-title">Setelah SKD &amp; lainnya</h2></div>
-          <ul class="next-links">
-            <li><a href="pasca-skd.html"><span><b>Hasil SKD</b><small id="d-postskd">Masukkan skor resmi, lihat analisis &amp; langkah berikutnya</small></span><span aria-hidden="true">→</span></a></li>
-            <li><a href="skb.html"><span><b>Persiapan SKB</b><small>Panduan, checklist, simulasi nilai akhir, tryout SKB</small></span><span aria-hidden="true">→</span></a></li>
-            <li><a href="pengaturan.html"><span><b>Aplikasi &amp; pengingat</b><small>Pasang di HP, pengingat belajar &amp; Tryout Akbar</small></span><span aria-hidden="true">→</span></a></li>
-            <li><a href="ajak.html"><span><b>Ajak teman</b><small>Teman diskon 10%, kamu +7 hari Premium</small></span><span aria-hidden="true">→</span></a></li>
-          </ul>
-        </section>
-
-        <div class="callout">
-          <div>
-            <strong>Pantau info resmi</strong>
-            Jadwal dan formasi CPNS 2026 diumumkan melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a> dan situs KemenPANRB. Perbarui perkiraan tanggal tes di profilmu saat jadwal resmi terbit.
-          </div>
-        </div>
-      </div>
-    </div>
+    <p class="muted">Membuka beranda… Jika tidak berpindah otomatis, <a href="../">ketuk di sini</a>.</p>
   </div>
 </main>
 
@@ -146,7 +50,7 @@
 <script type="module">
   import { hydrateCommon } from "../assets/js/core/ui.js";
   hydrateCommon();
-  import("../assets/js/features/dashboard.js").then((m) => m.initDashboard());
+  location.replace("../" + location.search);
 </script>
 </body>
 </html>

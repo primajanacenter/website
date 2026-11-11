@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Akun saya — Siap CPNS</title>
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <meta property="og:title" content="Akun saya — Siap CPNS">
+  <meta property="og:description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="modulepreload" href="../assets/js/core/config.js">
+  <link rel="modulepreload" href="../assets/js/core/store.js">
+  <link rel="modulepreload" href="../assets/js/core/auth.js">
+  <link rel="modulepreload" href="../assets/js/core/ui.js">
+  <link rel="modulepreload" href="../assets/js/core/api.js">
+  <link rel="modulepreload" href="../assets/js/features/akun.js">
+  <link rel="stylesheet" href="../assets/css/pages/hub.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="../">Beranda</a><a class="hide-sm" href="rapot.html">Rapot</a></nav>
+  </div>
+</header>
+<section class="page-top">
+  <div class="container">
+    <a class="back-link" href="../">‹ Beranda</a>
+    <h1>Akun saya</h1>
+    <p>Member area: tiket, rekaman, konsultasi, paket yang sudah dibeli, dan pengaturan.</p>
+  </div>
+</section>
+
+<main class="app-main">
+  <div class="container mid stack-lg">
+    <p id="ak-status" class="status-msg" role="status" hidden></p>
+
+    <section class="pcard">
+      <div class="prof" id="ak-prof"><span class="av">?</span><div><b>Memuat…</b></div></div>
+      <div id="ak-premium"></div>
+    </section>
+
+    <div id="ak-pending" class="stack" hidden></div>
+
+    <section id="live" class="stack" aria-labelledby="ak-live-h">
+      <div class="sec-title" style="margin:0"><h2 id="ak-live-h">Tiket Live Mentoring</h2><a class="small" href="mentoring.html">Jadwal ›</a></div>
+      <div class="mini-list" id="ak-live"></div>
+      <p class="xsmall muted">Tombol <b>Gabung</b> aktif 15 menit sebelum sesi. Link Zoom bersifat pribadi, tercatat atas nama akunmu, dan dilarang dibagikan.</p>
+    </section>
+
+    <section id="rekaman" class="stack" aria-labelledby="ak-rec-h">
+      <div class="sec-title" style="margin:0"><h2 id="ak-rec-h">Rekaman mentoring</h2><a class="small" href="mentoring.html">Katalog ›</a></div>
+      <div class="mini-list" id="ak-rec"></div>
+    </section>
+
+    <section id="konsultasi" class="stack" aria-labelledby="ak-kon-h">
+      <div class="sec-title" style="margin:0"><h2 id="ak-kon-h">Konsultasi</h2><a class="small" href="konsultasi.html">Pesan jadwal ›</a></div>
+      <div class="mini-list" id="ak-kon"></div>
+    </section>
+
+    <section class="stack" aria-labelledby="ak-to-h">
+      <div class="sec-title" style="margin:0"><h2 id="ak-to-h">Paket tryout & tiket Akbar</h2><a class="small" href="tryout.html">Paket Tryout ›</a></div>
+      <div class="mini-list" id="ak-tryout"></div>
+    </section>
+
+    <section class="stack" aria-labelledby="ak-more-h">
+      <h2 id="ak-more-h" style="font-size:var(--fs-lg)">Lainnya</h2>
+      <ul class="menu-list" id="ak-menu">
+        <li><a href="rencana.html">Rencana belajar<small>Jadwal mingguan & prioritas topik</small></a></li>
+        <li><a href="latihan.html">Latihan harian<small>10 soal campuran setiap hari</small></a></li>
+        <li><a href="ajak.html">Ajak teman<small>Teman diskon 10% Premium, kamu bonus 7 hari</small></a></li>
+        <li><a href="pasca-skd.html">Hasil SKD & persiapan SKB<small>Input skor resmi, analisis, tryout SKB</small></a></li>
+        <li><a href="pengaturan.html">Pengaturan & pengingat<small>Pengingat belajar di perangkat & email</small></a></li>
+        <li><a href="onboarding.html?next=akun.html">Profil belajar<small>Pendidikan, target, waktu belajar</small></a></li>
+        <li><a href="panduan.html">Panduan CPNS<small>Alur seleksi & dokumen</small></a></li>
+        <li id="ak-admin" hidden><a href="admin.html">Super User Dashboard<small>Khusus admin</small></a></li>
+        <li id="ak-desk" hidden><a href="konsultasi.html?desk=1">Meja konsultan<small>Sesi konsultasi yang kamu layani</small></a></li>
+      </ul>
+    </section>
+
+    <section class="stack" aria-labelledby="ak-his-h">
+      <h2 id="ak-his-h" style="font-size:var(--fs-lg)">Riwayat pembayaran</h2>
+      <div class="table-wrap"><table class="table" id="ak-history"></table></div>
+    </section>
+
+    <button class="btn btn-secondary" type="button" id="btn-logout" style="align-self:flex-start">Keluar</button>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo-112.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/akun.js").then((m) => m.initAkun());
+</script>
+</body>
+</html>
