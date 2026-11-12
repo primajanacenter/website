@@ -8,10 +8,10 @@ function getDemoPackageData_() {
   return {
     "package": {
       "package_id": "DEMO-01",
-      "title": "Tryout Demo (15 soal)",
+      "title": "Coba Paket Tryout SKD (15 soal HOTS)",
       "type": "demo",
-      "description": "Paket contoh untuk mencoba sistem CAT. 5 soal TWK, 5 TIU (termasuk 2 soal figural bergambar), 5 TKP. Ambang batas disesuaikan dengan jumlah soal.",
-      "duration_min": 15,
+      "description": "Paket coba gratis: 15 soal SKD tingkat sulit format terbaru — 5 TWK, 5 TIU (termasuk 2 figural kompleks), 5 TKP. Ambang batas disesuaikan dengan jumlah soal.",
+      "duration_min": 20,
       "pg_twk": 11,
       "pg_tiu": 11,
       "pg_tkp": 18,
@@ -24,221 +24,220 @@ function getDemoPackageData_() {
         "number": 1,
         "subtest": "TWK",
         "topic_id": "twk-pancasila",
-        "level": 1,
-        "text": "Gotong royong membersihkan lingkungan yang diikuti warga dari berbagai suku dan agama paling mencerminkan pengamalan sila …",
+        "level": 4,
+        "text": "Sebuah kabupaten menetapkan bahwa 30% paket pengadaan bernilai kecil diprioritaskan untuk usaha mikro dan kecil setempat, padahal penyedia dari luar daerah menawarkan harga rata-rata 8% lebih murah. Sebagian warga menilai kebijakan ini melanggar asas efisiensi. Penilaian yang paling tepat berdasarkan nilai Pancasila dan prinsip pengadaan pemerintah adalah…",
         "options": [
-          "Pertama",
-          "Kedua",
-          "Ketiga",
-          "Keempat",
-          "Kelima"
+          "dapat dibenarkan sebagai wujud keadilan sosial bila dijalankan terbuka, terukur, serta menjaga mutu dan persaingan sehat",
+          "tidak berkaitan dengan Pancasila karena urusan pengadaan sepenuhnya diatur oleh mekanisme pasar dan regulasi teknis",
+          "hanya sah bila disetujui seluruh penyedia dari luar daerah agar sejalan dengan sila keempat tentang musyawarah mufakat",
+          "dapat dibenarkan sepenuhnya karena kepentingan warga setempat harus selalu didahulukan walaupun mutu dan harga tidak sebanding",
+          "wajib dibatalkan karena efisiensi anggaran negara selalu harus didahulukan di atas pertimbangan sosial dan kedaerahan apa pun"
         ],
-        "answer": "c",
-        "explanation": "Kerja sama lintas suku dan agama demi kepentingan bersama mencerminkan sila ketiga, Persatuan Indonesia, yang menempatkan persatuan dan kepentingan bersama di atas kepentingan golongan."
+        "answer": "a",
+        "explanation": "Sila kelima (keadilan sosial) membenarkan keberpihakan kepada usaha kecil, dan aturan pengadaan pemerintah memang mewajibkan peningkatan peran usaha mikro, kecil, dan koperasi. Namun keberpihakan itu harus transparan, terukur, dan tidak mengorbankan mutu. Opsi lain ekstrem: menolak total, membenarkan tanpa syarat, salah menerapkan sila keempat, atau memisahkan kebijakan publik dari Pancasila."
       },
       {
         "number": 2,
         "subtest": "TWK",
         "topic_id": "twk-uud",
-        "level": 2,
-        "text": "Menurut UUD 1945, kedaulatan berada di tangan rakyat dan dilaksanakan menurut Undang-Undang Dasar. Ketentuan ini tercantum dalam pasal …",
+        "level": 4,
+        "text": "Dalam keadaan kegentingan yang memaksa, Presiden menetapkan Peraturan Pemerintah Pengganti Undang-Undang (Perppu). Pada persidangan berikutnya, DPR tidak memberikan persetujuan. Akibat hukum yang paling tepat menurut UUD 1945 dan ketentuan pembentukan peraturan perundang-undangan adalah…",
         "options": [
-          "Pasal 1 ayat (1)",
-          "Pasal 1 ayat (2)",
-          "Pasal 1 ayat (3)",
-          "Pasal 2 ayat (1)",
-          "Pasal 3 ayat (1)"
+          "Perppu tetap berlaku paling lama 30 hari sampai Presiden menetapkan Perppu pengganti yang baru",
+          "Perppu dapat diajukan ulang pada masa sidang yang sama setelah diperbaiki bersama Dewan Perwakilan Daerah",
+          "Perppu tetap berlaku sampai Mahkamah Konstitusi memutus perkara pengujian yang diajukan oleh pimpinan DPR RI",
+          "Perppu harus dicabut dan dinyatakan tidak berlaku melalui undang-undang tentang pencabutan Perppu tersebut",
+          "Perppu otomatis berubah menjadi peraturan pemerintah biasa yang tetap berlaku di bawah undang-undang"
         ],
-        "answer": "b",
-        "explanation": "Pasal 1 ayat (2) UUD 1945 hasil amandemen berbunyi: \"Kedaulatan berada di tangan rakyat dan dilaksanakan menurut Undang-Undang Dasar.\" Ayat (1) tentang bentuk negara kesatuan berbentuk republik, ayat (3) tentang negara hukum."
+        "answer": "d",
+        "explanation": "Pasal 22 ayat (3) UUD 1945: jika tidak mendapat persetujuan DPR, Perppu harus dicabut. UU tentang Pembentukan Peraturan Perundang-undangan mengatur bahwa pencabutan itu dilakukan dengan undang-undang yang menyatakan Perppu tidak berlaku. Tidak ada perubahan otomatis menjadi PP, tenggat 30 hari, atau peran DPD dalam persetujuan Perppu."
       },
       {
         "number": 3,
         "subtest": "TWK",
         "topic_id": "twk-nkri",
-        "level": 2,
-        "text": "Deklarasi yang menegaskan bahwa laut di antara dan di sekitar pulau-pulau Indonesia merupakan satu kesatuan wilayah NKRI dikenal sebagai …",
+        "level": 3,
+        "text": "Apabila Presiden dan Wakil Presiden mangkat, berhenti, diberhentikan, atau tidak dapat melakukan kewajibannya secara bersamaan, maka menurut UUD 1945 pelaksana tugas kepresidenan dan mekanisme pengisian jabatannya adalah…",
         "options": [
-          "Sumpah Pemuda 1928",
-          "Deklarasi Djuanda 1957",
-          "Dekret Presiden 1959",
-          "Konferensi Meja Bundar 1949",
-          "Konferensi Asia Afrika 1955"
+          "Ketua MPR sebagai pelaksana tugas; Komisi Pemilihan Umum wajib menggelar pemilu ulang paling lambat 60 hari kemudian",
+          "Menteri Dalam Negeri, Menteri Luar Negeri, dan Menteri Pertahanan bersama-sama; MPR memilih pengganti paling lambat 30 hari",
+          "Menteri Koordinator Politik dan Keamanan sebagai pelaksana tugas; MPR memilih pengganti paling lambat 30 hari kemudian",
+          "Ketua DPR dan Ketua DPD bersama-sama sebagai pelaksana tugas; MPR memilih pengganti paling lambat 90 hari kemudian",
+          "Menteri Dalam Negeri, Menteri Luar Negeri, dan Menteri Pertahanan bersama-sama; DPR memilih pengganti paling lambat 60 hari kemudian"
         ],
         "answer": "b",
-        "explanation": "Deklarasi Djuanda (13 Desember 1957) menyatakan perairan di antara pulau-pulau Indonesia sebagai bagian wilayah NKRI, dasar konsep Wawasan Nusantara dan negara kepulauan."
+        "explanation": "Pasal 8 ayat (3) UUD 1945: pelaksana tugas kepresidenan adalah Menteri Luar Negeri, Menteri Dalam Negeri, dan Menteri Pertahanan secara bersama-sama. Paling lambat 30 hari kemudian MPR memilih Presiden dan Wakil Presiden dari dua pasangan calon yang diusulkan partai politik atau gabungan partai politik yang pasangannya meraih suara terbanyak pertama dan kedua pada pemilu sebelumnya."
       },
       {
         "number": 4,
         "subtest": "TWK",
-        "topic_id": "twk-bhinneka",
-        "level": 1,
-        "text": "Semboyan Bhinneka Tunggal Ika berasal dari kitab …",
+        "topic_id": "twk-bahasa",
+        "level": 3,
+        "text": "Sebagai petugas humas, Anda harus memilih satu kalimat pengumuman yang paling efektif dan sesuai kaidah bahasa Indonesia baku. Kalimat yang paling tepat adalah…",
         "options": [
-          "Negarakertagama karya Mpu Prapanca",
-          "Sutasoma karya Mpu Tantular",
-          "Arjunawiwaha karya Mpu Kanwa",
-          "Pararaton",
-          "Bharatayudha karya Mpu Sedah"
+          "Bagi para peserta diminta mengunggah berkas paling lambat Jumat, 14 Maret 2025.",
+          "Para peserta-peserta diminta mengunggah berkas paling lambat Jumat, 14 Maret 2025.",
+          "Para peserta diminta mengunggah berkas paling lambat Jumat, 14 Maret 2025.",
+          "Para peserta diminta mengunggahkan berkas paling lambat hari Jumat 14 Maret 2025.",
+          "Para peserta diminta mengunggah berkas paling lambat Jum'at, 14 Maret 2025."
         ],
-        "answer": "b",
-        "explanation": "Bhinneka Tunggal Ika dikutip dari Kakawin Sutasoma karya Mpu Tantular pada masa Majapahit. Maknanya: berbeda-beda tetapi tetap satu."
+        "answer": "c",
+        "explanation": "Kalimat benar memiliki subjek jelas (para peserta), tanpa pemborosan, dan penulisan hari/tanggal baku. Kesalahan pengecoh: 'para peserta-peserta' pleonasme (para sudah bermakna jamak); 'Bagi para peserta' membuat kalimat kehilangan subjek; 'mengunggahkan' tidak tepat dan koma setelah nama hari hilang; 'Jum'at' bukan bentuk baku (yang baku: Jumat)."
       },
       {
         "number": 5,
         "subtest": "TWK",
-        "topic_id": "twk-belanegara",
-        "level": 2,
-        "text": "Sebagai pegawai di kantor pelayanan, contoh sikap bela negara yang paling tepat dalam keseharian adalah …",
+        "topic_id": "twk-integritas",
+        "level": 4,
+        "text": "Seminggu setelah Anda menandatangani berita acara serah terima pekerjaan, penyedia mengirim bingkisan senilai sekitar Rp1,5 juta ke rumah Anda dengan kartu bertuliskan 'Terima kasih atas kerja samanya'. Tindakan yang paling sesuai dengan ketentuan pengendalian gratifikasi adalah…",
         "options": [
-          "Mengikuti pelatihan militer setiap akhir pekan",
-          "Bekerja jujur, disiplin, dan melayani masyarakat sebaik mungkin",
-          "Menolak semua produk dari luar negeri",
-          "Mengikuti upacara hanya pada hari besar nasional",
-          "Memasang bendera di rumah sepanjang tahun"
+          "menyerahkannya ke panti asuhan atas nama penyedia agar tidak tercatat sebagai penerimaan pribadi pegawai",
+          "menerimanya karena pekerjaan sudah selesai sehingga pemberian itu tidak lagi memengaruhi keputusan jabatan",
+          "membagikannya kepada seluruh anggota tim agar manfaatnya dirasakan bersama dan tidak dinikmati sendiri",
+          "menerimanya karena nilainya masih di bawah batas wajar yang dikecualikan dari kewajiban pelaporan gratifikasi",
+          "menolaknya, atau bila terlanjur diterima, melaporkannya ke KPK atau UPG instansi paling lambat 30 hari kerja"
         ],
-        "answer": "b",
-        "explanation": "Bela negara tidak selalu berbentuk fisik atau militer. Bagi aparatur, wujud nyatanya adalah bekerja dengan jujur, disiplin, dan memberi pelayanan terbaik sesuai profesinya."
+        "answer": "e",
+        "explanation": "Pemberian dari penyedia jelas berhubungan dengan jabatan, kapan pun diberikan. Gratifikasi seperti ini wajib ditolak, atau dilaporkan ke KPK/Unit Pengendalian Gratifikasi paling lambat 30 hari kerja sejak diterima (Pasal 12C UU Tipikor). Batas nilai wajar hanya berlaku untuk pemberian yang tidak terkait jabatan. Membagikan atau menyumbangkan tanpa melapor tetap merupakan penerimaan gratifikasi."
       },
       {
         "number": 6,
         "subtest": "TIU",
-        "topic_id": "tiu-analogi",
-        "level": 1,
-        "text": "AIR : HAUS = MAKANAN : …",
+        "topic_id": "tiu-silogisme",
+        "level": 4,
+        "text": "Semua auditor yang lulus sertifikasi pernah mengikuti diklat teknis. Sebagian pegawai inspektorat adalah auditor yang lulus sertifikasi. Tidak ada pegawai yang pernah mengikuti diklat teknis yang ditempatkan di bagian umum. Kesimpulan yang PASTI benar adalah…",
         "options": [
-          "Kenyang",
-          "Lapar",
-          "Gizi",
-          "Piring",
-          "Dapur"
+          "Sebagian pegawai inspektorat tidak ditempatkan di bagian umum.",
+          "Sebagian pegawai bagian umum adalah auditor bersertifikat.",
+          "Semua pegawai yang pernah mengikuti diklat teknis adalah auditor.",
+          "Sebagian pegawai inspektorat ditempatkan di bagian umum.",
+          "Semua pegawai inspektorat tidak ditempatkan di bagian umum."
         ],
-        "answer": "b",
-        "explanation": "Air menghilangkan rasa haus; makanan menghilangkan rasa lapar. Hubungannya: sesuatu dan kondisi yang diatasinya."
+        "answer": "a",
+        "explanation": "Rantai: sebagian pegawai inspektorat → auditor lulus sertifikasi → pernah diklat teknis → tidak di bagian umum. Jadi pasti ada pegawai inspektorat yang tidak di bagian umum. Kita tidak tahu pegawai inspektorat lainnya, sehingga 'semua' dan 'sebagian ditempatkan di bagian umum' tidak pasti. Pernyataan tentang bagian umum dan konversi 'semua yang diklat adalah auditor' tidak dapat disimpulkan."
       },
       {
         "number": 7,
         "subtest": "TIU",
-        "topic_id": "tiu-figural",
-        "level": 2,
-        "text": "Gambar manakah yang tepat menggantikan tanda tanya sehingga hubungan kedua pasangan gambar sama?",
-        "context": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 508 100\" width=\"508\" height=\"100\"><rect width=\"508\" height=\"100\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"74.0,22.0 74.0,70.0 26.0,70.0 26.0,22.0\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"64.0\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"70.0,46.0 62.2,50.5 62.2,41.5\" fill=\"#1b2a4a\"/><rect x=\"44.5\" y=\"64.5\" width=\"11\" height=\"11\" fill=\"#1b2a4a\"/><text x=\"122\" y=\"62\" font-size=\"34\" font-family=\"Arial, sans-serif\" font-weight=\"700\" fill=\"#1b2a4a\" text-anchor=\"middle\">:</text><rect x=\"136\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"210.0,22.0 210.0,70.0 162.0,70.0 162.0,22.0\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"186\" y1=\"46\" x2=\"172.0\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"166.0,46.0 173.8,41.5 173.8,50.5\" fill=\"#1b2a4a\"/><rect x=\"180.5\" y=\"64.5\" width=\"11\" height=\"11\" fill=\"#1b2a4a\"/><text x=\"258\" y=\"62\" font-size=\"34\" font-family=\"Arial, sans-serif\" font-weight=\"700\" fill=\"#1b2a4a\" text-anchor=\"middle\">=</text><rect x=\"272\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"322.0,12.0 354.3,35.5 342.0,73.5 302.0,73.5 289.7,35.5\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"322\" y1=\"46\" x2=\"339.5\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"345.5,46.0 337.7,50.5 337.7,41.5\" fill=\"#1b2a4a\"/><circle cx=\"305.0\" cy=\"63.0\" r=\"6\" fill=\"#1b2a4a\"/><text x=\"394\" y=\"62\" font-size=\"34\" font-family=\"Arial, sans-serif\" font-weight=\"700\" fill=\"#1b2a4a\" text-anchor=\"middle\">:</text><rect x=\"408\" y=\"0\" width=\"100\" height=\"100\" fill=\"#f3f6fb\" stroke=\"#9aa8bf\" stroke-width=\"1.5\" stroke-dasharray=\"6 4\"/><text x=\"458\" y=\"64\" font-size=\"44\" font-family=\"Arial, sans-serif\" font-weight=\"700\" fill=\"#5b6b85\" text-anchor=\"middle\">?</text></svg>",
+        "topic_id": "tiu-analitis",
+        "level": 4,
+        "text": "Enam berkas P, Q, R, S, T, dan U diproses satu per hari dari Senin sampai Sabtu. Ketentuan: (1) Q diproses tepat dua hari setelah P; (2) R diproses sebelum S dengan minimal satu hari di antaranya; (3) T diproses pada hari Kamis; (4) U tidak diproses pada hari Senin maupun Sabtu; (5) S diproses setelah Q. Pernyataan yang PASTI benar adalah…",
         "options": [
-          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"50.0,12.0 82.3,35.5 70.0,73.5 30.0,73.5 17.7,35.5\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"32.5\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"26.5,46.0 34.3,41.5 34.3,50.5\" fill=\"#1b2a4a\"/><circle cx=\"67.0\" cy=\"63.0\" r=\"6\" fill=\"#1b2a4a\"/></svg>",
-          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"50.0,80.0 17.7,56.5 30.0,18.5 70.0,18.5 82.3,56.5\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"32.5\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"26.5,46.0 34.3,41.5 34.3,50.5\" fill=\"#1b2a4a\"/><circle cx=\"67.0\" cy=\"29.0\" r=\"6\" fill=\"#1b2a4a\"/></svg>",
-          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"50.0,12.0 82.3,35.5 70.0,73.5 30.0,73.5 17.7,35.5\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"32.5\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"26.5,46.0 34.3,41.5 34.3,50.5\" fill=\"#1b2a4a\"/><circle cx=\"67.0\" cy=\"63.0\" r=\"6\" fill=\"#1b2a4a\"/></svg>",
-          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"84.0,46.0 60.5,78.3 22.5,66.0 22.5,26.0 60.5,13.7\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"50.0\" y2=\"63.5\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"50.0,69.5 45.5,61.7 54.5,61.7\" fill=\"#1b2a4a\"/><circle cx=\"33.0\" cy=\"29.0\" r=\"6\" fill=\"#1b2a4a\"/></svg>",
-          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"50.0,80.0 17.7,56.5 30.0,18.5 70.0,18.5 82.3,56.5\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"67.5\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"73.5,46.0 65.7,50.5 65.7,41.5\" fill=\"#1b2a4a\"/><circle cx=\"33.0\" cy=\"29.0\" r=\"6\" fill=\"#1b2a4a\"/></svg>"
+          "R diproses sebelum berkas P",
+          "S diproses pada hari Sabtu",
+          "P diproses pada hari Senin",
+          "U diproses pada hari Jumat",
+          "Q diproses sehari sebelum T"
         ],
-        "answer": "c",
-        "explanation": "Analogi gambar. Hubungan A ke B: gambar dicerminkan kiri–kanan (cermin vertikal). Terapkan aturan yang sama pada gambar ketiga."
+        "answer": "b",
+        "explanation": "Hanya ada dua susunan yang memenuhi semua syarat: P-R-Q-T-U-S dan R-U-P-T-Q-S. Pada keduanya S diproses Sabtu, sehingga hanya pernyataan itu yang pasti benar. P Senin, U Jumat, dan Q sehari sebelum T hanya berlaku pada susunan pertama; R sebelum P hanya berlaku pada susunan kedua."
       },
       {
         "number": 8,
         "subtest": "TIU",
-        "topic_id": "tiu-deret",
-        "level": 2,
-        "text": "Lanjutkan deret berikut.",
-        "context": "4, 7, 13, 25, 49, …",
+        "topic_id": "tiu-cerita",
+        "level": 4,
+        "text": "Suatu pekerjaan dapat diselesaikan A sendirian dalam 12 hari dan B sendirian dalam 18 hari. A dan B bekerja bersama selama 4 hari, lalu A berhenti. B melanjutkan sendirian selama 3 hari, kemudian C bergabung dengan B dan sisa pekerjaan selesai tepat 2 hari kemudian. Jika C bekerja sendirian dari awal, pekerjaan itu selesai dalam…",
         "options": [
-          "73",
-          "91",
-          "97",
-          "98",
-          "100"
+          "10 hari",
+          "18 hari",
+          "9 hari",
+          "12 hari",
+          "15 hari"
         ],
-        "answer": "c",
-        "explanation": "Setiap suku dikali 2 lalu dikurangi 1: 4×2−1=7, 7×2−1=13, 13×2−1=25, 25×2−1=49, 49×2−1=97."
+        "answer": "d",
+        "explanation": "A+B selama 4 hari: 4 × (1/12 + 1/18) = 4 × 5/36 = 5/9. B selama 3 hari: 3/18 = 1/6. Total 5/9 + 1/6 = 13/18, sisa 5/18. B+C selama 2 hari menyelesaikan 5/18, jadi B + C = 5/36 per hari, sehingga C = 5/36 − 2/36 = 3/36 = 1/12. C sendirian butuh 12 hari."
       },
       {
         "number": 9,
         "subtest": "TIU",
-        "topic_id": "tiu-hitung",
-        "level": 2,
-        "text": "Harga sebuah buku setelah diskon 20% adalah Rp48.000. Berapa harga buku sebelum diskon?",
+        "topic_id": "tiu-figural",
+        "level": 4,
+        "text": "Perhatikan matriks gambar 3 × 3 berikut. Setiap baris dan kolom mengikuti beberapa aturan sekaligus. Gambar manakah yang tepat menggantikan tanda tanya?",
+        "context": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 316 316\" width=\"316\" height=\"316\"><rect width=\"316\" height=\"316\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><circle cx=\"50.0\" cy=\"42.0\" r=\"28.0\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><line x1=\"50.0\" y1=\"50.2\" x2=\"50.0\" y2=\"27.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"50.0,20.0 56.0,27.0 44.0,27.0\" fill=\"#1b2a4a\"/><circle cx=\"50.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><rect x=\"108\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"181.4,65.4 134.6,65.4 134.6,18.6 181.4,18.6\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"152.2\" y1=\"47.8\" x2=\"168.6\" y2=\"31.4\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"173.6,26.4 172.8,35.6 164.4,27.2\" fill=\"#1b2a4a\"/><circle cx=\"153.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"163.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><rect x=\"216\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"294.0,42.0 280.0,66.2 252.0,66.2 238.0,42.0 252.0,17.8 280.0,17.8\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"257.8\" y1=\"42.0\" x2=\"281.0\" y2=\"42.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"288.0,42.0 281.0,48.0 281.0,36.0\" fill=\"#1b2a4a\"/><circle cx=\"256.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"266.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"276.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><rect x=\"0\" y=\"108\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"73.4,173.4 26.6,173.4 26.6,126.6 73.4,126.6\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"41.8\" y1=\"150.0\" x2=\"65.0\" y2=\"150.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"72.0,150.0 65.0,156.0 65.0,144.0\" fill=\"#1b2a4a\"/><circle cx=\"45.0\" cy=\"196\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"55.0\" cy=\"196\" r=\"3.2\" fill=\"#1b2a4a\"/><rect x=\"108\" y=\"108\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"186.0,150.0 172.0,174.2 144.0,174.2 130.0,150.0 144.0,125.8 172.0,125.8\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"152.2\" y1=\"144.2\" x2=\"168.6\" y2=\"160.6\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"173.6,165.6 164.4,164.8 172.8,156.4\" fill=\"#1b2a4a\"/><circle cx=\"158.0\" cy=\"196\" r=\"3.2\" fill=\"#1b2a4a\"/><rect x=\"216\" y=\"108\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><circle cx=\"266.0\" cy=\"150.0\" r=\"28.0\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><line x1=\"266.0\" y1=\"141.8\" x2=\"266.0\" y2=\"165.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"266.0,172.0 260.0,165.0 272.0,165.0\" fill=\"#1b2a4a\"/><circle cx=\"256.0\" cy=\"196\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"266.0\" cy=\"196\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"276.0\" cy=\"196\" r=\"3.2\" fill=\"#1b2a4a\"/><rect x=\"0\" y=\"216\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"78.0,258.0 64.0,282.2 36.0,282.2 22.0,258.0 36.0,233.8 64.0,233.8\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50.0\" y1=\"249.8\" x2=\"50.0\" y2=\"273.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"50.0,280.0 44.0,273.0 56.0,273.0\" fill=\"#1b2a4a\"/><circle cx=\"50.0\" cy=\"304\" r=\"3.2\" fill=\"#1b2a4a\"/><rect x=\"108\" y=\"216\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><circle cx=\"158.0\" cy=\"258.0\" r=\"28.0\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><line x1=\"163.8\" y1=\"252.2\" x2=\"147.4\" y2=\"268.6\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"142.4,273.6 143.2,264.4 151.6,272.8\" fill=\"#1b2a4a\"/><circle cx=\"148.0\" cy=\"304\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"158.0\" cy=\"304\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"168.0\" cy=\"304\" r=\"3.2\" fill=\"#1b2a4a\"/><rect x=\"216\" y=\"216\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><text x=\"266\" y=\"280\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"52\" font-weight=\"700\" fill=\"#1b2a4a\">?</text></svg>",
         "options": [
-          "Rp57.600",
-          "Rp58.000",
-          "Rp60.000",
-          "Rp62.400",
-          "Rp64.000"
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"73.4,65.4 26.6,65.4 26.6,18.6 73.4,18.6\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"58.2\" y1=\"42.0\" x2=\"35.0\" y2=\"42.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"28.0,42.0 35.0,36.0 35.0,48.0\" fill=\"#1b2a4a\"/><circle cx=\"35.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"45.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"55.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"65.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"73.4,65.4 26.6,65.4 26.6,18.6 73.4,18.6\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"55.8\" y1=\"36.2\" x2=\"39.4\" y2=\"52.6\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"34.4,57.6 35.2,48.4 43.6,56.8\" fill=\"#1b2a4a\"/><circle cx=\"35.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"45.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"55.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"65.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"73.4,65.4 26.6,65.4 26.6,18.6 73.4,18.6\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"58.2\" y1=\"42.0\" x2=\"35.0\" y2=\"42.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"28.0,42.0 35.0,36.0 35.0,48.0\" fill=\"#1b2a4a\"/><circle cx=\"40.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"50.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"60.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"78.0,42.0 64.0,66.2 36.0,66.2 22.0,42.0 36.0,17.8 64.0,17.8\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"58.2\" y1=\"42.0\" x2=\"35.0\" y2=\"42.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"28.0,42.0 35.0,36.0 35.0,48.0\" fill=\"#1b2a4a\"/><circle cx=\"35.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"45.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"55.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"65.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"73.4,65.4 26.6,65.4 26.6,18.6 73.4,18.6\" fill=\"#c9d3e3\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"58.2\" y1=\"42.0\" x2=\"35.0\" y2=\"42.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"28.0,42.0 35.0,36.0 35.0,48.0\" fill=\"#1b2a4a\"/><circle cx=\"35.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"45.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"55.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/><circle cx=\"65.0\" cy=\"88\" r=\"3.2\" fill=\"#1b2a4a\"/></svg>"
         ],
-        "answer": "c",
-        "explanation": "Harga setelah diskon = 80% harga awal. Harga awal = 48.000 ÷ 0,8 = Rp60.000. Jebakan umum: menambah 20% dari 48.000 (= Rp57.600)."
+        "answer": "e",
+        "explanation": "Ada empat aturan sekaligus. (1) Bentuk luar: lingkaran, persegi, dan segi enam masing-masing muncul tepat sekali di setiap baris dan kolom, sehingga baris ketiga butuh persegi. (2) Panah: berputar 45° searah jarum jam dari kiri ke kanan, dan setiap baris dimulai 90° lebih jauh (baris 3: ke bawah → kiri bawah → ke kiri). (3) Titik: kolom ketiga = jumlah titik kolom pertama + kolom kedua (1 + 3 = 4). (4) Arsiran: kolom ketiga diarsir bila tepat satu dari dua gambar sebelumnya diarsir (tidak diarsir + diarsir → diarsir). Jawaban: persegi diarsir, panah ke kiri, 4 titik. Setiap pengecoh salah tepat pada satu aturan."
       },
       {
         "number": 10,
         "subtest": "TIU",
         "topic_id": "tiu-figural",
-        "level": 3,
-        "text": "Gambar manakah yang tepat untuk melanjutkan pola pada deret gambar berikut?",
-        "context": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 532 100\" width=\"532\" height=\"100\"><rect width=\"532\" height=\"100\" fill=\"#fff\"/><rect x=\"0\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"74.0,22.0 74.0,70.0 26.0,70.0 26.0,22.0\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"59.9\" y2=\"55.9\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"64.2,60.2 55.5,57.8 61.8,51.5\" fill=\"#1b2a4a\"/><circle cx=\"50.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><rect x=\"108\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"182.0,22.0 182.0,70.0 134.0,70.0 134.0,22.0\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"158\" y1=\"46\" x2=\"158.0\" y2=\"60.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"158.0,66.0 153.5,58.2 162.5,58.2\" fill=\"#1b2a4a\"/><circle cx=\"153.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"163.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><rect x=\"216\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"290.0,22.0 290.0,70.0 242.0,70.0 242.0,22.0\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"266\" y1=\"46\" x2=\"256.1\" y2=\"55.9\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"251.8,60.2 254.2,51.5 260.5,57.8\" fill=\"#1b2a4a\"/><circle cx=\"256.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"266.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"276.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><rect x=\"324\" y=\"0\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><polygon points=\"398.0,22.0 398.0,70.0 350.0,70.0 350.0,22.0\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"374\" y1=\"46\" x2=\"360.0\" y2=\"46.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"354.0,46.0 361.8,41.5 361.8,50.5\" fill=\"#1b2a4a\"/><circle cx=\"359.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"369.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"379.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"389.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><rect x=\"432\" y=\"0\" width=\"100\" height=\"100\" fill=\"#f3f6fb\" stroke=\"#9aa8bf\" stroke-width=\"1.5\" stroke-dasharray=\"6 4\"/><text x=\"482\" y=\"64\" font-size=\"44\" font-family=\"Arial, sans-serif\" font-weight=\"700\" fill=\"#5b6b85\" text-anchor=\"middle\">?</text></svg>",
+        "level": 4,
+        "text": "Gambar 1 sampai 5 membentuk satu deret dengan tiga pola yang berjalan bersamaan. Gambar manakah yang tepat menempati posisi 6 (tanda tanya)?",
+        "context": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 316 266\" width=\"316\" height=\"266\"><rect width=\"316\" height=\"266\" fill=\"#fff\"/><text x=\"50\" y=\"13\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"13\" font-weight=\"700\" fill=\"#5b6b86\">1</text><rect x=\"0\" y=\"18\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><rect x=\"8\" y=\"26\" width=\"84\" height=\"84\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><circle cx=\"18\" cy=\"36\" r=\"6\" fill=\"#1b2a4a\"/><line x1=\"50.0\" y1=\"73.2\" x2=\"50.0\" y2=\"53.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"50.0,46.0 56.0,53.0 44.0,53.0\" fill=\"#1b2a4a\"/><polygon points=\"50,98 42,110 58,110\" fill=\"#1b2a4a\" stroke=\"#1b2a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><text x=\"158\" y=\"13\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"13\" font-weight=\"700\" fill=\"#5b6b86\">2</text><rect x=\"108\" y=\"18\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><rect x=\"116\" y=\"26\" width=\"84\" height=\"84\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><circle cx=\"190\" cy=\"36\" r=\"6\" fill=\"#1b2a4a\"/><line x1=\"165.2\" y1=\"66.0\" x2=\"145.0\" y2=\"66.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"138.0,66.0 145.0,60.0 145.0,72.0\" fill=\"#1b2a4a\"/><polygon points=\"158,98 150,110 166,110\" fill=\"#1b2a4a\" stroke=\"#1b2a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><text x=\"266\" y=\"13\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"13\" font-weight=\"700\" fill=\"#5b6b86\">3</text><rect x=\"216\" y=\"18\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><rect x=\"224\" y=\"26\" width=\"84\" height=\"84\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><circle cx=\"234\" cy=\"100\" r=\"6\" fill=\"#1b2a4a\"/><line x1=\"266.0\" y1=\"58.9\" x2=\"266.0\" y2=\"79.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"266.0,86.0 260.0,79.0 272.0,79.0\" fill=\"#1b2a4a\"/><polygon points=\"266,98 258,110 274,110\" fill=\"#fff\" stroke=\"#1b2a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><text x=\"50\" y=\"137\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"13\" font-weight=\"700\" fill=\"#5b6b86\">4</text><rect x=\"0\" y=\"142\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><rect x=\"8\" y=\"150\" width=\"84\" height=\"84\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><circle cx=\"82\" cy=\"224\" r=\"6\" fill=\"#1b2a4a\"/><line x1=\"42.9\" y1=\"190.0\" x2=\"63.0\" y2=\"190.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"70.0,190.0 63.0,196.0 63.0,184.0\" fill=\"#1b2a4a\"/><polygon points=\"50,222 42,234 58,234\" fill=\"#fff\" stroke=\"#1b2a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><text x=\"158\" y=\"137\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"13\" font-weight=\"700\" fill=\"#5b6b86\">5</text><rect x=\"108\" y=\"142\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><rect x=\"116\" y=\"150\" width=\"84\" height=\"84\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><circle cx=\"190\" cy=\"224\" r=\"6\" fill=\"#1b2a4a\"/><line x1=\"158.0\" y1=\"197.2\" x2=\"158.0\" y2=\"177.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"158.0,170.0 164.0,177.0 152.0,177.0\" fill=\"#1b2a4a\"/><polygon points=\"158,222 150,234 166,234\" fill=\"#1b2a4a\" stroke=\"#1b2a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><text x=\"266\" y=\"137\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"13\" font-weight=\"700\" fill=\"#5b6b86\">6</text><rect x=\"216\" y=\"142\" width=\"100\" height=\"100\" fill=\"#fff\" stroke=\"#9aa8bf\" stroke-width=\"1.5\"/><text x=\"266\" y=\"210\" text-anchor=\"middle\" font-family=\"Arial\" font-size=\"52\" font-weight=\"700\" fill=\"#1b2a4a\">?</text></svg>",
         "options": [
-          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"74.0,22.0 74.0,70.0 26.0,70.0 26.0,22.0\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"59.9\" y2=\"55.9\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"64.2,60.2 55.5,57.8 61.8,51.5\" fill=\"#1b2a4a\"/><circle cx=\"35.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"45.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"55.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"65.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/></svg>",
-          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"74.0,22.0 74.0,70.0 26.0,70.0 26.0,22.0\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"40.1\" y2=\"55.9\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"35.8,60.2 38.2,51.5 44.5,57.8\" fill=\"#1b2a4a\"/><circle cx=\"30.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"40.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"50.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"60.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"70.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/></svg>",
-          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"74.0,22.0 74.0,70.0 26.0,70.0 26.0,22.0\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"40.1\" y2=\"36.1\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"35.8,31.8 44.5,34.2 38.2,40.5\" fill=\"#1b2a4a\"/><circle cx=\"40.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"50.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"60.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/></svg>",
-          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"74.0,22.0 74.0,70.0 26.0,70.0 26.0,22.0\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"40.1\" y2=\"36.1\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"35.8,31.8 44.5,34.2 38.2,40.5\" fill=\"#1b2a4a\"/><circle cx=\"30.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"40.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"50.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"60.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"70.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/></svg>",
-          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><polygon points=\"74.0,22.0 74.0,70.0 26.0,70.0 26.0,22.0\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linejoin=\"round\"/><line x1=\"50\" y1=\"46\" x2=\"50.0\" y2=\"32.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"50.0,26.0 54.5,33.8 45.5,33.8\" fill=\"#1b2a4a\"/><circle cx=\"30.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"40.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"50.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"60.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/><circle cx=\"70.0\" cy=\"92\" r=\"3\" fill=\"#1b2a4a\"/></svg>"
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><circle cx=\"18\" cy=\"18\" r=\"6\" fill=\"#1b2a4a\"/><line x1=\"57.1\" y1=\"48.0\" x2=\"37.0\" y2=\"48.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"30.0,48.0 37.0,42.0 37.0,54.0\" fill=\"#1b2a4a\"/><polygon points=\"50,80 42,92 58,92\" fill=\"#1b2a4a\" stroke=\"#1b2a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><circle cx=\"18\" cy=\"82\" r=\"6\" fill=\"#1b2a4a\"/><line x1=\"57.1\" y1=\"48.0\" x2=\"37.0\" y2=\"48.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"30.0,48.0 37.0,42.0 37.0,54.0\" fill=\"#1b2a4a\"/><polygon points=\"50,80 42,92 58,92\" fill=\"#fff\" stroke=\"#1b2a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><circle cx=\"18\" cy=\"82\" r=\"6\" fill=\"#1b2a4a\"/><line x1=\"57.1\" y1=\"48.0\" x2=\"37.0\" y2=\"48.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"30.0,48.0 37.0,42.0 37.0,54.0\" fill=\"#1b2a4a\"/><polygon points=\"50,80 42,92 58,92\" fill=\"#1b2a4a\" stroke=\"#1b2a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><circle cx=\"18\" cy=\"82\" r=\"6\" fill=\"#1b2a4a\"/><line x1=\"42.9\" y1=\"48.0\" x2=\"63.0\" y2=\"48.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"70.0,48.0 63.0,54.0 63.0,42.0\" fill=\"#1b2a4a\"/><polygon points=\"50,80 42,92 58,92\" fill=\"#1b2a4a\" stroke=\"#1b2a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/></svg>",
+          "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\" width=\"100\" height=\"100\"><rect width=\"100\" height=\"100\" fill=\"#fff\"/><rect x=\"8\" y=\"8\" width=\"84\" height=\"84\" fill=\"none\" stroke=\"#1b2a4a\" stroke-width=\"3\"/><circle cx=\"82\" cy=\"82\" r=\"6\" fill=\"#1b2a4a\"/><line x1=\"57.1\" y1=\"48.0\" x2=\"37.0\" y2=\"48.0\" stroke=\"#1b2a4a\" stroke-width=\"3\" stroke-linecap=\"round\"/><polygon points=\"30.0,48.0 37.0,42.0 37.0,54.0\" fill=\"#1b2a4a\"/><polygon points=\"50,80 42,92 58,92\" fill=\"#1b2a4a\" stroke=\"#1b2a4a\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/></svg>"
         ],
-        "answer": "d",
-        "explanation": "Serial gambar. Ada dua pola: panah berputar 45° searah jarum jam setiap langkah, dan jumlah titik bertambah 1. Gambar kelima: panah berputar 45° lagi dan titiknya 5."
+        "answer": "c",
+        "explanation": "Tiga pola berjalan bersamaan. (1) Titik hitam bergeser searah jarum jam sebanyak 1, 2, 3, 4, lalu 5 sudut, sehingga dari kanan bawah bergeser 5 sudut ke kiri bawah. (2) Panah berputar 90° berlawanan arah jarum jam setiap langkah (atas → kiri → bawah → kanan → atas → kiri). (3) Segitiga di bawah berpola hitam, hitam, putih, putih, hitam, hitam. Jawaban: titik kiri bawah, panah ke kiri, segitiga hitam. Setiap pengecoh salah tepat pada satu pola."
       },
       {
         "number": 11,
         "subtest": "TKP",
         "topic_id": "tkp-pelayanan",
-        "level": 2,
-        "text": "Menjelang jam tutup layanan, masih ada seorang warga lanjut usia yang belum terlayani dan datang dari desa yang jauh. Sikap Anda …",
+        "level": 4,
+        "text": "Anda bertugas di loket layanan. Sistem antrean daring tiba-tiba mati saat 40 warga sedang menunggu, sebagian di antaranya lansia, sementara atasan Anda sedang dinas luar kota. Sikap Anda adalah…",
         "options": [
-          "Memintanya datang kembali besok karena jam layanan sudah habis",
-          "Melayaninya hingga selesai karena ia sudah menempuh perjalanan jauh",
-          "Meminta rekan lain yang masih di kantor untuk melayaninya",
-          "Memberi nomor antrean prioritas untuk esok hari",
-          "Melayaninya sambil mengingatkan agar lain kali datang lebih awal"
+          "mengumumkan layanan dihentikan sementara dan meminta warga kembali besok dengan nomor antrean baru",
+          "melapor ke tim TI agar sistem segera diperbaiki sambil menjelaskan kepada warga perkiraan waktu pemulihan",
+          "meminta warga menulis nama di daftar hadir dan melayani sesuai urutan itu setelah sistem kembali normal",
+          "melayani warga yang paling dulu mendekat ke loket agar antrean cepat berkurang tanpa menunggu arahan",
+          "membuat antrean manual sesuai nomor yang sudah terbit, mendahulukan lansia, lalu melapor ke atasan dan tim TI"
         ],
         "scores": [
-          1,
-          5,
-          3,
           2,
-          4
+          4,
+          3,
+          1,
+          5
         ],
-        "explanation": "Nilai tertinggi diberikan pada sikap yang mengutamakan kebutuhan pengguna layanan dengan empati: melayani hingga tuntas. Mengingatkan agar datang lebih awal tetap baik (4), tetapi menambahkan beban pesan yang tidak perlu."
+        "explanation": "Skor tertinggi: layanan tetap berjalan, urutan tetap adil sesuai nomor, kelompok rentan didahulukan, dan masalah dilaporkan. Melapor ke TI saja (4) benar tetapi membiarkan layanan berhenti. Daftar hadir (3) menunda layanan. Menghentikan layanan (2) merugikan warga. Melayani yang paling dulu mendekat (1) tidak adil dan memicu kekacauan."
       },
       {
         "number": 12,
         "subtest": "TKP",
         "topic_id": "tkp-jejaring",
-        "level": 2,
-        "text": "Anda ditugaskan dalam tim lintas bidang yang anggotanya belum saling mengenal. Pada pertemuan pertama, Anda …",
+        "level": 4,
+        "text": "Anda menyusun laporan lintas instansi dengan tenggat tiga hari lagi. Instansi mitra belum mengirim data penting meski sudah dua kali diminta melalui pesan singkat. Sikap Anda adalah…",
         "options": [
-          "Menunggu ketua tim memulai pembicaraan",
-          "Memperkenalkan diri dan mengajak anggota lain berkenalan serta membahas pembagian tugas",
-          "Langsung membahas tugas agar waktu tidak terbuang",
-          "Berkenalan hanya dengan anggota dari bidang yang sama",
-          "Mengusulkan perkenalan melalui grup pesan saja"
+          "memakai data tahun lalu yang tersedia sambil tetap menunggu data terbaru dikirim oleh instansi mitra tersebut",
+          "menyelesaikan laporan tanpa data mitra dan mencatat bahwa bagian itu sepenuhnya tanggung jawab instansi mitra",
+          "menemui langsung penanggung jawab data, menjelaskan manfaat bersama, dan menyepakati jadwal serta format kiriman",
+          "melaporkan kepada atasan bahwa keterlambatan laporan terjadi karena instansi mitra tidak bersikap kooperatif",
+          "mengirim surat resmi melalui atasan lalu menindaklanjutinya setiap hari sampai data yang dibutuhkan dikirim"
         ],
         "scores": [
-          2,
-          5,
           3,
           1,
+          5,
+          2,
           4
         ],
-        "explanation": "Aspek jejaring kerja menilai inisiatif membangun hubungan kerja yang efektif. Mengambil inisiatif berkenalan sekaligus mengarahkan ke pembagian tugas bernilai tertinggi."
+        "explanation": "Jejaring kerja yang efektif membangun komunikasi langsung dan kesepakatan bersama (5). Surat resmi (4) baik tetapi lebih lambat dan formal. Data lama (3) menurunkan akurasi. Menyalahkan mitra (2) dan mengabaikan data (1) merusak kerja sama dan mutu laporan."
       },
       {
         "number": 13,
         "subtest": "TKP",
-        "topic_id": "tkp-sosbud",
-        "level": 2,
-        "text": "Anda ditempatkan di daerah dengan adat istiadat yang sangat berbeda dari daerah asal Anda. Sikap Anda …",
+        "topic_id": "tkp-tik",
+        "level": 4,
+        "text": "Untuk mempercepat pekerjaan, seorang rekan membagikan berkas berisi NIK dan alamat ratusan warga ke grup WhatsApp pribadi tim. Sikap Anda adalah…",
         "options": [
-          "Mempelajari adat setempat dan menyesuaikan diri tanpa meninggalkan nilai yang saya yakini",
-          "Tetap menjalankan kebiasaan dari daerah asal",
-          "Bergaul hanya dengan sesama pendatang",
-          "Meminta pindah ke daerah yang budayanya mirip",
-          "Mengikuti adat setempat hanya saat ada acara resmi"
+          "mengingatkan rekan untuk menghapus berkas itu dan mengusulkan berbagi data melalui sistem resmi yang aman",
+          "membiarkannya karena cara itu mempercepat pekerjaan dan grup tersebut hanya berisi pegawai satu unit kerja",
+          "meneruskan berkas itu ke rekan lain yang membutuhkannya agar seluruh anggota tim dapat bekerja lebih cepat",
+          "membuka berkas karena memang dibutuhkan, lalu segera menghapusnya dari ponsel setelah pekerjaan selesai",
+          "tidak membuka berkas tersebut dan menyarankan rekan memakai surel kantor untuk pengiriman data berikutnya"
         ],
         "scores": [
           5,
@@ -247,51 +246,51 @@ function getDemoPackageData_() {
           3,
           4
         ],
-        "explanation": "Aspek sosial budaya menilai kemampuan beradaptasi dan menghargai keragaman. Mempelajari dan menyesuaikan diri secara aktif bernilai tertinggi."
+        "explanation": "Data pribadi warga dilindungi UU Pelindungan Data Pribadi; berbagi lewat kanal pribadi berisiko bocor. Skor 5: hentikan penyebaran sekaligus tawarkan jalur resmi yang aman. Skor 4: tepat tetapi kurang tuntas. Skor 3: tetap memakai kanal berisiko. Skor 2–1: membiarkan dan memperluas kebocoran."
       },
       {
         "number": 14,
         "subtest": "TKP",
-        "topic_id": "tkp-tik",
-        "level": 2,
-        "text": "Kantor Anda mulai menerapkan aplikasi baru untuk pengarsipan surat, sementara Anda terbiasa dengan cara manual. Sikap Anda …",
+        "topic_id": "tkp-antiradikalisme",
+        "level": 4,
+        "text": "Seorang rekan kerja makin sering membagikan konten yang menyebut pemerintah dan dasar negara bertentangan dengan agama, lalu mengajak Anda ikut kajian tertutupnya. Sikap Anda adalah…",
         "options": [
-          "Tetap memakai cara manual karena lebih cepat",
-          "Mempelajari aplikasi tersebut dan membantu rekan yang kesulitan",
-          "Menunggu pelatihan resmi sebelum memakainya",
-          "Meminta rekan yang paham untuk mengerjakan bagian saya",
-          "Mempelajari aplikasi tersebut sesuai kebutuhan pekerjaan saya"
+          "menolak ajakan itu dengan sopan dan menyampaikan bahwa Pancasila tidak bertentangan dengan ajaran agama",
+          "mengikuti kajian itu satu kali untuk memahami isinya sebelum memutuskan sikap terhadap rekan tersebut",
+          "menolak ajakan itu dan mulai mengurangi interaksi dengan rekan tersebut agar tidak ikut terpengaruh",
+          "mengajaknya berdialog secara pribadi dengan rujukan yang sahih dan melapor ke atasan bila ajakan itu berlanjut",
+          "membiarkannya karena keyakinan adalah hak pribadi setiap orang selama tidak mengganggu pekerjaan kantor"
         ],
         "scores": [
-          1,
-          5,
-          3,
+          4,
           2,
-          4
+          3,
+          5,
+          1
         ],
-        "explanation": "Aspek teknologi informasi menilai kemauan memanfaatkan TIK untuk meningkatkan kinerja. Belajar proaktif sekaligus membantu rekan bernilai tertinggi."
+        "explanation": "Sikap antiradikalisme terbaik bersifat aktif dan konstruktif: meluruskan pemahaman melalui dialog dan memakai mekanisme organisasi bila diperlukan (5). Menolak sambil memberi argumen (4) baik tetapi tanpa tindak lanjut. Menjauh (3) melindungi diri tetapi membiarkan masalah. Ikut kajian (2) berisiko terpapar. Membiarkan (1) mengabaikan ancaman terhadap ideologi negara."
       },
       {
         "number": 15,
         "subtest": "TKP",
         "topic_id": "tkp-profesionalisme",
-        "level": 3,
-        "text": "Seorang kerabat meminta Anda mendahulukan berkas pengajuannya di atas antrean warga lain. Sikap Anda …",
+        "level": 4,
+        "text": "Pimpinan meminta Anda merevisi laporan kinerja agar capaian unit tertulis 100%, padahal data sebenarnya 82%, karena hasilnya akan dipakai untuk penilaian antarunit. Sikap Anda adalah…",
         "options": [
-          "Mendahulukannya karena ia keluarga",
-          "Menolak dengan sopan dan memprosesnya sesuai urutan antrean",
-          "Mendahulukannya asal tidak diketahui atasan",
-          "Meminta rekan lain yang memproses berkasnya",
-          "Memprosesnya sesuai urutan sambil menjelaskan persyaratan yang perlu disiapkan"
+          "menyajikan angka 82% sambil menonjolkan indikator lain yang capaiannya tinggi agar kinerja unit tetap tampak baik",
+          "mengikuti permintaan pimpinan karena tanggung jawab akhir atas isi laporan kinerja unit ada pada pimpinan",
+          "menyajikan data 82% apa adanya disertai analisis kendala dan rencana perbaikan yang realistis untuk periode depan",
+          "mengubah angka sesuai permintaan tetapi menyimpan data asli sebagai cadangan bila sewaktu-waktu diperiksa",
+          "menolak mengubah angka dan menjelaskan kepada pimpinan risiko temuan audit bila laporan tidak sesuai fakta"
         ],
         "scores": [
+          3,
           1,
-          4,
-          1,
+          5,
           2,
-          5
+          4
         ],
-        "explanation": "Aspek profesionalisme menilai integritas dan perlakuan adil. Tetap sesuai antrean sambil tetap membantu (menjelaskan persyaratan) bernilai tertinggi; menolak dengan sopan juga baik (4)."
+        "explanation": "Profesionalisme menuntut kejujuran data sekaligus solusi. Skor 5: data benar, ditambah analisis dan perbaikan yang membantu pimpinan. Skor 4: jujur tetapi kurang solutif. Skor 3: jujur tetapi cenderung mengaburkan. Skor 2–1: memalsukan data, yang melanggar integritas dan akuntabilitas kinerja."
       }
     ]
   };

@@ -53,7 +53,7 @@ function setupQuestionSheets() {
 }
 
 /** Versi isi paket demo (ikut ID soal agar rapor lama tidak tertukar). v2 = dengan soal figural. */
-var DEMO_VERSION = 'v2';
+var DEMO_VERSION = 'v3';
 
 /**
  * Masukkan paket DEMO-01 (15 soal contoh) ke bank soal. Aman dijalankan ulang:
