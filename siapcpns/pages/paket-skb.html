@@ -141,7 +141,8 @@
         <ol class="iv-how">
           <li><b>3 bagian, 7 pertanyaan</b>, mirip format mock test: perkenalan & motivasi, presentasi singkat (1 menit persiapan, 2 menit bicara), lalu wawasan instansi & situasi kerja.</li>
           <li>Pertanyaan <b>dibacakan</b>. Setelah waktu persiapan, perekaman jawaban mulai otomatis. Bicara jelas dengan bahasa Indonesia baku.</li>
-          <li>Ucapanmu diubah menjadi teks di perangkatmu. Rekaman suara <b>tidak dikirim</b>; hanya teks jawaban yang dinilai.</li>
+          <li>Saat merekam, tanda <b>● REC</b> berkedip dan ucapanmu langsung muncul sebagai teks. Rekaman suara <b>tidak dikirim</b> ke server; hanya teks jawaban yang dinilai.</li>
+          <li>Mode suara butuh internet dan paling lancar di <b>Google Chrome</b> (Android/komputer), <b>Microsoft Edge</b>, atau <b>Safari</b> (iPhone). Jalankan tes mikrofon di bawah sebelum mulai.</li>
           <li>Nilai dihitung otomatis dengan rubrik: isi & kata kunci, struktur, kelancaran (kata pengisi seperti "eee", "anu"), ketepatan waktu, dan penilaian dirimu sendiri. Jawaban model muncul setelah selesai.</li>
         </ol>
       </section>
@@ -152,9 +153,20 @@
           <label class="iv-mode"><input type="radio" name="iv-mode" value="text"><span><b>Mode ketik</b><small>Jawab dengan mengetik, waktu tetap berjalan.</small></span></label>
         </div>
         <label class="check"><input type="checkbox" id="iv-tts" checked> <span>Bacakan pertanyaan (suara pewawancara)</span></label>
-        <div class="row" style="gap:8px">
-          <button class="btn btn-secondary" type="button" id="iv-mic-test">Tes mikrofon</button>
-          <span class="small muted" id="iv-mic-out" role="status"></span>
+        <div class="iv-test" id="iv-test-box">
+          <div class="row" style="gap:10px;align-items:center;justify-content:space-between">
+            <b>Tes mikrofon & pengenalan suara</b>
+            <button class="btn btn-secondary btn-sm" type="button" id="iv-mic-test">🎙 Mulai tes</button>
+          </div>
+          <p class="xsmall muted" id="iv-test-say">Tekan Mulai tes, izinkan mikrofon, lalu ucapkan: <b>"Saya siap mengikuti wawancara."</b></p>
+          <ul class="iv-check" id="iv-check">
+            <li data-k="support"><i></i><span>Browser mendukung pengenalan suara</span></li>
+            <li data-k="perm"><i></i><span>Izin mikrofon diberikan</span></li>
+            <li data-k="sound"><i></i><span>Suara masuk ke mikrofon</span></li>
+            <li data-k="text"><i></i><span>Ucapan dikenali menjadi teks</span></li>
+          </ul>
+          <div class="iv-heard" id="iv-test-text" hidden></div>
+          <p class="xsmall" id="iv-test-msg" role="status"></p>
         </div>
         <p class="status-msg" id="iv-setup-msg" hidden></p>
         <div class="row" style="gap:8px;justify-content:space-between">
@@ -171,24 +183,38 @@
           <button class="btn btn-ghost btn-sm" type="button" id="iv-repeat" aria-label="Bacakan ulang pertanyaan">🔊 Ulangi</button></div>
         <p class="iv-q" id="iv-q" tabindex="-1"></p>
       </section>
-      <section class="iv-panel stack">
+      <section class="iv-panel stack" id="iv-answer">
         <div class="iv-phase">
           <span class="iv-dot" id="iv-dot" aria-hidden="true"></span>
           <b id="iv-phase">Persiapan</b>
           <span class="iv-clock" id="iv-clock" role="timer" aria-live="off">00:00</span>
         </div>
-        <div class="iv-meter" aria-hidden="true"><span id="iv-meter"></span></div>
-        <div class="iv-live" id="iv-live" aria-live="polite"></div>
+        <div class="iv-bar-time" aria-hidden="true"><span id="iv-progress"></span></div>
+        <div class="iv-status" id="iv-status" hidden>
+          <span class="iv-rec" id="iv-rec"><i></i>REC</span>
+          <span class="iv-pill" id="iv-mic" data-s="wait">🎙 Menyiapkan mikrofon…</span>
+          <span class="iv-pill" id="iv-voice" data-s="wait">Menunggu suara</span>
+          <span class="iv-pill" id="iv-words">0 kata</span>
+        </div>
+        <div class="iv-wave" id="iv-wave" data-on="0" aria-hidden="true" hidden><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="iv-live" id="iv-live" aria-live="polite" hidden></div>
+        <div class="iv-alert" id="iv-alert" role="alert" hidden>
+          <p id="iv-alert-text"></p>
+          <div class="row" style="gap:8px">
+            <button class="btn btn-primary btn-sm" type="button" id="iv-retry-mic">🎙 Coba lagi</button>
+            <button class="btn btn-secondary btn-sm" type="button" id="iv-to-text">⌨ Ketik jawaban saja</button>
+          </div>
+        </div>
         <textarea class="input iv-text" id="iv-text" rows="7" placeholder="Ketik jawabanmu di sini…" hidden></textarea>
         <div class="row" style="gap:8px;justify-content:space-between">
           <button class="btn btn-secondary" type="button" id="iv-skip-prep">Mulai menjawab sekarang</button>
-          <button class="btn btn-primary" type="button" id="iv-stop" hidden>Selesai menjawab</button>
+          <button class="btn btn-primary" type="button" id="iv-stop" hidden>■ Selesai menjawab</button>
         </div>
       </section>
       <!-- tinjau jawaban -->
       <section class="iv-panel stack" id="iv-review" hidden>
         <b>Periksa jawabanmu</b>
-        <p class="xsmall muted">Perbaiki kata yang salah dikenali mesin bila perlu (bukan menambah isi). Rekaman suaramu bisa didengar ulang di bawah dan tidak dikirim ke server.</p>
+        <p class="xsmall muted" id="iv-review-note">Perbaiki kata yang salah dikenali mesin bila perlu (bukan menambah isi).</p>
         <audio id="iv-audio" controls hidden></audio>
         <textarea class="input iv-text" id="iv-edit" rows="6"></textarea>
         <fieldset class="iv-self"><legend class="small"><b>Penilaian diri</b> — centang yang benar-benar kamu lakukan</legend><div id="iv-self"></div></fieldset>
