@@ -140,7 +140,7 @@
         <h2 style="font-size:var(--fs-lg)">Cara kerja latihan ini</h2>
         <ol class="iv-how">
           <li><b>3 bagian, 7 pertanyaan</b>, mirip format mock test: perkenalan & motivasi, presentasi singkat (1 menit persiapan, 2 menit bicara), lalu wawasan instansi & situasi kerja.</li>
-          <li>Pertanyaan <b>dibacakan</b>. Setelah waktu persiapan, perekaman jawaban mulai otomatis. Bicara jelas dengan bahasa Indonesia baku.</li>
+          <li>Pertanyaan <b>tampil berkedip</b> di layar selama waktu membaca & persiapan. Setelah itu perekaman jawaban mulai otomatis (atau tekan <b>Mulai menjawab sekarang</b>). Bicara jelas dengan bahasa Indonesia baku.</li>
           <li>Saat merekam, tanda <b>● REC</b> berkedip dan ucapanmu langsung muncul sebagai teks. Rekaman suara <b>tidak dikirim</b> ke server; hanya teks jawaban yang dinilai.</li>
           <li>Mode suara butuh internet dan paling lancar di <b>Google Chrome</b> (Android/komputer), <b>Microsoft Edge</b>, atau <b>Safari</b> (iPhone). Jalankan tes mikrofon di bawah sebelum mulai.</li>
           <li>Nilai dihitung otomatis dengan rubrik: isi & kata kunci, struktur, kelancaran (kata pengisi seperti "eee", "anu"), ketepatan waktu, dan penilaian dirimu sendiri. Jawaban model muncul setelah selesai.</li>
@@ -152,7 +152,6 @@
           <label class="iv-mode"><input type="radio" name="iv-mode" value="voice" checked><span><b>Mode suara</b><small id="iv-voice-note">Jawab dengan berbicara. Butuh izin mikrofon; paling baik di Chrome/Edge.</small></span></label>
           <label class="iv-mode"><input type="radio" name="iv-mode" value="text"><span><b>Mode ketik</b><small>Jawab dengan mengetik, waktu tetap berjalan.</small></span></label>
         </div>
-        <label class="check"><input type="checkbox" id="iv-tts" checked> <span>Bacakan pertanyaan (suara pewawancara)</span></label>
         <div class="iv-test" id="iv-test-box">
           <div class="row" style="gap:10px;align-items:center;justify-content:space-between">
             <b>Tes mikrofon & pengenalan suara</b>
@@ -178,9 +177,8 @@
 
     <!-- pertanyaan berjalan -->
     <div id="iv-run" class="stack-lg" hidden>
-      <section class="iv-card">
-        <div class="iv-who"><span class="av" aria-hidden="true">P</span><span><b>Pewawancara</b><small id="iv-cat"></small></span>
-          <button class="btn btn-ghost btn-sm" type="button" id="iv-repeat" aria-label="Bacakan ulang pertanyaan">🔊 Ulangi</button></div>
+      <section class="iv-card" id="iv-card">
+        <div class="iv-who"><span class="av" aria-hidden="true">P</span><span><b>Pewawancara</b><small id="iv-cat"></small></span></div>
         <p class="iv-q" id="iv-q" tabindex="-1"></p>
       </section>
       <section class="iv-panel stack" id="iv-answer">
