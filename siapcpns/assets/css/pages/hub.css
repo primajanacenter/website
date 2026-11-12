@@ -398,3 +398,10 @@
 .iv-alert { background: var(--bad-soft); border: 1px solid var(--bad); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
 .iv-alert[hidden] { display: none; }
 .iv-alert p { margin: 0; font-size: var(--fs-sm); color: var(--fg); }
+
+/* Fase 14.1: teks pertanyaan berkedip (pengganti suara pewawancara) */
+.iv-card.blink { animation: ivcardblink 1.2s ease-in-out infinite; border-color: var(--accent); }
+.iv-card.blink .iv-q { animation: ivqblink 1.2s ease-in-out infinite; }
+@keyframes ivcardblink { 0%, 100% { box-shadow: 0 0 0 0 rgba(214, 150, 30, 0); } 50% { box-shadow: 0 0 0 6px rgba(214, 150, 30, .35); } }
+@keyframes ivqblink { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .iv-card.blink, .iv-card.blink .iv-q { animation: none; } .iv-card.blink { box-shadow: 0 0 0 4px rgba(214, 150, 30, .35); } }
