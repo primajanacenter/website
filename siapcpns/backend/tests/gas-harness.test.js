@@ -904,6 +904,123 @@ const adm=post('getAdminDashboard',{days:30,force:true},'h.alice.s');
 check('F13 dasbor admin: pendapatan per produk & layanan', adm.ok && adm.data.business.byKind.some(k=>k.kind==='tryout') && adm.data.business.byKind.some(k=>k.kind==='consult' && k.revenue===30000) && adm.data.business.services.live.length>=8 && adm.data.business.services.consult.booked===0, adm.error||adm.data.business.byKind);
 delete props.ADMIN_EMAILS;
 }
+// ---------- Fase 14: Paket SKB per instansi & latihan wawancara ----------
+{
+ctx.setupSheets();
+check('F14 setup: kolom skb_until/skb_instansi & sheet interviews', sheets.users.rows[0].includes('skb_until') && sheets.users.rows[0].includes('skb_instansi') && sheets.interviews && sheets.interviews.rows[0][0]==='session_id');
+const uidOf=(t)=>sheets.users.rows.find(x=>x[1]===String(tokens[t].email).toLowerCase())[0];
+const TH14=sheets.transactions.rows[0];
+const trxOf=(id)=>{const r=sheets.transactions.rows.find(x=>x[0]===id); return r?Object.fromEntries(TH14.map((h,i)=>[h,r[i]])):null;};
+const pay=(co,tok)=>{const t=trxOf(co.data.trxId); mayar.payments[t.mayar_id].status='paid'; delete cacheStore['pchk_'+co.data.trxId]; return post('getPaymentStatus',{trxId:co.data.trxId},tok);};
+const lastBody=()=>mayar.calls.filter(c=>c.path==='/payments/create').pop().body;
+const PKH=['package_id','title','type','description','duration_min','pg_twk','pg_tiu','pg_tkp','free_attempts','status','order','instansi'];
+const skbFile=(id,pkgRow,qRows)=>{const st={};newFile(id,id,props.QUESTIONS_FOLDER_ID,st);st.packages=new Sheet('packages');st.packages.rows=[PKH,pkgRow];st.questions=new Sheet('questions');st.questions.rows=[QH,...qRows];};
+const qrow=(qid,pid,n,topic,level)=>{const o={question_id:qid,package_id:pid,number:n,subtest:'skb',topic_id:topic,level,text:'Soal '+qid,context:'',option_a:'Benar',option_b:'S1',option_c:'S2',option_d:'S3',option_e:'S4',answer:'a',explanation:'Bahas '+qid,status:'live',source:'t'};return QH.map(k=>o[k]??'');};
+// bank latihan Kemenag: 2 topik × 60 soal (level 1–5)
+const bank=[]; ['kmg-moderasi','kmg-lembaga'].forEach((t,ti)=>{for(let i=1;i<=60;i++)bank.push(qrow(`SKBLAT-KEMENAG-${t}-${i}`,'SKBLAT-KEMENAG',ti*60+i,t,1+((i*7)%5)));});
+skbFile('fsl1',['SKBLAT-KEMENAG','Bank latihan SKB Kemenag','skblat','',45,'','','','','live',900,'kemenag'],bank);
+const tq=Array.from({length:20},(_,i)=>qrow('SKB-KEMENAG-01-'+(i+1),'SKB-KEMENAG-01',i+1,i<10?'kmg-moderasi':'kmg-pendidikan',3));
+skbFile('fst1',['SKB-KEMENAG-01','Tryout SKB Kemenag 1','skb','Tryout uji',90,'','','','','live',301,'Kemenag'],tq);
+ctx.refreshQuestionCache();
+// materi & wawancara (file materi)
+const ms=files['mat1'].store;
+const MH14=ms.materials.rows[0];
+const mr=(t,l)=>{const o={material_id:`MAT-${t}-${l}`,topic_id:t,level:String(l),title:`Judul ${t} ${l}`,minutes:'8',ringkasan:'RINGKASAN-SKB-'+t+l,poin_kunci:'P1\nP2',contoh_soal:l>1?'Contoh?':'',opsi_a:l>1?'A':'',opsi_b:l>1?'B':'',opsi_c:l>1?'C':'',opsi_d:l>1?'D':'',opsi_e:l>1?'E':'',kunci:l>1?'b':'',pembahasan:'BAHAS',strategi:'S',jebakan:'J',status:'live'};return MH14.map(k=>o[k]??'');};
+[1,2,3,4].forEach(l=>{ms.materials.rows.push(mr('kmg-moderasi',l)); ms.materials.rows.push(mr('kmg-lembaga',l));});
+ms.interview=new Sheet('interview');
+const IH=['q_id','instansi','part','category','question','prep_sec','answer_sec','keywords','model_answer','tips','status'];
+ms.interview.rows.push(IH);
+for(let i=1;i<=4;i++) ms.interview.rows.push([`IV-U-${i}`,'semua','1','Motivasi','Ceritakan motivasi '+i,'10','60','motivasi|termotivasi; melayani|pelayanan; integritas','MODEL-U'+i,'Tip','live']);
+for(let i=1;i<=2;i++) ms.interview.rows.push([`IV-K2-${i}`,'kemenag','2','Presentasi','Jelaskan moderasi beragama '+i,'60','120','moderasi; toleransi|tenggang rasa; komitmen kebangsaan; anti kekerasan|antikekerasan; tradisi|budaya lokal','MODEL-K2','Tip','live']);
+for(let i=1;i<=4;i++) ms.interview.rows.push([`IV-K3-${i}`,'kemenag','3','Situasi','Situasi kerja '+i,'15','90','koordinasi|berkoordinasi; aturan|regulasi|ketentuan; solusi','MODEL-K3-'+i,'Tip','live']);
+ms.interview.rows.push(['IV-X','kemenag','3','x','draft','15','90','a','b','c','draft']);
+ctx.refreshSkbCache(); delete cacheStore['mats_v1'];
+
+const sk1='h.skb1.s'; tokens[sk1]={...tokens['h.dina.s'],email:'skb1@x.com',name:'Ani SKB'}; post('login',{},sk1);
+const sk2='h.skb2.s'; tokens[sk2]={...tokens['h.dina.s'],email:'skb2@x.com',name:'Budi SKB'}; post('login',{},sk2);
+let c=post('getSkbCatalog',{});
+const ck=c.data&&c.data.instansi.find(x=>x.id==='kemenag');
+check('F14 katalog anonim: 6 instansi (5 + SKB Umum ASN), harga Rp85.000/30 hari', c.ok && c.data.instansi.length===6 && c.data.price===85000 && c.data.days===30 && c.data.instansi.some(x=>x.id==='umum'&&x.general), c.error||c.data);
+check('F14 katalog: hitungan konten Kemenag', ck && ck.tryouts===1 && ck.latihan===2 && ck.materi===2 && ck.interview===6 && ck.ready && !c.data.instansi.find(x=>x.id==='kejagung').ready, ck);
+check('F14 setSkbInstansi: tolak instansi tak dikenal', post('setSkbInstansi',{instansi:'kpk'},sk1).error.code==='BAD_REQUEST');
+check('F14 setSkbInstansi tersimpan di profil', post('setSkbInstansi',{instansi:'kemenag'},sk1).ok && post('getSkbCatalog',{},sk1).data.selected==='kemenag');
+let I=post('getSkbInstansi',{instansi:'kemenag'},sk1);
+check('F14 instansi: topik pertama gratis, lainnya terkunci', I.ok && I.data.topics.length===6 && I.data.topics[0].free && !I.data.topics[0].locked && I.data.topics[1].locked && I.data.topics[0].questions===50 && I.data.topics[2].questions===0, I.error||I.data.topics);
+check('F14 instansi: tryout terkunci tanpa Premium SKB', I.data.tryouts.length===1 && I.data.tryouts[0].locked && I.data.tryouts[0].lockReason==='SKB_REQUIRED' && I.data.tryouts[0].questionCount===20, I.data.tryouts);
+check('F14 instansi: info seleksi & wawancara 1× gratis', I.data.info.length>=4 && I.data.interview.available && I.data.interview.freeLeft===1 && I.data.interview.canStart, I.data.interview);
+check('F14 materi gratis terbuka (level 1–4)', (()=>{const m=post('getSkbMateri',{topicId:'kmg-moderasi'},sk1);return m.ok && !m.data.locked && m.data.levels.length===4 && m.data.levels[1].contoh && m.data.levels[1].contoh.jawaban===1;})());
+const ml=post('getSkbMateri',{topicId:'kmg-lembaga'},sk1);
+check('F14 materi topik ke-2 terkunci tanpa membocorkan isi', ml.ok && ml.data.locked && ml.data.reason==='SKB' && !/RINGKASAN-SKB|BAHAS/.test(JSON.stringify(ml.data)), ml.data);
+check('F14 materi SKB tidak masuk indeks materi SKD', !JSON.stringify(post('getMaterialIndex',{},sk1).data.available).includes('kmg-'));
+// latihan
+let lt=post('startAttempt',{packageId:'LTS-kmg-moderasi'},sk1);
+check('F14 latihan SKB gratis: 50 soal, 45 menit, urut level, tanpa kunci', lt.ok && lt.data.questions.length===50 && lt.data.durationMin===45 && !/"answer"|explanation/.test(JSON.stringify(lt.data.questions)), lt.error);
+const lans={}; lt.data.questions.forEach((q,i)=>lans[q.id]=i<30?'a':'b');
+post('submitAttempt',{attemptId:lt.data.attemptId,answers:lans},sk1);
+let lr=post('getReport',{attemptId:lt.data.attemptId},sk1);
+check('F14 rapor latihan SKB: 30 benar = 150/250, skala 100 = 60, pembahasan lengkap', lr.ok && lr.data.total===150 && lr.data.maxTotal===250 && lr.data.score100===60 && lr.data.review.length===50 && lr.data.package.instansi==='kemenag' && lr.data.topics[0].name==='Moderasi beragama', lr.error||lr.data);
+check('F14 latihan topik ke-2 butuh Premium SKB', post0('startAttempt',{packageId:'LTS-kmg-lembaga'},sk1).error.code==='SKB_REQUIRED');
+check('F14 tryout SKB instansi butuh Premium SKB', post0('startAttempt',{packageId:'SKB-KEMENAG-01'},sk1).error.code==='SKB_REQUIRED');
+check('F14 bank SKBLAT tidak bisa dikerjakan langsung', post0('startAttempt',{packageId:'SKBLAT-KEMENAG'},sk1).error.code==='NOT_FOUND');
+check('F14 bank SKBLAT & tryout instansi tidak tampil di lobi SKD', !JSON.stringify(post('getTryoutInfo',{},sk1).data.packages).includes('SKBLAT') && !JSON.stringify(post('getTryoutCatalog',{},sk1).data.packages).match(/SKB-KEMENAG|SKBLAT/));
+check('F14 SKB Umum ASN lama tetap jalan (kuota gratis)', (()=>{const u=post('getSkbInstansi',{instansi:'umum'},sk1);return u.ok && u.data.tryouts.some(t=>t.packageId==='SKB-T1' && !t.locked) && u.data.topics.every(t=>t.free) && !u.data.interview.available;})());
+// wawancara
+check('F14 wawancara: SKB Umum tidak punya sesi', post('startInterview',{instansi:'umum'},sk1).error.code==='BAD_REQUEST');
+let iv=post('startInterview',{instansi:'kemenag'},sk1);
+check('F14 wawancara: 7 pertanyaan (3 + 1 + 3), tanpa kata kunci & jawaban model', iv.ok && iv.data.questions.length===7 && iv.data.questions.filter(q=>q.part===1).length===3 && iv.data.questions.filter(q=>q.part===2).length===1 && iv.data.questions.filter(q=>q.part===3).length===3 && !/MODEL|keywords|toleransi/.test(JSON.stringify(iv.data)) && iv.data.selfChecks.length===4, iv.error||iv.data);
+check('F14 wawancara: pertanyaan draft tidak dipakai', !iv.data.questions.some(q=>q.qId==='IV-X'));
+check('F14 wawancara: mulai lagi melanjutkan sesi yang sama', post('startInterview',{instansi:'kemenag'},sk1).data.sessionId===iv.data.sessionId);
+const good='Pertama, moderasi beragama berarti cara pandang yang adil dan berimbang. Kedua, saya menjaga toleransi dan komitmen kebangsaan. Selain itu, saya menolak kekerasan karena anti kekerasan adalah prinsip utama, dan menghormati tradisi serta budaya lokal. Sebagai contoh, saat bertugas saya melibatkan tokoh lintas agama. Kesimpulannya, moderasi menjaga kerukunan.';
+const bad='eee gitu anu eee saya gue banget eee anu kayak gitu';
+const A=iv.data.questions.map((q,i)=>({qId:q.qId,transcript:q.part===2?good:(i===0?bad:''),durationSec:q.part===2?100:20,mode:q.part===2?'voice':'text',self:[true,true,true,q.part===2]}));
+let ir=post('submitInterview',{sessionId:iv.data.sessionId,answers:A},sk1);
+const p2=ir.data&&ir.data.answers.find(a=>a.part===2), p1=ir.data&&ir.data.answers[0], pe=ir.data&&ir.data.answers[1];
+check('F14 rubrik: jawaban lengkap Bagian 2 skor tinggi (kata kunci semua kena)', ir.ok && p2.score>=85 && p2.missing.length===0 && p2.aspects.isi===40 && p2.wpm===28 && p2.tips.some(x=>/lambat/.test(x)), p2);
+check('F14 rubrik: kata pengisi & tidak baku terdeteksi', p1.fillers>=6 && p1.informal.includes('gue') && p1.score<45 && p1.tips.some(t=>/pengisi/.test(t)), p1);
+check('F14 rubrik: jawaban kosong = 0', pe.score===0 && pe.tips.length===1, pe);
+check('F14 hasil: band 1–9, jawaban model dibuka setelah selesai', ir.data.band>=1 && ir.data.band<=9 && ir.data.answers.every(a=>a.model.startsWith('MODEL')) && ir.data.aspectMax.isi===40 && ['Sangat baik','Baik','Cukup','Perlu latihan'].includes(ir.data.level), ir.data);
+check('F14 kirim ulang idempoten', post('submitInterview',{sessionId:iv.data.sessionId,answers:[]},sk1).data.score===ir.data.score);
+check('F14 hasil hanya pemilik', post('getInterviewResult',{sessionId:iv.data.sessionId},sk2).error.code==='NOT_FOUND' && post('getInterviewResult',{sessionId:iv.data.sessionId},sk1).data.score===ir.data.score);
+check('F14 sesi gratis habis → SKB_REQUIRED', post('startInterview',{instansi:'kemenag'},sk1).error.code==='SKB_REQUIRED' && post('getSkbInstansi',{instansi:'kemenag'},sk1).data.interview.freeLeft===0);
+// Premium SKB
+let co=post('createCheckout',{kind:'skb',refId:'SKB1M'},sk1);
+check('F14 checkout Premium SKB: Rp85.000 dari server, 30 hari', co.ok && lastBody().amount===85000 && trxOf(co.data.trxId).kind==='skb' && trxOf(co.data.trxId).duration_days==='30', co.error);
+check('F14 checkout SKB: refId lain ditolak', post('createCheckout',{kind:'skb',refId:'SKB6M'},sk1).error.code==='BAD_REQUEST');
+check('F14 checkout SKB: harga di browser diabaikan', post('createCheckout',{kind:'skb',refId:'SKB1M',amount:1000},sk1).ok && lastBody().amount===85000);
+let ps=pay(co,sk1);
+const urow=()=>Object.fromEntries(sheets.users.rows[0].map((h,i)=>[h,sheets.users.rows.find(x=>x[0]===uidOf(sk1))[i]]));
+const d1=new Date(urow().skb_until).getTime();
+check('F14 bayar → Premium SKB aktif ±30 hari; Premium SKD tidak berubah', ps.ok && ps.data.transaction.status==='paid' && Math.abs(d1-Date.now()-30*86400e3)<120e3 && urow().plan!=='premium', [ps.error, urow()]);
+check('F14 getMe memuat skbUntil', post('getMe',{},sk1).data.user.skbUntil.length===10);
+I=post('getSkbInstansi',{instansi:'kemenag'},sk1);
+check('F14 Premium SKB: semua topik & tryout terbuka, wawancara tanpa batas', I.data.skb.active && I.data.topics.every(t=>!t.locked) && !I.data.tryouts[0].locked && I.data.tryouts[0].canStart && I.data.interview.freeLeft===null && I.data.interview.canStart, I.data);
+check('F14 Premium SKB berlaku untuk instansi lain juga', post('getSkbInstansi',{instansi:'kemenkes'},sk1).data.topics.every(t=>!t.locked));
+let tr=post('startAttempt',{packageId:'SKB-KEMENAG-01'},sk1);
+check('F14 tryout SKB Kemenag bisa dimulai & diulang', tr.ok && tr.data.questions.length===20 && post('submitAttempt',{attemptId:tr.data.attemptId,answers:{}},sk1).ok && post('startAttempt',{packageId:'SKB-KEMENAG-01'},sk1).ok, tr.error);
+check('F14 latihan topik ke-2 terbuka', post0('startAttempt',{packageId:'LTS-kmg-lembaga'},sk1).ok);
+check('F14 materi topik ke-2 terbuka', post('getSkbMateri',{topicId:'kmg-lembaga'},sk1).data.locked===false);
+check('F14 wawancara sesi ke-2 boleh & menghindari pertanyaan sesi lalu', (()=>{const v=post('startInterview',{instansi:'kemenag'},sk1);if(!v.ok)return false;const prev=iv.data.questions.filter(q=>q.part===3).map(q=>q.qId);const now3=v.data.questions.filter(q=>q.part===3).map(q=>q.qId);return v.data.sessionId!==iv.data.sessionId && now3.filter(x=>!prev.includes(x)).length>=1;})());
+// perpanjang
+let co2=post('createCheckout',{kind:'skb',refId:'SKB1M'},sk1); pay(co2,sk1);
+check('F14 beli lagi → masa aktif bertambah 30 hari (idempoten per transaksi)', Math.abs(new Date(urow().skb_until).getTime()-d1-30*86400e3)<120e3 && (ctx.fulfillTransaction_(co2.data.trxId,'test'), Math.abs(new Date(urow().skb_until).getTime()-d1-30*86400e3)<120e3));
+check('F14 referral: diskon tidak berlaku untuk SKB', lastBody().amount===85000);
+// akun & rapot
+const my=post('getMyItems',{},sk1);
+check('F14 member area: status Premium SKB', my.ok && my.data.skb.active && my.data.skb.price===85000 && my.data.history.some(h=>h.kind==='skb'), my.data&&my.data.skb);
+const rh=post('getRaporHub',{},sk1);
+check('F14 rapot: latihan & tryout SKB + riwayat wawancara', rh.ok && rh.data.attempts.some(a=>a.type==='skbtopik' && a.max===250 && /Kemenag/.test(a.title)) && rh.data.attempts.some(a=>a.type==='skb' && a.instansi==='kemenag') && rh.data.interviews.length===1 && rh.data.interviews[0].instansiShort==='Kemenag' && rh.data.summary.interviews===1 && rh.data.skb.active, rh.data&&rh.data.summary);
+check('F14 latihan SKB tidak dihitung sebagai tryout SKD', rh.data.summary.tryouts===rh.data.attempts.filter(a=>['diagnostic','premium','tryout','akbar','demo'].includes(a.type)).length && (post('getMe',{},sk1).data.latestAttempt||{packageId:''}).packageId.indexOf('SKB')<0);
+// Premium SKD tidak membuka SKB
+const zrow=sheets.users.rows.find(x=>x[0]===uidOf(sk2)); zrow[sheets.users.rows[0].indexOf('plan')]='premium'; zrow[sheets.users.rows[0].indexOf('premium_until')]=new Date(Date.now()+9e9).toISOString();
+check('F14 Premium SKD tidak membuka Premium SKB', post0('startAttempt',{packageId:'SKB-KEMENAG-01'},sk2).error.code==='SKB_REQUIRED' && post('getSkbInstansi',{instansi:'kemenag'},sk2).data.topics[1].locked);
+// kedaluwarsa
+const H=sheets.users.rows[0]; const r1=sheets.users.rows.find(x=>x[0]===uidOf(sk1)); r1[H.indexOf('skb_until')]=new Date(Date.now()-60e3).toISOString();
+check('F14 Premium SKB kedaluwarsa → terkunci lagi', post0('startAttempt',{packageId:'LTS-kmg-lembaga'},sk1).error.code==='SKB_REQUIRED' && post('getMe',{},sk1).data.user.skbUntil==='');
+props.ADMIN_EMAILS='alice@gmail.com';
+const adm=post('getAdminDashboard',{days:30,force:true},'h.alice.s');
+check('F14 dasbor admin: Premium SKB per produk, wawancara', adm.ok && adm.data.business.byKind.some(k=>k.kind==='skb' && k.revenue===170000 && /SKB/.test(k.label)) && adm.data.learning.interviews.n===1 && typeof adm.data.kpi.skbActive==='number', adm.error||adm.data.business.byKind);
+delete props.ADMIN_EMAILS;
+}
 // ---------- Fase 12: Super User Dashboard ----------
 delete props.ADMIN_EMAILS; const oldAdm=props.ADMIN_EMAIL; delete props.ADMIN_EMAIL;
 check('admin: tanpa ADMIN_EMAILS semua ditolak', post('getAdminDashboard',{},'h.alice.s').error.code==='FORBIDDEN');
