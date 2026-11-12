@@ -49,7 +49,7 @@ function buildMe_(user) {
   var lastAssessment = findLast_('assessments', 'user_id', user.userId);
   var lastAttempt = null;
   try {
-    var mineA = findAll_('attempts', 'user_id', user.userId).filter(function (x) { return x.type !== 'akbar' && x.type !== 'skb'; });
+    var mineA = findAll_('attempts', 'user_id', user.userId).filter(function (x) { return SKD_TYPES_().indexOf(x.type || 'diagnostic') >= 0 && x.type !== 'akbar'; });
     var a = mineA[mineA.length - 1];
     if (a) {
       lastAttempt = a.status === 'submitted'

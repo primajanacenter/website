@@ -21,7 +21,8 @@ function loadMaterials_() {
     if (String(r.status).toLowerCase() !== 'live') return;
     var topic = String(r.topic_id || '').trim();
     var level = Number(r.level);
-    if (!TOPICS[topic] || MATERIAL_LEVELS.indexOf(level) < 0) return;
+    var skbT = skbTopic_(topic);
+    if (!(TOPICS[topic] && MATERIAL_LEVELS.indexOf(level) >= 0) && !(skbT && SKB_MATERIAL_LEVELS.indexOf(level) >= 0)) return;
     var key = topic + '|' + level;
     if (out[key]) { console.warn('Materi ganda ' + key + ' diabaikan'); return; }
     var lines = function (v) { return String(v || '').split(/\r?\n/).map(function (x) { return x.trim(); }).filter(String); };
@@ -49,7 +50,7 @@ function loadMaterials_() {
 function refreshMaterialCache() {
   CacheService.getScriptCache().remove('mats_v1');
   var m = loadMaterials_();
-  var byLevel = { 2: 0, 3: 0, 4: 0 };
+  var byLevel = { 1: 0, 2: 0, 3: 0, 4: 0 };
   Object.keys(m).forEach(function (k) { byLevel[m[k].level]++; });
   Logger.log('Materi live: ' + Object.keys(m).length + ' (Lv2 ' + byLevel[2] + ' · Lv3 ' + byLevel[3] + ' · Lv4 ' + byLevel[4] + ')');
 }
@@ -66,6 +67,7 @@ function handleGetMaterialIndex_(payload, user) {
   var available = {};
   Object.keys(mats).forEach(function (k) {
     var m = mats[k];
+    if (!TOPICS[m.topicId]) return;   // materi SKB tidak ditampilkan di indeks SKD
     (available[m.topicId] = available[m.topicId] || []).push({ level: m.level, title: m.title, minutes: m.minutes });
   });
   Object.keys(available).forEach(function (t) { available[t].sort(function (a, b) { return a.level - b.level; }); });

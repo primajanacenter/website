@@ -87,7 +87,16 @@ function getRoutes_() {
     sendConsultMessage: { handler: handleSendConsultMessage_, auth: 'required' },
     getConsultDesk:     { handler: handleGetConsultDesk_,     auth: 'required' },
     getMyItems:         { handler: handleGetMyItems_,         auth: 'required' },
-    getRaporHub:        { handler: handleGetRaporHub_,        auth: 'required' }
+    getRaporHub:        { handler: handleGetRaporHub_,        auth: 'required' },
+
+    // Fase 14: Paket SKB per instansi & latihan wawancara
+    getSkbCatalog:      { handler: handleGetSkbCatalog_,      auth: 'optional' },
+    setSkbInstansi:     { handler: handleSetSkbInstansi_,     auth: 'required' },
+    getSkbInstansi:     { handler: handleGetSkbInstansi_,     auth: 'optional' },
+    getSkbMateri:       { handler: handleGetSkbMateri_,       auth: 'optional' },
+    startInterview:     { handler: handleStartInterview_,     auth: 'required' },
+    submitInterview:    { handler: handleSubmitInterview_,    auth: 'required' },
+    getInterviewResult: { handler: handleGetInterviewResult_, auth: 'required' }
   };
 }
 
@@ -181,7 +190,8 @@ function errorBody_(err) {
 var BATCHABLE = {
   ping: 1, getMe: 1, getToday: 1, getPlan: 1, getPlans: 1, getMaterialIndex: 1, getTryoutInfo: 1,
   getAkbarInfo: 1, getAkbarRanking: 1, getReferral: 1, getPostSkd: 1, getNotifPrefs: 1,
-  getTryoutCatalog: 1, getMateriIndex: 1, getTopicPractice: 1, getMentoring: 1, getConsultSlots: 1, getMyItems: 1, getRaporHub: 1
+  getTryoutCatalog: 1, getMateriIndex: 1, getTopicPractice: 1, getMentoring: 1, getConsultSlots: 1, getMyItems: 1, getRaporHub: 1,
+  getSkbCatalog: 1, getSkbInstansi: 1, getSkbMateri: 1
 };
 var BATCH_MAX = 6;
 

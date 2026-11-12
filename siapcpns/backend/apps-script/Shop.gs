@@ -13,11 +13,11 @@
  * Harga bisa diubah lewat Script Properties: PRICE_TRYOUT, PRICE_AKBAR, PRICE_LIVE, PRICE_REC, PRICE_CONSULT.
  */
 
-var PRODUCT_KINDS = ['tryout', 'akbar', 'live', 'rec', 'consult'];
-var PRODUCT_LABEL = { tryout: 'Paket Tryout', akbar: 'Tiket Tryout Akbar', live: 'Tiket Live Mentoring', rec: 'Rekaman Mentoring', consult: 'Konsultasi CPNS' };
-var PRODUCT_CODE = { tryout: 'TRYOUT', akbar: 'AKBAR', live: 'LIVE', rec: 'REKAMAN', consult: 'KONSUL' };
-var PRODUCT_DEFAULT_PRICE = { tryout: 10000, akbar: 10000, live: 25000, rec: 10000, consult: 30000 };
-var PRODUCT_HOLD_MIN = { tryout: 1440, akbar: 60, live: 60, rec: 1440, consult: 30 };   // masa berlaku link bayar
+var PRODUCT_KINDS = ['tryout', 'akbar', 'live', 'rec', 'consult', 'skb'];
+var PRODUCT_LABEL = { tryout: 'Paket Tryout', akbar: 'Tiket Tryout Akbar', live: 'Tiket Live Mentoring', rec: 'Rekaman Mentoring', consult: 'Konsultasi CPNS', skb: 'Premium SKB (semua instansi)' };
+var PRODUCT_CODE = { tryout: 'TRYOUT', akbar: 'AKBAR', live: 'LIVE', rec: 'REKAMAN', consult: 'KONSUL', skb: 'SKB1M' };
+var PRODUCT_DEFAULT_PRICE = { tryout: 10000, akbar: 10000, live: 25000, rec: 10000, consult: 30000, skb: 85000 };
+var PRODUCT_HOLD_MIN = { tryout: 1440, akbar: 60, live: 60, rec: 1440, consult: 30, skb: 1440 };   // masa berlaku link bayar
 var DEFAULT_PRICING_V2_FROM = '2026-11-12T00:00:00+07:00';
 var SELLABLE_TRYOUT_TYPES = ['diagnostic', 'premium'];
 
@@ -84,7 +84,7 @@ function packageAccess_(pkg, user) {
     if (isFreeTopic_(pkg.topicId) || (user && user.plan === 'premium')) return { ok: true };
     return { ok: false, reason: 'PREMIUM_REQUIRED', message: 'Latihan soal topik ini khusus Premium. Berlangganan untuk membuka semua materi & latihan soal TWK, TIU, TKP.' };
   }
-  if (pkg.type === 'skb') return { ok: true };
+  if (pkg.type === 'skb' || pkg.type === 'skbtopik') return skbPackageAccess_(pkg, user);
   if (isSellableTryout_(pkg)) {
     if (owns_(user, 'tryout', pkg.packageId) || ownsAkbarOfPackage_(user, pkg.packageId) || isLegacyPremium_(user)) return { ok: true };
     return { ok: false, reason: 'PAYMENT_REQUIRED', message: 'Beli paket ini (' + rupiah_(productPrice_('tryout')) + ') untuk mengerjakannya. Setelah dibeli, bebas diulang.', price: productPrice_('tryout') };
@@ -141,6 +141,10 @@ function productInfo_(kind, refId) {
     if (new Date(slot.starts_at).getTime() <= now + 15 * 60000) throw new AppError_('CLOSED', 'Jadwal ini terlalu dekat. Pilih jadwal lain.');
     return { name: 'Konsultasi CPNS ' + fmtJkt_(slot.starts_at), amount: productPrice_('consult', slot.price), desc: 'Konsultasi CPNS via chat 60 menit, ' + fmtJkt_(slot.starts_at), capacity: 1 };
   }
+  if (kind === 'skb') {
+    if (refId !== SKB_PLAN_REF) throw new AppError_('BAD_REQUEST', 'Paket SKB tidak dikenal.');
+    return { name: 'Premium SKB 1 bulan (semua instansi)', amount: productPrice_('skb'), desc: 'Premium SKB ' + SKB_PLAN_DAYS + ' hari: tryout, materi, latihan soal & wawancara SKB semua instansi', days: SKB_PLAN_DAYS };
+  }
   throw new AppError_('BAD_REQUEST', 'Produk tidak dikenal.');
 }
 
@@ -159,7 +163,7 @@ function handleProductCheckout_(payload, user) {
   var kind = String(payload.kind || '');
   var refId = String(payload.refId || '').trim();
   if (PRODUCT_KINDS.indexOf(kind) < 0 || !refId) throw new AppError_('BAD_REQUEST', 'Produk tidak dikenal.');
-  if (owns_(user, kind, refId)) throw new AppError_('ALREADY_OWNED', 'Kamu sudah memiliki ' + PRODUCT_LABEL[kind].toLowerCase() + ' ini.');
+  if (kind !== 'skb' && owns_(user, kind, refId)) throw new AppError_('ALREADY_OWNED', 'Kamu sudah memiliki ' + PRODUCT_LABEL[kind].toLowerCase() + ' ini.');
   var info = productInfo_(kind, refId);
   var mine = findAll_('transactions', 'user_id', user.userId);
   var reuse = mine.filter(function (t) {
@@ -168,7 +172,7 @@ function handleProductCheckout_(payload, user) {
   if (reuse) return { trxId: reuse.trx_id, paymentUrl: reuse.payment_url, expiresAt: reuse.expires_at, reused: true };
   checkPayRate_(mine);
   return startPayment_(user, {
-    plan_id: PRODUCT_CODE[kind], plan_name: info.name, duration_days: 0, amount: info.amount, kind: kind, ref_id: refId,
+    plan_id: PRODUCT_CODE[kind], plan_name: info.name, duration_days: info.days || 0, amount: info.amount, kind: kind, ref_id: refId,
     description: info.desc, expireMinutes: PRODUCT_HOLD_MIN[kind],
     beforeInsert: info.capacity ? function () {
       if (seatsTaken_(kind, refId, user.userId) >= info.capacity) {
@@ -181,6 +185,12 @@ function handleProductCheckout_(payload, user) {
 /** Dipanggil di dalam lock fulfillTransaction_ untuk transaksi produk. Idempoten. */
 function fulfillProductLocked_(trx, source) {
   var kind = String(trx.kind), ref = String(trx.ref_id);
+  if (kind === 'skb') {   // Fase 14: langganan Premium SKB (perpanjang users.skb_until)
+    var urow = findOne_('users', 'user_id', trx.user_id);
+    if (!urow) throw new Error('User transaksi tidak ditemukan: ' + trx.user_id);
+    var until = extendSkbLocked_(urow, Number(trx.duration_days) || SKB_PLAN_DAYS, trx.trx_id, '');
+    return update_('transactions', trx._row, { status: 'paid', paid_at: nowIso_(), processed: 'ya', premium_until: until, source: source || '' });
+  }
   var exists = findAll_('entitlements', 'user_id', trx.user_id).some(function (e) { return e.kind === kind && String(e.ref_id) === ref && e.trx_id === trx.trx_id; });
   var note = '';
   if (kind === 'consult') {
@@ -228,6 +238,7 @@ function handleGetMyItems_(payload, user) {
   return {
     serverNow: nowIso_(),
     premium: { active: user.plan === 'premium', until: user.premiumUntil, legacy: isLegacyPremium_(user) },
+    skb: { active: hasSkb_(user), until: user.skbUntil || '', price: productPrice_('skb') },
     tryouts: tryouts, akbar: akbar, live: live, recordings: recs, consults: consults,
     pending: trx.filter(function (t) { return t.status === 'pending' && !isExpired_(t) && t.payment_url; }).slice(0, 5).map(publicTrx_),
     history: trx.slice(0, 20).map(publicTrx_)
@@ -260,7 +271,7 @@ function applyPricingV2() {
 /** Beri akses produk manual (kompensasi/undangan). Ganti nilai lalu jalankan. */
 function adminGrantProduct() {
   var EMAIL = 'nama@contoh.com';
-  var KIND = 'rec';            // tryout | akbar | live | rec | consult
+  var KIND = 'rec';            // tryout | akbar | live | rec | consult  (Premium SKB: pakai adminGrantSkb)
   var REF_ID = 'MTR-20261113'; // packageId / eventId / session_id / slot_id
   var u = findOne_('users', 'email', EMAIL.toLowerCase());
   if (!u) return Logger.log('Pengguna tidak ditemukan');

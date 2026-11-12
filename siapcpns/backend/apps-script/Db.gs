@@ -11,7 +11,9 @@
 var SCHEMA = {
   users: [
     'user_id', 'email', 'name', 'picture', 'phone', 'plan', 'premium_until',
-    'mayar_member_id', 'created_at', 'last_login_at', 'ref_code'
+    'mayar_member_id', 'created_at', 'last_login_at', 'ref_code',
+    // Fase 14: Premium SKB & instansi pilihan
+    'skb_until', 'skb_instansi'
   ],
   profiles: [
     'user_id', 'education', 'major', 'target_formation', 'target_province', 'test_date',
@@ -73,14 +75,16 @@ var SCHEMA = {
     'booked_by', 'trx_id', 'note', 'created_at'
   ],
   consult_messages: ['msg_id', 'slot_id', 'sender', 'user_id', 'text', 'at'],
-  access_log: ['at', 'user_id', 'kind', 'ref_id', 'ua']
+  access_log: ['at', 'user_id', 'kind', 'ref_id', 'ua'],
+  // Fase 14: latihan wawancara SKB
+  interviews: ['session_id', 'user_id', 'instansi', 'status', 'started_at', 'submitted_at', 'q_ids', 'score', 'band', 'mode', 'detail_json']
 };
 
 /** Struktur sheet di file BANK SOAL (QUESTIONS_SPREADSHEET_ID). Hanya bisa dibaca server. */
 var QSCHEMA = {
   packages: [
     'package_id', 'title', 'type', 'description', 'duration_min', 'pg_twk', 'pg_tiu', 'pg_tkp',
-    'free_attempts', 'status', 'order'
+    'free_attempts', 'status', 'order', 'instansi'
   ],
   questions: [
     'question_id', 'package_id', 'number', 'subtest', 'topic_id', 'level', 'text', 'context',

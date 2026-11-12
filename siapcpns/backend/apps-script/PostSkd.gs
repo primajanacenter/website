@@ -92,7 +92,7 @@ function analyzeSkd_(user, r) {
   });
   // pembanding: 5 tryout SKD terakhir di aplikasi (diagnostik/akbar, bukan SKB/latihan)
   var tries = findAll_('attempts', 'user_id', user.userId).filter(function (a) {
-    return a.status === 'submitted' && a.type !== 'skb' && a.type !== 'latihan' && Number(a.total) > 0;
+    return a.status === 'submitted' && SKD_TYPES_().indexOf(a.type || 'diagnostic') >= 0 && Number(a.total) > 0;
   }).slice(-5);
   var tryout = null;
   if (tries.length) {
@@ -108,7 +108,7 @@ function analyzeSkd_(user, r) {
   var weakest = subtests.slice().sort(function (a, b) { return (a.score / a.pg) - (b.score / b.pg); })[0];
   var steps = [];
   if (r.passedAll) {
-    steps.push({ id: 'skb', title: 'Siapkan SKB sekarang', text: 'SKB umumnya berbobot 60% dari nilai akhir, lebih besar dari SKD. Mulai dari panduan dan tryout SKB.', href: 'skb.html' });
+    steps.push({ id: 'skb', title: 'Siapkan SKB sekarang', text: 'SKB umumnya berbobot 60% dari nilai akhir, lebih besar dari SKD. Mulai dari panduan dan tryout SKB.', href: 'paket-skb.html' });
     steps.push({ id: 'pengumuman', title: 'Pantau pengumuman peserta SKB', text: 'Lolos ambang batas belum otomatis lolos ke SKB. Peserta SKB dipilih berdasarkan peringkat skor SKD di formasi yang sama (umumnya maksimal 3× jumlah kebutuhan formasi). Cek pengumuman resmi instansi.', href: '' });
     steps.push({ id: 'dokumen', title: 'Siapkan dokumen & jadwal', text: 'Catat jadwal, lokasi, dan syarat SKB (kartu ujian, KTP, dokumen tambahan). Beberapa instansi menambah wawancara, psikotes, atau praktik kerja.', href: 'panduan.html' });
   } else {

@@ -13,7 +13,7 @@
 var DEFAULT_PG = { twk: 65, tiu: 80, tkp: 166 };
 var SUBTEST_LABEL = { twk: 'Tes Wawasan Kebangsaan', tiu: 'Tes Intelegensia Umum', tkp: 'Tes Karakteristik Pribadi', skb: 'Seleksi Kompetensi Bidang' };
 /** Paket bertipe khusus yang tidak tampil di lobi tryout SKD. */
-var NON_LOBBY_TYPES = ['latihan', 'akbar', 'skb'];
+var NON_LOBBY_TYPES = ['latihan', 'akbar', 'skb', 'skblat'];
 var GRACE_SEC = 180;           // toleransi keterlambatan kirim jawaban (detik)
 var FREE_REVIEW_LIMIT = 5;     // jumlah pembahasan untuk pengguna gratis
 var PKG_CACHE_SEC = 21600;   // cache daftar paket & soal (6 jam, maksimum CacheService); ditimpa pemicu per jam
@@ -99,6 +99,7 @@ function buildPackageList_(sources) {
         },
         freeAttempts: isBlank_(p.free_attempts) ? null : Number(p.free_attempts),
         order: Number(p.order) || 99,
+        instansi: String(p.instansi || '').trim().toLowerCase(),
         fileId: src.fileId,
         questionCount: null
       });
@@ -131,6 +132,7 @@ function rebuildPackageCache_() {
   cachePutJson_('pkgs', list, PKG_CACHE_SEC);
   cachePutJson_('pbx', bankIndex, PKG_CACHE_SEC);
   clearTopicPackageCache_();
+  clearSkbCache_();
   Logger.log('Cache paket dibangun ulang: ' + list.length + ' paket, ' + bankIndex.length + ' soal latihan, ' + Math.round((Date.now() - t0) / 1000) + ' detik.');
   return list;
 }
@@ -203,6 +205,7 @@ function isBlank_(v) {
 
 function getPackage_(packageId) {
   if (/^LTP-/.test(String(packageId))) return topicPackage_(packageId);
+  if (/^LTS-/.test(String(packageId))) return skbTopicPackage_(packageId);
   var p = getPackages_().filter(function (x) { return x.packageId === packageId; })[0];
   if (!p) throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.');
   return p;
@@ -219,6 +222,12 @@ function getPackageQuestions_(packageId) {
     if (!tq.length) throw new AppError_('NOT_FOUND', 'Soal latihan untuk topik ini belum tersedia.');
     cachePutJson_(key, tq, PKG_CACHE_SEC);
     return tq;
+  }
+  if (pkg.type === 'skbtopik') {
+    var sq = skbTopicQuestions_(pkg.topicId);
+    if (!sq.length) throw new AppError_('NOT_FOUND', 'Soal latihan SKB untuk topik ini belum tersedia.');
+    cachePutJson_(key, sq, PKG_CACHE_SEC);
+    return sq;
   }
   var list = parseQuestions_(readTable_(SpreadsheetApp.openById(pkg.fileId), 'questions'), packageId);
   if (!list.length) throw new AppError_('NOT_FOUND', 'Soal untuk paket ini belum tersedia.');
@@ -287,6 +296,7 @@ function clearPackageCache_(packageId) {
   c.remove('pbx');
   c.remove('pkgs');
   clearTopicPackageCache_();
+  clearSkbCache_();
   if (packageId) {
     c.remove('pq_' + packageId);
     for (var i = 0; i < 10; i++) c.remove('pq_' + packageId + '__' + i);
@@ -312,7 +322,7 @@ function checkQuestionFolder() {
     src.packages.forEach(function (p) {
       var id = String(p.package_id);
       var qs = rows.filter(function (q) { return String(q.package_id).trim() === id; });
-      var count = { twk: 0, tiu: 0, tkp: 0 };
+      var count = { twk: 0, tiu: 0, tkp: 0, skb: 0 };
       var problems = [];
       qs.forEach(function (q) {
         var sub = String(q.subtest).trim().toLowerCase();
@@ -330,6 +340,7 @@ function checkQuestionFolder() {
         }
         if (isBlank_(q.explanation)) problems.push(q.question_id + ': pembahasan kosong');
       });
+      if (count.skb) { Logger.log((problems.length ? '⚠ ' : '✓ ') + id + ' (' + src.label + ') status=' + p.status + ' · type=' + p.type + ' · instansi=' + (p.instansi || '-') + ' · SKB ' + count.skb + ' soal' + (problems.length ? ' · ' + problems.length + ' masalah' : '')); problems.slice(0, 15).forEach(function (m) { Logger.log('    - ' + m); }); return; }
       var full = count.twk === target.twk && count.tiu === target.tiu && count.tkp === target.tkp;
       Logger.log((problems.length ? '⚠ ' : '✓ ') + id + ' (' + src.label + ') status=' + p.status +
         ' · TWK ' + count.twk + ' · TIU ' + count.tiu + ' · TKP ' + count.tkp + (full ? ' · lengkap 110' : ' · bukan paket penuh') +
@@ -390,7 +401,7 @@ function handleGetTryoutInfo_(payload, user) {
 function handleStartAttempt_(payload, user) {
   var packageId = String(payload.packageId || '');
   var pkg = getPackage_(packageId);
-  if (pkg.type === 'latihan' || (pkg.type === 'akbar' && !isSellableTryout_(pkg))) throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.'); // skb boleh
+  if (pkg.type === 'latihan' || pkg.type === 'skblat' || (pkg.type === 'akbar' && !isSellableTryout_(pkg))) throw new AppError_('NOT_FOUND', 'Paket tryout tidak ditemukan atau belum dibuka.'); // skb boleh
   // Fase 13: paket berbayar / Premium
   var access = packageAccess_(pkg, user);
   if (!access.ok) throw new AppError_(access.reason, access.message);
@@ -487,7 +498,7 @@ function handleGetReport_(payload, user) {
 function gradeAndStore_(row, questions, answers, mode) {
   var pkg = getPackage_(row.package_id);
   var g = grade_(questions, answers);
-  if (pkg.type === 'skb' || pkg.type === 'topik') return storeSkbGrade_(row, g, answers, mode, pkg.type === 'topik' ? pkg.subtest : 'skb');
+  if (pkg.type === 'skb' || pkg.type === 'topik' || pkg.type === 'skbtopik') return storeSkbGrade_(row, g, answers, mode, pkg.type === 'topik' ? pkg.subtest : 'skb');
   var passed = {
     twk: g.sub.twk.score >= pkg.pg.twk,
     tiu: g.sub.tiu.score >= pkg.pg.tiu,
@@ -581,7 +592,7 @@ function buildReport_(row, user) {
   var ansKeys = Object.keys(answers);
   var stale = ansKeys.length > 0 && !ansKeys.some(function (k) { return qids[k]; });
 
-  var isSkb = pkg.type === 'skb' || pkg.type === 'topik';
+  var isSkb = pkg.type === 'skb' || pkg.type === 'topik' || pkg.type === 'skbtopik';
   var subtests = (pkg.type === 'topik' ? [pkg.subtest] : isSkb ? ['skb'] : ['twk', 'tiu', 'tkp']).map(function (id) {
     var s = sub[id] || { score: 0, max: 0, total: 0, answered: 0, correct: 0 };
     var pgv = isSkb ? null : pkg.pg[id];
@@ -594,7 +605,7 @@ function buildReport_(row, user) {
   // Topik diurutkan dari yang paling lemah
   var topics = Object.keys(topicStats).map(function (id) {
     var t = topicStats[id];
-    var meta = TOPICS[id] || SKB_TOPICS[id] || { subtest: '', name: id };
+    var meta = topicMeta_(id) || { subtest: '', name: id };
     return { topicId: id, name: meta.name, subtest: meta.subtest, pct: t.max ? Math.round((t.points / t.max) * 100) : 0, answered: t.answered, total: t.total };
   }).sort(function (a, b) { return a.pct - b.pct; });
 
@@ -614,7 +625,7 @@ function buildReport_(row, user) {
       ? q.options.reduce(function (a, b) { return (b.score || 0) > (a.score || 0) ? b : a; }, q.options[0])
       : q.options.filter(function (o) { return o.key === q.answer; })[0];
     return {
-      number: q.number, subtest: q.subtest, topic: (TOPICS[q.topicId] || SKB_TOPICS[q.topicId] || {}).name || q.topicId,
+      number: q.number, subtest: q.subtest, topic: (topicMeta_(q.topicId) || {}).name || q.topicId,
       text: q.text, context: q.context,
       options: q.options.map(function (o) { return { key: o.key, text: o.text, score: q.subtest === 'tkp' ? o.score : null }; }),
       yourAnswer: ans, bestAnswer: best ? best.key : '', points: pts, explanation: q.explanation,
@@ -634,7 +645,7 @@ function buildReport_(row, user) {
 
   return {
     attemptId: row.attempt_id,
-    package: { packageId: pkg.packageId, title: pkg.title, type: pkg.type, durationMin: pkg.durationMin },
+    package: { packageId: pkg.packageId, title: pkg.title, type: pkg.type, durationMin: pkg.durationMin, instansi: pkg.type === 'skb' || pkg.type === 'skbtopik' ? (pkg.type === 'skb' ? pkgInstansi_(pkg) : pkg.instansi) : '' },
     startedAt: toIso_(row.started_at),
     submittedAt: toIso_(row.submitted_at),
     durationSec: Number(row.duration_sec) || 0,
@@ -897,11 +908,14 @@ function handleGetRaporHub_(payload, user) {
     var type = a.type || 'diagnostic';
     var title = titles[a.package_id] || a.package_id;
     if (type === 'topik') { var tp = topicPackage_(a.package_id); title = tp.title; }
+    if (type === 'skbtopik') { try { title = skbTopicPackage_(a.package_id).title; } catch (e) { /* topik dihapus */ } }
     var item = {
       attemptId: a.attempt_id, packageId: a.package_id, title: title, type: type,
       total: Number(a.total) || 0, twk: Number(a.twk) || 0, tiu: Number(a.tiu) || 0, tkp: Number(a.tkp) || 0,
-      passedAll: type === 'skb' || type === 'topik' ? null : isTrue_(a.passed_all), submittedAt: toIso_(a.submitted_at)
+      passedAll: type === 'skb' || type === 'topik' || type === 'skbtopik' ? null : isTrue_(a.passed_all), submittedAt: toIso_(a.submitted_at)
     };
+    if (type === 'skbtopik') item.max = SKB_TOPIC_SIZE * 5;
+    if (type === 'skb') { var sp = null; try { sp = getPackage_(a.package_id); } catch (e) { sp = null; } item.instansi = sp ? pkgInstansi_(sp) : 'umum'; item.max = sp ? packageQuestionCount_(sp) * 5 : null; }
     if (type === 'topik') { item.max = TOPIC_PRACTICE_SIZE * 5; item.subtest = topicPackage_(a.package_id).subtest; }
     if (type === 'akbar') {
       var ev = events[a.event_id], r = results[a.event_id];
@@ -923,13 +937,24 @@ function handleGetRaporHub_(payload, user) {
   var lastAssess = findLast_('assessments', 'user_id', user.userId);
   var sk = SKD_TYPES_();
   var skd = list.filter(function (x) { return sk.indexOf(x.type) >= 0; });
+  var interviews = [];
+  try {
+    interviews = userInterviews_(user).filter(function (r) { return r.status === 'submitted'; }).map(function (r) {
+      var ins = skbInstansi_(r.instansi) || { short: r.instansi };
+      return { sessionId: r.session_id, instansi: r.instansi, instansiShort: ins.short, score: Number(r.score) || 0, band: Number(r.band) || 0, submittedAt: toIso_(r.submitted_at) };
+    }).reverse();
+  } catch (e) { interviews = []; }
   return {
     attempts: list,
+    interviews: interviews,
+    skb: { active: hasSkb_(user), until: user.skbUntil || '' },
     summary: {
       tryouts: skd.length,
       best: skd.length ? Math.max.apply(null, skd.map(function (x) { return x.total || 0; })) : null,
       passed: skd.filter(function (x) { return x.passedAll; }).length,
       topicPractice: list.filter(function (x) { return x.type === 'topik'; }).length,
+      skbAttempts: list.filter(function (x) { return x.type === 'skb' || x.type === 'skbtopik'; }).length,
+      interviews: interviews.length,
       practiceAnswers: hist.length
     },
     levels: levels,

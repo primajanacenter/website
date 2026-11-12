@@ -198,7 +198,7 @@ function computeAdminDashboard_(days) {
   subAtt.forEach(function (a) {
     var t = types[a.type] || (types[a.type] = { type: a.type, n: 0, totals: [], passed: 0, twk: [], tiu: [], tkp: [] });
     t.n++;
-    if (a.type !== 'skb') {
+    if (SKD_TYPES_().indexOf(a.type || 'diagnostic') >= 0) {
       t.totals.push(num_(a.total)); if (isTrue_(a.passed_all)) t.passed++;
       t.twk.push(num_(a.twk)); t.tiu.push(num_(a.tiu)); t.tkp.push(num_(a.tkp));
     }
@@ -243,7 +243,7 @@ function computeAdminDashboard_(days) {
       aov: paidRange.length ? Math.round(sumAmt(paidRange) / paidRange.length) : 0,
       newUsers: newRange.length, newUsersPrev: newPrev,
       learners: learnersIn(from, today), learnersPrev: learnersIn(prevFrom, prevTo),
-      premiumActive: premiumActive.length, usersTotal: users.length,
+      premiumActive: premiumActive.length, skbActive: users.filter(isSkbRowActive_).length, usersTotal: users.length,
       conversionPct: pct_(payers.length, users.length)
     },
     business: {
@@ -290,6 +290,7 @@ function computeAdminDashboard_(days) {
     },
     learning: {
       attempts: subAtt.length, attemptsByType: attemptsByType,
+      interviews: (function () { try { var iv = readAll_('interviews').filter(function (r) { return r.status === 'submitted' && inR(jktDateOf_(r.submitted_at)); }); return { n: iv.length, avg: avg_(iv.map(function (r) { return num_(r.score); })) }; } catch (e) { return { n: 0, avg: null }; } })(),
       practice: pr.length, practiceAccPct: pct_(nonTkp.filter(function (p) { return num_(p.points) >= 5; }).length, nonTkp.length),
       practiceUsers: Object.keys(setOf(pr, 'user_id')).length,
       topicsWeak: topics.slice(0, 6), topicsStrong: topics.slice(-3).reverse(),

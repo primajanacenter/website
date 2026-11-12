@@ -108,7 +108,8 @@ function toUser_(row, isNew) {
     name: row.name,
     picture: row.picture,
     plan: isPremiumActive_(row) ? 'premium' : 'free',
-    premiumUntil: row.premium_until ? toIsoDate_(row.premium_until) : ''
+    premiumUntil: row.premium_until ? toIsoDate_(row.premium_until) : '',
+    skbUntil: isSkbRowActive_(row) ? toIsoDate_(row.skb_until) : ''
   };
 }
 
@@ -130,6 +131,7 @@ function publicUser_(user) {
     name: user.name,
     picture: user.picture,
     plan: user.plan,
-    premiumUntil: user.premiumUntil
+    premiumUntil: user.premiumUntil,
+    skbUntil: user.skbUntil || ''
   };
 }
