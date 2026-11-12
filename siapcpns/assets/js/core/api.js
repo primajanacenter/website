@@ -158,6 +158,9 @@ Object.assign(mockHandlers, {
       levels: MOCK_ORDER.map((t) => ({ topicId: t, name: TOPIC_NAMES[t] || t, subtest: t.slice(0, 3), level: null, pct: null, n: 0 })), assessment: db.assessments?.[db.assessments.length - 1] || null };
   },
 });
+// Fase 14: Paket SKB (data contoh, hanya mode uji)
+Object.assign(mockHandlers, Object.fromEntries(["getSkbCatalog", "setSkbInstansi", "getSkbInstansi", "getSkbMateri", "startInterview", "submitInterview", "getInterviewResult"]
+  .map((a) => [a, async (p) => (await import("./mock-skb.js")).mockSkb(a, p || {}, { auth, store, apiError })])));
 // Fase 12: Super User Dashboard (data contoh, hanya mode uji)
 Object.assign(mockHandlers, {
   async getAdminDashboard(p) { requireMockSession(); return (await import("./mock-admin.js")).mockAdminDashboard(p); },
@@ -793,7 +796,9 @@ const READ_TTL = {
 const NEUTRAL = new Set(["ping", "logClientError", "getReport", "saveProgress", "getAdminDashboard", "adminTransactions", "adminLookupUser",
   // Fase 13: data yang berubah cepat (tidak di-cache, juga tidak mengosongkan cache baca)
   "getTryoutCatalog", "getMateriIndex", "getMateriTopic", "getTopicPractice", "getMentoring", "getConsultSlots", "getConsultChat",
-  "sendConsultMessage", "getConsultDesk", "getMyItems", "getRaporHub", "joinLive", "getRecording"]);
+  "sendConsultMessage", "getConsultDesk", "getMyItems", "getRaporHub", "joinLive", "getRecording",
+  // Fase 14: Paket SKB
+  "getSkbCatalog", "getSkbInstansi", "getSkbMateri", "getInterviewResult"]);
 const RC_PREFIX = "sc:rc:";
 const inflight = new Map();
 
