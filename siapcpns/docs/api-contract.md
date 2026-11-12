@@ -74,6 +74,15 @@ Semua permintaan dari frontend lewat `assets/js/core/api.js` → Apps Script Web
 | `getConsultDesk` | 13 | Ya (konsultan/admin) | – | `{ slots[{...,status,clientName,clientEmail}] }` | ✅ |
 | `getMyItems` | 13 | Ya | – | `{ premium{active,until,legacy}, tryouts[], akbar[], live[], recordings[], consults[], pending[], history[] }` | ✅ |
 | `getRaporHub` | 13 | Ya | – | `{ attempts[{attemptId,title,type,total,passedAll,...}], summary, levels[21], assessment }` | ✅ |
+| `getSkbCatalog` | 14 | Opsional | – | `{ skb{active,until}, price, days, selected, instansi[{id,short,name,note,general,topics,materi,latihan,tryouts,interview,ready}] }` | ✅ |
+| `setSkbInstansi` | 14 | Ya | `{ instansi }` | `{ selected }` | ✅ |
+| `getSkbInstansi` | 14 | Opsional | `{ instansi }` | `{ instansi, skb, price, tryouts[], topics[{topicId,name,free,locked,materi,questions,packageId,last,inProgress}], interview{available,freeLeft,canStart,history}, info[] }` | ✅ |
+| `getSkbMateri` | 14 | Opsional | `{ topicId }` | `{ locked:false, levels[1–4] }` atau `{ locked:true, reason:'SKB'/'LOGIN', teaser }` | ✅ |
+| `startInterview` | 14 | Ya | `{ instansi }` | `{ sessionId, questions[7]{qId,part,partLabel,text,prepSec,answerSec}, selfChecks[4] }` — tanpa kata kunci & jawaban model. Galat `SKB_REQUIRED` bila sesi gratis habis | ✅ |
+| `submitInterview` | 14 | Ya | `{ sessionId, answers[{qId,transcript,durationSec,mode,self[4],edited}] }` | `{ score 0–100, band 1–9, level, aspects, answers[{score,aspects,hit,missing,tips,model}] }` (idempoten) | ✅ |
+| `getInterviewResult` | 14 | Ya | `{ sessionId }` | sama dengan `submitInterview` | ✅ |
+
+Fase 14 juga: `createCheckout { kind:'skb', refId:'SKB1M' }` (Premium SKB Rp85.000/30 hari, harga dari server, tanpa diskon ajakan); `startAttempt` menerima `LTS-<topik>` (latihan SKB) dan paket `SKB-<KODE>-0x`; galat akses `SKB_REQUIRED`; `getMe.user.skbUntil`; `getMyItems.skb`; `getRaporHub.interviews` & `summary.skbAttempts/interviews`.
 
 ## Kode error umum
 
