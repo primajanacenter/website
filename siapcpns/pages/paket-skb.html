@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Paket SKB — Siap CPNS</title>
+  <meta name="robots" content="index">
+  <meta name="description" content="Paket SKB CPNS per instansi (Kemenag, Kemendikbudristek, Kejaksaan, Kemenkes, PUPR): tryout SKB, materi, latihan soal, dan latihan wawancara mode suara.">
+  <meta property="og:title" content="Paket SKB — Siap CPNS">
+  <meta property="og:description" content="Paket SKB CPNS per instansi (Kemenag, Kemendikbudristek, Kejaksaan, Kemenkes, PUPR): tryout SKB, materi, latihan soal, dan latihan wawancara mode suara.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="modulepreload" href="../assets/js/core/config.js">
+  <link rel="modulepreload" href="../assets/js/core/store.js">
+  <link rel="modulepreload" href="../assets/js/core/auth.js">
+  <link rel="modulepreload" href="../assets/js/core/ui.js">
+  <link rel="modulepreload" href="../assets/js/core/api.js">
+  <link rel="modulepreload" href="../assets/js/features/paket-skb.js">
+  <link rel="stylesheet" href="../assets/css/cat.css">
+  <link rel="stylesheet" href="../assets/css/pages/tryout.css">
+  <link rel="stylesheet" href="../assets/css/pages/hub.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="../">Beranda</a><a class="hide-sm" href="rapot.html">Rapot</a><a class="nav-cta" href="masuk.html" data-nav-auth="akun.html" data-nav-label="Akun">Masuk</a></nav>
+  </div>
+</header>
+<div id="view-hub">
+  <section class="page-top">
+    <div class="container">
+      <a class="back-link" href="../" id="s-back">‹ Beranda</a>
+      <h1 id="s-title">Paket SKB</h1>
+      <p id="s-lead">Persiapan Seleksi Kompetensi Bidang per instansi: tryout, materi, latihan soal, dan latihan wawancara mode suara.</p>
+    </div>
+  </section>
+
+  <main class="app-main">
+    <div class="container mid stack-lg">
+      <p id="s-status" class="status-msg" role="status" hidden></p>
+      <div id="s-plan"></div>
+
+      <!-- 1. Pilih instansi -->
+      <section id="v-pick" class="stack" aria-labelledby="pick-h" hidden>
+        <div class="sec-title" style="margin:0"><h2 id="pick-h">Pilih instansi tujuan</h2><span class="muted">Pilihanmu tersimpan di profil</span></div>
+        <div class="ins-grid" id="ins-list"><div class="skeleton" style="height:96px"></div><div class="skeleton" style="height:96px"></div></div>
+        <p class="xsmall muted">Nama instansi mengikuti istilah yang umum dipakai pelamar. Selalu cocokkan nama, formasi, dan kisi-kisi dengan pengumuman resmi instansi dan SSCASN.</p>
+      </section>
+
+      <!-- 2. Satu instansi -->
+      <section id="v-ins" class="stack-lg" hidden>
+        <p class="ins-note small" id="i-note"></p>
+        <div class="skbtabs" role="tablist" aria-label="Isi Paket SKB" id="i-tabs">
+          <button type="button" role="tab" data-tab="tryout"><span class="ic" data-icon="tryout"></span><b>Tryout SKB</b></button>
+          <button type="button" role="tab" data-tab="materi"><span class="ic" data-icon="materi"></span><b>Materi SKB</b></button>
+          <button type="button" role="tab" data-tab="latihan"><span class="ic" data-icon="latihan"></span><b>Latihan Soal</b></button>
+          <button type="button" role="tab" data-tab="wawancara"><span class="ic" data-icon="mic"></span><b>Wawancara</b></button>
+          <button type="button" role="tab" data-tab="info"><span class="ic" data-icon="info"></span><b>Info seleksi</b></button>
+        </div>
+        <div data-panel="tryout" class="stack" hidden>
+          <div class="sec-title" style="margin:0"><h2>Tryout SKB</h2><span class="muted" id="i-to-sub">bebas diulang · rapor & pembahasan</span></div>
+          <div class="cards" id="i-tryouts"></div>
+        </div>
+        <div data-panel="materi" class="stack" hidden>
+          <div class="sec-title" style="margin:0"><h2>Materi SKB</h2><span class="muted">topik pertama gratis</span></div>
+          <ul class="tlist" id="i-materi"></ul>
+        </div>
+        <div data-panel="latihan" class="stack" hidden>
+          <div class="sec-title" style="margin:0"><h2>Latihan Soal SKB</h2><span class="muted" id="i-lt-sub"></span></div>
+          <ul class="tlist" id="i-latihan"></ul>
+        </div>
+        <div data-panel="wawancara" class="stack" hidden>
+          <div class="pcard hl stack" id="i-iv"></div>
+          <div class="stack" id="i-iv-hist"></div>
+        </div>
+        <div data-panel="info" class="stack" hidden>
+          <section class="pcard stack">
+            <h2 style="font-size:var(--fs-lg)">Yang perlu diketahui</h2>
+            <ul class="info-list" id="i-info"></ul>
+          </section>
+          <section class="pcard stack" aria-labelledby="calc-h">
+            <h2 id="calc-h" style="font-size:var(--fs-lg)">Hitung nilai akhir</h2>
+            <form class="row" id="skb-calc" style="gap:10px;align-items:flex-end">
+              <label class="field" style="flex:1;min-width:120px"><span>Skor SKD (0–550)</span><input class="input" id="calc-skd" type="number" min="0" max="550" inputmode="numeric" value="380"></label>
+              <label class="field" style="flex:1;min-width:120px"><span>Nilai SKB (0–100)</span><input class="input" id="calc-skb" type="number" min="0" max="100" inputmode="numeric" value="75"></label>
+            </form>
+            <p>Nilai akhir: <b id="calc-out" style="font-size:1.3rem">0</b> <span class="xsmall muted" id="calc-detail"></span></p>
+            <p class="xsmall muted">Rumus umum: (SKD ÷ 550 × 40) + (SKB × 60%). Bobot resmi bisa berbeda per instansi/formasi.</p>
+          </section>
+          <a class="btn btn-secondary" href="skb.html" style="align-self:flex-start">Checklist persiapan SKB ›</a>
+        </div>
+      </section>
+
+      <!-- 3. Materi -->
+      <section id="v-materi" class="stack-lg" hidden>
+        <article class="mdoc" id="m-doc"></article>
+        <section class="stack" aria-labelledby="mex-h" id="m-ex-wrap">
+          <div class="sec-title"><h2 id="mex-h">Contoh soal</h2><span class="muted">Jawab satu per satu — kunci & pembahasan langsung muncul</span></div>
+          <div class="stack" id="m-examples"></div>
+        </section>
+        <div class="card stack" id="m-next">
+          <b>Sudah paham? Uji dengan 50 soal latihan topik ini.</b>
+          <div class="row" style="gap:8px"><a class="btn btn-primary" id="m-practice" href="#">Latihan soal topik ini</a><a class="btn btn-secondary" id="m-back2" href="#">Daftar materi</a></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ================= LATIHAN WAWANCARA ================= -->
+<section id="view-iv" class="iv" hidden aria-labelledby="iv-q">
+  <div class="iv-bar">
+    <div class="container">
+      <div><b id="iv-title">Latihan wawancara</b><span id="iv-part">Bagian 1</span></div>
+      <span class="iv-step" id="iv-step">1 / 7</span>
+    </div>
+  </div>
+  <div class="container mid stack-lg iv-main">
+    <!-- persiapan -->
+    <div id="iv-setup" class="stack-lg">
+      <section class="pcard stack">
+        <h2 style="font-size:var(--fs-lg)">Cara kerja latihan ini</h2>
+        <ol class="iv-how">
+          <li><b>3 bagian, 7 pertanyaan</b>, mirip format mock test: perkenalan & motivasi, presentasi singkat (1 menit persiapan, 2 menit bicara), lalu wawasan instansi & situasi kerja.</li>
+          <li>Pertanyaan <b>dibacakan</b>. Setelah waktu persiapan, perekaman jawaban mulai otomatis. Bicara jelas dengan bahasa Indonesia baku.</li>
+          <li>Ucapanmu diubah menjadi teks di perangkatmu. Rekaman suara <b>tidak dikirim</b>; hanya teks jawaban yang dinilai.</li>
+          <li>Nilai dihitung otomatis dengan rubrik: isi & kata kunci, struktur, kelancaran (kata pengisi seperti "eee", "anu"), ketepatan waktu, dan penilaian dirimu sendiri. Jawaban model muncul setelah selesai.</li>
+        </ol>
+      </section>
+      <section class="pcard stack">
+        <h2 style="font-size:var(--fs-lg)">Pilih mode</h2>
+        <div class="iv-modes" role="radiogroup" aria-label="Mode jawaban">
+          <label class="iv-mode"><input type="radio" name="iv-mode" value="voice" checked><span><b>Mode suara</b><small id="iv-voice-note">Jawab dengan berbicara. Butuh izin mikrofon; paling baik di Chrome/Edge.</small></span></label>
+          <label class="iv-mode"><input type="radio" name="iv-mode" value="text"><span><b>Mode ketik</b><small>Jawab dengan mengetik, waktu tetap berjalan.</small></span></label>
+        </div>
+        <label class="check"><input type="checkbox" id="iv-tts" checked> <span>Bacakan pertanyaan (suara pewawancara)</span></label>
+        <div class="row" style="gap:8px">
+          <button class="btn btn-secondary" type="button" id="iv-mic-test">Tes mikrofon</button>
+          <span class="small muted" id="iv-mic-out" role="status"></span>
+        </div>
+        <p class="status-msg" id="iv-setup-msg" hidden></p>
+        <div class="row" style="gap:8px;justify-content:space-between">
+          <button class="btn btn-ghost" type="button" id="iv-cancel">‹ Kembali</button>
+          <button class="btn btn-primary" type="button" id="iv-begin">Mulai wawancara</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- pertanyaan berjalan -->
+    <div id="iv-run" class="stack-lg" hidden>
+      <section class="iv-card">
+        <div class="iv-who"><span class="av" aria-hidden="true">P</span><span><b>Pewawancara</b><small id="iv-cat"></small></span>
+          <button class="btn btn-ghost btn-sm" type="button" id="iv-repeat" aria-label="Bacakan ulang pertanyaan">🔊 Ulangi</button></div>
+        <p class="iv-q" id="iv-q" tabindex="-1"></p>
+      </section>
+      <section class="iv-panel stack">
+        <div class="iv-phase">
+          <span class="iv-dot" id="iv-dot" aria-hidden="true"></span>
+          <b id="iv-phase">Persiapan</b>
+          <span class="iv-clock" id="iv-clock" role="timer" aria-live="off">00:00</span>
+        </div>
+        <div class="iv-meter" aria-hidden="true"><span id="iv-meter"></span></div>
+        <div class="iv-live" id="iv-live" aria-live="polite"></div>
+        <textarea class="input iv-text" id="iv-text" rows="7" placeholder="Ketik jawabanmu di sini…" hidden></textarea>
+        <div class="row" style="gap:8px;justify-content:space-between">
+          <button class="btn btn-secondary" type="button" id="iv-skip-prep">Mulai menjawab sekarang</button>
+          <button class="btn btn-primary" type="button" id="iv-stop" hidden>Selesai menjawab</button>
+        </div>
+      </section>
+      <!-- tinjau jawaban -->
+      <section class="iv-panel stack" id="iv-review" hidden>
+        <b>Periksa jawabanmu</b>
+        <p class="xsmall muted">Perbaiki kata yang salah dikenali mesin bila perlu (bukan menambah isi). Rekaman suaramu bisa didengar ulang di bawah dan tidak dikirim ke server.</p>
+        <audio id="iv-audio" controls hidden></audio>
+        <textarea class="input iv-text" id="iv-edit" rows="6"></textarea>
+        <fieldset class="iv-self"><legend class="small"><b>Penilaian diri</b> — centang yang benar-benar kamu lakukan</legend><div id="iv-self"></div></fieldset>
+        <div class="row" style="gap:8px;justify-content:flex-end">
+          <button class="btn btn-ghost" type="button" id="iv-redo">Ulangi jawaban</button>
+          <button class="btn btn-primary" type="button" id="iv-next">Pertanyaan berikutnya ›</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- hasil -->
+    <div id="iv-result" class="stack-lg" hidden></div>
+  </div>
+</section>
+
+<!-- ================= UJIAN ================= -->
+<section id="view-exam" class="cat" hidden aria-labelledby="q-text">
+  <div class="cat-bar">
+    <div class="container">
+      <div class="cat-title">
+        <b id="ex-title">Tryout</b>
+        <span><span id="ex-subtest">SKB</span> · <span class="save-state" id="ex-save">Tersimpan</span></span>
+      </div>
+      <span class="cat-timer exam-timer" id="ex-timer-box" role="timer" aria-live="off"><small>Sisa waktu</small><span id="ex-timer">--:--:--</span></span>
+    </div>
+  </div>
+
+  <div class="container cat-layout">
+    <div class="cat-main">
+      <div class="cat-qhead">
+        <span class="qno">Soal nomor <span id="q-no" class="num">1</span> <span class="muted small">dari <span id="q-total" class="num">100</span></span></span>
+        <span class="chip chip-primary" id="q-badge">SKB</span>
+      </div>
+      <div class="cat-qbody">
+        <p class="question-text" id="q-text" tabindex="-1">Memuat soal…</p>
+        <div class="question-context" id="q-context" hidden></div>
+        <div class="options" id="options" role="radiogroup" aria-labelledby="q-text"></div>
+      </div>
+      <div class="cat-actions">
+        <button class="btn btn-secondary" type="button" id="btn-prev">‹ Sebelumnya</button>
+        <button class="btn btn-doubt" type="button" id="btn-doubt" aria-pressed="false">Ragu-ragu</button>
+        <button class="btn btn-primary" type="button" id="btn-next">Selanjutnya ›</button>
+      </div>
+    </div>
+
+    <aside class="cat-side" aria-label="Navigasi nomor soal">
+      <details class="nav-details" id="nav-details" open>
+        <summary>Nomor soal <span class="chip num" id="q-answered">0 / 100</span></summary>
+        <div>
+          <div class="qgrid big" id="q-grid"></div>
+          <div class="qlegend">
+            <span><i class="l-a"></i>Dijawab</span>
+            <span><i class="l-r"></i>Ragu-ragu</span>
+            <span><i></i>Belum</span>
+          </div>
+        </div>
+      </details>
+      <div class="subcount" id="sub-count"></div>
+      <button class="btn btn-primary btn-block" type="button" id="btn-finish">Selesai ujian</button>
+      <p class="xsmall muted">Tombol: 1–5 pilih jawaban, ← → pindah soal.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= KONFIRMASI MULAI ================= -->
+<div class="confirm" id="start-modal" hidden role="dialog" aria-modal="true" aria-labelledby="start-title">
+  <div class="card card-elevated">
+    <h3 id="start-title">Mulai sekarang?</h3>
+    <p class="small muted" id="start-text"></p>
+    <label class="check"><input type="checkbox" id="start-ready"> <span>Saya sudah siap dan berada di tempat yang tenang dengan koneksi internet stabil.</span></label>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn btn-secondary" type="button" id="start-cancel">Nanti saja</button>
+      <button class="btn btn-primary" type="button" id="start-ok" disabled>Mulai</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= KONFIRMASI SELESAI ================= -->
+<div class="confirm" id="finish-modal" hidden role="dialog" aria-modal="true" aria-labelledby="finish-title">
+  <div class="card card-elevated">
+    <h3 id="finish-title">Akhiri ujian?</h3>
+    <p class="small" id="finish-text"></p>
+    <p id="finish-error" class="status-msg error" hidden></p>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn btn-secondary" type="button" id="finish-cancel">Kembali ke soal</button>
+      <button class="btn btn-primary" type="button" id="finish-ok">Ya, kirim jawaban</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo-112.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/paket-skb.js").then((m) => m.initPaketSkb());
+</script>
+</body>
+</html>
