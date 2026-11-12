@@ -17,6 +17,7 @@ import { auth } from "../core/auth.js";
 import { store } from "../core/store.js";
 import { $, $$, esc, fmtDate, getParam, setBusy, toast, isSvg, richText, setContext } from "../core/ui.js";
 import { runExam } from "./cat-engine.js";
+import { voiceSupport, createListener, testVoice, startSideRecorder } from "./voice.js";
 import { ICON, goLogin, initBottomNav, skbSheet, handleCommonError, emptyBox, rupiah } from "./hub.js";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
@@ -278,22 +279,28 @@ function renderExamples(levels) {
 }
 
 /* =================== 4. Latihan wawancara =================== */
-const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-const IV = { s: null, idx: 0, answers: [], mode: "voice", tts: true, timer: null, rec: null, recOn: false, media: null, chunks: [], stream: null, audioUrl: "", ctx: null, raf: 0, phase: "", t0: 0, finalText: "", interim: "" };
+// Fase 14.1: mesin suara dipisah ke voice.js (tanpa getUserMedia bersamaan di HP, mulai ulang otomatis, pesan galat jelas).
+const IV = { s: null, idx: 0, answers: [], mode: "voice", tts: true, timer: null, listener: null, side: null, audioUrl: "", phase: "", t0: 0,
+  ansMode: "voice", tested: false, q: null };
 const fmtClock = (s) => `${String(Math.floor(Math.max(0, s) / 60)).padStart(2, "0")}:${String(Math.max(0, Math.ceil(s)) % 60).padStart(2, "0")}`;
 const fmtBand = (b) => String(b).replace(".", ",");
 const ivKey = (sid) => "iv.progress." + sid;
+const words = (t) => (t.trim() ? t.trim().split(/\s+/).length : 0);
 
 async function startInterviewFlow(insId) {
   if (!auth.isLoggedIn()) return goLogin();
   $("#view-hub").hidden = true;
   $("#view-iv").hidden = false;
   document.body.classList.add("exam-on");
-  if (!SR) {
-    $("#iv-voice-note").textContent = "Browser ini belum mendukung pengenalan suara. Gunakan Chrome atau Edge terbaru, atau pilih mode ketik.";
+  const sup = voiceSupport();
+  if (!sup.ok) {
+    $("#iv-voice-note").textContent = sup.reason;
     $("input[name=iv-mode][value=voice]").disabled = true;
     $("input[name=iv-mode][value=text]").checked = true;
-  }
+  } else if (sup.warn) $("#iv-voice-note").textContent = "Jawab dengan berbicara. " + sup.warn;
+  const syncMode = () => { $("#iv-test-box").hidden = $("input[name=iv-mode]:checked").value !== "voice"; };
+  $$("input[name=iv-mode]").forEach((r) => r.addEventListener("change", syncMode));
+  syncMode();
   $("#iv-title").textContent = "Latihan wawancara";
   $("#iv-part").textContent = "Persiapan";
   $("#iv-step").textContent = "";
@@ -303,9 +310,10 @@ async function startInterviewFlow(insId) {
     const btn = $("#iv-begin");
     IV.mode = $("input[name=iv-mode]:checked").value;
     IV.tts = $("#iv-tts").checked;
-    if (IV.mode === "voice") {
-      try { IV.stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
-      catch { return setupMsg("Izin mikrofon ditolak atau mikrofon tidak ditemukan. Izinkan mikrofon di pengaturan browser, atau pilih mode ketik."); }
+    if (IV.mode === "voice" && !IV.tested) {
+      setupMsg("Jalankan tes mikrofon dulu sampai keempat tanda ✓ hijau. Bila tes gagal, pilih Mode ketik.");
+      $("#iv-test-box").scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
     }
     setBusy(btn, true, "Menyiapkan sesi…");
     const res = await api.call("startInterview", { instansi: insId });
@@ -323,22 +331,46 @@ async function startInterviewFlow(insId) {
   };
 }
 
-function setupMsg(m) { const el = $("#iv-setup-msg"); el.hidden = false; el.classList.add("error"); el.textContent = m; }
+function setupMsg(m) { const el = $("#iv-setup-msg"); el.hidden = !m; el.classList.add("error"); el.textContent = m || ""; }
 function safeGet(k) { try { return store.get(k, null); } catch { return null; } }
 function safeSet(k, v) { try { store.set(k, v); } catch { /* abaikan */ } }
 
+/** Tes 4 langkah: dukungan browser → izin → suara masuk → ucapan dikenali. */
 async function micTest() {
-  const out = $("#iv-mic-out");
-  try {
-    const st = await navigator.mediaDevices.getUserMedia({ audio: true });
-    out.textContent = "Bicara sebentar…";
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const an = ctx.createAnalyser(); ctx.createMediaStreamSource(st).connect(an);
-    const buf = new Uint8Array(an.fftSize); let peak = 0; const t0 = Date.now();
-    await new Promise((done) => { const tick = () => { an.getByteTimeDomainData(buf); peak = Math.max(peak, ...buf.map((v) => Math.abs(v - 128))); if (Date.now() - t0 < 2500) requestAnimationFrame(tick); else done(); }; tick(); });
-    st.getTracks().forEach((t) => t.stop()); ctx.close();
-    out.textContent = peak > 6 ? "✓ Mikrofon berfungsi." : "Suara sangat pelan. Dekatkan mikrofon atau periksa perangkat input.";
-  } catch { out.textContent = "Mikrofon tidak bisa dibuka. Izinkan akses mikrofon di browser."; }
+  const btn = $("#iv-mic-test");
+  setupMsg("");
+  $$("#iv-check li").forEach((li) => { li.dataset.s = "wait"; li.querySelector("i").textContent = ""; li.querySelector("span").title = ""; });
+  $("#iv-check [data-k=support]").dataset.s = "run";
+  $("#iv-test-text").hidden = true;
+  $("#iv-test-msg").textContent = "Mendengarkan… ucapkan: \"Saya siap mengikuti wawancara.\"";
+  $("#iv-test-msg").className = "xsmall";
+  setBusy(btn, true, "🔴 Mendengarkan…");
+  const mark = (k, ok, detail) => {
+    const li = $(`#iv-check [data-k=${k}]`);
+    if (!li) return;
+    li.dataset.s = ok ? "ok" : "bad";
+    li.querySelector("i").textContent = ok ? "✓" : "✕";
+    const next = li.nextElementSibling;
+    if (ok && next && next.dataset.s === "wait") next.dataset.s = "run";
+    if (!ok && detail) { $("#iv-test-msg").textContent = detail; $("#iv-test-msg").className = "xsmall iv-bad"; }
+    if (ok && k === "support" && detail) $("#iv-test-msg").textContent = detail;
+  };
+  const r = await testVoice({
+    step: mark,
+    text: (f, i) => { const el = $("#iv-test-text"); el.hidden = false; el.innerHTML = `“${esc(f)}<span class="int"> ${esc(i)}</span>”`; },
+  });
+  setBusy(btn, false);
+  btn.textContent = r.ok ? "Tes ulang" : "🎙 Coba tes lagi";
+  IV.tested = r.ok;
+  if (r.ok) {
+    ["perm", "sound", "text"].forEach((k) => { const li = $(`#iv-check [data-k=${k}]`); if (li.dataset.s !== "ok") { li.dataset.s = "ok"; li.querySelector("i").textContent = "✓"; } });
+    $("#iv-test-msg").textContent = "✓ Mikrofon dan pengenalan suara berfungsi. Kamu siap memulai.";
+    $("#iv-test-msg").className = "xsmall iv-good";
+  } else {
+    $$("#iv-check li").forEach((li) => { if (li.dataset.s === "run") li.dataset.s = "wait"; });
+    if (!$("#iv-test-msg").textContent || /Mendengarkan/.test($("#iv-test-msg").textContent)) $("#iv-test-msg").textContent = r.error || "Tes belum berhasil.";
+    $("#iv-test-msg").className = "xsmall iv-bad";
+  }
 }
 
 function speak(text) {
@@ -361,30 +393,51 @@ function setPhase(name, label) {
   IV.phase = name;
   $("#iv-phase").textContent = label;
   $("#iv-dot").className = "iv-dot " + name;
+  $("#iv-answer").dataset.phase = name;
 }
 
 function countdown(sec, onEnd) {
   clearInterval(IV.timer);
-  const end = Date.now() + sec * 1000;
-  const draw = () => { const left = (end - Date.now()) / 1000; $("#iv-clock").textContent = fmtClock(left); if (left <= 0) { clearInterval(IV.timer); onEnd(); } };
+  const start = Date.now(), end = start + sec * 1000;
+  const draw = () => {
+    const left = (end - Date.now()) / 1000;
+    $("#iv-clock").textContent = fmtClock(left);
+    $("#iv-progress").style.width = Math.max(0, Math.min(100, ((Date.now() - start) / (sec * 1000)) * 100)) + "%";
+    $("#iv-clock").classList.toggle("low", IV.phase === "rec" && left <= 10);
+    if (left <= 0) { clearInterval(IV.timer); onEnd(); }
+  };
   IV.timer = setInterval(draw, 250);
   draw();
 }
 
+function pill(id, s, text) { const el = $(id); el.dataset.s = s; el.textContent = text; }
+function showAlert(msg) { $("#iv-alert").hidden = !msg; $("#iv-alert-text").textContent = msg || ""; }
+function renderLive(f, i) {
+  const el = $("#iv-live");
+  el.innerHTML = f || i ? `${esc(f)}<span class="int"> ${esc(i)}</span>` : `<span class="ph">Mulai bicara… ucapanmu akan muncul di sini sebagai teks.</span>`;
+  const n = words(`${f} ${i}`);
+  $("#iv-words").textContent = `${n} kata`;
+  el.scrollTop = el.scrollHeight;
+}
+
 async function askQuestion() {
   const q = IV.s.questions[IV.idx];
+  IV.q = q;
   $("#iv-part").textContent = q.partLabel;
   $("#iv-step").textContent = `${IV.idx + 1} / ${IV.s.questions.length}`;
   $("#iv-cat").textContent = q.category || "";
   $("#iv-q").textContent = q.text;
   $("#iv-review").hidden = true;
-  $("#iv-live").textContent = "";
-  $("#iv-live").hidden = IV.mode !== "voice";
+  $("#iv-answer").hidden = false;
+  $("#iv-status").hidden = true;
+  $("#iv-wave").hidden = true;
+  $("#iv-live").hidden = true;
+  showAlert("");
   $("#iv-text").hidden = true;
   $("#iv-text").value = "";
   $("#iv-stop").hidden = true;
   $("#iv-skip-prep").hidden = false;
-  $("#iv-meter").style.width = "0%";
+  $("#iv-progress").style.width = "0%";
   $("#iv-q").focus();
   $("#iv-repeat").onclick = () => { const t = IV.tts; IV.tts = true; speak(q.text); IV.tts = t; };
   setPhase("listen", "Dengarkan pertanyaan");
@@ -394,7 +447,7 @@ async function askQuestion() {
   $("#iv-skip-prep").onclick = go;
   await speak(q.text);
   if (started) return;
-  setPhase("prep", `Persiapan · ${q.prepSec} detik`);
+  setPhase("prep", `Persiapan · ${q.prepSec} detik — susun poin jawabanmu`);
   countdown(q.prepSec, go);
 }
 
@@ -402,79 +455,84 @@ function startAnswer(q) {
   clearInterval(IV.timer);
   $("#iv-skip-prep").hidden = true;
   $("#iv-stop").hidden = false;
+  $("#iv-review").hidden = true;
+  showAlert("");
   IV.t0 = Date.now();
-  IV.finalText = ""; IV.interim = "";
-  setPhase("rec", IV.mode === "voice" ? "Merekam jawaban" : "Waktu menjawab");
-  if (IV.mode === "voice") startVoice();
-  else { const ta = $("#iv-text"); ta.hidden = false; ta.focus(); }
+  IV.ansMode = IV.mode;
+  if (IV.mode === "voice") {
+    setPhase("rec", "Merekam jawaban");
+    startVoice();
+  } else {
+    setPhase("rec", "Waktu menjawab — ketik jawabanmu");
+    const ta = $("#iv-text"); ta.hidden = false; ta.focus();
+  }
   $("#iv-stop").onclick = () => finishAnswer(q);
   countdown(q.answerSec, () => finishAnswer(q));
 }
 
 function startVoice() {
-  IV.recOn = true;
-  // Pengenalan suara (teks) — berjalan ulang otomatis bila berhenti karena jeda
-  const rec = new SR();
-  rec.lang = "id-ID"; rec.continuous = true; rec.interimResults = true;
-  rec.onresult = (e) => {
-    let interim = "";
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      const r = e.results[i];
-      if (r.isFinal) IV.finalText += (IV.finalText ? " " : "") + r[0].transcript.trim();
-      else interim += r[0].transcript;
-    }
-    IV.interim = interim;
-    $("#iv-live").textContent = (IV.finalText + " " + interim).trim() || "…";
-  };
-  rec.onerror = (e) => { if (e.error === "not-allowed" || e.error === "service-not-allowed") { IV.recOn = false; toast("Pengenalan suara ditolak browser. Kamu bisa mengetik jawaban di langkah berikutnya.", 5000); } };
-  rec.onend = () => { if (IV.recOn) { try { rec.start(); } catch { /* sudah berjalan */ } } };
-  IV.rec = rec;
-  try { rec.start(); } catch { /* abaikan */ }
-  // Rekaman audio lokal untuk didengar ulang (tidak dikirim)
-  IV.chunks = [];
-  try {
-    if (IV.stream && window.MediaRecorder) {
-      IV.media = new MediaRecorder(IV.stream);
-      IV.media.ondataavailable = (e) => e.data.size && IV.chunks.push(e.data);
-      IV.media.start();
-    }
-  } catch { IV.media = null; }
-  // Meter level suara
-  try {
-    IV.ctx = IV.ctx || new (window.AudioContext || window.webkitAudioContext)();
-    const an = IV.ctx.createAnalyser(); IV.ctx.createMediaStreamSource(IV.stream).connect(an);
-    const buf = new Uint8Array(an.fftSize);
-    const tick = () => { an.getByteTimeDomainData(buf); let p = 0; for (const v of buf) p = Math.max(p, Math.abs(v - 128)); $("#iv-meter").style.width = Math.min(100, p * 1.6) + "%"; if (IV.recOn) IV.raf = requestAnimationFrame(tick); };
-    tick();
-  } catch { /* meter opsional */ }
+  $("#iv-status").hidden = false;
+  $("#iv-wave").hidden = false;
+  $("#iv-wave").dataset.on = "0";
+  $("#iv-live").hidden = false;
+  renderLive("", "");
+  pill("#iv-mic", "wait", "🎙 Menyalakan mikrofon…");
+  pill("#iv-voice", "wait", "Menunggu suara");
+  let quietTimer = 0;
+  const l = createListener({
+    state: (st) => {
+      if (st === "listening") { pill("#iv-mic", "ok", "🎙 Mikrofon aktif"); showAlert(""); }
+      if (st === "sound" || st === "speech") {
+        pill("#iv-voice", "ok", st === "speech" ? "🗣 Suara terdengar" : "🔊 Ada suara");
+        $("#iv-wave").dataset.on = "1";
+        clearTimeout(quietTimer);
+        quietTimer = setTimeout(() => { $("#iv-wave").dataset.on = "0"; }, 1200);
+      }
+      if (st === "quiet") { $("#iv-wave").dataset.on = "0"; pill("#iv-voice", "wait", "Hening… lanjutkan bicara"); }
+    },
+    text: (f, i) => renderLive(f, i),
+    error: (code, msg, fatal) => {
+      if (fatal || code === "no-audio") pill("#iv-mic", "bad", "🎙 Mikrofon bermasalah");
+      showAlert(msg);
+    },
+  });
+  IV.listener = l;
+  l.start();
+  // Rekaman putar-ulang & meter level hanya di komputer (di HP mikrofon tidak bisa dipakai dua fitur sekaligus)
+  IV.side = null;
+  startSideRecorder((lv) => { $("#iv-wave").style.setProperty("--lv", lv.toFixed(2)); if (lv > 0.08) $("#iv-wave").dataset.on = "1"; }).then((s) => {
+    if (IV.phase === "rec" && IV.ansMode === "voice") IV.side = s; else s && s.stop();
+  });
+  $("#iv-retry-mic").onclick = () => { showAlert(""); pill("#iv-mic", "wait", "🎙 Menyalakan mikrofon…"); l.abort(); l.start(); };
+  $("#iv-to-text").onclick = () => switchToText();
 }
 
-function stopVoice() {
-  IV.recOn = false;
-  cancelAnimationFrame(IV.raf);
-  try { IV.rec && IV.rec.stop(); } catch { /* abaikan */ }
-  return new Promise((resolve) => {
-    if (!IV.media || IV.media.state === "inactive") return resolve();
-    IV.media.onstop = () => resolve();
-    try { IV.media.stop(); } catch { resolve(); }
-  });
+/** Ganti jawaban ini ke mode ketik (teks yang sudah dikenali tetap dipakai). */
+async function switchToText() {
+  const got = IV.listener ? await IV.listener.stop() : "";
+  if (IV.side) { IV.side.stop(); IV.side = null; }
+  IV.ansMode = "text";
+  $("#iv-status").hidden = true; $("#iv-wave").hidden = true; $("#iv-live").hidden = true; showAlert("");
+  setPhase("rec", "Waktu menjawab — ketik jawabanmu");
+  const ta = $("#iv-text"); ta.hidden = false; ta.value = got; ta.focus();
 }
 
 async function finishAnswer(q) {
   if (IV.phase !== "rec") return;
   clearInterval(IV.timer);
-  setPhase("done", "Selesai");
+  setPhase("done", "Menyimpan jawaban…");
+  $("#iv-stop").hidden = true;
   const dur = Math.round((Date.now() - IV.t0) / 1000);
   let text;
-  if (IV.mode === "voice") {
-    await stopVoice();
-    await new Promise((r) => setTimeout(r, 400));   // beri waktu hasil akhir pengenalan suara
-    text = (IV.finalText + " " + IV.interim).trim();
+  if (IV.ansMode === "voice" && IV.listener) {
+    text = await IV.listener.stop();
     if (IV.audioUrl) URL.revokeObjectURL(IV.audioUrl);
-    IV.audioUrl = IV.chunks.length ? URL.createObjectURL(new Blob(IV.chunks, { type: IV.chunks[0].type || "audio/webm" })) : "";
+    IV.audioUrl = IV.side ? await IV.side.stop() : "";
+    IV.side = null;
   } else text = $("#iv-text").value.trim();
-  $("#iv-stop").hidden = true;
-  $("#iv-text").hidden = true;
+  IV.listener = null;
+  setPhase("done", "Jawaban selesai");
+  $("#iv-answer").hidden = true;
   review(q, text, dur);
 }
 
@@ -482,19 +540,24 @@ function review(q, text, dur) {
   const box = $("#iv-review");
   box.hidden = false;
   const audio = $("#iv-audio");
-  audio.hidden = !IV.audioUrl || IV.mode !== "voice";
+  audio.hidden = !IV.audioUrl;
   if (IV.audioUrl) audio.src = IV.audioUrl;
+  $("#iv-review-note").textContent = IV.ansMode === "voice"
+    ? (text ? "Ini teks dari ucapanmu. Perbaiki kata yang salah dikenali mesin bila perlu (bukan menambah isi)." + (IV.audioUrl ? " Rekaman bisa didengar ulang di bawah dan tidak dikirim ke server." : "")
+      : "⚠ Tidak ada ucapan yang dikenali. Ketuk Ulangi jawaban untuk merekam lagi, atau ketik jawabanmu di kotak ini.")
+    : "Periksa jawabanmu sebelum lanjut.";
+  $("#iv-review-note").className = "xsmall " + (IV.ansMode === "voice" && !text ? "iv-bad" : "muted");
   const ta = $("#iv-edit");
   ta.value = text;
-  ta.placeholder = IV.mode === "voice" ? "Tidak ada ucapan yang dikenali. Ketik ringkasan jawabanmu, atau ulangi jawaban." : "";
+  ta.placeholder = "Ketik jawabanmu di sini…";
   $("#iv-self").innerHTML = IV.s.selfChecks.map((c, i) => `<label class="check"><input type="checkbox" data-self="${i}"> <span>${esc(c)}</span></label>`).join("");
   const last = IV.idx === IV.s.questions.length - 1;
   $("#iv-next").textContent = last ? "Selesai & lihat hasil" : "Pertanyaan berikutnya ›";
   box.scrollIntoView({ behavior: "smooth", block: "start" });
-  $("#iv-redo").onclick = () => { box.hidden = true; startAnswer(q); };
+  $("#iv-redo").onclick = () => { box.hidden = true; $("#iv-answer").hidden = false; startAnswer(q); };
   $("#iv-next").onclick = () => {
     const final = ta.value.trim();
-    IV.answers[IV.idx] = { qId: q.qId, transcript: final, durationSec: dur, mode: IV.mode, edited: final !== text, self: $$("#iv-self [data-self]").map((x) => x.checked) };
+    IV.answers[IV.idx] = { qId: q.qId, transcript: final, durationSec: dur, mode: IV.ansMode === "voice" && text ? "voice" : "text", edited: final !== text, self: $$("#iv-self [data-self]").map((x) => x.checked) };
     safeSet(ivKey(IV.s.sessionId), { answers: IV.answers });
     IV.idx++;
     if (IV.idx >= IV.s.questions.length) return submitInterview();
@@ -508,7 +571,6 @@ async function submitInterview() {
   const out = $("#iv-result");
   out.hidden = false;
   out.innerHTML = `<div class="pcard"><div class="skeleton" style="width:60%"></div><p class="small muted">Menilai jawabanmu…</p></div>`;
-  try { IV.stream && IV.stream.getTracks().forEach((t) => t.stop()); } catch { /* abaikan */ }
   const res = await api.call("submitInterview", { sessionId: IV.s.sessionId, answers: IV.answers });
   if (!res.ok) {
     out.innerHTML = `<p class="status-msg error">${esc(res.error.message)}</p><button class="btn btn-primary" type="button" id="iv-retry">Kirim ulang</button>`;
