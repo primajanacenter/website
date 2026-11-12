@@ -5,7 +5,7 @@
  *   paket-skb.html                     → pilih instansi (pilihan tersimpan di profil)
  *   paket-skb.html?i=kemenag&tab=…     → kotak Tryout SKB · Materi SKB · Latihan Soal · Wawancara · Info seleksi
  *   paket-skb.html?i=kemenag&materi=…  → materi satu topik + 3 contoh soal
- *   paket-skb.html?i=kemenag&wawancara=1 → latihan wawancara gaya mock test (mode suara / ketik)
+ *   paket-skb.html?i=kemenag&wawancara=1 → latihan wawancara gaya mock test (mode suara / ketik; pertanyaan tampil berkedip, tanpa suara)
  *   paket-skb.html?hasil=<sesi>        → hasil wawancara
  *
  * Premium SKB (Rp85.000 / 30 hari, semua instansi) terpisah dari Premium SKD.
@@ -280,7 +280,7 @@ function renderExamples(levels) {
 
 /* =================== 4. Latihan wawancara =================== */
 // Fase 14.1: mesin suara dipisah ke voice.js (tanpa getUserMedia bersamaan di HP, mulai ulang otomatis, pesan galat jelas).
-const IV = { s: null, idx: 0, answers: [], mode: "voice", tts: true, timer: null, listener: null, side: null, audioUrl: "", phase: "", t0: 0,
+const IV = { s: null, idx: 0, answers: [], mode: "voice", timer: null, listener: null, side: null, audioUrl: "", phase: "", t0: 0,
   ansMode: "voice", tested: false, q: null };
 const fmtClock = (s) => `${String(Math.floor(Math.max(0, s) / 60)).padStart(2, "0")}:${String(Math.max(0, Math.ceil(s)) % 60).padStart(2, "0")}`;
 const fmtBand = (b) => String(b).replace(".", ",");
@@ -309,7 +309,6 @@ async function startInterviewFlow(insId) {
   $("#iv-begin").onclick = async () => {
     const btn = $("#iv-begin");
     IV.mode = $("input[name=iv-mode]:checked").value;
-    IV.tts = $("#iv-tts").checked;
     if (IV.mode === "voice" && !IV.tested) {
       setupMsg("Jalankan tes mikrofon dulu sampai keempat tanda ✓ hijau. Bila tes gagal, pilih Mode ketik.");
       $("#iv-test-box").scrollIntoView({ behavior: "smooth", block: "center" });
@@ -373,22 +372,6 @@ async function micTest() {
   }
 }
 
-function speak(text) {
-  return new Promise((resolve) => {
-    if (!IV.tts || !window.speechSynthesis) return resolve();
-    try {
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = "id-ID"; u.rate = 0.98;
-      const v = speechSynthesis.getVoices().find((x) => /^id(-|_)/i.test(x.lang));
-      if (v) u.voice = v;
-      const guard = setTimeout(resolve, Math.min(30000, 1500 + text.length * 90));
-      u.onend = u.onerror = () => { clearTimeout(guard); resolve(); };
-      speechSynthesis.speak(u);
-    } catch { resolve(); }
-  });
-}
-
 function setPhase(name, label) {
   IV.phase = name;
   $("#iv-phase").textContent = label;
@@ -438,16 +421,18 @@ async function askQuestion() {
   $("#iv-stop").hidden = true;
   $("#iv-skip-prep").hidden = false;
   $("#iv-progress").style.width = "0%";
-  $("#iv-q").focus();
-  $("#iv-repeat").onclick = () => { const t = IV.tts; IV.tts = true; speak(q.text); IV.tts = t; };
-  setPhase("listen", "Dengarkan pertanyaan");
-  $("#iv-clock").textContent = fmtClock(q.prepSec);
+  $("#iv-q").focus({ preventScroll: true });
+  // pastikan kartu pertanyaan terlihat penuh di bawah header (tidak tertutup)
+  const hdr = document.querySelector(".site-header");
+  const top = $("#iv-card").getBoundingClientRect().top + window.scrollY - ((hdr && hdr.offsetHeight) || 0) - 12;
+  window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
+  // Fase 14.1: tanpa suara pewawancara — teks pertanyaan berkedip selama waktu membaca & persiapan
+  const card = $("#iv-card");
+  card.classList.remove("blink"); void card.offsetWidth; card.classList.add("blink");
   let started = false;
-  const go = () => { if (started) return; started = true; window.speechSynthesis && speechSynthesis.cancel(); startAnswer(q); };
+  const go = () => { if (started) return; started = true; card.classList.remove("blink"); startAnswer(q); };
   $("#iv-skip-prep").onclick = go;
-  await speak(q.text);
-  if (started) return;
-  setPhase("prep", `Persiapan · ${q.prepSec} detik — susun poin jawabanmu`);
+  setPhase("prep", `Baca pertanyaan & persiapan · ${q.prepSec} detik`);
   countdown(q.prepSec, go);
 }
 
