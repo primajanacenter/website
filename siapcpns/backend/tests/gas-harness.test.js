@@ -272,8 +272,8 @@ let ps2=post('startPractice',{},carol);
 check('hari baru: kuota pulih & soal salah muncul pertama', ps2.ok && ps2.data.questions[0].id===wrongId, ps2.data&&ps2.data.questions.map(q=>q.id));
 td=post('getToday',{},carol);
 check('streak putus bila kemarin tidak latihan', td.data.streak===0, td.data.streak);
-let pst=post('startPractice',{topicId:'tiu-deret'},carol);
-check('latihan per topik', pst.ok && pst.data.questions.every(q=>q.topicId==='tiu-deret'), pst.data&&pst.data.questions.map(q=>q.topicId));
+let pst=post('startPractice',{topicId:'tiu-cerita'},carol);
+check('latihan per topik', pst.ok && pst.data.questions.every(q=>q.topicId==='tiu-cerita'), pst.data&&pst.data.questions.map(q=>q.topicId));
 // premium tanpa batas harian
 const crow=sheets.users.rows.find(r=>r[1]==='carol@x.com'); crow[5]='premium'; crow[6]=new Date(Date.now()+30*86400000).toISOString().slice(0,10);
 sheets.practice_answers.rows.slice(1).forEach(r=>{r[1]=new Date().toISOString().slice(0,10);});
@@ -811,12 +811,12 @@ check('F13 materi Premium terbuka untuk Premium', !dinaPrem || post('getMateriTo
 let tp=post('getTopicPractice',{},zed);
 check('F13 latihan per materi: 21 topik, 45 menit, 50 soal', tp.ok && tp.data.topics.length===21 && tp.data.durationMin===45 && tp.data.size===50 && !tp.data.topics.find(t=>t.topicId==='tiu-analogi').locked && tp.data.topics.find(t=>t.topicId==='twk-pancasila').locked, tp.data);
 check('F13 topik terkunci butuh Premium', post0('startAttempt',{packageId:'LTP-twk-pancasila'},zed).error.code==='PREMIUM_REQUIRED');
-const lt=post0('startAttempt',{packageId:'LTP-tiu-analogi'},zed);
-check('F13 latihan topik gratis: soal dari bank latihan, 45 menit, tanpa kunci', lt.ok && lt.data.questions.length>=1 && lt.data.questions.every(q=>q.topicId==='tiu-analogi') && lt.data.durationMin===45 && !/"answer"|"explanation"/.test(JSON.stringify(lt.data.questions)), lt.error||lt.data);
-const ltAns={}; lt.data.questions.forEach(q=>{const src=demo.questions[Number(q.id.split('-').pop())-1]; ltAns[q.id]=src.answer;});
+const lt=post0('startAttempt',{packageId:'LTP-tkp-pelayanan'},zed);
+check('F13 latihan topik gratis: soal dari bank latihan, 45 menit, tanpa kunci', lt.ok && lt.data.questions.length>=1 && lt.data.questions.every(q=>q.topicId==='tkp-pelayanan') && lt.data.durationMin===45 && !/"answer"|"explanation"/.test(JSON.stringify(lt.data.questions)), lt.error||lt.data);
+const ltAns={}; lt.data.questions.forEach(q=>{const src=demo.questions[Number(q.id.split('-').pop())-1]; ltAns[q.id]=src.answer||'abcde'[src.scores.indexOf(5)];});
 post('submitAttempt',{attemptId:lt.data.attemptId,answers:ltAns},zed);
 const ltr=post('getReport',{attemptId:lt.data.attemptId},zed);
-check('F13 rapor latihan topik: satu subtes, skala 100, pembahasan semua', ltr.ok && ltr.data.subtests.length===1 && ltr.data.subtests[0].id==='tiu' && ltr.data.score100===100 && ltr.data.review.length===lt.data.questions.length && ltr.data.package.type==='topik', ltr.error||ltr.data);
+check('F13 rapor latihan topik: satu subtes, skala 100, pembahasan semua', ltr.ok && ltr.data.subtests.length===1 && ltr.data.subtests[0].id==='tkp' && ltr.data.score100===100 && ltr.data.review.length===lt.data.questions.length && ltr.data.package.type==='topik', ltr.error||ltr.data);
 check('F13 topik tidak dikenal', post0('startAttempt',{packageId:'LTP-xyz'},zed).error.code==='NOT_FOUND');
 check('F13 Premium membuka semua topik', !dinaPrem || post0('startAttempt',{packageId:'LTP-twk-pancasila'},dina).ok);
 
