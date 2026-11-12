@@ -10,7 +10,7 @@
  *
  * Saat merilis perubahan besar, naikkan CACHE_VERSION agar cache lama dibersihkan.
  */
-const CACHE_VERSION = "sc-v14.0";
+const CACHE_VERSION = "sc-v14.1";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const NETWORK_TIMEOUT_MS = 6000;
@@ -27,7 +27,7 @@ const PRECACHE = [
   "assets/data/materi-level1.json",
   "assets/img/primajana-mark-96.png", "assets/img/primajana-logo-112.png", "assets/img/icon-192.png", "assets/img/favicon-32.png",
   "pages/materi.html", "pages/panduan.html", "pages/pengaturan.html", "pages/akun.html", "pages/rapot.html", "pages/paket-skb.html",
-  "assets/js/features/paket-skb.js",
+  "assets/js/features/paket-skb.js", "assets/js/features/voice.js",
 ];
 
 self.addEventListener("install", (event) => {
