@@ -9,9 +9,9 @@ import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
 import { store, KEYS } from "../core/store.js";
 import { $, esc, fmtDate, setBusy, toast } from "../core/ui.js";
-import { emptyBox, fmtDT, fmtDay, fmtTime, initBottomNav, premiumSheet, rupiah } from "./hub.js";
+import { emptyBox, fmtDT, fmtDay, fmtTime, initBottomNav, premiumSheet, skbSheet, rupiah } from "./hub.js";
 
-const KIND = { premium: "Premium", tryout: "Paket tryout", akbar: "Tiket Akbar", live: "Live Mentoring", rec: "Rekaman", consult: "Konsultasi" };
+const KIND = { premium: "Premium", tryout: "Paket tryout", akbar: "Tiket Akbar", live: "Live Mentoring", rec: "Rekaman", consult: "Konsultasi", skb: "Premium SKB" };
 const STATUS = { paid: ["Lunas", "chip-ok"], pending: ["Menunggu", "chip-warn"], expired: ["Kedaluwarsa", ""], failed: ["Gagal", "chip-bad"] };
 
 export async function initAkun() {
@@ -25,7 +25,7 @@ export async function initAkun() {
   }
   if (me.ok) { store.set(KEYS.ME, { ...me.data, fetchedAt: Date.now() }); auth.updateUser(me.data.user); }
   const user = me.ok ? me.data.user : auth.getUser();
-  renderProfile(user, items.data.premium);
+  renderProfile(user, items.data.premium, items.data.skb);
   $("#ak-admin").hidden = !(me.ok && me.data.isAdmin);
   renderPending(items.data.pending);
   renderLive(items.data.live);
@@ -37,13 +37,20 @@ export async function initAkun() {
   if (location.hash) document.querySelector(location.hash)?.scrollIntoView();
 }
 
-function renderProfile(u, p) {
+function renderProfile(u, p, skb) {
   const ini = String(u?.name || u?.email || "?").trim().charAt(0).toUpperCase();
   $("#ak-prof").innerHTML = `${u?.picture ? `<img src="${esc(u.picture)}" alt="" referrerpolicy="no-referrer">` : `<span class="av">${esc(ini)}</span>`}<div><b>${esc(u?.name || "Pengguna")}</b><span>${esc(u?.email || "")}</span></div>`;
   $("#ak-premium").innerHTML = p.active
     ? `<div class="row" style="align-items:center;gap:8px"><span class="chip chip-accent">Premium aktif</span><span class="small">s.d. ${esc(fmtDate(p.until))}${p.legacy ? " · termasuk semua paket tryout reguler (hak paket lama)" : ""}</span></div>`
     : `<div class="row" style="align-items:center;gap:8px;justify-content:space-between"><span class="small muted">Akun gratis · Premium membuka semua Paket Materi & Latihan Soal per Materi</span><button class="btn btn-accent" type="button" id="ak-go-premium">Berlangganan</button></div>`;
   $("#ak-go-premium")?.addEventListener("click", () => premiumSheet({ title: "Langganan Premium", text: "Buka semua materi dan latihan soal." }));
+  // Fase 14: Premium SKB (terpisah dari Premium SKD)
+  if (skb) {
+    $("#ak-premium").insertAdjacentHTML("beforeend", skb.active
+      ? `<div class="row" style="align-items:center;gap:8px;margin-top:8px"><span class="chip chip-ok">Premium SKB aktif</span><span class="small">s.d. ${esc(fmtDate(skb.until))} · semua instansi</span><a class="small" href="paket-skb.html">Paket SKB ›</a></div>`
+      : `<div class="row" style="align-items:center;gap:8px;justify-content:space-between;margin-top:8px"><span class="small muted">Premium SKB ${rupiah(skb.price)}/bulan · tryout, materi, latihan & wawancara SKB semua instansi</span><button class="btn btn-secondary btn-sm" type="button" id="ak-go-skb">Lihat</button></div>`);
+    $("#ak-go-skb")?.addEventListener("click", () => skbSheet({ price: skb.price }));
+  }
 }
 
 function renderPending(list) {

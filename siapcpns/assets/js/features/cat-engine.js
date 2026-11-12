@@ -14,7 +14,7 @@ import { store } from "../core/store.js";
 import { $, esc, toast, isSvg, richText, setContext } from "../core/ui.js";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
-const SUB_LABEL = { twk: "TWK", tiu: "TIU", tkp: "TKP" };
+const SUB_LABEL = { twk: "TWK", tiu: "TIU", tkp: "TKP", skb: "SKB" };
 const SAVE_EVERY_CHANGES = 10;
 const SAVE_EVERY_MS = 120000;
 

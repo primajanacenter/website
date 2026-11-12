@@ -15,11 +15,13 @@ const FEATURES = ["Semua judul Paket Materi TWK, TIU, TKP (21 topik)", "Contoh s
 const DONE_LINK = {
   premium: ["materi.html", "Buka Paket Materi"], tryout: ["tryout.html", "Kerjakan paket tryout"], akbar: ["tryout.html", "Lihat Tryout Akbar"],
   live: ["akun.html#live", "Lihat tiket di Akun"], rec: ["akun.html#rekaman", "Tonton rekaman"], consult: ["akun.html#konsultasi", "Lihat jadwal konsultasi"],
+  skb: ["paket-skb.html", "Buka Paket SKB"],
 };
 const DONE_TEXT = {
   tryout: "Paket tryout sudah menjadi milikmu dan bisa dikerjakan berulang kali.", akbar: "Tiket Tryout Akbar sudah aktif. Kerjakan saat event dibuka.",
   live: "Tiket Live Mentoring sudah aktif. Tombol Gabung muncul di menu Akun 15 menit sebelum sesi.", rec: "Rekaman sudah terbuka di menu Akun.",
   consult: "Jadwal konsultasimu sudah dipesan. Ruang chat terbuka 10 menit sebelum sesi di menu Akun.",
+  skb: "Premium SKB aktif selama 30 hari: semua tryout, materi, latihan soal, dan latihan wawancara SKB untuk semua instansi sudah terbuka.",
 };
 const rupiah = (n) => "Rp" + Number(n || 0).toLocaleString("id-ID");
 

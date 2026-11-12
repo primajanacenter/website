@@ -1,5 +1,5 @@
 /**
- * home.js — Beranda (menu kotak A–F) untuk semua pengunjung (Fase 13).
+ * home.js — Beranda (menu kotak A–H) untuk semua pengunjung (Fase 13–14).
  * Pengunjung tanpa login tetap melihat menu; login baru diminta saat membeli atau mengerjakan.
  */
 
@@ -18,8 +18,9 @@ export async function initHome() {
     $("#h-sub").textContent = "Mau belajar apa hari ini?";
     const chip = $("#h-plan");
     chip.hidden = false;
-    chip.textContent = user.plan === "premium" ? "Premium aktif" : "Akun gratis";
-    if (user.plan === "premium") chip.classList.add("chip-accent");
+    const skbOn = user.skbUntil && user.skbUntil >= new Date().toISOString().slice(0, 10);
+    chip.textContent = user.plan === "premium" ? (skbOn ? "Premium + SKB aktif" : "Premium aktif") : skbOn ? "Premium SKB aktif" : "Akun gratis";
+    if (user.plan === "premium" || skbOn) chip.classList.add("chip-accent");
   }
 
   const calls = [{ action: "getTryoutCatalog" }];

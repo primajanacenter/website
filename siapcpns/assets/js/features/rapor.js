@@ -42,7 +42,7 @@ function render(r) {
   $("#r-total").textContent = r.total;
   $("#r-max").textContent = r.maxTotal;
 
-  if (r.package.type === "skb") return renderSkb(r);
+  if (r.package.type === "skb" || r.package.type === "skbtopik") return renderSkb(r);
   if (r.package.type === "topik") return renderTopik(r);
   const failed = r.subtests.filter((s) => !s.passed);
   const v = $("#r-verdict");
@@ -89,10 +89,19 @@ function renderSkb(r) {
     <td><strong>SKB</strong><br><span class="xsmall muted">${esc(s.label)}</span></td>
     <td class="num"><strong>${s.score}</strong> / ${s.max}<br><span class="xsmall muted">skala 100: ${n}</span></td>
     <td><div class="pg-bar" role="img" aria-label="Nilai ${n} dari 100"><span style="width:${pct}%"></span></div><span class="xsmall muted">${s.correct} benar dari ${s.total}</span></td>
-    <td><a class="chip chip-primary" href="skb.html">Panduan SKB</a></td>
+    <td><a class="chip chip-primary" href="${skbHref(r)}">Paket SKB</a></td>
   </tr>`;
+  const again = document.querySelector("#r-actions .btn-secondary");
+  if (again) { again.href = skbHref(r, r.package.type === "skbtopik" ? "latihan" : "tryout"); again.textContent = r.package.type === "skbtopik" ? "Latihan SKB lain" : "Tryout SKB lain"; }
+  if (r.package.type === "skbtopik") { renderReview(r); return; }
   renderTopics(r);
   renderReview(r);
+}
+
+/** Fase 14: tautan kembali ke Paket SKB instansi paket ini. */
+function skbHref(r, tab) {
+  const ins = r.package.instansi;
+  return ins ? `paket-skb.html?i=${encodeURIComponent(ins)}${tab ? `&tab=${tab}` : ""}` : "skb.html";
 }
 
 /** Fase 13: rapor Latihan Soal per Materi — satu topik, skala 0–100, pembahasan semua soal. */

@@ -5,6 +5,7 @@
  * - initBottomNav(): navigasi bawah di HP (Beranda · Tryout · Materi · Rapot · Akun).
  * - buy(): beli produk satuan lewat Mayar (harga selalu dari server).
  * - premiumSheet(): pop-up langganan Premium (Paket Materi & Paket Latihan Soal).
+ * - skbSheet(): pop-up Premium SKB (Fase 14).
  */
 
 import { api } from "../core/api.js";
@@ -26,6 +27,10 @@ export const ICON = {
   trophy: sv('<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"/>'),
   play: sv('<circle cx="12" cy="12" r="9"/><path d="m10 8.5 5.5 3.5-5.5 3.5z"/>'),
   star: sv('<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.5 2.9 1-6.1L3.2 9.5l6.1-.9z"/>'),
+  skb: sv('<path d="M3 21h18"/><path d="M4 10h16"/><path d="m12 3 8 4.5H4z"/><path d="M6 10v8M10 10v8M14 10v8M18 10v8"/>'),
+  info: sv('<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>'),
+  mic: sv('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/>'),
+  chat: sv('<path d="M4 5h16v11H8l-4 4z"/><path d="M8 9.5h8M8 12.5h5"/>'),
 };
 
 const PREFIX = () => (location.pathname.includes("/pages/") ? "" : "pages/");
@@ -71,7 +76,7 @@ export function goLogin(next) {
 }
 
 /**
- * Beli produk satuan: kind = tryout | akbar | live | rec | consult.
+ * Beli produk satuan: kind = tryout | akbar | live | rec | consult | skb (Premium SKB, refId SKB1M).
  * Harga & ketersediaan diperiksa server; browser hanya mengirim jenis & ID produk.
  */
 export async function buy(kind, refId, btn) {
@@ -152,10 +157,43 @@ export async function premiumSheet(opts = {}) {
   };
 }
 
+/**
+ * Fase 14: pop-up Premium SKB — satu paket Rp85.000 / 30 hari untuk semua instansi.
+ * Harga ditampilkan dari server (opts.price); pembayaran tetap memakai harga server.
+ */
+export function skbSheet(opts = {}) {
+  let el = $("#skb-sheet");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "skb-sheet";
+    el.className = "sheet";
+    el.hidden = true;
+    el.setAttribute("role", "dialog");
+    el.setAttribute("aria-modal", "true");
+    el.setAttribute("aria-labelledby", "ss-h");
+    document.body.appendChild(el);
+    el.addEventListener("click", (e) => { if (e.target === el) el.hidden = true; });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !el.hidden) el.hidden = true; });
+  }
+  const price = opts.price || 85000;
+  el.innerHTML = `<div class="box"><div class="row" style="align-items:center"><span class="lock">${ICON.lock}</span><button class="x" type="button" aria-label="Tutup">×</button></div>
+    <h3 id="ss-h">${esc(opts.title || "Buka dengan Premium SKB")}</h3>
+    <p class="small muted">${esc(opts.text || "Bagian ini khusus pelanggan Premium SKB.")}</p>
+    <div class="plan-opt" aria-pressed="true" style="cursor:default"><span><b>Premium SKB 1 bulan</b><small>30 hari · semua instansi</small></span><span class="pp"><b>${rupiah(price)}</b></span></div>
+    <ul class="incl"><li>3 tryout SKB per instansi (100 soal), bebas diulang</li><li>Semua materi SKB + contoh soal mudah, sedang, sulit</li><li>Latihan soal 50 soal per topik dengan pembahasan</li><li>Latihan wawancara mode suara tanpa batas</li><li>Bayar sekali, tanpa perpanjangan otomatis</li></ul>
+    <button class="btn btn-accent btn-block" type="button" id="ss-buy">Langganan Premium SKB · ${rupiah(price)}</button>
+    <p class="xsmall muted">Premium SKB terpisah dari Premium SKD (materi & latihan TWK, TIU, TKP). Beli lagi sebelum habis untuk menambah 30 hari.</p></div>`;
+  el.hidden = false;
+  el.querySelector(".x").addEventListener("click", () => (el.hidden = true));
+  const btn = el.querySelector("#ss-buy");
+  btn.onclick = () => buy("skb", "SKB1M", btn);
+}
+
 /** Tampilkan pesan kesalahan standar; kembalikan true bila sudah ditangani (mis. perlu login). */
 export function handleCommonError(err, statusEl) {
   if (err.code === "UNAUTHENTICATED") { goLogin(); return true; }
   if (err.code === "PREMIUM_REQUIRED") { premiumSheet({ text: err.message }); return true; }
+  if (err.code === "SKB_REQUIRED") { skbSheet({ text: err.message }); return true; }
   if (statusEl) { statusEl.hidden = false; statusEl.classList.add("error"); statusEl.textContent = err.message; }
   else toast(err.message, 4500);
   return false;
