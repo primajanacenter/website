@@ -274,12 +274,6 @@
         </div>
         <input type="search" id="f-q" placeholder="Cari ID, jenis, nomor WA…" aria-label="Cari order">
         <select id="f-assignee" aria-label="Filter anggota tim"></select>
-        <select id="f-pay" aria-label="Filter status pembayaran">
-          <option value="all">Semua pembayaran</option>
-          <option value="Belum Bayar">Belum bayar</option>
-          <option value="DP">Sudah DP</option>
-          <option value="Lunas">Lunas</option>
-        </select>
         <button type="button" class="badge info quick-chip" id="quick-chip" hidden></button>
         <span class="spacer"></span>
         <a class="btn btn-ghost btn-sm" href="formulir.html" target="_blank" rel="noopener">Buka form order</a>
@@ -292,7 +286,7 @@
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>ID</th><th>Jenis</th><th>Deadline</th><th>Status</th><th>Ditugaskan</th><th>Pembayaran</th><th class="num">Biaya</th></tr></thead>
+            <thead><tr><th>ID</th><th>Jenis</th><th>Deadline</th><th>Status</th><th>Ditugaskan</th><th class="num">Biaya</th></tr></thead>
             <tbody id="list-body"></tbody>
           </table>
         </div>
@@ -307,7 +301,7 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>ID</th><th>Jenis</th><th>WhatsApp</th><th>Diarsipkan</th><th>Ditugaskan</th><th class="num">Biaya</th><th>Pembayaran</th><th></th></tr></thead>
+          <thead><tr><th>ID</th><th>Jenis</th><th>WhatsApp</th><th>Diarsipkan</th><th>Ditugaskan</th><th class="num">Biaya</th><th></th></tr></thead>
           <tbody id="archive-body"></tbody>
         </table>
       </div>
@@ -473,7 +467,7 @@
     token: store.get('pj_token'),
     user: null, orders: [], users: [], statuses: [],
     tab: 'board',
-    filter: { q: '', assignee: 'all', payment: 'all', quick: null },
+    filter: { q: '', assignee: 'all', quick: null },
     archiveQ: '',
     fin: { preset: 'month', from: '', to: '' },
     editing: null, editingUser: null, dragId: null, busy: false,
@@ -485,7 +479,6 @@
     active: { label: 'Sedang berjalan', cls: '' },
     near: { label: `Deadline ${W} hari ke depan`, cls: 'warn' },
     overdue: { label: 'Lewat deadline', cls: 'danger' },
-    unpaid: { label: 'Belum lunas', cls: '' },
     done: { label: 'Selesai, siap diarsipkan', cls: 'ok' }
   };
 
@@ -522,7 +515,6 @@
       case 'active': return !isDone(o);
       case 'near': return !isDone(o) && d !== null && d >= 0 && d <= W;
       case 'overdue': return !isDone(o) && d !== null && d < 0;
-      case 'unpaid': return o.paymentStatus !== 'Lunas';
       case 'done': return isDone(o);
       default: return true;
     }
@@ -543,12 +535,6 @@
     if (left <= 0) return 'Diarsipkan otomatis pada pengecekan berikutnya';
     if (left === 1) return 'Diarsipkan otomatis besok';
     return `Diarsipkan otomatis dalam ${left} hari`;
-  }
-
-  function payBadge(o) {
-    const m = { 'Lunas': 'ok', 'DP': 'warn', 'Belum Bayar': 'danger' };
-    const label = { 'Lunas': 'Lunas', 'DP': 'DP', 'Belum Bayar': 'Belum bayar' };
-    return `<span class="badge ${m[o.paymentStatus] || ''}">${label[o.paymentStatus] || esc(o.paymentStatus)}</span>`;
   }
 
   function deadlineInfo(o) {
@@ -677,9 +663,8 @@
   // Klik angka ringkasan → tampilkan daftar order terkait
   function goQuick(k) {
     if (S.tab !== 'board') switchTab('board');
-    S.filter = { q: '', assignee: 'all', payment: 'all', quick: k };
+    S.filter = { q: '', assignee: 'all', quick: k };
     $('#f-q').value = '';
-    $('#f-pay').value = 'all';
     $('#f-assignee').value = 'all';
     setView('list');
     $('#list-head').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -711,7 +696,6 @@
   $('#list-clear').addEventListener('click', () => { S.filter.quick = null; renderBoardArea(); });
   $('#f-q').addEventListener('input', (e) => { S.filter.q = e.target.value; renderBoardArea(); });
   $('#f-assignee').addEventListener('change', (e) => { S.filter.assignee = e.target.value; renderBoardArea(); });
-  $('#f-pay').addEventListener('change', (e) => { S.filter.payment = e.target.value; renderBoardArea(); });
 
   function boardOrders() {
     const f = S.filter;
@@ -721,7 +705,6 @@
       if (f.assignee === 'me' && o.assignee !== S.user.username) return false;
       if (f.assignee === 'none' && o.assignee) return false;
       if (!['all', 'me', 'none'].includes(f.assignee) && o.assignee !== f.assignee) return false;
-      if (f.payment !== 'all' && o.paymentStatus !== f.payment) return false;
       return f.quick ? matchQuick(o, f.quick) : true;
     }).sort((a, b) => (a.deadline || '9999').localeCompare(b.deadline || '9999'));
   }
@@ -736,7 +719,7 @@
       <div class="card-top"><span class="card-id">${esc(o.id)}</span><span class="badge ${dl.cls} ${dl.state === 'late' ? 'blink' : ''}">${esc(dl.text)}</span></div>
       <h3>${esc(o.jenis)}</h3>
       ${o.catatan ? `<p class="card-note">${esc(o.catatan)}</p>` : ''}
-      <div class="card-foot">${who}${payBadge(o)}<span class="amount">${rupiah(o.biaya)}</span></div>
+      <div class="card-foot">${who}<span class="amount">${rupiah(o.biaya)}</span></div>
       ${isDone(o) && autoArchiveText(o) ? `<p class="auto-note">${esc(autoArchiveText(o))}</p>` : ''}
       ${isDone(o) ? `<button type="button" class="btn btn-ghost btn-sm card-archive" data-archive="${esc(o.id)}">Arsipkan sekarang</button>` : ''}
     </article>`;
@@ -767,9 +750,8 @@
         <td><span class="badge ${dl.cls} ${dl.state ? 'blink' : ''}">${esc(dl.text)}</span></td>
         <td>${esc(o.status)}</td>
         <td>${o.assignee ? esc(userName(o.assignee)) : '<span class="hint">Belum ditugaskan</span>'}</td>
-        <td>${payBadge(o)}</td>
         <td class="num">${rupiah(o.biaya)}</td></tr>`;
-    }).join('') : '<tr><td colspan="7" class="empty">Tidak ada order di kategori ini.</td></tr>';
+    }).join('') : '<tr><td colspan="6" class="empty">Tidak ada order di kategori ini.</td></tr>';
   }
 
   $('#list-body').addEventListener('click', (e) => {
@@ -1029,8 +1011,7 @@
     const biaya = num(fld('biaya').value);
     const paid = num(fld('dpAmount').value) + num(fld('pelunasanAmount').value);
     const sisa = Math.max(biaya - paid, 0);
-    const status = paid <= 0 ? 'Belum Bayar' : paid >= biaya ? 'Lunas' : 'DP';
-    $('#od-paysum').innerHTML = `<span>Dibayar <b>${rupiah(paid)}</b></span><span>Sisa <b>${rupiah(sisa)}</b></span>${payBadge({ paymentStatus: status })}` +
+    $('#od-paysum').innerHTML = `<span>Dibayar <b>${rupiah(paid)}</b></span><span>Sisa <b>${rupiah(sisa)}</b></span>` +
       (paid > biaya ? '<span class="badge danger">Pembayaran melebihi biaya</span>' : '');
   }
 
@@ -1130,12 +1111,11 @@
         <td>${esc(formatTanggal(o.archivedAt))} ${o.updatedBy === 'sistem' ? '<span class="badge info">Otomatis</span>' : ''}</td>
         <td>${o.assignee ? esc(userName(o.assignee)) : '<span class="hint">-</span>'}</td>
         <td class="num">${rupiah(o.biaya)}</td>
-        <td>${payBadge(o)}</td>
         <td><div class="row-actions">
           <button type="button" class="btn btn-ghost btn-sm" data-open="${esc(o.id)}">Buka</button>
           <button type="button" class="btn btn-ghost btn-sm" data-restore="${esc(o.id)}">Pulihkan</button>
         </div></td></tr>`).join('')
-      : `<tr><td colspan="8" class="empty">${q ? 'Tidak ada order arsip yang cocok dengan pencarian.' : `Belum ada order yang diarsipkan. Order selesai diarsipkan otomatis setelah ${S.autoArchiveDays} hari, atau bisa diarsipkan manual dari papan.`}</td></tr>`;
+      : `<tr><td colspan="7" class="empty">${q ? 'Tidak ada order arsip yang cocok dengan pencarian.' : `Belum ada order yang diarsipkan. Order selesai diarsipkan otomatis setelah ${S.autoArchiveDays} hari, atau bisa diarsipkan manual dari papan.`}</td></tr>`;
   }
 
   $('#archive-body').addEventListener('click', (e) => {
