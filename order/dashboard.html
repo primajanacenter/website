@@ -133,10 +133,6 @@
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
   @media (max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
   .section-title { font-size: 14px; font-weight: 800; margin: 4px 0 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-  .pay-box { background: var(--surface-2); border-radius: var(--radius-m); padding: 14px 14px 0; margin-bottom: 18px; }
-  .pay-box .field { margin-bottom: 14px; }
-  .pay-sum { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; padding: 0 0 14px; align-items: center; }
-  .pay-sum b { font-variant-numeric: tabular-nums; }
   .meta-line { font-size: 12px; color: var(--muted); margin: 0 0 14px; }
   .check { display: flex; gap: 8px; align-items: center; font-weight: 600; margin-bottom: 18px; }
   .check input { width: 18px; height: 18px; min-height: 0; }
@@ -286,7 +282,7 @@
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>ID</th><th>Jenis</th><th>Deadline</th><th>Status</th><th>Ditugaskan</th><th class="num">Biaya</th></tr></thead>
+            <thead><tr><th>ID</th><th>Jenis</th><th>Deadline</th><th>Status</th><th>Ditugaskan</th><th class="num">Nominal</th></tr></thead>
             <tbody id="list-body"></tbody>
           </table>
         </div>
@@ -301,7 +297,7 @@
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>ID</th><th>Jenis</th><th>WhatsApp</th><th>Diarsipkan</th><th>Ditugaskan</th><th class="num">Biaya</th><th></th></tr></thead>
+          <thead><tr><th>ID</th><th>Jenis</th><th>WhatsApp</th><th>Diarsipkan</th><th>Ditugaskan</th><th class="num">Nominal</th><th></th></tr></thead>
           <tbody id="archive-body"></tbody>
         </table>
       </div>
@@ -309,7 +305,7 @@
 
     <!-- KEUANGAN -->
     <section data-panel="finance" hidden>
-      <div class="page-head"><div><h1>Keuangan</h1><p>Pemasukan dihitung dari tanggal DP dan pelunasan yang dicatat.</p></div></div>
+      <div class="page-head"><div><h1>Keuangan</h1><p>Pemasukan dihitung dari nominal yang dibayarkan, berdasarkan tanggal order masuk.</p></div></div>
       <div class="fin-controls">
         <div class="field">
           <label for="fin-preset" class="field-label">Periode</label>
@@ -337,7 +333,7 @@
       </div>
       <div class="panel">
         <h2>Riwayat pembayaran</h2>
-        <div class="table-wrap"><table><thead><tr><th>Tanggal</th><th>ID order</th><th>Jenis</th><th>Pembayaran</th><th class="num">Nominal</th></tr></thead><tbody id="fin-tx"></tbody></table></div>
+        <div class="table-wrap"><table><thead><tr><th>Tanggal</th><th>ID order</th><th>Jenis</th><th class="num">Nominal</th></tr></thead><tbody id="fin-tx"></tbody></table></div>
       </div>
     </section>
 
@@ -380,18 +376,7 @@
         <div class="field"><label for="od-jenis">Jenis orderan</label><input id="od-jenis" name="jenis" maxlength="100"></div>
         <div class="field"><label for="od-deadline">Deadline</label><input id="od-deadline" name="deadline" type="date"></div>
         <div class="field"><label for="od-wa-input">Nomor WhatsApp</label><input id="od-wa-input" name="whatsapp" type="tel" inputmode="tel"></div>
-        <div class="field"><label for="od-biaya">Biaya disepakati</label><input id="od-biaya" name="biaya" inputmode="numeric"></div>
-      </div>
-
-      <div class="section-title">Pembayaran <button class="btn btn-ghost btn-sm" type="button" id="od-fill">Catat sisa sebagai pelunasan</button></div>
-      <div class="pay-box">
-        <div class="grid2">
-          <div class="field"><label for="od-dp">Nominal DP</label><input id="od-dp" name="dpAmount" inputmode="numeric" placeholder="0"></div>
-          <div class="field"><label for="od-dpdate">Tanggal DP</label><input id="od-dpdate" name="dpDate" type="date"></div>
-          <div class="field"><label for="od-pel">Nominal pelunasan</label><input id="od-pel" name="pelunasanAmount" inputmode="numeric" placeholder="0"></div>
-          <div class="field"><label for="od-peldate">Tanggal pelunasan</label><input id="od-peldate" name="pelunasanDate" type="date"></div>
-        </div>
-        <div class="pay-sum" id="od-paysum" aria-live="polite"></div>
+        <div class="field"><label for="od-biaya">Nominal dibayar (lunas)</label><input id="od-biaya" name="biaya" inputmode="numeric"></div>
       </div>
 
       <div class="field"><label for="od-catatan">Catatan dari customer</label><textarea id="od-catatan" name="catatan" maxlength="3000"></textarea></div>
@@ -990,10 +975,6 @@
     fld('deadline').value = o.deadline;
     fld('whatsapp').value = formatWa(o.whatsapp);
     fld('biaya').value = o.biaya || '';
-    fld('dpAmount').value = o.dpAmount || '';
-    fld('dpDate').value = o.dpDate || '';
-    fld('pelunasanAmount').value = o.pelunasanAmount || '';
-    fld('pelunasanDate').value = o.pelunasanDate || '';
     fld('catatan').value = o.catatan || '';
     fld('catatanInternal').value = o.catatanInternal || '';
     const who = o.updatedBy === 'customer' ? 'customer' : o.updatedBy === 'sistem' ? 'sistem (arsip otomatis)' : userName(o.updatedBy);
@@ -1003,29 +984,12 @@
     $('#od-archive').textContent = o.archived ? 'Pulihkan ke papan' : 'Arsipkan';
     $('#od-delete').hidden = S.user.role !== 'admin';
     showError($('#od-error'), '');
-    updatePaySum();
     $('#order-dialog').showModal();
   }
 
-  function updatePaySum() {
-    const biaya = num(fld('biaya').value);
-    const paid = num(fld('dpAmount').value) + num(fld('pelunasanAmount').value);
-    const sisa = Math.max(biaya - paid, 0);
-    $('#od-paysum').innerHTML = `<span>Dibayar <b>${rupiah(paid)}</b></span><span>Sisa <b>${rupiah(sisa)}</b></span>` +
-      (paid > biaya ? '<span class="badge danger">Pembayaran melebihi biaya</span>' : '');
-  }
-
-  ['biaya', 'dpAmount', 'pelunasanAmount'].forEach((n) => fld(n).addEventListener('input', () => {
-    const d = digitsOnly(fld(n).value);
-    if (fld(n).value !== d) fld(n).value = d;
-    updatePaySum();
-  }));
-
-  $('#od-fill').addEventListener('click', () => {
-    const sisa = num(fld('biaya').value) - num(fld('dpAmount').value);
-    fld('pelunasanAmount').value = Math.max(sisa, 0) || '';
-    if (!fld('pelunasanDate').value) fld('pelunasanDate').value = todayStr();
-    updatePaySum();
+  fld('biaya').addEventListener('input', () => {
+    const d = digitsOnly(fld('biaya').value);
+    if (fld('biaya').value !== d) fld('biaya').value = d;
   });
 
   of.addEventListener('submit', async (e) => {
@@ -1038,15 +1002,12 @@
       deadline: fld('deadline').value,
       whatsapp: digitsOnly(fld('whatsapp').value),
       biaya: num(fld('biaya').value),
-      dpAmount: num(fld('dpAmount').value),
-      dpDate: fld('dpDate').value,
-      pelunasanAmount: num(fld('pelunasanAmount').value),
-      pelunasanDate: fld('pelunasanDate').value,
       catatan: fld('catatan').value.trim(),
       catatanInternal: fld('catatanInternal').value.trim()
     };
     if (!vals.jenis) return showError($('#od-error'), 'Jenis orderan tidak boleh kosong.');
     if (!vals.deadline) return showError($('#od-error'), 'Deadline tidak boleh kosong.');
+    if (!vals.biaya) return showError($('#od-error'), 'Nominal dibayar tidak boleh kosong.');
     const changes = {};
     Object.keys(vals).forEach((k) => {
       const before = k === 'whatsapp' ? formatWa(o.whatsapp) : o[k];
@@ -1129,8 +1090,9 @@
   function transactions() {
     const tx = [];
     S.orders.forEach((o) => {
-      if (o.dpAmount > 0 && o.dpDate) tx.push({ date: o.dpDate, type: 'DP', amount: o.dpAmount, o: o });
-      if (o.pelunasanAmount > 0 && o.pelunasanDate) tx.push({ date: o.pelunasanDate, type: 'Pelunasan', amount: o.pelunasanAmount, o: o });
+      // Order hanya masuk jika sudah lunas: tanggal order = tanggal pembayaran
+      const date = String(o.createdAt || '').slice(0, 10);
+      if (o.biaya > 0 && date) tx.push({ date: date, amount: o.biaya, o: o });
     });
     return tx;
   }
@@ -1189,17 +1151,15 @@
 
     const tx = transactions().filter((x) => inRange(x.date)).sort((a, b) => b.date.localeCompare(a.date));
     const income = tx.reduce((s, x) => s + x.amount, 0);
-    const dpIncome = tx.filter((x) => x.type === 'DP').reduce((s, x) => s + x.amount, 0);
     const newOrders = S.orders.filter((o) => inRange(String(o.createdAt).slice(0, 10)));
-    const newValue = newOrders.reduce((s, o) => s + o.biaya, 0);
-    const receivable = S.orders.filter((o) => o.sisa > 0);
-    const receivableTotal = receivable.reduce((s, o) => s + o.sisa, 0);
+    const doneCount = newOrders.filter(isDone).length;
+    const maxOrder = Math.max.apply(null, tx.map((x) => x.amount).concat([0]));
 
     $('#fin-cards').innerHTML = `
-      <div class="panel feature"><p class="sub">Pemasukan periode ini</p><p class="big">${rupiah(income)}</p><p class="sub">${tx.length} pembayaran, termasuk DP ${rupiah(dpIncome)}</p></div>
-      <div class="panel"><p class="sub">Order masuk</p><p class="big">${newOrders.length}</p><p class="sub">Nilai total ${rupiah(newValue)}</p></div>
-      <div class="panel"><p class="sub">Belum tertagih (semua order)</p><p class="big">${rupiah(receivableTotal)}</p><p class="sub">dari ${receivable.length} order yang belum lunas</p></div>
-      <div class="panel"><p class="sub">Rata-rata nilai order</p><p class="big">${rupiah(newOrders.length ? Math.round(newValue / newOrders.length) : 0)}</p><p class="sub">untuk order masuk periode ini</p></div>`;
+      <div class="panel feature"><p class="sub">Pemasukan periode ini</p><p class="big">${rupiah(income)}</p><p class="sub">dari ${tx.length} order lunas</p></div>
+      <div class="panel"><p class="sub">Order masuk</p><p class="big">${newOrders.length}</p><p class="sub">${doneCount} sudah selesai dikerjakan</p></div>
+      <div class="panel"><p class="sub">Rata-rata nilai order</p><p class="big">${rupiah(tx.length ? Math.round(income / tx.length) : 0)}</p><p class="sub">untuk order masuk periode ini</p></div>
+      <div class="panel"><p class="sub">Order terbesar</p><p class="big">${rupiah(maxOrder)}</p><p class="sub">di periode ini</p></div>`;
 
     // Grafik
     const bk = buckets(from, to, tx);
@@ -1241,9 +1201,8 @@
         <td>${esc(formatTanggal(x.date))}</td>
         <td><a href="#" data-open="${esc(x.o.id)}">${esc(x.o.id)}</a></td>
         <td class="wrap">${esc(x.o.jenis)}</td>
-        <td><span class="badge ${x.type === 'DP' ? 'warn' : 'ok'}">${x.type}</span></td>
         <td class="num">${rupiah(x.amount)}</td></tr>`).join('')
-      : '<tr><td colspan="5" class="empty">Belum ada pembayaran di periode ini. Catat DP atau pelunasan dari detail order.</td></tr>';
+      : '<tr><td colspan="4" class="empty">Belum ada pembayaran di periode ini.</td></tr>';
 
     S.fin.lastTx = tx;
     S.fin.lastRange = [from, to];
@@ -1258,8 +1217,8 @@
     const tx = S.fin.lastTx || [];
     if (!tx.length) return toast('Tidak ada transaksi untuk diunduh di periode ini.', true);
     const q = (v) => '"' + String(v).replace(/"/g, '""') + '"';
-    const rows = [['Tanggal', 'ID Order', 'Jenis Orderan', 'Pembayaran', 'Nominal', 'Ditugaskan']]
-      .concat(tx.map((x) => [x.date, x.o.id, x.o.jenis, x.type, x.amount, x.o.assignee ? userName(x.o.assignee) : '']));
+    const rows = [['Tanggal', 'ID Order', 'Jenis Orderan', 'Nominal', 'Ditugaskan']]
+      .concat(tx.map((x) => [x.date, x.o.id, x.o.jenis, x.amount, x.o.assignee ? userName(x.o.assignee) : '']));
     const csv = '\ufeff' + rows.map((r) => r.map(q).join(',')).join('\n');
     const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
     const a = document.createElement('a');
