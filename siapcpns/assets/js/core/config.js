@@ -4,7 +4,7 @@
  * PENTING: file ini ada di repo PUBLIK dan bisa dibaca siapa pun.
  * Hanya isi dengan nilai yang memang aman untuk publik.
  *
- *  BOLEH di sini : URL Web App Apps Script, Google OAuth Client ID, nama aplikasi.
+ *  BOLEH di sini : URL Web App Apps Script, Google OAuth Client ID, nama aplikasi, GA Measurement ID.
  *  DILARANG      : API key Mayar, token webhook, ID Spreadsheet, password apa pun.
  *                  Semua rahasia disimpan di Script Properties (Apps Script).
  */
@@ -28,6 +28,10 @@ export const CONFIG = {
   // Opsional (Fase 1): link Google Form untuk daftar tunggu sebelum fitur akun siap.
   // Kosongkan jika belum ada; tombol daftar tunggu akan disembunyikan.
   WAITLIST_URL: "",
+
+  // Google Analytics 4 Measurement ID. Kosongkan untuk mematikan.
+  // ID ini memang publik (terlihat di setiap situs yang memakai GA), jadi aman ditaruh di sini.
+  GA_MEASUREMENT_ID: "G-88JFB45J62",
 
   // Batas waktu permintaan ke backend (ms).
   REQUEST_TIMEOUT: 20000,
