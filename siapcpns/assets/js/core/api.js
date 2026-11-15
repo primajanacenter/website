@@ -14,6 +14,7 @@
 import { CONFIG } from "./config.js";
 import { store } from "./store.js";
 import { auth } from "./auth.js";
+import { trackApi } from "./analytics.js";
 import { buildPlan, ALL_TOPICS } from "../features/plan.js";
 
 /* ------------------------------------------------------------------ */
@@ -848,6 +849,7 @@ export const api = {
         const data = CONFIG.USE_MOCK ? await callMock(action, payload) : await callRemote(action, payload);
         if (key) rcSet(key, data);
         if (!ttl && !NEUTRAL.has(action)) clearReadCache(); // juga setelah selesai (hasil server sudah berubah)
+        try { trackApi(action, payload, data); } catch { /* analitik tidak boleh mengganggu */ }
         return { ok: true, data };
       } catch (e) {
         return wrapError(e);

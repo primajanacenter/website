@@ -5,6 +5,7 @@
 import { CONFIG } from "./config.js";
 import { auth } from "./auth.js";
 import { store, KEYS } from "./store.js";
+import { initAnalytics } from "./analytics.js";
 
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
@@ -58,6 +59,7 @@ export async function copyText(text) {
 
 /** Isi nama aplikasi dan tahun di elemen dengan atribut data-app-name / data-year. */
 export function hydrateCommon() {
+  initAnalytics();
   captureReferral();
   installErrorReporter();
   registerServiceWorker();
