@@ -45,3 +45,17 @@ Agar parameter `paket` dan `produk` muncul di laporan, daftarkan sebagai **Custo
 - Tambahkan kalimat berikut di `privasi.html` bagian pihak ketiga:
 
   > Kami memakai Google Analytics untuk memahami cara aplikasi dipakai (halaman yang dibuka, jenis perangkat, dan perkiraan lokasi tingkat kota). Data ini tidak memuat nama atau email, dan tidak dipakai untuk iklan.
+
+## 5. Live GA di Super User Dashboard (tab "Live GA")
+Data dibaca server Apps Script lewat Google Analytics Data API, jadi tidak ada kunci yang tampil di browser.
+1. **Apps Script editor › Layanan (+) › Google Analytics Data API › Tambahkan** (identifier `AnalyticsData`).
+   Bila memakai `appsscript.json` dari repo, layanan ini sudah tercantum.
+2. **Project Settings › Script Properties:**
+   - `GA_PROPERTY_ID` = `564371238` (angka setelah huruf `p` di URL GA, bukan Measurement ID `G-…`).
+   - Opsional `GA_REPORT_URL` = link laporan Realtime Anda, untuk tombol "Buka di Google Analytics".
+3. Pastikan akun Google pemilik deploy Apps Script punya akses minimal **Viewer** di properti GA
+   (GA › Admin › Property access management). Bila akunnya sama dengan pemilik GA, lewati langkah ini.
+4. Di editor, jalankan **`testAnalytics()`** sekali dan setujui izin baru (membaca Google Analytics).
+   Log menampilkan jumlah pengguna aktif.
+5. **Deploy › Manage deployments › Edit › New version.**
+6. Buka `admin.html#live`. Data realtime (30 menit terakhir) diperbarui otomatis tiap 60 detik selama tab terbuka.
