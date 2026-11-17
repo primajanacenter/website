@@ -1087,6 +1087,14 @@ check('F14.4 GA: hasil di-cache (tanpa panggilan baru)', gaCalls.length===n);
 ctx.AnalyticsData={Properties:{runRealtimeReport(){throw new Error('User does not have sufficient permissions for this property. PERMISSION_DENIED');},batchRunReports(){throw new Error('x');}}};
 const g3=post('adminAnalytics',{force:true},'h.alice.s');
 check('F14.4 GA: galat izin diterjemahkan', g3.ok && g3.data.configured && /Viewer/.test(g3.data.error), g3);
+ctx.AnalyticsData={Properties:{runRealtimeReport(){return {totals:[{}],rowCount:0};},batchRunReports(){return {reports:[{totals:[{}]},{},{rows:[{}]},{},{}]};}}};
+for(const k of Object.keys(cacheStore)) if(k.startsWith('ga_')) delete cacheStore[k];
+const g4=post('adminAnalytics',{force:true},'h.alice.s');
+check('F14.4 GA: respons kosong (belum ada pengunjung) tidak error', g4.ok && !g4.data.error && g4.data.realtime.activeUsers===0 && g4.data.realtime.minutes.length===30 && g4.data.history.today.activeUsers===0, g4);
+ctx.AnalyticsData={Properties:{runRealtimeReport(req){return req.dimensions?{}:{rows:[{metricValues:[{value:'5'},{value:'9'},{value:'11'}]}]};},batchRunReports(){return {reports:[]};}}};
+for(const k of Object.keys(cacheStore)) if(k.startsWith('ga_')) delete cacheStore[k];
+const g5=post('adminAnalytics',{force:true},'h.alice.s');
+check('F14.4 GA: tanpa totals → dijumlah dari baris', g5.ok && g5.data.realtime.activeUsers===5 && g5.data.realtime.pageViews===9, g5);
 delete ctx.AnalyticsData; delete props.GA_PROPERTY_ID; props.ADMIN_EMAILS='bos@x.com, ALICE@gmail.com';
 }
 
@@ -1101,7 +1109,7 @@ const lastBody=()=>mayar.calls.filter(c=>c.path==='/payments/create').pop().body
 const uidOf=(t)=>sheets.users.rows.find(x=>x[1]===String(tokens[t].email).toLowerCase())[0];
 const mk=(k,email,name)=>{tokens[k]={...tokens['h.bob.s'],email,name,sub:k};return k;};
 const af=mk('h.af.s','affi@x.com','Affi Promotor'), b1=mk('h.b1.s','b1@x.com','Pembeli Satu'), b2=mk('h.b2.s','b2@x.com','Pembeli Dua'), b3=mk('h.b3.s','b3@x.com','Pembeli Tiga');
-props.ADMIN_EMAILS='bos@x.com';
+props.ADMIN_EMAILS='bos@x.com'; props.AFF_RATE_PCT='20'; props.AFF_MAX_RATE_PCT='90'; // alur lama diuji dengan 20%
 const adm=mk('h.bos.s','bos@x.com','Bos');
 post('login',{},af); post('login',{},adm);
 let g=post('getAffiliate',{},af);
@@ -1180,6 +1188,19 @@ check('F15 nonaktifkan affiliate', post('adminAffiliateAction',{userId:affId,act
 co=post('createCheckout',{kind:'skb',refId:'SKB1M'},b2); pay(co,b2);
 check('F15 affiliate nonaktif: tidak ada komisi baru & tidak bisa cair', rows('commissions').length===4 && post('requestPayout',{},af).error.code==='FORBIDDEN');
 check('F15 aktifkan kembali', post('adminAffiliateAction',{userId:affId,action:'reactivate'},adm).data.status==='approved');
+// batas maksimal 5% per produk (bawaan)
+delete props.AFF_RATE_PCT; delete props.AFF_MAX_RATE_PCT;
+g=post('getAffiliate',{},af).data;
+check('F15 bawaan: komisi 5%, maks 5%, tarif khusus 50% dipotong ke 5%', g.program.ratePct===5 && g.program.maxRatePct===5 && g.ratePct===5, [g.program, g.ratePct]);
+check('F15 tarif khusus di atas 5% ditolak', post('adminAffiliateAction',{userId:affId,action:'rate',ratePct:10},adm).error.code==='BAD_REQUEST' && post('adminAffiliateAction',{userId:affId,action:'rate',ratePct:4},adm).data.ratePct===4);
+co=post('createCheckout',{kind:'skb',refId:'SKB1M'},b1); pay(co,b1);
+check('F15 komisi baru memakai tarif khusus 4% (85.000 → 3.400)', rows('commissions').slice(-1)[0].commission==='3400' && rows('commissions').slice(-1)[0].rate_pct==='4', rows('commissions').slice(-1));
+post('adminAffiliateAction',{userId:affId,action:'rate',ratePct:''},adm);
+co=post('createCheckout',{kind:'skb',refId:'SKB1M'},b1); pay(co,b1);
+check('F15 tarif standar 5% (85.000 → 4.250)', rows('commissions').slice(-1)[0].commission==='4250', rows('commissions').slice(-1));
+props.AFF_RATE_PCT='12';
+check('F15 AFF_RATE_PCT di atas batas tetap dipotong ke maks', post('getAffiliate',{},af).data.program.ratePct===5);
+delete props.AFF_RATE_PCT;
 delete props.ADMIN_EMAILS;
 }
 delete props.ADMIN_EMAILS; if(oldAdm) props.ADMIN_EMAIL=oldAdm;
