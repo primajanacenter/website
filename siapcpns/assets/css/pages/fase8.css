@@ -47,6 +47,9 @@
 .rf-recent { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
 .rf-recent li { display: flex; flex-wrap: wrap; gap: 6px; justify-content: space-between; align-items: center; font-size: var(--fs-sm); padding: 6px 0; border-bottom: 1px solid var(--line); }
 .rf-input { flex: 1 1 200px; text-transform: uppercase; letter-spacing: .08em; }
+.af-promo { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding: var(--sp-4); border-radius: var(--radius-lg); background: var(--accent-soft); border: 1px solid var(--accent); color: var(--fg); text-decoration: none; flex-wrap: wrap; }
+.af-promo small { color: var(--muted); }
+.af-promo:hover { box-shadow: var(--shadow); }
 .rf-rules { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: var(--fs-sm); }
 
 /* ---------- Beranda & Premium ---------- */
