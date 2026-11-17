@@ -263,7 +263,12 @@ function fulfillTransaction_(trxId, source) {
     var trx = findOne_('transactions', 'trx_id', trxId);
     if (!trx) throw new AppError_('NOT_FOUND', 'Transaksi tidak ditemukan.');
     if (trx.processed === 'ya') return trx;
-    if (!isPremiumTrx_(trx)) return fulfillProductLocked_(trx, source);   // Fase 13: produk satuan (Shop.gs)
+    if (!isPremiumTrx_(trx)) {   // Fase 13: produk satuan (Shop.gs)
+      var doneProduct = fulfillProductLocked_(trx, source);
+      // Fase 15: komisi affiliate. Gagal di sini tidak boleh membatalkan aktivasi.
+      try { creditAffiliateLocked_(doneProduct); } catch (e) { console.warn('Komisi affiliate gagal untuk ' + trxId + ': ' + (e && e.message)); }
+      return doneProduct;
+    }
     var userRow = findOne_('users', 'user_id', trx.user_id);
     if (!userRow) throw new Error('User transaksi tidak ditemukan: ' + trx.user_id);
     var now = Date.now();
@@ -276,6 +281,7 @@ function fulfillTransaction_(trxId, source) {
     });
     // Fase 8: bonus untuk pengajak (sekali, pada pembelian pertama). Gagal di sini tidak boleh membatalkan aktivasi.
     try { rewardReferralLocked_(done); } catch (e) { console.warn('Bonus ajakan gagal untuk ' + trxId + ': ' + (e && e.message)); }
+    try { creditAffiliateLocked_(done); } catch (e) { console.warn('Komisi affiliate gagal untuk ' + trxId + ': ' + (e && e.message)); }
     return done;
   });
 }

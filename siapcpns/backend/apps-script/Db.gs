@@ -77,7 +77,20 @@ var SCHEMA = {
   consult_messages: ['msg_id', 'slot_id', 'sender', 'user_id', 'text', 'at'],
   access_log: ['at', 'user_id', 'kind', 'ref_id', 'ua'],
   // Fase 14: latihan wawancara SKB
-  interviews: ['session_id', 'user_id', 'instansi', 'status', 'started_at', 'submitted_at', 'q_ids', 'score', 'band', 'mode', 'detail_json']
+  interviews: ['session_id', 'user_id', 'instansi', 'status', 'started_at', 'submitted_at', 'q_ids', 'score', 'band', 'mode', 'detail_json'],
+  // Fase 15: affiliate berkomisi
+  affiliates: [
+    'user_id', 'name', 'email', 'phone', 'status', 'rate_pct', 'method', 'provider', 'account_no', 'account_name',
+    'channel', 'applied_at', 'approved_at', 'admin_note'
+  ],
+  commissions: [
+    'commission_id', 'affiliate_id', 'referee_id', 'trx_id', 'kind', 'product', 'amount', 'rate_pct', 'commission',
+    'status', 'created_at', 'available_at', 'payout_id', 'note'
+  ],
+  payouts: [
+    'payout_id', 'affiliate_id', 'email', 'name', 'phone', 'gross', 'fee', 'net', 'count', 'status', 'requested_at',
+    'method', 'provider', 'account_no', 'account_name', 'processed_at', 'processed_by', 'paid_via', 'ref_no', 'admin_note'
+  ]
 };
 
 /** Struktur sheet di file BANK SOAL (QUESTIONS_SPREADSHEET_ID). Hanya bisa dibaca server. */

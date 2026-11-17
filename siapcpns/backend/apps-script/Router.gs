@@ -73,6 +73,7 @@ function getRoutes_() {
     getAdminDashboard: { handler: handleGetAdminDashboard_, auth: 'required' },
     adminTransactions: { handler: handleAdminTransactions_, auth: 'required' },
     adminLookupUser:   { handler: handleAdminLookupUser_,   auth: 'required' },
+    adminAnalytics:    { handler: handleAdminAnalytics_,    auth: 'required' },   // Fase 14.4: Google Analytics
 
     // Fase 13: menu A–F, produk satuan, member area
     getTryoutCatalog:   { handler: handleGetTryoutCatalog_,   auth: 'optional' },
@@ -96,7 +97,17 @@ function getRoutes_() {
     getSkbMateri:       { handler: handleGetSkbMateri_,       auth: 'optional' },
     startInterview:     { handler: handleStartInterview_,     auth: 'required' },
     submitInterview:    { handler: handleSubmitInterview_,    auth: 'required' },
-    getInterviewResult: { handler: handleGetInterviewResult_, auth: 'required' }
+    getInterviewResult: { handler: handleGetInterviewResult_, auth: 'required' },
+
+    // Fase 15: affiliate
+    getAffiliate:            { handler: handleGetAffiliate_,            auth: 'required' },
+    applyAffiliate:          { handler: handleApplyAffiliate_,          auth: 'required' },
+    updateAffiliatePayment:  { handler: handleUpdateAffiliatePayment_,  auth: 'required' },
+    requestPayout:           { handler: handleRequestPayout_,           auth: 'required' },
+    adminAffiliates:         { handler: handleAdminAffiliates_,         auth: 'required' },
+    adminAffiliateAction:    { handler: handleAdminAffiliateAction_,    auth: 'required' },
+    adminPayoutAction:       { handler: handleAdminPayoutAction_,       auth: 'required' },
+    adminCommissionVoid:     { handler: handleAdminCommissionVoid_,     auth: 'required' }
   };
 }
 

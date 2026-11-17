@@ -6,7 +6,7 @@
  *   pernah membeli Premium mendapat diskon REF_DISCOUNT_PCT % untuk pembelian pertamanya.
  * - Saat pembelian pertama teman lunas (fulfillTransaction_), pengajak mendapat +REF_BONUS_DAYS
  *   hari Premium. Maksimal REF_MAX_REWARDS_30D bonus per 30 hari per pengajak (pengaman penyalahgunaan).
- * - Tidak ada komisi uang.
+ * - Fase 15: bila pengajak adalah affiliate yang disetujui, ia mendapat komisi uang (Affiliate.gs) sebagai ganti bonus hari.
  */
 
 var REF_BONUS_DAYS = 7;
@@ -71,7 +71,7 @@ function handleGetReferral_(payload, user) {
     code: code,
     bonusDays: REF_BONUS_DAYS, discountPct: REF_DISCOUNT_PCT,
     invited: invited.length,
-    purchased: invited.filter(function (r) { return r.status === 'rewarded' || r.status === 'capped'; }).length,
+    purchased: invited.filter(function (r) { return r.status === 'rewarded' || r.status === 'capped' || r.status === 'affiliate'; }).length,
     rewarded: rewarded.length,
     bonusDaysEarned: rewarded.reduce(function (s, r) { return s + (Number(r.bonus_days) || 0); }, 0),
     recent: invited.slice(-10).reverse().map(function (r) {
@@ -119,6 +119,11 @@ function rewardReferralLocked_(trx) {
   }).length;
   if (recent >= REF_MAX_REWARDS_30D) {
     update_('referrals', ref._row, { status: 'capped', trx_id: trx.trx_id, rewarded_at: nowIso_(), bonus_days: 0 });
+    return null;
+  }
+  // Fase 15: affiliate yang disetujui menerima komisi uang (Affiliate.gs), bukan bonus hari Premium.
+  if (isApprovedAffiliate_(ref.referrer_id)) {
+    update_('referrals', ref._row, { status: 'affiliate', trx_id: trx.trx_id, bonus_days: 0, rewarded_at: nowIso_() });
     return null;
   }
   var owner = findOne_('users', 'user_id', ref.referrer_id);
