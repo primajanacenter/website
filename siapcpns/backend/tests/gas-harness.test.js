@@ -1047,6 +1047,141 @@ check('admin cari: minimal 3 huruf', post('adminLookupUser',{q:'di'},'h.alice.s'
 const lk=post('adminLookupUser',{q:'dina@x.com'},'h.alice.s');
 check('admin cari: detail pengguna', lk.ok && lk.data.detail && lk.data.detail.email==='dina@x.com' && Array.isArray(lk.data.detail.transactions) && lk.data.detail.transactions.length>0 && 'practice' in lk.data.detail, lk.data);
 check('admin cari: tidak membocorkan jawaban mentah', !/answers_json|correct_json/.test(JSON.stringify(lk.data)));
+// ---------- Fase 14.4: Live Google Analytics di dasbor admin ----------
+{
+const gaCalls=[];
+const row=(d,m)=>({dimensionValues:d.map(v=>({value:String(v)})),metricValues:m.map(v=>({value:String(v)}))});
+const fakeGA={Properties:{
+  runRealtimeReport(req,prop){gaCalls.push(['rt',prop,req]);
+    if(req.minuteRanges) return {totals:[{metricValues:[{value:'4'}]}]};
+    if(!req.dimensions) return {totals:[{metricValues:[{value:'12'},{value:'90'},{value:'300'}]}]};
+    const d=req.dimensions[0].name;
+    if(d==='minutesAgo') return {rows:[row([0],[3]),row([5],[2])]};
+    if(d==='unifiedScreenName') return {rows:[row(['Tryout — Siap CPNS'],[5,20])]};
+    if(d==='deviceCategory') return {rows:[row(['mobile'],[10]),row(['desktop'],[2])]};
+    if(d==='city') return {rows:[row(['Jakarta'],[6])]};
+    if(d==='eventName') return {rows:[row(['page_view'],[90])]};
+    return {};},
+  batchRunReports(req,prop){gaCalls.push(['batch',prop,req]);return {reports:[
+    {rows:[row(['date_range_0'],[20,8,25,140]),row(['date_range_1'],[200,90,260,1500])]},
+    {rows:[row(['20261114'],[150,200]),row(['20261115'],[20,25])]},
+    {rows:[row(['wa / jarkoman'],[40,30])]},
+    {rows:[row(['sign_up'],[7,7]),row(['purchase'],[2,2])]},
+    {rows:[row(['mobile'],[180])]}]};}}};
+props.ADMIN_EMAILS='alice@gmail.com';
+check('F14.4 GA: bukan admin ditolak', post('adminAnalytics',{},'h.bob.s').error.code==='FORBIDDEN');
+delete props.GA_PROPERTY_ID;
+const g0=post('adminAnalytics',{},'h.alice.s');
+check('F14.4 GA: tanpa GA_PROPERTY_ID → configured false', g0.ok && g0.data.configured===false && /GA_PROPERTY_ID/.test(g0.data.reason), g0);
+props.GA_PROPERTY_ID='564371238';
+const g1=post('adminAnalytics',{},'h.alice.s');
+check('F14.4 GA: layanan belum ditambahkan → pesan jelas', g1.ok && g1.data.configured===false && /Analytics Data API/.test(g1.data.reason) && /p564371238/.test(g1.data.gaUrl), g1);
+ctx.AnalyticsData=fakeGA;
+const g2=post('adminAnalytics',{force:true},'h.alice.s');
+const R=g2.data&&g2.data.realtime, H=g2.data&&g2.data.history;
+check('F14.4 GA: realtime terbaca', g2.ok && g2.data.configured && R.activeUsers===12 && R.activeUsers5===4 && R.pageViews===90 && R.minutes.length===30 && R.minutes[29].users===3 && R.minutes[24].users===2 && R.pages[0].views===20 && R.devices.length===2, g2);
+check('F14.4 GA: ringkasan 7 hari, sumber & event aplikasi', H.today.activeUsers===20 && H.week.sessions===260 && H.daily[1].date==='2026-11-15' && H.sources[0].source==='wa / jarkoman' && H.appEvents.find(e=>e.event==='purchase').count===2 && H.appEvents.find(e=>e.event==='tryout_mulai').count===0, H);
+check('F14.4 GA: memakai properties/<id>', gaCalls.every(c=>c[1]==='properties/564371238'));
+const n=gaCalls.length; post('adminAnalytics',{},'h.alice.s');
+check('F14.4 GA: hasil di-cache (tanpa panggilan baru)', gaCalls.length===n);
+ctx.AnalyticsData={Properties:{runRealtimeReport(){throw new Error('User does not have sufficient permissions for this property. PERMISSION_DENIED');},batchRunReports(){throw new Error('x');}}};
+const g3=post('adminAnalytics',{force:true},'h.alice.s');
+check('F14.4 GA: galat izin diterjemahkan', g3.ok && g3.data.configured && /Viewer/.test(g3.data.error), g3);
+delete ctx.AnalyticsData; delete props.GA_PROPERTY_ID; props.ADMIN_EMAILS='bos@x.com, ALICE@gmail.com';
+}
+
+// ================= Fase 15: affiliate =================
+{
+const H=(n)=>sheets[n].rows[0]; const obj=(n,r)=>Object.fromEntries(H(n).map((h,i)=>[h,r[i]]));
+const rows=(n)=>(sheets[n]?sheets[n].rows.slice(1):[]).map(r=>obj(n,r));
+const TX=()=>sheets.transactions.rows[0];
+const trxOf=(id)=>{const r=sheets.transactions.rows.find(x=>x[0]===id); return r?obj('transactions',r):null;};
+const pay=(co,tok)=>{const t=trxOf(co.data.trxId); mayar.payments[t.mayar_id].status='paid'; delete cacheStore['pchk_'+co.data.trxId]; return post('getPaymentStatus',{trxId:co.data.trxId},tok);};
+const lastBody=()=>mayar.calls.filter(c=>c.path==='/payments/create').pop().body;
+const uidOf=(t)=>sheets.users.rows.find(x=>x[1]===String(tokens[t].email).toLowerCase())[0];
+const mk=(k,email,name)=>{tokens[k]={...tokens['h.bob.s'],email,name,sub:k};return k;};
+const af=mk('h.af.s','affi@x.com','Affi Promotor'), b1=mk('h.b1.s','b1@x.com','Pembeli Satu'), b2=mk('h.b2.s','b2@x.com','Pembeli Dua'), b3=mk('h.b3.s','b3@x.com','Pembeli Tiga');
+props.ADMIN_EMAILS='bos@x.com';
+const adm=mk('h.bos.s','bos@x.com','Bos');
+post('login',{},af); post('login',{},adm);
+let g=post('getAffiliate',{},af);
+check('F15 getAffiliate: belum daftar, program 20%/100rb/3rb', g.ok && g.data.status==='none' && g.data.program.ratePct===20 && g.data.program.minPayout===100000 && g.data.program.fee===3000 && g.data.program.windowDays===90 && /^SC/.test(g.data.code), g.data);
+const code=g.data.code;
+const form={name:'Affi Promotor',phone:'0812-3456-7890',method:'bank',provider:'BCA',accountNo:'0123 456 789',accountName:'Affi Promotor',channel:'Akun IG @belajarcpns dan 5 grup WA',agree:true};
+check('F15 daftar tanpa setuju ketentuan ditolak', post('applyAffiliate',{...form,agree:false},af).error.code==='BAD_REQUEST');
+check('F15 daftar: rekening tidak valid ditolak', post('applyAffiliate',{...form,accountNo:'12'},af).error.code==='BAD_REQUEST');
+let ap=post('applyAffiliate',form,af);
+check('F15 daftar → pending', ap.ok && ap.data.status==='pending' && rows('affiliates')[0].account_no.replace(/^'/,'')==='0123456789', ap);
+check('F15 daftar ulang saat pending ditolak', post('applyAffiliate',form,af).error.code==='ALREADY_DONE');
+g=post('getAffiliate',{},af).data;
+check('F15 rekening disamarkan untuk pengguna', g.status==='pending' && g.payment.accountMasked.endsWith('6789') && !g.payment.accountMasked.includes('0123'), g.payment);
+check('F15 admin: bukan admin ditolak', post('adminAffiliates',{},af).error.code==='FORBIDDEN' && post('adminAffiliateAction',{userId:'x',action:'approve'},af).error.code==='FORBIDDEN');
+const affId=rows('affiliates')[0].user_id;
+// pembeli 1 bergabung SEBELUM disetujui, membeli SETELAH disetujui → tetap dapat komisi
+let lg=post('login',{ref:code},b1);
+check('F15 pembeli lewat link affiliate', lg.ok && lg.data.referralClaimed===true);
+let ad=post('adminAffiliates',{},adm);
+check('F15 admin melihat pengajuan + rekening lengkap', ad.ok && ad.data.totals.pending===1 && ad.data.affiliates[0].status==='pending' && ad.data.affiliates[0].accountNo==='0123456789' && ad.data.affiliates[0].code===code && ad.data.affiliates[0].referred===1, ad.data.affiliates);
+check('F15 admin setujui', post('adminAffiliateAction',{userId:affId,action:'approve'},adm).data.status==='approved');
+const affRow=()=>obj('users',sheets.users.rows.find(r=>r[0]===affId));
+let co=post('createCheckout',{planId:'P1M'},b1);
+check('F15 pembeli tetap dapat diskon 10%', lastBody().amount===27000);
+pay(co,b1);
+let C=rows('commissions');
+check('F15 komisi 20% dari nominal dibayar (27.000 → 5.400), status tertahan', C.length===1 && C[0].commission==='5400' && C[0].affiliate_id===affId && C[0].kind==='premium', C);
+check('F15 affiliate tidak dapat bonus hari (diganti komisi)', !affRow().premium_until && rows('referrals').find(r=>r.referee_id===uidOf(b1)).status==='affiliate', affRow());
+co=post('createCheckout',{kind:'skb',refId:'SKB1M'},b1); pay(co,b1);
+ctx.fulfillTransaction_(co.data.trxId,'ulang');
+C=rows('commissions');
+check('F15 semua produk dihitung (SKB 85.000 → 17.000) & idempoten', C.length===2 && C[1].commission==='17000' && C[1].kind==='skb', C);
+g=post('getAffiliate',{},af).data;
+check('F15 statistik: tertahan 22.400, tersedia 0, 1 pembeli', g.stats.holding===22400 && g.stats.available===0 && g.stats.buyers===1 && g.stats.referred===1 && g.commissions.length===2 && g.commissions[0].state==='holding' && !g.canRequest, g.stats);
+check('F15 data pembeli tidak bocor ke affiliate', !/b1@x.com|Pembeli Satu|referee/.test(JSON.stringify(g)));
+check('F15 cairkan saat saldo tertahan ditolak', post('requestPayout',{},af).error.code==='BAD_REQUEST');
+// tarif khusus 50% untuk pembeli 2
+check('F15 admin ubah tarif khusus', post('adminAffiliateAction',{userId:affId,action:'rate',ratePct:50},adm).data.ratePct===50 && post('adminAffiliateAction',{userId:affId,action:'rate',ratePct:200},adm).error.code==='BAD_REQUEST');
+post('login',{ref:code},b2);
+co=post('createCheckout',{planId:'P6M'},b2); pay(co,b2);
+co=post('createCheckout',{kind:'skb',refId:'SKB1M'},b2); pay(co,b2);
+C=rows('commissions');
+check('F15 tarif khusus 50%: 135.000 → 67.500, 85.000 → 42.500', C.length===4 && C[2].commission==='67500' && C[3].commission==='42500' && C[2].rate_pct==='50', C.map(c=>c.commission));
+// pembeli 3: bergabung > 90 hari lalu → tidak ada komisi
+post('login',{ref:code},b3);
+const RFH=H('referrals'); const r3=sheets.referrals.rows.find(r=>r[RFH.indexOf('referee_id')]===uidOf(b3)); r3[RFH.indexOf('created_at')]=new Date(Date.now()-91*86400e3).toISOString();
+co=post('createCheckout',{kind:'skb',refId:'SKB1M'},b3); pay(co,b3);
+check('F15 di luar 90 hari tidak dapat komisi', rows('commissions').length===4);
+// masa tahan selesai
+const CH=H('commissions'); sheets.commissions.rows.slice(1).forEach(r=>{r[CH.indexOf('available_at')]=new Date(Date.now()-1000).toISOString();});
+check('F15 admin batalkan komisi (refund) wajib alasan', post('adminCommissionVoid',{commissionId:C[0].commission_id},adm).error.code==='BAD_REQUEST' && post('adminCommissionVoid',{commissionId:C[0].commission_id,note:'refund'},adm).ok);
+g=post('getAffiliate',{},af).data;
+check('F15 saldo tersedia 127.000 setelah pembatalan', g.stats.available===127000 && g.stats.voided===5400 && g.canRequest, g.stats);
+let rq=post('requestPayout',{},af);
+check('F15 cairkan: kotor 127.000, potongan 3.000, diterima 124.000', rq.ok && rq.data.gross===127000 && rq.data.fee===3000 && rq.data.net===124000 && rq.data.status==='requested', rq);
+check('F15 tidak bisa ajukan dua kali', post('requestPayout',{},af).error.code==='ALREADY_DONE');
+g=post('getAffiliate',{},af).data;
+check('F15 saldo pindah ke "diproses"', g.stats.available===0 && g.stats.requested===127000 && g.openRequest && !g.canRequest, g.stats);
+check('F15 komisi dalam pencairan tidak bisa dibatalkan', post('adminCommissionVoid',{commissionId:C[1].commission_id,note:'x'},adm).error.code==='BAD_REQUEST');
+check('F15 tolak pencairan wajib alasan', post('adminPayoutAction',{payoutId:rq.data.id,action:'reject'},adm).error.code==='BAD_REQUEST');
+check('F15 tolak pencairan → saldo kembali', post('adminPayoutAction',{payoutId:rq.data.id,action:'reject',note:'Nama rekening tidak sesuai'},adm).data.status==='rejected' && post('getAffiliate',{},af).data.stats.available===127000);
+check('F15 ganti rekening', post('updateAffiliatePayment',{...form,method:'ewallet',provider:'DANA',accountNo:'081234567890'},af).ok && post('getAffiliate',{},af).data.payment.provider==='DANA');
+rq=post('requestPayout',{},af);
+ad=post('adminAffiliates',{},adm).data;
+const pq=ad.payouts.find(p=>p.id===rq.data.id);
+check('F15 admin melihat antrean dengan nomor lengkap', pq && pq.status==='requested' && pq.accountNo==='081234567890' && pq.provider==='DANA' && pq.net===124000, pq);
+let pd=post('adminPayoutAction',{payoutId:rq.data.id,action:'paid',paidVia:'mayar',refNo:'MYR-001'},adm);
+check('F15 tandai sudah ditransfer (via Mayar)', pd.ok && pd.data.status==='paid' && pd.data.paidVia==='mayar' && pd.data.refNo==='MYR-001', pd);
+check('F15 diproses dua kali ditolak', post('adminPayoutAction',{payoutId:rq.data.id,action:'paid'},adm).error.code==='ALREADY_DONE');
+g=post('getAffiliate',{},af).data;
+check('F15 riwayat: dibayar 127.000', g.stats.paid===127000 && g.stats.available===0 && g.payouts[0].status==='paid' && g.payouts[0].refNo==='MYR-001' && g.payouts.length===2, g.stats);
+ad=post('adminAffiliates',{},adm).data;
+check('F15 ringkasan admin', ad.totals.affiliates===1 && ad.totals.paidThisMonth===124000 && ad.totals.feesCollected===3000 && ad.affiliates[0].stats.paid===127000, ad.totals);
+// nonaktifkan → tidak ada komisi baru
+check('F15 nonaktifkan affiliate', post('adminAffiliateAction',{userId:affId,action:'suspend',note:'spam'},adm).data.status==='suspended');
+co=post('createCheckout',{kind:'skb',refId:'SKB1M'},b2); pay(co,b2);
+check('F15 affiliate nonaktif: tidak ada komisi baru & tidak bisa cair', rows('commissions').length===4 && post('requestPayout',{},af).error.code==='FORBIDDEN');
+check('F15 aktifkan kembali', post('adminAffiliateAction',{userId:affId,action:'reactivate'},adm).data.status==='approved');
+delete props.ADMIN_EMAILS;
+}
 delete props.ADMIN_EMAILS; if(oldAdm) props.ADMIN_EMAIL=oldAdm;
 delete props.QUESTIONS_FOLDER_ID; ctx.clearPackageCache_(null);
 check('no source -> clear config error', post('getTryoutInfo',{},'h.alice.s').error.code==='CONFIG_MISSING');
