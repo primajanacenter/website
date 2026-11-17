@@ -3,7 +3,8 @@
 ## Ringkasan aturan
 | Aturan | Nilai | Ubah lewat Script Property |
 |---|---|---|
-| Komisi | 20% dari nominal yang dibayar pembeli | `AFF_RATE_PCT` (atau tarif khusus per affiliate di dasbor) |
+| Komisi | 5% dari nominal yang dibayar pembeli, per produk | `AFF_RATE_PCT` (atau tarif khusus per affiliate di dasbor) |
+| Batas maksimal komisi | 5% per produk; tarif standar dan tarif khusus tidak bisa melebihi ini | `AFF_MAX_RATE_PCT` |
 | Produk dihitung | semua: Premium SKD, Premium SKB, tryout, Akbar, mentoring, rekaman, konsultasi | |
 | Masa atribusi | 90 hari sejak pembeli bergabung lewat link/kode | `AFF_WINDOW_DAYS` |
 | Masa tahan (cek refund) | 7 hari, lalu komisi bisa dicairkan | `AFF_HOLD_DAYS` |
