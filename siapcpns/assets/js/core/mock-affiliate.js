@@ -2,7 +2,7 @@
  * mock-affiliate.js: data contoh Program Affiliate untuk mode uji (USE_MOCK = true).
  * Aturan sebenarnya ada di server (Affiliate.gs); di sini hanya cukup untuk mencoba tampilan.
  */
-const PROGRAM = { ratePct: 20, minPayout: 100000, fee: 3000, holdDays: 7, windowDays: 90,
+const PROGRAM = { ratePct: 5, maxRatePct: 5, minPayout: 100000, fee: 3000, holdDays: 7, windowDays: 90,
   providers: { bank: ["BCA", "BRI", "BNI", "Mandiri", "BSI", "Bank lain"], ewallet: ["DANA", "OVO", "GoPay", "ShopeePay"] } };
 const day = 86400e3;
 const iso = (ms) => new Date(ms).toISOString();
@@ -10,8 +10,8 @@ const mask = (s) => (String(s).length <= 4 ? s : "•".repeat(String(s).length -
 
 function sampleCommissions(now) {
   const rows = [[75000 * 0.9, "premium", 1], [85000, "skb", 2], [30000 * 0.9, "premium", 9], [150000 * 0.9, "premium", 12], [85000, "skb", 15], [75000 * 0.9, "premium", 20]];
-  return rows.map(([amount, kind, ago], i) => ({ id: "com_" + i, at: iso(now - ago * day), kind, product: kind === "skb" ? "Premium SKB 1 bulan" : "Premium", amount, ratePct: 20,
-    commission: Math.floor(amount * 0.2), availableAt: iso(now - ago * day + 7 * day), state: "" }));
+  return rows.map(([amount, kind, ago], i) => ({ id: "com_" + i, at: iso(now - ago * day), kind, product: kind === "skb" ? "Premium SKB 1 bulan" : "Premium", amount, ratePct: 5,
+    commission: Math.floor(amount * 0.05), availableAt: iso(now - ago * day + 7 * day), state: "" }));
 }
 
 export function mockAffiliate(action, p, { store, apiError }) {
@@ -41,7 +41,7 @@ export function mockAffiliate(action, p, { store, apiError }) {
       if (st.status === "none") return out;
       const s = stats(); save();
       const open = st.payouts.some((x) => x.status === "requested");
-      return { ...out, ratePct: 20, appliedAt: st.appliedAt, adminNote: st.note || "", payment: publicPay(), stats: s,
+      return { ...out, ratePct: 5, appliedAt: st.appliedAt, adminNote: st.note || "", payment: publicPay(), stats: s,
         commissions: st.coms.slice().reverse(), payouts: st.payouts.slice().reverse().map((x) => ({ ...x, accountMasked: mask(x.accountNo) })),
         canRequest: st.status === "approved" && !open && s.available >= PROGRAM.minPayout, openRequest: open };
     }
@@ -66,9 +66,9 @@ export function mockAffiliate(action, p, { store, apiError }) {
     case "adminAffiliates": {
       const s = st.status === "none" ? null : stats();
       const me = st.status === "none" ? [] : [{ userId: "me", name: st.payment.name || "Pengguna uji", email: "kamu@contoh.id", phone: st.payment.phone, status: st.status, code: st.code,
-        ratePct: 20, customRate: false, channel: st.payment.channel, method: st.payment.method, provider: st.payment.provider, accountNo: st.payment.accountNo,
+        ratePct: 5, customRate: false, channel: st.payment.channel, method: st.payment.method, provider: st.payment.provider, accountNo: st.payment.accountNo,
         accountName: st.payment.accountName, appliedAt: st.appliedAt, approvedAt: "", adminNote: st.note || "", referred: 9, stats: s }];
-      const demo = { userId: "demo1", name: "Rizky Pratama", email: "rizky@contoh.id", phone: "081200001111", status: "approved", code: "SCRIZKY2", ratePct: 25, customRate: true,
+      const demo = { userId: "demo1", name: "Rizky Pratama", email: "rizky@contoh.id", phone: "081200001111", status: "approved", code: "SCRIZKY2", ratePct: 5, customRate: false,
         channel: "IG @cpns.harian", method: "bank", provider: "BCA", accountNo: "1234567890", accountName: "Rizky Pratama", appliedAt: iso(now - 40 * day), approvedAt: iso(now - 39 * day),
         adminNote: "", referred: 31, stats: { count: 14, sales: 1120000, total: 280000, holding: 42000, available: 61000, requested: 0, paid: 177000, voided: 0 } };
       const affs = [...me, demo];
@@ -85,7 +85,7 @@ export function mockAffiliate(action, p, { store, apiError }) {
       else if (a === "suspend") { st.status = "suspended"; st.note = p.note; }
       else if (a === "reactivate") st.status = "approved";
       save();
-      return { userId: p.userId, status: st.status, ratePct: 20 };
+      return { userId: p.userId, status: st.status, ratePct: 5 };
     }
     case "adminPayoutAction": {
       const x = st.payouts.find((y) => y.id === p.payoutId);
