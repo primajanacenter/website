@@ -7,13 +7,14 @@
  *  3. Link affiliate = link ajak teman yang sama (?ref=KODE). Pembeli baru yang masuk lewat link itu:
  *       - tetap mendapat diskon Ajak Teman untuk Premium pertamanya (Referral.gs);
  *       - SEMUA pembelian lunasnya selama AFF_WINDOW_DAYS sejak bergabung memberi komisi AFF_RATE_PCT %
+ *         (maksimal AFF_MAX_RATE_PCT % per produk, termasuk tarif khusus per affiliate)
  *         dari nominal yang benar-benar dibayar (Premium, SKB, tryout, Akbar, mentoring, rekaman, konsultasi).
  *     Affiliate yang disetujui menerima komisi uang sebagai pengganti bonus +7 hari Premium.
  *  4. Komisi tertahan AFF_HOLD_DAYS hari (masa cek pembatalan), lalu bisa dicairkan.
  *  5. Pencairan (requestPayout) minimal AFF_MIN_PAYOUT dari saldo tersedia; potongan transfer AFF_PAYOUT_FEE
  *     per pencairan. Admin mentransfer manual (bank, e-wallet, atau saldo Mayar) lalu menandai "Sudah ditransfer".
  *
- * Script Properties opsional (angka): AFF_RATE_PCT (20), AFF_MIN_PAYOUT (100000), AFF_PAYOUT_FEE (3000),
+ * Script Properties opsional (angka): AFF_RATE_PCT (5), AFF_MAX_RATE_PCT (5), AFF_MIN_PAYOUT (100000), AFF_PAYOUT_FEE (3000),
  * AFF_HOLD_DAYS (7), AFF_WINDOW_DAYS (90).
  *
  * Data rekening hanya terlihat oleh pemiliknya dan admin. Tidak pernah dikirim ke Google Analytics.
@@ -27,7 +28,8 @@ function affCfg_() {
     return isNaN(v) || v < 0 ? d : v;
   };
   return {
-    ratePct: n('AFF_RATE_PCT', 20),
+    maxRatePct: Math.min(90, n('AFF_MAX_RATE_PCT', 5)),
+    ratePct: Math.min(n('AFF_RATE_PCT', 5), Math.min(90, n('AFF_MAX_RATE_PCT', 5))),
     minPayout: n('AFF_MIN_PAYOUT', 100000),
     fee: n('AFF_PAYOUT_FEE', 3000),
     holdDays: n('AFF_HOLD_DAYS', 7),
@@ -48,8 +50,9 @@ function isApprovedAffiliate_(userId) {
 }
 
 function affRate_(aff) {
+  var cfg = affCfg_();
   var r = Number(aff && aff.rate_pct);
-  return r > 0 && r <= 90 ? r : affCfg_().ratePct;
+  return Math.min(r > 0 ? r : cfg.ratePct, cfg.maxRatePct);   // tidak pernah melebihi batas maksimal
 }
 
 function maskAccount_(no) {
@@ -153,7 +156,7 @@ function handleGetAffiliate_(payload, user) {
   var code = ensureRefCode_(user);
   var aff = affiliateRow_(user.userId);
   var out = {
-    program: { ratePct: cfg.ratePct, minPayout: cfg.minPayout, fee: cfg.fee, holdDays: cfg.holdDays, windowDays: cfg.windowDays, providers: AFF_PROVIDERS },
+    program: { ratePct: cfg.ratePct, maxRatePct: cfg.maxRatePct, minPayout: cfg.minPayout, fee: cfg.fee, holdDays: cfg.holdDays, windowDays: cfg.windowDays, providers: AFF_PROVIDERS },
     code: code, status: aff ? String(aff.status) : 'none'
   };
   if (!aff) return out;
@@ -313,7 +316,8 @@ function handleAdminAffiliateAction_(payload, user) {
       patch = { status: 'approved', admin_note: note };
     } else if (action === 'rate') {
       var r = payload.ratePct === '' || payload.ratePct === null || payload.ratePct === undefined ? '' : Number(payload.ratePct);
-      if (r !== '' && !(r > 0 && r <= 90)) throw new AppError_('BAD_REQUEST', 'Komisi harus 1 sampai 90 persen (kosongkan untuk tarif standar).');
+      var max = affCfg_().maxRatePct;
+      if (r !== '' && !(r > 0 && r <= max)) throw new AppError_('BAD_REQUEST', 'Komisi harus lebih dari 0 dan maksimal ' + max + ' persen (kosongkan untuk tarif standar).');
       patch = { rate_pct: r };
     } else {
       throw new AppError_('BAD_REQUEST', 'Aksi tidak dikenal.');
