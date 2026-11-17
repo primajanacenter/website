@@ -102,6 +102,7 @@
 .btn-block { width: 100%; }
 .btn-accent { background: var(--accent); color: #1a1204; }
 .btn-accent:hover { background: #dda03a; color: #1a1204; }
+.btn-sm { padding: 8px 14px; font-size: var(--fs-sm); min-height: 38px; }
 .btn-lg { min-height: 54px; font-size: var(--fs-lg); padding: 0 var(--sp-6); }
 
 /* ---------- Kartu ---------- */
