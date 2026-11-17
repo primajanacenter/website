@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Program Affiliate — Siap CPNS</title>
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <meta property="og:title" content="Program Affiliate — Siap CPNS">
+  <meta property="og:description" content="Siap CPNS oleh Primajana: aplikasi latihan independen untuk persiapan SKD dan SKB CPNS.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="../assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0f2d55">
+  <link rel="icon" href="../assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="../assets/img/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/pages/app.css">
+  <link rel="modulepreload" href="../assets/js/core/config.js">
+  <link rel="modulepreload" href="../assets/js/core/store.js">
+  <link rel="modulepreload" href="../assets/js/core/auth.js">
+  <link rel="modulepreload" href="../assets/js/core/ui.js">
+  <link rel="modulepreload" href="../assets/js/core/api.js">
+  <link rel="modulepreload" href="../assets/js/features/affiliate.js">
+  <link rel="stylesheet" href="../assets/css/pages/fase8.css">
+  <link rel="stylesheet" href="../assets/css/pages/affiliate.css">
+</head>
+<body>
+<div class="notice-bar" role="note">
+  <div class="container"><span><strong>Aplikasi latihan independen.</strong> Bukan situs resmi BKN atau KemenPANRB. Pendaftaran CPNS hanya melalui <a data-link="sscasn" href="https://sscasn.bkn.go.id" target="_blank" rel="noopener">SSCASN</a>.</span></div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="../"><span class="brand-mark"><img src="../assets/img/primajana-mark-96.png" alt="" width="30" height="30"></span><span class="brand-text"><b data-app-name>Siap CPNS</b><small>oleh <span data-org-name>Primajana</span></small></span></a>
+    <nav class="nav" aria-label="Navigasi utama"><a class="hide-sm" href="../">Beranda</a><a class="hide-sm" href="rapot.html">Rapot</a><a class="nav-cta" href="masuk.html" data-nav-auth="akun.html" data-nav-label="Akun">Masuk</a></nav>
+  </div>
+</header>
+<section class="page-band">
+  <div class="container stack" style="gap:10px">
+    <nav class="crumbs" aria-label="Lokasi halaman"><a href="../">Beranda</a> / <a href="ajak.html">Ajak teman</a> / <span>Affiliate</span></nav>
+    <h1>Program Affiliate Siap CPNS</h1>
+    <p class="lead">Rekomendasikan Siap CPNS dan dapatkan <b>komisi <span data-aff-rate>20</span>%</b> dari setiap pembelian orang yang bergabung lewat link-mu.</p>
+  </div>
+</section>
+
+<main class="app-main">
+  <div class="container stack-lg">
+    <p id="af-status" class="status-msg" role="status" hidden></p>
+    <div id="af-loading" class="panel"><span class="skeleton" style="width:60%;height:22px"></span><span class="skeleton" style="width:90%;height:14px"></span></div>
+
+    <!-- BELUM DAFTAR / DITOLAK -->
+    <div id="af-join" class="stack-lg" hidden>
+      <section class="af-hero">
+        <div class="af-hero-main">
+          <h2>Bagikan link, terima komisi setiap ada penjualan</h2>
+          <ul class="af-points">
+            <li><b>Komisi <span data-aff-rate>20</span>%</b> dari nominal yang dibayar pembeli.</li>
+            <li><b>Semua produk dihitung</b>: Premium SKD, Premium SKB, paket tryout, Tryout Akbar, mentoring, rekaman, dan konsultasi.</li>
+            <li><b>Berlaku <span data-aff-window>90</span> hari</b> sejak pembeli bergabung lewat link-mu, untuk setiap pembelian, bukan hanya yang pertama.</li>
+            <li><b>Pembeli tetap untung</b>: diskon 10% untuk Premium pertamanya.</li>
+            <li><b>Cairkan mulai <span data-aff-min>Rp100.000</span></b> ke rekening bank atau e-wallet, potongan transfer <span data-aff-fee>Rp3.000</span> per pencairan.</li>
+          </ul>
+        </div>
+        <div class="af-sim" aria-label="Contoh penghasilan">
+          <span class="xsmall">Contoh dalam sebulan</span>
+          <div class="af-sim-row"><span>5 orang beli Premium 3 bulan</span><b id="af-sim1">Rp67.500</b></div>
+          <div class="af-sim-row"><span>3 orang beli Premium SKB</span><b id="af-sim2">Rp51.000</b></div>
+          <div class="af-sim-total"><span>Total komisi</span><b id="af-simt">Rp118.500</b></div>
+          <span class="xsmall">Dihitung dari harga setelah diskon 10%. Hanya ilustrasi.</span>
+        </div>
+      </section>
+
+      <div class="callout callout-warn" id="af-rejected" hidden></div>
+
+      <section class="panel" aria-labelledby="af-form-title">
+        <div class="panel-head"><h2 id="af-form-title">Daftar jadi affiliate</h2><span class="chip">Ditinjau admin 1x24 jam kerja</span></div>
+        <form id="af-form" class="af-form" novalidate>
+          <div class="af-row2">
+            <div class="field"><label for="af-name">Nama lengkap</label><input class="input" id="af-name" autocomplete="name" maxlength="80" required></div>
+            <div class="field"><label for="af-phone">Nomor WhatsApp</label><input class="input" id="af-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx" maxlength="20" required></div>
+          </div>
+          <fieldset class="af-pay" id="af-pay"></fieldset>
+          <div class="field"><label for="af-channel">Di mana kamu akan mempromosikan?</label><textarea class="input" id="af-channel" rows="3" maxlength="300" placeholder="Contoh: akun Instagram @namaku (5 ribu pengikut), 3 grup WA persiapan CPNS, channel YouTube."></textarea></div>
+          <label class="af-check"><input type="checkbox" id="af-agree"> <span>Saya sudah membaca dan menyetujui <a href="#af-rules">ketentuan program affiliate</a>.</span></label>
+          <div class="row"><button class="btn btn-primary" type="submit" id="af-submit">Kirim pendaftaran</button></div>
+        </form>
+      </section>
+    </div>
+
+    <!-- MENUNGGU / NONAKTIF -->
+    <section class="panel af-wait" id="af-pending" hidden>
+      <div class="af-wait-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div><h2>Pendaftaranmu sedang ditinjau</h2><p class="muted" id="af-pending-text">Admin akan meninjau pendaftaranmu dalam 1x24 jam kerja. Kamu sudah bisa membagikan link ajakan dari sekarang; komisi dihitung untuk pembelian setelah kamu disetujui.</p></div>
+    </section>
+    <section class="callout callout-warn" id="af-suspended" hidden></section>
+
+    <!-- AKTIF -->
+    <div id="af-active" class="stack-lg" hidden>
+      <section class="af-link panel" aria-labelledby="af-link-title">
+        <div class="panel-head"><h2 id="af-link-title">Link affiliate-mu</h2><span class="chip chip-ok" id="af-rate-chip">Komisi 20%</span></div>
+        <div class="af-link-box">
+          <input class="input mono" id="af-link" type="text" readonly aria-label="Link affiliate">
+          <button class="btn btn-primary" type="button" id="af-copy">Salin link</button>
+        </div>
+        <div class="row" style="gap:8px">
+          <a class="btn btn-secondary btn-sm" id="af-wa" href="#" target="_blank" rel="noopener">Bagikan ke WhatsApp</a>
+          <button class="btn btn-secondary btn-sm" type="button" id="af-copy-msg">Salin teks promosi</button>
+          <span class="xsmall muted" style="align-self:center">Kode: <b class="mono" id="af-code"></b></span>
+        </div>
+      </section>
+
+      <section class="af-wallet" aria-label="Saldo komisi">
+        <div class="af-bal">
+          <span class="xsmall">Saldo bisa dicairkan</span>
+          <b id="af-available">Rp0</b>
+          <div class="af-progress" aria-hidden="true"><span id="af-progress"></span></div>
+          <span class="xsmall" id="af-progress-text"></span>
+          <button class="btn btn-accent" type="button" id="af-payout" disabled>Cairkan komisi</button>
+        </div>
+        <div class="af-mini">
+          <div><span class="xsmall muted">Masa tahan</span><b id="af-holding">Rp0</b><small class="muted" id="af-hold-note">cair setelah 7 hari</small></div>
+          <div><span class="xsmall muted">Sedang diproses</span><b id="af-requested">Rp0</b><small class="muted">menunggu transfer admin</small></div>
+          <div><span class="xsmall muted">Sudah dibayar</span><b id="af-paid">Rp0</b><small class="muted">total sejak bergabung</small></div>
+          <div><span class="xsmall muted">Pembeli lewat link-mu</span><b id="af-buyers">0</b><small class="muted" id="af-referred">0 orang bergabung</small></div>
+        </div>
+      </section>
+
+      <dialog class="af-dialog" id="af-confirm" aria-labelledby="af-confirm-title">
+        <form method="dialog" class="stack">
+          <h2 id="af-confirm-title">Cairkan komisi</h2>
+          <dl class="af-calc">
+            <div><dt>Saldo dicairkan</dt><dd id="af-c-gross"></dd></div>
+            <div><dt>Potongan transfer</dt><dd id="af-c-fee"></dd></div>
+            <div class="tot"><dt>Kamu terima</dt><dd id="af-c-net"></dd></div>
+          </dl>
+          <p class="small">Ditransfer ke <b id="af-c-to"></b>. Admin memproses manual, biasanya 1 sampai 3 hari kerja.</p>
+          <div class="row" style="justify-content:flex-end;gap:8px"><button class="btn btn-secondary" value="cancel">Batal</button><button class="btn btn-primary" value="ok" id="af-c-ok">Ya, cairkan</button></div>
+        </form>
+      </dialog>
+
+      <section class="panel" aria-labelledby="af-com-title">
+        <div class="panel-head"><h2 id="af-com-title">Riwayat komisi</h2><span class="xsmall muted">identitas pembeli dirahasiakan</span></div>
+        <ul class="af-coms" id="af-coms"></ul>
+      </section>
+
+      <div class="af-grid2">
+        <section class="panel" aria-labelledby="af-po-title">
+          <div class="panel-head"><h2 id="af-po-title">Riwayat pencairan</h2></div>
+          <ul class="af-payouts" id="af-payouts"></ul>
+        </section>
+        <section class="panel" aria-labelledby="af-acc-title">
+          <div class="panel-head"><h2 id="af-acc-title">Rekening pencairan</h2><button class="btn btn-ghost btn-sm" type="button" id="af-acc-edit">Ubah</button></div>
+          <dl class="af-acc" id="af-acc"></dl>
+          <form id="af-acc-form" class="af-form" hidden novalidate>
+            <div class="field"><label for="af-phone2">Nomor WhatsApp</label><input class="input" id="af-phone2" type="tel" inputmode="tel" maxlength="20"></div>
+            <fieldset class="af-pay" id="af-pay2"></fieldset>
+            <div class="row" style="gap:8px"><button class="btn btn-primary btn-sm" type="submit" id="af-acc-save">Simpan</button><button class="btn btn-secondary btn-sm" type="button" id="af-acc-cancel">Batal</button></div>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <section class="panel" id="af-rules" aria-labelledby="af-rules-title">
+      <div class="panel-head"><h2 id="af-rules-title">Ketentuan program affiliate</h2></div>
+      <ol class="rf-rules">
+        <li>Affiliate wajib mendaftar dan disetujui admin. Satu orang satu akun affiliate.</li>
+        <li>Komisi <b><span data-aff-rate>20</span>%</b> dihitung dari nominal yang benar-benar dibayar pembeli (setelah diskon), untuk semua produk, selama <span data-aff-window>90</span> hari sejak pembeli bergabung lewat link atau kode-mu.</li>
+        <li>Pembeli harus pengguna baru yang masuk lewat link-mu (atau mengisi kodemu) sebelum membeli Premium pertamanya. Membeli lewat link sendiri tidak dihitung.</li>
+        <li>Komisi tertahan <span data-aff-hold>7</span> hari sebelum bisa dicairkan. Komisi dari transaksi yang dibatalkan atau dikembalikan dananya akan dibatalkan.</li>
+        <li>Pencairan minimal <span data-aff-min>Rp100.000</span>, seluruh saldo tersedia dicairkan sekaligus, dan dipotong biaya transfer <span data-aff-fee>Rp3.000</span> per pencairan. Transfer dilakukan manual oleh admin dalam 1 sampai 3 hari kerja.</li>
+        <li>Pastikan nama pemilik rekening sesuai. Kesalahan data rekening dari affiliate bukan tanggung jawab <span data-org-name>Primajana</span>.</li>
+        <li>Dilarang spam, iklan berbayar memakai merek Siap CPNS/Primajana, mengaku sebagai BKN atau instansi pemerintah, menjanjikan kelulusan, atau membuat akun palsu. Pelanggaran dapat membuat akun affiliate dinonaktifkan dan komisi dibatalkan.</li>
+        <li>Affiliate yang aktif menerima komisi uang sebagai pengganti bonus +7 hari Premium dari program Ajak Teman.</li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer"><div class="container"><div class="footer-org"><img src="../assets/img/primajana-logo-112.png" alt="Logo Primajana" width="56" height="57"><p class="small"><strong><span data-app-name>Siap CPNS</span></strong> adalah layanan persiapan belajar dari <strong data-org-name>Primajana</strong>.</p></div><div class="footer-links"><a href="panduan.html">Panduan CPNS</a><a href="privasi.html">Kebijakan Privasi</a><a href="syarat.html">Syarat &amp; Ketentuan</a></div><p class="xsmall">© <span data-year>2026</span> <span data-org-name>Primajana</span>. Tidak berafiliasi dengan BKN, KemenPANRB, maupun instansi pemerintah mana pun.</p></div></footer>
+<script type="module">
+  import { hydrateCommon } from "../assets/js/core/ui.js";
+  hydrateCommon();
+  import("../assets/js/features/affiliate.js").then((m) => m.initAffiliate());
+</script>
+</body>
+</html>

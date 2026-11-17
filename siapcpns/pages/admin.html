@@ -75,6 +75,8 @@
         <a href="#belajar" data-tab="belajar">Capaian belajar</a>
         <a href="#operasional" data-tab="operasional">Operasional</a>
         <a href="#cari" data-tab="cari">Cari pengguna</a>
+        <a href="#live" data-tab="live">Live GA</a>
+        <a href="#affiliate" data-tab="affiliate">Affiliate <span class="tab-badge" id="af-badge" hidden></span></a>
       </nav>
 
       <!-- RINGKASAN -->
@@ -160,6 +162,76 @@
           <section class="panel"><div class="panel-head"><h2>Pemeriksaan sistem</h2><span class="xsmall muted">hasil healthCheck</span></div><ul class="health" id="o-health"></ul></section>
           <section class="panel"><div class="panel-head"><h2>Galat 24 jam teratas</h2></div><div id="o-errors"></div></section>
         </div>
+      </section>
+
+      <!-- LIVE GOOGLE ANALYTICS (Fase 14.4) -->
+      <section class="adm-tab stack-lg" data-panel="live" hidden>
+        <div class="ga-head">
+          <div><span class="ga-dot" aria-hidden="true"></span><b>Google Analytics langsung</b><span class="xsmall muted" id="g-meta"></span></div>
+          <div class="row" style="gap:8px"><button type="button" class="btn btn-secondary btn-sm" id="g-refresh">Muat ulang</button><a class="btn btn-primary btn-sm" id="g-open" href="https://analytics.google.com/" target="_blank" rel="noopener">Buka di Google Analytics</a></div>
+        </div>
+        <p id="g-status" class="status-msg" role="status" hidden></p>
+        <div id="g-app" hidden>
+          <div class="kpis" id="g-kpis"></div>
+          <section class="panel"><div class="panel-head"><h2>Pengguna aktif per menit</h2><span class="xsmall muted">30 menit terakhir, diperbarui otomatis tiap 60 detik</span></div><div class="chart" id="c-gamin"></div></section>
+          <div class="adm-grid2">
+            <section class="panel"><div class="panel-head"><h2>Halaman yang sedang dibuka</h2><span class="xsmall muted">pengguna aktif · tayangan</span></div><div id="g-pages"></div></section>
+            <section class="panel"><div class="panel-head"><h2>Event 30 menit terakhir</h2></div><div id="g-events"></div></section>
+          </div>
+          <div class="adm-grid2">
+            <section class="panel"><div class="panel-head"><h2>Kota</h2><span class="xsmall muted">pengguna aktif</span></div><div id="g-cities"></div></section>
+            <section class="panel"><div class="panel-head"><h2>Perangkat</h2><span class="xsmall muted">pengguna aktif</span></div><div id="g-devices"></div></section>
+          </div>
+          <h2 class="ga-sub">Hari ini dan 7 hari terakhir</h2>
+          <div class="kpis" id="g-hkpis"></div>
+          <section class="panel"><div class="panel-head"><h2>Pengguna per hari</h2><span class="xsmall muted">14 hari, data hari ini masih bertambah</span></div><div class="chart" id="c-gaday"></div></section>
+          <div class="adm-grid2">
+            <section class="panel"><div class="panel-head"><h2>Sumber kunjungan</h2><span class="xsmall muted">7 hari, sesi (pakai utm_source di link promosi)</span></div><div id="g-sources"></div></section>
+            <section class="panel"><div class="panel-head"><h2>Aktivitas di aplikasi</h2><span class="xsmall muted">7 hari, jumlah event · pengguna</span></div><div id="g-appev"></div></section>
+          </div>
+          <p class="xsmall muted">Data realtime dari Google Analytics 4 (30 menit terakhir). Ringkasan 7 hari bisa tertinggal beberapa jam karena proses GA. Pemblokir iklan di browser pengunjung membuat sebagian kunjungan tidak tercatat, jadi angka GA biasanya sedikit di bawah angka di tab Pengguna.</p>
+        </div>
+      </section>
+
+      <!-- AFFILIATE (Fase 15) -->
+      <section class="adm-tab stack-lg" data-panel="affiliate" hidden>
+        <div class="ga-head">
+          <div><b>Program affiliate</b><span class="xsmall muted" id="f-meta"></span></div>
+          <div class="row" style="gap:8px"><button type="button" class="btn btn-secondary btn-sm" id="f-refresh">Muat ulang</button></div>
+        </div>
+        <p id="f-status" class="status-msg" role="status" hidden></p>
+        <div id="f-app" class="stack-lg" hidden>
+          <div class="kpis" id="f-kpis"></div>
+          <section class="panel">
+            <div class="panel-head"><h2>Permintaan pencairan</h2><button type="button" class="btn btn-secondary btn-sm" id="f-csv" disabled>Unduh CSV antrean</button></div>
+            <p class="xsmall muted">Transfer manual nominal <b>Diterima</b> lewat bank, e-wallet, atau saldo Mayar (Saldo › Tarik dana / transfer). Setelah berhasil, klik <b>Sudah ditransfer</b> dan isi nomor referensi transfer.</p>
+            <div id="f-queue"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2>Pendaftar baru</h2><span class="xsmall muted">tinjau kanal promosi sebelum menyetujui</span></div>
+            <div id="f-apps"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2>Semua affiliate</h2><span class="xsmall muted" id="f-aff-sub"></span></div>
+            <div class="table-wrap"><table class="table adm-table" id="f-affs"></table></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2>Komisi terbaru</h2><span class="xsmall muted">100 terakhir · batalkan bila transaksi di-refund</span></div>
+            <div class="table-wrap"><table class="table adm-table" id="f-coms"></table></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2>Riwayat pencairan</h2></div>
+            <div class="table-wrap"><table class="table adm-table" id="f-hist"></table></div>
+          </section>
+        </div>
+        <dialog class="adm-dialog" id="f-dlg">
+          <form method="dialog" class="stack" id="f-dlg-form">
+            <h2 id="f-dlg-title"></h2>
+            <p class="small" id="f-dlg-text"></p>
+            <div id="f-dlg-fields" class="stack"></div>
+            <div class="row" style="justify-content:flex-end;gap:8px"><button class="btn btn-secondary" value="cancel" formnovalidate>Batal</button><button class="btn btn-primary" value="ok" id="f-dlg-ok">Simpan</button></div>
+          </form>
+        </dialog>
       </section>
 
       <!-- CARI -->
