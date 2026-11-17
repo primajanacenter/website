@@ -92,6 +92,8 @@ export function trackApi(action, payload = {}, data = {}) {
     case "startInterview": track("wawancara_mulai"); break;
     case "submitInterview": track("wawancara_selesai"); break;
     case "claimReferral": track("ajak_teman_klaim"); break;
+    case "applyAffiliate": track("affiliate_daftar"); break;
+    case "requestPayout": track("affiliate_cair"); break;
     case "createCheckout": track("begin_checkout", { currency: "IDR", produk: payload.planId || payload.kind || "", ref: payload.refId || "" }); break;
     case "getPaymentStatus": {
       const t = data && data.transaction;

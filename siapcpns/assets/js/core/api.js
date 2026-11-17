@@ -162,11 +162,15 @@ Object.assign(mockHandlers, {
 // Fase 14: Paket SKB (data contoh, hanya mode uji)
 Object.assign(mockHandlers, Object.fromEntries(["getSkbCatalog", "setSkbInstansi", "getSkbInstansi", "getSkbMateri", "startInterview", "submitInterview", "getInterviewResult"]
   .map((a) => [a, async (p) => (await import("./mock-skb.js")).mockSkb(a, p || {}, { auth, store, apiError })])));
+// Fase 15: affiliate (data contoh, hanya mode uji)
+Object.assign(mockHandlers, Object.fromEntries(["getAffiliate", "applyAffiliate", "updateAffiliatePayment", "requestPayout", "adminAffiliates", "adminAffiliateAction", "adminPayoutAction", "adminCommissionVoid"]
+  .map((a) => [a, async (p) => { requireMockSession(); return (await import("./mock-affiliate.js")).mockAffiliate(a, p || {}, { store, apiError }); }])));
 // Fase 12: Super User Dashboard (data contoh, hanya mode uji)
 Object.assign(mockHandlers, {
   async getAdminDashboard(p) { requireMockSession(); return (await import("./mock-admin.js")).mockAdminDashboard(p); },
   async adminTransactions(p) { requireMockSession(); return (await import("./mock-admin.js")).mockAdminTransactions(p); },
   async adminLookupUser(p) { requireMockSession(); return (await import("./mock-admin.js")).mockAdminLookup(p); },
+  async adminAnalytics(p) { requireMockSession(); return (await import("./mock-admin.js")).mockAdminAnalytics(p); },
 });
 Object.assign(mockHandlers, {
   async getTryoutInfo() {
@@ -794,7 +798,7 @@ const READ_TTL = {
   getTryoutInfo: 30, getAkbarInfo: 60, getAkbarRanking: 300, getReferral: 120, getPostSkd: 300, getNotifPrefs: 300,
 };
 // Action baca yang tidak di-cache tetapi juga tidak mengubah data (tidak perlu mengosongkan cache).
-const NEUTRAL = new Set(["ping", "logClientError", "getReport", "saveProgress", "getAdminDashboard", "adminTransactions", "adminLookupUser",
+const NEUTRAL = new Set(["ping", "logClientError", "getReport", "saveProgress", "getAdminDashboard", "adminTransactions", "adminLookupUser", "adminAnalytics", "getAffiliate", "adminAffiliates",
   // Fase 13: data yang berubah cepat (tidak di-cache, juga tidak mengosongkan cache baca)
   "getTryoutCatalog", "getMateriIndex", "getMateriTopic", "getTopicPractice", "getMentoring", "getConsultSlots", "getConsultChat",
   "sendConsultMessage", "getConsultDesk", "getMyItems", "getRaporHub", "joinLive", "getRecording",

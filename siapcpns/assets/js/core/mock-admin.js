@@ -127,3 +127,32 @@ export function mockAdminLookup({ q } = {}) {
   };
   return { total: list.length, list, detail: detail || null };
 }
+
+/** Data CONTOH Google Analytics (tab Live GA) untuk mode uji. */
+export function mockAdminAnalytics() {
+  const r = rng(Math.floor(Date.now() / 60000));
+  const minutes = Array.from({ length: 30 }, (_, i) => ({ minutesAgo: 29 - i, users: Math.round(2 + r() * 9) }));
+  const pages = ["Siap CPNS — Tryout, Materi & Latihan SKD CPNS", "Tryout — Siap CPNS", "Beranda — Siap CPNS", "Paket SKB — Siap CPNS", "Masuk — Siap CPNS", "Premium — Siap CPNS"]
+    .map((p, i) => ({ page: p, users: Math.max(1, Math.round((14 - i * 2) * (0.7 + r() * 0.6))), views: Math.round((30 - i * 4) * (0.7 + r() * 0.6)) }));
+  const daily = Array.from({ length: 14 }, (_, i) => ({ date: day(i - 13), activeUsers: Math.round(80 + i * 9 + r() * 40), sessions: Math.round(120 + i * 12 + r() * 50) }));
+  const ev = ["sign_up", "login", "cek_kesiapan_selesai", "tryout_mulai", "tryout_selesai", "latihan_mulai", "materi_dibuka", "akbar_daftar", "wawancara_mulai", "begin_checkout", "purchase"];
+  return {
+    configured: true, mock: true, generatedAt: new Date().toISOString(),
+    gaUrl: "https://analytics.google.com/",
+    realtime: {
+      activeUsers: 37, activeUsers5: 9, pageViews: 214, events: 690, minutes, pages,
+      devices: [{ device: "mobile", users: 29 }, { device: "desktop", users: 7 }, { device: "tablet", users: 1 }],
+      cities: [["Jakarta", 9], ["Surabaya", 5], ["Bandung", 4], ["Medan", 3], ["Makassar", 3], ["Semarang", 2]].map(([city, users]) => ({ city, users })),
+      eventList: [["page_view", 214], ["user_engagement", 160], ["scroll", 88], ["tryout_mulai", 12], ["login", 9], ["begin_checkout", 3]].map(([event, count]) => ({ event, count })),
+    },
+    history: {
+      today: { activeUsers: 168, newUsers: 74, sessions: 231, pageViews: 1420 },
+      week: { activeUsers: 941, newUsers: 512, sessions: 1388, pageViews: 9120 },
+      daily,
+      sources: [["(direct) / (none)", 520, 410], ["wa / jarkoman", 330, 260], ["instagram / social", 210, 170], ["google / organic", 190, 150], ["l.facebook.com / referral", 60, 48]]
+        .map(([source, sessions, users]) => ({ source, sessions, users })),
+      appEvents: ev.map((e, i) => ({ event: e, count: Math.round(400 / (i + 1.5)), users: Math.round(260 / (i + 1.8)) })),
+      devices: [{ device: "mobile", users: 780 }, { device: "desktop", users: 150 }, { device: "tablet", users: 11 }],
+    },
+  };
+}
