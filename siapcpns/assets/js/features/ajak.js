@@ -10,7 +10,7 @@ import { auth } from "../core/auth.js";
 import { CONFIG } from "../core/config.js";
 import { $, esc, fmtDate, copyText, toast, setBusy } from "../core/ui.js";
 
-const STATUS = { joined: "Bergabung, belum membeli", rewarded: "Membeli · bonus +7 hari diterima", capped: "Membeli · batas bonus bulan ini tercapai", void: "Tidak memenuhi syarat" };
+const STATUS = { joined: "Bergabung, belum membeli", rewarded: "Membeli · bonus +7 hari diterima", capped: "Membeli · batas bonus bulan ini tercapai", void: "Tidak memenuhi syarat", affiliate: "Membeli · komisi affiliate tercatat" };
 
 export async function initAjak() {
   if (!auth.requireLogin("masuk.html")) return;
@@ -40,7 +40,7 @@ function render(d) {
   $("#rf-purchased").textContent = d.purchased;
   $("#rf-bonus").textContent = `${d.bonusDaysEarned} hari`;
   $("#rf-recent").innerHTML = d.recent.length
-    ? d.recent.map((r) => `<li><span>Teman · ${esc(fmtDate(r.joinedAt))}</span><span class="chip ${r.status === "rewarded" ? "chip-ok" : r.status === "joined" ? "" : "chip-warn"}">${esc(STATUS[r.status] || r.status)}</span></li>`).join("")
+    ? d.recent.map((r) => `<li><span>Teman · ${esc(fmtDate(r.joinedAt))}</span><span class="chip ${r.status === "rewarded" || r.status === "affiliate" ? "chip-ok" : r.status === "joined" ? "" : "chip-warn"}">${esc(STATUS[r.status] || r.status)}</span></li>`).join("")
     : `<li class="muted small">Belum ada teman yang memakai kodemu.</li>`;
   $("#rf-claim-card").hidden = !d.canClaim;
   const mine = $("#rf-mine");

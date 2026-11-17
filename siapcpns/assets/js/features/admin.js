@@ -9,7 +9,7 @@
 import { api } from "../core/api.js";
 import { auth } from "../core/auth.js";
 import { CONFIG } from "../core/config.js";
-import { $, esc, setBusy } from "../core/ui.js";
+import { $, esc, setBusy, copyText } from "../core/ui.js";
 
 const S = { days: 30, data: null, trx: null };
 const TYPE_LABEL = { diagnostic: "Diagnostik", akbar: "Tryout Akbar", premium: "Premium", demo: "Demo", skb: "SKB" };
@@ -66,7 +66,10 @@ export async function initAdmin() {
   $("#t-form").addEventListener("submit", (e) => { e.preventDefault(); loadTrx(); });
   $("#t-csv").addEventListener("click", downloadCsv);
   $("#s-form").addEventListener("submit", (e) => { e.preventDefault(); lookup($("#s-q").value); });
+  $("#g-refresh")?.addEventListener("click", () => loadGa(true));
+  document.addEventListener("visibilitychange", gaTick);
   initTooltip();
+  afInit();
   let rt;
   window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(redrawCharts, 150); });
   await load(false);
@@ -111,6 +114,7 @@ function showTab() {
   const valid = [...document.querySelectorAll("[data-panel]")].some((p) => p.dataset.panel === tab) ? tab : "ringkasan";
   document.querySelectorAll("[data-panel]").forEach((p) => (p.hidden = p.dataset.panel !== valid));
   requestAnimationFrame(redrawCharts);
+  gaTick();
   document.querySelectorAll("#a-tabs a").forEach((a) => {
     const on = a.dataset.tab === valid;
     a.classList.toggle("active", on);
@@ -396,6 +400,7 @@ function redrawCharts() {
   CHARTS.forEach(([rows, o], el) => { if (el.offsetParent !== null && el.dataset.w !== String(el.clientWidth)) drawBars(el, rows, o); });
 }
 function drawBars(el, rows, o) {
+  const xl = o.xlabel || ((r) => dShort(r.date));
   const W = Math.max(280, Math.round(el.clientWidth || 640)), H = W < 480 ? 180 : 210, L = 52, R = 8, T = 10, B = 26;
   el.dataset.w = String(el.clientWidth);
   const vals = rows.map((r) => Number(r[o.y]) || 0);
@@ -413,19 +418,19 @@ function drawBars(el, rows, o) {
     const h = Math.max(0, H - B - y(v));
     if (h > 0) g += `<path class="bar" d="${roundTop(x, y(v), bw, h, Math.min(4, bw / 2, h))}"/>`;
     g += `<rect class="hit" x="${L + i * step}" y="${T}" width="${step}" height="${H - T - B}" data-i="${i}"/>`;
-    if (i === n - 1 || (i % every === 0 && n - 1 - i >= every / 2)) g += `<text class="ax" x="${L + i * step + step / 2}" y="${H - 8}" text-anchor="middle">${esc(dShort(r.date))}</text>`;
+    if (i === n - 1 || (i % every === 0 && n - 1 - i >= every / 2)) g += `<text class="ax" x="${L + i * step + step / 2}" y="${H - 8}" text-anchor="middle">${esc(xl(r))}</text>`;
   });
   const total = vals.reduce((s, v) => s + v, 0);
   el.innerHTML = `<figure class="chart-fig"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(o.title)}: total ${esc(o.fmt(total, {}))}">${g}</svg>
-    <details class="chart-table"><summary>Lihat tabel</summary><div class="table-wrap"><table class="table adm-table"><thead><tr><th>Tanggal</th><th class="num">${esc(o.label)}</th></tr></thead><tbody>${rows
-      .map((r, i) => `<tr><td>${dShort(r.date)}</td><td class="num">${esc(o.fmt(vals[i], r))}</td></tr>`).join("")}</tbody></table></div></details></figure>`;
+    <details class="chart-table"><summary>Lihat tabel</summary><div class="table-wrap"><table class="table adm-table"><thead><tr><th>${esc(o.xhead || "Tanggal")}</th><th class="num">${esc(o.label)}</th></tr></thead><tbody>${rows
+      .map((r, i) => `<tr><td>${esc(xl(r))}</td><td class="num">${esc(o.fmt(vals[i], r))}</td></tr>`).join("")}</tbody></table></div></details></figure>`;
   const svg = el.querySelector("svg");
   svg.querySelectorAll(".hit").forEach((h) => {
     const show = (ev) => {
       const i = Number(h.dataset.i);
       svg.querySelectorAll(".hit.on").forEach((x) => x.classList.remove("on"));
       h.classList.add("on");
-      tip(ev, `<b>${esc(dShort(rows[i].date))}</b><br>${esc(o.fmt(vals[i], rows[i]))}`);
+      tip(ev, `<b>${esc(xl(rows[i]))}</b><br>${esc(o.fmt(vals[i], rows[i]))}`);
     };
     h.addEventListener("mousemove", show);
     h.addEventListener("click", show);
@@ -460,4 +465,240 @@ function tip(ev, html) {
   if (yy < 8) yy = ev.clientY + pad;
   tipEl.style.left = `${Math.max(8, x)}px`;
   tipEl.style.top = `${yy}px`;
+}
+
+/* ---------------- Live Google Analytics (Fase 14.4) ---------------- */
+const GA = { data: null, timer: 0, busy: false };
+const DEVICE = { mobile: "HP", desktop: "Laptop/PC", tablet: "Tablet", "smart tv": "Smart TV" };
+const APP_EVENT = { sign_up: "Daftar akun baru", login: "Login", cek_kesiapan_selesai: "Cek Kesiapan selesai", tryout_mulai: "Tryout dimulai", tryout_selesai: "Tryout selesai",
+  latihan_mulai: "Latihan soal dibuka", materi_dibuka: "Materi dibuka", akbar_daftar: "Daftar Tryout Akbar", wawancara_mulai: "Wawancara dimulai", begin_checkout: "Klik beli", purchase: "Pembelian lunas" };
+
+/** Muat GA hanya saat tab Live terbuka dan halaman terlihat; perbarui tiap 60 detik. */
+function gaTick() {
+  clearInterval(GA.timer);
+  const on = (location.hash || "").slice(1) === "live" && !document.hidden && !$("#a-app").hidden;
+  if (!on) return;
+  if (!GA.data || Date.now() - GA.loadedAt > 55000) loadGa(false);
+  GA.timer = setInterval(() => loadGa(false), 60000);
+}
+
+async function loadGa(force) {
+  if (GA.busy) return;
+  GA.busy = true;
+  const btn = $("#g-refresh");
+  if (force) setBusy(btn, true, "Memuat…");
+  const res = await api.call("adminAnalytics", { force: Boolean(force) });
+  if (force) setBusy(btn, false);
+  GA.busy = false;
+  GA.loadedAt = Date.now();
+  const st = $("#g-status");
+  const fail = (msg) => { st.hidden = false; st.textContent = msg; st.classList.add("error"); $(".ga-dot").classList.add("off"); };
+  if (!res.ok) return fail(res.error.message);
+  const d = res.data;
+  if (d.gaUrl) $("#g-open").href = d.gaUrl;
+  if (!d.configured) { $("#g-app").hidden = true; return fail(`Google Analytics belum tersambung ke dasbor: ${d.reason} Lihat docs/setup-analytics.md bagian 5.`); }
+  if (d.error && !d.realtime) { $("#g-app").hidden = true; return fail(d.error); }
+  st.hidden = !d.error; st.textContent = d.error || ""; st.classList.toggle("error", Boolean(d.error));
+  $(".ga-dot").classList.remove("off");
+  GA.data = d;
+  $("#g-app").hidden = false;
+  renderGa(d);
+}
+
+function renderGa(d) {
+  const rt = d.realtime, h = d.history;
+  $("#g-meta").textContent = ` · diperbarui ${dTime(d.generatedAt)}${d.mock ? " · data contoh" : ""}`;
+  $("#g-kpis").innerHTML = [
+    kpi("Pengguna aktif", num(rt.activeUsers), "30 menit terakhir", "").replace('class="kpi"', 'class="kpi ga-big"'),
+    kpi("Aktif 5 menit", num(rt.activeUsers5), "sedang membuka aplikasi"),
+    kpi("Tayangan halaman", num(rt.pageViews), "30 menit terakhir"),
+    kpi("Event", num(rt.events), "30 menit terakhir"),
+  ].join("");
+  barChart($("#c-gamin"), rt.minutes, { y: "users", fmt: (v) => `${num(v)} pengguna`, axis: num, label: "Pengguna aktif", title: "Pengguna aktif per menit",
+    xhead: "Menit", xlabel: (r) => (r.minutesAgo === 0 ? "kini" : `-${r.minutesAgo}m`) });
+  const bars = (rows, key, val, labelFn, textFn) => {
+    if (!rows || !rows.length) return `<p class="muted small">Belum ada data.</p>`;
+    const max = Math.max(1, ...rows.map((r) => r[val]));
+    return hbars(rows.map((r) => ({ label: esc(labelFn ? labelFn(r[key]) : r[key]), value: r[val], w: r[val] / max, text: textFn ? textFn(r) : num(r[val]) })));
+  };
+  $("#g-pages").innerHTML = bars(rt.pages, "page", "users", (p) => String(p).replace(/\s+[—|-]\s+Siap CPNS$/, "") || "(tanpa judul)", (r) => `${num(r.users)} · ${num(r.views)}`);
+  $("#g-events").innerHTML = bars(rt.eventList, "event", "count", (e) => APP_EVENT[e] || e);
+  $("#g-cities").innerHTML = bars(rt.cities, "city", "users", (c) => (c === "(not set)" ? "Tidak diketahui" : c));
+  $("#g-devices").innerHTML = bars(rt.devices, "device", "users", (x) => DEVICE[x] || x);
+  if (!h) { $("#g-hkpis").innerHTML = ""; return; }
+  $("#g-hkpis").innerHTML = [
+    kpi("Pengguna hari ini", num(h.today.activeUsers), `${num(h.today.newUsers)} baru`),
+    kpi("Sesi hari ini", num(h.today.sessions), `${num(h.today.pageViews)} tayangan`),
+    kpi("Pengguna 7 hari", num(h.week.activeUsers), `${num(h.week.newUsers)} baru`),
+    kpi("Sesi 7 hari", num(h.week.sessions), `${num(h.week.pageViews)} tayangan`),
+  ].join("");
+  barChart($("#c-gaday"), h.daily, { y: "activeUsers", fmt: (v, r) => `${num(v)} pengguna · ${num(r.sessions || 0)} sesi`, axis: num, label: "Pengguna", title: "Pengguna per hari" });
+  $("#g-sources").innerHTML = bars(h.sources, "source", "sessions", (x) => x.replace("(direct) / (none)", "Langsung / link tanpa utm"), (r) => `${num(r.sessions)} sesi`);
+  $("#g-appev").innerHTML = bars(h.appEvents, "event", "count", (e) => APP_EVENT[e] || e, (r) => `${num(r.count)} · ${num(r.users)} org`);
+}
+
+/* ---------------- Affiliate (Fase 15) ---------------- */
+const AF = { data: null, busy: false, loadedAt: 0 };
+const AF_STATUS = { pending: ["Menunggu", "chip-warn"], approved: ["Aktif", "chip-ok"], rejected: ["Ditolak", ""], suspended: ["Nonaktif", "chip-bad"] };
+const COM_STATE = { holding: ["Masa tahan", "chip-warn"], available: ["Bisa dicairkan", "chip-ok"], requested: ["Diproses", "chip-primary"], paid: ["Dibayar", "chip-ok"], void: ["Dibatalkan", "chip-bad"] };
+const PO_STATE = { requested: ["Menunggu transfer", "chip-warn"], paid: ["Sudah ditransfer", "chip-ok"], rejected: ["Ditolak", "chip-bad"] };
+const PROD = { premium: "Premium SKD", skb: "Premium SKB", tryout: "Paket tryout", akbar: "Tryout Akbar", live: "Live mentoring", rec: "Rekaman", consult: "Konsultasi" };
+const VIA_LABEL = { bank: "Bank", ewallet: "E-wallet", mayar: "Mayar" };
+
+function afInit() {
+  $("#f-refresh").addEventListener("click", () => loadAffiliates(true));
+  $("#f-csv").addEventListener("click", payoutCsv);
+  $("#f-dlg").addEventListener("close", afDialogClosed);
+  const panel = $("[data-panel=affiliate]");
+  panel.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-af]");
+    if (!b) return;
+    const [kind, id] = b.dataset.af.split(":");
+    if (kind === "copy") return copyText(b.dataset.v).then((ok) => b.textContent = ok ? "Tersalin" : "Gagal");
+    afAction(kind, id);
+  });
+  window.addEventListener("hashchange", afTick);
+  afTick();
+  // lencana jumlah antrean langsung terlihat walau tab lain yang terbuka
+  loadAffiliates(false, true);
+}
+
+function afTick() {
+  if ((location.hash || "").slice(1) === "affiliate" && (!AF.data || Date.now() - AF.loadedAt > 60000)) loadAffiliates(false);
+}
+
+async function loadAffiliates(force, quiet) {
+  if (AF.busy) return;
+  AF.busy = true;
+  const btn = $("#f-refresh");
+  if (force) setBusy(btn, true, "Memuat…");
+  const res = await api.call("adminAffiliates", {}, { fresh: true });
+  if (force) setBusy(btn, false);
+  AF.busy = false;
+  const st = $("#f-status");
+  if (!res.ok) { if (!quiet) { st.hidden = false; st.textContent = res.error.message; st.classList.add("error"); } return; }
+  st.hidden = true;
+  AF.data = res.data; AF.loadedAt = Date.now();
+  renderAffiliates(res.data);
+}
+
+function renderAffiliates(d) {
+  const t = d.totals, p = d.program;
+  const queue = d.payouts.filter((x) => x.status === "requested");
+  const apps = d.affiliates.filter((a) => a.status === "pending");
+  const badge = $("#af-badge"); const n = queue.length + apps.length;
+  badge.hidden = !n; badge.textContent = n;
+  $("#f-app").hidden = false;
+  $("#f-meta").textContent = ` · komisi standar ${p.ratePct}% · ${p.windowDays} hari · tahan ${p.holdDays} hari · min cair ${rp(p.minPayout)} · potongan ${rp(p.fee)}`;
+  const owed = queue.reduce((s, x) => s + x.net, 0);
+  $("#f-kpis").innerHTML = [
+    kpi("Affiliate aktif", num(t.affiliates), t.pending ? `${num(t.pending)} pendaftar menunggu` : "tidak ada pendaftar menunggu"),
+    kpi("Perlu ditransfer", rp(owed), `${num(queue.length)} permintaan pencairan`),
+    kpi("Komisi belum cair", rp(t.holding + t.available), `${rp(t.holding)} masa tahan · ${rp(t.available)} tersedia`),
+    kpi("Dibayar bulan ini", rp(t.paidThisMonth), `penjualan via affiliate ${rp(t.sales)} · komisi ${rp(t.total)}`),
+  ].join("");
+
+  $("#f-csv").disabled = !queue.length;
+  $("#f-queue").innerHTML = queue.length ? `<div class="f-cards">${queue.map((x) => `
+    <div class="f-card urgent">
+      <div><h3>${esc(x.name || x.email)}</h3><span class="muted">${esc(x.email)} · WA ${esc(x.phone)} · ${num(x.count)} komisi · diajukan ${dTime(x.requestedAt)}</span></div>
+      <div class="f-acct"><span class="muted">${esc(VIA_LABEL[x.method] || x.method)} ${esc(x.provider)}</span><span><span class="mono">${esc(x.accountNo)}</span><button type="button" class="f-copy" data-af="copy:" data-v="${esc(x.accountNo)}">Salin</button></span><span>a.n. <b>${esc(x.accountName)}</b></span></div>
+      <div class="f-actions"><div class="f-amt" style="text-align:right"><span class="muted">${rp(x.gross)} − ${rp(x.fee)}</span><br><b>${rp(x.net)}</b></div>
+        <button class="btn btn-primary btn-sm" type="button" data-af="paid:${esc(x.id)}">Sudah ditransfer</button>
+        <button class="btn btn-danger btn-sm" type="button" data-af="rejectpo:${esc(x.id)}">Tolak</button></div>
+    </div>`).join("")}</div>` : `<p class="muted small">Tidak ada permintaan pencairan.</p>`;
+
+  $("#f-apps").innerHTML = apps.length ? `<div class="f-cards">${apps.map((a) => `
+    <div class="f-card">
+      <div><h3>${esc(a.name)}</h3><span class="muted">${esc(a.email)} · WA ${esc(a.phone)} · daftar ${dTime(a.appliedAt)}</span><p class="small" style="margin:6px 0 0">${esc(a.channel)}</p></div>
+      <div class="f-acct"><span class="muted">${esc(VIA_LABEL[a.method] || a.method)} ${esc(a.provider)}</span><span class="mono">${esc(a.accountNo)}</span><span>a.n. <b>${esc(a.accountName)}</b></span></div>
+      <div class="f-actions"><button class="btn btn-primary btn-sm" type="button" data-af="approve:${esc(a.userId)}">Setujui</button><button class="btn btn-danger btn-sm" type="button" data-af="reject:${esc(a.userId)}">Tolak</button></div>
+    </div>`).join("")}</div>` : `<p class="muted small">Tidak ada pendaftar baru.</p>`;
+
+  const others = d.affiliates.filter((a) => a.status !== "pending");
+  $("#f-aff-sub").textContent = `${num(others.length)} affiliate`;
+  $("#f-affs").innerHTML = others.length
+    ? `<thead><tr><th>Affiliate</th><th>Kode</th><th>Status</th><th class="num">Komisi</th><th class="num">Bergabung</th><th class="num">Transaksi</th><th class="num">Penjualan</th><th class="num">Total komisi</th><th class="num">Belum cair</th><th class="num">Dibayar</th><th>Aksi</th></tr></thead><tbody>${others.map((a) => {
+        const [lbl, cls] = AF_STATUS[a.status] || [a.status, ""]; const s = a.stats;
+        const act = a.status === "approved" ? `<button class="btn-link" data-af="rate:${esc(a.userId)}">Ubah komisi</button><button class="btn-link" data-af="suspend:${esc(a.userId)}">Nonaktifkan</button>`
+          : a.status === "suspended" ? `<button class="btn-link" data-af="reactivate:${esc(a.userId)}">Aktifkan</button>`
+          : a.status === "rejected" ? `<button class="btn-link" data-af="approve:${esc(a.userId)}">Setujui</button>` : "";
+        return `<tr><td>${mailLink(a.email)}<br><small class="muted">${esc(a.name)} · WA ${esc(a.phone)}</small></td><td class="mono">${esc(a.code)}</td><td><span class="chip ${cls}">${lbl}</span>${a.adminNote ? `<br><small class="muted">${esc(a.adminNote)}</small>` : ""}</td><td class="num">${a.ratePct}%${a.customRate ? " *" : ""}</td><td class="num">${num(a.referred)}</td><td class="num">${num(s.count)}</td><td class="num">${rp(s.sales)}</td><td class="num">${rp(s.total)}</td><td class="num">${rp(s.holding + s.available + s.requested)}</td><td class="num">${rp(s.paid)}</td><td>${act}</td></tr>`;
+      }).join("")}</tbody>`
+    : `<tbody><tr><td class="muted">Belum ada affiliate yang disetujui.</td></tr></tbody>`;
+  bindUserLinks($("#f-affs"));
+
+  $("#f-coms").innerHTML = d.commissions.length
+    ? `<thead><tr><th>Tanggal</th><th>Affiliate</th><th>Produk</th><th class="num">Dibayar</th><th class="num">Komisi</th><th>Status</th><th>Transaksi</th><th></th></tr></thead><tbody>${d.commissions.map((c) => {
+        const [lbl, cls] = COM_STATE[c.state] || [c.state, ""];
+        const can = c.state === "holding" || c.state === "available";
+        return `<tr><td>${dTime(c.at)}</td><td>${esc(c.affiliateName)}</td><td>${esc(PROD[c.kind] || c.product || c.kind)}</td><td class="num">${rp(c.amount)}</td><td class="num"><b>${rp(c.commission)}</b> <small class="muted">${c.ratePct}%</small></td><td><span class="chip ${cls}">${lbl}</span>${c.note ? `<br><small class="muted">${esc(c.note)}</small>` : ""}</td><td class="mono xsmall">${esc(c.trxId)}</td><td>${can ? `<button class="btn-link" data-af="void:${esc(c.id)}">Batalkan</button>` : ""}</td></tr>`;
+      }).join("")}</tbody>`
+    : `<tbody><tr><td class="muted">Belum ada komisi.</td></tr></tbody>`;
+
+  const hist = d.payouts.filter((x) => x.status !== "requested");
+  $("#f-hist").innerHTML = hist.length
+    ? `<thead><tr><th>Diproses</th><th>Affiliate</th><th>Tujuan</th><th class="num">Kotor</th><th class="num">Potongan</th><th class="num">Diterima</th><th>Status</th><th>Via / ref</th></tr></thead><tbody>${hist.map((x) => {
+        const [lbl, cls] = PO_STATE[x.status] || [x.status, ""];
+        return `<tr><td>${dTime(x.processedAt)}</td><td>${esc(x.name || x.email)}</td><td>${esc(x.provider)} <span class="mono">${esc(x.accountNo)}</span></td><td class="num">${rp(x.gross)}</td><td class="num">${rp(x.fee)}</td><td class="num">${rp(x.net)}</td><td><span class="chip ${cls}">${lbl}</span></td><td class="wrap">${x.status === "paid" ? `${esc(VIA_LABEL[x.paidVia] || x.paidVia)} ${esc(x.refNo)}` : esc(x.note)}</td></tr>`;
+      }).join("")}</tbody>`
+    : `<tbody><tr><td class="muted">Belum ada pencairan yang diproses.</td></tr></tbody>`;
+}
+
+/* dialog aksi admin */
+function afAction(kind, id) {
+  const d = AF.data;
+  const aff = d.affiliates.find((a) => a.userId === id);
+  const po = d.payouts.find((x) => x.id === id);
+  const com = d.commissions.find((c) => c.id === id);
+  const note = (label, req) => `<label class="field">${label}<textarea class="input" id="f-note" rows="2" maxlength="300"${req ? " required" : ""}></textarea></label>`;
+  const cfg = {
+    approve: { title: `Setujui ${aff?.name}?`, text: `Affiliate langsung bisa membagikan link dan mendapat komisi ${d.program.ratePct}%.`, fields: note("Catatan (opsional)"), ok: "Setujui" },
+    reject: { title: `Tolak pendaftaran ${aff?.name}?`, text: "Alasan ditampilkan ke pendaftar. Ia bisa memperbaiki data lalu mendaftar ulang.", fields: note("Alasan", true), ok: "Tolak" },
+    suspend: { title: `Nonaktifkan ${aff?.name}?`, text: "Pembelian baru tidak lagi memberi komisi dan pencairan ditahan. Komisi lama tetap tercatat.", fields: note("Alasan (ditampilkan ke affiliate)", true), ok: "Nonaktifkan" },
+    reactivate: { title: `Aktifkan kembali ${aff?.name}?`, text: "", fields: note("Catatan (opsional)"), ok: "Aktifkan" },
+    rate: { title: `Komisi khusus untuk ${aff?.name}`, text: `Kosongkan untuk memakai tarif standar ${d.program.ratePct}%. Berlaku untuk penjualan berikutnya.`, fields: `<label class="field">Komisi (%)<input class="input" id="f-rate" type="number" min="1" max="90" step="0.5" value="${aff?.customRate ? aff.ratePct : ""}"></label>`, ok: "Simpan" },
+    paid: { title: `Tandai sudah ditransfer`, text: po ? `${rp(po.net)} ke ${po.provider} ${po.accountNo} a.n. ${po.accountName}.` : "", ok: "Sudah ditransfer",
+      fields: `<label class="field">Ditransfer lewat<select class="input" id="f-via"><option value="bank">Transfer bank</option><option value="ewallet">E-wallet</option><option value="mayar">Saldo Mayar</option></select></label><label class="field">No. referensi / bukti transfer<input class="input" id="f-ref" maxlength="80" placeholder="mis. nomor referensi m-banking"></label>${note("Catatan (opsional)")}` },
+    rejectpo: { title: "Tolak pencairan?", text: "Saldo dikembalikan ke affiliate dan ia bisa mengajukan lagi setelah memperbaiki data rekening.", fields: note("Alasan (ditampilkan ke affiliate)", true), ok: "Tolak pencairan" },
+    void: { title: "Batalkan komisi?", text: com ? `${rp(com.commission)} dari transaksi ${com.trxId}. Pakai bila transaksi di-refund atau terbukti curang.` : "", fields: note("Alasan", true), ok: "Batalkan komisi" },
+  }[kind];
+  if (!cfg) return;
+  AF.pending = { kind, id };
+  $("#f-dlg-title").textContent = cfg.title;
+  $("#f-dlg-text").textContent = cfg.text;
+  $("#f-dlg-fields").innerHTML = cfg.fields;
+  $("#f-dlg-ok").textContent = cfg.ok;
+  $("#f-dlg").returnValue = "";
+  $("#f-dlg").showModal();
+}
+
+async function afDialogClosed() {
+  if ($("#f-dlg").returnValue !== "ok" || !AF.pending) return;
+  const { kind, id } = AF.pending; AF.pending = null;
+  const noteV = $("#f-note")?.value || "";
+  let res;
+  if (["approve", "reject", "suspend", "reactivate"].includes(kind)) res = await api.call("adminAffiliateAction", { userId: id, action: kind, note: noteV });
+  else if (kind === "rate") res = await api.call("adminAffiliateAction", { userId: id, action: "rate", ratePct: $("#f-rate").value });
+  else if (kind === "paid") res = await api.call("adminPayoutAction", { payoutId: id, action: "paid", paidVia: $("#f-via").value, refNo: $("#f-ref").value, note: noteV });
+  else if (kind === "rejectpo") res = await api.call("adminPayoutAction", { payoutId: id, action: "reject", note: noteV });
+  else if (kind === "void") res = await api.call("adminCommissionVoid", { commissionId: id, note: noteV });
+  const st = $("#f-status");
+  st.hidden = false;
+  st.classList.toggle("error", !res.ok);
+  st.textContent = res.ok ? "Tersimpan." : res.error.message;
+  await loadAffiliates(false);
+  if (res.ok) setTimeout(() => (st.hidden = true), 3000);
+}
+
+function payoutCsv() {
+  const rows = (AF.data?.payouts || []).filter((x) => x.status === "requested");
+  if (!rows.length) return;
+  const cols = [["id", "ID"], ["name", "Nama"], ["email", "Email"], ["phone", "WA"], ["method", "Jenis"], ["provider", "Bank/E-wallet"], ["accountNo", "Nomor"], ["accountName", "Atas nama"], ["gross", "Kotor"], ["fee", "Potongan"], ["net", "Ditransfer"], ["requestedAt", "Diajukan"]];
+  const q = (v) => { let s = String(v ?? ""); if (/^[=+\-@]/.test(s)) s = "'" + s; return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const csv = [cols.map((c) => c[1]).join(","), ...rows.map((r) => cols.map((c) => q(r[c[0]])).join(","))].join("\n");
+  const url = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" }));
+  const a = Object.assign(document.createElement("a"), { href: url, download: `pencairan-affiliate-${new Date().toISOString().slice(0, 10)}.csv` });
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
 }
