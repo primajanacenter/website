@@ -59,7 +59,7 @@ function render() {
   $$("[data-aff-hold]").forEach((el) => (el.textContent = p.holdDays));
   $$("[data-aff-min]").forEach((el) => (el.textContent = rp(p.minPayout)));
   $$("[data-aff-fee]").forEach((el) => (el.textContent = rp(p.fee)));
-  const c1 = 5 * Math.floor(75000 * 0.9 * rate / 100), c2 = 3 * Math.floor(85000 * rate / 100);
+  const c1 = 10 * Math.floor(75000 * 0.9 * rate / 100), c2 = 5 * Math.floor(85000 * rate / 100);
   $("#af-sim1").textContent = rp(c1); $("#af-sim2").textContent = rp(c2); $("#af-simt").textContent = rp(c1 + c2);
 
   const st = d.status;

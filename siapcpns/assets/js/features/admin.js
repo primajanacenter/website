@@ -589,7 +589,7 @@ function renderAffiliates(d) {
   const badge = $("#af-badge"); const n = queue.length + apps.length;
   badge.hidden = !n; badge.textContent = n;
   $("#f-app").hidden = false;
-  $("#f-meta").textContent = ` · komisi standar ${p.ratePct}% · ${p.windowDays} hari · tahan ${p.holdDays} hari · min cair ${rp(p.minPayout)} · potongan ${rp(p.fee)}`;
+  $("#f-meta").textContent = ` · komisi standar ${p.ratePct}% (maks ${p.maxRatePct}%) · ${p.windowDays} hari · tahan ${p.holdDays} hari · min cair ${rp(p.minPayout)} · potongan ${rp(p.fee)}`;
   const owed = queue.reduce((s, x) => s + x.net, 0);
   $("#f-kpis").innerHTML = [
     kpi("Affiliate aktif", num(t.affiliates), t.pending ? `${num(t.pending)} pendaftar menunggu` : "tidak ada pendaftar menunggu"),
@@ -657,7 +657,7 @@ function afAction(kind, id) {
     reject: { title: `Tolak pendaftaran ${aff?.name}?`, text: "Alasan ditampilkan ke pendaftar. Ia bisa memperbaiki data lalu mendaftar ulang.", fields: note("Alasan", true), ok: "Tolak" },
     suspend: { title: `Nonaktifkan ${aff?.name}?`, text: "Pembelian baru tidak lagi memberi komisi dan pencairan ditahan. Komisi lama tetap tercatat.", fields: note("Alasan (ditampilkan ke affiliate)", true), ok: "Nonaktifkan" },
     reactivate: { title: `Aktifkan kembali ${aff?.name}?`, text: "", fields: note("Catatan (opsional)"), ok: "Aktifkan" },
-    rate: { title: `Komisi khusus untuk ${aff?.name}`, text: `Kosongkan untuk memakai tarif standar ${d.program.ratePct}%. Berlaku untuk penjualan berikutnya.`, fields: `<label class="field">Komisi (%)<input class="input" id="f-rate" type="number" min="1" max="90" step="0.5" value="${aff?.customRate ? aff.ratePct : ""}"></label>`, ok: "Simpan" },
+    rate: { title: `Komisi khusus untuk ${aff?.name}`, text: `Kosongkan untuk memakai tarif standar ${d.program.ratePct}%. Maksimal ${d.program.maxRatePct}% per produk. Berlaku untuk penjualan berikutnya.`, fields: `<label class="field">Komisi (%)<input class="input" id="f-rate" type="number" min="0.5" max="${d.program.maxRatePct}" step="0.5" value="${aff?.customRate ? aff.ratePct : ""}"></label>`, ok: "Simpan" },
     paid: { title: `Tandai sudah ditransfer`, text: po ? `${rp(po.net)} ke ${po.provider} ${po.accountNo} a.n. ${po.accountName}.` : "", ok: "Sudah ditransfer",
       fields: `<label class="field">Ditransfer lewat<select class="input" id="f-via"><option value="bank">Transfer bank</option><option value="ewallet">E-wallet</option><option value="mayar">Saldo Mayar</option></select></label><label class="field">No. referensi / bukti transfer<input class="input" id="f-ref" maxlength="80" placeholder="mis. nomor referensi m-banking"></label>${note("Catatan (opsional)")}` },
     rejectpo: { title: "Tolak pencairan?", text: "Saldo dikembalikan ke affiliate dan ia bisa mengajukan lagi setelah memperbaiki data rekening.", fields: note("Alasan (ditampilkan ke affiliate)", true), ok: "Tolak pencairan" },
